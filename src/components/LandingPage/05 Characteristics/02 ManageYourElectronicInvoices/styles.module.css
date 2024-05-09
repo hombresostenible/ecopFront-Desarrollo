@@ -1,0 +1,16 @@
+.container {
+    margin: 80px auto 0 auto;
+    width: 1250px;
+    min-height: calc(100vh - 440px);
+}
+.containerPrimer {
+    width: 980px;
+    margin: 50px auto;
+}
+.subtitle {
+    color: #f28705;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif;
+}

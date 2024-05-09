@@ -1,0 +1,35 @@
+.container {
+    padding: 30px;
+    margin: 30px auto 0 auto;
+    background: #3c6e71;
+}
+.containerSustainability {
+    width: 900px;
+    margin: 0 auto;
+}
+.sustainability {
+    width: 400px;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.containerComponent {
+    height: 100px;
+    border-radius: 10px;
+    width: 390px;
+    min-height: 80px;
+    color: #ced4da;
+    background: #213c5c;
+    transition: all 300ms ease;
+}
+.containerComponent:hover {
+    transform: translateY(-10px);
+}
+.icon {
+    font-size: 30px;
+    color: #ced4da;
+}

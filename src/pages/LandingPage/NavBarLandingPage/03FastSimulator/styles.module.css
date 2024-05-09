@@ -1,0 +1,7 @@
+.container {
+    margin: 70px auto 0 auto;
+    min-height: calc(100vh - 440px);
+}
+.image {
+    width: 500px;
+}

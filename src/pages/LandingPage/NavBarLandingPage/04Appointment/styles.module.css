@@ -1,0 +1,397 @@
+/*---------------Appointment---------------*/
+.container {
+    margin: 70px auto 0 auto;
+}
+.containerIntroductionAppointment {
+    background: #2d3748;
+    width: 100%;
+}
+.introductionAppointment {
+    margin: 0 auto;
+    height: 400px;
+    width: 1250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.containerImage {
+    position: relative;
+    height: 100%;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.image {
+    width: 300px;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+.divCita {
+    position: absolute;
+    background: #f28705;
+    width: 350px;
+    padding: 10px;
+    border-radius: 10px;
+    bottom: 40px;
+    color: #f8f9fa;
+    text-align: center;
+    font-size: 25px;
+}
+.containerInfo {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+.textIntroduction {
+    color: #dee2e6;
+}
+.buttonConsult {
+    margin: 20px;
+}
+.consultAppointment {
+    background: #718bd8;
+    text-decoration: none;
+    color: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+
+
+/*---------------CreateAppointment---------------*/
+.containerComponents {    
+    padding: 40px 0;
+    width: 100%;
+    min-height: calc(100vh - 370px);
+}
+.containerAppointment, .containerConsultApointment {
+    border: 1px solid re;
+    margin: 0 auto;
+    width: 1250px;
+}
+.subtitle {
+    color: #f28705;
+    font-size: 35px;
+    text-align: center;
+}
+.text {
+    width: 400px;
+}
+.info {
+    min-width: 350px;
+}
+.input {
+  width: 350px;
+}
+.containerCalendar {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Calendario*/
+.calendar {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    height: 320px;
+    color: #718bd8;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+}
+.containerHoursCalendar {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 10px;
+    width: 350px;
+    height: 320px;
+}
+.subtitleHour {
+    color: #3c6e71;
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #e9ecef;
+    text-shadow: 0px 0px 1px rgba(73, 80, 87, 0.5);
+}
+.hours {
+    width: 100%;
+    height: 250px;
+    text-align: justify;
+    overflow: hidden;
+    scroll-behavior: auto;
+    overflow-y: auto;
+}
+.hour {
+    margin: 4px;
+    padding: 2px 10px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background: #f8f9fa;
+    border-radius: 5px;
+    color: #495057;
+    text-align: center;
+}
+.hour:hover {
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.selectedHour {
+    background: #718bd8;
+    color: #f8f9fa;
+}
+
+/*Calendario*/
+.containerAcceptedPolicy {
+    padding: 20px 40px;
+    color: #495057;
+}
+.acceptedPolicy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.check {
+    margin: 5px 0 0 0;
+    width: 20px;
+    height: 20px;
+}
+.buttonSubmit {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.buttonSubmit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+
+
+
+/*---------------ConfirmAppointment---------------*/
+.confirmAppointment {
+    background: #2d3748;
+    width: 100%;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.containerInfoConfirm {
+    border-radius: 10px;
+    padding: 20px;
+    background: #718bd8;
+}
+.client {
+    font-weight: 600;
+    color: #f8f9fa;
+    width: 500px;
+}
+.confirm {
+    width: 500px;
+    margin: auto;
+}
+.textConfirmAppointment {
+    width: 500px;
+}
+.buttonFinish {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.buttonFinish:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.containerButtons {
+    margin: auto;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.buttonCancel {
+    border: none;
+    color: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #f28705;
+    text-decoration: none;
+}
+.buttonCancel:hover {
+    background: #6c757d;
+    color: #f8f9fa;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+
+
+
+/*---------------ConsultApointment---------------*/
+.containerDataConsult {
+    padding: 40px 20px 20px 20px;
+    margin: 0 auto;
+    width: 1250px;
+}
+.dataConsult {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.consult {
+    display: flex;
+    gap: 20px;
+}
+.buttonRescheduleAppointment {
+    border: none;
+    margin: auto;
+    color: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    text-decoration: none;
+}
+.buttonRescheduleAppointment:hover {
+    background: #0a31bf;
+    color: #f8f9fa;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.inputConsult {
+    width: 500px;
+}
+.cccccc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.information {
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+.information p:last-child {
+    margin: 0;
+}
+.eeeeee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+
+/*---------------RescheduleAppointment---------------*/
+.infoDataCard {
+    width: 100%;
+}
+.titleInfoCard {
+    width: 100px;
+    text-align: start;
+    font-weight: 600;
+    color: #212529;
+}
+.textInfoCard {
+    margin: 5px;
+}
+.inputEditInfoCard {
+    padding: 5px;
+}
+
+
+
+
+.loading {
+    z-index: 1;
+    top: 50%;
+    left: 45%;
+    right: 45%;
+}
+
+.data__Appointment {
+    font-weight: 700;
+}
+
+
+
+.ttttttttttt {
+    font-weight: 700;
+}
+.yyyyyy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cancelAppointment {
+    height: 100px;
+}
+.containerCancelAppointment {
+    position: relative;
+    height: 180px;
+}
+.button__Comfirm {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    text-decoration: none;
+}
+
+
+.ppppp {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ppppooooo {
+    position: absolute;
+    top: 100px;
+    left: 39%;
+    right: 39%;
+}
+.sdsdsdsdsd {
+    border: none;
+    padding: 10px 20px ;
+    border-radius: 5px;
+    background: #718bd8;
+    color: #f8f9fa;
+}

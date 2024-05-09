@@ -1,0 +1,80 @@
+.container {
+    z-index: 2;
+    margin: 0 0 20px 0;
+    top: 0;
+    background: #f8f9fa;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+}
+.containerNavbar {
+    margin: 0 auto;
+    width: 1250px;
+}
+.logo{
+    height: 50px;
+}
+.navBar {
+    height: 70px;
+}
+.navTitle {
+    color: #6c757d;
+    margin: 10px 5px;
+    padding: 5px 15px;
+    height: 50px;
+}
+.navTitle:hover {
+    background: #2d3748;
+    color: #dee2e6;
+    border-radius: 5px;
+}
+.activeLink {
+    background: #2d3748;
+    color: #dee2e6;
+    border-radius: 5px;
+}
+.playStore {
+    border-radius: 5px;
+    width: 180px;
+    height: 50px;
+    background: #212529;
+    margin: 10px;
+}
+.logoPlayStore{
+    height: 35px;
+}
+.playStoreText{
+    height: 50px;
+    margin: 10px 0;
+}
+.playStoreP {
+    color: #e9ecef;
+    font-size: 13px;
+    margin: 0 0 0 3px;
+}
+.playStoreH {
+    color: #e9ecef;
+    font-size: 17px;
+    letter-spacing: 1px;
+    margin: 0 0 0 3px;   
+    line-height: 0.7;
+    font-family: sans-serif;
+}
+.e {
+    transform: rotate(-20deg);
+    display: inline-block;
+}
+.icons {
+    font-size: 20px;
+    margin: 0 5px 0 0;
+}
+.navSignIn {
+    margin: 10px 5px;
+    border-radius: 5px;
+    width: 110px;
+    height: 50px;
+    background: #718bd8;
+    color: #f8f9fa;
+    transition: 300ms all ease;
+}
+.navSignIn:hover {
+    transform: scale(1.1);
+}

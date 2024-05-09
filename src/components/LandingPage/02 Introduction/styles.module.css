@@ -1,0 +1,43 @@
+.container {
+    height: 500px;
+    background: #2d3748;
+    margin: 70px 0 20px 0;
+}
+.containerIntroduction {
+    margin: 0 auto;
+    width: 1250px;
+    height: 500px;
+}
+.imageInformation {
+    width: 623px;
+    height: 450px;
+}
+.image {
+    width: 600px;
+}
+.textInformation {
+    margin: 0 auto;
+    width: 623px;
+}
+.title {
+    color: #f28705;
+    font-size: 45px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.text {
+    color: #dee2e6;
+    font-size: 20px;
+}
+.item {
+    line-height: 0.7;
+}
+.iconItem {
+    font-size: 30px;
+    margin: -5px 3px 0 0;
+    color: #718bd8;
+}
+.subtitle {
+    color: #f28705;
+}

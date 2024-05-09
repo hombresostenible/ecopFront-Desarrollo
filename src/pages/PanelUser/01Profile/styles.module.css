@@ -1,0 +1,28 @@
+.container {
+    min-height: calc(100vh - 591px);
+    max-width: 1200px;
+    margin: 110px auto 0 auto;
+}
+.container__Component {
+    width: calc(100% - 250px);
+}
+.main__Title {
+    font-weight: 700;
+    color: #e4002b;
+}
+.container__Info_User {
+    height: 300px;
+}
+.container__Logo_Client {
+    width: 300px;
+    height: 300px;
+}
+.logo__Client {
+    width: 100%;
+}
+.container__Info_Client {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 500px;
+    height: 100%;
+}

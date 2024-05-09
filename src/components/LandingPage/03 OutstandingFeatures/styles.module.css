@@ -1,0 +1,39 @@
+.subtitle {
+    color: #f28705;
+}
+.containerFunctionality {
+    padding: 10px 0;
+    gap: 20px;
+}
+.containerTextA {
+    border-radius: 10px;
+    width: 390px;
+    height: 80px; 
+    background: #718bd8;
+    transition: all 300ms ease;
+}
+.containerTextA:hover {
+    transform: translateY(-10px);
+}
+.containerIcon {
+    border-radius: 50%;
+    background: #f8f9fa;
+    width: 60px;
+    height: 60px; 
+}
+.containerText {
+    width: 300px;
+    margin: 0 0 0 10px;
+}
+.iconItem {
+    font-size: 30px;
+    color: #718bd8;
+}
+.iconItemInvoiceSolid {
+    font-size: 35px;
+    color: #718bd8;
+}
+.textFunctionality {
+    margin: 0;
+    color: #f8f9fa;
+}

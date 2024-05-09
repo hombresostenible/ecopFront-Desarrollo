@@ -1,0 +1,43 @@
+.container {
+    margin: 0 0 20px 0;
+    background: #f2f2f2;
+}
+.containerEffectTitle {
+    width: 550px;
+}
+.titleCharacteristics {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 2s, transform 2s;
+}
+.title {
+    color: #f28705;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.textContent {
+    color: #495057;
+}
+.buttonRoute {
+    padding: 5px 20px;
+    background: #718bd8;
+    color: #f8f9fa;
+    border-radius: 5px;
+}
+.buttonRoute:hover {
+    transition: 300ms all ease;
+    padding: 5px 20px;
+    background: #0a31bf;
+    color: #f8f9fa;
+}
+.image {
+    height: 300px;
+    margin: auto;
+}
+.animateIn {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 2s, transform 2s;
+}
