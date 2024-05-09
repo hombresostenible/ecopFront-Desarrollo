@@ -35,7 +35,7 @@ function LoginPage() {
     };
 
     useEffect(() => {
-        if (isAuthenticated) navigate("/panel-user/profile");
+        if (isAuthenticated) navigate("/profile");
     }, [ isAuthenticated ]);
 
     return (
