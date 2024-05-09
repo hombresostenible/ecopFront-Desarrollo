@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { useAuth } from '../context/AuthContext';
+import { NavLink } from 'react-router-dom';
 import Logo from '../assets/LogoEcopcion.svg';
-// import { GiFlatPlatform } from "react-icons/gi";
 import { BsPlus } from "react-icons/bs";
 import { IoHome } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
@@ -12,35 +8,9 @@ import { IoStorefrontSharp } from "react-icons/io5";
 import { FaUsers, FaFileInvoiceDollar, FaCashRegister, FaPlay } from "react-icons/fa";
 import { AiFillFunnelPlot } from "react-icons/ai";
 import { MdAppRegistration, MdDangerous } from "react-icons/md";
-import { TbLogout2 } from "react-icons/tb";
 import styles from './styles.module.css';
 
 function SideBar () {
-    const token = Cookies.get("token");
-
-    const { signout, profile, getProfile } = useAuth();
-    const [ userLogo, setUserLogo ] = useState<string | null>(null);
-    const location = useLocation();
-
-    // const [isCrmOpen, setIsCrmOpen] = useState(false);
-
-    useEffect(() => {
-        if (token && !profile) {
-            getProfile(token);
-        }
-    
-        if (profile) {
-            setUserLogo(profile.profilePicture ?? null);
-        }
-    }, [token, profile]);
-
-    // const toggleCrmMenu = () => {
-    //     setIsCrmOpen(!isCrmOpen);
-    // };
-
-    // const stopPropagation = (event: { stopPropagation: () => void; }) => {
-    //     event.stopPropagation();
-    // };
 
     return (
         <div className={`${styles.containerSideBar} position-relative`}>
@@ -51,32 +21,6 @@ function SideBar () {
                     </NavLink>
                 </div>
 
-                <div className={`${styles.containerProfile} mt-3 d-flex flex-column align-items-center justify-content-center`}>
-                    <div className={`${styles.containerProfilePicture} mb-1 d-flex align-items-center justify-content-center rounded-circle overflow-hidden`}>
-                        {userLogo && (
-                            <img className={`${styles.profilePicture} rounded-circle`} src={userLogo} alt="Logo del usuario" />
-                        )}
-                        {!userLogo && (
-                            <div>
-                                <p className="m-0 text-center">No tienes un Logo para mostrar</p>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className={`${styles.containerInfo}`}>
-                        {profile?.userType === 'User' ? (
-                            <div>
-                                <h5 className="m-0 text-center">{profile?.name} {profile?.lastName}</h5>
-                                <h5 className="m-0 text-center">{profile?.typeRole}</h5>
-                            </div>
-                        ) : (
-                            <div>
-                                <h5 className="m-0 text-center">{profile?.nameCompanyLeader} {profile?.lastNameCompanyLeader}</h5>
-                                <h5 className="m-0 text-center">{profile?.typeRole}</h5>
-                            </div>
-                        )}
-                    </div>
-                </div>
 
                 <div className={`${styles.containerOptions} mt-2 overflow-y-auto`}>
                     {/* <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/ecopcionApp' ? styles.activeSideBar : ''} mb-2`}>
@@ -153,10 +97,6 @@ function SideBar () {
                         <MdDangerous className={`${styles.icon} m-2`}/>
                         <NavLink to="/report-errors" className={`${styles.option} nav-link`}>Reportar errores o mejoras</NavLink>
                         <BsPlus className={styles.iconPlus}/>
-                    </li>                    
-                    <li className={`${styles.sectionLogout} p-1 d-flex align-items-center justify-content-start rounded`}>
-                        <TbLogout2 className={`${styles.icon} m-2`}/>
-                        <NavLink to="/login" onClick={() => { signout() }} className={`${styles.option} nav-link`}>Logout</NavLink>
                     </li>
                 </div>
             </div>
