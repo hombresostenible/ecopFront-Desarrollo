@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from 'react-router-dom';
-import Citas from '../../../../assets/LandingPage/Citas.png';
-import NavBarLandingPage from '../../../../components/LandingPage/01 NavBarLandingPage/NavBarLandingPage';
+import Citas from '../../../../assets/LandingPage/01NavBarLandingPage/Appointment/Citas.png';
+import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import Footer from '../../../../components/LandingPage/Footer/Footer';
 import CreateAppointment from './CreateAppointmentPage';
 import styles from './styles.module.css';

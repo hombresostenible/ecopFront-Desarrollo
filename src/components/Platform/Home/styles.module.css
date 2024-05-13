@@ -1,0 +1,128 @@
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.container__Panel {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 
+        repeat(
+            auto-fit,
+            minmax(400px, 1fr)
+        );
+}
+.card__Inventory,
+.card__AccountBook,
+.card__Electronic_Invoicing,
+.card__PSO,
+.card__Calculate_Indicators,
+.card__CRM,
+.card__Appointment,
+.card__Electronic_Payroll,
+.card__Sustainability,
+.card__Notifications {
+    height: 150px;
+    width: 420px;
+}
+
+.container__Image_Inventory,
+.container__Image_AccountBook,
+.container__Image_Electronic_Invoicing,
+.container__Image_POS,
+.container__Image_Calculate_Indicators,
+.container__Image_CRM,
+.container__Image_Appointment,
+.container__Image_Electronic_Payroll,
+.container__Image_Sustainability,
+.container__Image_Notifications {
+    height: 150px;
+    width: 150px;
+}
+.image {
+    width: 100px;
+    transition: transform 0.3s ease;
+}
+.image:hover {
+    transform: rotate(10deg) scale(1.08);
+}
+.cardTitle {
+    height: 150px;
+    width: 270px;
+}
+.subTitle {
+    color: #f8f9fa;
+}
+
+/*----------Específicos de las Cards----------*/
+.card__Inventory {
+    background: rgba(23, 126, 137, 0.9);
+}
+.container__Image_Inventory {
+    background: rgba(23, 126, 137, 1);
+}
+
+.card__AccountBook {
+    background: rgba(255, 183, 3, 0.9);
+}
+.container__Image_AccountBook {
+    background: rgba(255, 183, 3, 1);
+}
+
+.card__Electronic_Invoicing {
+    background: rgba(219, 58, 52, 0.9);
+}
+.container__Image_Electronic_Invoicing {
+    background: rgba(219, 58, 52, 1);
+}
+
+.card__PSO {
+    background: rgba(50, 48, 49, 0.9);
+}
+.container__Image_POS {
+    background: rgba(50, 48, 49, 1);
+}
+
+.card__Calculate_Indicators {
+    background: rgba(32, 139, 58, 0.9);
+}
+.container__Image_Calculate_Indicators {
+    background: rgba(32, 139, 58, 1);
+}
+
+.card__CRM {
+    background: rgba(131, 56, 236, 0.9);
+}
+.container__Image_CRM {
+    background: rgba(131, 56, 236, 1);
+}
+
+.card__Appointment {
+    background: rgba(242, 100, 25, 0.9);
+}
+.container__Image_Appointment {
+    background: rgba(242, 100, 25, 1);
+}
+
+.card__Electronic_Payroll {
+    background: rgba(27, 73, 101, 0.9);
+}
+.container__Image_Electronic_Payroll {
+    background: rgba(27, 73, 101, 1);
+}
+
+.card__Sustainability {
+    background: rgba(4, 114, 77, 0.9);
+}
+.container__Image_Sustainability {
+    background: rgba(4, 114, 77, 1);
+}
+
+.card__Notifications {
+    background: rgba(249, 65, 68, 0.9);
+}
+.container__Image_Notifications {
+    background: rgba(249, 65, 68, 1);
+}
