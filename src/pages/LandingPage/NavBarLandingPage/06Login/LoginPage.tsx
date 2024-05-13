@@ -35,11 +35,7 @@ function LoginPage() {
     };
 
     useEffect(() => {
-<<<<<<< HEAD
-        if (isAuthenticated) navigate("/profile");
-=======
         if (isAuthenticated) navigate("/home");
->>>>>>> 4912b99b42aca86c55d0c784f50538288f3f9ad0
     }, [ isAuthenticated ]);
 
     return (
