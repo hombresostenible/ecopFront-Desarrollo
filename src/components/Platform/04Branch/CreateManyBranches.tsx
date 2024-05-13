@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as XLSX from 'xlsx';
-import { useAuth } from '../../context/AuthContext';
-import { useBranches } from '../../context/BranchContext';
-import { IBranch } from '../../types/branch.types';
+//REDUX
+import { useDispatch } from 'react-redux';
+import { getBranches, postManyBranch } from '../../../redux/branchSlice/actions';
+import type { AppDispatch } from '../../../redux/store';
+//ELEMENTOS DEL COMPONENTE
+import { IBranch } from '../../../types/User/branch.types';
 import styles from './styles.module.css';
 
 interface CreateManyBranchesProps {
@@ -12,19 +15,12 @@ interface CreateManyBranchesProps {
 }
 
 function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProps) {
-    const { profile, getProfile } = useAuth();
-    const { getBranches, postManyBranch } = useBranches();
+    const dispatch: AppDispatch = useDispatch();
 
     const [ excelData, setExcelData ] = useState<Array<{ [key: string]: any }> | null>(null);
     const [ headers, setHeaders ] = useState<string[]>([]);
 
     const [ message, setMessage ] = useState('');
-
-    useEffect(() => {
-        if (token && !profile) {
-            getProfile(token);
-        }
-    }, [ token, profile ]);
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
@@ -100,44 +96,22 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
     };
 
     const onSubmit = async () => {    
-        if (profile?.userType === 'User') {
-            // Filtrar las filas que contienen datos
-            const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
-        
-            // Mapear solo las filas no vacías
-            const branchData = nonEmptyRows?.map(branch => ({
-                ...branch,
-                userId: profile.id,
-                contactPhoneBranch: branch.contactPhoneBranch.toString(),
-                documentIdManager: branch.documentIdManager.toString(),
-            }));
-            await postManyBranch(branchData as unknown as IBranch[], token);
-            setExcelData(null);
-            setMessage('Se guardó masivamente tus sedes con exito');
-            getBranches(token);
-            setTimeout(() => {
-                onCreateComplete();
-            }, 1500);
-        }
+        // Filtrar las filas que contienen datos
+        const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
     
-        if (profile?.userType === 'Company') {
-            // Filtrar las filas que contienen datos
-            const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
-        
-            // Mapear solo las filas no vacías
-            const branchData = nonEmptyRows?.map(branch => ({
-                ...branch,
-                companyId: profile.id,
-                contactPhoneBranch: branch.contactPhoneBranch.toString(),
-                documentIdManager: branch.documentIdManager.toString(),
-            }));
-            await postManyBranch(branchData as unknown as IBranch[], token);
-            setExcelData(null);
-            setMessage('Se guardó masivamente tus activos con exito');
-            setTimeout(() => {
-                onCreateComplete();
-            }, 1500);
-        }
+        // Mapear solo las filas no vacías
+        const branchData = nonEmptyRows?.map(branch => ({
+            ...branch,
+            contactPhoneBranch: branch.contactPhoneBranch.toString(),
+            documentIdManager: branch.documentIdManager.toString(),
+        }));
+        await dispatch(postManyBranch(branchData as IBranch[], token));
+        setExcelData(null);
+        setMessage('Se guardó masivamente tus sedes con exito');
+        setTimeout(() => {
+            dispatch(getBranches(token));
+            onCreateComplete();
+        }, 1500);
     };
 
 

@@ -7,7 +7,7 @@ import { branchData, createBranchStart, branchStartErrors, createManyBranchStart
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(createBranchStart());
+        dispatch(createBranchStart(formData));
         const response = await axiosInstance.post('/branch', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -27,9 +27,9 @@ export const postBranch = (formData: IBranch, token: string) => async (dispatch:
 
 
 //CREAR MUCHAS SEDES
-export const postManyBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
+export const postManyBranch = (formData: IBranch[], token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(createManyBranchStart());
+        dispatch(createManyBranchStart(formData));
         const response = await axiosInstance.post('/branch/createMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,

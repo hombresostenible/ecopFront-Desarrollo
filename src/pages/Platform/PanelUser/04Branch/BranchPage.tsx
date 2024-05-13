@@ -14,7 +14,7 @@ import Footer from '../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
 function BranchPage() {
-    const token = jsCookie.get("token");
+    const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     
     // Utiliza useSelector para obtener la información del usuario del estado de Redux
@@ -38,12 +38,11 @@ function BranchPage() {
     const filteredBranches = selectedBranch
     ? branchesToDisplay.filter(branch => branch.id === selectedBranch)
     : branchesToDisplay;
-    console.log('branch: ', branch)
     
-    // const handleCreateBranch = () => {
-    //     // Llama a getBranches para actualizar los datos después de crear una nueva sede
-    //     getBranches(token);
-    // };
+    const handleCreateBranch = () => {
+        // Llama a getBranches para actualizar los datos después de crear una nueva sede
+        dispatch(getBranches(token));
+    };
    
 
     return (
@@ -104,7 +103,7 @@ function BranchPage() {
                             </div>
                         ) : (
                             <CreateBranch
-                                // onCreateBranch={handleCreateBranch}
+                                onCreateBranch={handleCreateBranch}
                             />
                         )}
                     </div>

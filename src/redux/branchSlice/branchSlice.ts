@@ -1,34 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/*
--CREA UNA SEDE
--CREA MASIVAMENTE SEDES
--OBTIENE TODAS LAS SEDES
--OBTIENE UNA SEDE POR ID
--ACTUALIZA UNA SEDE
--ELIMINA UNA SEDE
-*/
-
-/*
-ESTADOS
-- Sedes
-- Loading
-- Crea
-- Error al crea las sedes
-- Crea muchos
-- Obtiene todos
-- Obtene uno
-- Actualiza
-- Elimina
-*/
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBranch } from '../../types/User/branch.types';
 
 interface UserState {
-    branch: IBranch | null;
+    branch: IBranch | IBranch[] | null;
     loading: boolean;
-    errorBranch: string | null;
+    errorBranch: string[] | null;
 }
 
 const initialState: UserState = {
@@ -47,17 +23,18 @@ const branchSlice = createSlice({
             state.loading = false;
             state.branch = action.payload;
         },
-        createBranchStart: (state) => {
+        createBranchStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = true;
+            state.branch = action.payload;
             state.errorBranch = null;
         },
-        branchStartErrors: (state, action: PayloadAction<string>) => {
+        branchStartErrors: (state, action: PayloadAction<string[]>) => { // Modificado para aceptar un array de cadenas
             state.loading = false;
             state.errorBranch = action.payload;
         },
-        createManyBranchStart: (state) => {
+        createManyBranchStart: (state, action: PayloadAction<IBranch[]>) => { // Modificado para aceptar un array de IBranch como payload
             state.loading = true;
-            state.errorBranch = null;
+            state.branch = action.payload; // Asigna el array de sedes al estado de errorBranch
         },
         getBranchesStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = true;
