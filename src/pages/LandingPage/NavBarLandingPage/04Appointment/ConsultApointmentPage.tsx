@@ -1,5 +1,5 @@
-import Footer from '../../../../components/Footer';
-import NavBarLandingPage from '../../../../components/LandingPage/01 NavBarLandingPage/NavBarLandingPage';
+import Footer from '../../../../components/Platform/Footer/Footer';
+import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import styles from './styles.module.css';
 
 function ConsultApointmentPage() {

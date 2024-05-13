@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../redux/store';
 import { loginUser } from '../../../../redux/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
-import { ILogin } from '../../../../types/login.types'
+import { ILogin } from '../../../../types/Auth/login.types'
 import Logo from '../../../../assets/LogoEcopcion.svg';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import { PiWarningCircle } from 'react-icons/pi';
@@ -35,7 +35,7 @@ function LoginPage() {
     };
 
     useEffect(() => {
-        if (isAuthenticated) navigate("/panel-user/profile");
+        if (isAuthenticated) navigate("/home");
     }, [ isAuthenticated ]);
 
     return (

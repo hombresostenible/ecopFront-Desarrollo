@@ -1,4 +1,4 @@
-import NavBarLandingPage from '../../../../components/LandingPage/01 NavBarLandingPage/NavBarLandingPage';
+import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import styles from './styles.module.css';
 
 function CreateAppointmentPage() {

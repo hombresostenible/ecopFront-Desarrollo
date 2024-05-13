@@ -23,6 +23,7 @@ function ProfilePage() {
             dispatch(getProfileUser(token));
         }
     }, [token]);
+    console.log('user: ', user)
 
     return (
         <div>

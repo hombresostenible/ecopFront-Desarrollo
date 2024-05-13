@@ -1,6 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import { useState } from 'react';
-import NavBarLandingPage from '../../../../components/LandingPage/01 NavBarLandingPage/NavBarLandingPage';
+import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import Footer from '../../../../components/LandingPage/Footer/Footer';
 import { FiPlus } from "react-icons/fi";
 import { FiMinus } from "react-icons/fi";
