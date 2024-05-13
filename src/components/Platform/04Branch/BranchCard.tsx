@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
-// import Cookies from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { IBranch } from '../../../types/User/branch.types';
 import ConfirmDeleteBranch from './ConfirmDeleteBranch';
@@ -14,13 +13,6 @@ interface BranchCardProps {
 }
 
 function BranchCard ({ branches }: BranchCardProps) {
-// function BranchCard () {
-    // const token = Cookies.get('token') || '';
-    // const { getBranches } = useBranches();
-
-    // useEffect(() => {
-    //     getBranches(token);
-    // }, [ token ]);
 
     const [ idBranch, setIdBranch ] = useState('');
     const [ nameBranch, setNameBranch ] = useState('');
@@ -41,8 +33,7 @@ function BranchCard ({ branches }: BranchCardProps) {
     const onCloseModal = () => {
         setShowDeleteConfirmation(false);
         setShowBranchModal(false);
-    };
-    
+    };    
 
     return (
         <div className="m-auto">
