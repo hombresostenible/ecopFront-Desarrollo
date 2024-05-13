@@ -3,12 +3,12 @@ import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IBranch } from '../../types/User/branch.types';
 import { branchData, createBranchStart, branchStartErrors, createManyBranchStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } from './branchSlice';
-//FUNCIONAES ASINCRONAS
+
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(createBranchStart());
-        const response = await axiosInstance.post('/api/branch', formData, {
+        const response = await axiosInstance.post('/branch', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const postBranch = (formData: IBranch, token: string) => async (dispatch:
 export const postManyBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(createManyBranchStart());
-        const response = await axiosInstance.post('/api/branch/createMany', formData, {
+        const response = await axiosInstance.post('/branch/createMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const postManyBranch = (formData: IBranch, token: string) => async (dispa
 //OBTENER TODAS LAS SEDES
 export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/auth/branch', {
+        const response = await axiosInstance.get('/branch', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
 //OBTENER UNA SEDE POR ID
 export const getBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/auth/branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const getBranch = (idBranch: string, token: string) => async (dispatch: A
 export const putBranch = (idBranch: string, formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putBranchStart()); // Llama a putBranchStart sin argumentos
-        const response = await axiosInstance.put(`/auth/branch/${idBranch}`, formData, {
+        const response = await axiosInstance.put(`/branch/${idBranch}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const putBranch = (idBranch: string, formData: IBranch, token: string) =>
 export const deleteBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteBranchStart()); // Llama a deleteBranchStart sin argumentos
-        const response = await axiosInstance.delete(`/auth/branch/${idBranch}`, {
+        const response = await axiosInstance.delete(`/branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

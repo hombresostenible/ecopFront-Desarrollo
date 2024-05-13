@@ -1,0 +1,14 @@
+.container {
+    margin: 70px auto 0 auto;
+    min-height: calc(100vh - 440px);
+}
+.subtitle {
+    color: #f28705;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif;
+}
+.link {
+    font-weight: 600;
+}

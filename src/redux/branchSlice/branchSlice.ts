@@ -59,8 +59,9 @@ const branchSlice = createSlice({
             state.loading = true;
             state.errorBranch = null;
         },
-        getBranchesStart: (state) => {
+        getBranchesStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = true;
+            state.branch = action.payload;
             state.errorBranch = null; // Limpia cualquier error previo al obtener las sucursales
         },
         getBranchStart: (state, action: PayloadAction<IBranch>) => {

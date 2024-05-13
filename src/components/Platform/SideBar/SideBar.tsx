@@ -1,15 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { NavLink } from 'react-router-dom';
+//REDUX
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../../redux/store';
+import { logoutUser } from '../../../redux/userSlice/actions';
+//ELEMENTOS DEL COMPONENTE
 import { BsPlus } from "react-icons/bs";
 import { IoHome } from "react-icons/io5";
-import { IoSettingsSharp } from "react-icons/io5";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { FaUsers, FaFileInvoiceDollar, FaCashRegister, FaPlay } from "react-icons/fa";
 import { AiFillFunnelPlot } from "react-icons/ai";
-import { MdAppRegistration, MdDangerous } from "react-icons/md";
+import { MdAppRegistration, MdDangerous } from "react-icons/md";import { TbLogout2 } from "react-icons/tb";
 import styles from './styles.module.css';
 
-function SideBar () {
+function SideBar() {
+    const dispatch: AppDispatch = useDispatch();
+
+    const signout = async () => {
+        try {
+            dispatch(logoutUser());
+        } catch (error) {
+            throw new Error('Error al hacer el cierre de sesión');
+        }
+    };
 
     return (
         <div className={`${styles.container} position-relative`}>
@@ -18,11 +31,6 @@ function SideBar () {
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/home' ? styles.active : ''} mb-2`}>
                         <IoHome className={`${styles.icon} m-2`}/>
                         <NavLink to="/home" className={`${styles.option} nav-link`}>Home</NavLink>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${(location.pathname === '/configuration' || location.pathname === '/configuration/profile') ? styles.active : ''} mb-2`}>
-                        <IoSettingsSharp className={`${styles.icon} m-2`}/>
-                        <NavLink to="/configuration" className={`${styles.option} nav-link`}>Configuración</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
                     </li>
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/branches' ? styles.active : ''} mb-2`}>
                         <IoStorefrontSharp className={`${styles.icon} m-2`}/>
@@ -73,6 +81,10 @@ function SideBar () {
                         <MdDangerous className={`${styles.icon} m-2`}/>
                         <NavLink to="/report-errors" className={`${styles.option} nav-link`}>Reportar errores o mejoras</NavLink>
                         <BsPlus className={styles.icon__Plus}/>
+                    </li>
+                    <li className={`${styles.sectionLogout} p-1 d-flex align-items-center justify-content-start rounded`}>
+                        <TbLogout2 className={`${styles.icon} m-2`}/>
+                        <NavLink to="/login" onClick={() => { signout() }} className={`${styles.option} nav-link`}>Salir</NavLink>
                     </li>
                 </div>
             </div>
