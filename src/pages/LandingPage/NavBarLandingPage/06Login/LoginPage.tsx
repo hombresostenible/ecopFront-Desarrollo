@@ -40,9 +40,8 @@ function LoginPage() {
 
     return (
         <div className="d-flex align-items-center justify-content-center">
-            <div className={`${styles.container} d-flex align-items-center justify-content-center vh-100`}>
-
-                <div className={`${styles.container__Login} d-flex flex-column align-items-center justify-content-center`}>
+            <div className={`${styles.container__Login} d-flex align-items-center justify-content-center vh-100`}>
+                <div className={`${styles.login} d-flex flex-column align-items-center justify-content-center`}>
                     <Link to="/">
                         <img src={Logo} alt="Top Drive Group" className={`${styles.logo} mb-4`}/>
                     </Link>
@@ -54,12 +53,12 @@ function LoginPage() {
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-                            <div className='mb-2 d-flex align-items-center justify-content-center position-relative'>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className='mb-3 d-flex align-items-center justify-content-center position-relative'>
                                 <input
                                     type="email"
                                     {...register('email', { required: true })}
-                                    className={`${styles.input} p-2 mb-3 border rounded`}
+                                    className={`${styles.input} p-2 mb-3 form-control `}
                                     placeholder='Email del usuario'
                                 />
                                 {errors.email && (
@@ -67,12 +66,12 @@ function LoginPage() {
                                 )}
                             </div>
 
-                            <div className='mb-2'>
-                                <div className="rounded d-flex align-items-center justify-content-center position-relative">
+                            <div className='mb-3'>
+                                <div className={`${styles.password} d-flex align-items-center justify-content-center position-relative`}>
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         {...register('password', { required: true })}
-                                        className={`${styles.input} p-2 mb-3 border rounded`}
+                                        className={`${styles.input} p-2 mb-3 form-control `}
                                         placeholder='Contraseña'
                                     />
                                     {showPassword ? (
@@ -87,12 +86,7 @@ function LoginPage() {
                             </div>
                             
                             <div className="d-flex mb-4">
-                                <button 
-                                    className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`}
-                                    type='submit'
-                                >
-                                    Login
-                                </button>
+                                <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
                             </div>  
                         </form>
 

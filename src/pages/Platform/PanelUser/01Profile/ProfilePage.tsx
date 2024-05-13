@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileUser } from '../../../redux/userSlice/actions';
-import type { RootState, AppDispatch } from '../../../redux/store';
+import { getProfileUser } from '../../../../redux/userSlice/actions';
+import type { RootState, AppDispatch } from '../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
-// import NavBar from '../../../components/01NavBar/NavBar';
-// import Footer from '../../../components/16Footer/Footer';
-// import PanelUser from '../../../components/PanelUser/SideBarPanelUser/PanelUser';
+import NavBar from '../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
 function ProfilePage() {
@@ -23,13 +23,12 @@ function ProfilePage() {
             dispatch(getProfileUser(token));
         }
     }, [token]);
-    console.log('user: ', user)
 
     return (
-        <div>
-            {/* <NavBar /> */}
+        <div className="d-flex">
+            <SideBar />
             <div className={`${styles.container} d-flex align-items-start justify-content-center`}>
-                {/* <PanelUser /> */}
+                <NavBar />
                 <div className={`${styles.container__Component} p-4`}>
                     <h1 className={`${styles.main__Title} mb-3 text-center`}>Tu información de perfil</h1>
                     <div className={`${styles.container__Info_User} d-flex align-items-center justify-content-center gap-4`}>
@@ -69,7 +68,7 @@ function ProfilePage() {
                     </div>
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }

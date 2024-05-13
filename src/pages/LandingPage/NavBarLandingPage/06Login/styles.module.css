@@ -1,83 +1,45 @@
-/*---------------Login Page---------------*/
-.container {
-    min-width: 100vw;
-    height: 100vh;
-}
-.containerPublicity {
-    width: 40%;
-    height: 100vh;
-    background: #718bd8;
-}
-.containerLogin {
-    width: 60%;
-    height: 100vh;
+.container__Login {
+    width: 100%;
 }
 .login {
     height: 400px;
     width: 600px;
 }
-/*---------------Archivo Create---------------*/
-.title {
-    color: #f28705;
-    font-size: 50px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-}
-.buttonLogin {
-    border-radius: 5px;
-    background: #718bd8;
-    color: #f8f9fa;
-    padding: 5px 20px;
-    transition: all 300ms ease;
-}
-.buttonLogin:hover {
-    background: #0a31bf;
-}
-
-
-
-/*---------------SendEmailResetPassword User y Company---------------*/
-.containerSendEmail {
-    margin: 70px auto 0 auto;
-    min-height: calc(100vh - 440px);
-}
-.subtitle {
-    color: #f28705;
-    font-size: 40px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    font-family: 'Roboto', sans-serif;
-}
-.containerInfo {
-    position: relative;
-}
-.info {
+.logo {
     height: 80px;
 }
-.input {
-    width: 350px;
-    padding: 8px;
+.errors__Login {
+    top: -35px;
+    left: 0;
 }
-.buttonSubmit {
+.input {
+    min-width: 450px;
+}
+.text__Danger {
+    top: 44px;
+}
+.password {
+    border-radius: 5px;
+}
+.icon {
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #718bd8;
+}
+.button__Submit {
     padding: 7px 25px;
-    border-radius: 4px;
     letter-spacing: 1px;
     font-size: 18px;
     background: #718bd8;
     color: #f8f9fa;
 }
-.buttonSubmit:hover {
+.button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;
 }
-.errorMessage {
-    position: absolute;
-    top: 75px;
-}
 .link {
-    text-decoration: none;
     font-weight: 600;
 }

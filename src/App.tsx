@@ -50,13 +50,13 @@ import Help from './components/LandingPage/Footer/Support/Help/Help';
 import Trainings from './components/LandingPage/Footer/Support/Trainings/Trainings';
 import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
 
-
-// PLATAFORMA
-import Home from './pages/PanelUser/01Home/Home';
-
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
-import ProfilePage from './pages/PanelUser/01Profile/ProfilePage';
+
+// PLATAFORMA
+import Home from './pages/Platform/PanelUser/01Home/Home';
+import ProfilePage from './pages/Platform/PanelUser/01Profile/ProfilePage';
+import BranchPage from './pages/Platform/PanelUser/04Branch/BranchPage';
 
 //Error 404
 import Error404 from './pages/Error404/Error404';
@@ -120,6 +120,7 @@ function App() {
 
                             {/* Sección Configuration */}
                             <Route path='/profile' element={<ProfilePage />} />
+                            <Route path='/branches' element={<BranchPage />} />
                             {/* Sección EcopcionApp */}
 
 

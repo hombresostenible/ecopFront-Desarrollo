@@ -1,7 +1,7 @@
-import NavBar from '../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../components/Platform/Footer/Footer';
-import Panel from '../../../components/Platform/Home/Panel';
+import NavBar from '../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../components/Platform/Footer/Footer';
+import Panel from '../../../../components/Platform/Home/Panel';
 import styles from './styles.module.css';
 
 function HomePage() {
