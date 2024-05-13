@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice/userSlice';
-// import addressReducer from './addressSlice/addressSlice';
+import branchReducer from './branchSlice/branchSlice';
 
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
@@ -8,7 +8,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        // address: addressReducer,
+        branch: branchReducer,
     },
 });
 

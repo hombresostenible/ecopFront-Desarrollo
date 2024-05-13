@@ -21,13 +21,8 @@ function SideBar () {
                     </NavLink>
                 </div>
 
-
                 <div className={`${styles.containerOptions} mt-2 overflow-y-auto`}>
-                    {/* <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/ecopcionApp' ? styles.activeSideBar : ''} mb-2`}>
-                        <GiFlatPlatform className={`${styles.icon} m-2`}/>
-                        <NavLink to="/ecopcionApp" className={`${styles.option} nav-link`}>EcopcionApp</NavLink>
-                        <BsPlus className={styles.iconPlus}/>
-                    </li> */}
+
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/home' ? styles.activeSideBar : ''} mb-2`}>
                         <IoHome className={`${styles.icon} m-2`}/>
                         <NavLink to="/home" className={`${styles.option} nav-link`}>Home</NavLink>
@@ -47,21 +42,10 @@ function SideBar () {
                         <NavLink to="/users-platform" className={`${styles.option} nav-link`}>Tus Usuarios</NavLink>
                         <BsPlus className={styles.iconPlus}/>
                     </li>
-                    {/* <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start mb-2`} onClick={toggleCrmMenu}> */}
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-clients' ? styles.activeSideBar : ''} mb-2`}>
                         <FaUsers className={`${styles.icon} m-2`} />
                         <NavLink to="/crm-clients" className={`${styles.option} nav-link`}>CRM Clientes</NavLink>
                         <BsPlus className={styles.iconPlus} />
-                        {/* {isCrmOpen && (
-                            <ul className='d-flex flex-column'>
-                                <li>
-                                    <Link to="/crm-clients" className={`${styles.option} nav-link`} onClick={stopPropagation}>CRM Clientes</Link>
-                                </li>
-                                <li>
-                                    <Link to="/crm-suppliers" className={`${styles.option} nav-link`} onClick={stopPropagation}>CRM Proveedores</Link>
-                                </li>
-                            </ul>
-                        )} */}
                     </li>
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-suppliers' ? styles.activeSideBar : ''} mb-2`}>
                         <FaUsers className={`${styles.icon} m-2`} />

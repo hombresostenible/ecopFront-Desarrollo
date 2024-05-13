@@ -22,19 +22,19 @@ import RegisterUserPage from './pages/LandingPage/NavBarLandingPage/05Register/U
 import LoginPage from './pages/LandingPage/NavBarLandingPage/06Login/LoginPage';
 
 // Sección de Body LandingPage
-import RegisterYourTransactions from './components/LandingPage/05 Characteristics/01 RegisterYourTransactions/RegisterYourTransactions';
-import ManageYourElectronicInvoices from './components/LandingPage/05 Characteristics/02 ManageYourElectronicInvoices/ManageYourElectronicInvoices';
-import ManageYourCustomers from './components/LandingPage/05 Characteristics/03 ManageYourCustomers/ManageYourCustomers';
-import CalculateIndicatorsPlus from './components/LandingPage/05 Characteristics/04 CalculateIndicatorsPlus/CalculateIndicatorsPlus';
-import ViewDownloadReports from './components/LandingPage/05 Characteristics/05 ViewDownloadReports/ViewDownloadReports';
-import PersonalizedAdvisories from './components/LandingPage/05 Characteristics/06 PersonalizedAdvisories/PersonalizedAdvisories';
-import InformedDecisions from './components/LandingPage/05 Characteristics/07 InformedDecisions/InformedDecisions';
+import RegisterYourTransactions from './components/LandingPage/05Characteristics/01RegisterYourTransactions/RegisterYourTransactions';
+import ManageYourElectronicInvoices from './components/LandingPage/05Characteristics/02ManageYourElectronicInvoices/ManageYourElectronicInvoices';
+import ManageYourCustomers from './components/LandingPage/05Characteristics/03ManageYourCustomers/ManageYourCustomers';
+import CalculateIndicatorsPlus from './components/LandingPage/05Characteristics/04CalculateIndicatorsPlus/CalculateIndicatorsPlus';
+import ViewDownloadReports from './components/LandingPage/05Characteristics/05ViewDownloadReports/ViewDownloadReports';
+import PersonalizedAdvisories from './components/LandingPage/05Characteristics/06PersonalizedAdvisories/PersonalizedAdvisories';
+import InformedDecisions from './components/LandingPage/05Characteristics/07InformedDecisions/InformedDecisions';
 
 // Sección de Sustainability LandingPage
-import Primer from './components/LandingPage/04 Sustainability/01 Primer/Primer';
-import Segundo from './components/LandingPage/04 Sustainability/02 Segundo/Segundo';
-import Tercer from './components/LandingPage/04 Sustainability/03 Tercer/Tercer';
-import Cuarto from './components/LandingPage/04 Sustainability/04 Cuarto/Cuarto';
+import Primer from './components/LandingPage/04Sustainability/01Primer/Primer';
+import Segundo from './components/LandingPage/04Sustainability/02Segundo/Segundo';
+import Tercer from './components/LandingPage/04Sustainability/03Tercer/Tercer';
+import Cuarto from './components/LandingPage/04Sustainability/04Cuarto/Cuarto';
 
 // FOOTER DE LA LANDINGPAGE
 import Blog from './components/LandingPage/Footer/AboutUs/Blog/Blog';
@@ -49,6 +49,10 @@ import MembershipAgreement from './components/LandingPage/Footer/Legal/Membershi
 import Help from './components/LandingPage/Footer/Support/Help/Help';
 import Trainings from './components/LandingPage/Footer/Support/Trainings/Trainings';
 import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
+
+
+// PLATAFORMA
+import Home from './pages/PanelUser/01Home/Home';
 
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
@@ -111,10 +115,13 @@ function App() {
                         <Route path='/apiDocumentation' element={<APIDocumentation />} />
                         {/* Rutas Protegidas */}
                         <Route element={<ProtectedRoute />}>
-                        <Route path='/profile' element={<ProfilePage />} />
+                            {/* Sección Home */}
+                            <Route path='/home' element={<Home />} />
+
+                            {/* Sección Configuration */}
+                            <Route path='/profile' element={<ProfilePage />} />
                             {/* Sección EcopcionApp */}
 
-                            {/* Sección Home */}
 
                             {/* Sección Configuración del perfil */}
 

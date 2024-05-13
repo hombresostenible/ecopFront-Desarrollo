@@ -2,8 +2,8 @@
 import jsCookie from 'js-cookie';
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
-import { IUser } from '../../types/user.types';
-import { registerUserStart, userData, registerUserErrors, loginSuccess, loginErrors, isAuthenticatedStatus, profileSuccess, profileErrors } from './userSlice';
+import { IUser } from '../../types/User/user.types';
+import { userData, registerUserStart, registerUserErrors, loginSuccess, loginErrors, isAuthenticatedStatus, profileSuccess, profileErrors } from './userSlice';
 
 //REGISTRO DE USUARIOS
 export const postRegisterClient = (registerData: IUser) => async (dispatch: AppDispatch) => {
