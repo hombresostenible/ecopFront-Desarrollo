@@ -53,8 +53,8 @@ function ModalBranch ({ branch }: ModalBranchProps) {
         try {
             editedBranch.typeDocumentIdManager = editedTypeDocumentIdManager;
             dispatch(putBranch(idBranch, editedBranch, token));
-            setIsEditing(false);
             dispatch(getBranches(token));
+            setIsEditing(false);
         } catch (error) {
             throw new Error('Error al guardar cambios');
         }
@@ -191,7 +191,7 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                     </div>
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>Número de identiicación del lIder de la sede</h6>
+                    <h6 className={styles.label}>Número de identificación del lider de la sede</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
