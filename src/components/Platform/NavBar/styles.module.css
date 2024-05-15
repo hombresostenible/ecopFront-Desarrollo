@@ -1,6 +1,81 @@
-.containerNavBar {
+.container {
     z-index: 2;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: calc(100% - 300px);
+    height: 70px;
 }
 .logo{
     width: 250px;
+}
+.container__Navigation {
+    height: 70px;
+    width: 350px;
+}
+.container__Question {
+    height: 70px;
+    width: 70px;
+}
+.icon__Question {
+    color: #343a40;
+    font-size: 30px;
+}
+.container__Services {
+    height: 70px;
+    width: 70px;
+}
+.icon__Services {
+    font-size: 40px;
+    color: #343a40;
+}
+.icon__Services:hover {
+    cursor: pointer;
+}
+.menu {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    top: 70px;
+    left: 0;
+    background: white;
+    width: 250px;
+    border-radius: 10px;
+}
+.link__Service {
+    margin: 3px 0;
+}
+.container__Notification {
+    height: 70px;
+    width: 70px;
+}
+.icon__Notification {
+    font-size: 35px;
+    color: #343a40;
+}
+.notification {
+    height: 35px;
+    width: 35px;
+    top: 5px;
+    right: 0px;
+    border-radius: 50%;
+    background: #d90429;
+    border: 3px solid white;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+.container__Configuration {
+    height: 70px;
+    width: 70px;
+}
+.icon__Configuration {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+}
+.container__Logout {
+    height: 70px;
+    width: 70px;
+}
+.icon__Logout {
+    font-size: 30px;
+    color: #d90429;
 }
