@@ -37,9 +37,37 @@ function SideBar() {
                         <NavLink to="/branches" className={`${styles.option} nav-link`}>Tus Sedes</NavLink>
                         <BsPlus className={styles.icon__Plus}/>
                     </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/users-platform' ? styles.active : ''} mb-2`}>
-                        <FaUsers className={`${styles.icon} m-2`}/>
-                        <NavLink to="/users-platform" className={`${styles.option} nav-link`}>Tus Usuarios</NavLink>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/your-registers' ? styles.active : ''} mb-2`}>
+                        <MdAppRegistration className={`${styles.icon} m-2`}/>
+                        <NavLink to="/your-registers" className={`${styles.option} nav-link`}>Inventarios</NavLink>
+                        <BsPlus className={styles.icon__Plus}/>
+                    </li>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${(location.pathname === '/accountBook' || location.pathname === '/accountBook/incomePage' || location.pathname === '/accountBook/expensesPage' || location.pathname === '/accountBook/accountingRecords') ? styles.active : ''} mb-2`}>
+                        <FaFileInvoiceDollar className={`${styles.icon} m-2`}/>
+                        <NavLink to="/accountBook" className={`${styles.option} nav-link`}>Cuentas</NavLink>
+                        <BsPlus className={styles.icon__Plus}/>
+                    </li>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/transactions' ? styles.active : ''}`}>
+                        <FaCashRegister className={`${styles.icon} m-2`}/>
+                        <NavLink to="/transactions" className={`${styles.option} nav-link`}>Facturación y POS</NavLink>
+                        <BsPlus className={styles.icon__Plus}/>
+                        {/* 
+                            DEBE DE SALIR UNAS OPCIONES LA DAR CLIC:
+                            -EMITIR FACTURAS Y POS
+                            -NOTAS CREDITO  --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA CREDITO
+                            -NOTAS DEBITO   --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA DEBITO
+                            -
+                            -
+                            -
+
+
+
+
+                        */}
+                    </li>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/transactions' ? styles.active : ''}`}>
+                        <FaCashRegister className={`${styles.icon} m-2`}/>
+                        <NavLink to="/transactions" className={`${styles.option} nav-link`}>Nómina electrónica</NavLink>
                         <BsPlus className={styles.icon__Plus}/>
                     </li>
                     <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-clients' ? styles.active : ''} mb-2`}>
@@ -52,35 +80,25 @@ function SideBar() {
                         <NavLink to="/crm-suppliers" className={`${styles.option} nav-link`}>CRM Proveedores</NavLink>
                         <BsPlus className={styles.icon__Plus} />
                     </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/transactions' ? styles.active : ''}`}>
-                        <FaCashRegister className={`${styles.icon} m-2`}/>
-                        <NavLink to="/transactions" className={`${styles.option} nav-link`}>Transacciones</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <FaUsers className={`${styles.icon} m-2`} />
+                        <NavLink to="/crm-suppliers" className={`${styles.option} nav-link`}>Sostenibilidad</NavLink>
+                        <BsPlus className={styles.icon__Plus} />
                     </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${(location.pathname === '/accountBook' || location.pathname === '/accountBook/incomePage' || location.pathname === '/accountBook/expensesPage' || location.pathname === '/accountBook/accountingRecords') ? styles.active : ''} mb-2`}>
-                        <FaFileInvoiceDollar className={`${styles.icon} m-2`}/>
-                        <NavLink to="/accountBook" className={`${styles.option} nav-link`}>Libro diario</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <FaUsers className={`${styles.icon} m-2`} />
+                        <NavLink to="/crm-suppliers" className={`${styles.option} nav-link`}>Reportes e indicadores</NavLink>
+                        <BsPlus className={styles.icon__Plus} />
                     </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/your-registers' ? styles.active : ''} mb-2`}>
-                        <MdAppRegistration className={`${styles.icon} m-2`}/>
-                        <NavLink to="/your-registers" className={`${styles.option} nav-link`}>Tus registros</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <FaUsers className={`${styles.icon} m-2`} />
+                        <NavLink to="/crm-suppliers" className={`${styles.option} nav-link`}>Notificaciones estratégicas</NavLink>
+                        <BsPlus className={styles.icon__Plus} />
                     </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/salesFunnel' ? styles.active : ''} mb-2`}>
-                        <AiFillFunnelPlot className={`${styles.icon} m-2`}/>
-                        <NavLink to="/salesFunnel" className={`${styles.option} nav-link`}>Embudo de Ventas</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/tutorial-videos' ? styles.active : ''} mb-2`}>
-                        <FaPlay className={`${styles.icon} m-2`}/>
-                        <NavLink to="/tutorial-videos" className={`${styles.option} nav-link`}>Video tutoriales</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/report-errors' ? styles.active : ''} mb-2`}>
-                        <MdDangerous className={`${styles.icon} m-2`}/>
-                        <NavLink to="/report-errors" className={`${styles.option} nav-link`}>Reportar errores o mejoras</NavLink>
-                        <BsPlus className={styles.icon__Plus}/>
+                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <FaUsers className={`${styles.icon} m-2`} />
+                        <NavLink to="/crm-suppliers" className={`${styles.option} nav-link`}>Asesorías empresariales</NavLink>
+                        <BsPlus className={styles.icon__Plus} />
                     </li>
                     <li className={`${styles.sectionLogout} p-1 d-flex align-items-center justify-content-start rounded`}>
                         <TbLogout2 className={`${styles.icon} m-2`}/>

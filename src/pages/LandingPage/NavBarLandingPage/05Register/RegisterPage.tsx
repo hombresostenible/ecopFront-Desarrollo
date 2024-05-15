@@ -6,37 +6,22 @@ function RegisterPage() {
 
     return (
         <div className={`${styles.container} d-flex align-items-center justify-content-center`}>
-            <div className={`${styles.containerRegister} d-flex align-items-center justify-content-center`}>
-                <div className={`${styles.register} d-flex flex-column align-items-center justify-content-center`}>
-                    <Link to="/" >
-                        <img src={Logo} alt="Ecopcion" className={`${styles.logo}`} />
+            <div className={`${styles.container__Register} d-flex flex-column align-items-center justify-content-center gap-4`}>
+                <Link to="/" >
+                    <img src={Logo} alt="Ecopcion" className={`${styles.logo}`} />
+                </Link>
+
+                <Link to="/register-user" className='d-flex justify-content-around text-decoration-none'>
+                    <div className="d-flex text-decoration-none">
+                        <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} >Personas</button>
+                    </div>
+                </Link>
+
+                <div className={`${styles.program__Funder} d-flex flex-column align-items-center justify-content-center gap-2`} >
+                    <p className='m-0 text-center'>Si eres una Cámara de Comercio, Gremio empresarial, Agencia de Cooperación Internacional, ONG, Entidad Pública o Entidad Territorial, regístrate dando clic acá</p>
+                    <Link to="/register-program-funder">
+                        <button className={`${styles.button__Program_Funder} border-0`} >Financiadores de proyectos</button>
                     </Link>
-
-                    <div>
-                        <h1 className={`${styles.title} text-center mb-2`}>Regístrate</h1>
-                        <div className='d-flex justify-content-around'>
-                            <div className=''>
-                                <Link to="/register-user">
-                                    <button
-                                        className={`${styles.buttonRegister} m-2 border-0`}
-                                    >
-                                        Personas
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={`${styles.registerProgramFunder}`} >
-                        <p className='text-center mb-2'>Si eres una Cámara de Comercio, Gremio empresarial, Agencia de Cooperación Internacional, ONG, Entidad Pública o Entidad Territorial, regístrate dando clic acá</p>
-                        <Link to="/register-programFunder">
-                            <button
-                                className={`${styles.buttonRegisterProgramFunder} border-0`}
-                            >
-                                Financiadores de proyectos
-                            </button>
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>

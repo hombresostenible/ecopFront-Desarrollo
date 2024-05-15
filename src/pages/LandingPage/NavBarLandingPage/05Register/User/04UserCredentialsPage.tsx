@@ -28,7 +28,7 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
                     <input
                         type="email"
                         {...register('email', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es tu email?'
                     />
                     {errors.email && (
@@ -43,7 +43,7 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
                     <input
                         type={showPassword ? "text" : "password"}
                         {...register('password', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es tu contraseña?'
                     />
                     {showPassword ? (
