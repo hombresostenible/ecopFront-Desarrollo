@@ -13,13 +13,13 @@ function EconomicActivityPage({ register, errors, onSelect }: EconomicSectionPro
 
     return (
         <div>
-            <h5 className="text-dark text-center">Tu actividad económica</h5>
+            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Tu actividad económica</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Sector económico</h6>
                 <div className={styles.container__Input}>
                     <select
                         {...register('economicSector', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border`}
                     >
                         <option value='Agricultura'>Agricultura</option>
                         <option value='Manufactura'>Manufactura</option>

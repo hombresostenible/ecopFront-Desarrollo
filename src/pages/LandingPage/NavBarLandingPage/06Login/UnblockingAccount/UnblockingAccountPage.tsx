@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from 'react-router-dom';
-import Logo from '../../../assets/LogoEcopcion.svg';
+import Logo from '../../../../../assets/LogoEcopcion.svg';
 import styles from './styles.module.css';
 
-function UnblockingAccountUserPage() {      
+function UnblockingAccountPage() {      
 
     return (
         <div className="d-flex align-items-center justify-content-center">
@@ -49,4 +49,4 @@ function UnblockingAccountUserPage() {
     );
 }
 
-export default UnblockingAccountUserPage;
+export default UnblockingAccountPage;

@@ -1,13 +1,15 @@
 .container {
-    margin: 70px auto 0 auto;
-    min-height: calc(100vh - 440px);
+    width: 100%;
 }
-.subtitle {
-    color: #f28705;
-    font-size: 40px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    font-family: 'Roboto', sans-serif;
+.container__Component {
+    height: 400px;
+    width: 600px;
+}
+.logo {
+    height: 80px;
+}
+.title {
+    color: #718bd8;
 }
 .input {
     min-width: 450px;
@@ -19,16 +21,13 @@
     padding: 7px 25px;
     letter-spacing: 1px;
     font-size: 18px;
-    color: #f8f9fa;
     background: #718bd8;
+    color: #f8f9fa;
 }
 .button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;
-}
-.text__Danger {
-    top: 44px;
 }
 .link {
     font-weight: 600;

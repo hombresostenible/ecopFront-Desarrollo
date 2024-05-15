@@ -20,6 +20,9 @@ import RegisterUserPage from './pages/LandingPage/NavBarLandingPage/05Register/U
 
 // Login
 import LoginPage from './pages/LandingPage/NavBarLandingPage/06Login/LoginPage';
+import SendEmailResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/SendEmailResetPassword/SendEmailResetPasswordPage';
+import UnblockingAccountPage from './pages/LandingPage/NavBarLandingPage/06Login/UnblockingAccount/UnblockingAccountPage';
+import ResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/ResetPassword/ResetPasswordPage';
 
 // Sección de Body LandingPage
 import RegisterYourTransactions from './components/LandingPage/05Characteristics/01RegisterYourTransactions/RegisterYourTransactions';
@@ -78,7 +81,9 @@ function App() {
                         {/* Login */}
                         <Route path='/login' element={<LoginPage />} />
                         {/* Recuperación de contraseñas y desbloqueos de cuenta de User */}
-
+                        <Route path='/reset-password' element={<SendEmailResetPasswordPage />} />
+                        <Route path='/unblocking-account/complete/:idParams' element={<UnblockingAccountPage />} />
+                        <Route path='/reset-password/complete/:idParams/:passwordResetCode' element={<ResetPasswordPage />} />
                         {/* Recuperación de contraseñas y desbloqueos de cuenta de Company */}
 
                         {/* Sección de NavBar LandingPage */}

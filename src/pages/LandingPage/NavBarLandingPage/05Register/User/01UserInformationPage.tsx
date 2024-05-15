@@ -1,3 +1,4 @@
+import { useState, SetStateAction } from 'react';
 import { IUser } from "../../../../../types/User/user.types";
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styles from './styles.module.css';
@@ -8,49 +9,22 @@ interface UserInfoSectionProps {
 }
 
 function UserInformationPage({ register, errors }: UserInfoSectionProps) {
+    const [typeDocument, setTypeDocument] = useState('NIT');
+    const handleTypeDocument = (event: { target: { value: SetStateAction<string> }}) => {
+        setTypeDocument(event.target.value);
+    };
 
     return (
         <div>
-            <h5 className="text-dark text-center">Tu información personal</h5>
-            <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
-                <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                    <h6 className={styles.label}>Nombres</h6>
-                    <div className={styles.container__Input}>
-                        <input
-                            type="text"
-                            {...register('name', { required: true })}
-                            className={`${styles.input} p-2 border form-control`}
-                            placeholder='¿Cuáles son tus nombres?'
-                        />
-                        {errors.name && (
-                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Tus nombres son requeridos</p>
-                        )}
-                    </div>
-                </div>
-                <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                    <h6 className={styles.label}>Apellidos</h6>
-                    <div className={styles.container__Input}>
-                        <input
-                            type="text"
-                            {...register('lastName', { required: true })}
-                            className={`${styles.input} p-2 border form-control`}
-                            placeholder='¿Cuáles son tu apellidos?'
-                        />
-                        {errors.lastName && (
-                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Tus apellidos son requeridos</p>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-                
+            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Información personal</h4>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Tipo de identificación</h6>
                 <div className={styles.container__Input}>
                     <select
                         {...register('typeDocumentId', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
+                        onChange={handleTypeDocument}
                     >
                         <option value='NIT'>NIT</option>
                         <option value='Cedula de Ciudadania'>Cédula de Ciudadanía</option>
@@ -73,7 +47,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                                 required: true,
                                 pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
                             })}
-                            className={`${styles.input} p-2 border form-control`}
+                            className={`${styles.input} p-2 border `}
                             placeholder='¿Cuál es tu número de identificación?'
                             min={0}
                             onKeyDown={(e) => {
@@ -97,7 +71,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                                 required: true,
                                 pattern: /^\d{1}$/ // Expresión regular para 9 dígitos exactos
                             })}
-                            className={`${styles.input} p-2 border form-control`}
+                            className={`${styles.input} p-2 border `}
                             placeholder='¿Cuál es el dígito de verificación de tu empresa?'
                             min={0}
                             onKeyDown={(e) => {
@@ -113,13 +87,63 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                 </div>
             </div>
 
+            {typeDocument === 'NIT' && (
+                <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                    <h6 className={styles.label}>Razón Social</h6>
+                    <div className={styles.container__Input}>
+                        <input
+                            type="text"
+                            {...register('corporateName', { required: true })}
+                            className={`${styles.input} p-2 border `}
+                            placeholder='Razón Social de tu empresa'
+                        />
+                        {errors.corporateName && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>La Razón Social es requerida</p>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {(typeDocument === 'Cedula de Ciudadania' || typeDocument === 'Cedula de Extranjeria' || typeDocument === 'Pasaporte')  && ( 
+                <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
+                    <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                        <h6 className={styles.label}>Nombres</h6>
+                        <div className={styles.container__Input}>
+                            <input
+                                type="text"
+                                {...register('name', { required: true })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder='¿Cuáles son tus nombres?'
+                            />
+                            {errors.name && (
+                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Tus nombres son requeridos</p>
+                            )}
+                        </div>
+                    </div>
+                    <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                        <h6 className={styles.label}>Apellidos</h6>
+                        <div className={styles.container__Input}>
+                            <input
+                                type="text"
+                                {...register('lastName', { required: true })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder='¿Cuáles son tu apellidos?'
+                            />
+                            {errors.lastName && (
+                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Tus apellidos son requeridos</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>¿Tu negocio tiene nombre comercial?</h6>
                 <div className={styles.container__Input}>
                     <input
                         type="text"
                         {...register('commercialName')}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='Nombre comercial de tu negocio si lo tiene'
                     />
                 </div>
