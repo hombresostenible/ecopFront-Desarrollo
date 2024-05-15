@@ -40,8 +40,8 @@ function LoginPage() {
 
     return (
         <div className="d-flex align-items-center justify-content-center">
-            <div className={`${styles.container__Login} d-flex align-items-center justify-content-center vh-100`}>
-                <div className={`${styles.login} d-flex flex-column align-items-center justify-content-center`}>
+            <div className={`${styles.container} d-flex align-items-center justify-content-center vh-100`}>
+                <div className={`${styles.container__Component} d-flex flex-column align-items-center justify-content-center`}>
                     <Link to="/">
                         <img src={Logo} alt="Top Drive Group" className={`${styles.logo} mb-4`}/>
                     </Link>
@@ -58,7 +58,7 @@ function LoginPage() {
                                 <input
                                     type="email"
                                     {...register('email', { required: true })}
-                                    className={`${styles.input} p-2 mb-3 form-control `}
+                                    className={`${styles.input} p-2 mb-3 border rounded`}
                                     placeholder='Email del usuario'
                                 />
                                 {errors.email && (
@@ -71,7 +71,7 @@ function LoginPage() {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         {...register('password', { required: true })}
-                                        className={`${styles.input} p-2 mb-3 form-control `}
+                                        className={`${styles.input} p-2 mb-3 border rounded`}
                                         placeholder='Contraseña'
                                     />
                                     {showPassword ? (
@@ -84,14 +84,14 @@ function LoginPage() {
                                     )}
                                 </div>
                             </div>
-                            
+       
                             <div className="d-flex mb-4">
                                 <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
-                            </div>  
+                            </div>
                         </form>
 
-                        <p className='m-0 text-center'>¿No tienes cuenta? <Link to="/register" className={`${styles.link} text-sky-500 text-decoration-none`}>Regístrate acá</Link></p>
-                        <p className='text-center'><Link to="/reset-password-user" className={`${styles.link} text-sky-500 text-decoration-none`}>¿Has olvidado la contraseña?</Link></p>
+                        <p className='m-0 text-center'>¿No tienes cuenta? <Link to="/register-user" className={`${styles.link} text-sky-500 text-decoration-none`}>Regístrate acá</Link></p>
+                        <p className='text-center'><Link to="/reset-password" className={`${styles.link} text-sky-500 text-decoration-none`}>¿Has olvidado la contraseña?</Link></p>
                     </div>
                 </div>
             </div>
@@ -100,50 +100,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-
-
-// import { Link } from 'react-router-dom';
-// // import PublicityLogin from './PublicityLogin/PublicityLogin';
-// import Logo from '../../../../assets/LogoEcopcion.svg';
-// import styles from './styles.module.css';
-
-// function LoginPage() {
-    
-//     return (
-//         <div className={`${styles.container} d-flex align-items-center justify-content-center`}>
-//             <div className={`${styles.containerLogin} d-flex align-items-center justify-content-center`}>
-//                 <div className={`${styles.login} d-flex flex-column align-items-center justify-content-center`}>
-//                     <Link to="/" >
-//                         <img src={Logo} alt="Ecopcion" height="80" className="mb-3"/>
-//                     </Link>
-//                     <div className='p-4'>
-//                         <h1 className={`${styles.title} text-center`}>Inicia sesión</h1>
-//                         <div className='d-flex justify-content-around'>
-//                             <div className='mb-3'>
-//                                 <Link to="/loginUser">
-//                                     <button
-//                                         className={`${styles.buttonLogin} m-1 border-0`}
-//                                     >
-//                                         Personas
-//                                     </button>
-//                                 </Link>
-//                             </div>
-//                             <div className='mb-3'>
-//                                 <Link to="/loginCompany">
-//                                     <button
-//                                         className={`${styles.buttonLogin} m-1 border-0`}
-//                                     >
-//                                         Empresas
-//                                     </button>
-//                                 </Link>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default LoginPage;

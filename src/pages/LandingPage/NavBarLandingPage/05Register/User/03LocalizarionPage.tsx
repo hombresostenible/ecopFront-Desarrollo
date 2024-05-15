@@ -14,8 +14,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
 
     return (
         <div>
-            <h5 className="text-dark text-center">Tus datos de contacto</h5>
-
+            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Tus datos de contacto</h4>
             <DepartmenAndCity
                 onSelect={(department, city, codeDane, subregionCodeDane) => onSelect(department, city, codeDane, subregionCodeDane)}
                 reset={reset}
@@ -27,7 +26,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
                     <input
                         type="text"
                         {...register('address', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es tu dirección?'
                     />
                     {errors.address && (
@@ -42,7 +41,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
                     <input
                         type="postalCode"
                         {...register('postalCode', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
                         min={0}
                     />
@@ -58,7 +57,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
                     <input
                         type="phone"
                         {...register('phone', { required: true })}
-                        className={`${styles.input} p-2 border form-control`}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
                         min={0}
                     />

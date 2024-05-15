@@ -23,14 +23,14 @@ const branchSlice = createSlice({
             state.loading = false;
             state.branch = action.payload;
         },
+        branchStartErrors: (state, action: PayloadAction<string[]>) => { // Modificado para aceptar un array de cadenas
+            state.loading = false;
+            state.errorBranch = action.payload;
+        },
         createBranchStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = true;
             state.branch = action.payload;
             state.errorBranch = null;
-        },
-        branchStartErrors: (state, action: PayloadAction<string[]>) => { // Modificado para aceptar un array de cadenas
-            state.loading = false;
-            state.errorBranch = action.payload;
         },
         createManyBranchStart: (state, action: PayloadAction<IBranch[]>) => { // Modificado para aceptar un array de IBranch como payload
             state.loading = true;
@@ -57,5 +57,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { branchData, createBranchStart, branchStartErrors, createManyBranchStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
+export const { branchData, branchStartErrors, createBranchStart, createManyBranchStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
 export default branchSlice.reducer;

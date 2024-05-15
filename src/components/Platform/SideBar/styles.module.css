@@ -8,7 +8,9 @@
     padding: 20px 6px 10px 6px;
 }
 .options {
-    height: calc(100vh - 300px);
+    /* height: calc(100vh - 300px); */
+    border: 1px solid red;
+    /* width: 185px; */
 }
 .section {
     min-height: 35px;
@@ -24,9 +26,6 @@
 }
 .icon {
     font-size: 25px;
-}
-.option {
-    width: 185px;
 }
 .icon__Plus {
     margin: 0 0 0 20px;

@@ -10,14 +10,13 @@ import NewsletterSuscribe from '../../components/LandingPage/08NewsletterSuscrib
 import ChatUs from '../../components/LandingPage/09ChatUs/ChatUs';
 import Testimonies from '../../components/LandingPage/11Testimonies/Testimonies';
 import Footer from '../../components/LandingPage/Footer/Footer';
-import styles from './styles.module.css';
 
 function LandingPage() {
 
     return (
         <div>
             <NavBarLandingPage />
-            <div className={styles.container}>
+            <div>
                 <Introduction />
                 <OutstandingFeatures />
                 <Sustainability />
