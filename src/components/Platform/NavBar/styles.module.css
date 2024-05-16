@@ -1,7 +1,5 @@
 .container {
-    /* z-index: 2; */
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    /* width: calc(100% - 300px); */
     height: 70px;
 }
 .logo{
