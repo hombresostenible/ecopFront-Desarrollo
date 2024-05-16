@@ -1,17 +1,14 @@
 .container {
-    width: 300px;
+    min-width: 330px;
     height: calc(100vh - 70px);
     background: #718bd8;
     color: hsl(210, 17%, 98%);
 }
 .container__Component {
-    padding: 10px;
     min-width: 300px;
 }
 .section {
     min-height: 35px;
-    list-style: none;
-    text-decoration: none;
     color: hsl(210, 17%, 98%);
 }
 .section:hover {

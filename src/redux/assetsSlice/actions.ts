@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IAssets } from '../../types/User/assets.types';
-import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetsByBranchStart, getAssetStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
+import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
@@ -63,29 +63,10 @@ export const getAssets = (token: string) => async (dispatch: AppDispatch) => {
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
-export const getAssetsByBranch = (token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get('/assets', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAssetsByBranchStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAssets(error.response?.data.message));
-        } else {
-            dispatch(errorAssets(error.message));
-        }
-    }
-};
-
 //OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
-export const getAsset = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAsset = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/assets/${idBranch}`, {
+        const response = await axiosInstance.get(`/assets/${idAssets}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -101,11 +82,30 @@ export const getAsset = (idBranch: string, token: string) => async (dispatch: Ap
     }
 };
 
+//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
+export const getAssetsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/assets/assets-branch/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAssetsByBranchStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAssets(error.response?.data.message));
+        } else {
+            dispatch(errorAssets(error.message));
+        }
+    }
+};
+
 //ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const putAsset = (idBranch: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
+export const putAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putAssetStart());
-        const response = await axiosInstance.put(`/assets/${idBranch}`, formData, {
+        const response = await axiosInstance.put(`/assets/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -142,10 +142,10 @@ export const putManyAssets = (formData: IAssets[], token: string) => async (disp
 };
 
 //DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const patchAsset = (idBranch: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
+export const patchAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAssetStart());
-        const response = await axiosInstance.put(`/assets/${idBranch}`, formData, {
+        const response = await axiosInstance.put(`/assets/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -161,11 +161,11 @@ export const patchAsset = (idBranch: string, formData: IAssets, token: string) =
     }
 }
 
-//ELIMINAUN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const deleteAsset = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+//ELIMINA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+export const deleteAsset = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteAssetStart());
-        const response = await axiosInstance.delete(`/assets/${idBranch}`, {
+        const response = await axiosInstance.delete(`/assets/${idAssets}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

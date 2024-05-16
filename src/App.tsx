@@ -57,9 +57,10 @@ import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumen
 import ProtectedRoute from './ProtectedRoute';
 
 // PLATAFORMA
-import Home from './pages/Platform/PanelUser/01Home/Home';
+import Home from './pages/Platform/PanelUser/01Home/HomePage';
 import ProfilePage from './pages/Platform/PanelUser/01Profile/ProfilePage';
 import BranchPage from './pages/Platform/PanelUser/04Branch/BranchPage';
+import SustainabilityPage from './pages/Platform/PanelUser/Sustainability/SustainabilityPage';
 
 //Error 404
 import Error404 from './pages/Error404/Error404';
@@ -126,6 +127,7 @@ function App() {
                             {/* Sección Configuration */}
                             <Route path='/profile' element={<ProfilePage />} />
                             <Route path='/branches' element={<BranchPage />} />
+                            <Route path='/sustainability' element={<SustainabilityPage />} />
                             {/* Sección EcopcionApp */}
 
 

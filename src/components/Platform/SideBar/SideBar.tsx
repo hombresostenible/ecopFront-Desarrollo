@@ -27,36 +27,38 @@ function SideBar() {
 
     return (
         <div className={`${styles.container} position-relative`}>
-            <div className={`${styles.container__Component} position-fixed`}>
+            <div className={`${styles.container__Component} p-2 position-fixed`}>
                 <div className="overflow-y-auto">
-                    <NavLink to="/home" className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/home' ? styles.active : ''} mb-2`}>
+                    <NavLink to="/home" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
                         <IoHome className={`${styles.icon} `}/>
-                        <div className={`${styles.section} p-1 d-flex align-items-center justify-content-start`}>Home</div>
+                        <div className={` p-1 d-flex align-items-center justify-content-start`}>Home</div>
                     </NavLink>
 
-                    <NavLink to="/branches" className={`${styles.section} p-1 d-flex align-items-center justify-content-start ${location.pathname === '/branches' ? styles.active : ''} mb-2`}>
+                    <NavLink to="/branches" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/branches' ? styles.active : ''} `}>
                         <IoStorefrontSharp className={`${styles.icon} `}/>
-                        <div className={`${styles.section} p-1 d-flex align-items-center justify-content-start`}>Tus Sedes</div>
+                        <div className={` p-1 d-flex align-items-center justify-content-start`}>Tus Sedes</div>
                     </NavLink>
 
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/your-registers' ? styles.active : ''} mb-2`}>
+                    <NavLink to="/branches" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/branches' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <MdAppRegistration className={`${styles.icon} `}/>
-                            <NavLink to="/your-registers" className={styles.section}>Inventarios</NavLink>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Inventarios</div>
                         </div>
                         <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${(location.pathname === '/accountBook' || location.pathname === '/accountBook/incomePage' || location.pathname === '/accountBook/expensesPage' || location.pathname === '/accountBook/accountingRecords') ? styles.active : ''} mb-2`}>
+                    </NavLink>
+
+                    <NavLink to="/accountsBook" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/accountsBook' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaFileInvoiceDollar className={`${styles.icon} `}/>
-                            <NavLink to="/accountBook" className={styles.section}>Cuentas</NavLink>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Cuentas</div>
                         </div>
                         <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/transactions' ? styles.active : ''}`}>
+                    </NavLink>
+
+                    <NavLink to="/transactions" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/transactions' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaCashRegister className={`${styles.icon} `}/>
-                            <NavLink to="/transactions" className={styles.section}>Facturación y POS</NavLink>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Facturación y POS</div>
                         </div>
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                         {/* 
@@ -65,57 +67,64 @@ function SideBar() {
                             -NOTAS CREDITO  --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA CREDITO
                             -NOTAS DEBITO   --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA DEBITO
                         */}
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/transactions' ? styles.active : ''}`}>
+                    </NavLink>
+
+                    <NavLink to="/transactions" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/transactions' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaCashRegister className={`${styles.icon} `}/>
-                            <NavLink to="/transactions" className={styles.section}>Nómina electrónica</NavLink>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Nómina electrónica</div>
                         </div>
                         <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-clients' ? styles.active : ''} mb-2`}>
+                    </NavLink>
+
+                    <NavLink to="/crm-clients" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-clients' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-clients" className={styles.section}>CRM Clientes</NavLink>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>CRM Clientes</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
-                    <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-suppliers" className={styles.section}>CRM Proveedores</NavLink>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
+                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-suppliers" className={styles.section}>Sostenibilidad</NavLink>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>CRM Proveedores</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
+                    <NavLink to="/sustainability" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/sustainability' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-suppliers" className={styles.section}>Reportes e indicadores</NavLink>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Sostenibilidad</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
+                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-suppliers" className={styles.section}>Notificaciones estratégicas</NavLink>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Reportes e indicadores</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    <li className={`${styles.section} p-1 d-flex align-items-center justify-content-between ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
+                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `} />
-                            <NavLink to="/crm-suppliers" className={styles.section}>Asesoría para toma de decisiones</NavLink>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Notificaciones estratégicas</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus} />
-                    </li>
-                    
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
+                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                        <div className='d-flex items-center justify-content-center'>
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Asesoría para toma de decisiones</div>
+                        </div>
+                        <IoChevronDownOutline className={styles.icon__Plus}/>
+                    </NavLink>
+
                     <NavLink to="/login" onClick={() => { signout() }}  className={`${styles.section} p-1 d-flex align-items-center justify-content-start rounded `}>
                         <GoSignOut className={`${styles.icon} `}/>
                         <div>Salir</div>
