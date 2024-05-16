@@ -2,12 +2,12 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IBranch } from '../../types/User/branch.types';
-import { branchData, createBranchStart, branchStartErrors, createManyBranchStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } from './branchSlice';
+import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } from './branchSlice';
 
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(createBranchStart(formData));
+        dispatch(postBranchStart(formData));
         const response = await axiosInstance.post('/branch', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -17,19 +17,17 @@ export const postBranch = (formData: IBranch, token: string) => async (dispatch:
         dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
 
-
-
 //CREAR MUCHAS SEDES
 export const postManyBranch = (formData: IBranch[], token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(createManyBranchStart(formData));
+        dispatch(postManyBranchesStart(formData));
         const response = await axiosInstance.post('/branch/createMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -39,14 +37,12 @@ export const postManyBranch = (formData: IBranch[], token: string) => async (dis
         dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
-
-
 
 //OBTENER TODAS LAS SEDES
 export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
@@ -60,14 +56,12 @@ export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
         dispatch(getBranchesStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
-
-
 
 //OBTENER UNA SEDE POR ID
 export const getBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
@@ -81,19 +75,17 @@ export const getBranch = (idBranch: string, token: string) => async (dispatch: A
         dispatch(getBranchStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
 
-
-
 //ACTUALIZA UNA SEDE
 export const putBranch = (idBranch: string, formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(putBranchStart()); // Llama a putBranchStart sin argumentos
+        dispatch(putBranchStart());
         const response = await axiosInstance.put(`/branch/${idBranch}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -103,9 +95,9 @@ export const putBranch = (idBranch: string, formData: IBranch, token: string) =>
         dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
@@ -113,7 +105,7 @@ export const putBranch = (idBranch: string, formData: IBranch, token: string) =>
 //ELIMINA UNA SEDE
 export const deleteBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(deleteBranchStart()); // Llama a deleteBranchStart sin argumentos
+        dispatch(deleteBranchStart());
         const response = await axiosInstance.delete(`/branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -123,9 +115,9 @@ export const deleteBranch = (idBranch: string, token: string) => async (dispatch
         dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
-            dispatch(branchStartErrors(error.response?.data.message));
+            dispatch(errorBranch(error.response?.data.message));
         } else {
-            dispatch(branchStartErrors(error.message));
+            dispatch(errorBranch(error.message));
         }
     }
 };
