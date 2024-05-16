@@ -41,13 +41,13 @@ const branchSlice = createSlice({
             state.assets = action.payload;
             state.errorAssets = null;
         },
-        getAssetsByBranchStart: (state, action: PayloadAction<IAssets[]>) => {
-            state.loading = true;
+        getAssetStart: (state, action: PayloadAction<IAssets>) => {
+            state.loading = false;
             state.assets = action.payload;
             state.errorAssets = null;
         },
-        getAssetStart: (state, action: PayloadAction<IAssets>) => {
-            state.loading = false;
+        getAssetsByBranchStart: (state, action: PayloadAction<IAssets[]>) => {
+            state.loading = true;
             state.assets = action.payload;
             state.errorAssets = null;
         },
@@ -71,5 +71,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetsByBranchStart, getAssetStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = branchSlice.actions;
+export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = branchSlice.actions;
 export default branchSlice.reducer;
