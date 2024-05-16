@@ -8,7 +8,7 @@ import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccounts
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postAccountsBookStart(formData));
-        const response = await axiosInstance.post('/branch', formData, {
+        const response = await axiosInstance.post('/accountsBook', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export const postAccountsBook = (formData: IAccountsBook, token: string) => asyn
 //OBTENER TODOS LOS REGISTRO DEL LIBRO DIARIO
 export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/branch', {
+        const response = await axiosInstance.get('/accountsBook', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -44,9 +44,9 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
 };
 
 //OBTENER UN REGISTRO DEL LIBRO DIARIO POR ID
-export const getAccountsBook = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBook = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/accountsBook/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -63,10 +63,10 @@ export const getAccountsBook = (idBranch: string, token: string) => async (dispa
 };
 
 //ACTUALIZA UN REGISTRO DEL LIBRO DIARIO
-export const putAccountsBook = (idBranch: string, formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
+export const putAccountsBook = (idAccountsBook: string, formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putAccountsBookStart());
-        const response = await axiosInstance.put(`/branch/${idBranch}`, formData, {
+        const response = await axiosInstance.put(`/accountsBook/${idAccountsBook}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -83,10 +83,10 @@ export const putAccountsBook = (idBranch: string, formData: IAccountsBook, token
 };
 
 //ELIMINA UN REGISTRO DEL LIBRO DIARIO
-export const deleteAccountsBook = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const deleteAccountsBook = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteAccountsBookStart());
-        const response = await axiosInstance.delete(`/branch/${idBranch}`, {
+        const response = await axiosInstance.delete(`/accountsBook/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
