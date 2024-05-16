@@ -8,7 +8,6 @@ interface UserState {
 }
 
 const initialState: UserState = {
-    //STATES
     branch: null,
     loading: false,
     errorBranch: null,
@@ -23,39 +22,40 @@ const branchSlice = createSlice({
             state.loading = false;
             state.branch = action.payload;
         },
-        branchStartErrors: (state, action: PayloadAction<string[]>) => { // Modificado para aceptar un array de cadenas
+        errorBranch: (state, action: PayloadAction<string[]>) => {
             state.loading = false;
             state.errorBranch = action.payload;
         },
-        createBranchStart: (state, action: PayloadAction<IBranch>) => {
+        postBranchStart: (state, action: PayloadAction<IBranch  | null>) => {
+            state.loading = true;
+            state.branch = action.payload;
+            state.errorBranch = null;        // Limpia cualquier error previo
+        },
+        postManyBranchesStart: (state, action: PayloadAction<IBranch[]>) => {
             state.loading = true;
             state.branch = action.payload;
             state.errorBranch = null;
-        },
-        createManyBranchStart: (state, action: PayloadAction<IBranch[]>) => { // Modificado para aceptar un array de IBranch como payload
-            state.loading = true;
-            state.branch = action.payload; // Asigna el array de sedes al estado de errorBranch
         },
         getBranchesStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = true;
             state.branch = action.payload;
-            state.errorBranch = null; // Limpia cualquier error previo al obtener las sucursales
+            state.errorBranch = null;
         },
         getBranchStart: (state, action: PayloadAction<IBranch>) => {
-            state.loading = false; // Establece el estado de carga como falso una vez que se obtiene la sucursal
+            state.loading = false;
             state.branch = action.payload;
-            state.errorBranch = null; // Limpia cualquier error previo al obtener la sucursal
+            state.errorBranch = null;
         },
-        putBranchStart: (state) => { // Modificado para no esperar un payload
+        putBranchStart: (state) => {
             state.loading = true;
             state.errorBranch = null;
         },
-        deleteBranchStart: (state) => { // Modificado para no esperar un payload
+        deleteBranchStart: (state) => {
             state.loading = true;
             state.errorBranch = null;
         },
     },
 });
 
-export const { branchData, branchStartErrors, createBranchStart, createManyBranchStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
+export const { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
 export default branchSlice.reducer;
