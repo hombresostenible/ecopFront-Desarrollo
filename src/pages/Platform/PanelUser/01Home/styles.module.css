@@ -1,4 +1,8 @@
 .container {
-    margin: 72px 0 0 0;
-    height: calc(100vh - 123px);
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Component {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
 }

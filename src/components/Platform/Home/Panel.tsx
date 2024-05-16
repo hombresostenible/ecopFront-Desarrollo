@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Inventario from '../../../assets/Plataforma/Home/Inventario.png';
 import LibroDiario from '../../../assets/Plataforma/Home/LibroDiario.png';
 import FacturaElectronica from '../../../assets/Plataforma/Home/FacturaElectronica.png';
-import POS from '../../../assets/Plataforma/Home/POS.png';
+// import POS from '../../../assets/Plataforma/Home/POS.png';
 import Informes from '../../../assets/Plataforma/Home/Informe.png';
 import CRM from '../../../assets/Plataforma/Home/CRM.png';
 import Asesoria from '../../../assets/Plataforma/Home/Asesoria.png';
@@ -12,7 +12,7 @@ import Notificacion from '../../../assets/Plataforma/Home/Notificacion.png';
 import styles from './styles.module.css';
 
 function Panel() {
-    
+
     return (
         <div>
             <h1 className={`${styles.title} text-center text-2xl font-bold`}>Bienvenido a Ecopción</h1 >
@@ -24,7 +24,7 @@ function Panel() {
                             <img src={Inventario} alt="Registra o carga inventarios" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Registra o carga inventarios</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>Inventarios</h4>
                         </div>
                     </Link>
                 </div>
@@ -35,7 +35,7 @@ function Panel() {
                             <img src={LibroDiario} alt="Registra tus transacciones diarias" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Registra tus transacciones diarias</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>Cuentas</h4>
                         </div>
                     </Link>
                 </div>
@@ -46,51 +46,7 @@ function Panel() {
                             <img src={FacturaElectronica} alt="Facturación electrónica - gestiona tus facturas" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Facturación electrónica - gestiona tus facturas</h4>
-                        </div>
-                    </Link>
-                </div>
-
-                <div className={`${styles.card__PSO} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/transactions" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
-                        <div className={`${styles.container__Image_POS} d-flex align-items-center justify-content-center`} >
-                            <img src={POS} alt="Sistema POS" className={`${styles.image}`} />
-                        </div>
-                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Sistema POS</h4>
-                        </div>
-                    </Link>
-                </div>
-
-                <div className={`${styles.card__Calculate_Indicators} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/indicators" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
-                        <div className={`${styles.container__Image_Calculate_Indicators} d-flex align-items-center justify-content-center`} >
-                            <img src={Informes} alt="Calcula indicadores/visualiza y descarga informes" className={`${styles.image}`} />
-                        </div>
-                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Calcula indicadores/visualiza y descarga informes</h4>
-                        </div>
-                    </Link>
-                </div>
-
-                <div className={`${styles.card__CRM} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/crm-clients" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
-                        <div className={`${styles.container__Image_CRM} d-flex align-items-center justify-content-center`} >
-                            <img src={CRM} alt="CRM" className={`${styles.image}`} />
-                        </div>
-                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>CRM</h4>
-                        </div>
-                    </Link>
-                </div>
-
-                <div className={`${styles.card__Appointment} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/appointment" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
-                        <div className={`${styles.container__Image_Appointment} d-flex align-items-center justify-content-center`} >
-                            <img src={Asesoria} alt="Asesoría para toma de decisiones" className={`${styles.image}`} />
-                        </div>
-                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Asesoría para toma de decisiones</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>Facturación y POS</h4>
                         </div>
                     </Link>
                 </div>
@@ -106,13 +62,24 @@ function Panel() {
                     </Link>
                 </div>
 
-                <div className={`${styles.card__Sustainability} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/appointment" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
-                        <div className={`${styles.container__Image_Sustainability} d-flex align-items-center justify-content-center`} >
-                            <img src={Sostenibilidad} alt="Sostenibilidad de tu negocio" className={`${styles.image}`} />
+                <div className={`${styles.card__CRM} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
+                    <Link to="/crm-clients" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
+                        <div className={`${styles.container__Image_CRM} d-flex align-items-center justify-content-center`} >
+                            <img src={CRM} alt="CRM" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Sostenibilidad de tu negocio</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>CRM Clientes</h4>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className={`${styles.card__CRM} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
+                    <Link to="/crm-clients" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
+                        <div className={`${styles.container__Image_CRM} d-flex align-items-center justify-content-center`} >
+                            <img src={CRM} alt="CRM" className={`${styles.image}`} />
+                        </div>
+                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
+                            <h4 className={`${styles.subTitle} text-center`}>CRM Proveedores</h4>
                         </div>
                     </Link>
                 </div>
@@ -123,7 +90,18 @@ function Panel() {
                             <img src={Sostenibilidad} alt="Sostenibilidad de tu negocio" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Diagnóstico y recomendaciones</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>Sostenibilidad</h4>
+                        </div>
+                    </Link>
+                </div>
+
+                <div className={`${styles.card__Calculate_Indicators} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
+                    <Link to="/indicators" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
+                        <div className={`${styles.container__Image_Calculate_Indicators} d-flex align-items-center justify-content-center`} >
+                            <img src={Informes} alt="Calcula indicadores/visualiza y descarga informes" className={`${styles.image}`} />
+                        </div>
+                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
+                            <h4 className={`${styles.subTitle} text-center`}>Reportes e indicadores</h4>
                         </div>
                     </Link>
                 </div>
@@ -141,6 +119,17 @@ function Panel() {
                             Noticias, eventos convocatorias, leyes en trámite, temas de interes
                             Análiscic de datos, del negocio o de la industria
                             */}
+                        </div>
+                    </Link>
+                </div>
+
+                <div className={`${styles.card__Appointment} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
+                    <Link to="/appointment" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
+                        <div className={`${styles.container__Image_Appointment} d-flex align-items-center justify-content-center`} >
+                            <img src={Asesoria} alt="Asesoría para toma de decisiones" className={`${styles.image}`} />
+                        </div>
+                        <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
+                            <h4 className={`${styles.subTitle} text-center`}>Asesoría para toma de decisiones</h4>
                         </div>
                     </Link>
                 </div>

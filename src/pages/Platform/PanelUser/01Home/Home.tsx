@@ -7,14 +7,16 @@ import styles from './styles.module.css';
 function HomePage() {
 
     return (
-        <div className="d-flex w-100">
-            <SideBar />
-            <div>
-                <NavBar />
-                <div className={`${styles.container} w-100 overflow-hidden overflow-y-auto`}>
-                    <Panel />
+        <div className='d-flex flex-column'>
+            <NavBar />
+            <div className='d-flex'>
+                <SideBar />
+                <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                        <Panel />
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
             </div>
         </div>
     );
