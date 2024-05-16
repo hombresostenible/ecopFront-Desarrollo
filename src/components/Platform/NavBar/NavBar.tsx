@@ -17,7 +17,7 @@ function NavBar() {
     const dispatch: AppDispatch = useDispatch();
     const [ menuVisible, setMenuVisible ] = useState(false);
 
-    const handleEditClick = () => {
+    const handleServiceClick = () => {
         setMenuVisible(!menuVisible);
     };
 
@@ -44,7 +44,7 @@ function NavBar() {
     };
 
     return (
-        <div className={`${styles.container} pt-0 pb-0 px-4 d-flex align-items-center justify-content-between position-fixed`}>
+        <div className={`${styles.container} pt-0 pb-0 px-4 d-flex align-items-center justify-content-between`}>
             <Link to="/home" className="text-center">
                 <img src={Logo} alt="Ecopcion" className={`${styles.logo} m-auto`} />
             </Link>
@@ -55,7 +55,7 @@ function NavBar() {
                 </Link>
 
                 <div className={`${styles.container__Services} d-flex align-items-center justify-content-center position-relative`}>
-                    <CgMenuGridO className={styles.icon__Services} onClick={handleEditClick} />
+                    <CgMenuGridO className={styles.icon__Services} onClick={handleServiceClick} />
                     {menuVisible && (
                         <div ref={menuRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
                             <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
