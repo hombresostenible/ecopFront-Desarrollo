@@ -7,7 +7,7 @@
 }
 .container__Panel {
     display: grid;
-    width: 90%;
+    min-width: 90%;
     grid-template-columns: 
         repeat(
             auto-fit,
@@ -25,7 +25,7 @@
 .card__Sustainability,
 .card__Notifications {
     height: 150px;
-    width: 420px;
+    width: 300px;
 }
 
 .container__Image_Inventory,

@@ -1,19 +1,18 @@
 .container {
-    min-width: 300px;
-    height: 100vh;
+    width: 300px;
+    height: calc(100vh - 70px);
     background: #718bd8;
     color: hsl(210, 17%, 98%);
 }
-.sideBar {
-    padding: 20px 6px 10px 6px;
-}
-.options {
-    /* height: calc(100vh - 300px); */
-    border: 1px solid red;
-    /* width: 185px; */
+.container__Component {
+    padding: 10px;
+    min-width: 300px;
 }
 .section {
     min-height: 35px;
+    list-style: none;
+    text-decoration: none;
+    color: hsl(210, 17%, 98%);
 }
 .section:hover {
     background: rgba(67, 97, 238, 0.5);
@@ -25,33 +24,15 @@
     color: #f8f9fa;
 }
 .icon {
-    font-size: 25px;
+    font-size: 20px;
+    margin: 0 10px 0 0;
 }
 .icon__Plus {
     margin: 0 0 0 20px;
-    font-size: 25px;
+    font-size: 20px;
     transition: transform 0.3s ease;
 }
 .icon__Plus:hover {
     cursor: pointer;
     transform: rotate(90deg) scale(1.08);
-}
-.logout{
-    padding: 5px;
-    margin: 0 0 80px 0;
-    width: 280px;
-    min-height: 35px;
-    background: rgba(10, 49, 191, 0.8);
-}
-.logout:hover {
-    background: rgba(10, 49, 191, 1);
-    border-radius: 5px;
-}
-
-
-/*---------------Footer---------------*/
-.containerFooter {
-    width: calc(100vw - 300px);
-    height: 50px;
-    color: #6c757d;
 }

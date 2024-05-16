@@ -4,19 +4,15 @@ import { IUser } from '../../types/User/user.types';
 interface UserState {
     user: IUser | null;
     loading: boolean;
-    error: string | null;
-    registerUserErrors: string | null;
+    error: string[] | null;
     isAuthenticated: boolean;
-    loginErrors: string | null;
 }
 
 const initialState: UserState = {
     user: null,
     loading: false,
     error: null,
-    registerUserErrors: null,
     isAuthenticated: false,
-    loginErrors: null,
 };
 
 const userSlice = createSlice({
@@ -29,43 +25,49 @@ const userSlice = createSlice({
             state.user = action.payload;
             state.isAuthenticated = !!action.payload;
         },
-        registerUserStart: (state) => {
+        userErrors: (state, action: PayloadAction<string[]>) => {
             state.loading = true;
-            state.error = null;
-        },
-        registerUserErrors: (state, action: PayloadAction<string>) => {
-            state.loading = false;
             state.error = action.payload;
-            state.isAuthenticated = false;
-            state.registerUserErrors = action.payload;
+        },
+        registerUserStart: (state, action: PayloadAction<IUser | null>) => {
+            state.loading = true;
+            state.user = action.payload;
+            state.error = null;
         },
         isAuthenticatedStatus: (state, action: PayloadAction<boolean>) => {
             state.isAuthenticated = action.payload;
         },
-        loginSuccess: (state, action: PayloadAction<IUser>) => {
+        loginStart: (state, action: PayloadAction<IUser>) => {
             state.loading = false;
             state.user = action.payload;
             state.isAuthenticated = true;
         },
-        loginErrors: (state, action: PayloadAction<string>) => {
-            state.loading = false;
-            state.error = action.payload;
-            state.isAuthenticated = false;
-            state.loginErrors = action.payload;
-        },
-        profileSuccess: (state, action: PayloadAction<IUser>) => {
+        profileStart: (state, action: PayloadAction<IUser>) => {
             state.loading = false;
             state.user = action.payload;
             state.isAuthenticated = true;
         },
-        profileErrors: (state, action: PayloadAction<string>) => {
+        sendEmailPasswordChangeRequest: (state) => {
             state.loading = false;
-            state.error = action.payload;
-            state.isAuthenticated = false;
-            state.loginErrors = action.payload;
+            state.error = null;
+        },
+        passwordChange: (state) => {
+            state.loading = false;
+            state.error = null;
+        },
+        accountUnlocking: (state) => {
+            state.loading = false;
+            state.error = null;
+        },
+        logoChange: (state, action: PayloadAction<IUser>) => {
+            state.loading = false;
+            state.user = action.payload;
+        },
+        deleteLogo: (state) => {
+            state.loading = false;
         },
     },
 });
 
-export const { userData, registerUserStart, registerUserErrors, isAuthenticatedStatus, loginSuccess, loginErrors, profileSuccess, profileErrors } = userSlice.actions;
+export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } = userSlice.actions;
 export default userSlice.reducer;
