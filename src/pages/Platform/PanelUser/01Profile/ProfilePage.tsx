@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileUser } from '../../../../redux/userSlice/actions';
+import { getProfileUser } from '../../../../redux/User/userSlice/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import NavBar from '../../../../components/Platform/NavBar/NavBar';

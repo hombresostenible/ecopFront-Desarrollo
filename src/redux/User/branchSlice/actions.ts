@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../store';
-import axiosInstance from '../../api/axios';
-import { IBranch } from '../../types/User/branch.types';
+import { AppDispatch } from '../../store';
+import axiosInstance from '../../../api/axios';
+import { IBranch } from '../../../types/User/branch.types';
 import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
 
 //CREAR DE UNA SEDE

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../store';
-import axiosInstance from '../../api/axios';
-import { IMerchandise } from '../../types/User/merchandise.types';
+import { AppDispatch } from '../../store';
+import axiosInstance from '../../../api/axios';
+import { IMerchandise } from '../../../types/User/merchandise.types';
 import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA

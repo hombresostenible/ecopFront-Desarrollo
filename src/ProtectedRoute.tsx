@@ -4,8 +4,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 import Cookies from "js-cookie";
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { isAuthenticatedStatus } from './redux/userSlice/userSlice';
-import { verifyTokenRequest } from './redux/userSlice/actions';
+import { isAuthenticatedStatus } from './redux/User/userSlice/userSlice';
+import { verifyTokenRequest } from './redux/User/userSlice/actions';
 import { RootState } from './redux/store';
 
 function ProtectedRoute() {

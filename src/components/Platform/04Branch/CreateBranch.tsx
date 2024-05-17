@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postBranch, getBranches } from '../../../redux/branchSlice/actions';
+import { postBranch, getBranches } from '../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../types/User/branch.types';
