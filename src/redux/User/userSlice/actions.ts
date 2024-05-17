@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import jsCookie from 'js-cookie';
-import { AppDispatch } from '../store';
-import axiosInstance from '../../api/axios';
-import { IUser } from '../../types/User/user.types';
-import { IResetPassword } from '../../types/User/resetPassword.types';
-import { IResetPasswordBlocked } from '../../types/User/resetPasswordBlocked.types';
+import { AppDispatch } from '../../store';
+import axiosInstance from '../../../api/axios';
+import { IUser } from '../../../types/User/user.types';
+import { IResetPassword } from '../../../types/User/resetPassword.types';
+import { IResetPasswordBlocked } from '../../../types/User/resetPasswordBlocked.types';
 import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } from './userSlice';
 
 //REGISTRO DE USUARIOS

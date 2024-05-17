@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 //REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../redux/store';
-import { logoutUser } from '../../../redux/userSlice/actions';
+import { logoutUser } from '../../../redux/User/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IoChevronDownOutline } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";

@@ -1,18 +1,31 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './userSlice/userSlice';
-import branchReducer from './branchSlice/branchSlice';
-import accountsBookReducer from './accountsBookSlice/accountsBookSlice';
-import assetsBookReducer from './assetsSlice/assetsSlice';
-
+import accountsBookReducer from './User/accountsBookSlice/accountsBookSlice';
+import assetsReducer from './User/assetsSlice/assetsSlice';
+import branchReducer from './User/branchSlice/branchSlice';
+import crmClientReducer from './User/crmClientSlice/crmClientSlice';
+import crmSupplierReducer from './User/crmSupplierSlice/crmSupplierSlice';
+import merchandiseReducer from './User/merchandiseSlice/merchandiseSlice';
+import productReducer from './User/productSlice/productSlice';
+import rawMaterialReducer from './User/rawMaterialSlice/rawMaterialSlice';
+import serviceReducer from './User/serviceSlice/serviceSlice';
+import userReducer from './User/userSlice/userSlice';
+import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
-        branch: branchReducer,
         accountsBook: accountsBookReducer,
-        assets: assetsBookReducer,
+        assets: assetsReducer,
+        branch: branchReducer,
+        crmClient: crmClientReducer,
+        crmSupplier: crmSupplierReducer,
+        merchandise: merchandiseReducer,
+        product: productReducer,
+        rawMaterial: rawMaterialReducer,
+        service: serviceReducer,
+        user: userReducer,
+        userPlatform: userPlatformReducer,
     },
 });
 

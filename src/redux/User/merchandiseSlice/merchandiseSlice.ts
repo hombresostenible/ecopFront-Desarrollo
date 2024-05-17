@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IMerchandise } from '../../types/User/merchandise.types';
+import { IMerchandise } from '../../../types/User/merchandise.types';
 
-interface UserState {
+interface MerchandiseState {
     merchandise: IMerchandise | IMerchandise[] | null;
     loading: boolean;
     errorMerchandise: string[] | null;
 }
 
-const initialState: UserState = {
+const initialState: MerchandiseState = {
     merchandise: null,
     loading: false,
     errorMerchandise: null,

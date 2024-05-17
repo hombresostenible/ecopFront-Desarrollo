@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../store';
-import axiosInstance from '../../api/axios';
-import { IAccountsBook } from '../../types/User/accountsBook.types';
+import { AppDispatch } from '../../store';
+import axiosInstance from '../../../api/axios';
+import { IAccountsBook } from '../../../types/User/accountsBook.types';
 import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO

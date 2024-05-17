@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBranch } from '../../types/User/branch.types';
+import { IBranch } from '../../../types/User/branch.types';
 
-interface UserState {
+interface BranchState {
     branch: IBranch | IBranch[] | null;
     loading: boolean;
     errorBranch: string[] | null;
 }
 
-const initialState: UserState = {
+const initialState: BranchState = {
     branch: null,
     loading: false,
     errorBranch: null,

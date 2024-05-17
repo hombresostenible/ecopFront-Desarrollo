@@ -3,7 +3,7 @@ import { useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch } from 'react-redux';
-import { getBranches, postManyBranch } from '../../../redux/branchSlice/actions';
+import { getBranches, postManyBranch } from '../../../redux/User/branchSlice/actions';
 import type { AppDispatch } from '../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../types/User/branch.types';

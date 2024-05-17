@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../redux/store';
-import { loginUser } from '../../../../redux/userSlice/actions';
+import { loginUser } from '../../../../redux/User/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { ILogin } from '../../../../types/Auth/login.types'
 import Logo from '../../../../assets/LogoEcopcion.svg';
