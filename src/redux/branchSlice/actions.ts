@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IBranch } from '../../types/User/branch.types';
-import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } from './branchSlice';
+import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
 
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
@@ -64,7 +64,7 @@ export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
 };
 
 //OBTENER UNA SEDE POR ID
-export const getBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getBranchById = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/branch/${idBranch}`, {
             headers: {
@@ -72,7 +72,7 @@ export const getBranch = (idBranch: string, token: string) => async (dispatch: A
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getBranchStart(response.data));
+        dispatch(getBranchByIdStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorBranch(error.response?.data.message));

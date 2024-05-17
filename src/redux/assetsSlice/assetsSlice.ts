@@ -13,7 +13,7 @@ const initialState: UserState = {
     errorAssets: null,
 };
 
-const branchSlice = createSlice({
+const assetsSlice = createSlice({
     name: 'assets',
     initialState,
     reducers: {
@@ -41,7 +41,7 @@ const branchSlice = createSlice({
             state.assets = action.payload;
             state.errorAssets = null;
         },
-        getAssetStart: (state, action: PayloadAction<IAssets>) => {
+        getAssetByIdStart: (state, action: PayloadAction<IAssets>) => {
             state.loading = false;
             state.assets = action.payload;
             state.errorAssets = null;
@@ -71,5 +71,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = branchSlice.actions;
-export default branchSlice.reducer;
+export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = assetsSlice.actions;
+export default assetsSlice.reducer;

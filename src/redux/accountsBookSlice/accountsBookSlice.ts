@@ -13,11 +13,10 @@ const initialState: UserState = {
     errorAccountsBook: null,
 };
 
-const branchSlice = createSlice({
+const accountsBookSlice = createSlice({
     name: 'accountsBook',
     initialState,
     reducers: {
-        //ACTIONS
         accountsBookData: (state, action: PayloadAction<IAccountsBook | null>) => {
             state.loading = false;
             state.accountsBook = action.payload;
@@ -29,14 +28,19 @@ const branchSlice = createSlice({
         postAccountsBookStart: (state, action: PayloadAction<IAccountsBook  | null>) => {
             state.loading = true;
             state.accountsBook = action.payload;
-            state.errorAccountsBook = null;        // Limpia cualquier error previo
+            state.errorAccountsBook = null;
         },
         getAccountsBooksStart: (state, action: PayloadAction<IAccountsBook>) => {
             state.loading = true;
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
         },
-        getAccountsBookStart: (state, action: PayloadAction<IAccountsBook>) => {
+        getAccountsBookByIdStart: (state, action: PayloadAction<IAccountsBook>) => {
+            state.loading = false;
+            state.accountsBook = action.payload;
+            state.errorAccountsBook = null;
+        },
+        getAccountsBookByBranchStart: (state, action: PayloadAction<IAccountsBook>) => {
             state.loading = false;
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
@@ -52,5 +56,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBookStart, putAccountsBookStart, deleteAccountsBookStart } = branchSlice.actions;
-export default branchSlice.reducer;
+export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
+export default accountsBookSlice.reducer;

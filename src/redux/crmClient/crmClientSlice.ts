@@ -35,13 +35,13 @@ const crmClientSlice = createSlice({
             state.crmClient = action.payload;
             state.errorCrmClient = null;
         },
-        getCrmClientsByBranchStart: (state, action: PayloadAction<ICrmClient[]>) => {
-            state.loading = true;
+        getCrmClientByIdStart: (state, action: PayloadAction<ICrmClient>) => {
+            state.loading = false;
             state.crmClient = action.payload;
             state.errorCrmClient = null;
         },
-        getCrmClientStart: (state, action: PayloadAction<ICrmClient>) => {
-            state.loading = false;
+        getCrmClientsByBranchStart: (state, action: PayloadAction<ICrmClient[]>) => {
+            state.loading = true;
             state.crmClient = action.payload;
             state.errorCrmClient = null;
         },
@@ -56,5 +56,5 @@ const crmClientSlice = createSlice({
     },
 });
 
-export const { crmClientData, errorCrmClient, postCrmClientStart, getCrmClientsStart, getCrmClientsByBranchStart, getCrmClientStart, putCrmClientStart, deleteCrmClientStart } = crmClientSlice.actions;
+export const { crmClientData, errorCrmClient, postCrmClientStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart } = crmClientSlice.actions;
 export default crmClientSlice.reducer;
