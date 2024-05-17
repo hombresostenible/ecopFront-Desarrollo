@@ -13,7 +13,7 @@ const initialState: CrmSupplierState = {
     errorCrmSupplier: null,
 };
 
-const crmClientSlice = createSlice({
+const crmSupplierSlice = createSlice({
     name: 'crmSupplier',
     initialState,
     reducers: {
@@ -35,7 +35,7 @@ const crmClientSlice = createSlice({
             state.crmSupplier = action.payload;
             state.errorCrmSupplier = null;
         },
-        getCrmSupplierStart: (state, action: PayloadAction<ICrmSupplier>) => {
+        getCrmSupplierByIdStart: (state, action: PayloadAction<ICrmSupplier>) => {
             state.loading = false;
             state.crmSupplier = action.payload;
             state.errorCrmSupplier = null;
@@ -56,5 +56,5 @@ const crmClientSlice = createSlice({
     },
 });
 
-export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } = crmClientSlice.actions;
-export default crmClientSlice.reducer;
+export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } = crmSupplierSlice.actions;
+export default crmSupplierSlice.reducer;

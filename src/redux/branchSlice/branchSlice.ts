@@ -17,7 +17,6 @@ const branchSlice = createSlice({
     name: 'branch',
     initialState,
     reducers: {
-        //ACTIONS
         branchData: (state, action: PayloadAction<IBranch | null>) => {
             state.loading = false;
             state.branch = action.payload;
@@ -29,7 +28,7 @@ const branchSlice = createSlice({
         postBranchStart: (state, action: PayloadAction<IBranch  | null>) => {
             state.loading = true;
             state.branch = action.payload;
-            state.errorBranch = null;        // Limpia cualquier error previo
+            state.errorBranch = null;
         },
         postManyBranchesStart: (state, action: PayloadAction<IBranch[]>) => {
             state.loading = true;
@@ -41,7 +40,7 @@ const branchSlice = createSlice({
             state.branch = action.payload;
             state.errorBranch = null;
         },
-        getBranchStart: (state, action: PayloadAction<IBranch>) => {
+        getBranchByIdStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = false;
             state.branch = action.payload;
             state.errorBranch = null;
@@ -57,5 +56,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
+export const { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
 export default branchSlice.reducer;

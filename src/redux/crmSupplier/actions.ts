@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { ICrmSupplier } from '../../types/User/crmSupplier.types';
-import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } from './crmSupplierSlice';
+import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } from './crmSupplierSlice';
 
 //CREAR DE UN PROVEEDOR
 export const postCrmSupplier = (formData: ICrmSupplier, token: string) => async (dispatch: AppDispatch) => {
@@ -44,7 +44,7 @@ export const getCrmSuppliers = (token: string) => async (dispatch: AppDispatch) 
 };
 
 //OBTIENE UN PROVEEDOR POR ID DEL USER
-export const getCrmSupplier = (idCrmSupplier: string, token: string) => async (dispatch: AppDispatch) => {
+export const getCrmSupplierById = (idCrmSupplier: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/crmSupplier/${idCrmSupplier}`, {
             headers: {
@@ -52,7 +52,7 @@ export const getCrmSupplier = (idCrmSupplier: string, token: string) => async (d
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getCrmSupplierStart(response.data));
+        dispatch(getCrmSupplierByIdStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorCrmSupplier(error.response?.data.message));

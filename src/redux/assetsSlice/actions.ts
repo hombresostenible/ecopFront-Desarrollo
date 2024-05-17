@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IAssets } from '../../types/User/assets.types';
-import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
+import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
@@ -64,7 +64,7 @@ export const getAssets = (token: string) => async (dispatch: AppDispatch) => {
 };
 
 //OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
-export const getAsset = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAssetById = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/assets/${idAssets}`, {
             headers: {
@@ -72,7 +72,7 @@ export const getAsset = (idAssets: string, token: string) => async (dispatch: Ap
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAssetStart(response.data));
+        dispatch(getAssetByIdStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAssets(error.response?.data.message));
@@ -125,7 +125,7 @@ export const putAsset = (idAssets: string, formData: IAssets, token: string) => 
 export const putManyAssets = (formData: IAssets[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyAssetsStart(formData));
-        const response = await axiosInstance.post('/assets/updateMany', formData, {
+        const response = await axiosInstance.put('/assets/updateMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -145,7 +145,7 @@ export const putManyAssets = (formData: IAssets[], token: string) => async (disp
 export const patchAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAssetStart());
-        const response = await axiosInstance.put(`/assets/${idAssets}`, formData, {
+        const response = await axiosInstance.patch(`/assets/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
