@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { ICrmClient } from '../../types/User/crmClient.types';
-import { crmClientData, errorCrmClient, postCrmClientStart, getCrmClientsStart, getCrmClientsByBranchStart, getCrmClientStart, putCrmClientStart, deleteCrmClientStart } from './crmClientSlice';
+import { crmClientData, errorCrmClient, postCrmClientStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart } from './crmClientSlice';
 
 //CREAR DE UN CLIENTE
 export const postCrmClient = (formData: ICrmClient, token: string) => async (dispatch: AppDispatch) => {
@@ -43,10 +43,29 @@ export const getCrmClients = (token: string) => async (dispatch: AppDispatch) =>
     }
 };
 
-//OBTIENE TODOS LOS CLIENTES POR SEDE DEL USER
-export const getCrmClientsByBranch = (token: string) => async (dispatch: AppDispatch) => {
+//OBTIENE UN CLIENTE POR ID DEL USER
+export const getCrmClientById = (idCrmClient: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/crmClients', {
+        const response = await axiosInstance.get(`/crmClients/${idCrmClient}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getCrmClientByIdStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorCrmClient(error.response?.data.message));
+        } else {
+            dispatch(errorCrmClient(error.message));
+        }
+    }
+};
+
+//OBTIENE TODOS LOS CLIENTES POR SEDE DEL USER
+export const getCrmClientsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/crmClients/crmClients-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -62,30 +81,11 @@ export const getCrmClientsByBranch = (token: string) => async (dispatch: AppDisp
     }
 };
 
-//OBTIENE UN CLIENTE POR ID DEL USER
-export const getCrmClient = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/crmClients/${idBranch}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getCrmClientStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorCrmClient(error.response?.data.message));
-        } else {
-            dispatch(errorCrmClient(error.message));
-        }
-    }
-};
-
 //ACTUALIZA UN CLIENTE DEL USER
-export const putCrmClient = (idBranch: string, formData: ICrmClient, token: string) => async (dispatch: AppDispatch) => {
+export const putCrmClient = (idCrmClient: string, formData: ICrmClient, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putCrmClientStart());
-        const response = await axiosInstance.put(`/crmClients/${idBranch}`, formData, {
+        const response = await axiosInstance.put(`/crmClients/${idCrmClient}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -102,10 +102,10 @@ export const putCrmClient = (idBranch: string, formData: ICrmClient, token: stri
 };
 
 //ELIMINA UN CLIENTE DEL USER
-export const deleteCrmClient = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const deleteCrmClient = (idCrmClient: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteCrmClientStart());
-        const response = await axiosInstance.delete(`/crmClients/${idBranch}`, {
+        const response = await axiosInstance.delete(`/crmClients/${idCrmClient}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

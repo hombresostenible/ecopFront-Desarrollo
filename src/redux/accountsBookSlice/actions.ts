@@ -2,7 +2,7 @@
 import { AppDispatch } from '../store';
 import axiosInstance from '../../api/axios';
 import { IAccountsBook } from '../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBookStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -44,7 +44,7 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
 };
 
 //OBTENER UN REGISTRO DEL LIBRO DIARIO POR ID
-export const getAccountsBook = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBookById = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/accountsBook/${idAccountsBook}`, {
             headers: {
@@ -52,7 +52,26 @@ export const getAccountsBook = (idAccountsBook: string, token: string) => async 
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBookStart(response.data));
+        dispatch(getAccountsBookByIdStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS REGISTROS DEL LIBRO DIARIO POR SEDE
+export const getAccountsBookByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/accountsBook/accountsBook-branch/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsBookByBranchStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
