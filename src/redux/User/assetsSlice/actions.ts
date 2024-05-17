@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../store';
-import axiosInstance from '../../api/axios';
-import { IAssets } from '../../types/User/assets.types';
+import { AppDispatch } from '../../store';
+import axiosInstance from '../../../api/axios';
+import { IAssets } from '../../../types/User/assets.types';
 import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postAssetStart(formData));
-        const response = await axiosInstance.post('/assets', formData, {
+        const response = await axiosInstance.post('/asset', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const postAsset = (formData: IAssets, token: string) => async (dispatch: 
 export const postManyAssets = (formData: IAssets[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyAssetsStart(formData));
-        const response = await axiosInstance.post('/assets/createMany', formData, {
+        const response = await axiosInstance.post('/asset/createMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const postManyAssets = (formData: IAssets[], token: string) => async (dis
 //OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
 export const getAssets = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/assets', {
+        const response = await axiosInstance.get('/asset', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const getAssets = (token: string) => async (dispatch: AppDispatch) => {
 //OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
 export const getAssetById = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/assets/${idAssets}`, {
+        const response = await axiosInstance.get(`/asset/${idAssets}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export const getAssetById = (idAssets: string, token: string) => async (dispatch
 //OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
 export const getAssetsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/assets/assets-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/asset/assets-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export const getAssetsByBranch = (idBranch: string, token: string) => async (dis
 export const putAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putAssetStart());
-        const response = await axiosInstance.put(`/assets/${idAssets}`, formData, {
+        const response = await axiosInstance.put(`/asset/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -125,7 +125,7 @@ export const putAsset = (idAssets: string, formData: IAssets, token: string) => 
 export const putManyAssets = (formData: IAssets[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyAssetsStart(formData));
-        const response = await axiosInstance.put('/assets/updateMany', formData, {
+        const response = await axiosInstance.put('/asset/updateMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -145,7 +145,7 @@ export const putManyAssets = (formData: IAssets[], token: string) => async (disp
 export const patchAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAssetStart());
-        const response = await axiosInstance.patch(`/assets/${idAssets}`, formData, {
+        const response = await axiosInstance.patch(`/asset/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -165,7 +165,7 @@ export const patchAsset = (idAssets: string, formData: IAssets, token: string) =
 export const deleteAsset = (idAssets: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteAssetStart());
-        const response = await axiosInstance.delete(`/assets/${idAssets}`, {
+        const response = await axiosInstance.delete(`/asset/${idAssets}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

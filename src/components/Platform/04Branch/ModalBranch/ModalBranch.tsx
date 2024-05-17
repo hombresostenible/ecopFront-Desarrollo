@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch } from 'react-redux';
-import { putBranch, getBranches } from '../../../../redux/branchSlice/actions';
+import { putBranch, getBranches } from '../../../../redux/User/branchSlice/actions';
 import type { AppDispatch } from '../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../types/User/branch.types';

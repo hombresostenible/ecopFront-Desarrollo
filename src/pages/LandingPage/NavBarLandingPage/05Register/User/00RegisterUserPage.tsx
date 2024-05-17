@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { postRegisterClient } from '../../../../../redux/userSlice/actions';
+import { postRegisterClient } from '../../../../../redux/User/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IUser } from "../../../../../types/User/user.types";
 import UserInformationPage from './01UserInformationPage';

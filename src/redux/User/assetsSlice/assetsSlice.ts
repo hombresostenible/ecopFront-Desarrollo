@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAssets } from '../../types/User/assets.types';
+import { IAssets } from '../../../types/User/assets.types';
 
-interface UserState {
+interface AssetState {
     assets: IAssets | IAssets[] | null;
     loading: boolean;
     errorAssets: string[] | null;
 }
 
-const initialState: UserState = {
+const initialState: AssetState = {
     assets: null,
     loading: false,
     errorAssets: null,

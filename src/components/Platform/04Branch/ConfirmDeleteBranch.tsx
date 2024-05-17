@@ -1,7 +1,7 @@
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch } from 'react-redux';
-import { deleteBranch } from '../../../redux/branchSlice/actions';
+import { deleteBranch } from '../../../redux/User/branchSlice/actions';
 import type { AppDispatch } from '../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import styles from './styles.module.css';
