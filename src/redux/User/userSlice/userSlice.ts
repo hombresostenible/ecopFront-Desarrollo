@@ -4,14 +4,14 @@ import { IUser } from '../../../types/User/user.types';
 interface UserState {
     user: IUser | null;
     loading: boolean;
-    error: string[] | null;
+    errorUser: string[] | null;
     isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
     user: null,
     loading: false,
-    error: null,
+    errorUser: null,
     isAuthenticated: false,
 };
 
@@ -19,7 +19,6 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        //SON LOS ESTADOS
         userData: (state, action: PayloadAction<IUser | null>) => {
             state.loading = false;
             state.user = action.payload;
@@ -27,12 +26,12 @@ const userSlice = createSlice({
         },
         userErrors: (state, action: PayloadAction<string[]>) => {
             state.loading = true;
-            state.error = action.payload;
+            state.errorUser = action.payload;
         },
         registerUserStart: (state, action: PayloadAction<IUser | null>) => {
             state.loading = true;
             state.user = action.payload;
-            state.error = null;
+            state.errorUser = null;
         },
         isAuthenticatedStatus: (state, action: PayloadAction<boolean>) => {
             state.isAuthenticated = action.payload;
@@ -49,15 +48,15 @@ const userSlice = createSlice({
         },
         sendEmailPasswordChangeRequest: (state) => {
             state.loading = false;
-            state.error = null;
+            state.errorUser = null;
         },
         passwordChange: (state) => {
             state.loading = false;
-            state.error = null;
+            state.errorUser = null;
         },
         accountUnlocking: (state) => {
             state.loading = false;
-            state.error = null;
+            state.errorUser = null;
         },
         logoChange: (state, action: PayloadAction<IUser>) => {
             state.loading = false;

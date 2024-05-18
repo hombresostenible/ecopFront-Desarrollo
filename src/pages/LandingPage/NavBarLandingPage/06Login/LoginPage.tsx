@@ -16,8 +16,10 @@ import styles from './styles.module.css';
 function LoginPage() {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
+
+    // Utiliza useSelector para obtener la información del usuario del estado de Redux
+    const errorUser = useSelector((state: RootState) => state.user.errorUser);
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-    const loginErrors = useSelector((state: RootState) => state.user.loginErrors);
 
     const { register, formState: { errors }, handleSubmit } = useForm<ILogin>();
 
@@ -47,9 +49,9 @@ function LoginPage() {
                     </Link>
                     
                     <div className='position-relative'>
-                        {loginErrors && (
+                        {errorUser && (
                             <div className={`${styles.errors__Login} p-2 text-center position-absolute w-100`}>
-                                <p className='m-0'><PiWarningCircle /> {loginErrors}</p>
+                                <p className='m-0'><PiWarningCircle /> {errorUser}</p>
                             </div>
                         )}
 
