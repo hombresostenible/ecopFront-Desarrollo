@@ -32,7 +32,7 @@ export const loginUser = (loginData: { email: string; password: string }) => asy
         if (error.response && error.response.status === 401) {
             dispatch(userErrors(error.response?.data.message));
         } else {
-            dispatch(userErrors(error.message));
+            dispatch(userErrors(error.response?.data.message));
         }
     }
 };

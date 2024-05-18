@@ -1,78 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
-import jsCookie from 'js-cookie';
-//REDUX
+import React, { useState } from 'react';
+// REDUX
 import { useDispatch } from 'react-redux';
-import { putBranch, getBranches } from '../../../../redux/User/branchSlice/actions';
+import { putBranch } from '../../../../redux/User/branchSlice/actions';
 import type { AppDispatch } from '../../../../redux/store';
-//ELEMENTOS DEL COMPONENTE
+// ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../types/User/branch.types';
 import styles from './styles.module.css';
 
 interface ModalBranchProps {
     branch: IBranch;
+    token: string;
+    onUpdateBranch: () => void;
 }
 
-function ModalBranch ({ branch }: ModalBranchProps) {
-    const token = jsCookie.get('token') || '';
+const ModalBranch: React.FC<ModalBranchProps> = ({ branch, token, onUpdateBranch }) => {
     const dispatch: AppDispatch = useDispatch();
 
-    const [ idBranch, setIdBranch ] = useState('');
 
-    useEffect(() => {
-        if (branch) setIdBranch(branch.id);
-    }, [ branch ]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedBranch, setEditedBranch] = useState<IBranch>({ ...branch });
+    const [editedTypeDocumentIdManager, setEditedTypeDocumentIdManager] = useState<string>(branch.typeDocumentIdManager);
 
-    const [ isEditing, setIsEditing ] = useState(false);
-    const [ editedBranch, setEditedBranch ] = useState<IBranch>({ ...branch });
-    const [ editedTypeDocumentIdManager, setEditedTypeDocumentIdManager ] = useState(branch?.typeDocumentIdManager);
-
-    const handleEditField = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-        field: string,
-        dataType: 'text' | 'number' = 'text'
-    ) => {
-        const newValue = e.target.value;
-        if (dataType === 'number') {
-            const numericValue = parseFloat(newValue);
-            if (!isNaN(numericValue)) {
-                setEditedBranch((prevEdited) => ({
-                    ...prevEdited,
-                    [field]: numericValue,
-                }));
-            }
-        } else {
-            setEditedBranch((prevEdited) => ({
-                ...prevEdited,
-                [field]: newValue,
-            }));
-        }
+    const handleEditField = (e: React.ChangeEvent<HTMLInputElement>, field: keyof IBranch, type: string) => {
+        const value = type === 'number' ? parseInt(e.target.value) : e.target.value;
+        setEditedBranch({ ...editedBranch, [field]: value });
     };
 
-    const handleSaveChanges = (editedBranch: IBranch) => {
+    const handleSaveChanges = async (values: IBranch) => {
         try {
-            editedBranch.typeDocumentIdManager = editedTypeDocumentIdManager;
-            dispatch(putBranch(idBranch, editedBranch, token));
-            dispatch(getBranches(token));
-            setIsEditing(false);
+            const formData = {
+                ...values,
+            }
+            dispatch(putBranch(formData.id, formData, token));
+            // Simulamos un delay de la API
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            onUpdateBranch();
         } catch (error) {
-            throw new Error('Error al guardar cambios');
+            throw new Error('Error al eliminar la sede');
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         setIsEditing(false);
-        setEditedBranch({ ...editedBranch, [id]: { ...branch } });
+        setEditedBranch({ ...branch });
+        setEditedTypeDocumentIdManager(branch.typeDocumentIdManager);
     };
-
 
     return (
         <div>
-            <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información de la Sede</h1>
-            </div>
-
-            <div className='d-flex gap-3'>
+            <div className="d-flex gap-3">
                 <div className="w-100">
                     <h6 className={styles.label}>Nombre de la sede</h6>
                     <div className={styles.containerInput}>
@@ -85,6 +62,39 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>{branch?.nameBranch}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Departamento</h6>
+                    <div className={styles.containerInput}>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                className={`${styles.inputEdit} p-2 border form-control`}
+                                value={editedBranch.department}
+                                onChange={(e) => handleEditField(e, 'department', 'text')}
+                            />
+                        ) : (
+                            <p className={`${styles.input} p-2 text-start border`}>{branch?.department}</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <div className="d-flex gap-3">
+                <div className="w-100">
+                    <h6 className={styles.label}>Ciudad</h6>
+                    <div className={styles.containerInput}>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                className={`${styles.inputEdit} p-2 border form-control`}
+                                value={editedBranch.city}
+                                onChange={(e) => handleEditField(e, 'city', 'text')}
+                            />
+                        ) : (
+                            <p className={`${styles.input} p-2 text-start border`}>{branch?.city}</p>
                         )}
                     </div>
                 </div>
@@ -105,7 +115,7 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
+            <div className="d-flex gap-3">
                 <div className="w-100">
                     <h6 className={styles.label}>Email de la sede</h6>
                     <div className={styles.containerInput}>
@@ -138,7 +148,7 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
+            <div className="d-flex gap-3">
                 <div className="w-100">
                     <h6 className={styles.label}>Nombres del lider de la sede</h6>
                     <div className={styles.containerInput}>
@@ -171,7 +181,7 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
+            <div className="d-flex gap-3">
                 <div className="w-100">
                     <h6 className={styles.label}>Tipo de identificación</h6>
                     <div>
@@ -181,9 +191,9 @@ function ModalBranch ({ branch }: ModalBranchProps) {
                                 className={`${styles.inputEdit} p-2 border form-control`}
                                 onChange={(e) => setEditedTypeDocumentIdManager(e.target.value as 'Cédula de Ciudadanía' | 'Cédula de Extranjería' | 'Pasaporte')}
                             >
-                                <option value='Cédula de Ciudadanía'>Cédula de Ciudadanía</option>
-                                <option value='Cédula de Extranjería'>Cédula de Extranjería</option>
-                                <option value='Pasaporte'>Pasaporte</option>
+                                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+                                <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+                                <option value="Pasaporte">Pasaporte</option>
                             </select>
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>{branch?.typeDocumentIdManager}</p>
@@ -209,24 +219,33 @@ function ModalBranch ({ branch }: ModalBranchProps) {
 
             <div className="w-100">
                 {isEditing ? (
-                    <div className="d-flex align-items-center justify-content-center">
-                        <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
-                        <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                    <div className="d-flex justify-content-center gap-2 mt-4">
+                        <button
+                            className={`${styles.buttonCancel} p-2`}
+                            onClick={cancelEditing}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            className={`${styles.buttonSave} p-2`}
+                            onClick={() => handleSaveChanges(editedBranch)}
+                        >
+                            Guardar
+                        </button>
                     </div>
                 ) : (
-                    <div
-                        className={`${styles.divButtonEdit} d-flex align-items-center justify-content-center`}
-                        onClick={() => {
-                            setEditedBranch({ ...branch });
-                            setIsEditing(true);
-                        }}
-                    >
-                        <h6 className="m-0">Edita la información de la sede</h6>
+                    <div className="d-flex justify-content-center gap-2 mt-4">
+                        <button
+                            className={`${styles.buttonEdit} p-2`}
+                            onClick={() => setIsEditing(true)}
+                        >
+                            Editar
+                        </button>
                     </div>
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default ModalBranch;
