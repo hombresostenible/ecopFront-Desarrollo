@@ -63,11 +63,23 @@ import ProtectedRoute from './ProtectedRoute';
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
 import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
 import BranchPage from './pages/Platform/PanelUser/02Branch/BranchPage';
-import SustainabilityPage from './pages/Platform/PanelUser/Sustainability/SustainabilityPage';
-import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/Questions';
-import ServicesPage from './pages/Platform/PanelUser/00NavBar/02Services/Services';
-import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/Notifications';
-import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/Configuration';
+import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
+import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
+import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
+import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
+import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsPage';
+import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliersPage';
+import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/SustainabilityPage';
+import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
+import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
+import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
+
+import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
+import ServicesPage from './pages/Platform/PanelUser/00NavBar/02Services/ServicesPage';
+import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
+import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
+
+
 
 function App() {
 
@@ -135,16 +147,16 @@ function App() {
                             {/* Sección Home */}
                             <Route path='/home' element={<Home />} />
                             <Route path='/branches' element={<BranchPage />} />
-                            <Route path='/inventories' element={<BranchPage />} />
-                            <Route path='/accounts' element={<BranchPage />} />
-                            <Route path='/invoicing-and-pos' element={<BranchPage />} />
-                            <Route path='/electronic-payroll' element={<BranchPage />} />
-                            <Route path='/crm-clients' element={<BranchPage />} />
-                            <Route path='/crm-suppliers' element={<BranchPage />} />
+                            <Route path='/inventories' element={<InventoriesPage />} />
+                            <Route path='/accounts' element={<AccountsPage />} />
+                            <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
+                            <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
+                            <Route path='/crm-clients' element={<CrmClientsPage />} />
+                            <Route path='/crm-suppliers' element={<CrmSuppliersPage />} />
                             <Route path='/sustainability' element={<SustainabilityPage />} />
-                            <Route path='/reports-and-indicators' element={<SustainabilityPage />} />
-                            <Route path='/strategic-notifications' element={<SustainabilityPage />} />
-                            <Route path='/consultancies' element={<SustainabilityPage />} />
+                            <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />
+                            <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />
+                            <Route path='/consultancies' element={<ConsultanciesPage />} />
                         </Route>
                     {/* Sección Error 404 */}
                     <Route path="*" element={<Error404 />} />
