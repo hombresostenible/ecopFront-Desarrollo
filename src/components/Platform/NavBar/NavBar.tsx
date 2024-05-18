@@ -50,7 +50,7 @@ function NavBar() {
             </Link>
 
             <div className={`${styles.container__Navigation} d-flex`}>
-                <Link to='/qustions' className={`${styles.container__Question} d-flex align-items-center justify-content-center`}>
+                <Link to='/questions' className={`${styles.container__Question} d-flex align-items-center justify-content-center`}>
                     <SlQuestion className={`${styles.icon__Question}`}/>
                 </Link>
 
@@ -58,18 +58,18 @@ function NavBar() {
                     <CgMenuGridO className={styles.icon__Services} onClick={handleServiceClick} />
                     {menuVisible && (
                         <div ref={menuRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Nómina</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>CRM Clientes y Proveedores</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Asesorías</Link>
-                            <Link to='/' className={`${styles.link__Service} text-decoration-none`}>Notifcaciones estratégicas</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Nómina</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>CRM Clientes y Proveedores</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Asesorías</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notifcaciones estratégicas</Link>
                         </div>
                     )}
                 </div>
 
-                <Link to="/configuration" className={`${styles.container__Notification} d-flex align-items-center justify-content-center position-relative text-decoration-none`}>
+                <Link to="/notifications" className={`${styles.container__Notification} d-flex align-items-center justify-content-center position-relative text-decoration-none`}>
                     <IoNotificationsOutline className={`${styles.icon__Notification} `}/>
                     <div className={`${styles.notification} d-flex align-items-center justify-content-center position-absolute`}>
                         5

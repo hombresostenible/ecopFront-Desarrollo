@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import BranchCard from '../../../../components/Platform/04Branch/BranchCard';
-import CreateBranch from '../../../../components/Platform/04Branch/CreateBranch/CreateBranch';
+import BranchCard from '../../../../components/Platform/02Branch/BranchCard';
+import CreateBranch from '../../../../components/Platform/02Branch/CreateBranch/CreateBranch';
 import NavBar from '../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../components/Platform/Footer/Footer';
@@ -16,7 +16,7 @@ import styles from './styles.module.css';
 function BranchPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
-    
+
     // Utiliza useSelector para obtener la información del usuario del estado de Redux
     const branch = useSelector((state: RootState) => state.branch.branch);
 
@@ -49,21 +49,21 @@ function BranchPage() {
     };
 
     return (
-        <div className="d-flex">
-            <SideBar />
-            <div>
-                <NavBar />
-                <div className={`${styles.container} overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.containerBranchPage} m-auto`}>
+        <div className='d-flex flex-column'>
+            <NavBar />
+            <div className='d-flex'>
+                <SideBar />
+                <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <div className="d-flex">
                             <div
-                                className={` ${styles.component} w-50 d-flex align-items-center justify-content-center ${selectedComponent === 'branchCard' ? styles.active : '' }`}
+                                className={` ${styles.component} p-2 w-50 d-flex align-items-center justify-content-center ${selectedComponent === 'branchCard' ? styles.active : '' }`}
                                 onClick={() => handleComponentChange('branchCard')}
                             >
                                 Tus Sedes
                             </div>
                             <div
-                                className={` ${styles.component} w-50 d-flex align-items-center justify-content-center ${selectedComponent === 'createBranch' ? styles.active : ''}`}
+                                className={` ${styles.component} p-2 w-50 d-flex align-items-center justify-content-center ${selectedComponent === 'createBranch' ? styles.active : ''}`}
                                 onClick={() => handleComponentChange('createBranch')}
                             >
                                 Crea tus Sedes
@@ -112,8 +112,8 @@ function BranchPage() {
                             />
                         )}
                     </div>
+                    <Footer />
                 </div>
-                <Footer />
             </div>
         </div>
     );

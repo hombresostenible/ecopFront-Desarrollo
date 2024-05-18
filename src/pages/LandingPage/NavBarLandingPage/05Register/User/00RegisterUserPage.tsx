@@ -27,13 +27,13 @@ function RegisterUserPagePage() {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-    const registerUserErrors = useSelector((state: RootState) => state.user.registerUserErrors);
+    const errorUser = useSelector((state: RootState) => state.user.errorUser);
 
     const [currentStep, setCurrentStep] = useState(RegistrationStep.UserInformationPage);
     const {register, formState: { errors }, handleSubmit} = useForm<IUser>();
     
     useEffect(() => {
-        if (isAuthenticated) navigate("/profile");
+        if (isAuthenticated) navigate("/configuration/profile");
     }, [ isAuthenticated ]);
 
     const [ selectedDepartment, setSelectedDepartment ] = useState('');
@@ -102,9 +102,9 @@ function RegisterUserPagePage() {
                     </div>
 
                     <div className='position-relative'>
-                        {registerUserErrors && (
+                        {errorUser && (
                             <div className={`${styles.errors__Register} p-2 text-center position-absolute w-100`}>
-                                <p className='m-0'><PiWarningCircle /> {registerUserErrors}</p>
+                                <p className='m-0'><PiWarningCircle /> {errorUser}</p>
                             </div>
                         )}
                         <form onSubmit={handleSubmit(onSubmit)} >

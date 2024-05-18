@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import Inventario from '../../../assets/Plataforma/Home/Inventario.png';
 import LibroDiario from '../../../assets/Plataforma/Home/LibroDiario.png';
 import FacturaElectronica from '../../../assets/Plataforma/Home/FacturaElectronica.png';
-// import POS from '../../../assets/Plataforma/Home/POS.png';
 import Informes from '../../../assets/Plataforma/Home/Informe.png';
 import CRM from '../../../assets/Plataforma/Home/CRM.png';
 import Asesoria from '../../../assets/Plataforma/Home/Asesoria.png';

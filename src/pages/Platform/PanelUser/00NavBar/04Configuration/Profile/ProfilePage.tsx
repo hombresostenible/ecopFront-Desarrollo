@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileUser } from '../../../../redux/User/userSlice/actions';
-import type { RootState, AppDispatch } from '../../../../redux/store';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
+import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
-import NavBar from '../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../components/Platform/Footer/Footer';
+import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
 function ProfilePage() {
