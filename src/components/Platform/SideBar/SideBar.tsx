@@ -39,7 +39,7 @@ function SideBar() {
                         <div className={` p-1 d-flex align-items-center justify-content-start`}>Tus Sedes</div>
                     </NavLink>
 
-                    <NavLink to="/branches" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/branches' ? styles.active : ''} `}>
+                    <NavLink to="/inventories" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/inventories' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <MdAppRegistration className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Inventarios</div>
@@ -47,7 +47,7 @@ function SideBar() {
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                     </NavLink>
 
-                    <NavLink to="/accountsBook" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/accountsBook' ? styles.active : ''} `}>
+                    <NavLink to="/accounts" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/accounts' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaFileInvoiceDollar className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Cuentas</div>
@@ -55,7 +55,7 @@ function SideBar() {
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                     </NavLink>
 
-                    <NavLink to="/transactions" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/transactions' ? styles.active : ''} `}>
+                    <NavLink to="/invoicing-and-pos" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/invoicing-and-pos' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaCashRegister className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Facturación y POS</div>
@@ -69,7 +69,7 @@ function SideBar() {
                         */}
                     </NavLink>
 
-                    <NavLink to="/transactions" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/transactions' ? styles.active : ''} `}>
+                    <NavLink to="/electronic-payroll" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/electronic-payroll' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaCashRegister className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Nómina electrónica</div>
@@ -101,7 +101,7 @@ function SideBar() {
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                     </NavLink>
 
-                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
+                    <NavLink to="/reports-and-indicators" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/reports-and-indicators' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaUsers className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Reportes e indicadores</div>
@@ -109,7 +109,7 @@ function SideBar() {
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                     </NavLink>
 
-                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
+                    <NavLink to="/strategic-notifications" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/strategic-notifications' ? styles.active : ''} `}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaUsers className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Notificaciones estratégicas</div>
@@ -117,7 +117,7 @@ function SideBar() {
                         <IoChevronDownOutline className={styles.icon__Plus}/>
                     </NavLink>
 
-                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} mb-2`}>
+                    <NavLink to="/consultancies" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/consultancies' ? styles.active : ''} mb-2`}>
                         <div className='d-flex items-center justify-content-center'>
                             <FaUsers className={`${styles.icon} `}/>
                             <div className={` p-1 d-flex align-items-center justify-content-start`}>Asesoría para toma de decisiones</div>
