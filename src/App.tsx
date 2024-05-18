@@ -53,17 +53,21 @@ import Help from './components/LandingPage/Footer/Support/Help/Help';
 import Trainings from './components/LandingPage/Footer/Support/Trainings/Trainings';
 import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
 
+//Error 404
+import Error404 from './pages/Error404/Error404';
+
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
 
 // PLATAFORMA
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
-import ProfilePage from './pages/Platform/PanelUser/01Profile/ProfilePage';
-import BranchPage from './pages/Platform/PanelUser/04Branch/BranchPage';
+import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
+import BranchPage from './pages/Platform/PanelUser/02Branch/BranchPage';
 import SustainabilityPage from './pages/Platform/PanelUser/Sustainability/SustainabilityPage';
-
-//Error 404
-import Error404 from './pages/Error404/Error404';
+import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/Questions';
+import ServicesPage from './pages/Platform/PanelUser/00NavBar/02Services/Services';
+import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/Notifications';
+import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/Configuration';
 
 function App() {
 
@@ -121,43 +125,26 @@ function App() {
                         <Route path='/apiDocumentation' element={<APIDocumentation />} />
                         {/* Rutas Protegidas */}
                         <Route element={<ProtectedRoute />}>
+                            {/* Sección NavBar */}
+                            <Route path='/questions' element={<QuestionsPage />} />
+                            <Route path='/services' element={<ServicesPage />} />
+                            <Route path='/notifications' element={<NotificationsPage />} />
+                            <Route path='/configuration' element={<ConfigurationPage />} />
+                            <Route path='/configuration/profile' element={<ProfilePage />} />
+
                             {/* Sección Home */}
                             <Route path='/home' element={<Home />} />
-
-                            {/* Sección Configuration */}
-                            <Route path='/profile' element={<ProfilePage />} />
                             <Route path='/branches' element={<BranchPage />} />
+                            <Route path='/inventories' element={<BranchPage />} />
+                            <Route path='/accounts' element={<BranchPage />} />
+                            <Route path='/invoicing-and-pos' element={<BranchPage />} />
+                            <Route path='/electronic-payroll' element={<BranchPage />} />
+                            <Route path='/crm-clients' element={<BranchPage />} />
+                            <Route path='/crm-suppliers' element={<BranchPage />} />
                             <Route path='/sustainability' element={<SustainabilityPage />} />
-                            {/* Sección EcopcionApp */}
-
-
-                            {/* Sección Configuración del perfil */}
-
-                            {/* Sección Sedes */}
-
-                            {/* Sección Usuarios de plataforma del User o Company */}
-
-                            {/* Sección Transacciones POS */}
-
-                            {/* Sección AccountsBook */}
-
-                            {/* Sección Tus Registros (Actvos, Mercancías, Productos, Materias Primas, Servicios) */}
-
-                            {/* Sección CRM */}
-
-                            {/* Sección Sales Funnel */}
-
-                            {/* Sección Video Tutoriales */}
-
-                            {/* Sección Reportar Errores o Mejoras */}
-
-                            {/* Sección NavBar Indicadores */}
-
-                            {/* Sección NavBar Indicadores Financieros */}
-
-                            {/* Sección NavBar Indicadores de Mercadeo */}
-
-                            {/* Sección NavBar Indicadores de Sostenibilidad */}
+                            <Route path='/reports-and-indicators' element={<SustainabilityPage />} />
+                            <Route path='/strategic-notifications' element={<SustainabilityPage />} />
+                            <Route path='/consultancies' element={<SustainabilityPage />} />
                         </Route>
                     {/* Sección Error 404 */}
                     <Route path="*" element={<Error404 />} />

@@ -1,11 +1,9 @@
-import NavBar from '../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../components/Platform/Footer/Footer';
-import Panel from '../../../../components/Platform/01Home/Panel';
+import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function HomePage() {
-
+function ConfigurationPage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -13,7 +11,7 @@ function HomePage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Panel />
+                        ConfigurationPage
                     </div>
                     <Footer />
                 </div>
@@ -22,4 +20,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default ConfigurationPage;

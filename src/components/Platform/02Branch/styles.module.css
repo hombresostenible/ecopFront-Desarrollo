@@ -1,0 +1,110 @@
+.container__Table{
+    width: 1000px;
+}
+.container__Head{
+    background: #e9ecef;
+    height: 60px;
+    width: 100%;
+    font-weight: 600;
+}
+.container__Tr{
+    height: 60px;
+}
+.branch{
+    height: 60px;
+    width: 140px;
+}
+.department{
+    height: 60px;
+    width: 140px;
+}
+.city{
+    height: 60px;
+    width: 140px;
+}
+.address{
+    height: 60px;
+    width: 140px;
+}
+.email{
+    height: 60px;
+    width: 200px;
+}
+.phone{
+    height: 60px;
+    width: 140px;
+}
+.action{
+    height: 60px;
+    width: 100px;
+}
+.container__Body{
+    height: 60px;
+    width: 100%;
+}
+.container__Info{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+.container__Branch{
+    padding: 0 10px;
+    height: 60px;
+    width: 140px;
+}
+.text__Ellipsis {
+    opacity: 0.75;
+    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
+}
+.container__Department{
+    white-space: nowrap;
+    height: 60px;
+    width: 140px;
+}
+.container__City{
+    white-space: nowrap;
+    height: 60px;
+    width: 140px;
+}
+.container__Address{
+    white-space: nowrap;
+    height: 60px;
+    width: 140px;
+}
+.container__Email{
+    white-space: nowrap;
+    height: 60px;
+    width: 200px;
+}
+.container__Phone{
+    white-space: nowrap;
+    height: 60px;
+    width: 140px;
+}
+.container__Action{
+    white-space: nowrap;
+    height: 60px;
+    width: 100px;
+}
+.button__Delete {
+    font-size: 16px;
+    color: #da2c38;
+    height: 35px;
+    width: 50px;
+    padding: 5px 10px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.button__Edit {
+    font-size: 16px;
+    color: #718bd8;
+    height: 35px;
+    width: 50px;
+    padding: 5px 10px;
+}
+.button__Edit:hover {
+    transition: 300ms all ease;
+    cursor: pointer;
+}

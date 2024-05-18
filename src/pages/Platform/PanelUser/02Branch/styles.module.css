@@ -1,0 +1,21 @@
+.container {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Component {
+    border: 1px solid red;
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.active {
+    background: #718bd8;
+    color: #f8f9fa;
+    cursor: pointer;
+}
