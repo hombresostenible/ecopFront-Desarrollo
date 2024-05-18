@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { SetStateAction, useEffect, useState } from 'react';
 import jsCookie from 'js-cookie';
-//REDUX
+// REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
-//ELEMENTOS DEL COMPONENTE
+// ELEMENTOS DEL COMPONENTE
 import BranchCard from '../../../../components/Platform/04Branch/BranchCard';
-import CreateBranch from '../../../../components/Platform/04Branch/CreateBranch';
+import CreateBranch from '../../../../components/Platform/04Branch/CreateBranch/CreateBranch';
 import NavBar from '../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../components/Platform/Footer/Footer';
@@ -20,8 +20,8 @@ function BranchPage() {
     // Utiliza useSelector para obtener la información del usuario del estado de Redux
     const branch = useSelector((state: RootState) => state.branch.branch);
 
-    const [ selectedBranch, setSelectedBranch ] = useState('');
-    const [ selectedComponent, setSelectedComponent ] = useState('branchCard');
+    const [selectedBranch, setSelectedBranch] = useState('');
+    const [selectedComponent, setSelectedComponent] = useState('branchCard');
 
     useEffect(() => {
         if (token) {
@@ -36,14 +36,17 @@ function BranchPage() {
     const branchesToDisplay = Array.isArray(branch) ? branch : [];
     
     const filteredBranches = selectedBranch
-    ? branchesToDisplay.filter(branch => branch.id === selectedBranch)
-    : branchesToDisplay;
+        ? branchesToDisplay.filter(branch => branch.id === selectedBranch)
+        : branchesToDisplay;
     
     const handleCreateBranch = () => {
         // Llama a getBranches para actualizar los datos después de crear una nueva sede
         dispatch(getBranches(token));
     };
-   
+    
+    const handleUpdateBranch = () => {
+        dispatch(getBranches(token));
+    };
 
     return (
         <div className="d-flex">
@@ -91,7 +94,9 @@ function BranchPage() {
                                     {filteredBranches.length > 0 ? (
                                         <div>
                                             <BranchCard
+                                                token={token}
                                                 branches={filteredBranches}
+                                                onUpdateBranch={handleUpdateBranch}
                                             />
                                         </div>
                                     ) : (

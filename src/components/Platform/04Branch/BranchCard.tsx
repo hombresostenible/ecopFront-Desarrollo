@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { IBranch } from '../../../types/User/branch.types';
-import ConfirmDeleteBranch from './ConfirmDeleteBranch';
+import ConfirmDeleteBranch from './ConfirmDeleteBranch/ConfirmDeleteBranch';
 import ModalBranch from './ModalBranch/ModalBranch';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaUserEdit } from "react-icons/fa";
@@ -10,9 +10,11 @@ import styles from './styles.module.css';
 
 interface BranchCardProps {
     branches: IBranch[];
+    token: string;
+    onUpdateBranch: () => void;
 }
 
-function BranchCard ({ branches }: BranchCardProps) {
+function BranchCard ({ branches, token, onUpdateBranch }: BranchCardProps) {
 
     const [ idBranch, setIdBranch ] = useState('');
     const [ nameBranch, setNameBranch ] = useState('');
@@ -31,6 +33,7 @@ function BranchCard ({ branches }: BranchCardProps) {
     };
 
     const onCloseModal = () => {
+        onUpdateBranch()
         setShowDeleteConfirmation(false);
         setShowBranchModal(false);
     };    
@@ -96,7 +99,12 @@ function BranchCard ({ branches }: BranchCardProps) {
                         <Modal.Title>Detalles de la sede</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {selectedBranch && <ModalBranch branch={selectedBranch} />}
+                        {selectedBranch &&
+                            <ModalBranch
+                                branch={selectedBranch}
+                                token={token}
+                                onUpdateBranch={onUpdateBranch}
+                            />}
                     </Modal.Body>
                 </Modal>
 
@@ -109,6 +117,7 @@ function BranchCard ({ branches }: BranchCardProps) {
                             id={idBranch}
                             nameBranch={nameBranch}
                             onCloseModal={() => {onCloseModal()}}
+                            // onUpdateBranch={onUpdateBranch}
                         />
                     </Modal.Body>
                 </Modal>

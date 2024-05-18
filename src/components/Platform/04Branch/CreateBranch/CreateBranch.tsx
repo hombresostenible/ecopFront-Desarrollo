@@ -6,12 +6,12 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postBranch, getBranches } from '../../../redux/User/branchSlice/actions';
-import type { RootState, AppDispatch } from '../../../redux/store';
+import { postBranch, getBranches } from '../../../../redux/User/branchSlice/actions';
+import type { RootState, AppDispatch } from '../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
-import { IBranch } from '../../../types/User/branch.types';
-import DepartmenAndCity from '../../../helpers/DepartmenAndCity/DepartmenAndCity';
-import CreateManyBranches from './CreateManyBranches';
+import { IBranch } from '../../../../types/User/branch.types';
+import DepartmenAndCity from '../../../../helpers/DepartmenAndCity/DepartmenAndCity';
+import CreateManyBranches from '../CreateManyBranches/CreateManyBranches';
 import styles from './styles.module.css';
 
 interface CreateBranchProps {
