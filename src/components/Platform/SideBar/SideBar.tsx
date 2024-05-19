@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { NavLink, useLocation } from 'react-router-dom';
-//REDUX
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps */
+import { useState, useRef, useEffect } from 'react';
+import { NavLink, useLocation, Link } from 'react-router-dom';
+// REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../redux/store';
 import { logoutUser } from '../../../redux/User/userSlice/actions';
-//ELEMENTOS DEL COMPONENTE
-import { IoChevronDownOutline } from "react-icons/io5";
+// ELEMENTOS DEL COMPONENTE
+import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { FaUsers, FaFileInvoiceDollar, FaCashRegister } from "react-icons/fa";
@@ -13,9 +14,168 @@ import { MdAppRegistration } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
 import styles from './styles.module.css';
 
+const setItemInLocalStorage = (key: string, value: any) => {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+
+const getItemFromLocalStorage = (key: string, initialValue: any) => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : initialValue;
+};
+
 function SideBar() {
     const dispatch: AppDispatch = useDispatch();
     const location = useLocation();
+
+    //DECLARAR LOS ESTADOS PARA CADA SUBMENU
+    const [subMenuBranches, setSubMenuBranches] = useState(() => getItemFromLocalStorage('branches', false));                                               //SEDES
+    const [subMenuInventory, setSubMenuInventory] = useState(() => getItemFromLocalStorage('inventory', false));                                            //INENTARIO
+    const [subMenuAccounts, setSubMenuAccounts] = useState(() => getItemFromLocalStorage('accounts', false));                                               //CUENTAS
+    const [subMenuInvoicingAndPos, setSubMenuInvoicingAndPos] = useState(() => getItemFromLocalStorage('invoicingAndPos', false));                          //FACTURACION Y POS
+    const [subMenuElectronicPayroll, setSubMenuElectronicPayroll] = useState(() => getItemFromLocalStorage('electronicPayroll', false));                    //NOMINA ELECTRONICA
+    const [subMenuCrmClients, setSubMenuCrmClients] = useState(() => getItemFromLocalStorage('crmClients', false));                                         //CRM CLIENTES
+    const [subMenuCrmSuppliers, setSubMenuCrmSuppliers] = useState(() => getItemFromLocalStorage('crmSuppliers', false));                                   //CRM PROVEEDORES
+    const [subMenuSustainability, setSubMenuSustainability] = useState(() => getItemFromLocalStorage('sustainability', false));                             //SOSTENIBILIDAD
+    const [subMenuReportsAndIndicators, setSubMenuReportsAndIndicators] = useState(() => getItemFromLocalStorage('reportsAndIndicators', false));           //REPORTES E INDICADORES
+    const [subMenuStrategicNotifications, setSubMenuStrategicNotifications] = useState(() => getItemFromLocalStorage('strategicNotifications', false));     //NOTIFICACIONES ESTRATEGICAS
+    const [subMenuConsultancies, setSubMenuConsultancies] = useState(() => getItemFromLocalStorage('consultancies', false));                                //ASESORIAS
+
+
+    //DECLARAR LAS REFERENCIAS PARA CADA SUBMENU
+    const subMenuBranchesRef = useRef<HTMLDivElement>(null);
+    const subMenuInventoryRef = useRef<HTMLDivElement>(null);
+    const subMenuAccountsRef = useRef<HTMLDivElement>(null);
+    const subMenuInvoicingAndPosRef = useRef<HTMLDivElement>(null);
+    const subMenuElectronicPayrollRef = useRef<HTMLDivElement>(null);
+    const subMenuCrmClientsRef = useRef<HTMLDivElement>(null);
+    const subMenuCrmSuppliersRef = useRef<HTMLDivElement>(null);
+    const subMenuSustainabilityRef = useRef<HTMLDivElement>(null);
+    const subMenuReportsAndIndicatorsRef = useRef<HTMLDivElement>(null);
+    const subMenuStrategicNotificationsRef = useRef<HTMLDivElement>(null);
+    const subMenuConsultanciesRef = useRef<HTMLDivElement>(null);
+    
+    //DECLARAR LOS HANDLES PARA CADA SUBMENU
+    //SEDES
+    const handleSubMenuBranches = () => {
+        setSubMenuBranches((prev: any) => {
+            setItemInLocalStorage('branches', !prev);
+            return !prev;
+        });
+    };
+
+    //INVENTARIOS
+    const handleSubMenuInventory = () => {
+        setSubMenuInventory((prev: any) => {
+            setItemInLocalStorage('inventory', !prev);
+            return !prev;
+        });
+    };
+    
+    //CUENTAS
+    const handleSubMenuAccounts = () => {
+        setSubMenuAccounts((prev: any) => {
+            setItemInLocalStorage('accounts', !prev);
+            return !prev;
+        });
+    };
+
+    //FACTURACION Y POS
+    const handleSubMenuInvoicingAndPos = () => {
+        setSubMenuInvoicingAndPos((prev: any) => {
+            setItemInLocalStorage('invoicingAndPos', !prev);
+            return !prev;
+        });
+    };
+
+    //NOMINA ELECTRONICA
+    const handleSubMenuElectronicPayroll = () => {
+        setSubMenuElectronicPayroll((prev: any) => {
+            setItemInLocalStorage('electronicPayroll', !prev);
+            return !prev;
+        });
+    };
+
+    //CMR CLIENTES
+    const handleSubMenuCrmClients = () => {
+        setSubMenuCrmClients((prev: any) => {
+            setItemInLocalStorage('crmClients', !prev);
+            return !prev;
+        });
+    };
+
+    //CMR PROVEEDORES
+    const handleSubMenuCrmSuppliers = () => {
+        setSubMenuCrmSuppliers((prev: any) => {
+            setItemInLocalStorage('crmSuppliers', !prev);
+            return !prev;
+        });
+    };
+
+    //SOSTENIBILIDAD
+    const handleSubMenuSustainability = () => {
+        setSubMenuSustainability((prev: any) => {
+            setItemInLocalStorage('sustainability', !prev);
+            return !prev;
+        });
+    };
+
+    //REPORTES E INDICADORES
+    const handleSubMenuReportsAndIndicators = () => {
+        setSubMenuReportsAndIndicators((prev: any) => {
+            setItemInLocalStorage('reportsAndIndicators', !prev);
+            return !prev;
+        });
+    };
+
+    //REPORTES E INDICADORES
+    const handleSubMenuStrategicNotifications = () => {
+        setSubMenuStrategicNotifications((prev: any) => {
+            setItemInLocalStorage('strategicNotifications', !prev);
+            return !prev;
+        });
+    };
+
+    //ASESORIAS PARA TOMA DE DECISIONES
+    const handleSubMenuConsultancies = () => {
+        setSubMenuConsultancies((prev: any) => {
+            setItemInLocalStorage('consultancies', !prev);
+            return !prev;
+        });
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                subMenuBranches.current && !subMenuBranches.current.contains(event.target as Node) &&
+                subMenuInventoryRef.current && !subMenuInventoryRef.current.contains(event.target as Node) &&
+                subMenuAccountsRef.current && !subMenuAccountsRef.current.contains(event.target as Node) &&
+                subMenuInvoicingAndPosRef.current && !subMenuInvoicingAndPosRef.current.contains(event.target as Node) &&
+                subMenuElectronicPayrollRef.current && !subMenuElectronicPayrollRef.current.contains(event.target as Node) &&
+                subMenuCrmClientsRef.current && !subMenuCrmClientsRef.current.contains(event.target as Node) &&
+                subMenuCrmSuppliersRef.current && !subMenuCrmSuppliersRef.current.contains(event.target as Node) &&
+                subMenuSustainabilityRef.current && !subMenuSustainabilityRef.current.contains(event.target as Node) &&
+                subMenuReportsAndIndicatorsRef.current && !subMenuReportsAndIndicatorsRef.current.contains(event.target as Node) &&
+                subMenuStrategicNotificationsRef.current && !subMenuStrategicNotificationsRef.current.contains(event.target as Node) &&
+                subMenuConsultanciesRef.current && !subMenuConsultanciesRef.current.contains(event.target as Node)
+            ) {
+                setSubMenuBranches(false);
+                setSubMenuInventory(false);
+                setSubMenuAccounts(false);
+                setSubMenuInvoicingAndPos(false);
+                setSubMenuElectronicPayroll(false);
+                setSubMenuCrmClients(false);
+                setSubMenuCrmSuppliers(false);
+                setSubMenuSustainability(false);
+                setSubMenuReportsAndIndicators(false);
+                setSubMenuStrategicNotifications(false);
+                setSubMenuConsultancies(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const signout = async () => {
         try {
@@ -26,110 +186,236 @@ function SideBar() {
     };
 
     return (
-        <div className={`${styles.container} position-relative`}>
-            <div className={`${styles.container__Component} p-2 position-fixed`}>
-                <div className="overflow-y-auto">
-                    <NavLink to="/home" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
-                        <IoHome className={`${styles.icon} `}/>
-                        <div className={` p-1 d-flex align-items-center justify-content-start`}>Home</div>
-                    </NavLink>
+        <div className={`${styles.container} position-relative overflow-y-auto`}>
+            <div className={`${styles.container__Component} p-2 `}>
+                <NavLink to="/home" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
+                    <IoHome className={`${styles.icon} `}/>
+                    <div className={` p-1 d-flex align-items-center justify-content-start`}>Home</div>
+                </NavLink>
 
-                    <NavLink to="/branches" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/branches' ? styles.active : ''} `}>
-                        <IoStorefrontSharp className={`${styles.icon} `}/>
-                        <div className={` p-1 d-flex align-items-center justify-content-start`}>Tus Sedes</div>
-                    </NavLink>
-
-                    <NavLink to="/inventories" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/inventories' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <MdAppRegistration className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Inventarios</div>
+                <div ref={subMenuBranchesRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <IoStorefrontSharp className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Tus Sedes</div>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/accounts" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/accounts' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaFileInvoiceDollar className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Cuentas</div>
+                        {subMenuBranches ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuBranches} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuBranches} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuBranches ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/branches/consult-branches' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/branches/consult-branches' ? styles.active : ''} `} >Consulta tus sedes</Link>
+                            <Link to='/branches/create-branches' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/branches/create-branches' ? styles.active : ''}`}>Crea tus sedes</Link>
                         </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/invoicing-and-pos" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/invoicing-and-pos' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaCashRegister className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Facturación y POS</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                        {/* 
-                            DEBE DE SALIR UNAS OPCIONES LA DAR CLIC:
-                            -EMITIR FACTURAS Y POS
-                            -NOTAS CREDITO  --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA CREDITO
-                            -NOTAS DEBITO   --> DEBE DE SALIR UNA FACTURA PARA REGISTRAR LA NOTA DEBITO
-                        */}
-                    </NavLink>
-
-                    <NavLink to="/electronic-payroll" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/electronic-payroll' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaCashRegister className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Nómina electrónica</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/crm-clients" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-clients' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>CRM Clientes</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/crm-suppliers" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/crm-suppliers' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>CRM Proveedores</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/sustainability" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/sustainability' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Sostenibilidad</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/reports-and-indicators" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/reports-and-indicators' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Reportes e indicadores</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/strategic-notifications" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/strategic-notifications' ? styles.active : ''} `}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Notificaciones estratégicas</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/consultancies" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-between text-decoration-none ${location.pathname === '/consultancies' ? styles.active : ''} mb-2`}>
-                        <div className='d-flex items-center justify-content-center'>
-                            <FaUsers className={`${styles.icon} `}/>
-                            <div className={` p-1 d-flex align-items-center justify-content-start`}>Asesoría para toma de decisiones</div>
-                        </div>
-                        <IoChevronDownOutline className={styles.icon__Plus}/>
-                    </NavLink>
-
-                    <NavLink to="/login" onClick={() => { signout() }}  className={`${styles.section} p-1 d-flex align-items-center justify-content-start rounded `}>
-                        <GoSignOut className={`${styles.icon} `}/>
-                        <div>Salir</div>
-                    </NavLink>
+                    </div>
                 </div>
+
+                <div ref={subMenuInventoryRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <MdAppRegistration className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Inventarios</div>
+                        </div>
+                        {subMenuInventory ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuInventory} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuInventory} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuInventory ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/inventories/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/assets' ? styles.active : ''}`}>Activos</Link>
+                            <Link to='/inventories/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/merchadises' ? styles.active : ''}`}>Mercancías</Link>
+                            <Link to='/inventories/products' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/products' ? styles.active : ''}`}>Productos</Link>
+                            <Link to='/inventories/raw-materals' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/raw-materals' ? styles.active : ''}`}>Materias primas</Link>
+                            <Link to='/inventories/services' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/services' ? styles.active : ''}`}>Servicios</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuAccountsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaFileInvoiceDollar className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Cuentas</div>
+                        </div>
+                        {subMenuAccounts ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuAccounts} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuAccounts} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuAccounts ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/accounts/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/assets' ? styles.active : ''}`}>Ingresos</Link>
+                            <Link to='/accounts/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/assets' ? styles.active : ''}`}>Gastos</Link>
+                            <Link to='/accounts/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/merchadises' ? styles.active : ''}`}>Transacciones pendientes de aprobar</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuInvoicingAndPosRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaCashRegister className={`${styles.icon} `} />
+                            <div className={`p-1`}>Facturación y POS</div>
+                        </div>
+                        {subMenuInvoicingAndPos ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuInvoicingAndPos} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuInvoicingAndPos} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuInvoicingAndPos ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas crédito</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas débito</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuElectronicPayrollRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaFileInvoiceDollar className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Nómina electrónica</div>
+                        </div>
+                        {subMenuElectronicPayroll ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuElectronicPayroll} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuElectronicPayroll} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuElectronicPayroll ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Pagos de nómina</Link>
+                            <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Certificaciones</Link>
+                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Contratos laborales</Link>
+                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Liquidación de nómina</Link>
+                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Seguridad social</Link>
+                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Parafiscales</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuCrmClientsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>CRM Clientes</div>
+                        </div>
+                        {subMenuCrmClients ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuCrmClients} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuCrmClients} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuCrmClients ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Consulta tus clientes</Link>
+                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Crea tus clientes</Link>
+                            <Link to='/crm-clients/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/merchadises' ? styles.active : ''}`}>Enviar cotizaciones</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuCrmSuppliersRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>CRM Proveedores</div>
+                        </div>
+                        {subMenuCrmSuppliers ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuCrmSuppliers} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuCrmSuppliers} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuCrmSuppliers ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Consulta tus proveedores</Link>
+                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Crea tus proveedores</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuSustainabilityRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Sostenibilidad</div>
+                        </div>
+                        {subMenuSustainability ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuSustainability} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuSustainability} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuSustainability ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Leyes</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Sanciones</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuReportsAndIndicatorsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Reportes e indicadores</div>
+                        </div>
+                        {subMenuReportsAndIndicators ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuReportsAndIndicators} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuReportsAndIndicators} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuReportsAndIndicators ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores financieros</Link>
+                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores de mercadeo</Link>
+                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores de sostenibilidad</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuStrategicNotificationsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Notificaciones estratégicas</div>
+                        </div>
+                        {subMenuStrategicNotifications ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuStrategicNotifications} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuStrategicNotifications} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuStrategicNotifications ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/strategic-notifications/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/assets' ? styles.active : ''}`}>Vencimiento de productos</Link>
+                            <Link to='/strategic-notifications/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/assets' ? styles.active : ''}`}>Calendario tributario</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <div ref={subMenuConsultanciesRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
+                    <div className="d-flex align-items-center justify-content-between w-100" >
+                        <div className="d-flex align-items-center">
+                            <FaUsers className={`${styles.icon} `}/>
+                            <div className={`p-1`}>Asesoría para toma de decisiones</div>
+                        </div>
+                        {subMenuConsultancies ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuConsultancies} />
+                        ) : ( 
+                            <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuConsultancies} />
+                        )}
+                    </div>
+                    <div className={`collapse ${subMenuConsultancies ? 'show' : ''}`}>
+                        <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
+                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Vencimiento de productos</Link>
+                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Calendario tributario</Link>
+                        </div>
+                    </div>
+                </div>
+
+                <NavLink to="/login" onClick={() => { signout() }} className={`${styles.section} p-1 d-flex align-items-center justify-content-start rounded text-decoration-none`}>
+                    <GoSignOut className={`${styles.icon} `}/>
+                    <div>Salir</div>
+                </NavLink>
             </div>
         </div>
     );

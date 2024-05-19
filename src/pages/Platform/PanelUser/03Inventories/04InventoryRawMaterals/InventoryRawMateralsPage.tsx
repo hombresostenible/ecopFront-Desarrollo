@@ -3,7 +3,7 @@ import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function ServicesPage() {
+function InventoryRawMateralsPage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -11,7 +11,7 @@ function ServicesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        ServicesPage
+                        InventoryRawMateralsPage
                     </div>
                     <Footer />
                 </div>
@@ -20,4 +20,4 @@ function ServicesPage() {
     );
 }
 
-export default ServicesPage;
+export default InventoryRawMateralsPage;

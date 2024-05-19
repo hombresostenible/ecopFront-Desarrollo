@@ -1,11 +1,11 @@
 .container {
-    min-width: 330px;
+    min-width: 350px;
     height: calc(100vh - 70px);
     background: #718bd8;
     color: hsl(210, 17%, 98%);
 }
 .container__Component {
-    min-width: 300px;
+    max-width: 340px;
 }
 .section {
     min-height: 35px;
@@ -13,12 +13,7 @@
 }
 .section:hover {
     background: rgba(67, 97, 238, 0.5);
-    border-radius: 5px;
-}
-.active {
-    background: #4361ee;
-    border-radius: 5px;
-    color: #f8f9fa;
+    border-radius: 10px;
 }
 .icon {
     font-size: 20px;
@@ -27,9 +22,30 @@
 .icon__Plus {
     margin: 0 0 0 20px;
     font-size: 20px;
-    transition: transform 0.3s ease;
 }
 .icon__Plus:hover {
     cursor: pointer;
-    transform: rotate(90deg) scale(1.08);
+}
+.menu {
+    background: #f8f9fa;
+    margin: 0 0 5px 5px;
+    min-width: 300px;
+    border-radius: 10px;
+    padding: 5px 5px 5px 35px;
+}
+.link__Service {
+    color: #343a40;
+    opacity: 0.75;
+}
+.link__Service:hover {
+    color: #4361ee;
+    opacity: 1;
+}
+.active {
+    background: #4361ee;
+    border-radius: 10px;
+    color: #f8f9fa;
+    width: 270px;
+    margin: 0 0 0 -10px;
+    padding: 0 0 0 10px;
 }

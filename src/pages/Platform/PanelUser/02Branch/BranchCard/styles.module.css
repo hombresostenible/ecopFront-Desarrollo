@@ -1,3 +1,12 @@
+.container {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Component {
+    border: 1px solid red;
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
 .container__Table{
     width: 1000px;
 }
