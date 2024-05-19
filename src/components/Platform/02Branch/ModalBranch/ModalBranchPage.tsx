@@ -14,7 +14,7 @@ interface ModalBranchProps {
     onUpdateBranch: () => void;
 }
 
-const ModalBranch: React.FC<ModalBranchProps> = ({ branch, token, onUpdateBranch }) => {
+function ModalBranch({ branch, token, onUpdateBranch }: ModalBranchProps) {
     const dispatch: AppDispatch = useDispatch();
 
 
@@ -246,6 +246,6 @@ const ModalBranch: React.FC<ModalBranchProps> = ({ branch, token, onUpdateBranch
             </div>
         </div>
     );
-};
+}
 
 export default ModalBranch;

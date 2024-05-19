@@ -15,7 +15,7 @@ import styles from './styles.module.css';
 
 function NavBar() {
     const dispatch: AppDispatch = useDispatch();
-    const [ menuVisible, setMenuVisible ] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
 
     const handleServiceClick = () => {
         setMenuVisible(!menuVisible);
