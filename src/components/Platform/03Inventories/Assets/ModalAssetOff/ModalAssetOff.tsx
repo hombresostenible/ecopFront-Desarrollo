@@ -6,8 +6,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchAsset, getAssets } from '../../../../../redux/User/assetsSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
+// ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../types/User/assets.types';
-import styles from '../styles.module.css';
+import styles from './styles.module.css';
 
 interface ModalAssetOffProps {
     asset: IAssets;
@@ -27,15 +28,15 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
     const [ formSubmitted, setFormSubmitted ] = useState(false);
     const [ shouldNavigate, setShouldNavigate ] = useState(false);
     
-    const isassetStatusConsult = location.pathname === '/assets';
+    const isAssetStatusConsult = location.pathname === '/inventories/assets';
 
 
     const onSubmit = (values: IAssets) => {
         try {
-            const assetData = {
+            const formData = {
                 ...values,
             };
-            dispatch(patchAsset(asset.id, assetData, token));
+            dispatch(patchAsset(asset.id, formData, token));
             setFormSubmitted(true);
             setTimeout(() => {
                 setFormSubmitted(false);
@@ -58,10 +59,10 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
     return (
         <div className="p-3">
             <div className={`${styles.containerModal} `}>
-                {isassetStatusConsult === true && (
+                {isAssetStatusConsult === true && (
                     <p>Si deseas normalizar tu "{asset?.nameItem}", presiona "Enviar"</p>
                 )}
-                {isassetStatusConsult === false && (
+                {isAssetStatusConsult === false && (
                     <p>Si deseas dar de baja tu "{asset?.nameItem}" del inventario de activos, selecciona el motivo:</p>
                 )}
                 {formSubmitted && (
@@ -71,7 +72,7 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
                     <div key={i} className='bg-red-500 my-2 p-2 text-white text-center'>{error}</div>
                 ))}
                 <form onSubmit={handleSubmit(onSubmit)} >
-                    {isassetStatusConsult === false && (
+                    {isAssetStatusConsult === false && (
                         <div>
                             <div>
                                 <label>Selecciona el motivo</label>
@@ -109,7 +110,7 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
                             </div>
                         </div>
                     )}
-                    {isassetStatusConsult === true && (
+                    {isAssetStatusConsult === true && (
                         <div>
                             <select
                                 {...register('inventoryOff', { required: true })}

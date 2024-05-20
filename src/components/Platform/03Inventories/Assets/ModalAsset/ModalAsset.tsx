@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
+// REDUX
 import { useDispatch } from 'react-redux';
 import { getAssets, putAsset } from '../../../../../redux/User/assetsSlice/actions';
 import type { AppDispatch } from '../../../../../redux/store';
+// ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../types/User/branch.types';
 import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
@@ -16,7 +18,7 @@ interface ModalAssetProps {
     onCloseModal: () => void;
 }
 
-const ModalAsset: React.FC<ModalAssetProps> = ({ token, idItem, asset, branches, onCloseModal }) => {
+function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAssetProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -297,6 +299,6 @@ const ModalAsset: React.FC<ModalAssetProps> = ({ token, idItem, asset, branches,
             </div>
         </div>
     );
-};
+}
 
 export default ModalAsset;
