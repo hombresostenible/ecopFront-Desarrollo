@@ -3,7 +3,6 @@
     width: calc(100vw - 300px);
 }
 .container__Component {
-    border: 1px solid red;
     height: calc(100vh - 70px);
     width: calc(100vw - 300px);
 }
@@ -19,31 +18,32 @@
 .container__Tr{
     height: 60px;
 }
-.branch{
+.column__Branch{
     height: 60px;
     width: 140px;
 }
-.department{
+.column__Name_Item{
     height: 60px;
     width: 140px;
 }
-.city{
+.column__Brand_Assets{
     height: 60px;
     width: 140px;
 }
-.address{
+.column__Reference_Asset{  
+
     height: 60px;
     width: 140px;
 }
-.email{
+.column__Condition_Asset{
+    height: 60px;
+    width: 140px;
+}
+.column__State_Asset{
     height: 60px;
     width: 200px;
 }
-.phone{
-    height: 60px;
-    width: 140px;
-}
-.action{
+.column__Action{
     height: 60px;
     width: 100px;
 }
@@ -99,21 +99,21 @@
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 12px;
+    padding: 0 5px;
 }
 .button__Delete:hover {
-    color: #718bd8;
     transition: 300ms all ease;
+    color: #718bd8;
     cursor: pointer;
 }
 .button__Edit {
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 12px;
+    padding: 0 5px;
 }
 .button__Edit:hover {
-    color: #718bd8;
     transition: 300ms all ease;
+    color: #718bd8;
     cursor: pointer;
 }

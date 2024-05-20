@@ -142,7 +142,7 @@ export const putManyAssets = (formData: IAssets[], token: string) => async (disp
 };
 
 //DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const patchAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
+export const patchAsset = (idAssets: string, formData: { assetStatus: string }, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAssetStart());
         const response = await axiosInstance.patch(`/asset/${idAssets}`, formData, {
