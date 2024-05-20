@@ -23,8 +23,8 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<IMerchandise>();
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
-    const [ shouldNavigate, setShouldNavigate ] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const onSubmit = (values: IMerchandise) => {
         try {
