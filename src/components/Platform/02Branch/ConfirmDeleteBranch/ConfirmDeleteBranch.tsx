@@ -1,7 +1,7 @@
 import jsCookie from 'js-cookie';
 //REDUX
 import { useDispatch } from 'react-redux';
-import { deleteBranch } from '../../../../redux/User/branchSlice/actions';
+import { deleteBranch, getBranches } from '../../../../redux/User/branchSlice/actions';
 import type { AppDispatch } from '../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import styles from './styles.module.css';
@@ -21,7 +21,8 @@ function ConfirmDeleteBranch ({ id, nameBranch, onCloseModal }: ConfirmDeleteBra
         try {
             dispatch(deleteBranch(id, token));
             // Simulamos un delay de la API
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 500));
+            dispatch(getBranches(token));
             onCloseModal();
         } catch (error) {
             throw new Error('Error al eliminar la sede');

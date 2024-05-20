@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBranch } from '../../../types/User/branch.types';
 
 interface BranchState {
-    branch: IBranch | IBranch[] | null;
+    branch: IBranch|  IBranch[] | null;
     loading: boolean;
     errorBranch: string[] | null;
 }
@@ -17,7 +17,7 @@ const branchSlice = createSlice({
     name: 'branch',
     initialState,
     reducers: {
-        branchData: (state, action: PayloadAction<IBranch | null>) => {
+        branchData: (state, action: PayloadAction<IBranch[] | null>) => {
             state.loading = false;
             state.branch = action.payload;
         },
@@ -25,9 +25,8 @@ const branchSlice = createSlice({
             state.loading = false;
             state.errorBranch = action.payload;
         },
-        postBranchStart: (state, action: PayloadAction<IBranch  | null>) => {
+        postBranchStart: (state) => {
             state.loading = true;
-            state.branch = action.payload;
             state.errorBranch = null;
         },
         postManyBranchesStart: (state, action: PayloadAction<IBranch[]>) => {

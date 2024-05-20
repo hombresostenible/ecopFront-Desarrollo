@@ -7,7 +7,7 @@ import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBra
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(postBranchStart(formData));
+        dispatch(postBranchStart());
         const response = await axiosInstance.post('/branch', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
