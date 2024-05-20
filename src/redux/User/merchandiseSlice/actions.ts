@@ -4,7 +4,7 @@ import axiosInstance from '../../../api/axios';
 import { IMerchandise } from '../../../types/User/merchandise.types';
 import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
-//CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
+//CREAR UNA MERCANCIA
 export const postMerchandise = (formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postMerchandisetart(formData));
@@ -24,7 +24,7 @@ export const postMerchandise = (formData: IMerchandise, token: string) => async 
     }
 };
 
-//CREAR MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS
+//CREAR MUCHAS MERCANCIAS
 export const postManyMerchandises = (formData: IMerchandise[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyMerchandisesStart(formData));
@@ -44,7 +44,7 @@ export const postManyMerchandises = (formData: IMerchandise[], token: string) =>
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//OBTIENE TODOS LAS MERCANCIAS DEL USER
 export const getMerchandises = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/merchandise', {
@@ -63,7 +63,7 @@ export const getMerchandises = (token: string) => async (dispatch: AppDispatch) 
     }
 };
 
-//OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
+//OBTIENE UNA MERCANCIAS POR ID
 export const getMerchandiseById = (idMerchandise: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/merchandise/${idMerchandise}`, {
@@ -82,7 +82,7 @@ export const getMerchandiseById = (idMerchandise: string, token: string) => asyn
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
+//OBTIENE TODOS LAS MERCANCIAS DEL USER POR SEDE
 export const getMerchandisesByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/merchandise/merchandises-branch/${idBranch}`, {
@@ -101,7 +101,7 @@ export const getMerchandisesByBranch = (idBranch: string, token: string) => asyn
     }
 };
 
-//ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ACTUALIZA UNA MERCANCIAS DEL USER
 export const putMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putMerchandiseStart());
@@ -121,7 +121,7 @@ export const putMerchandise = (idMerchandise: string, formData: IMerchandise, to
     }
 };
 
-//ACTUALIZA MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//ACTUALIZA MUCHAS MERCANCIAS DEL USER
 export const putManyMerchandises = (formData: IMerchandise[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyMerchandisesStart(formData));
@@ -141,7 +141,7 @@ export const putManyMerchandises = (formData: IMerchandise[], token: string) => 
     }
 };
 
-//DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//DA DE BAJA UNA MERCANCIAS DEL USER
 export const patchMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchMerchandiseStart());
@@ -161,7 +161,7 @@ export const patchMerchandise = (idMerchandise: string, formData: IMerchandise, 
     }
 }
 
-//ELIMINA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ELIMINA UNA MERCANCIAS DEL USER
 export const deleteMerchandise = (idMerchandise: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteMerchandiseStart());

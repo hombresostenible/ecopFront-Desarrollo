@@ -69,7 +69,7 @@ import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/C
 
 // import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
 import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/AssetsCard/AssetsCardPage';
-import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/InventoryMerchadisesPage';
+import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/MerchadisesCard/MerchadisesCardPage';
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/InventoryProductsPage';
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/InventoryRawMateralsPage';
 import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/InventoryServicesPage';

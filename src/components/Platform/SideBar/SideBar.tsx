@@ -9,8 +9,13 @@ import { logoutUser } from '../../../redux/User/userSlice/actions';
 import { IoChevronDownOutline, IoChevronUpOutline } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
 import { IoStorefrontSharp } from "react-icons/io5";
-import { FaUsers, FaFileInvoiceDollar, FaCashRegister } from "react-icons/fa";
 import { MdAppRegistration } from "react-icons/md";
+import { FaFileInvoiceDollar, FaCashRegister, FaUsers } from "react-icons/fa";
+import { TbCoin } from "react-icons/tb";
+import { BiSolidLeaf } from "react-icons/bi";
+import { PiChartLineUp } from "react-icons/pi";
+import { IoIosNotifications } from "react-icons/io";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { GoSignOut } from "react-icons/go";
 import styles from './styles.module.css';
 
@@ -299,7 +304,7 @@ function SideBar() {
                 <div ref={subMenuCrmClientsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
-                            <FaUsers className={`${styles.icon} `}/>
+                            <TbCoin className={`${styles.icon} `}/>
                             <div className={`p-1`}>CRM Clientes</div>
                         </div>
                         {subMenuCrmClients ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuCrmClients} />
@@ -338,7 +343,7 @@ function SideBar() {
                 <div ref={subMenuSustainabilityRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
-                            <FaUsers className={`${styles.icon} `}/>
+                            <BiSolidLeaf className={`${styles.icon} `}/>
                             <div className={`p-1`}>Sostenibilidad</div>
                         </div>
                         {subMenuSustainability ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuSustainability} />
@@ -357,7 +362,7 @@ function SideBar() {
                 <div ref={subMenuReportsAndIndicatorsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
-                            <FaUsers className={`${styles.icon} `}/>
+                            <PiChartLineUp className={`${styles.icon} `}/>
                             <div className={`p-1`}>Reportes e indicadores</div>
                         </div>
                         {subMenuReportsAndIndicators ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuReportsAndIndicators} />
@@ -377,7 +382,7 @@ function SideBar() {
                 <div ref={subMenuStrategicNotificationsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
-                            <FaUsers className={`${styles.icon} `}/>
+                            <IoIosNotifications className={`${styles.icon} `}/>
                             <div className={`p-1`}>Notificaciones estratégicas</div>
                         </div>
                         {subMenuStrategicNotifications ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuStrategicNotifications} />
@@ -396,7 +401,7 @@ function SideBar() {
                 <div ref={subMenuConsultanciesRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
-                            <FaUsers className={`${styles.icon} `}/>
+                            <TfiHeadphoneAlt className={`${styles.icon} `}/>
                             <div className={`p-1`}>Asesoría para toma de decisiones</div>
                         </div>
                         {subMenuConsultancies ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuConsultancies} />
