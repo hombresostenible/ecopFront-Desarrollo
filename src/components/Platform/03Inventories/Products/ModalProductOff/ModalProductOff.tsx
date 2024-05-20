@@ -3,43 +3,43 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { patchMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+import { patchProduct, getProducts } from '../../../../../redux/User/productSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { IProduct } from '../../../../../types/User/products.types';
 import styles from './styles.module.css';
 
 interface ModalAssetOffProps {
     token: string;
-    merchandise: IMerchandise;
+    product: IProduct;
     onCloseModal: () => void;
 }
 
-function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalAssetOffProps) {
+function ModalProductOff({ token, product, onCloseModal }: ModalAssetOffProps) {
     const dispatch: AppDispatch = useDispatch();
 
-    const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
+    const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
     
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm<IMerchandise>();
+    const { register, handleSubmit, formState: { errors } } = useForm<IProduct>();
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
     const [ shouldNavigate, setShouldNavigate ] = useState(false);
     
     // const isMerchadiseStatusConsult = location.pathname === '/inventories/merchadises';
 
-    const onSubmit = (values: IMerchandise) => {
+    const onSubmit = (values: IProduct) => {
         try {
             const formData = {
                 ...values,
             };
-            dispatch(patchMerchandise(merchandise.id, formData, token));
+            dispatch(patchProduct(product.id, formData, token));
             setFormSubmitted(true);
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
                 onCloseModal();
-                dispatch(getMerchandises(token));
+                dispatch(getProducts(token));
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -56,11 +56,11 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalAssetOffP
     return (
         <div className="p-3">
             <div className={`${styles.containerModal} `}>
-                <p>Si deseas dar de baja tu "{merchandise?.nameItem}" del inventario de mercancías, selecciona el motivo:</p>
+                <p>Si deseas dar de baja tu "{product?.nameItem}" del inventario de productos, selecciona el motivo:</p>
                 {formSubmitted && (
                     <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
                 )}
-                {errorMerchandise?.map((error, i) => (
+                {errorProduct?.map((error, i) => (
                     <div key={i} className='bg-red-500 my-2 p-2 text-white text-center'>{error}</div>
                 ))}
                 <form onSubmit={handleSubmit(onSubmit)} >
@@ -106,4 +106,4 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalAssetOffP
     );
 }
 
-export default ModalMerchadiseOff;
+export default ModalProductOff;
