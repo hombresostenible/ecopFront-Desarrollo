@@ -9,13 +9,13 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IProduct } from '../../../../../types/User/products.types';
 import styles from './styles.module.css';
 
-interface ModalAssetOffProps {
+interface ModalProductOffProps {
     token: string;
     product: IProduct;
     onCloseModal: () => void;
 }
 
-function ModalProductOff({ token, product, onCloseModal }: ModalAssetOffProps) {
+function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
@@ -25,8 +25,6 @@ function ModalProductOff({ token, product, onCloseModal }: ModalAssetOffProps) {
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
     const [ shouldNavigate, setShouldNavigate ] = useState(false);
-    
-    // const isMerchadiseStatusConsult = location.pathname === '/inventories/merchadises';
 
     const onSubmit = (values: IProduct) => {
         try {
@@ -48,7 +46,7 @@ function ModalProductOff({ token, product, onCloseModal }: ModalAssetOffProps) {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/merchadises');
+            navigate('/inventories/products');
         }
     }, [ shouldNavigate, navigate ]);
 

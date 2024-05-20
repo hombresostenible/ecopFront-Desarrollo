@@ -1,0 +1,87 @@
+.container {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Component {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Table{
+    width: 1000px;
+}
+.container__Head{
+    background: #e9ecef;
+    height: 60px;
+    width: 100%;
+    font-weight: 600;
+}
+.container__Tr{
+    height: 60px;
+}
+.column__Branch{
+    height: 60px;
+    width: 120px;
+}
+.column__Name_Item{
+    height: 60px;
+    width: 120px;
+}
+.column__Inventory{
+    height: 60px;
+    width: 100px;
+}
+.column__Unit_Measure{  
+    height: 60px;
+    width: 120px;
+}
+.column__Selling_Price{
+    height: 60px;
+    width: 120px;
+}
+.column__Packaged{
+    height: 60px;
+    width: 120px;
+}
+.column__Primary_Package_Type{
+    height: 60px;
+    width: 140px;
+}
+.column__Action{
+    height: 60px;
+    width: 100px;
+}
+.container__Body{
+    height: 60px;
+    width: 100%;
+}
+.container__Info{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+.text__Ellipsis {
+    opacity: 0.75;
+    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
+}
+.button__Delete {
+    color: #6c757d;
+    height: 35px;
+    width: 50px;
+    padding: 0 5px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}
+.button__Edit {
+    color: #6c757d;
+    height: 35px;
+    width: 50px;
+    padding: 0 5px;
+}
+.button__Edit:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}

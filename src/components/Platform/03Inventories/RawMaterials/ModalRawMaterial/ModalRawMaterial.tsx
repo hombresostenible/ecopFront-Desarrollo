@@ -2,86 +2,83 @@
 import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
-import { getProducts, putProduct } from '../../../../../redux/User/productSlice/actions';
+import { getRawMaterials, putRawMaterial } from '../../../../../redux/User/rawMaterialSlice/actions';
 import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IProduct } from '../../../../../types/User/products.types';
+import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../types/User/branch.types';
 import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
-interface ModalProductProps {
+interface ModalRawMaterialProps {
     token: string;
     idItem: string;
-    product: IProduct;
+    rawMaterial: IRawMaterial;
     branches: IBranch[] | null;
     onCloseModal: () => void;
 }
 
-function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalProductProps) {
+function ModalRawMaterial({ token, idItem, rawMaterial, branches, onCloseModal }: ModalRawMaterialProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editedProduct, setEditedProduct] = useState<IProduct>({ ...product });
-    const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
-    const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
-    const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState(product?.IVA);
-    const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
-    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
-    const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(product?.expirationDate ? new Date(product.expirationDate) : undefined);
+    const [editedRawMaterial, setEditedRawMaterial] = useState<IRawMaterial>({ ...rawMaterial });
+    const [editedUnitMeasure, setEditedUnitMeasure] = useState(rawMaterial?.unitMeasure);
+    const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(rawMaterial?.inventoryIncrease || 'No');
+    const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(rawMaterial?.periodicityAutomaticIncrease);
+    const [editedIVA, setEditedIVA] = useState(rawMaterial?.IVA);
+    const [editedPackaged, setEditedPackaged] = useState(rawMaterial?.packaged || 'No');
+    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(rawMaterial?.primaryPackageType);    
+    const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(rawMaterial?.expirationDate ? new Date(rawMaterial.expirationDate) : undefined);
     const currentDate = new Date().toISOString().split('T')[0];
-    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(product?.returnablePackaging);
-    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(product?.individualPackaging);
-    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(product?.secondaryPackageType);
-    const [editedIsDiscounted, setEditedIsDiscounted] = useState(product?.isDiscounted);
-
+    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(rawMaterial?.returnablePackaging);
+    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(rawMaterial?.individualPackaging);
+    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(rawMaterial?.secondaryPackageType);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-        field: keyof IProduct,
+        field: keyof IRawMaterial,
         dataType: 'text' | 'number' = 'text'
     ) => {
         const newValue = e.target.value;
         if (dataType === 'number') {
             const numericValue = parseFloat(newValue);
             if (!isNaN(numericValue)) {
-                setEditedProduct((prevEdited) => ({
+                setEditedRawMaterial((prevEdited) => ({
                     ...prevEdited,
                     [field]: numericValue,
                 }));
             }
         } else {
-            setEditedProduct((prevEdited) => ({
+            setEditedRawMaterial((prevEdited) => ({
                 ...prevEdited,
                 [field]: newValue,
             }));
         }
     };
 
-    const handleSaveChanges = async (editedProduct: IProduct) => {
+    const handleSaveChanges = async (editedRawMaterial: IRawMaterial) => {
         try {
-            editedProduct.unitMeasure = editedUnitMeasure;
-            editedProduct.inventoryIncrease = editedInventoryIncrease;
-            editedProduct.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
-            editedProduct.IVA = editedIVA;
-            editedProduct.packaged = editedPackaged;
-            editedProduct.primaryPackageType = editedPrimaryPackageType;
-            editedProduct.expirationDate = editedExpirationDate;
-            editedProduct.returnablePackaging = editedReturnablePackaging;
-            editedProduct.individualPackaging = editedIndividualPackaging;
-            editedProduct.secondaryPackageType = editedSecondaryPackageType;
-            editedProduct.isDiscounted = editedIsDiscounted;
+            editedRawMaterial.unitMeasure = editedUnitMeasure;
+            editedRawMaterial.inventoryIncrease = editedInventoryIncrease;
+            editedRawMaterial.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
+            editedRawMaterial.IVA = editedIVA;
+            editedRawMaterial.packaged = editedPackaged;
+            editedRawMaterial.primaryPackageType = editedPrimaryPackageType;
+            editedRawMaterial.expirationDate = editedExpirationDate;
+            editedRawMaterial.returnablePackaging = editedReturnablePackaging;
+            editedRawMaterial.individualPackaging = editedIndividualPackaging;
+            editedRawMaterial.secondaryPackageType = editedSecondaryPackageType;
             if (editedInventoryIncrease === 'No') {
-                editedProduct.periodicityAutomaticIncrease = undefined;
-                editedProduct.automaticInventoryIncrease = 0;
+                editedRawMaterial.periodicityAutomaticIncrease = undefined;
+                editedRawMaterial.automaticInventoryIncrease = 0;
             }
-            if (editedPackaged === 'No') editedProduct.primaryPackageType = undefined;
-            if (editedIndividualPackaging === 'No') editedProduct.secondaryPackageType = undefined;
+            if (editedPackaged === 'No') editedRawMaterial.primaryPackageType = undefined;
+            if (editedIndividualPackaging === 'No') editedRawMaterial.secondaryPackageType = undefined;
 
-            await dispatch(putProduct(idItem, editedProduct, token));
+            await dispatch(putRawMaterial(idItem, editedRawMaterial, token));
             setIsEditing(false);
-            dispatch(getProducts(token));
+            dispatch(getRawMaterials(token));
             onCloseModal();
         } catch (error) {
             console.error('Error al guardar cambios:', error);
@@ -90,35 +87,38 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
 
     const cancelEditing = (id: string) => {
         setIsEditing(false);
-        setEditedProduct({ ...editedProduct, [id]: { ...product } });
+        setEditedRawMaterial({ ...editedRawMaterial, [id]: { ...rawMaterial } });
     };
+
+
+
 
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información del producto</h1>
+                <h1 className={`${styles.title} text-center`}>Información de la meteria prima</h1>
             </div>
 
             <div className="w-100">
-                <h6 className={styles.label}>Nombre de la sede asignada al producto</h6>
+                <h6 className={styles.label}>Nombre de la sede asignada a la materia prima</h6>
                 <div className={styles.containerInput}>
                     {isEditing ? (
                         <select
-                            value={editedProduct.branchId}
+                            value={editedRawMaterial.branchId}
                             className={`${styles.inputEdit} p-2 border w-100`}
                             onChange={(e) => handleEditField(e, 'branchId')}
                             
                         >
-                            {branches && branches.map((product, index) => (
-                                <option key={index} value={product.id}>
-                                    {product.nameBranch}
+                            {branches && branches.map((rawMaterial, index) => (
+                                <option key={index} value={rawMaterial.id}>
+                                    {rawMaterial.nameBranch}
                                 </option>
                             ))}
                         </select>
                     ) : (
                         <span>
                             {branches && branches.map((branch, index) => (
-                                product.branchId === branch.id && (
+                                rawMaterial.branchId === branch.id && (
                                     <p className={`${styles.input} p-2 text-start border`} key={index}>{branch.nameBranch}</p>
                                 )
                             ))}
@@ -129,17 +129,17 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Nombre del producto</h6>
+                    <h6 className={styles.label}>Nombre de la materia prima</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedProduct.nameItem}
+                                value={editedRawMaterial.nameItem}
                                 onChange={(e) => handleEditField(e, 'nameItem', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.nameItem}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.nameItem}</p>
                         )}
                     </div>
                 </div>
@@ -150,11 +150,11 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedProduct.barCode || ''}
+                                value={editedRawMaterial.barCode || ''}
                                 onChange={(e) => handleEditField(e, 'barCode', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.barCode ? product.barCode : 'No asignado'}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.barCode ? rawMaterial.barCode : 'No asignado'}</p>
                         )}
                     </div>
                 </div>
@@ -166,13 +166,14 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
-                                type="text"
+                                type="number"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedProduct.inventory}
-                                onChange={(e) => handleEditField(e, 'inventory', 'text')}
+                                value={editedRawMaterial.inventory}
+                                onChange={(e) => handleEditField(e, 'inventory', 'number')}
+                                min={0}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.inventory}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.inventory}</p>
                         )}
                     </div>
                 </div>
@@ -215,7 +216,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
 
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.unitMeasure}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.unitMeasure}</p>
                         )}
                     </div>
                 </div>
@@ -235,7 +236,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.inventoryIncrease}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.inventoryIncrease}</p>
                         )}
                     </div>
                 </div>
@@ -258,7 +259,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                     <option value='Semestral'>Semestral</option>
                                 </select>
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{product?.periodicityAutomaticIncrease ? product.periodicityAutomaticIncrease : 'No asignado'}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.periodicityAutomaticIncrease ? rawMaterial.periodicityAutomaticIncrease : 'No asignado'}</p>
                             )}
                         </div>
                     </div>
@@ -272,13 +273,14 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                         <div className={styles.containerInput}>
                             {isEditing ? (
                                 <input
-                                    type="text"
+                                    type="number"
                                     className={`${styles.inputEdit} p-2 border w-100`}
-                                    value={editedProduct.automaticInventoryIncrease}
-                                    onChange={(e) => handleEditField(e, 'automaticInventoryIncrease', 'text')}
+                                    value={editedRawMaterial.automaticInventoryIncrease}
+                                    onChange={(e) => handleEditField(e, 'automaticInventoryIncrease', 'number')}
+                                    min={0}
                                 />
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{product?.automaticInventoryIncrease}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.automaticInventoryIncrease}</p>
                             )}
                         </div>
                     </div>
@@ -287,7 +289,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>IVA del producto</h6>
+                    <h6 className={styles.label}>IVA de la materia prima</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <select
@@ -300,28 +302,50 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                 <option value='19'>19</option>
                             </select>                                
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.IVA}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.IVA}</p>
                         )}
                     </div>
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>Precio de venta</h6>
+                    <h6 className={styles.label}>Precio de compra antes de impuestos</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
-                                type="text"
+                                type="number"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedProduct.sellingPrice || ''}
-                                onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
+                                value={editedRawMaterial.purchasePriceBeforeTax || ''}
+                                onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'number')}
+                                min={0}
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {product?.sellingPrice !== null && product?.sellingPrice !== undefined
-                                    ? `$ ${formatNumberWithCommas(product.sellingPrice)}`
+                                {rawMaterial?.purchasePriceBeforeTax !== null && rawMaterial?.purchasePriceBeforeTax !== undefined
+                                    ? `$ ${formatNumberWithCommas(rawMaterial.purchasePriceBeforeTax)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
                     </div>
+                </div>
+            </div>
+
+            <div className="w-100">
+                <h6 className={styles.label}>Precio de venta</h6>
+                <div className={styles.containerInput}>
+                    {isEditing ? (
+                        <input
+                            type="number"
+                            className={`${styles.inputEdit} p-2 border w-100`}
+                            value={editedRawMaterial.sellingPrice || ''}
+                            onChange={(e) => handleEditField(e, 'sellingPrice', 'number')}
+                            min={0}
+                        />
+                    ) : (
+                        <p className={`${styles.input} p-2 text-start border`}>
+                            {rawMaterial?.sellingPrice !== null && rawMaterial?.sellingPrice !== undefined
+                                ? `$ ${formatNumberWithCommas(rawMaterial.sellingPrice)}`
+                                : 'Precio no asignado'}
+                        </p>
+                    )}
                 </div>
             </div>
 
@@ -338,13 +362,13 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {product?.expirationDate ? new Date(product.expirationDate).toLocaleDateString() : 'Fecha no asignada'}
+                                {rawMaterial?.expirationDate ? new Date(rawMaterial.expirationDate).toLocaleDateString() : 'Fecha no asignada'}
                             </p>
                         )}
                     </div>
                 </div>
             </div>
-            
+
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>¿Retornable?</h6>
@@ -359,7 +383,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.returnablePackaging}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.returnablePackaging}</p>
                         )}
                     </div>
                 </div>
@@ -368,16 +392,17 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
-                                type="text"
+                                type="number"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedProduct.quantityPerPackage || ''}
-                                onChange={(e) => handleEditField(e, 'quantityPerPackage', 'text')}
+                                value={editedRawMaterial.quantityPerPackage || ''}
+                                onChange={(e) => handleEditField(e, 'quantityPerPackage', 'number')}
+                                min={0}
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {product?.quantityPerPackage !== null && product?.quantityPerPackage !== undefined
-                                    ? product.quantityPerPackage
-                                    : 'Precio no asignado'}
+                                {rawMaterial?.quantityPerPackage !== null && rawMaterial?.quantityPerPackage !== undefined
+                                    ? rawMaterial.quantityPerPackage
+                                    : 'Cantidad no asignada'}
                             </p>
                         )}
                     </div>
@@ -398,7 +423,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.packaged}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.packaged}</p>
                         )}
                     </div>
                 </div>
@@ -431,13 +456,13 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                     <option value='Plastico de burbujas'>Plástico de burbujas</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.primaryPackageType}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.primaryPackageType}</p>
                         )}
                     </div>
                 </div>
                 )}
             </div>
-
+            
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>¿Tiene empaques individuales?</h6>
@@ -452,7 +477,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.individualPackaging}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.individualPackaging}</p>
                         )}
                     </div>
                 </div>
@@ -485,44 +510,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                                     <option value='Plastico de burbujas'>Plástico de burbujas</option>
                             </select>
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{product?.secondaryPackageType}</p>
-                            )}
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>¿Tiene descuento?</h6>
-                    <div className={styles.containerInput}>
-                        {isEditing ? (
-                            <select
-                                className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedIsDiscounted}
-                                onChange={(e) => setEditedIsDiscounted(e.target.value as 'Si' | 'No')}
-                            >
-                                <option value='Si'>Si</option>
-                                <option value='No'>No</option>
-                            </select>
-                        ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{product?.isDiscounted}</p>
-                        )}
-                    </div>
-                </div>
-                {editedIsDiscounted === 'Si' && (
-                    <div className="w-100">
-                        <h6 className={styles.label}>Porcentage de descuento</h6>
-                        <div className={styles.containerInput}>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.inputEdit} p-2 border w-100`}
-                                    value={editedProduct.discountPercentage || ''}
-                                    onChange={(e) => handleEditField(e, 'discountPercentage', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{product?.discountPercentage}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.secondaryPackageType}</p>
                             )}
                         </div>
                     </div>
@@ -532,14 +520,14 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
             <div className="w-100">
                 {isEditing ? (
                     <div className="d-flex align-items-center justify-content-center">
-                        <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedProduct)}>Guardar</button>
-                        <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(product.id)}>Cancelar</button>
+                        <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedRawMaterial)}>Guardar</button>
+                        <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(rawMaterial.id)}>Cancelar</button>
                     </div>
                 ) : (
                     <div
                         className={`${styles.divButtonEdit} d-flex align-items-center justify-content-center`}
                         onClick={() => {
-                            setEditedProduct({ ...product });
+                            setEditedRawMaterial({ ...rawMaterial });
                             setIsEditing(true);
                         }}
                     >
@@ -551,4 +539,4 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
     );
 }
 
-export default ModalProduct;
+export default ModalRawMaterial;
