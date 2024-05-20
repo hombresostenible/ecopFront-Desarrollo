@@ -121,12 +121,16 @@ function BranchCardPage() {
                                         </div>
                                         <div className={`${styles.container__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
                                             <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}
-                                                onClick={() => handleDelete(branch)}
+                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                onClick={() => {
+                                                    handleDelete(branch);
+                                                }}
                                             />
                                             <FaUserEdit
-                                                className={`${styles.button__Edit} `}
-                                                onClick={() => handleEdit(branch)}
+                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                onClick={() => {
+                                                    handleEdit(branch)
+                                                }}
                                             />
                                         </div>
                                     </div>

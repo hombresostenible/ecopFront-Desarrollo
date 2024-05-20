@@ -17,7 +17,6 @@ const assetsSlice = createSlice({
     name: 'assets',
     initialState,
     reducers: {
-        //ACTIONS
         assetsData: (state, action: PayloadAction<IAssets | null>) => {
             state.loading = false;
             state.assets = action.payload;

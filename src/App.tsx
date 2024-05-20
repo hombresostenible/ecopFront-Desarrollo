@@ -67,8 +67,8 @@ import BranchCardPage from './pages/Platform/PanelUser/02Branch/BranchCard/Branc
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
 
 
-import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
-import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/InventoryAssetsPage';
+// import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
+import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/AssetsCard/AssetsCardPage';
 import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/InventoryMerchadisesPage';
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/InventoryProductsPage';
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/InventoryRawMateralsPage';
@@ -154,7 +154,7 @@ function App() {
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
 
                             {/* SideBar Inventarios */}
-                            <Route path='/inventories' element={<InventoriesPage />} />
+                            {/* <Route path='/inventories' element={<InventoriesPage />} /> */}
                             <Route path='/inventories/assets' element={<AssetsPage />} />
                             <Route path='/inventories/merchadises' element={<MerchadisesPage />} />
                             <Route path='/inventories/products' element={<ProductsPage />} />
