@@ -23,8 +23,8 @@ function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps)
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<IProduct>();
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
-    const [ shouldNavigate, setShouldNavigate ] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const onSubmit = (values: IProduct) => {
         try {
