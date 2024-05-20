@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
-import { getMerchandises, putMerchandise } from '../../../../../redux/User/merchandiseSlice/actions';
+import { getProducts, putProduct } from '../../../../../redux/User/productSlice/actions';
 import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { IProduct } from '../../../../../types/User/products.types';
 import { IBranch } from '../../../../../types/User/branch.types';
 import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
@@ -13,74 +13,75 @@ import styles from './styles.module.css';
 interface ModalMerchandiseProps {
     token: string;
     idItem: string;
-    merchandise: IMerchandise;
+    product: IProduct;
     branches: IBranch[] | null;
     onCloseModal: () => void;
 }
 
-function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal }: ModalMerchandiseProps) {
+function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalMerchandiseProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editedMerchandise, setEditedMerchandise] = useState<IMerchandise>({ ...merchandise });
-    const [editedUnitMeasure, setEditedUnitMeasure] = useState(merchandise?.unitMeasure);
-    const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(merchandise?.inventoryIncrease || 'No');
-    const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(merchandise?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState(merchandise?.IVA);
-    const [editedPackaged, setEditedPackaged] = useState(merchandise?.packaged || 'No');
-    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(merchandise?.primaryPackageType);    
-    const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(merchandise?.expirationDate ? new Date(merchandise.expirationDate) : undefined);
+    const [editedProduct, setEditedProduct] = useState<IProduct>({ ...product });
+    const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
+    const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
+    const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
+    const [editedIVA, setEditedIVA] = useState(product?.IVA);
+    const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
+    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
+    const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(product?.expirationDate ? new Date(product.expirationDate) : undefined);
     const currentDate = new Date().toISOString().split('T')[0];
-    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(merchandise?.returnablePackaging);
-    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(merchandise?.individualPackaging);
-    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(merchandise?.secondaryPackageType);
-    const [editedIsDiscounted, setEditedIsDiscounted] = useState(merchandise?.isDiscounted);
+    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(product?.returnablePackaging);
+    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(product?.individualPackaging);
+    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(product?.secondaryPackageType);
+    const [editedIsDiscounted, setEditedIsDiscounted] = useState(product?.isDiscounted);
+
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-        field: keyof IMerchandise,
+        field: keyof IProduct,
         dataType: 'text' | 'number' = 'text'
     ) => {
         const newValue = e.target.value;
         if (dataType === 'number') {
             const numericValue = parseFloat(newValue);
             if (!isNaN(numericValue)) {
-                setEditedMerchandise((prevEdited) => ({
+                setEditedProduct((prevEdited) => ({
                     ...prevEdited,
                     [field]: numericValue,
                 }));
             }
         } else {
-            setEditedMerchandise((prevEdited) => ({
+            setEditedProduct((prevEdited) => ({
                 ...prevEdited,
                 [field]: newValue,
             }));
         }
     };
 
-    const handleSaveChanges = async (editedMerchandise: IMerchandise) => {
+    const handleSaveChanges = async (editedProduct: IProduct) => {
         try {
-            editedMerchandise.unitMeasure = editedUnitMeasure;
-            editedMerchandise.inventoryIncrease = editedInventoryIncrease;
-            editedMerchandise.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
-            editedMerchandise.IVA = editedIVA;
-            editedMerchandise.packaged = editedPackaged;
-            editedMerchandise.primaryPackageType = editedPrimaryPackageType;
-            editedMerchandise.expirationDate = editedExpirationDate;
-            editedMerchandise.returnablePackaging = editedReturnablePackaging;
-            editedMerchandise.individualPackaging = editedIndividualPackaging;
-            editedMerchandise.secondaryPackageType = editedSecondaryPackageType;
-            editedMerchandise.isDiscounted = editedIsDiscounted;
+            editedProduct.unitMeasure = editedUnitMeasure;
+            editedProduct.inventoryIncrease = editedInventoryIncrease;
+            editedProduct.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
+            editedProduct.IVA = editedIVA;
+            editedProduct.packaged = editedPackaged;
+            editedProduct.primaryPackageType = editedPrimaryPackageType;
+            editedProduct.expirationDate = editedExpirationDate;
+            editedProduct.returnablePackaging = editedReturnablePackaging;
+            editedProduct.individualPackaging = editedIndividualPackaging;
+            editedProduct.secondaryPackageType = editedSecondaryPackageType;
+            editedProduct.isDiscounted = editedIsDiscounted;
             if (editedInventoryIncrease === 'No') {
-                editedMerchandise.periodicityAutomaticIncrease = undefined;
-                editedMerchandise.automaticInventoryIncrease = 0;
+                editedProduct.periodicityAutomaticIncrease = undefined;
+                editedProduct.automaticInventoryIncrease = 0;
             }
-            if (editedPackaged === 'No') editedMerchandise.primaryPackageType = undefined;
-            if (editedIndividualPackaging === 'No') editedMerchandise.secondaryPackageType = undefined;
+            if (editedPackaged === 'No') editedProduct.primaryPackageType = undefined;
+            if (editedIndividualPackaging === 'No') editedProduct.secondaryPackageType = undefined;
 
-            await dispatch(putMerchandise(idItem, editedMerchandise, token));
+            await dispatch(putProduct(idItem, editedProduct, token));
             setIsEditing(false);
-            dispatch(getMerchandises(token));
+            dispatch(getProducts(token));
             onCloseModal();
         } catch (error) {
             console.error('Error al guardar cambios:', error);
@@ -89,35 +90,35 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
 
     const cancelEditing = (id: string) => {
         setIsEditing(false);
-        setEditedMerchandise({ ...editedMerchandise, [id]: { ...merchandise } });
+        setEditedProduct({ ...editedProduct, [id]: { ...product } });
     };
 
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información de la mercancía</h1>
+                <h1 className={`${styles.title} text-center`}>Información del producto</h1>
             </div>
 
             <div className="w-100">
-                <h6 className={styles.label}>Nombre de la sede asignada a la mercancía</h6>
+                <h6 className={styles.label}>Nombre de la sede asignada al producto</h6>
                 <div className={styles.containerInput}>
                     {isEditing ? (
                         <select
-                            value={editedMerchandise.branchId}
+                            value={editedProduct.branchId}
                             className={`${styles.inputEdit} p-2 border w-100`}
                             onChange={(e) => handleEditField(e, 'branchId')}
                             
                         >
-                            {branches && branches.map((merchandise, index) => (
-                                <option key={index} value={merchandise.id}>
-                                    {merchandise.nameBranch}
+                            {branches && branches.map((product, index) => (
+                                <option key={index} value={product.id}>
+                                    {product.nameBranch}
                                 </option>
                             ))}
                         </select>
                     ) : (
                         <span>
                             {branches && branches.map((branch, index) => (
-                                merchandise.branchId === branch.id && (
+                                product.branchId === branch.id && (
                                     <p className={`${styles.input} p-2 text-start border`} key={index}>{branch.nameBranch}</p>
                                 )
                             ))}
@@ -128,17 +129,17 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Nombre de la mercancía</h6>
+                    <h6 className={styles.label}>Nombre del producto</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.nameItem}
+                                value={editedProduct.nameItem}
                                 onChange={(e) => handleEditField(e, 'nameItem', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.nameItem}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.nameItem}</p>
                         )}
                     </div>
                 </div>
@@ -149,11 +150,11 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.barCode || ''}
+                                value={editedProduct.barCode || ''}
                                 onChange={(e) => handleEditField(e, 'barCode', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.barCode ? merchandise.barCode : 'No asignado'}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.barCode ? product.barCode : 'No asignado'}</p>
                         )}
                     </div>
                 </div>
@@ -167,11 +168,11 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.inventory}
+                                value={editedProduct.inventory}
                                 onChange={(e) => handleEditField(e, 'inventory', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.inventory}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.inventory}</p>
                         )}
                     </div>
                 </div>
@@ -214,7 +215,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
 
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.unitMeasure}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.unitMeasure}</p>
                         )}
                     </div>
                 </div>
@@ -234,7 +235,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.inventoryIncrease}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.inventoryIncrease}</p>
                         )}
                     </div>
                 </div>
@@ -257,7 +258,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                     <option value='Semestral'>Semestral</option>
                                 </select>
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{merchandise?.periodicityAutomaticIncrease ? merchandise.periodicityAutomaticIncrease : 'No asignado'}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{product?.periodicityAutomaticIncrease ? product.periodicityAutomaticIncrease : 'No asignado'}</p>
                             )}
                         </div>
                     </div>
@@ -273,11 +274,11 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <input
                                     type="text"
                                     className={`${styles.inputEdit} p-2 border w-100`}
-                                    value={editedMerchandise.automaticInventoryIncrease}
+                                    value={editedProduct.automaticInventoryIncrease}
                                     onChange={(e) => handleEditField(e, 'automaticInventoryIncrease', 'text')}
                                 />
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{merchandise?.automaticInventoryIncrease}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{product?.automaticInventoryIncrease}</p>
                             )}
                         </div>
                     </div>
@@ -286,26 +287,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Precio de compra</h6>
-                    <div className={styles.containerInput}>
-                        {isEditing ? (
-                            <input
-                                type="text"
-                                className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.purchasePriceBeforeTax}
-                                onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
-                            />
-                        ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>
-                                {merchandise?.purchasePriceBeforeTax !== null && merchandise?.purchasePriceBeforeTax !== undefined
-                                    ? `$ ${formatNumberWithCommas(merchandise.purchasePriceBeforeTax)}`
-                                    : 'Precio no asignado'}
-                            </p>
-                        )}
-                    </div>
-                </div>
-                <div className="w-100">
-                    <h6 className={styles.label}>IVA de la mercancía</h6>
+                    <h6 className={styles.label}>IVA del producto</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <select
@@ -318,13 +300,10 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='19'>19</option>
                             </select>                                
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.IVA}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.IVA}</p>
                         )}
                     </div>
                 </div>
-            </div>
-
-            <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Precio de venta</h6>
                     <div className={styles.containerInput}>
@@ -332,18 +311,21 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.sellingPrice || ''}
+                                value={editedProduct.sellingPrice || ''}
                                 onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {merchandise?.sellingPrice !== null && merchandise?.sellingPrice !== undefined
-                                    ? `$ ${formatNumberWithCommas(merchandise.sellingPrice)}`
+                                {product?.sellingPrice !== null && product?.sellingPrice !== undefined
+                                    ? `$ ${formatNumberWithCommas(product.sellingPrice)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
                     </div>
                 </div>
+            </div>
+
+            <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Fecha de expiración</h6>
                     <div className={styles.containerInput}>
@@ -356,7 +338,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {merchandise?.expirationDate ? new Date(merchandise.expirationDate).toLocaleDateString() : 'Fecha no asignada'}
+                                {product?.expirationDate ? new Date(product.expirationDate).toLocaleDateString() : 'Fecha no asignada'}
                             </p>
                         )}
                     </div>
@@ -377,7 +359,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.returnablePackaging}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.returnablePackaging}</p>
                         )}
                     </div>
                 </div>
@@ -388,14 +370,14 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedMerchandise.quantityPerPackage || ''}
+                                value={editedProduct.quantityPerPackage || ''}
                                 onChange={(e) => handleEditField(e, 'quantityPerPackage', 'text')}
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
-                                {merchandise?.quantityPerPackage !== null && merchandise?.quantityPerPackage !== undefined
-                                    ? merchandise.quantityPerPackage
-                                    : 'Cantidad no asignada'}
+                                {product?.quantityPerPackage !== null && product?.quantityPerPackage !== undefined
+                                    ? product.quantityPerPackage
+                                    : 'Precio no asignado'}
                             </p>
                         )}
                     </div>
@@ -416,7 +398,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.packaged}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.packaged}</p>
                         )}
                     </div>
                 </div>
@@ -449,11 +431,11 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                     <option value='Plastico de burbujas'>Plástico de burbujas</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.primaryPackageType}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.primaryPackageType}</p>
                         )}
                     </div>
                 </div>
-                )}                
+                )}
             </div>
 
             <div className='d-flex gap-3'>
@@ -470,11 +452,10 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.individualPackaging}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.individualPackaging}</p>
                         )}
                     </div>
                 </div>
-
                 {editedIndividualPackaging === 'Si' && (
                     <div className="w-100">
                         <h6 className={styles.label}>Tipo de empaque secundario</h6>
@@ -504,7 +485,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                     <option value='Plastico de burbujas'>Plástico de burbujas</option>
                             </select>
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{merchandise?.secondaryPackageType}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{product?.secondaryPackageType}</p>
                             )}
                         </div>
                     </div>
@@ -525,7 +506,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <option value='No'>No</option>
                             </select>
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{merchandise?.isDiscounted}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>{product?.isDiscounted}</p>
                         )}
                     </div>
                 </div>
@@ -537,11 +518,11 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                                 <input
                                     type="text"
                                     className={`${styles.inputEdit} p-2 border w-100`}
-                                    value={editedMerchandise.discountPercentage || ''}
+                                    value={editedProduct.discountPercentage || ''}
                                     onChange={(e) => handleEditField(e, 'discountPercentage', 'text')}
                                 />
                             ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{merchandise?.discountPercentage}</p>
+                                <p className={`${styles.input} p-2 text-start border`}>{product?.discountPercentage}</p>
                             )}
                         </div>
                     </div>
@@ -551,14 +532,14 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
             <div className="w-100">
                 {isEditing ? (
                     <div className="d-flex align-items-center justify-content-center">
-                        <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
-                        <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(merchandise.id)}>Cancelar</button>
+                        <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedProduct)}>Guardar</button>
+                        <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(product.id)}>Cancelar</button>
                     </div>
                 ) : (
                     <div
                         className={`${styles.divButtonEdit} d-flex align-items-center justify-content-center`}
                         onClick={() => {
-                            setEditedMerchandise({ ...merchandise });
+                            setEditedProduct({ ...product });
                             setIsEditing(true);
                         }}
                     >
@@ -570,4 +551,4 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
     );
 }
 
-export default ModalMerchandises;
+export default ModalProduct;
