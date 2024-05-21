@@ -43,9 +43,13 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
 
     const onSubmit = (idAsset: string) => {
         try {
-            const assetData = {
-                assetStatus: 'Activo en uso',
-            };
+            const assetData: IAssets = {
+                inventoryOff: [{
+                    date: new Date(),
+                    quantity: 1, // O cualquier valor apropiado
+                    reason: "Activo en uso",
+                }],
+            } as IAssets;
             dispatch(patchAsset(idAsset, assetData, token));
             onCloseModal();
             dispatch(getAssets(token));

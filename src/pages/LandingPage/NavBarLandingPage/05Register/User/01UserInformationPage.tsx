@@ -16,8 +16,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
 
     return (
         <div>
-            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Información personal</h4>
-
+            <h4 className={`${styles.tertiary__Title } text-center`}>Información personal</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Tipo de identificación</h6>
                 <div className={styles.container__Input}>
