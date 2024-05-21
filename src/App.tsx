@@ -62,13 +62,12 @@ import ProtectedRoute from './ProtectedRoute';
 // PLATAFORMA
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
 import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
-// import BranchPage from './pages/Platform/PanelUser/02Branch/BranchPage';
 import BranchCardPage from './pages/Platform/PanelUser/02Branch/BranchCard/BranchCardPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
 
-
-// import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
 import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/AssetsCard/AssetsCardPage';
+import CreateAssetPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/CreateAssets/CreateAssetPage';
+
 import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/MerchadisesCard/MerchadisesCardPage';
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ProductsCard/ProductsCardPage';
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/RawMateralCard/RawMateralCardPage';
@@ -155,7 +154,8 @@ function App() {
 
                             {/* SideBar Inventarios */}
                             {/* <Route path='/inventories' element={<InventoriesPage />} /> */}
-                            <Route path='/inventories/assets' element={<AssetsPage />} />
+                            <Route path='/inventories/consult-assets' element={<AssetsPage />} />
+                            <Route path='/inventories/create-asset' element={<CreateAssetPage />} />
                             <Route path='/inventories/merchadises' element={<MerchadisesPage />} />
                             <Route path='/inventories/products' element={<ProductsPage />} />
                             <Route path='/inventories/raw-materals' element={<RawMateralsPage />} />

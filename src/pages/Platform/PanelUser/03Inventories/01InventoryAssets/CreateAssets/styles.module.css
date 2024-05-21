@@ -1,0 +1,93 @@
+.container {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.container__Component {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 300px);
+}
+.subtitle {
+    color: #f28705;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif;
+}
+.form {
+    padding: 60px 0 0 0;
+    width: 600px;
+    margin: auto;
+}
+.alert__Success {
+    border: 1px solid rgba(76, 149, 108, 0.7);
+    color: #4c956c;
+    background: rgba(76, 149, 108, 0.4);
+    border-radius: 5px;
+    top: 10px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
+.alert__Danger {
+    border: 1px solid rgba(230, 57, 70, 0.7);
+    color: #e63946;
+    background: rgba(230, 57, 70, 0.4);
+    border-radius: 5px;
+    top: 10px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
+.text {
+    width: 400px;
+}
+.info {
+    width: 350px;
+}
+.conditionContainer {
+    background-color: #eee;
+    width: 200px;
+}
+.conditionOption {
+    cursor: pointer;
+    flex-grow: 1;
+    transition: background-color 0.2s;
+}
+.selected {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #718bd8;
+    color: #fff;
+}
+.container__Info {
+    width: 600px;
+}
+.container__Input {
+    width: 100%;
+    border-radius: 3px;
+}
+.input {
+    border-radius: 5px;
+    margin: 0 0 30px 0;
+    width: 100%;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
+.text__Danger {
+    top: 65px;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}

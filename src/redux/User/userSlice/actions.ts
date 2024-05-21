@@ -17,7 +17,7 @@ export const postRegisterClient = (formData: IUser) => async (dispatch: AppDispa
         if (error.response && error.response.status === 500) {
             dispatch(userErrors(error.response?.data.message));
         } else {
-            dispatch(userErrors(error.message));
+            dispatch(userErrors(error.response?.data.message));
         }
     }
 };

@@ -28,7 +28,7 @@ const userSlice = createSlice({
             state.loading = true;
             state.errorUser = action.payload;
         },
-        registerUserStart: (state, action: PayloadAction<IUser | null>) => {
+        registerUserStart: (state, action: PayloadAction<IUser>) => {
             state.loading = true;
             state.user = action.payload;
             state.errorUser = null;
