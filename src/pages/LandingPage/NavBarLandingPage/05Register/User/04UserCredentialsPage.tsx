@@ -21,7 +21,7 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
 
     return (
         <div>
-            <h5 className="text-dark text-center">Tus datos de acceso</h5>
+            <h4 className={`${styles.tertiary__Title } text-center`}>Tus datos de acceso</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Email</h6>
                 <div className={styles.container__Input}>

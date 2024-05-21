@@ -13,7 +13,7 @@ function EconomicActivityPage({ register, errors, onSelect }: EconomicSectionPro
 
     return (
         <div>
-            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Tu actividad económica</h4>
+            <h4 className={`${styles.tertiary__Title } text-center`}>Tu actividad económica</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Sector económico</h6>
                 <div className={styles.container__Input}>

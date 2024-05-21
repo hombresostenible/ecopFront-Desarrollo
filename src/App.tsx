@@ -69,6 +69,8 @@ import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAsse
 import CreateAssetPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/CreateAssets/CreateAssetPage';
 
 import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/MerchadisesCard/MerchadisesCardPage';
+import CreateMerchandisePage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/CreateMerchandise/CreateMerchandisePage';
+
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ProductsCard/ProductsCardPage';
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/RawMateralCard/RawMateralCardPage';
 import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ServicesCard/ServicesCardPage';
@@ -156,7 +158,10 @@ function App() {
                             {/* <Route path='/inventories' element={<InventoriesPage />} /> */}
                             <Route path='/inventories/consult-assets' element={<AssetsPage />} />
                             <Route path='/inventories/create-asset' element={<CreateAssetPage />} />
-                            <Route path='/inventories/merchadises' element={<MerchadisesPage />} />
+                            
+                            <Route path='/inventories/consult-merchadises' element={<MerchadisesPage />} />
+                            <Route path='/inventories/create-merchadises' element={<CreateMerchandisePage />} />
+
                             <Route path='/inventories/products' element={<ProductsPage />} />
                             <Route path='/inventories/raw-materals' element={<RawMateralsPage />} />
                             <Route path='/inventories/services' element={<ServicesPage />} />

@@ -41,9 +41,9 @@ function CreateAssetPage() {
         setValue('conditionAssets', value);
     };
     
-    const [nameItem, setnameItem] = useState('');
+    const [nameItem, setNameItem] = useState('');
     const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-        setnameItem(event.target.value);
+        setNameItem(event.target.value);
     };
 
     const onSubmit = async (values: IAssets) => {
@@ -79,7 +79,7 @@ function CreateAssetPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <Link to='/inventories/consult-assets'>Consulta tus activos</Link>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Sedes</h2>
+                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Equipos, herramientas o máquinas</h2>
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>

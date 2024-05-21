@@ -11,6 +11,10 @@
 .logo {
     height: 80px;
 }
+.errors__Register {
+    top: 20px;
+    color: #e4002b;
+}
 .button__Back {
     padding: 7px 25px;
     letter-spacing: 1px;
@@ -42,6 +46,7 @@
 .tertiary__Title {
     font-weight: 700;
     color: #718bd8;
+    margin: 0 0 30px 0;
 }
 .container__Info {
     width: 600px;
