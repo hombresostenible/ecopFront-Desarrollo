@@ -230,7 +230,7 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuInventory ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/inventories/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/assets' ? styles.active : ''}`}>Activos</Link>
+                            <Link to='/inventories/consult-assets' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-asset') ? styles.active : ''}`}>Activos</Link>
                             <Link to='/inventories/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/merchadises' ? styles.active : ''}`}>Mercancías</Link>
                             <Link to='/inventories/products' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/products' ? styles.active : ''}`}>Productos</Link>
                             <Link to='/inventories/raw-materals' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/raw-materals' ? styles.active : ''}`}>Materias primas</Link>
@@ -353,8 +353,11 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuSustainability ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Leyes</Link>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Sanciones</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Consulta normas ambientales</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Diseño de planes</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Informes ASG</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Historias de sostenibilidad</Link>
+                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Diagnósticos</Link>
                         </div>
                     </div>
                 </div>

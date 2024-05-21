@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBranch } from '../../../types/User/branch.types';
 
 interface BranchState {
-    branch: IBranch|  IBranch[] | null;
+    branch: IBranch | IBranch[] | null;
     loading: boolean;
     errorBranch: string[] | null;
 }
