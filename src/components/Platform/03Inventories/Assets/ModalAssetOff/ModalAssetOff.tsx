@@ -28,7 +28,7 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
     const [ formSubmitted, setFormSubmitted ] = useState(false);
     const [ shouldNavigate, setShouldNavigate ] = useState(false);
     
-    const isAssetStatusConsult = location.pathname === '/inventories/assets';
+    const isAssetStatusConsult = location.pathname === '/inventories/consult-assets';
 
 
     const onSubmit = (values: IAssets) => {

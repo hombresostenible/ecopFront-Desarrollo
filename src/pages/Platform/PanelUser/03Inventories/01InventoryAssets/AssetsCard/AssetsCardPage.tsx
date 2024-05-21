@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 // REDUX
@@ -94,6 +95,7 @@ function InventoryAssetsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                        <Link to='/inventories/create-asset'>Crea tus activos</Link>
                         <div className="d-flex">
                             <div
                                 className={`${styles.linkTransfer} border-0 m-auto rounded text-decoration-none`}
