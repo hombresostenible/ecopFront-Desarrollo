@@ -14,7 +14,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
 
     return (
         <div>
-            <h4 className={`${styles.tertiary__Title } m-0 text-center`}>Tus datos de contacto</h4>
+            <h4 className={`${styles.tertiary__Title } text-center`}>Tus datos de contacto</h4>
             <DepartmenAndCity
                 onSelect={(department, city, codeDane, subregionCodeDane) => onSelect(department, city, codeDane, subregionCodeDane)}
                 reset={reset}

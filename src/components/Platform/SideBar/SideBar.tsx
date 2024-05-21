@@ -231,7 +231,7 @@ function SideBar() {
                     <div className={`collapse ${subMenuInventory ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/inventories/consult-assets' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-asset') ? styles.active : ''}`}>Activos</Link>
-                            <Link to='/inventories/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/merchadises' ? styles.active : ''}`}>Mercancías</Link>
+                            <Link to='/inventories/consult-merchadises' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-merchadises' || location.pathname === '/inventories/create-merchadises') ? styles.active : ''}`}>Mercancías</Link>
                             <Link to='/inventories/products' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/products' ? styles.active : ''}`}>Productos</Link>
                             <Link to='/inventories/raw-materals' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/raw-materals' ? styles.active : ''}`}>Materias primas</Link>
                             <Link to='/inventories/services' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/services' ? styles.active : ''}`}>Servicios</Link>
