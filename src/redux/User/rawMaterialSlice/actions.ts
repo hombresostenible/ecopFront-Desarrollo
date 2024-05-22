@@ -24,7 +24,7 @@ export const postRawMaterial = (formData: IRawMaterial, token: string) => async 
     }
 };
 
-//CREAR MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS
+//CREAR MUCHAS MATERIAS PRIMAS
 export const postManyRawMaterials = (formData: IRawMaterial[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyRawMaterialsStart(formData));

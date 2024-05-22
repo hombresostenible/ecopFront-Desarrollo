@@ -6,28 +6,28 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postMerchandise, getMerchandises } from '../../../../../../redux/User//merchandiseSlice/actions';
+import { postRawMaterial, getRawMaterials } from '../../../../../../redux/User/rawMaterialSlice/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../../types/User/merchandise.types';
+import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyMerchandises from './CreateManyMerchandises';
+import CreateManyRawMaterals from './CreateManyRawMaterals';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CreateMerchandisePage() {
+function CreateRawMateralPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
-
+    
     // Estados de Redux
-    const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
+    const errorRawMaterial = useSelector((state: RootState) => state.rawMaterial.errorRawMaterial);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const navigate = useNavigate();
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IMerchandise>();
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IRawMaterial>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
@@ -38,7 +38,7 @@ function CreateMerchandisePage() {
     }, [token]);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
-    const onCloseMerchandiseModal = () => {
+    const onCloseRawMaterialModal = () => {
         setShowCancelModal(false);
     };
 
@@ -48,22 +48,8 @@ function CreateMerchandisePage() {
         setNameItem(event.target.value);
     };
 
-    //Setea si el artículo aumentará de forma periódica en el inventario
-    const [inventoryIncrease, setInventoryIncrease] = useState('Si');
-    const [ periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
-    const handleInventoryIncrease = (value: 'Si' | 'No') => {
-        setInventoryIncrease(value);
-        setPeriodicityAutomaticInventoryIncrease(undefined)
-        setValue('inventoryIncrease', value);
-    };
-
-    //Setea la periodicidad en la que se aumentará el inventario
-    const handlePeriodicityAutomaticInventoryIncrease = (value: string) => {
-        setPeriodicityAutomaticInventoryIncrease(value);
-    };
-    
-    //Setea si la mercancía está empacada
-    const [selectedpackaged, setSelectedpackaged] = useState('Si');
+    //Setea si la materia prima tiene o no empaque principal
+    const [ selectedpackaged, setSelectedpackaged ] = useState('Si');
     const handlepackagedChange = (value: 'Si' | 'No') => {
         setSelectedpackaged(value);
         setValue('packaged', value);
@@ -76,12 +62,26 @@ function CreateMerchandisePage() {
         setValue('returnablePackaging', value);
     };
 
+    //Setea si el producto aumentará de forma periódica en el inventario
+    const [ inventoryIncrease, setInventoryIncrease ] = useState('Si');
+    const [ periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease ] = useState<string | undefined>(undefined);
+    const handleInventoryIncrease = (value: 'Si' | 'No') => {
+        setInventoryIncrease(value);
+        setPeriodicityAutomaticInventoryIncrease(undefined)
+        setValue('inventoryIncrease', value);
+    };
+
+    //Setea la periodicidad en la que se aumentará el inventario
+    const handlePeriodicityAutomaticInventoryIncrease = (value: string) => {
+        setPeriodicityAutomaticInventoryIncrease(value);
+    };
+
     //Setea la unidad de medida
     const [showUnitMeasure, setShowUnitMeasure] = useState('');
     const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
         setShowUnitMeasure(event.target.value);
     };
-
+    
     //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
     const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
     const handleIndividualPackagingChange = (value: 'Si' | 'No') => {
@@ -89,21 +89,29 @@ function CreateMerchandisePage() {
         setValue('individualPackaging', value);
     };
 
-    const onSubmit = async (values: IMerchandise) => {
+    const [showIndividualPackage, setShowIndividualPackage] = useState('');
+    const handleIndividualPackageChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowIndividualPackage(event.target.value);
+    };
+
+    const onSubmit = async (values: IRawMaterial) => {
         try {
+            if (values.packaged === 'No') {
+                values.primaryPackageType = undefined;
+            }
+
             const formData = {
                 ...values,
-                returnablePackaging: selectedReturnablePackaging,
-                individualPackaging: selectedIndividualPackaging,
                 packaged: selectedpackaged,
+                returnablePackaging: selectedReturnablePackaging,
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease,
-            } as IMerchandise;
-            await dispatch(postMerchandise(formData, token));
+            } as IRawMaterial;
+            await dispatch(postRawMaterial(formData, token));
             setFormSubmitted(true);
+            dispatch(getRawMaterials(token));
             reset();
             setTimeout(() => {
-                dispatch(getMerchandises(token));
                 setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
@@ -114,7 +122,7 @@ function CreateMerchandisePage() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-merchandise');
+            navigate('/inventories/consult-rawMaterial');
         }
     }, [ shouldNavigate, navigate ]);
 
@@ -125,23 +133,21 @@ function CreateMerchandisePage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Mercancías</h2>
-                        <p>La mercancía son los artículos que se compran para vender</p>
-
+                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Materias primas</h2>
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
+                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus materias primas de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
-                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus mercancías de forma masiva</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus materias primas de forma masiva</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <CreateManyMerchandises
+                                <CreateManyRawMaterals
                                     branches={branches}
                                     token={token}
                                     onCreateComplete={() => {
-                                        onCloseMerchandiseModal();
+                                        onCloseRawMaterialModal();
                                     }}
                                 />
                             </Modal.Body>
@@ -151,7 +157,7 @@ function CreateMerchandisePage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorMerchandise?.map((error, i) => (
+                            {errorRawMaterial?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -178,7 +184,7 @@ function CreateMerchandisePage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la mercancía que vas a registrar?</p>
+                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la materia prima que vas a registrar?</p>
                                 </div>
                                 <div>
                                     <input
@@ -196,7 +202,7 @@ function CreateMerchandisePage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>                           
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene la mercancía?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene la materia prima?</p>
                                 </div>
                                 <div>
                                     <select
@@ -247,14 +253,14 @@ function CreateMerchandisePage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`} >Inventario: ¿Cuánta materia prima tienes en inventario?</p>
                                 </div>
                                 <div>
                                     <input
                                         type="number"
                                         {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.info} p-2 border rounded border-secundary `}
                                         placeholder='Tu inventario acá'
                                         min={0}
                                         onKeyDown={(e) => {
@@ -264,7 +270,7 @@ function CreateMerchandisePage() {
                                         }}
                                     />
                                     {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
+                                        <p className='text-danger'>El inventario de la materia prima es requerido</p>
                                     )}
                                 </div>
                             </div>
@@ -349,13 +355,13 @@ function CreateMerchandisePage() {
 
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
-                                            <p className={`${styles.text} mb-0 p-2`} >Inventario: A futuro, ¿Cuánto deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
+                                            <p className={`${styles.text} mb-0 p-2`} >Inventario: A futuro, ¿Qué cantidad deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
                                         </div>
                                         <div>
                                             <input
                                                 type="number"
                                                 {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded form-control`}
+                                                className={`${styles.info} p-2 border rounded border-secundary `}
                                                 placeholder='Valor numérico de lo que quieres aumentar'
                                                 min={0}
                                                 onKeyDown={(e) => {
@@ -374,7 +380,7 @@ function CreateMerchandisePage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada en embalaje o envoltura?</p>
+                                    <p className={`${styles.text}`} >¿La materia prima/insumo viene empacada?</p>
                                 </div>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
@@ -397,13 +403,13 @@ function CreateMerchandisePage() {
 
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
+                                    <div className="px-3">
+                                        <p className={`${styles.text} mb-0 p-2`} >Si la materia prima viene empacada ¿Cuál es el tipo de empaque principal?</p>
                                     </div>
                                     <div>
                                         <select
-                                            {...register('primaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded form-control`}
+                                            {...register('primaryPackageType')}
+                                            className={`${styles.info} p-2 border rounded border-secundary`}
                                         >
                                             <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
@@ -425,67 +431,67 @@ function CreateMerchandisePage() {
                                             <option value='Plastico de burbujas'>Plástico de burbujas</option>
                                         </select>
                                         {errors.primaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
+                                            <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
                                         )}
                                     </div>
                                 </div>
                             )}
 
                             {selectedpackaged === 'Si' && (
-                                <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>                                    
-                                            <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="number"
-                                                {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded form-control`}
-                                                placeholder='Ej: 10'
-                                                min={0}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                            {errors.quantityPerPackage && (
-                                                <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                            )}
-                                        </div>
+                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    <div>
+                                        <p className={`${styles.text} mb-0 p-2`} >¿El empaque, embalaje o envoltura de tu materia prima es retornable?</p>
                                     </div>
+                                    <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
+                                        <div
+                                            className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                            onClick={() => handleReturnablePackagingChange('Si')}
+                                            >
+                                            Si
+                                        </div>
+                                        <div
+                                            className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                            onClick={() => handleReturnablePackagingChange('No')}
+                                        >
+                                            No
+                                        </div>
+                                        {errors.returnablePackaging && (
+                                            <p className='text-danger'>Este dato es requerido</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
 
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>
-                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
-                                        </div>
-                                        <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('Si')}
-                                            >
-                                                Si
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('No')}
-                                            >
-                                                No
-                                            </div>
-                                            {errors.returnablePackaging && (
-                                                <p className='text-danger'>Este dato es requerido</p>
-                                            )}
-                                        </div>
+                            {showUnitMeasure && (
+                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    <div className="px-3">                                    
+                                        <p className={`${styles.text} mb-0 p-2`} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
+                                    </div>
+                                    <div>
+                                        <input
+                                            type="number"
+                                            {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                            className={`${styles.info} p-2 border rounded border-secundary`}
+                                            placeholder='Ej: 10'
+                                            min={0}
+                                            onKeyDown={(e) => {
+                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                    e.preventDefault();
+                                                }
+                                            }}
+                                        />
+                                        {errors.quantityPerPackage && (
+                                            <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
+                                        )}
                                     </div>
                                 </div>
                             )}
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿La materia prima tiene empaques adicionales?</p>
                                 </div>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
+                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
                                         onClick={() => handleIndividualPackagingChange('Si')}
@@ -507,12 +513,12 @@ function CreateMerchandisePage() {
                             {selectedIndividualPackaging === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                     <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si la materia prima tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
                                     </div>
                                     <div>
                                         <select
                                             {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded form-control`}                                    
+                                            className={`${styles.info} p-2 border rounded border-secundary`}                                    
                                         >
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>
@@ -539,6 +545,66 @@ function CreateMerchandisePage() {
                                 </div>
                             )}
 
+                            {showUnitMeasure === 'Unidades' && (
+                                <div>
+                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                        <div className="px-3">
+                                            <p className={`${styles.text} mb-0 p-2`} >¿Las unidades vienen en empaque individual? Si la respuesta es "Si", selecciona la casilla</p>
+                                        </div>
+                                        <div>
+                                            <select
+                                                {...register('individualPackaging', { required: true })}
+                                                className={`${styles.info} p-2 border rounded border-secundary`}                                            
+                                                onChange={handleIndividualPackageChange}
+                                            >
+                                                <option value='Si'>Si</option>
+                                                <option value='No'>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {showIndividualPackage && (
+                                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                            <div className="px-3">
+                                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el tipo de empaque de cada unidad?</p>
+                                            </div>
+                                            <div>
+                                                <select
+                                                    {...register('secondaryPackageType', { required: true })}
+                                                    className={`${styles.info} p-2 border rounded border-secundary`}                                            
+                                                >
+                                                    <option value='Papel'>Papel</option>
+                                                    <option value='Papel de archivo'>Papel de archivo</option>
+                                                    <option value='Carton'>Cartón</option>                                                
+                                                    <option value='Aluminio'>Aluminio</option>
+                                                    <option value='Plegadiza'>Plegadiza</option>
+                                                    <option value='Vidrio'>Vidrio</option>
+                                                    <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
+                                                    <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                                    <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                                    <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                                    <option value='PP Polipropileno'>PP Polipropileno</option>
+                                                    <option value='PS Poliestireno'>PS Poliestireno</option>
+                                                    <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                                    <option value='Hierro'>Hierro</option>
+                                                    <option value='Icopor'>Icopor</option>
+                                                    <option value='Biodegradable'>Biodegradable</option>
+                                                    <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                                </select>
+                                                {errors.secondaryPackageType && (
+                                                    <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+
+
+
+
+
+
                             <div className="d-flex">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
@@ -551,4 +617,4 @@ function CreateMerchandisePage() {
     );
 }
 
-export default CreateMerchandisePage;
+export default CreateRawMateralPage;
