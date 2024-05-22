@@ -72,7 +72,12 @@ import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02Inventor
 import CreateMerchandisePage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/CreateMerchandise/CreateMerchandisePage';
 
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ProductsCard/ProductsCardPage';
+import CreateProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/CreateProduct/CreateProductPage';
+import QuoteProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/QuoteProduct/QuoteProductPage';
+
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/RawMateralCard/RawMateralCardPage';
+import CreateRawMateralPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/CreateRawMateral/CreateRawMateralPage';
+
 import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ServicesCard/ServicesCardPage';
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
@@ -163,7 +168,12 @@ function App() {
                             <Route path='/inventories/create-merchadises' element={<CreateMerchandisePage />} />
 
                             <Route path='/inventories/products' element={<ProductsPage />} />
+                            <Route path='/inventories/create-products' element={<CreateProductPage />} />
+                            <Route path='/inventories/quote-products' element={<QuoteProductPage />} />
+
                             <Route path='/inventories/raw-materals' element={<RawMateralsPage />} />
+                            <Route path='/inventories/create-rawmaterals' element={<CreateRawMateralPage />} />
+
                             <Route path='/inventories/services' element={<ServicesPage />} />
 
                             {/* SideBar Cuentas */}
