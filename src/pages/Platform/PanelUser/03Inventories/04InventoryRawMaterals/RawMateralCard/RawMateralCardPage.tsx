@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 // REDUX
@@ -87,6 +88,7 @@ function RawMateralCardPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                        <Link to='/inventories/create-rawmaterals'>Crea tus materias primas</Link>
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className='p-4'>
                                 <h1 className='text-2xl font-bold'>Materias primas</h1>

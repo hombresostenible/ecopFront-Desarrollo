@@ -6,28 +6,37 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postMerchandise, getMerchandises } from '../../../../../../redux/User//merchandiseSlice/actions';
+import { postProduct, getProducts } from '../../../../../../redux/User/productSlice/actions';
+import { getAssetsByBranch } from '../../../../../../redux/User/assetsSlice/actions';
+import { getMerchandisesByBranch } from '../../../../../../redux/User/merchandiseSlice/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../../types/User/merchandise.types';
+import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyMerchandises from './CreateManyMerchandises';
+import CreateManyProduct from './CreateManyProduct';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CreateMerchandisePage() {
+
+
+
+
+function CreateProductPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
+    const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
+
     const navigate = useNavigate();
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IMerchandise>();
+
+
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IProduct>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
@@ -89,7 +98,7 @@ function CreateMerchandisePage() {
         setValue('individualPackaging', value);
     };
 
-    const onSubmit = async (values: IMerchandise) => {
+    const onSubmit = async (values: IProduct) => {
         try {
             const formData = {
                 ...values,
@@ -98,12 +107,13 @@ function CreateMerchandisePage() {
                 packaged: selectedpackaged,
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease,
-            } as IMerchandise;
-            await dispatch(postMerchandise(formData, token));
+            } as IProduct;
+            // console.log('merchandiseData: ', merchandiseData);
+            await dispatch(postProduct(formData, token));
             setFormSubmitted(true);
             reset();
             setTimeout(() => {
-                dispatch(getMerchandises(token));
+                dispatch(getProducts(token));
                 setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
@@ -114,7 +124,7 @@ function CreateMerchandisePage() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-merchandise');
+            navigate('/inventories/consult-product');
         }
     }, [ shouldNavigate, navigate ]);
 
@@ -125,11 +135,10 @@ function CreateMerchandisePage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Mercancías</h2>
-                        <p>La mercancía son los artículos que se compran para vender</p>
+                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Productos</h2>
 
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
+                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus productos de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
@@ -137,7 +146,7 @@ function CreateMerchandisePage() {
                                 <Modal.Title className='text-primary-emphasis text-start'>Crea tus mercancías de forma masiva</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <CreateManyMerchandises
+                                <CreateManyProduct
                                     branches={branches}
                                     token={token}
                                     onCreateComplete={() => {
@@ -151,7 +160,7 @@ function CreateMerchandisePage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorMerchandise?.map((error, i) => (
+                            {errorProduct?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -205,7 +214,7 @@ function CreateMerchandisePage() {
                                         onChange={handleUnitMeasureChange}
                                     >                                         
                                         <option value=''>Selecciona una unidad de medida</option>
-                                        <optgroup label="Unidades">
+                                        <optgroup label="Unidades">                                              
                                             <option value='Unidades'>Unidades</option>
                                             <option value='Ristra'>Ristra</option>
                                             <option value='Decena'>Decena</option>
@@ -551,4 +560,4 @@ function CreateMerchandisePage() {
     );
 }
 
-export default CreateMerchandisePage;
+export default CreateProductPage;
