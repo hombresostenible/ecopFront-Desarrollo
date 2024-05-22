@@ -95,7 +95,7 @@ function InventoryAssetsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/create-asset'>Crea tus activos</Link>
+                        <Link to='/inventories/create-assets'>Crea tus activos</Link>
                         <div className="d-flex">
                             <div
                                 className={`${styles.linkTransfer} border-0 m-auto rounded text-decoration-none`}

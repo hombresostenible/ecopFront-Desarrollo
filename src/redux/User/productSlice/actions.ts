@@ -4,7 +4,7 @@ import axiosInstance from '../../../api/axios';
 import { IProduct } from '../../../types/User/products.types';
 import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, deleteProductStart } from './productSlice';
 
-//CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
+//CREAR DE UN PRODUCTO
 export const postProduct = (formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postProductStart(formData));
@@ -24,7 +24,7 @@ export const postProduct = (formData: IProduct, token: string) => async (dispatc
     }
 };
 
-//CREAR MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS
+//CREAR MUCHOS PRODUCTO
 export const postManyProducts = (formData: IProduct[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyProductsStart(formData));
@@ -44,7 +44,7 @@ export const postManyProducts = (formData: IProduct[], token: string) => async (
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//OBTIENE TODOS LOS PRODUCTO DEL USER
 export const getProducts = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/product', {
@@ -63,7 +63,7 @@ export const getProducts = (token: string) => async (dispatch: AppDispatch) => {
     }
 };
 
-//OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
+//OBTIENE UN PRODUCTO POR ID
 export const getProductById = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/product/${idProduct}`, {
@@ -82,7 +82,7 @@ export const getProductById = (idProduct: string, token: string) => async (dispa
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
+//OBTIENE TODOS LOS PRODUCTO DEL USER POR SEDE
 export const getProductsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/product/products-branch/${idBranch}`, {
@@ -101,7 +101,7 @@ export const getProductsByBranch = (idBranch: string, token: string) => async (d
     }
 };
 
-//ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ACTUALIZA UN PRODUCTO DEL USER
 export const putProduct = (idProduct: string, formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putProductStart());
@@ -121,7 +121,7 @@ export const putProduct = (idProduct: string, formData: IProduct, token: string)
     }
 };
 
-//ACTUALIZA MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//ACTUALIZA MUCHOS PRODUCTO DEL USER
 export const putManyProducts = (formData: IProduct[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyProductsStart(formData));
@@ -141,7 +141,7 @@ export const putManyProducts = (formData: IProduct[], token: string) => async (d
     }
 };
 
-//DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//DA DE BAJA UN PRODUCTO DEL USER
 export const patchProduct = (idProduct: string, formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchProductStart());
@@ -161,7 +161,7 @@ export const patchProduct = (idProduct: string, formData: IProduct, token: strin
     }
 }
 
-//ELIMINA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ELIMINA UN PRODUCTO DEL USER
 export const deleteProduct = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteProductStart());

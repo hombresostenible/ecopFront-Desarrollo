@@ -44,7 +44,7 @@ export const postManyRawMaterials = (formData: IRawMaterial[], token: string) =>
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//OBTIENE TODAS LOS MATERIAS PRIMAS DEL USER
 export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/rawMaterial', {
@@ -63,7 +63,7 @@ export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) 
     }
 };
 
-//OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
+//OBTIENE UNA MATERIAS PRIMAS POR ID
 export const getRawMaterialById = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/rawMaterial/${idProduct}`, {
@@ -82,7 +82,7 @@ export const getRawMaterialById = (idProduct: string, token: string) => async (d
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
+//OBTIENE TODAS LAS MATERIAS PRIMAS DEL USER POR SEDE
 export const getRawMaterialsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/rawMaterial/rawMaterials-branch/${idBranch}`, {
@@ -101,7 +101,7 @@ export const getRawMaterialsByBranch = (idBranch: string, token: string) => asyn
     }
 };
 
-//ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ACTUALIZA UNA MATERIAS PRIMAS DEL USER
 export const putRawMaterial = (idProduct: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putRawMaterialStart());
@@ -121,7 +121,7 @@ export const putRawMaterial = (idProduct: string, formData: IRawMaterial, token:
     }
 };
 
-//ACTUALIZA MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//ACTUALIZA MUCHAS MATERIAS PRIMAS DEL USER
 export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyRawMaterialsStart(formData));
@@ -141,7 +141,7 @@ export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => 
     }
 };
 
-//DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//DA DE BAJA UNA MATERIAS PRIMAS DEL USER
 export const patchRawMaterial = (idProduct: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchRawMaterialStart());
@@ -161,7 +161,7 @@ export const patchRawMaterial = (idProduct: string, formData: IRawMaterial, toke
     }
 }
 
-//ELIMINA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+//ELIMINA UNA MATERIAS PRIMAS DEL USER
 export const deleteRawMaterial = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteRawMaterialStart());

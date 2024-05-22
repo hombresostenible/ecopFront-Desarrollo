@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import NavBar from '../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../components/Platform/Footer/Footer';
@@ -11,7 +12,13 @@ function ConsultanciesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        ConsultanciesPage
+                        <h2>Asesoría para toma de decisiones</h2>
+                        <p>Explicación sobre lo que se puede hacer en esta sección</p>
+                        <div className='d-flex flex-column'>
+                            <h4>Consulta con un asesor</h4>
+                            <Link to='/inventories/consult-assets' >Consulta tus clientes</Link>
+                            <Link to='/inventories/create-assets' >Crea tus clientes</Link>
+                        </div>
                     </div>
                     <Footer />
                 </div>

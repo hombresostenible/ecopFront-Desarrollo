@@ -230,19 +230,14 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuInventory ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/inventories/consult-assets' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-asset') ? styles.active : ''} `}>Activos</Link>
+                            <Link to='/inventories/consult-assets' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-assets') ? styles.active : ''} `}>Activos</Link>
                             <Link to='/inventories/consult-merchadises' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-merchadises' || location.pathname === '/inventories/create-merchadises') ? styles.active : ''} `}>Mercancías</Link>
-                            <Link to='/inventories/products' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/products'|| location.pathname === '/inventories/create-products' ) ? styles.active : ''} `}>Productos</Link>
-                            <Link to='/inventories/raw-materals' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/raw-materals' || location.pathname === '/inventories/create-rawmaterals') ? styles.active : ''}`}>Materias primas</Link>
-                            <Link to='/inventories/services' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/inventories/services' ? styles.active : ''}`}>Servicios</Link>
+                            <Link to='/inventories/consult-products' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-products'|| location.pathname === '/inventories/create-products' ) ? styles.active : ''} `}>Productos</Link>
+                            <Link to='/inventories/consult-raw-materals' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-raw-materals' || location.pathname === '/inventories/create-raw-materals') ? styles.active : ''}`}>Materias primas</Link>
+                            <Link to='/inventories/consult-services' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-services' || location.pathname === '/inventories/create-services') ? styles.active : ''}`}>Servicios</Link>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
 
                 <div ref={subMenuAccountsRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
@@ -278,7 +273,6 @@ function SideBar() {
                     <div className={`collapse ${subMenuInvoicingAndPos ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas crédito</Link>    {/* Visualizar notas crédito - Enviar notas crédito - Convertit notas crédito */}
-                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas crédito</Link>    {/* Visualizar notas crédito - Enviar notas crédito - Convertit notas crédito */}
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas débito</Link>     {/* Visualizar notas débito - Enviar notas débito - Convertit notas débito */}
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Facturas recurrentes</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Pagos recibidos</Link>
@@ -286,21 +280,6 @@ function SideBar() {
                         </div>
                     </div>
                 </div>
-
-
-                /*
-                Poductos
-                    Arroz
-                    Azúcar
-
-                Mercancías
-                    Arroz
-                    Azúcar
-
-                Mercancías
-                    Arroz
-                    Azúcar
-                */
 
                 <div ref={subMenuElectronicPayrollRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
                     <div className="d-flex align-items-center justify-content-between w-100" >
@@ -317,10 +296,8 @@ function SideBar() {
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Pagos de nómina</Link>
                             <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Certificaciones</Link>
-                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Contratos laborales</Link>
                             <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Liquidación de nómina</Link>
-                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Seguridad social</Link>
-                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Parafiscales</Link>
+                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Colaboradores</Link>
                         </div>
                     </div>
                 </div>
@@ -338,9 +315,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuCrmClients ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Consulta tus clientes</Link>
-                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Crea tus clientes</Link>
-                            <Link to='/crm-clients/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/merchadises' ? styles.active : ''}`}>Enviar cotizaciones</Link>
+                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Clientes</Link>
+                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Seguimiento</Link>
                         </div>
                     </div>
                 </div>
@@ -358,8 +334,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuCrmSuppliers ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Consulta tus proveedores</Link>
-                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Crea tus proveedores</Link>
+                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Proveedores</Link>
+                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Seguimiento de tus compras</Link>
                         </div>
                     </div>
                 </div>
@@ -438,8 +414,7 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuConsultancies ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Vencimiento de productos</Link>
-                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Calendario tributario</Link>
+                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Contacta a un asesor</Link>
                         </div>
                     </div>
                 </div>
