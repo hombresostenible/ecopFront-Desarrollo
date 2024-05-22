@@ -94,7 +94,7 @@ function CreateRawMateralPage() {
         setShowIndividualPackage(event.target.value);
     };
 
-    const onSubmit = async (values: IRawMaterial) => {
+    const onSubmit = (values: IRawMaterial) => {
         try {
             if (values.packaged === 'No') {
                 values.primaryPackageType = undefined;
@@ -107,7 +107,7 @@ function CreateRawMateralPage() {
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease,
             } as IRawMaterial;
-            await dispatch(postRawMaterial(formData, token));
+            dispatch(postRawMaterial(formData, token));
             setFormSubmitted(true);
             dispatch(getRawMaterials(token));
             reset();
@@ -133,7 +133,7 @@ function CreateRawMateralPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Materias primas</h2>
+                        <h2 className={`${styles.subtitle} text-center`}>Crea tus materias primas</h2>
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus materias primas de forma masiva</button>
                         </div>

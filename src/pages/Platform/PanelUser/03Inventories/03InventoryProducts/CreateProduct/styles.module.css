@@ -1,10 +1,10 @@
 .container {
     height: calc(100vh - 70px);
-    width: calc(100vw - 300px);
+    width: calc(100vw - 350px);
 }
 .container__Component {
     height: calc(100vh - 70px);
-    width: calc(100vw - 300px);
+    width: calc(100vw - 350px);
 }
 .subtitle {
     color: #f28705;

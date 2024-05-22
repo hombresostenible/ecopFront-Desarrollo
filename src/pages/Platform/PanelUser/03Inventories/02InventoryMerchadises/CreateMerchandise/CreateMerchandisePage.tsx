@@ -114,7 +114,7 @@ function CreateMerchandisePage() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-merchandise');
+            navigate('/inventories/consult-merchandises');
         }
     }, [ shouldNavigate, navigate ]);
 

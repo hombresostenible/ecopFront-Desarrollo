@@ -44,7 +44,7 @@ export const postManyMerchandises = (formData: IMerchandise[], token: string) =>
     }
 };
 
-//OBTIENE TODOS LAS MERCANCIAS DEL USER
+//OBTIENE TODAS LAS MERCANCIAS DEL USER
 export const getMerchandises = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/merchandise', {
@@ -82,7 +82,7 @@ export const getMerchandiseById = (idMerchandise: string, token: string) => asyn
     }
 };
 
-//OBTIENE TODOS LAS MERCANCIAS DEL USER POR SEDE
+//OBTIENE TODAS LAS MERCANCIAS DEL USER POR SEDE
 export const getMerchandisesByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/merchandise/merchandises-branch/${idBranch}`, {

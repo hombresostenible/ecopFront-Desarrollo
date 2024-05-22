@@ -46,7 +46,7 @@ function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps)
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/products');
+            navigate('/inventories/consult-products');
         }
     }, [ shouldNavigate, navigate ]);
 
