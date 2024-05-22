@@ -88,7 +88,7 @@ function RawMateralCardPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/create-rawmaterals'>Crea tus materias primas</Link>
+                        <Link to='/inventories/create-raw-materals'>Crea tus materias primas</Link>
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className='p-4'>
                                 <h1 className='text-2xl font-bold'>Materias primas</h1>

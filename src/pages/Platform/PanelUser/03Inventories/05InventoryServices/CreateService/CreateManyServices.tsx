@@ -2,23 +2,24 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyProducts } from '../../../../../../redux/User/productSlice/actions';
+import { postManyRawMaterials } from '../../../../../../redux/User/rawMaterialSlice/actions';
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import { IProduct } from "../../../../../../types/User/products.types";
+import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import styles from './styles.module.css';
 
-interface CreateManyProductsProps {
+interface CreateManyRawMateralsProps {
     branches: IBranch | IBranch[] | null;
     token: string;
     onCreateComplete: () => void;
 }
 
-function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyProductsProps) {
+function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRawMateralsProps) {
     const dispatch: AppDispatch = useDispatch();
 
+    // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -53,14 +54,14 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Nombre del producto": "nameItem",
+                    "Nombre de la matería prima": "nameItem",
                     "Código de barras": "barCode",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
                     "¿Autoincremento?": "inventoryIncrease",
                     "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
                     "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio de venta": "sellingPrice",
+                    "Precio de compra antes de impuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
                     "¿Empacado?": "packaged",
                     "Tipo de empaque principal": "primaryPackageType",
@@ -86,6 +87,7 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                             return obj;
                         }, {})
                     );
+
                     // Establecer los encabezados y los datos traducidos
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
@@ -99,14 +101,14 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "nameItem": "Nombre del producto",
+        "nameItem": "Nombre de la matería prima",
         "barCode": "Código de barras",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
         "inventoryIncrease": "¿Autoincremento?",
         "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
         "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "sellingPrice": "Precio de venta",        
+        "purchasePriceBeforeTax": "Precio de compra antes de impuestos",
         "IVA": "IVA",
         "packaged": "¿Empacado?",
         "primaryPackageType": "Tipo de empaque principal",
@@ -122,42 +124,44 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
     
         // Mapear los datos con la manipulación específica
-        const rawMateriaData = nonEmptyRows.map(product => {
+        const rawMateriaData = nonEmptyRows.map(rawmaterial => {
             // Verificar si inventoryIncrease es No o packaged es No
-            if (product.inventoryIncrease === 'No' || product.packaged === 'No') {
+            if (rawmaterial.inventoryIncrease === 'No' || rawmaterial.packaged === 'No') {
                 return {
-                    ...product,
+                    ...rawmaterial,
                     branchId: branchId,
                     userId: user?.id,
-                    periodicityAutomaticIncrease: product.inventoryIncrease === 'No' ? null : product.periodicityAutomaticIncrease,
-                    automaticInventoryIncrease: product.inventoryIncrease === 'No' ? null : product.automaticInventoryIncrease,
-                    primaryPackageType: product.packaged === 'No' ? null : product.primaryPackageType
+                    periodicityAutomaticIncrease: rawmaterial.inventoryIncrease === 'No' ? null : rawmaterial.periodicityAutomaticIncrease,
+                    automaticInventoryIncrease: rawmaterial.inventoryIncrease === 'No' ? null : rawmaterial.automaticInventoryIncrease,
+                    primaryPackageType: rawmaterial.packaged === 'No' ? null : rawmaterial.primaryPackageType
                 };
             }
     
             return {
-                ...product,
+                ...rawmaterial,
                 branchId: branchId,
                 userId: user?.id
             };
         });
-        dispatch(postManyProducts(rawMateriaData as unknown as IProduct[], token));
+        dispatch(postManyRawMaterials(rawMateriaData as unknown as IRawMaterial[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
-        setMessage('Se guardó masivamente tus productos con éxito');
+        setMessage('Se guardó masivamente tus materias primas con éxito');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
     };
 
+
+
     return (
         <div>
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
-                <div className={`${styles.containerDownloadFile} mt-3 mb-3 m-auto p-2 d-flex align-items-center justify-content-between border rounded`}>
+                <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/Download-Excels/Productos.xlsx" download="Productos.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/Download-Excels/Materias Primas.xlsx" download="Materias Primas.xlsx">Descargar Excel</a>
                 </div>
-                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus productos y facilitar la creación masiva en la sede seleccionada.</p>
+                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus materias primas y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
 
             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -203,6 +207,7 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                         </thead>
                         <tbody>
                             {excelData.map((row, index) => (
+                                // Verificar si hay datos en la fila antes de renderizarla
                                 Object.values(row).some(value => !!value) && (
                                     <tr key={index}>
                                         {headers.map((header, columnIndex) => (
@@ -223,4 +228,4 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
     );
 }
 
-export default CreateManyProducts;
+export default CreateManyServices;

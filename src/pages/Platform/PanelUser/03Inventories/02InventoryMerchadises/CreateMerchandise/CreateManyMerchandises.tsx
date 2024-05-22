@@ -125,7 +125,7 @@ function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateMa
             branchId: branchId,
             userId: user?.id,
         }));
-        postManyMerchandises(merchandiseData as unknown as IMerchandise[], token);
+        dispatch(postManyMerchandises(merchandiseData as unknown as IMerchandise[], token));
         setExcelData(null);
         setMessage('Se guardó masivamente tus activos con exito');
         setTimeout(() => {

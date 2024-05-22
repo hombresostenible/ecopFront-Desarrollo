@@ -44,7 +44,7 @@ export const postManyServices = (formData: IService[], token: string) => async (
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//OBTIENE TODOS LOS SERVICIOS
 export const getServices = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/service', {

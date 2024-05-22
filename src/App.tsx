@@ -59,26 +59,43 @@ import Error404 from './pages/Error404/Error404';
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
 
-// PLATAFORMA
+// NAVBAR PLATAFORMA
+import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
+import ServicesEcopcionPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/ServicesEcopcionPage';
+import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
+import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
+
+// SIDEBAR PLATAFORMA
+// SIDEBAR - HOME
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
 import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
+// SIDEBAR - TUS SEDES
 import BranchCardPage from './pages/Platform/PanelUser/02Branch/BranchCard/BranchCardPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
-
+// SIDEBAR - INVENTARIOS
+import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
+// SIDEBAR - INVENTARIOS - ASSETS
 import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/AssetsCard/AssetsCardPage';
 import CreateAssetPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/CreateAssets/CreateAssetPage';
-
+// SIDEBAR - INVENTARIOS - MERCHANDISES
 import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/MerchadisesCard/MerchadisesCardPage';
 import CreateMerchandisePage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/CreateMerchandise/CreateMerchandisePage';
-
+// SIDEBAR - INVENTARIOS - PRODUCTS
 import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ProductsCard/ProductsCardPage';
 import CreateProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/CreateProduct/CreateProductPage';
 import QuoteProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/QuoteProduct/QuoteProductPage';
-
+// SIDEBAR - INVENTARIOS - RAWMATERIALS
 import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/RawMateralCard/RawMateralCardPage';
 import CreateRawMateralPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/CreateRawMateral/CreateRawMateralPage';
-
+// SIDEBAR - INVENTARIOS - SERVICES
 import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ServicesCard/ServicesCardPage';
+import CreateServicePage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateService/CreateServicePage';
+
+
+
+
+
+
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
@@ -89,10 +106,6 @@ import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndInd
 import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
 import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
 
-import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
-import ServicesEcopcionPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/ServicesEcopcionPage';
-import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
-import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 
 function App() {
 
@@ -154,28 +167,31 @@ function App() {
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
 
-                            {/* SideBar Tus Sedes */}
+                            {/* SideBar Home */}
                             <Route path='/home' element={<Home />} />
+                            {/* SideBar Tus Sedes */}
                             <Route path='/branches/consult-branches' element={<BranchCardPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
 
                             {/* SideBar Inventarios */}
-                            {/* <Route path='/inventories' element={<InventoriesPage />} /> */}
+                            <Route path='/inventories' element={<InventoriesPage />} />
+                            {/* SideBar Inventarios - Assets */}
                             <Route path='/inventories/consult-assets' element={<AssetsPage />} />
-                            <Route path='/inventories/create-asset' element={<CreateAssetPage />} />
-                            
+                            <Route path='/inventories/create-assets' element={<CreateAssetPage />} />
+                            {/* SideBar Inventarios - Merchadises */}
                             <Route path='/inventories/consult-merchadises' element={<MerchadisesPage />} />
                             <Route path='/inventories/create-merchadises' element={<CreateMerchandisePage />} />
-
-                            <Route path='/inventories/products' element={<ProductsPage />} />
+                            {/* SideBar Inventarios - Products */}
+                            <Route path='/inventories/consult-products' element={<ProductsPage />} />
                             <Route path='/inventories/create-products' element={<CreateProductPage />} />
                             <Route path='/inventories/quote-products' element={<QuoteProductPage />} />
-
-                            <Route path='/inventories/raw-materals' element={<RawMateralsPage />} />
-                            <Route path='/inventories/create-rawmaterals' element={<CreateRawMateralPage />} />
-
-                            <Route path='/inventories/services' element={<ServicesPage />} />
-
+                            {/* SideBar Inventarios - Rawmaterals */}
+                            <Route path='/inventories/consult-raw-materals' element={<RawMateralsPage />} />
+                            <Route path='/inventories/create-raw-materals' element={<CreateRawMateralPage />} />
+                            {/* SideBar Inventarios - Services */}
+                            <Route path='/inventories/consult-services' element={<ServicesPage />} />
+                            <Route path='/inventories/create-services' element={<CreateServicePage />} />
+                            
                             {/* SideBar Cuentas */}
                             <Route path='/accounts' element={<AccountsPage />} />
 

@@ -49,7 +49,6 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
                 const workbook = XLSX.read(data, { type: 'binary' });
                 const sheetName = workbook.SheetNames[0];
                 const sheet = workbook.Sheets[sheetName];
-    
                 const parsedData: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
@@ -68,17 +67,14 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
                     "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
-    
                 // Tomar las filas 4 y 6 como encabezados y datos respectivamente
                 const originalHeaders: string[] = parsedData[3] || [];
                 const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
-    
                 // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
                     // Obtener la traducción en inglés si está disponible, de lo contrario, mantener el nombre original
                     return spanishColumnNames[header] || header;
                 });
-    
                 if (currentHeaders.length > 0) {
                     // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
@@ -119,10 +115,8 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
     const onSubmit = async () => {
         if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
-    
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-    
         // Mapear los datos con la manipulación específica
         const rawMateriaData = nonEmptyRows.map(rawmaterial => {
             // Verificar si inventoryIncrease es No o packaged es No
@@ -136,17 +130,13 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
                     primaryPackageType: rawmaterial.packaged === 'No' ? null : rawmaterial.primaryPackageType
                 };
             }
-    
             return {
                 ...rawmaterial,
                 branchId: branchId,
                 userId: user?.id
             };
         });
-    
-        // Enviar los datos al backend dependiendo del tipo de usuario
-        if (user?.userType === 'User' || user?.userType === 'Company') await postManyRawMaterials(rawMateriaData as unknown as IRawMaterial[], token);
-    
+        dispatch(postManyRawMaterials(rawMateriaData as unknown as IRawMaterial[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
         setMessage('Se guardó masivamente tus materias primas con éxito');
@@ -154,8 +144,6 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
             onCreateComplete();
         }, 1500);
     };
-
-
 
     return (
         <div>

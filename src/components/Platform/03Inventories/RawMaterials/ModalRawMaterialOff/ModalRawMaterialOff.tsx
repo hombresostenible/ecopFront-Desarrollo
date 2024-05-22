@@ -46,7 +46,7 @@ function ModalRawMaterialOff({ token, rawMaterial, onCloseModal }: ModalRawMater
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/raw-materals');
+            navigate('/inventories/consult-raw-materals');
         }
     }, [ shouldNavigate, navigate ]);
     
