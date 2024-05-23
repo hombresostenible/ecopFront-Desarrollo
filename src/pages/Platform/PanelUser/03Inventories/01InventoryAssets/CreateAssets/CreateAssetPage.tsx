@@ -16,7 +16,13 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CreateAssetPage() {
+interface CreateAssetPageProps {
+    selectedBranchId?: string;
+    onCreateComplete?: () => void;
+    onAssetCreated?: (idBranch: string, token: string) => void;
+}
+
+function CreateAssetPage({ selectedBranchId, onCreateComplete, onAssetCreated }: CreateAssetPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -48,17 +54,26 @@ function CreateAssetPage() {
 
     const onSubmit = async (values: IAssets) => {
         try {
-            const branchData = {
+            const assetData = {
                 ...values,
                 conditionAssets: selectedCondition,
+                branchId: selectedBranchId || values.branchId, // Usa el branchId pasado como prop si está disponible
             } as IAssets;
-            await dispatch(postAsset(branchData, token));
+
+            await dispatch(postAsset(assetData, token));
             setFormSubmitted(true);
             reset();
             setTimeout(() => {
                 dispatch(getAssets(token));
                 setFormSubmitted(false);
-                setShouldNavigate(true);
+                if (onCreateComplete) {
+                    onCreateComplete();
+                } else {
+                    setShouldNavigate(true);
+                }
+                if (onAssetCreated && selectedBranchId) {
+                    onAssetCreated(selectedBranchId, token);
+                }
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -69,16 +84,16 @@ function CreateAssetPage() {
         if (shouldNavigate) {
             navigate('/inventories/consult-assets');
         }
-    }, [ shouldNavigate, navigate ]);
+    }, [shouldNavigate, navigate]);
 
     return (
         <div className='d-flex flex-column'>
-            <NavBar />
+            {!onCreateComplete && <NavBar />}
             <div className='d-flex'>
-                <SideBar />
+                {!onCreateComplete && <SideBar />}
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/consult-assets'>Consulta tus activos</Link>
+                        {!onCreateComplete && <Link to='/inventories/consult-assets'>Consulta tus activos</Link>}
                         <h2 className={`${styles.subtitle} text-center`}>Crea tus Equipos, herramientas o máquinas</h2>
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
@@ -95,6 +110,8 @@ function CreateAssetPage() {
                                     <select
                                         {...register('branchId', { required: true })}
                                         className={`${styles.info} p-2 border rounded border-secundary`}
+                                        defaultValue={selectedBranchId || ''}
+                                        disabled={!!selectedBranchId} // Deshabilita el select si se pasa una branchId
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -228,7 +245,7 @@ function CreateAssetPage() {
                             </div>
                         </form>
                     </div>
-                    <Footer />
+                    {!onCreateComplete && <Footer />}
                 </div>
             </div>
         </div>

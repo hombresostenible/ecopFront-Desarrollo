@@ -18,7 +18,13 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CreateRawMateralPage() {
+interface CreateRawMateralPageProps {
+    selectedBranchId?: string;
+    onCreateComplete?: () => void;
+    onRawMaterialCreated?: (idBranch: string, token: string) => void;
+}
+
+function CreateRawMateralPage({ selectedBranchId, onCreateComplete, onRawMaterialCreated }: CreateRawMateralPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     
@@ -109,11 +115,18 @@ function CreateRawMateralPage() {
             } as IRawMaterial;
             dispatch(postRawMaterial(formData, token));
             setFormSubmitted(true);
-            dispatch(getRawMaterials(token));
             reset();
             setTimeout(() => {
+                dispatch(getRawMaterials(token));
                 setFormSubmitted(false);
-                setShouldNavigate(true);
+                if (onCreateComplete) {
+                    onCreateComplete();
+                } else {
+                    setShouldNavigate(true);
+                }
+                if (onRawMaterialCreated && selectedBranchId) {
+                    onRawMaterialCreated(selectedBranchId, token);
+                }
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -598,12 +611,6 @@ function CreateRawMateralPage() {
                                     )}
                                 </div>
                             )}
-
-
-
-
-
-
 
                             <div className="d-flex">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>

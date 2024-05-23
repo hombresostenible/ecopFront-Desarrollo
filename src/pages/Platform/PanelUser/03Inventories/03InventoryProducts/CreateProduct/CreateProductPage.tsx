@@ -20,11 +20,13 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
+interface CreateProductPageProps {
+    selectedBranchId?: string;
+    onCreateComplete?: () => void;
+    onProductCreated?: (idBranch: string, token: string) => void;
+}
 
-
-
-
-function CreateProductPage() {
+function CreateProductPage({ selectedBranchId, onCreateComplete, onProductCreated }: CreateProductPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -114,7 +116,14 @@ function CreateProductPage() {
             setTimeout(() => {
                 dispatch(getProducts(token));
                 setFormSubmitted(false);
-                setShouldNavigate(true);
+                if (onCreateComplete) {
+                    onCreateComplete();
+                } else {
+                    setShouldNavigate(true);
+                }
+                if (onProductCreated && selectedBranchId) {
+                    onProductCreated(selectedBranchId, token);
+                }
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
