@@ -16,6 +16,9 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import CreateManyServices from './CreateManyServices';
+import CreateAssetPage from '../../01InventoryAssets/CreateAssets/CreateAssetPage';
+import CreateProductPage from '../../03InventoryProducts/CreateProduct/CreateProductPage';
+import CreateRawMateralPage from '../../04InventoryRawMaterals/CreateRawMateral/CreateRawMateralPage';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -32,7 +35,6 @@ function CreateServicePage() {
     const product = useSelector((state: RootState) => state.product.product);
     const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
     
-
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IService>();
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -83,7 +85,13 @@ function CreateServicePage() {
 
     //RENDERIZA TODOS LOS ACTIVOS
     const renderAssetInputs = () => {
-        return assets?.map((asset, index) => (
+        // Si assets es null, devolvemos null
+        if (!assets) return null;
+    
+        // Si assets es un solo objeto, lo convertimos en un array
+        const assetsArray = Array.isArray(assets) ? assets : [assets];
+    
+        return assetsArray.map((asset, index) => (
             <div key={index} className='d-flex'>
                 <div className={`${styles.containerRender} d-flex align-items-center justify-content-center gap-2`}>
                     <p className={`${styles.renderNameItem} m-0 p-1 border rounded`}>{asset.nameItem}</p>
@@ -128,8 +136,14 @@ function CreateServicePage() {
     
     //RENDERIZA TODOS LOS PRODUCTOS
     const renderProductInputs = () => {
-        return product?.map((product, index) => (
-            <div key={index}>
+        // Si product es null, devolvemos null
+        if (!product) return null;
+    
+        // Si product es un solo objeto, lo convertimos en un array
+        const productArray = Array.isArray(product) ? product : [product];
+    
+        return productArray.map((product, index) => (
+            <div key={index} className='d-flex'>
                 <div className={`${styles.containerRender} d-flex align-items-center justify-content-center gap-2`}>
                     <p className={`${styles.renderNameItem} m-0 p-1 border rounded`}>{product.nameItem}</p>
                     <input
@@ -190,8 +204,14 @@ function CreateServicePage() {
 
     //RENDERIZA TODAS LAS MATERIAS PRIMAS
     const renderRawMaterialInputs = () => {
-        return rawMaterial?.map((rawMaterial, index) => (
-            <div key={index}>
+        // Si assets es null, devolvemos null
+        if (!rawMaterial) return null;
+    
+        // Si rawMaterial es un solo objeto, lo convertimos en un array
+        const rawMaterialArray = Array.isArray(rawMaterial) ? rawMaterial : [rawMaterial];
+    
+        return rawMaterialArray.map((rawMaterial, index) => (
+            <div key={index} className='d-flex'>
                 <div className={`${styles.containerRender} d-flex align-items-center justify-content-center gap-2`}>
                     <p className={`${styles.renderNameItem} m-0 p-1 border rounded`}>{rawMaterial.nameItem}</p>
                     <input
@@ -213,6 +233,8 @@ function CreateServicePage() {
             </div>
         ));
     };
+
+
 
     // Selecciona todas las materias primas utilizados en la prestación del servicio
     const handleRawMaterialCheckboxChange = (rawMaterialId: string, isChecked: boolean) => {
@@ -249,42 +271,47 @@ function CreateServicePage() {
 
     const onSubmit = (values: IService) => {
         try {
-            if (!isCreatingRawMaterial) {
-                if (!isCreatingProduct) {
-                    if (!isCreatingAsset) {
-                        const formDarta = {
-                            ...values,
-                            serviceAssets: assets ?.filter((asset) => selectedAssets.includes(asset.id))
-                                .map((asset: { nameItem: any; id: any; }) => ({
-                                    nameItem: asset.nameItem,
-                                    assetId: asset.id,
-                                })),
-
-                            serviceProducts: product ?.filter((product) => selectedProducts.includes(product.id))
-                                .map((product: { nameItem: any; id: string | number; }) => ({
-                                    nameItem: product.nameItem,
-                                    productId: product.id,
-                                    quantity: productQuantities[product.id] || 0,
-                                })),
-                            
-                            serviceRawMaterials: rawMaterial ?.filter((rawMaterial) => selectedRawMaterials.includes(rawMaterial.id))
-                                .map((rawMaterial: { nameItem: any; id: string | number; unitMeasure: any; }) => ({
-                                    nameItem: rawMaterial.nameItem,
-                                    rawMaterialId: rawMaterial.id,
-                                    unitMeasure: rawMaterial.unitMeasure,
-                                    quantity: rawMaterialQuantities[rawMaterial.id] || 0,
-                                })),
-                        } as IService;
-                        dispatch(postService(formDarta, token));
-                        setFormSubmitted(true);
-                        dispatch(getServices(token));
-                        reset();    
-                        setTimeout(() => {
-                            setFormSubmitted(false);
-                            setShouldNavigate(true);
-                        }, 1500);
-                    }
-                }
+            if (!isCreatingRawMaterial && !isCreatingProduct && !isCreatingAsset) {
+                // Convertir assets, product y rawMaterial a arrays si no lo son ya
+                const assetsArray = Array.isArray(assets) ? assets : assets ? [assets] : [];
+                const productsArray = Array.isArray(product) ? product : product ? [product] : [];
+                const rawMaterialsArray = Array.isArray(rawMaterial) ? rawMaterial : rawMaterial ? [rawMaterial] : [];
+    
+                const formDarta: IService = {
+                    ...values,
+                    serviceAssets: assetsArray
+                        .filter((asset) => selectedAssets.includes(asset.id))
+                        .map((asset) => ({
+                            nameItem: asset.nameItem,
+                            assetId: asset.id,
+                        })),
+    
+                    serviceProducts: productsArray
+                        .filter((product) => selectedProducts.includes(product.id))
+                        .map((product) => ({
+                            nameItem: product.nameItem,
+                            productId: product.id,  // Usar 'productId' en lugar de 'productlId'
+                            quantity: String(productQuantities[product.id] || 0),  // Convertir cantidad a cadena
+                        })),
+    
+                    serviceRawMaterials: rawMaterialsArray
+                        .filter((rawMaterial) => selectedRawMaterials.includes(rawMaterial.id))
+                        .map((rawMaterial) => ({
+                            nameItem: rawMaterial.nameItem,
+                            rawMaterialId: rawMaterial.id,
+                            unitMeasure: rawMaterial.unitMeasure,
+                            quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
+                        })),
+                };
+    
+                dispatch(postService(formDarta, token));
+                setFormSubmitted(true);
+                dispatch(getServices(token));
+                reset();
+                setTimeout(() => {
+                    setFormSubmitted(false);
+                    setShouldNavigate(true);
+                }, 1500);
             }
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -382,7 +409,7 @@ function CreateServicePage() {
                                                 <Modal.Title>Crear Activo</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateAsset
+                                                <CreateAssetPage
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseAssetModal();
@@ -408,7 +435,7 @@ function CreateServicePage() {
                                                 <Modal.Title>Crear Producto</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateProducts
+                                                <CreateProductPage
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseProductModal();
@@ -434,7 +461,7 @@ function CreateServicePage() {
                                                 <Modal.Title>Crear Materia Prima</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateRawMaterial
+                                                <CreateRawMateralPage
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseRawMaterialModal();
