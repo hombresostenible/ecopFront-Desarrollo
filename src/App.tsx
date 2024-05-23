@@ -105,6 +105,7 @@ import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/Sust
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
 import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
 import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
+import EnviromentalPage from './pages/Platform/PanelUser/09Sustainability/01Enviromental/EnviromentalPage';
 
 
 function App() {
@@ -209,6 +210,7 @@ function App() {
 
                             {/* SideBar Sostenibilidad */}
                             <Route path='/sustainability' element={<SustainabilityPage />} />
+                            <Route path='/sustainability/standars' element={<EnviromentalPage />} />
 
                             {/* SideBar Reportes e indicadores */}
                             <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />

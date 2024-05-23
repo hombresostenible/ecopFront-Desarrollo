@@ -353,7 +353,7 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuSustainability ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Consulta normas ambientales</Link>
+                            <Link to='/sustainability/standars' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/standars' ? styles.active : ''}`}>Consulta normas ambientales</Link>
                             <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Diseño de planes</Link>
                             <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Informes ASG</Link>
                             <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Historias de sostenibilidad</Link>
