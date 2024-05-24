@@ -46,7 +46,7 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-merchadises');
+            navigate('/inventories/consult-merchandises');
         }
     }, [ shouldNavigate, navigate ]);
 

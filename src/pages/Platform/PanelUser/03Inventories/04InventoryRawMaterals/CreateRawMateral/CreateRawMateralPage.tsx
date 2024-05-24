@@ -135,7 +135,7 @@ function CreateRawMateralPage({ selectedBranchId, onCreateComplete, onRawMateria
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-rawMaterial');
+            navigate('/inventories/consult-raw-materals');
         }
     }, [ shouldNavigate, navigate ]);
 

@@ -87,7 +87,7 @@ function MerchadisesCardPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/create-merchadises'>Crea tus mercancías</Link>
+                        <Link to='/inventories/create-merchandises'>Crea tus mercancías</Link>
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className='p-4'>
                                 <h1 className='text-2xl font-bold'>Mercancías</h1>
