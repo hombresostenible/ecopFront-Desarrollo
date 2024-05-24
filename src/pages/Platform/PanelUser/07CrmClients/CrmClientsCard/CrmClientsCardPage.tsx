@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import NavBar from '../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../components/Platform/Footer/Footer';
+import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CrmClientsPage() {
+function CrmClientsCardPage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -31,4 +31,4 @@ function CrmClientsPage() {
     );
 }
 
-export default CrmClientsPage;
+export default CrmClientsCardPage;

@@ -21,8 +21,8 @@ function InventoriesPage() {
                         </div>
                         <div className='d-flex flex-column'>
                             <h4>Mercancías</h4>
-                            <Link to='/inventories/consult-merchadises' >Consulta tus mercancías</Link>
-                            <Link to='/inventories/create-merchadises' >Crea tus mercancías</Link>
+                            <Link to='/inventories/consult-merchandises' >Consulta tus mercancías</Link>
+                            <Link to='/inventories/create-merchandises' >Crea tus mercancías</Link>
                         </div>
                         <div className='d-flex flex-column'>
                             <h4>Productos</h4>

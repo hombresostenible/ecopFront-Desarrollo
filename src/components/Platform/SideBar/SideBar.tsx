@@ -231,7 +231,7 @@ function SideBar() {
                     <div className={`collapse ${subMenuInventory ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/inventories/consult-assets' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-assets') ? styles.active : ''} `}>Activos</Link>
-                            <Link to='/inventories/consult-merchadises' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-merchadises' || location.pathname === '/inventories/create-merchadises') ? styles.active : ''} `}>Mercancías</Link>
+                            <Link to='/inventories/consult-merchandises' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-merchandises' || location.pathname === '/inventories/create-merchandises') ? styles.active : ''} `}>Mercancías</Link>
                             <Link to='/inventories/consult-products' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-products'|| location.pathname === '/inventories/create-products' ) ? styles.active : ''} `}>Productos</Link>
                             <Link to='/inventories/consult-raw-materals' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-raw-materals' || location.pathname === '/inventories/create-raw-materals') ? styles.active : ''}`}>Materias primas</Link>
                             <Link to='/inventories/consult-services' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/inventories/consult-services' || location.pathname === '/inventories/create-services') ? styles.active : ''}`}>Servicios</Link>
@@ -315,8 +315,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuCrmClients ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Clientes</Link>
-                            <Link to='/crm-clients/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/assets' ? styles.active : ''}`}>Seguimiento</Link>
+                            <Link to='/crm-clients/consult-crm-clients' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/consult-crm-clients' ? styles.active : ''}`}>Clientes</Link>
+                            <Link to='/crm-clients/create-crm-clients' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/create-crm-clients' ? styles.active : ''}`}>Seguimiento</Link>
                         </div>
                     </div>
                 </div>
@@ -334,8 +334,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuCrmSuppliers ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Proveedores</Link>
-                            <Link to='/crm-suppliers/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/assets' ? styles.active : ''}`}>Seguimiento de tus compras</Link>
+                            <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/consult-crm-suppliers' ? styles.active : ''}`}>Proveedores</Link>
+                            <Link to='/crm-suppliers/create-crm-suppliers' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/create-crm-suppliers' ? styles.active : ''}`}>Seguimiento de tus compras</Link>
                         </div>
                     </div>
                 </div>
@@ -375,9 +375,9 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuReportsAndIndicators ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores financieros</Link>
-                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores de mercadeo</Link>
-                            <Link to='/reports-and-indicators/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/assets' ? styles.active : ''}`}>Indicadores de sostenibilidad</Link>
+                            <Link to='/reports-and-indicators/financial-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/financial-indicators' ? styles.active : ''}`}>Indicadores financieros</Link>
+                            <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active : ''}`}>Indicadores de mercadeo</Link>
+                            <Link to='/reports-and-indicators/sustainability-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/sustainability-indicators' ? styles.active : ''}`}>Indicadores de sostenibilidad</Link>
                         </div>
                     </div>
                 </div>

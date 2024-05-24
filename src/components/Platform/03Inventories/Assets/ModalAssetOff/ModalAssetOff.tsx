@@ -30,7 +30,6 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
     
     const isAssetStatusConsult = location.pathname === '/inventories/consult-assets';
 
-
     const onSubmit = (values: IAssets) => {
         try {
             const formData = {

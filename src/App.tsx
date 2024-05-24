@@ -90,22 +90,29 @@ import CreateRawMateralPage from './pages/Platform/PanelUser/03Inventories/04Inv
 // SIDEBAR - INVENTARIOS - SERVICES
 import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ServicesCard/ServicesCardPage';
 import CreateServicePage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateService/CreateServicePage';
-
-
-
-
-
-
+// SIDEBAR - INVENTARIOS - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
+// SIDEBAR - INVENTARIOS - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
+// SIDEBAR - INVENTARIOS - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
-import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsPage';
-import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliersPage';
+// SIDEBAR - INVENTARIOS - CRM-CLIENT
+import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsCard/CrmClientsCardPage';
+import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
+// SIDEBAR - INVENTARIOS - CRM-SUPPLIER
+import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliers/CrmSuppliersCardPage';
+import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
+// SIDEBAR - INVENTARIOS - SUSTAINABILITY
 import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/SustainabilityPage';
+// SIDEBAR - INVENTARIOS - REPORT-AND-INDICATORS
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
+import FinancialIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/FinancialIndicator/FinancialIndicatorsPage';
+import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/MarketingIndicator/MarketingIndicatorsPage';
+import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/SustainabilityIndicator/SustainabilityIndicatorsPage';
+// SIDEBAR - INVENTARIOS - STRATEGIC-NOTIFICATIONS
 import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
+// SIDEBAR - INVENTARIOS - CONSULTANCIES
 import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
-import EnviromentalPage from './pages/Platform/PanelUser/09Sustainability/01Enviromental/EnviromentalPage';
 
 
 function App() {
@@ -180,8 +187,8 @@ function App() {
                             <Route path='/inventories/consult-assets' element={<AssetsPage />} />
                             <Route path='/inventories/create-assets' element={<CreateAssetPage />} />
                             {/* SideBar Inventarios - Merchadises */}
-                            <Route path='/inventories/consult-merchadises' element={<MerchadisesPage />} />
-                            <Route path='/inventories/create-merchadises' element={<CreateMerchandisePage />} />
+                            <Route path='/inventories/consult-merchandises' element={<MerchadisesPage />} />
+                            <Route path='/inventories/create-merchandises' element={<CreateMerchandisePage />} />
                             {/* SideBar Inventarios - Products */}
                             <Route path='/inventories/consult-products' element={<ProductsPage />} />
                             <Route path='/inventories/create-products' element={<CreateProductPage />} />
@@ -192,32 +199,27 @@ function App() {
                             {/* SideBar Inventarios - Services */}
                             <Route path='/inventories/consult-services' element={<ServicesPage />} />
                             <Route path='/inventories/create-services' element={<CreateServicePage />} />
-                            
                             {/* SideBar Cuentas */}
                             <Route path='/accounts' element={<AccountsPage />} />
-
                             {/* SideBar Facturación y POS */}
                             <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
-
                             {/* SideBar Nómina electrónica */}
                             <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
-
                             {/* SideBar CRM Clientes */}
-                            <Route path='/crm-clients' element={<CrmClientsPage />} />
-
+                            <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
+                            <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
                             {/* SideBar CRM Proveedores */}
-                            <Route path='/crm-suppliers' element={<CrmSuppliersPage />} />
-
+                            <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />
+                            <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
                             {/* SideBar Sostenibilidad */}
                             <Route path='/sustainability' element={<SustainabilityPage />} />
-                            <Route path='/sustainability/standars' element={<EnviromentalPage />} />
-
                             {/* SideBar Reportes e indicadores */}
                             <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />
-
+                            <Route path='/reports-and-indicators/financial-indicators' element={<FinancialIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} />
                             {/* SideBar Notificaciones estratégicas */}
                             <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />
-
                             {/* SideBar Asesorías para toma de decisiones */}
                             <Route path='/consultancies' element={<ConsultanciesPage />} />
                         </Route>
