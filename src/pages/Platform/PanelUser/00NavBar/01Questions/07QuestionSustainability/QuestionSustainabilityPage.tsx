@@ -3,7 +3,8 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CurrentMembershipsPage() {
+function QuestionSustainabilityPage() {
+
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -11,7 +12,7 @@ function CurrentMembershipsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h3>Mostrar los planes actuales</h3>
+                        QuestionSustainabilityPage
                     </div>
                     <Footer />
                 </div>
@@ -20,4 +21,4 @@ function CurrentMembershipsPage() {
     );
 }
 
-export default CurrentMembershipsPage;
+export default QuestionSustainabilityPage;

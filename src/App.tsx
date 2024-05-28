@@ -59,11 +59,21 @@ import Error404 from './pages/Error404/Error404';
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
 
-// NAVBAR PLATAFORMA
+// NAVBAR PLATAFORMA - QUESTIONS
 import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
+import QuestionInformationManageYourBusinessPage from './pages/Platform/PanelUser/00NavBar/01Questions/01QuestionInformationManageYourBusiness/QuestionInformationManageYourBusinessPage';
+import QuestionActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/01Questions/02QuestionActivateNewPlans/QuestionActivateNewPlansPage';
+import QuestionAccountsAndInventoriesPage from './pages/Platform/PanelUser/00NavBar/01Questions/03QuestionAccountsAndInventories/QuestionAccountsAndInventoriesPage';
+import QuestionInvoicingAndPosPage from './pages/Platform/PanelUser/00NavBar/01Questions/04QuestionInvoicingAndPos/QuestionInvoicingAndPosPage';
+import QuestionElectronicPayrollPage from './pages/Platform/PanelUser/00NavBar/01Questions/05QuestionElectronicPayroll/QuestionElectronicPayrollPage';
+import QuestionCrmPage from './pages/Platform/PanelUser/00NavBar/01Questions/06QuestionCrm/QuestionCrmPage';
+import QuestionSustainabilityPage from './pages/Platform/PanelUser/00NavBar/01Questions/07QuestionSustainability/QuestionSustainabilityPage';
+import QuestionConsultanciesPage from './pages/Platform/PanelUser/00NavBar/01Questions/08QuestionConsultancies/QuestionConsultanciesPage';
+import QuestionStrategicNotificationsPage from './pages/Platform/PanelUser/00NavBar/01Questions/09QuestionStrategicNotifications/QuestionStrategicNotificationsPage';
+// NAVBAR PLATAFORMA - SERVICES
 import ServicesEcopcionPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/ServicesEcopcionPage';
-import CurrentMembershipsPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/01CurrentMemberships/CurrentMembershipsPage';
-import ActivateNewMembershipsPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/02ActivateNewMemberships/ActivateNewMembershipsPage';
+
+import ActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/02ActivateNewPlans/ActivateNewPlansPage';
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 
@@ -194,12 +204,23 @@ function App() {
                         <Route path='/apiDocumentation' element={<APIDocumentation />} />
                         {/* Rutas Protegidas */}
                         <Route element={<ProtectedRoute />}>
-                            {/* Sección NavBar */}
+                            {/* Sección NavBar - Questions */}
                             <Route path='/questions' element={<QuestionsPage />} />
+                            <Route path='/questions/information-manage-your-business' element={<QuestionInformationManageYourBusinessPage />} />
+                            <Route path='/questions/activate-new-plans' element={<QuestionActivateNewPlansPage />} />
+                            <Route path='/questions/accounts-and-inventories' element={<QuestionAccountsAndInventoriesPage />} />
+                            <Route path='/questions/invoicing-and-pos' element={<QuestionInvoicingAndPosPage />} />
+                            <Route path='/questions/electronic-payroll' element={<QuestionElectronicPayrollPage />} />
+                            <Route path='/questions/crm' element={<QuestionCrmPage />} />
+                            <Route path='/questions/sustainability' element={<QuestionSustainabilityPage />} />
+                            <Route path='/questions/consultancies' element={<QuestionConsultanciesPage />} />
+                            <Route path='/questions/strategic-notifications' element={<QuestionStrategicNotificationsPage />} />
+                            {/* Sección NavBar - Services */}
                             <Route path='/services' element={<ServicesEcopcionPage />} />
-                            <Route path='/services/current-memberships' element={<CurrentMembershipsPage />} />
-                            <Route path='/services/activate-new-memberships' element={<ActivateNewMembershipsPage />} />
+                            <Route path='/services/activate-new-plans' element={<ActivateNewPlansPage />} />
+                            {/* Sección NavBar - Notifications */}
                             <Route path='/notifications' element={<NotificationsPage />} />
+                            {/* Sección NavBar - Configuration */}
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
                             {/* SideBar Home */}
@@ -268,8 +289,6 @@ function App() {
                             <Route path='/reports-and-indicators/suggested-report' element={<SuggestedReportPage />} />
                             {/* SideBar Notificaciones estratégicas */}
                             <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />
-
-
                             <Route path='/strategic-notifications/product-expiry' element={<ProductExpiryPage />} />
                             <Route path='/strategic-notifications/tax-calendar' element={<TaxCalendarPage />} />
                             {/* SideBar Asesorías para toma de decisiones */}
