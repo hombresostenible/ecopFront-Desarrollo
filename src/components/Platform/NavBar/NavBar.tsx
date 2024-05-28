@@ -62,7 +62,7 @@ function NavBar() {
                     {menuQuestionVisible && (
                         <div ref={menuQuestionRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
                             <Link to='/questions/information-manage-your-business' className={`${styles.link__Service} text-decoration-none`}>Información clave para gerenciar tu negocio</Link>
-                            <Link to='/questions/activate-new-memberships' className={`${styles.link__Service} text-decoration-none`}>Activa nuevos planes</Link>
+                            <Link to='/questions/activate-new-plans' className={`${styles.link__Service} text-decoration-none`}>Activa nuevos planes</Link>
                             <Link to='/questions/accounts-and-inventories' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
                             <Link to='/questions/invoicing-and-pos' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
                             <Link to='/questions/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nómina electrónica</Link>
@@ -85,7 +85,7 @@ function NavBar() {
                             <Link to='/services/accounts' className={`${styles.link__Service} text-decoration-none`}>Cuentas</Link>
                             <Link to='/services/billing-and-pos' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
                             <Link to='/services/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nómina electrónica</Link>
-                            <Link to='/services/crm-client' className={`${styles.link__Service} text-decoration-none`}>CRM CLientes</Link>
+                            <Link to='/services/crm-client' className={`${styles.link__Service} text-decoration-none`}>CRM Clientes</Link>
                             <Link to='/services/crm-supplier' className={`${styles.link__Service} text-decoration-none`}>CRM Proveedores</Link>
                             <Link to='/services/sustainability' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
                             <Link to='/services/strategy-and-decision-making' className={`${styles.link__Service} text-decoration-none`}>Estrategia y toma de decisiones</Link>
