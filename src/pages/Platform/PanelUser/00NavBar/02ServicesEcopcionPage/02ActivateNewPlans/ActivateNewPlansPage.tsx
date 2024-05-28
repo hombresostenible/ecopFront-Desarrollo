@@ -3,7 +3,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function ActivateNewMembershipsPage() {
+function ActivateNewPlansPage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -98,4 +98,4 @@ function ActivateNewMembershipsPage() {
     );
 }
 
-export default ActivateNewMembershipsPage;
+export default ActivateNewPlansPage;
