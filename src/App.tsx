@@ -21,8 +21,8 @@ import RegisterUserPage from './pages/LandingPage/NavBarLandingPage/05Register/U
 // Login
 import LoginPage from './pages/LandingPage/NavBarLandingPage/06Login/LoginPage';
 import SendEmailResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/SendEmailResetPassword/SendEmailResetPasswordPage';
-import UnblockingAccountPage from './pages/LandingPage/NavBarLandingPage/06Login/UnblockingAccount/UnblockingAccountPage';
 import ResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/ResetPassword/ResetPasswordPage';
+import UnblockingAccountPage from './pages/LandingPage/NavBarLandingPage/06Login/UnblockingAccount/UnblockingAccountPage';
 
 // Sección de Body LandingPage
 import RegisterYourTransactions from './components/LandingPage/05Characteristics/01RegisterYourTransactions/RegisterYourTransactions';
@@ -62,6 +62,8 @@ import ProtectedRoute from './ProtectedRoute';
 // NAVBAR PLATAFORMA
 import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
 import ServicesEcopcionPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/ServicesEcopcionPage';
+import CurrentMembershipsPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/01CurrentMemberships/CurrentMembershipsPage';
+import ActivateNewMembershipsPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/02ActivateNewMemberships/ActivateNewMembershipsPage';
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 
@@ -92,10 +94,22 @@ import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventorySe
 import CreateServicePage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateService/CreateServicePage';
 // SIDEBAR - INVENTARIOS - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
+import IncomePage from './pages/Platform/PanelUser/04Accounts/01Income/IncomePage';
+import ExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ExpensesPage';
+import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/03PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVENTARIOS - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
+import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/01CreditNotes/CreditNotesPage';
+import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02DebitNotes/DebitNotesPage';
+import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03RecurringInvoices/RecurringInvoicesPage';
+import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/04ReceivedPayments/ReceivedPaymentsPage';
+import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/05Quotes/QuotesPage';
 // SIDEBAR - INVENTARIOS - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
+import PayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/01PayrollPayments/PayrollPaymentsPage';
+import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02Certifications/CertificationsPage';
+import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/03PayrollSettlement/PayrollSettlementPage';
+import EmployeesPage from './pages/Platform/PanelUser/06ElectronicPayroll/04Employees/EmployeesPage';
 // SIDEBAR - INVENTARIOS - CRM-CLIENT
 import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsCard/CrmClientsCardPage';
 import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
@@ -104,16 +118,28 @@ import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppl
 import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
 // SIDEBAR - INVENTARIOS - SUSTAINABILITY
 import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/SustainabilityPage';
+import EnvironmentalStandardsConsultationPage from './pages/Platform/PanelUser/09Sustainability/01EnvironmentalStandardsConsultation/EnvironmentalStandardsConsultationPage';
+import PlanDesignPage from './pages/Platform/PanelUser/09Sustainability/02PlanDesign/PlanDesignPage';
+import AsgReportsPage from './pages/Platform/PanelUser/09Sustainability/03AsgReports/AsgReportsPage';
+import SustainabilityStoriesPage from './pages/Platform/PanelUser/09Sustainability/04SustainabilityStories/SustainabilityStoriesPage';
+import DiagnosticsPage from './pages/Platform/PanelUser/09Sustainability/05Diagnostics/DiagnosticsPage';
 // SIDEBAR - INVENTARIOS - REPORT-AND-INDICATORS
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
-import FinancialIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/FinancialIndicator/FinancialIndicatorsPage';
-import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/MarketingIndicator/MarketingIndicatorsPage';
-import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/SustainabilityIndicator/SustainabilityIndicatorsPage';
+import BillingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/01BillingIndicators/BillingIndicatorsPage';
+import AccountsAndInventoryIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/AccountsAndInventoryIndicatorsPage';
+import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/MarketingIndicatorsPage';
+import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/04SustainabilityIndicators/SustainabilityIndicatorsPage';
+import CustomReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/05CustomReport/CustomReportPage';
+import DailyReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/06DailyReport/DailyReportPage';
+import EndOfMonthReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/07EndOfMonthReport/EndOfMonthReportPage';
+import SuggestedReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/08SuggestedReport/SuggestedReportPage';
 // SIDEBAR - INVENTARIOS - STRATEGIC-NOTIFICATIONS
 import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
+import ProductExpiryPage from './pages/Platform/PanelUser/11StrategicNotifications/01ProductExpiry/ProductExpiryPage';
+import TaxCalendarPage from './pages/Platform/PanelUser/11StrategicNotifications/02TaxCalendar/TaxCalendarPage';
 // SIDEBAR - INVENTARIOS - CONSULTANCIES
 import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
-
+import ContactAnAdvisorPage from './pages/Platform/PanelUser/12Consultancies/01ContactAnAdvisor/ContactAnAdvisorPage';
 
 function App() {
 
@@ -133,8 +159,8 @@ function App() {
                         <Route path='/login' element={<LoginPage />} />
                         {/* Recuperación de contraseñas y desbloqueos de cuenta de User */}
                         <Route path='/reset-password' element={<SendEmailResetPasswordPage />} />
-                        <Route path='/unblocking-account/complete/:idParams' element={<UnblockingAccountPage />} />
                         <Route path='/reset-password/complete/:idParams/:passwordResetCode' element={<ResetPasswordPage />} />
+                        <Route path='/unblocking-account/complete/:idParams' element={<UnblockingAccountPage />} />
                         {/* Sección de NavBar LandingPage */}
                         <Route path='/paymentPlans' element={<PaymentPlansPage />} />
                         <Route path='/contactUs' element={<ContactUsPage />} />
@@ -171,16 +197,16 @@ function App() {
                             {/* Sección NavBar */}
                             <Route path='/questions' element={<QuestionsPage />} />
                             <Route path='/services' element={<ServicesEcopcionPage />} />
+                            <Route path='/services/current-memberships' element={<CurrentMembershipsPage />} />
+                            <Route path='/services/activate-new-memberships' element={<ActivateNewMembershipsPage />} />
                             <Route path='/notifications' element={<NotificationsPage />} />
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
-
                             {/* SideBar Home */}
                             <Route path='/home' element={<Home />} />
                             {/* SideBar Tus Sedes */}
                             <Route path='/branches/consult-branches' element={<BranchCardPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
-
                             {/* SideBar Inventarios */}
                             <Route path='/inventories' element={<InventoriesPage />} />
                             {/* SideBar Inventarios - Assets */}
@@ -201,10 +227,22 @@ function App() {
                             <Route path='/inventories/create-services' element={<CreateServicePage />} />
                             {/* SideBar Cuentas */}
                             <Route path='/accounts' element={<AccountsPage />} />
+                            <Route path='/accounts/income' element={<IncomePage />} />
+                            <Route path='/accounts/expenses' element={<ExpensesPage />} />
+                            <Route path='/accounts/pending-approval' element={<PendingApprovalPage />} />
                             {/* SideBar Facturación y POS */}
                             <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
+                            <Route path='/invoicing-and-pos/credit-notes' element={<CreditNotesPage />} />
+                            <Route path='/invoicing-and-pos/debit-notes' element={<DebitNotesPage />} />
+                            <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
+                            <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
+                            <Route path='/invoicing-and-pos/quotes' element={<QuotesPage />} />
                             {/* SideBar Nómina electrónica */}
                             <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
+                            <Route path='/electronic-payroll/payroll-payments' element={<PayrollPaymentsPage />} />
+                            <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />
+                            <Route path='/electronic-payroll/payroll-settlement' element={<PayrollSettlementPage />} />
+                            <Route path='/electronic-payroll/employees' element={<EmployeesPage />} />
                             {/* SideBar CRM Clientes */}
                             <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
                             <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
@@ -213,15 +251,30 @@ function App() {
                             <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
                             {/* SideBar Sostenibilidad */}
                             <Route path='/sustainability' element={<SustainabilityPage />} />
+                            <Route path='/sustainability/environmental-standards-consultation' element={<EnvironmentalStandardsConsultationPage />} />
+                            <Route path='/sustainability/plan-design' element={<PlanDesignPage />} />
+                            <Route path='/sustainability/asg-reports' element={<AsgReportsPage />} />
+                            <Route path='/sustainability/sustainability-stories' element={<SustainabilityStoriesPage />} />
+                            <Route path='/sustainability/diagnostics' element={<DiagnosticsPage />} />
                             {/* SideBar Reportes e indicadores */}
                             <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />
-                            <Route path='/reports-and-indicators/financial-indicators' element={<FinancialIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/billing-indicators' element={<BillingIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/accounts-and-inventory-indicators' element={<AccountsAndInventoryIndicatorsPage />} />
                             <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
                             <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/custom-report' element={<CustomReportPage />} />
+                            <Route path='/reports-and-indicators/daily-report' element={<DailyReportPage />} />
+                            <Route path='/reports-and-indicators/end-of-month-report' element={<EndOfMonthReportPage />} />
+                            <Route path='/reports-and-indicators/suggested-report' element={<SuggestedReportPage />} />
                             {/* SideBar Notificaciones estratégicas */}
                             <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />
+
+
+                            <Route path='/strategic-notifications/product-expiry' element={<ProductExpiryPage />} />
+                            <Route path='/strategic-notifications/tax-calendar' element={<TaxCalendarPage />} />
                             {/* SideBar Asesorías para toma de decisiones */}
                             <Route path='/consultancies' element={<ConsultanciesPage />} />
+                            <Route path='/consultancies/contact-an-advisor' element={<ContactAnAdvisorPage />} />
                         </Route>
                     {/* Sección Error 404 */}
                     <Route path="*" element={<Error404 />} />

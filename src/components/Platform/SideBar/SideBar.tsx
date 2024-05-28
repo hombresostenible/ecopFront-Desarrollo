@@ -252,9 +252,9 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuAccounts ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/accounts/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/assets' ? styles.active : ''}`}>Ingresos</Link>
-                            <Link to='/accounts/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/assets' ? styles.active : ''}`}>Gastos</Link>
-                            <Link to='/accounts/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/merchadises' ? styles.active : ''}`}>Transacciones pendientes de aprobar</Link>
+                            <Link to='/accounts/income' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/income' ? styles.active : ''} `}>Ingresos</Link>
+                            <Link to='/accounts/expenses' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/expenses' ? styles.active : ''} `}>Gastos</Link>
+                            <Link to='/accounts/pending-approval' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/pending-approval' ? styles.active : ''} `}>Transacciones pendientes de aprobar</Link>
                         </div>
                     </div>
                 </div>
@@ -272,11 +272,11 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuInvoicingAndPos ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas crédito</Link>    {/* Visualizar notas crédito - Enviar notas crédito - Convertit notas crédito */}
-                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notas débito</Link>     {/* Visualizar notas débito - Enviar notas débito - Convertit notas débito */}
-                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Facturas recurrentes</Link>
-                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Pagos recibidos</Link>
-                            <Link to='/inventories/quote-products' className={`${styles.link__Service} text-decoration-none`}>Cotizaciones</Link> {/* Visualizar cotizaciones - Enviar cotizaciones - Convertit cotizaciones en facturas */}
+                            <Link to='/invoicing-and-pos/credit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/credit-notes' ? styles.active : ''} `}>Notas crédito</Link>    {/* Visualizar notas crédito - Enviar notas crédito - Convertit notas crédito */}
+                            <Link to='/invoicing-and-pos/debit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/debit-notes' ? styles.active : ''} `}>Notas débito</Link>     {/* Visualizar notas débito - Enviar notas débito - Convertit notas débito */}
+                            <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/recurring-invoices' ? styles.active : ''} `}>Facturas recurrentes</Link>
+                            <Link to='/invoicing-and-pos/received-payments' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/received-payments' ? styles.active : ''} `}>Pagos recibidos</Link>
+                            <Link to='/invoicing-and-pos/quotes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/quotes' ? styles.active : ''} `}>Cotizaciones</Link> {/* Visualizar cotizaciones - Enviar cotizaciones - Convertit cotizaciones en facturas */}
                         </div>
                     </div>
                 </div>
@@ -294,10 +294,10 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuElectronicPayroll ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Pagos de nómina</Link>
-                            <Link to='/electronic-payroll/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/assets' ? styles.active : ''}`}>Certificaciones</Link>
-                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Liquidación de nómina</Link>
-                            <Link to='/electronic-payroll/merchadises' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/merchadises' ? styles.active : ''}`}>Colaboradores</Link>
+                            <Link to='/electronic-payroll/payroll-payments' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/payroll-payments' ? styles.active : ''}`}>Pagos de nómina</Link>
+                            <Link to='/electronic-payroll/certifications' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/certifications' ? styles.active : ''}`}>Certificaciones</Link>
+                            <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/payroll-settlement' ? styles.active : ''}`}>Liquidación de nómina</Link>
+                            <Link to='/electronic-payroll/employees' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/electronic-payroll/employees' ? styles.active : ''}`}>Colaboradores</Link>
                         </div>
                     </div>
                 </div>
@@ -353,11 +353,11 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuSustainability ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/sustainability/standars' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/standars' ? styles.active : ''}`}>Consulta normas ambientales</Link>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Diseño de planes</Link>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Informes ASG</Link>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Historias de sostenibilidad</Link>
-                            <Link to='/sustainability/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/assets' ? styles.active : ''}`}>Diagnósticos</Link>
+                            <Link to='/sustainability/environmental-standards-consultation' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/environmental-standards-consultation' ? styles.active : ''}`}>Consulta normas ambientales</Link>
+                            <Link to='/sustainability/plan-design' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/plan-design' ? styles.active : ''}`}>Diseño de planes</Link>
+                            <Link to='/sustainability/asg-reports' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/asg-reports' ? styles.active : ''}`}>Informes ASG</Link>
+                            <Link to='/sustainability/sustainability-stories' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/sustainability-stories' ? styles.active : ''}`}>Historias de sostenibilidad</Link>
+                            <Link to='/sustainability/diagnostics' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/sustainability/diagnostics' ? styles.active : ''}`}>Diagnósticos</Link>
                         </div>
                     </div>
                 </div>
@@ -375,9 +375,14 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuReportsAndIndicators ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/reports-and-indicators/financial-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/financial-indicators' ? styles.active : ''}`}>Indicadores financieros</Link>
+                            <Link to='/reports-and-indicators/billing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/billing-indicators' ? styles.active : ''}`}>Indicadores de facturación</Link>
+                            <Link to='/reports-and-indicators/accounts-and-inventory-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' ? styles.active : ''}`}>Indicadores cuentas e inventarios</Link>
                             <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active : ''}`}>Indicadores de mercadeo</Link>
                             <Link to='/reports-and-indicators/sustainability-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/sustainability-indicators' ? styles.active : ''}`}>Indicadores de sostenibilidad</Link>
+                            <Link to='/reports-and-indicators/custom-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/custom-report' ? styles.active : ''}`}>Reporte a tu medida</Link>
+                            <Link to='/reports-and-indicators/daily-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/daily-report' ? styles.active : ''}`}>Reporte diario</Link>
+                            <Link to='/reports-and-indicators/end-of-month-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/end-of-month-report' ? styles.active : ''}`}>Reporte cierre de mes</Link>
+                            <Link to='/reports-and-indicators/suggested-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/suggested-report' ? styles.active : ''}`}>Reporte sugerido</Link>
                         </div>
                     </div>
                 </div>
@@ -395,8 +400,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuStrategicNotifications ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/strategic-notifications/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/assets' ? styles.active : ''}`}>Vencimiento de productos</Link>
-                            <Link to='/strategic-notifications/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/assets' ? styles.active : ''}`}>Calendario tributario</Link>
+                            <Link to='/strategic-notifications/product-expiry' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/product-expiry' ? styles.active : ''}`}>Vencimiento de productos</Link>
+                            <Link to='/strategic-notifications/tax-calendar' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/strategic-notifications/tax-calendar' ? styles.active : ''}`}>Calendario tributario</Link>
                         </div>
                     </div>
                 </div>
@@ -414,7 +419,7 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuConsultancies ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/consultancies/assets' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/assets' ? styles.active : ''}`}>Contacta a un asesor</Link>
+                            <Link to='/consultancies/contact-an-advisor' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/consultancies/contact-an-advisor' ? styles.active : ''}`}>Contacta a un asesor</Link>
                         </div>
                     </div>
                 </div>

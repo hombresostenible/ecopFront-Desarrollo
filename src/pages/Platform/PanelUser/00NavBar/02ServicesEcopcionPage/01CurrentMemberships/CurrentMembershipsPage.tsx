@@ -1,9 +1,9 @@
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../../components/Platform/Footer/Footer';
+import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function ServicesEcopcionPage() {
+function CurrentMembershipsPage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -11,9 +11,7 @@ function ServicesEcopcionPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        ServicesPage
-
-                        
+                        <h3>Mostrar los planes actuales</h3>
                     </div>
                     <Footer />
                 </div>
@@ -22,4 +20,4 @@ function ServicesEcopcionPage() {
     );
 }
 
-export default ServicesEcopcionPage;
+export default CurrentMembershipsPage;
