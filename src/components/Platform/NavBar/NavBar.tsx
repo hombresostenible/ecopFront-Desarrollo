@@ -15,25 +15,32 @@ import styles from './styles.module.css';
 
 function NavBar() {
     const dispatch: AppDispatch = useDispatch();
-    const [menuVisible, setMenuVisible] = useState(false);
-
-    const handleServiceClick = () => {
-        setMenuVisible(!menuVisible);
+    const menuQuestionRef = useRef<HTMLDivElement | null>(null);
+    const [menuQuestionVisible, setMenuQuestionVisible] = useState(false);
+    const handleQuestionClick = () => {
+        setMenuQuestionVisible(!menuQuestionVisible);
     };
 
-    const menuRef = useRef<HTMLDivElement | null>(null);
+    const menuServiceRef = useRef<HTMLDivElement | null>(null);
+    const [menuServiceVisible, setMenuServiceVisible] = useState(false);
+    const handleServiceClick = () => {
+        setMenuServiceVisible(!menuServiceVisible);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setMenuVisible(false);
+            if (menuQuestionRef.current && !menuQuestionRef.current.contains(event.target as Node)) {
+                setMenuQuestionVisible(false);
+            }
+            if (menuServiceRef.current && !menuServiceRef.current.contains(event.target as Node)) {
+                setMenuServiceVisible(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [ menuRef ]);
-
+    }, [ menuQuestionRef, menuServiceRef ]);
 
     const signout = async () => {
         try {
@@ -50,14 +57,12 @@ function NavBar() {
             </Link>
 
             <div className={`${styles.container__Navigation} d-flex`}>
-                <Link to='/questions' className={`${styles.container__Question} d-flex align-items-center justify-content-center`}>
-                    <SlQuestion className={`${styles.icon__Question}`}/>
-                </Link>
-
                 <div className={`${styles.container__Services} d-flex align-items-center justify-content-center position-relative`}>
-                    <CgMenuGridO className={styles.icon__Services} onClick={handleServiceClick} />
-                    {menuVisible && (
-                        <div ref={menuRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                <SlQuestion className={`${styles.icon__Question}`} onClick={handleQuestionClick} />
+                    {menuQuestionVisible && (
+                        <div ref={menuQuestionRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                            <Link to='/services/current-memberships' className={`${styles.link__Service} text-decoration-none`}>Información clave para gerenciar tu negocio</Link>
+                            <Link to='/services/activate-new-memberships' className={`${styles.link__Service} text-decoration-none`}>Activa nuevos planes</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Nómina</Link>
@@ -65,6 +70,25 @@ function NavBar() {
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Asesorías</Link>
                             <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Notifcaciones estratégicas</Link>
+                        </div>
+                    )}
+                </div>
+
+                <div className={`${styles.container__Services} d-flex align-items-center justify-content-center position-relative`}>
+                    <CgMenuGridO className={styles.icon__Services} onClick={handleServiceClick} />
+                    {menuServiceVisible && (
+                        <div ref={menuServiceRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                            <Link to='/services/current-memberships' className={`${styles.link__Service} text-decoration-none`}>Conacto con soporte para PQRF</Link>
+                            <Link to='/services/activate-new-memberships' className={`${styles.link__Service} text-decoration-none`}>Activa nuevos planes</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Funcionamiento de la plataforma</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Inventarios</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Cuentas</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Nómina electrónica</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>CRM CLientes</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>CRM Proveedores</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
+                            <Link to='/services' className={`${styles.link__Service} text-decoration-none`}>Estrategia y toma de desiciones</Link>
                         </div>
                     )}
                 </div>
