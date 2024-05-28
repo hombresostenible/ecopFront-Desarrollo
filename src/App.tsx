@@ -71,9 +71,20 @@ import QuestionSustainabilityPage from './pages/Platform/PanelUser/00NavBar/01Qu
 import QuestionConsultanciesPage from './pages/Platform/PanelUser/00NavBar/01Questions/08QuestionConsultancies/QuestionConsultanciesPage';
 import QuestionStrategicNotificationsPage from './pages/Platform/PanelUser/00NavBar/01Questions/09QuestionStrategicNotifications/QuestionStrategicNotificationsPage';
 // NAVBAR PLATAFORMA - SERVICES
-import ServicesEcopcionPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/ServicesEcopcionPage';
+import ServicesPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/ServicesPage';
+import ServiceSupportContactPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/01ServiceSupportContact/ServiceSupportContactPage';
+import ServiceActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/02ServiceActivateNewPlans/ServiceActivateNewPlansPage';
+import ServicePlatformFunctionalityPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/03ServicePlatformFunctionalityPage/ServicePlatformFunctionalityPage';
+import ServiceInventoriesPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/04ServiceInventories/ServiceInventoriesPage';
+import ServiceAccountsPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/05ServiceAccounts/ServiceAccountsPage';
+import ServiceBillingAndPosPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/06ServiceBillingAndPos/ServiceBillingAndPosPage';
+import ServiceElectronicPayrollPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/07ServiceElectronicPayroll/ServiceElectronicPayrollPage';
+import ServiceCrmClientPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/08ServiceCrmClient/ServiceCrmClientPage';
+import ServiceCrmSupplierPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/09ServiceCrmSupplier/ServiceCrmSupplierPage';
+import ServiceSustainabilityPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/10ServiceSustainability/ServiceSustainabilityPage';
+import ServiceStrategyAndDecisionMakingPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/11ServiceStrategyAndDecisionMaking/ServiceStrategyAndDecisionMakingPage';
 
-import ActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02ServicesEcopcionPage/02ActivateNewPlans/ActivateNewPlansPage';
+
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 
@@ -87,21 +98,21 @@ import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/C
 // SIDEBAR - INVENTARIOS
 import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
 // SIDEBAR - INVENTARIOS - ASSETS
-import AssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/AssetsCard/AssetsCardPage';
-import CreateAssetPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/CreateAssets/CreateAssetPage';
+import ConsultAssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/ConsultAssets/ConsultAssetsPage';
+import CreateAssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/CreateAssets/CreateAssetsPage';
 // SIDEBAR - INVENTARIOS - MERCHANDISES
-import MerchadisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/MerchadisesCard/MerchadisesCardPage';
-import CreateMerchandisePage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/CreateMerchandise/CreateMerchandisePage';
+import ConsultMerchandisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/ConsultMerchandises/ConsultMerchandisesPage';
+import CreateMerchandisesPage from './pages/Platform/PanelUser/03Inventories/02InventoryMerchadises/CreateMerchandises/CreateMerchandisesPage';
 // SIDEBAR - INVENTARIOS - PRODUCTS
-import ProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ProductsCard/ProductsCardPage';
-import CreateProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/CreateProduct/CreateProductPage';
-import QuoteProductPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/QuoteProduct/QuoteProductPage';
+import ConsultProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/ConsultProducts/ConsultProductsPage';
+import CreateProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/CreateProducts/CreateProductsPage';
+import QuoteProductsPage from './pages/Platform/PanelUser/03Inventories/03InventoryProducts/QuoteProducts/QuoteProductsPage';
 // SIDEBAR - INVENTARIOS - RAWMATERIALS
-import RawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/RawMateralCard/RawMateralCardPage';
-import CreateRawMateralPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/CreateRawMateral/CreateRawMateralPage';
+import ConsultRawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/ConsultRawMaterals/ConsultRawMateralsPage';
+import CreateRawMateralsPage from './pages/Platform/PanelUser/03Inventories/04InventoryRawMaterals/CreateRawMaterals/CreateRawMateralsPage';
 // SIDEBAR - INVENTARIOS - SERVICES
-import ServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ServicesCard/ServicesCardPage';
-import CreateServicePage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateService/CreateServicePage';
+import ConsultServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ConsultServices/ConsultServicesPage';
+import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateServices/CreateServicesPage';
 // SIDEBAR - INVENTARIOS - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 import IncomePage from './pages/Platform/PanelUser/04Accounts/01Income/IncomePage';
@@ -216,8 +227,18 @@ function App() {
                             <Route path='/questions/consultancies' element={<QuestionConsultanciesPage />} />
                             <Route path='/questions/strategic-notifications' element={<QuestionStrategicNotificationsPage />} />
                             {/* Sección NavBar - Services */}
-                            <Route path='/services' element={<ServicesEcopcionPage />} />
-                            <Route path='/services/activate-new-plans' element={<ActivateNewPlansPage />} />
+                            <Route path='/services' element={<ServicesPage />} />
+                            <Route path='/services/support-contact' element={<ServiceSupportContactPage />} />
+                            <Route path='/services/activate-new-plans' element={<ServiceActivateNewPlansPage />} />
+                            <Route path='/services/platform-functionality' element={<ServicePlatformFunctionalityPage />} />
+                            <Route path='/services/inventories' element={<ServiceInventoriesPage />} />
+                            <Route path='/services/accounts' element={<ServiceAccountsPage />} />
+                            <Route path='/services/billing-and-pos' element={<ServiceBillingAndPosPage />} />
+                            <Route path='/services/electronic-payroll' element={<ServiceElectronicPayrollPage />} />
+                            <Route path='/services/crm-client' element={<ServiceCrmClientPage />} />
+                            <Route path='/services/crm-supplier' element={<ServiceCrmSupplierPage />} />
+                            <Route path='/services/sustainability' element={<ServiceSustainabilityPage />} />
+                            <Route path='/services/strategy-and-decision-making' element={<ServiceStrategyAndDecisionMakingPage />} />
                             {/* Sección NavBar - Notifications */}
                             <Route path='/notifications' element={<NotificationsPage />} />
                             {/* Sección NavBar - Configuration */}
@@ -231,21 +252,21 @@ function App() {
                             {/* SideBar Inventarios */}
                             <Route path='/inventories' element={<InventoriesPage />} />
                             {/* SideBar Inventarios - Assets */}
-                            <Route path='/inventories/consult-assets' element={<AssetsPage />} />
-                            <Route path='/inventories/create-assets' element={<CreateAssetPage />} />
+                            <Route path='/inventories/consult-assets' element={<ConsultAssetsPage />} />
+                            <Route path='/inventories/create-assets' element={<CreateAssetsPage />} />
                             {/* SideBar Inventarios - Merchadises */}
-                            <Route path='/inventories/consult-merchandises' element={<MerchadisesPage />} />
-                            <Route path='/inventories/create-merchandises' element={<CreateMerchandisePage />} />
+                            <Route path='/inventories/consult-merchandises' element={<ConsultMerchandisesPage />} />
+                            <Route path='/inventories/create-merchandises' element={<CreateMerchandisesPage />} />
                             {/* SideBar Inventarios - Products */}
-                            <Route path='/inventories/consult-products' element={<ProductsPage />} />
-                            <Route path='/inventories/create-products' element={<CreateProductPage />} />
-                            <Route path='/inventories/quote-products' element={<QuoteProductPage />} />
+                            <Route path='/inventories/consult-products' element={<ConsultProductsPage />} />
+                            <Route path='/inventories/create-products' element={<CreateProductsPage />} />
+                            <Route path='/inventories/quote-products' element={<QuoteProductsPage />} />
                             {/* SideBar Inventarios - Rawmaterals */}
-                            <Route path='/inventories/consult-raw-materals' element={<RawMateralsPage />} />
-                            <Route path='/inventories/create-raw-materals' element={<CreateRawMateralPage />} />
+                            <Route path='/inventories/consult-raw-materals' element={<ConsultRawMateralsPage />} />
+                            <Route path='/inventories/create-raw-materals' element={<CreateRawMateralsPage />} />
                             {/* SideBar Inventarios - Services */}
-                            <Route path='/inventories/consult-services' element={<ServicesPage />} />
-                            <Route path='/inventories/create-services' element={<CreateServicePage />} />
+                            <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
+                            <Route path='/inventories/create-services' element={<CreateServicesPage />} />
                             {/* SideBar Cuentas */}
                             <Route path='/accounts' element={<AccountsPage />} />
                             <Route path='/accounts/income' element={<IncomePage />} />
