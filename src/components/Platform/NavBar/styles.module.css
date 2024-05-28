@@ -3,7 +3,7 @@
     height: 70px;
 }
 .logo{
-    width: 250px;
+    height: 35px;
 }
 .container__Navigation {
     height: 70px;
@@ -15,14 +15,14 @@
 }
 .icon__Question {
     color: #343a40;
-    font-size: 30px;
+    font-size: 25px;
 }
 .container__Services {
     height: 70px;
     width: 70px;
 }
 .icon__Services {
-    font-size: 40px;
+    font-size: 30px;
     color: #343a40;
 }
 .icon__Services:hover {
@@ -45,7 +45,7 @@
     width: 70px;
 }
 .icon__Notification {
-    font-size: 35px;
+    font-size: 25px;
     color: #343a40;
 }
 .notification {
@@ -75,6 +75,6 @@
     width: 70px;
 }
 .icon__Logout {
-    font-size: 30px;
+    font-size: 25px;
     color: #d90429;
 }
