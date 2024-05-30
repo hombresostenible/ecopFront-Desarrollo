@@ -85,7 +85,7 @@ function AnimatedBlockRight ({ title, content, image, route, textButton }: Anima
             <div className={`${styles.containerEffectTitle} d-flex flex-column align-items-center justify-content-center`}>
                 <div className={`${styles.effectTitle} p-0 w-100 overflow-hidden`}>                
                     <div className={`${styles.titleCharacteristics} ${animateClass} d-flex flex-title align-items-start justify-content-center`}>
-                        <h2 className={`${styles.title} m-0 text-center`}>{title}</h2>
+                        <h2 className={`${styles.title} mt-5 text-center`}>{title}</h2>
                     </div>
                 </div>
                 <div><p className={`${styles.textContent} m-0 `}>{content}</p></div>
@@ -100,7 +100,7 @@ function AnimatedBlockRight ({ title, content, image, route, textButton }: Anima
 function Characteristics () {
 
     return (
-        <div className={`${styles.container} d-flex align-items-center justify-content-center`}> 
+        <div className={`${styles.container} mb-5 d-flex align-items-center justify-content-center`}> 
             <div> 
                 <AnimatedBlockLeft
                     title="Registrar tus transacciones diarias"
