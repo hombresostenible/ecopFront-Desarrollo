@@ -4,26 +4,21 @@ import './styles.css';
 import WhatsApp from './components/WhatsApp/WhatsApp';
 import Telegram from './components/WhatsApp/Telegram';
 import Scroll from "./components/Scroll/Scroll";
-
 // LANDINGPAGE
 import LandingPage from './pages/LandingPage/LandingPage';
-
 // NAVBAR DE LA LANDINGPAGE
 import PaymentPlansPage from './pages/LandingPage/NavBarLandingPage/01PaymentPlans/PaymentPlansPage';
 import ContactUsPage from './pages/LandingPage/NavBarLandingPage/02ContactUs/ContactUsPage';
 import FastSimulatorPage from './pages/LandingPage/NavBarLandingPage/03FastSimulator/FastSimulatorPage';
 import AppointmentPage from './pages/LandingPage/NavBarLandingPage/04Appointment/AppointmentPage';
-
-// Registros
+// REGISTER
 import RegisterPage from './pages/LandingPage/NavBarLandingPage/05Register/RegisterPage';
 import RegisterUserPage from './pages/LandingPage/NavBarLandingPage/05Register/User/00RegisterUserPage';
-
-// Login
+// LOGIN
 import LoginPage from './pages/LandingPage/NavBarLandingPage/06Login/LoginPage';
 import SendEmailResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/SendEmailResetPassword/SendEmailResetPasswordPage';
 import ResetPasswordPage from './pages/LandingPage/NavBarLandingPage/06Login/ResetPassword/ResetPasswordPage';
 import UnblockingAccountPage from './pages/LandingPage/NavBarLandingPage/06Login/UnblockingAccount/UnblockingAccountPage';
-
 // Sección de Body LandingPage
 import RegisterYourTransactions from './components/LandingPage/05Characteristics/01RegisterYourTransactions/RegisterYourTransactions';
 import ManageYourElectronicInvoices from './components/LandingPage/05Characteristics/02ManageYourElectronicInvoices/ManageYourElectronicInvoices';
@@ -32,13 +27,11 @@ import CalculateIndicatorsPlus from './components/LandingPage/05Characteristics/
 import ViewDownloadReports from './components/LandingPage/05Characteristics/05ViewDownloadReports/ViewDownloadReports';
 import PersonalizedAdvisories from './components/LandingPage/05Characteristics/06PersonalizedAdvisories/PersonalizedAdvisories';
 import InformedDecisions from './components/LandingPage/05Characteristics/07InformedDecisions/InformedDecisions';
-
 // Sección de Sustainability LandingPage
 import Primer from './components/LandingPage/04Sustainability/01Primer/Primer';
 import Segundo from './components/LandingPage/04Sustainability/02Segundo/Segundo';
 import Tercer from './components/LandingPage/04Sustainability/03Tercer/Tercer';
 import Cuarto from './components/LandingPage/04Sustainability/04Cuarto/Cuarto';
-
 // FOOTER DE LA LANDINGPAGE
 import Blog from './components/LandingPage/Footer/AboutUs/Blog/Blog';
 import OurCompany from './components/LandingPage/Footer/AboutUs/OurCompany/OurCompany';
@@ -52,13 +45,10 @@ import MembershipAgreement from './components/LandingPage/Footer/Legal/Membershi
 import Help from './components/LandingPage/Footer/Support/Help/Help';
 import Trainings from './components/LandingPage/Footer/Support/Trainings/Trainings';
 import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
-
-//Error 404
+// ERROR 404
 import Error404 from './pages/Error404/Error404';
-
 // PROTECCION DE RUTAS
 import ProtectedRoute from './ProtectedRoute';
-
 // NAVBAR PLATAFORMA - QUESTIONS
 import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
 import QuestionInformationManageYourBusinessPage from './pages/Platform/PanelUser/00NavBar/01Questions/01QuestionInformationManageYourBusiness/QuestionInformationManageYourBusinessPage';
@@ -83,12 +73,10 @@ import ServiceCrmClientPage from './pages/Platform/PanelUser/00NavBar/02Services
 import ServiceCrmSupplierPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/09ServiceCrmSupplier/ServiceCrmSupplierPage';
 import ServiceSustainabilityPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/10ServiceSustainability/ServiceSustainabilityPage';
 import ServiceStrategyAndDecisionMakingPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/11ServiceStrategyAndDecisionMaking/ServiceStrategyAndDecisionMakingPage';
-
-
+// NAVBAR PLATAFORMA - NOTIFICATIONS
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
+// NAVBAR PLATAFORMA - CONFIGURATION
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
-
-// SIDEBAR PLATAFORMA
 // SIDEBAR - HOME
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
 import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
