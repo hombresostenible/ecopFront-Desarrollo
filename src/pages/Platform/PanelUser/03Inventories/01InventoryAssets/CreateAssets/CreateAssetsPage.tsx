@@ -2,6 +2,7 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
+import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
+import CreateManyAssets from './CreateManyAssets';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -40,6 +42,11 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
             dispatch(getBranches(token));
         }
     }, [token]);
+
+    const [ showCancelModal, setShowCancelModal ] = useState(false);
+    const onCloseAssetModal = () => {
+        setShowCancelModal(false);
+    };
     
     const [selectedCondition, setSelectedCondition] = useState('Nuevo');
     const handleConditionChange = (value: 'Nuevo' | 'Usado') => {
@@ -95,6 +102,27 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         {!onCreateComplete && <Link to='/inventories/consult-assets'>Consulta tus activos</Link>}
                         <h2 className={`${styles.subtitle} text-center`}>Crea tus Equipos, herramientas o máquinas</h2>
+
+                        <div className="d-flex">
+                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
+                        </div>
+
+                        <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
+                            <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus activos de forma masiva</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <CreateManyAssets
+                                    branches={branches}
+                                    token={token}
+                                    onCreateComplete={() => {
+                                        onCloseAssetModal();
+                                    }}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
