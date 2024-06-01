@@ -25,27 +25,27 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     
-    // Utiliza useSelector para obtener la información del usuario del estado de Redux
+    // Estado de Redux
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
 
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBranch>();
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
-    const [ shouldNavigate, setShouldNavigate ] = useState(false);
-    const [ showCancelModal, setShowCancelModal ] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
 
     const onCloseBranchModal = () => {
         setShowCancelModal(false);
     };
 
-    const [ selectedDepartment, setSelectedDepartment ] = useState('');
-    const [ selectedCity, setSelectedCity ] = useState('');
-    const [ selectedCodeDane, setSelectedCodeDane ] = useState('');
-    const [ selectedsubregionCodeDane, setSelectedsubregionCodeDane ] = useState('');
-    const [ resetDepartmenAndCity, setResetDepartmenAndCity ] = useState(false);    //Estado para resetear el componente "DepartmenAndCity" luego de crear el registro
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedCodeDane, setSelectedCodeDane] = useState('');
+    const [selectedsubregionCodeDane, setSelectedsubregionCodeDane] = useState('');
+    const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);    //Estado para resetear el componente "DepartmenAndCity" luego de crear el registro
     // Función para manejar los datos seleccionados del departamento y los municipios
-    const handleSelectDepartmentCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
+    const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
         setSelectedDepartment(department);
         setSelectedCity(city);
         setSelectedCodeDane(codeDane);
@@ -81,7 +81,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/branches');
+            navigate('/branches/consult-branches');
         }
     }, [ shouldNavigate, navigate ]);
 
@@ -98,6 +98,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                         <div className="d-flex">
                             <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus sedes de forma masiva</button>
                         </div>
+
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
                                 <Modal.Title>Crea tus sedes de forma masiva</Modal.Title>
@@ -111,6 +112,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                 />
                             </Modal.Body>
                         </Modal>
+
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
@@ -132,10 +134,12 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     )}
                                 </div>
                             </div>
+
                             <DepartmenAndCity
-                                onSelect={handleSelectDepartmentCity}
-                                reset={resetDepartmenAndCity} // Pasar el estado de reset al componente DepartmenAndCity
+                                onSelect={handleSelectDepartmentAndCity}
+                                reset={resetDepartmenAndCity}
                             />
+
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}>Dirección de la Sede</h6>
                                 <div className={styles.container__Input}>
@@ -215,8 +219,8 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                         {...register('typeDocumentIdManager', { required: true })}
                                         className={`${styles.input} p-2 border`}
                                     >
-                                        <option value='Cédula de Ciudadanía'>Cédula de Ciudadanía</option>
-                                        <option value='Cédula de Extranjería'>Cédula de Extranjería</option>
+                                        <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                                        <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
                                         <option value='Pasaporte'>Pasaporte</option>
                                     </select>
                                     {errors.typeDocumentIdManager && (

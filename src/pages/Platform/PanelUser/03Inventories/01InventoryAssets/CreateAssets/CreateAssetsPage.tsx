@@ -232,7 +232,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         <option value='Funciona correctamente'>Funciona correctamente</option>
                                         <option value='Funciona requiere mantenimiento'>Funciona bien pero requiere pronto mantenimiento</option>
                                         <option value='Dañada requiere cambio'>Dañada y requiere cambio</option>
-                                        <option value='Dañada requiere reparación'>Dañada y requiere reparación</option>
+                                        <option value='Dañada requiere reparacion'>Dañada y requiere reparación</option>
                                     </select>
                                     {errors.stateAssets && (
                                         <p className='text-danger'>El estado de la máquina es requerido</p>

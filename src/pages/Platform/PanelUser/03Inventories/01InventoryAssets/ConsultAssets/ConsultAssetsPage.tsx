@@ -105,6 +105,12 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
+                        <div>Filtrar por sede</div>
+                        <div>descargar en PDF</div>
+                        <div>Descargar en Excel</div>
+                        <div>Visualizar activos dados de baja</div>
+                        <div>Crear un filtro para cada columna</div>
+
                         <Modal show={showConsultAssetOff} onHide={() => setShowConsultAssetOff(false)} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de los equipos dados de baja</Modal.Title>

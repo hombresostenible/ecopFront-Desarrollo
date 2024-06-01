@@ -189,10 +189,10 @@ function ModalBranch({ branch, token, onUpdateBranch }: ModalBranchProps) {
                             <select
                                 value={editedTypeDocumentIdManager}
                                 className={`${styles.inputEdit} p-2 border form-control`}
-                                onChange={(e) => setEditedTypeDocumentIdManager(e.target.value as 'Cédula de Ciudadanía' | 'Cédula de Extranjería' | 'Pasaporte')}
+                                onChange={(e) => setEditedTypeDocumentIdManager(e.target.value as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte')}
                             >
-                                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
-                                <option value="Cédula de Extranjería">Cédula de Extranjería</option>
+                                <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                                <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
                                 <option value="Pasaporte">Pasaporte</option>
                             </select>
                         ) : (

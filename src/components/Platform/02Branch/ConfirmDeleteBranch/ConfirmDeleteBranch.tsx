@@ -10,7 +10,6 @@ interface ConfirmDeleteBranchProps {
     id: string;
     nameBranch: string;
     onCloseModal: () => void;
-    
 }
 
 function ConfirmDeleteBranch ({ id, nameBranch, onCloseModal }: ConfirmDeleteBranchProps) {

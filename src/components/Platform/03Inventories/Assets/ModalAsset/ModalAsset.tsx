@@ -211,12 +211,12 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                             <select
                                 className={`${styles.inputEdit} p-2 border w-100`}
                                 value={editedAsset.stateAssets}
-                                onChange={(e) => setEditedStateAssets(e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparación')}
+                                onChange={(e) => setEditedStateAssets(e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion')}
                             >
                                 <option value='Funciona correctamente'>Funciona correctamente</option>
                                 <option value='Funciona requiere mantenimiento'>Funciona requiere mantenimiento</option>
                                 <option value='Dañada requiere cambio'>Dañada requiere cambio</option>
-                                <option value='Dañada requiere reparación'>Dañada requiere reparación</option>
+                                <option value='Dañada requiere reparacion'>Dañada requiere reparacion</option>
                             </select>
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>{asset?.stateAssets}</p>
