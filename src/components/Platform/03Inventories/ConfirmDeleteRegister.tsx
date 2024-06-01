@@ -21,13 +21,13 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
     const token = Cookies.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
-    const [ typeDelete, setTypeDelete ] = useState('');
+    const [typeDelete, setTypeDelete] = useState('');
     useEffect(() => {
         if (typeRegisterDelete === 'Asset') {
             setTypeDelete('el Activo')
         } 
         else if (typeRegisterDelete === 'Merchandise') {            
-            setTypeDelete('la Mercancía')
+            setTypeDelete('la Mercancia')
         }
         else if (typeRegisterDelete === 'Product') {
             setTypeDelete('el Producto')            

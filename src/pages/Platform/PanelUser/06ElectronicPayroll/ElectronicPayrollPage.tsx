@@ -12,7 +12,7 @@ function ElectronicPayrollPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2>Nómina electrónica</h2>
+                        <h2>Nomina electrónica</h2>
                         <p>Explicación sobre lo que se puede hacer en esta sección</p>
                         <div className='d-flex flex-column'>
                             <h4>Pagos de nómina</h4>

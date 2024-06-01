@@ -332,7 +332,7 @@ function PaymentPlansPage() {
                         </div>
                         {showAnswer2 && (
                             <div className={`${styles.containerAnswers} `}>
-                                <p>Entre los métodos de pago aceptados se incluyen tarjetas de crédito, cuentas de ahorro y cuentas corrientes de todos los bancos con integración a PSE.</p>
+                                <p>Entre los métodos de pago aceptados se incluyen tarjetas de Credito, cuentas de ahorro y cuentas corrientes de todos los bancos con integración a PSE.</p>
                             </div>
                         )}
                     </div>

@@ -53,10 +53,10 @@ function Panel() {
                 <div className={`${styles.card__Electronic_Payroll} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
                     <Link to="/electronic-payroll" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image_Electronic_Payroll} d-flex align-items-center justify-content-center`} >
-                            <img src={NominaElectronica} alt="Nómina electrónica" className={`${styles.image}`} />
+                            <img src={NominaElectronica} alt="Nomina electrónica" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.cardTitle} p-2 d-flex align-items-center justify-content-center`} >
-                            <h4 className={`${styles.subTitle} text-center`}>Nómina electrónica</h4>
+                            <h4 className={`${styles.subTitle} text-center`}>Nomina electrónica</h4>
                         </div>
                     </Link>
                 </div>

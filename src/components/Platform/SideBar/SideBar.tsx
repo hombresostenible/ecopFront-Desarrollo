@@ -250,7 +250,7 @@ function SideBar() {
                             <IoChevronDownOutline className={styles.icon__Plus} onClick={handleSubMenuAccounts} />
                         )}
                     </div>
-                    <div className={`collapse ${subMenuAccounts ? 'show' : ''}`}>
+                    <div className={`collapse ${subMenuAccounts ? 'show' : ''} `}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/accounts/income' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/income' ? styles.active : ''} `}>Ingresos</Link>
                             <Link to='/accounts/expenses' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/expenses' ? styles.active : ''} `}>Gastos</Link>
@@ -272,7 +272,8 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuInvoicingAndPos ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/invoicing-and-pos/credit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/credit-notes' ? styles.active : ''} `}>Notas crédito</Link>    {/* Visualizar notas crédito - Enviar notas crédito - Convertit notas crédito */}
+                            <Link to='/invoicing-and-pos/credit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/credit-notes' ? styles.active : ''} `}>Facturas y POS</Link>    {/* Visualizar notas Credito - Enviar notas Credito - Convertit notas Credito */}
+                            <Link to='/invoicing-and-pos/credit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/credit-notes' ? styles.active : ''} `}>Notas Credito</Link>    {/* Visualizar notas Credito - Enviar notas Credito - Convertit notas Credito */}
                             <Link to='/invoicing-and-pos/debit-notes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/debit-notes' ? styles.active : ''} `}>Notas débito</Link>     {/* Visualizar notas débito - Enviar notas débito - Convertit notas débito */}
                             <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/recurring-invoices' ? styles.active : ''} `}>Facturas recurrentes</Link>
                             <Link to='/invoicing-and-pos/received-payments' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/invoicing-and-pos/received-payments' ? styles.active : ''} `}>Pagos recibidos</Link>
@@ -285,7 +286,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <FaFileInvoiceDollar className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Nómina electrónica</div>
+                            <div className={`p-1`}>Nomina electrónica</div>
                         </div>
                         {subMenuElectronicPayroll ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuElectronicPayroll} />
                         ) : ( 

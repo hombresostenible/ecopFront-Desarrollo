@@ -65,7 +65,7 @@ function NavBar() {
                             <Link to='/questions/activate-new-plans' className={`${styles.link__Service} text-decoration-none`}>Activa nuevos planes</Link>
                             <Link to='/questions/accounts-and-inventories' className={`${styles.link__Service} text-decoration-none`}>Cuentas e inventarios</Link>
                             <Link to='/questions/invoicing-and-pos' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
-                            <Link to='/questions/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nómina electrónica</Link>
+                            <Link to='/questions/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nomina electrónica</Link>
                             <Link to='/questions/crm' className={`${styles.link__Service} text-decoration-none`}>CRM Clientes y Proveedores</Link>
                             <Link to='/questions/sustainability' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
                             <Link to='/questions/consultancies' className={`${styles.link__Service} text-decoration-none`}>Asesorías</Link>
@@ -84,7 +84,7 @@ function NavBar() {
                             <Link to='/services/inventories' className={`${styles.link__Service} text-decoration-none`}>Inventarios</Link>
                             <Link to='/services/accounts' className={`${styles.link__Service} text-decoration-none`}>Cuentas</Link>
                             <Link to='/services/billing-and-pos' className={`${styles.link__Service} text-decoration-none`}>Facturación y POS</Link>
-                            <Link to='/services/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nómina electrónica</Link>
+                            <Link to='/services/electronic-payroll' className={`${styles.link__Service} text-decoration-none`}>Nomina electrónica</Link>
                             <Link to='/services/crm-client' className={`${styles.link__Service} text-decoration-none`}>CRM Clientes</Link>
                             <Link to='/services/crm-supplier' className={`${styles.link__Service} text-decoration-none`}>CRM Proveedores</Link>
                             <Link to='/services/sustainability' className={`${styles.link__Service} text-decoration-none`}>Sostenibilidad</Link>
