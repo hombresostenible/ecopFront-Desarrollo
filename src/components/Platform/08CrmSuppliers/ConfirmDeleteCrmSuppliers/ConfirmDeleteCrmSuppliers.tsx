@@ -1,36 +1,36 @@
 // REDUX
 import { useDispatch } from 'react-redux';
-import { deleteCrmClient, getCrmClients } from '../../../../redux/User/crmClientSlice/actions';
+import { deleteCrmSupplier, getCrmSuppliers } from '../../../../redux/User/crmSupplierSlice/actions';
 import type { AppDispatch } from '../../../../redux/store';
-
+// ELEMENTOS DEL COMPONENTE
 interface ConfirmDeleteCRMClientProps {
     token: string;
-    idCrmClient: string;
+    idCrmSupplier: string;
     nameClient: string;
     onCloseModal: () => void;
 }
 
-function ConfirmDeleteCRMClient ({ token, idCrmClient, nameClient, onCloseModal }: ConfirmDeleteCRMClientProps) {
+function ConfirmDeleteCrmSuppliers({ token, idCrmSupplier, nameClient, onCloseModal }: ConfirmDeleteCRMClientProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const onDelete = async () => {
         try {
-            dispatch(deleteCrmClient(idCrmClient, token));
+            dispatch(deleteCrmSupplier(idCrmSupplier, token));
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
-            dispatch(getCrmClients(token));
+            dispatch(getCrmSuppliers(token));
             onCloseModal();
         } catch (error) {
-            throw new Error('Error al eliminar tu cliente');
+            throw new Error('Error al eliminar tu proveedor');
         }
     };
 
     return (
         <div className='d-flex flex-column align-items-center justify-content-center'>
-            <p>¿Estas seguro de que quieres eliminar tu cliente "{nameClient}"?</p>
+            <p>¿Estas seguro de que quieres eliminar tu proveedor "{nameClient}"?</p>
             <button className='btn btn-primary' onClick={onDelete}>Aceptar</button>     
         </div>
     );
 }
 
-export default ConfirmDeleteCRMClient;
+export default ConfirmDeleteCrmSuppliers;

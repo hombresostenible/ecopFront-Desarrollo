@@ -9,18 +9,18 @@ import { ICrmClient } from '../../../../types/User/crmClient.types';
 import DepartmenAndCity from '../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 
-interface ModalAssetProps {
+interface ModalCrmClientProps {
     token: string;
     idCrmClient: string;
     crmClient: ICrmClient;
     onCloseModal: () => void;
 }
 
-function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAssetProps) {
+function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalCrmClientProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editedCRMClient, setEditedCRMClient] = useState<ICrmClient>({ ...crmClient });
+    const [editedCrmClient, setEditedCrmClient] = useState<ICrmClient>({ ...crmClient });
     const [editedTypeDocumentId, setEditedTypeDocumentId] = useState(crmClient?.typeDocumentId);
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedCity, setSelectedCity] = useState(''); 
@@ -43,13 +43,13 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
         if (dataType === 'number') {
             const numericValue = parseFloat(newValue);
             if (!isNaN(numericValue)) {
-                setEditedCRMClient((prevEdited) => ({
+                setEditedCrmClient((prevEdited) => ({
                     ...prevEdited,
                     [field]: numericValue,
                 }));
             }
         } else {
-            setEditedCRMClient((prevEdited) => ({
+            setEditedCrmClient((prevEdited) => ({
                 ...prevEdited,
                 [field]: newValue,
             }));
@@ -77,7 +77,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
 
     const cancelEditing = (id: string) => {
         setIsEditing(false);
-        setEditedCRMClient({ ...editedCRMClient, [id]: { ...crmClient } });
+        setEditedCrmClient({ ...editedCrmClient, [id]: { ...crmClient } });
     };
 
     return (
@@ -95,7 +95,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border form-control`}
-                                value={editedCRMClient.name}
+                                value={editedCrmClient.name}
                                 onChange={(e) => handleEditField(e, 'name', 'text')}
                             />
                         ) : (
@@ -110,7 +110,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border form-control`}
-                                value={editedCRMClient.lastName}
+                                value={editedCrmClient.lastName}
                                 onChange={(e) => handleEditField(e, 'lastName', 'text')}
                             />
                         ) : (
@@ -130,7 +130,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                             <input
                                 type="text"
                                 className={`${styles.inputEdit} p-2 border form-control`}
-                                value={editedCRMClient.corporateName}
+                                value={editedCrmClient.corporateName}
                                 onChange={(e) => handleEditField(e, 'corporateName', 'text')}
                             />
                         ) : (
@@ -168,7 +168,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                         <input
                             type="text"
                             className={`${styles.inputEdit} p-2 border form-control`}
-                            value={editedCRMClient.documentId}
+                            value={editedCrmClient.documentId}
                             onChange={(e) => handleEditField(e, 'documentId', 'text')}
                         />
                     ) : (
@@ -186,7 +186,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                         <input
                             type="text"
                             className={`${styles.inputEdit} p-2 border form-control`}
-                            value={editedCRMClient.email}
+                            value={editedCrmClient.email}
                             onChange={(e) => handleEditField(e, 'email', 'text')}
                         />
                     ) : (
@@ -201,7 +201,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                         <input
                             type="text"
                             className={`${styles.inputEdit} p-2 border form-control`}
-                            value={editedCRMClient.phone}
+                            value={editedCrmClient.phone}
                             onChange={(e) => handleEditField(e, 'phone', 'text')}
                         />
                     ) : (
@@ -244,7 +244,7 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
                         <input
                             type="text"
                             className={`${styles.inputEdit} p-2 border form-control`}
-                            value={editedCRMClient.address}
+                            value={editedCrmClient.address}
                             onChange={(e) => handleEditField(e, 'address', 'text')}
                         />
                     ) : (
@@ -257,14 +257,14 @@ function ModalCrmClient({ token, idCrmClient, crmClient, onCloseModal }: ModalAs
         <div className="w-100">
             {isEditing ? (
                 <div className="d-flex align-items-center justify-content-center">
-                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedCRMClient)}>Guardar</button>
+                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedCrmClient)}>Guardar</button>
                     <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(idCrmClient)}>Cancelar</button>
                 </div>
             ) : (
                 <div
                     className={`${styles.divButtonEdit} d-flex align-items-center justify-content-center`}
                     onClick={() => {
-                        setEditedCRMClient({ ...crmClient });
+                        setEditedCrmClient({ ...crmClient });
                         setIsEditing(true);
                     }}
                 >

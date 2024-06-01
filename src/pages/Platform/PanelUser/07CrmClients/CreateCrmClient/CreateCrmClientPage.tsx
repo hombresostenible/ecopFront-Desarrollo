@@ -142,7 +142,7 @@ function CreateCrmClientPage() {
                                                 placeholder='Nombres de tu cliente'
                                             />
                                             {errors.name && (
-                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>los nombres de tu cliente son requeridos</p>
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Los nombres de tu cliente son requeridos</p>
                                             )}
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@ function CreateCrmClientPage() {
                                                 placeholder='Apellidos de tu cliente'
                                             />
                                             {errors.lastName && (
-                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>los apllidos de tu cliente son requeridos</p>
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Los apellidos de tu cliente son requeridos</p>
                                             )}
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@ function CreateCrmClientPage() {
                                         placeholder='¿Cuál es el email?'
                                     />
                                     {errors.email && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El email del usuario es requerido</p>
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El email del cliente es requerido</p>
                                     )}
                                 </div>
                             </div>
