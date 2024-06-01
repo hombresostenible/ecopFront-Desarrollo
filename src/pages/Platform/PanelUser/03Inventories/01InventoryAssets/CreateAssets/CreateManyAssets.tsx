@@ -138,7 +138,7 @@ function CreateManyAssets ({ branches, token, onCreateComplete }: CreateManyMerc
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
                 <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/Download-Excels/Mercancías.xlsx" download="Mercancías.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Equipos_Herramientas_y_Maquinara.xlsx" download="Equipos_Herramientas_y_Maquinara.xlsx">Descargar Excel</a>
                 </div>
                 <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
