@@ -10,7 +10,7 @@ interface DepartmenAndCityProps {
     reset: boolean;
 }
 
-function DepartmenAndCity ({ onSelect, reset }: DepartmenAndCityProps) {
+function DepartmenAndCity({ onSelect, reset }: DepartmenAndCityProps) {
     const [ department, setDepartment ] = useState<{ value: string; label: string } | null>(null);
     const [selectedDepartment, setSelectedDepartment] = useState<{ value: string; label: string } | null>();    
     const handleDepartmentChange = (selectedOption: any) => {
@@ -22,7 +22,7 @@ function DepartmenAndCity ({ onSelect, reset }: DepartmenAndCityProps) {
         const selectedCityValue = '';
         const selectedCityCodeDane = '';
         const selectedCitysubregionCodeDane = '';
-        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);      // Reseteamos la ciudad, el código y la subreión del Dane al camnbiar de departamento
+        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);  // Reseteamos la ciudad, el código y la subreión del Dane al camnbiar de departamento
     };
 
     const [ city, setCity ] = useState<{ value: string; label: string } | null>(null);    
@@ -33,8 +33,8 @@ function DepartmenAndCity ({ onSelect, reset }: DepartmenAndCityProps) {
         const selectedDepartmentValue = department!.value;                                                          // Setea el departamento
         const selectedCityValue = selectedOption.value;                                                             // Setea la ciudad
         const selectedCityCodeDane = selectedOption.codeDane;                                                       // Setea el código del Dane
-        const selectedCitysubregionCodeDane = selectedOption.subregionCodeDane;                                             // Setea el código de la subregión del Dane
-        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);      // Enviamos el departamento, la ciudad, el código y la subregión del Dane
+        const selectedCitysubregionCodeDane = selectedOption.subregionCodeDane;                                     // Setea el código de la subregión del Dane
+        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);  // Enviamos el departamento, la ciudad, el código y la subregión del Dane
     };
 
     const cityOptions: { value: string; label: string }[] = department ? citiesByDepartment[ department.value as keyof typeof citiesByDepartment ] || [] : [];

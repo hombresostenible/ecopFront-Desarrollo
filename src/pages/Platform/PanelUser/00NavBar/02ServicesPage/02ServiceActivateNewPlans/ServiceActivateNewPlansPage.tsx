@@ -38,7 +38,7 @@ function ServiceActivateNewPlansPage() {
                                 <div className={`${styles.segunda} `}>premium</div>
                             </div>
                             <div className={`${styles.container__Data_Columns} `}>
-                                <div className={`${styles.title__Plaint} `}>Nómina electrónica</div>
+                                <div className={`${styles.title__Plaint} `}>Nomina electrónica</div>
                                 <div className={`${styles.segunda} `}>1 colaborador</div>
                                 <div className={`${styles.segunda} `}>3 colaboradores</div>
                                 <div className={`${styles.segunda} `}>15 colaboradores</div>

@@ -17,7 +17,7 @@ function LoginPage() {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
-    // Utiliza useSelector para obtener la información del usuario del estado de Redux
+    // Estado de Redux
     const errorUser = useSelector((state: RootState) => state.user.errorUser);
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
 

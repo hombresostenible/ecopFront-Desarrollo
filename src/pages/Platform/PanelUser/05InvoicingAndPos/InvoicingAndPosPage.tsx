@@ -16,9 +16,9 @@ function InvoicingAndPosPage() {
                         <h2>Facturación y POS</h2>
                         <p>Explicación sobre lo que se puede hacer en esta sección</p>
                         <div className='d-flex flex-column'>
-                            <h4>Nota crédito</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus notas crédito</Link>
-                            <Link to='/inventories/create-assets' >Crea notas crédito</Link>
+                            <h4>Nota Credito</h4>
+                            <Link to='/inventories/consult-assets' >Consulta tus notas Credito</Link>
+                            <Link to='/inventories/create-assets' >Crea notas Credito</Link>
                         </div>
                         <div className='d-flex flex-column'>
                             <h4>Nota débito</h4>

@@ -267,7 +267,7 @@ function App() {
                             <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
                             <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
                             <Route path='/invoicing-and-pos/quotes' element={<QuotesPage />} />
-                            {/* SideBar Nómina electrónica */}
+                            {/* SideBar Nomina electrónica */}
                             <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
                             <Route path='/electronic-payroll/payroll-payments' element={<PayrollPaymentsPage />} />
                             <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />

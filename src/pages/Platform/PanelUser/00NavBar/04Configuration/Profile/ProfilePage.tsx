@@ -15,7 +15,7 @@ function ProfilePage() {
     const token = jsCookie.get("token");
     const dispatch: AppDispatch = useDispatch();
 
-    // Utiliza useSelector para obtener la información del usuario del estado de Redux
+    // Estado de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     useEffect(() => {
