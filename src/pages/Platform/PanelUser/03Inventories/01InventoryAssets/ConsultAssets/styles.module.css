@@ -6,6 +6,7 @@
     height: calc(100vh - 70px);
     width: calc(100vw - 350px);
 }
+
 .container__Table{
     width: 1000px;
 }
