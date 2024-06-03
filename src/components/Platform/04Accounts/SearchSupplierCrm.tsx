@@ -116,6 +116,7 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
                 </Modal.Header>
                 <Modal.Body>
                     <CreateSupplier
+                        token={token}
                         onCreateComplete={() => {
                             onCloseCreateClientModal();
                         }}
