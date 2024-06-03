@@ -14,7 +14,7 @@ function AccountsPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <h2>Cuentas</h2>
-                        <p>Explicación sobre lo que se puede hacer en esta sección</p>
+                        <p>Bienvendo al espacio del Libro Diario de cuentas, aquí podrás registrar tus ingresos, gastos, cuentas por cobrar y cuentas por pagar.</p>
                         <div className='d-flex flex-column'>
                             <h4>Ingresos</h4>
                             <Link to='/inventories/consult-assets' >Consulta tus ingresos</Link>
@@ -26,8 +26,18 @@ function AccountsPage() {
                             <Link to='/inventories/create-assets' >Crea tus gastos</Link>
                         </div>
                         <div className='d-flex flex-column'>
+                            <h4>Cuentas por cobrar</h4>
+                            <Link to='/inventories/consult-assets' >Consulta tus cuentas por cobrar</Link>
+                            <Link to='/inventories/create-assets' >Crea tus cuentas por cobrar</Link>
+                        </div>
+                        <div className='d-flex flex-column'>
+                            <h4>Cuentas por pagar</h4>
+                            <Link to='/inventories/consult-assets' >Consulta tus cuentas por pagar</Link>
+                            <Link to='/inventories/create-assets' >Crea tus cuentas por pagar</Link>
+                        </div>
+                        <div className='d-flex flex-column'>
                             <h4>Transacciones pendientes de aprobar</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus transacciones pendientes de aprobar</Link>
+                            <Link to='/inventories/consult-assets' >Consulta tus transacciones pendientes de aprobación</Link>
                         </div>
                     </div>
                     <Footer />

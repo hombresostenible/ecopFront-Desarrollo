@@ -106,7 +106,7 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                                                 onSubmit(asset.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
                                             }}
                                         >
-                                            Normalizar
+                                            Deshacer
                                         </div>
                                     </td>
                                 </tr>

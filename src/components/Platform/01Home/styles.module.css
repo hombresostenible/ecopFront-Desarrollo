@@ -3,7 +3,7 @@
     font-size: 50px;
     font-weight: 600;
     letter-spacing: 1px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', sans-serif;
 }
 .container__Panel {
     display: grid;
@@ -11,7 +11,7 @@
     grid-template-columns: 
         repeat(
             auto-fit,
-            minmax(400px, 1fr)
+            minmax(300px, 1fr)
         );
 }
 .card__Inventory,
@@ -24,8 +24,8 @@
 .card__Electronic_Payroll,
 .card__Sustainability,
 .card__Notifications {
-    height: 150px;
-    width: 300px;
+    height: 140px;
+    width: 250px;
 }
 
 .container__Image_Inventory,
@@ -38,8 +38,8 @@
 .container__Image_Electronic_Payroll,
 .container__Image_Sustainability,
 .container__Image_Notifications {
-    height: 150px;
-    width: 150px;
+    height: 140px;
+    width: 140px;
 }
 .image {
     width: 100px;
@@ -54,6 +54,7 @@
 }
 .subTitle {
     color: #f8f9fa;
+    font-weight: 500;
 }
 
 /*----------Específicos de las Cards----------*/

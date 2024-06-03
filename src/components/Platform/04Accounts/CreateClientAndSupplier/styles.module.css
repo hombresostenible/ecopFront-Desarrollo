@@ -1,0 +1,54 @@
+.containerForm {
+    width: 450px;
+}
+.form {
+    padding: 60px 0 0 0;
+}
+.alertSuccess {
+    border: 1px solid rgba(76, 149, 108, 0.7);
+    color: #4c956c;
+    background: rgba(76, 149, 108, 0.4);
+    border-radius: 5px;
+    top: -5px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
+.alertDanger {
+    border: 1px solid rgba(230, 57, 70, 0.7);
+    color: #e63946;
+    background: rgba(230, 57, 70, 0.4);
+    border-radius: 5px;
+    top: -5px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
+.containerInfo {
+    width: 400px;
+}
+.label {
+    margin-bottom: 5px;
+}
+.containerInput {
+    width: 100%;
+}
+.input {
+    width: 100%;
+    margin: 0 0 16px 0;
+}
+.buttonSave {
+    padding: 5px 10px;
+    width: 100px;
+    margin: 0 10px;
+    border-radius: 4px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.buttonSave:hover {
+    transition: 300ms all ease;
+    background: #0a31bf;
+    cursor: pointer;
+}
