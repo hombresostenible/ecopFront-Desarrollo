@@ -13,10 +13,10 @@ import styles from './styles.module.css';
 interface CreateSupplierProps {
     token: string;
     onCreateComplete: () => void;
-    onClientCreated: (token: string) => void;
+    onSupplierCreated: (token: string) => void;
 }
 
-function CreateSupplier ({ token, onCreateComplete, onClientCreated }:CreateSupplierProps) {
+function CreateSupplier ({ token, onCreateComplete, onSupplierCreated }:CreateSupplierProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -43,7 +43,7 @@ function CreateSupplier ({ token, onCreateComplete, onClientCreated }:CreateSupp
             dispatch(postCrmSupplier(formData, token));
             setFormSubmitted(true);
             onCreateComplete();
-            onClientCreated(token);
+            onSupplierCreated(token);
             setTimeout(() => {
                 setFormSubmitted(false);
             }, 1500);
@@ -79,24 +79,25 @@ function CreateSupplier ({ token, onCreateComplete, onClientCreated }:CreateSupp
                         </div>
                     </div>
 
-                    <div className="d-flex align-items-center justify-content-center w-100 gap-2">
-                        <div className={`d-flex flex-column align-items-start justify-content-start`}>
-                            <h6 className={styles.label}>Tipo de identificación</h6>
-                            <div className={styles.containerInput}>
-                                <select
-                                    {...register('typeDocumentId', { required: true })}
-                                    className={`${styles.input} p-2 border rounded border-secundary w-100`}
-                                >
-                                    <option value='Cedula de Ciudadania'>Cédula de Ciudadanía</option>
-                                    <option value='NIT'>NIT</option>
-                                    <option value='Cedula de Extranjeria'>Cédula de Extranjería</option>
-                                    <option value='Pasaporte'>Pasaporte</option>
-                                </select>
-                                {errors.typeDocumentId && (
-                                    <p className='text-danger'>El tipo de documento del proveedor es requerido</p>
-                                )}
-                            </div>
+                    <div className={`${styles.containerInfo} d-flex flex-column align-items-start justify-content-start`}>
+                        <h6 className={styles.label}>Tipo de identificación</h6>
+                        <div className={styles.containerInput}>
+                            <select
+                                {...register('typeDocumentId', { required: true })}
+                                className={`${styles.input} p-2 border rounded border-secundary w-100`}
+                            >
+                                <option value='Cedula de Ciudadania'></option>
+                                <option value='NIT'>NIT</option>
+                                <option value='Cedula de Extranjeria'></option>
+                                <option value='Pasaporte'>Pasaporte</option>
+                            </select>
+                            {errors.typeDocumentId && (
+                                <p className='text-danger'>El tipo de documento del proveedor es requerido</p>
+                            )}
                         </div>
+                    </div>
+
+                    <div className="d-flex align-items-center justify-content-center w-100 gap-2">
                         <div className={` d-flex flex-column align-items-start justify-content-start`}>
                             <h6 className={styles.label}>Número de identificación</h6>
                             <div className={styles.containerInput}>
@@ -108,6 +109,21 @@ function CreateSupplier ({ token, onCreateComplete, onClientCreated }:CreateSupp
                                 />
                                 {errors.documentId && (
                                     <p className='text-danger'>El número de identidad es requerido</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={` d-flex flex-column align-items-start justify-content-start`}>
+                            <h6 className={styles.label}>Dígito de verificación</h6>
+                            <div className={styles.containerInput}>
+                                <input
+                                    type="text"
+                                    {...register('verificationDigit', { required: true })}
+                                    className={`${styles.input} p-2 border rounded border-secundary w-100`}
+                                    placeholder='¿Cuál es el número de identificación?'
+                                />
+                                {errors.verificationDigit && (
+                                    <p className='text-danger'>El dígito de verificación es requerido</p>
                                 )}
                             </div>
                         </div>

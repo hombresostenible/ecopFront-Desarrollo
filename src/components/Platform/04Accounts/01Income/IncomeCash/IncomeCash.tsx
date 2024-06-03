@@ -28,7 +28,7 @@ interface CashProps {
     transactionDate: Date | undefined;
 }
 
-function Cash({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: CashProps) {
+function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: CashProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -60,12 +60,12 @@ function Cash({ token, selectedBranch, defaultDates, registrationDate, transacti
         setMeansPayment(event.target.value);
     };
     
-    //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancía, MP, etc
+    //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancia, MP, etc
     useEffect(() => {
         if (typeSell === 'Activo') {
             dispatch(getAssetsByBranch(selectedBranch, token));
         }
-        if (typeSell === 'Mercancía') {
+        if (typeSell === 'Mercancia') {
             dispatch(getMerchandisesByBranch(selectedBranch, token));
         }
         if (typeSell === 'Producto') {
@@ -84,7 +84,7 @@ function Cash({ token, selectedBranch, defaultDates, registrationDate, transacti
         switch (typeSell) {
             case 'Activo':
                 return { labelTableChange: 'el activo', dataTableChange: assets as IAssets[] };
-            case 'Mercancía':
+            case 'Mercancia':
                 return { labelTableChange: 'la mercancía', dataTableChange: merchandises as IMerchandise[] };
             case 'Producto':
                 return { labelTableChange: 'el producto', dataTableChange: products as IProduct[] };
@@ -176,17 +176,17 @@ function Cash({ token, selectedBranch, defaultDates, registrationDate, transacti
                             <option value=''>Selecciona una opción</option>
                             <optgroup label="Ventas">
                                 <option value='Producto'>Producto</option>
-                                <option value='Mercancía'>Mercancía</option>
+                                <option value='Mercancia'>Mercancia</option>
                                 <option value='Servicio'>Servicio</option>
                                 <option value='Materia Prima'>Materia Prima</option>
                                 <option value='Activo'>Equipo, herramienta o máquina</option>
                             </optgroup>
                             <optgroup label="Otros ingresos">
-                                <option value='Crédito del banco'>Crédito del banco</option>
-                                <option value='Crédito en Cooperativa'>Crédito de la cooperativa</option>
+                                <option value='Credito del Banco'>Credito del Banco</option>
+                                <option value='Credito en Cooperativa'>Credito de la cooperativa</option>
                                 <option value='Gota gota'>Gota gota</option>
-                                <option value='Crédito de almacén'>Créditos en almacenes</option>
-                                <option value='Crédito de servicios públicos'>Créditos en servicios públicos</option>
+                                <option value='Credito de almacén'>Créditos en almacenes</option>
+                                <option value='Credito de servicios públicos'>Créditos en servicios públicos</option>
                             </optgroup>
                         </select>
                         {errors.incomeCategory && (
@@ -195,7 +195,7 @@ function Cash({ token, selectedBranch, defaultDates, registrationDate, transacti
                     </div>
                 </div>
 
-                {(typeSell === 'Activo' || typeSell === 'Mercancía' || typeSell === 'Producto' || typeSell === 'Materia Prima' || typeSell === 'Servicio') && (
+                {(typeSell === 'Activo' || typeSell === 'Mercancia' || typeSell === 'Producto' || typeSell === 'Materia Prima' || typeSell === 'Servicio') && (
                     <div className="mb-3 p-2 d-flex flex-column align-items-center justify-content-center border rounded">
                         <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                             <div className="px-3">
@@ -363,4 +363,4 @@ function Cash({ token, selectedBranch, defaultDates, registrationDate, transacti
     );
 }
 
-export default Cash;
+export default IncomeCash;
