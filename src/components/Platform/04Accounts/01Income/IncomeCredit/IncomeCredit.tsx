@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 
-interface CreditProps {
+interface IncomeCreditProps {
     selectedBranch: string;
     defaultDates: boolean;
 }
 
-function Credit({ selectedBranch, defaultDates }: CreditProps) {
+function IncomeCredit({ selectedBranch, defaultDates }: IncomeCreditProps) {
     console.log('selectedBranch: ', selectedBranch)
     console.log('defaultDates: ', defaultDates)
     return (
-        <div>Credit</div>
+        <div>IncomeCredit</div>
     );
 }
 
-export default Credit;
+export default IncomeCredit;
 
 
 
@@ -55,36 +55,36 @@ export default Credit;
 //     const [ nameItem, setNameItem ] = useState('');
 
 //     //Selección de la tabla que se consultará para renderizar los activos, mercancías, etc que se compraron a crédito
-//     const [ typeExpenses, setTypeExpenses ] = useState('');
+//     const [ expenseCategory, setTypeExpenses ] = useState('');
 //     const handleTypeExpenses = (event: { target: { value: SetStateAction<string> }}) => {
 //         setTypeExpenses(event.target.value);
 //     };
 
-//     //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancía, MP, etc
+//     //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancia, MP, etc
 //     useEffect(() => {
-//         if (typeExpenses === 'Activo') {
+//         if (expenseCategory === 'Activo') {
 //             getAssetsBranch(selectedBranch, token);
 //         }
-//         if (typeExpenses === 'Mercancía') {
+//         if (expenseCategory === 'Mercancia') {
 //             getMerchandisesBranch(selectedBranch, token);
 //         }
-//         if (typeExpenses === 'Producto') {
+//         if (expenseCategory === 'Producto') {
 //             getProductsBranch(selectedBranch, token);
 //         }
-//         if (typeExpenses === 'Materia Prima') {
+//         if (expenseCategory === 'Materia Prima') {
 //             getRawMaterialsBranch(selectedBranch, token);
 //         }
-//         if (typeExpenses === 'Servicio') {
+//         if (expenseCategory === 'Servicio') {
 //             getServicesBranch(selectedBranch, token);
 //         }
-//     }, [ typeExpenses, token ]);    
+//     }, [ expenseCategory, token ]);    
 
 //     //Muestra los nombre de los registros
 //     const getItemInfoTableChange = () => {
-//         switch (typeExpenses) {
+//         switch (expenseCategory) {
 //             case 'Activo':
 //                 return { labelTableChange: 'el activo', dataTableChange: assetsBranch };
-//             case 'Mercancía':
+//             case 'Mercancia':
 //                 return { labelTableChange: 'la mercancía', dataTableChange: merchandisesBranch };
 //             case 'Producto':
 //                 return { labelTableChange: 'el producto', dataTableChange: productsBranch };
@@ -187,7 +187,7 @@ export default Credit;
 //                 ...values,
 //                 branchId: selectedBranch,
 //                 transactionType: "Gasto",
-//                 creditCash: "Crédito",
+//                 creditCash: "Credito",
 //                 pay: "No",
 //                 nameItem,
 //                 paymentValue,
@@ -198,11 +198,11 @@ export default Credit;
 //                 accountBookData.registrationDate = new Date();
 //                 accountBookData.transactionDate = new Date();
 //             }
-//             if (typeExpenses === 'Crédito del banco' || typeExpenses === 'Crédito en Cooperativa' || typeExpenses === 'Gota gota' || typeExpenses === 'Crédito de almacén' || typeExpenses === 'Crédito de servicios públicos') {
-//                 accountBookData.incomeCategory = 'Crédito del banco';
+//             if (expenseCategory === 'Credito del Banco' || expenseCategory === 'Credito en Cooperativa' || expenseCategory === 'Gota gota' || expenseCategory === 'Credito de almacén' || expenseCategory === 'Credito de servicios públicos') {
+//                 accountBookData.incomeCategory = 'Credito del Banco';
 //                 accountBookData.unitValue = accountBookData.totalValue;
 //             }
-//             console.log('Crédito: ', accountBookData);
+//             console.log('Credito: ', accountBookData);
 //             await postAccountsBook(accountBookData, token);
 //             setFormSubmitted(true);
 //             onCreateComplete();
@@ -231,14 +231,14 @@ export default Credit;
 //                     </div>
 //                     <div>
 //                         <select
-//                             {...register('typeExpenses', { required: true })}
+//                             {...register('expenseCategory', { required: true })}
 //                             className={`${styles.info} p-2 border rounded border-secundary`}
 //                             onChange={handleTypeExpenses}
 //                         >
 //                             <option value=''>Selecciona un rubro</option>
 //                             <optgroup label="Compras o gastos de tu negocio">
 //                                 <option value='Materia Prima'>Materias Primas</option>
-//                                 <option value='Mercancía'>Mercancía</option>
+//                                 <option value='Mercancia'>Mercancia</option>
 //                                 <option value='Activo'>Equipos, herramientas y maquinaría</option>
 //                                 <option value='Arriendo'>Arriendo</option>
 //                                 <option value='Mantenimiento de equipos, maquinaria, herramientas'>Mantenimiento de equipos, maquinaria, herramientas</option>
@@ -247,19 +247,19 @@ export default Credit;
 //                                 <option value='Combustible'>Combustible</option>
 //                             </optgroup>
 //                             <optgroup label="Pagos de nómina">
-//                                 <option value='Nómina'>Nómina</option>
+//                                 <option value='Nomina'>Nomina</option>
 //                                 <option value='Seguridad Social y/o parafiscales'>Seguridad Social y/o parafiscales</option>
 //                             </optgroup>
 //                             <optgroup label="Servicios Públicos">
 //                                 <option value='Acueducto'>Acueducto</option>
-//                                 <option value='Energía'>Energía</option>
+//                                 <option value='Energia'>Energia</option>
 //                                 <option value='Gas'>Gas</option>
 //                                 <option value='Internet'>Internet</option>
 //                                 <option value='Celular/Plan de datos'>Celular/Plan de datos</option>
 //                             </optgroup>
 //                             <optgroup label="Obligaciones financieras">
-//                                 <option value='Crédito del banco'>Crédito del banco</option>
-//                                 <option value='CooperativeCredit'>Crédito de la cooperativa</option>
+//                                 <option value='Credito del Banco'>Credito del Banco</option>
+//                                 <option value='CooperativeCredit'>Credito de la cooperativa</option>
 //                                 <option value='LoanShark'>Gota gota</option>
 //                                 <option value='WarehouseCredit'>Créditos en almacenes</option>
 //                                 <option value='PublicUtilitiesCredit'>Créditos en servicios públicos</option>
@@ -267,16 +267,16 @@ export default Credit;
 //                             <optgroup label="Impuestos">
 //                                 <option value='IVA'>IVA</option>
 //                                 <option value='ICA'>ICA</option>
-//                                 <option value='Declaración de Renta'>Declaración de Renta</option>
-//                                 <option value='Retención en la Fuente'>Retención en la Fuente</option>
+//                                 <option value='Declaracion de Renta'>Declaracion de Renta</option>
+//                                 <option value='Retencion en la Fuente'>Retencion en la Fuente</option>
 //                                 <option value='Predial'>Predial</option>
 //                                 <option value='Vehículos y motos'>Vehículos y motos</option>
 //                             </optgroup>
 //                             <optgroup label="Otros gastos">
 //                                 <option value='Asesoría Contable'>Asesoría Contable</option>
-//                                 <option value='Renovación Cámara de Comercio'>Renovación Cámara de Comercio</option>
+//                                 <option value='Renovacion Camara de Comercio'>Renovacion Camara de Comercio</option>
 //                                 <option value='Licencias y permisos'>Licencias y permisos</option>
-//                                 <option value='Asesoría Jurídica'>Asesoría Jurídica</option>
+//                                 <option value='Asesoria Juridica'>Asesoria Juridica</option>
 //                                 <option value='Honorarios de contratista'>Honorarios de contratista</option>
 //                                 <option value='Honorarios de contratista'>Honorarios de contratista</option>
 //                             </optgroup>
@@ -284,13 +284,13 @@ export default Credit;
 //                                 <option value='Otro'>Otro</option>
 //                             </optgroup>
 //                         </select>
-//                         {errors.typeExpenses && (
+//                         {errors.expenseCategory && (
 //                             <p className='text-danger'>El rubro es requerido</p>
 //                         )}
 //                     </div>
 //                 </div>
 
-//                 {(typeExpenses === 'Activo' || typeExpenses === 'Mercancía' || typeExpenses === 'Producto' || typeExpenses === 'Materia Prima' || typeExpenses === 'Servicio') && (
+//                 {(expenseCategory === 'Activo' || expenseCategory === 'Mercancia' || expenseCategory === 'Producto' || expenseCategory === 'Materia Prima' || expenseCategory === 'Servicio') && (
 //                     <div className="mb-3 p-2 d-flex flex-column align-items-center justify-content-center border rounded">
 //                         <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
 //                             <div className="px-3">
@@ -487,7 +487,7 @@ export default Credit;
 //                 </div>
 
 //                 <SearchSupplierCrm
-//                     typeExpenses={typeExpenses}
+//                     expenseCategory={expenseCategory}
 //                     onClientSelect={(client) => setSelectedClient(client)}
 //                 />
 
