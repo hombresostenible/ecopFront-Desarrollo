@@ -95,7 +95,7 @@ function ConsultAssetsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/create-assets'>Crea tus activos</Link>
+                        <Link to='/inventories/create-assets'>Registro de inventario</Link>
                         <div className="d-flex">
                             <div
                                 className={`${styles.linkTransfer} border-0 m-auto rounded text-decoration-none`}
@@ -108,6 +108,7 @@ function ConsultAssetsPage() {
                         <div>Filtrar por sede</div>
                         <div>descargar en PDF</div>
                         <div>Descargar en Excel</div>
+                        <div>Bloquear las unidades enviadas en una cotzación</div>
                         <div>Visualizar activos dados de baja</div>
                         <div>Crear un filtro para cada columna</div>
 

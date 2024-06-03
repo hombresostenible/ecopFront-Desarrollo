@@ -1,7 +1,9 @@
 export interface InventoryOffItem {
     date: Date;
     quantity: number;
-    reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Desechado" | "Vendido";
+    reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Desechado" | "Vendido";//AGREGARLE RECICLADO
+    // reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Reciclado" | "Vendido";
+    description: string;
 }
 
 export interface IAssets {

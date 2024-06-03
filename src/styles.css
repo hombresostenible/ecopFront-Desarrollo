@@ -6,3 +6,16 @@
 ::-webkit-scrollbar-thumb {
     background: #718bd8;
 }
+
+
+
+
+@import url('./assets/fonts/century-gothic.css');
+
+/* body {
+    font-family: 'Century Gothic', sans-serif;
+} */
+
+* {
+    font-family: 'Century Gothic', sans-serif;
+}

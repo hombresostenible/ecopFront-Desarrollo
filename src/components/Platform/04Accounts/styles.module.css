@@ -1,0 +1,9 @@
+.container {
+    min-width: 350px;
+    height: calc(100vh - 70px);
+    background: #718bd8;
+    color: hsl(210, 17%, 98%);
+}
+.container__Component {
+    max-width: 340px;
+}
