@@ -5,14 +5,13 @@ import Footer from '../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
 function AccountsPage() {
-    
     return (
         <div className='d-flex flex-column'>
             <NavBar />
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h2>Cuentas</h2>
                         <p>Bienvendo al espacio del Libro Diario de cuentas, aquí podrás registrar tus ingresos, gastos, cuentas por cobrar y cuentas por pagar.</p>
                         <div className='d-flex flex-column'>
