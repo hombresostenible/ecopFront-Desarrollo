@@ -105,8 +105,8 @@ function CreateCrmClientPage() {
                                             onChange={handleTypeDocumentIdChange}
                                         >
                                             <option value='NIT'>NIT</option>
-                                            <option value='Cedula de Ciudadania'>Cédula de Ciudadanía</option>
-                                            <option value='Cedula de Extranjeria'>Cédula de Extranjería</option>
+                                            <option value='Cedula de Ciudadania'></option>
+                                            <option value='Cedula de Extranjeria'></option>
                                             <option value='Pasaporte'>Pasaporte</option>
                                         </select>
                                         {errors.typeDocumentId && (

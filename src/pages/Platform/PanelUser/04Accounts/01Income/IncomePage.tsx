@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import Cash from '../../../../../components/Platform/04Accounts/01Income/Cash/Cash';
-import Credit from '../../../../../components/Platform/04Accounts/01Income/Credit/Credit';
+import Cash from '../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
+import Credit from '../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
@@ -75,7 +75,7 @@ function IncomePage () {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                    <Link to='/inventories/create-assets'>Registros</Link>
+                        <Link to='/inventories/create-assets'>Registros</Link>{/* CREAR EL COMPONENTE QUE VISUALIZA LOS REGITROS CREADOS DEL LIBRO DIARIO */}
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div className="px-3">

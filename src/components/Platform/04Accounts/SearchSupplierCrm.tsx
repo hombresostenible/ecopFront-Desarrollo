@@ -12,11 +12,11 @@ import styles from './styles.module.css';
 
 interface SearchSupplierCrmCrmProps {
     token: string;
-    typeExpenses: string;
-    onClientSelect: (value: string | null) => void;
+    expenseCategory: string;
+    onSupplierSelect: (value: string | null) => void;
 }
 
-function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSupplierCrmCrmProps) {
+function SearchSupplierCrm ({ token, expenseCategory, onSupplierSelect }: SearchSupplierCrmCrmProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -50,7 +50,7 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
         };
     }, [ selectRef, selectedOption ]);
 
-    const createClientOption = {
+    const createSupplierOption = {
         value: 'createSupplier',
         label: '¿No existe tu proveedor? Créalo acá',
     };
@@ -63,9 +63,9 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
         };
     }) : [];
 
-    options?.unshift(createClientOption);
+    options?.unshift(createSupplierOption);
 
-    options?.unshift(createClientOption);
+    options?.unshift(createSupplierOption);
 
     const handleInputChange = (inputValue: string) => {
         setFilterText(inputValue);
@@ -75,7 +75,7 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
         if (option?.value === 'createSupplier') {
             setShowCancelModalCreateSupplier(true);
         } else {
-            onClientSelect(option?.value || null);  // Solo pasa el valor de `value` como argumento.
+            onSupplierSelect(option?.value || null);  // Solo pasa el valor de `value` como argumento.
             setSelectedOption(option);
         }
     };
@@ -84,10 +84,9 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
         setShowCancelModalCreateSupplier(false);
     };
 
-    const onCreateClientCreated = (token: string) => {
+    const onCreateSupplierCreated = (token: string) => {
         dispatch(getCrmSuppliers(token));
     };
-
 
     return (
         <div
@@ -95,7 +94,7 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
             className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded"
         >
             <div className="px-3">                    
-                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(typeExpenses === 'Crédito' || typeExpenses === 'Crédito del banco' || typeExpenses === 'CooperativeCredit' || typeExpenses === 'LoanShark' || typeExpenses === 'WarehouseCredit' || typeExpenses === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le pagaste'}?</p>
+                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(expenseCategory === 'Credito' || expenseCategory === 'Credito del Banco' || expenseCategory === 'CooperativeCredit' || expenseCategory === 'LoanShark' || expenseCategory === 'WarehouseCredit' || expenseCategory === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le pagaste'}?</p>
             </div>
             <div>
                 <Select
@@ -120,7 +119,7 @@ function SearchSupplierCrm ({ token, typeExpenses, onClientSelect }: SearchSuppl
                         onCreateComplete={() => {
                             onCloseCreateClientModal();
                         }}
-                        onClientCreated={onCreateClientCreated}
+                        onSupplierCreated={onCreateSupplierCreated}
                     />
                 </Modal.Body>
             </Modal>
