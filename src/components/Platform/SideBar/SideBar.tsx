@@ -254,7 +254,9 @@ function SideBar() {
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/accounts/income' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/income' ? styles.active : ''} `}>Ingresos</Link>
                             <Link to='/accounts/expenses' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/expenses' ? styles.active : ''} `}>Gastos</Link>
-                            <Link to='/accounts/pending-approval' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/pending-approval' ? styles.active : ''} `}>Transacciones pendientes de aprobar</Link>
+                            <Link to='/accounts/account-receivable' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/account-receivable' ? styles.active : ''} `}>Cuentas por cobrar</Link>
+                            <Link to='/accounts/accounts-payable' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/accounts-payable' ? styles.active : ''} `}>Cuentas por pagar</Link>
+                            <Link to='/accounts/pending-approval' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/pending-approval' ? styles.active : ''} `}>Transacciones pendientes de aprobación</Link>
                         </div>
                     </div>
                 </div>

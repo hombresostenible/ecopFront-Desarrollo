@@ -333,12 +333,12 @@ function CreateServicesPage() {
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <h2 className={`${styles.subtitle} text-center`}>Crea tus Servicios</h2>
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus materias primas de forma masiva</button>
+                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus servicios de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
-                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus activos de forma masiva</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus servicios de forma masiva</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <CreateManyServices
