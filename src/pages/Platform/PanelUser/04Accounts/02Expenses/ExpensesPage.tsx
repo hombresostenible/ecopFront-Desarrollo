@@ -164,8 +164,11 @@ function ExpensesPage() {
                             )}
                             {creditCashOption === 'Credito' && (
                                 <CreditExpense
+                                    token={token}
                                     selectedBranch={selectedBranch}
                                     defaultDates={defaultDates}
+                                    registrationDate={registrationDate}
+                                    transactionDate={transactionDate}
                                 />
                             )}
                         </div>
