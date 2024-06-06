@@ -71,7 +71,7 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
         if (expenseCategory === 'Servicio') {
             dispatch(getServicesByBranch(selectedBranch, token));
         }
-    }, [ expenseCategory, token ]); 
+    }, [ expenseCategory, token ]);
     
     //Muestra los nombres de los registros
     const getItemInfoTypeExpenses = () => {
@@ -156,7 +156,6 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                     <div className="px-3">
                         <p className={`${styles.text} mb-0 p-2`}>¿Qué compraste, gastaste o pagaste o por qué salió dinero de tu negocio?</p>
                     </div>
-
                     <div>
                         <select
                             {...register('expenseCategory', { required: true })}
