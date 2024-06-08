@@ -29,7 +29,7 @@ function Panel() {
                 </div>
 
                 <div className={`${styles.card__AccountBook} m-auto overflow-hidden d-flex align-items-center justify-content-center border rounded`} >
-                    <Link to="/accounts" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
+                    <Link to="/home/accounts" className="border-0 overflow-hidden text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image_AccountBook} d-flex align-items-center justify-content-center`} >
                             <img src={LibroDiario} alt="Registra tus transacciones diarias" className={`${styles.image}`} />
                         </div>

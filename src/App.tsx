@@ -101,38 +101,39 @@ import CreateRawMateralsPage from './pages/Platform/PanelUser/03Inventories/04In
 // SIDEBAR - INVENTARIOS - SERVICES
 import ConsultServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/ConsultServices/ConsultServicesPage';
 import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateServices/CreateServicesPage';
-// SIDEBAR - INVENTARIOS - ACCOUNTS
+// SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
+import Accounts from './pages/Platform/PanelUser/04Accounts/Accounts';
 import IncomePage from './pages/Platform/PanelUser/04Accounts/01Income/IncomePage';
 import ExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ExpensesPage';
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/03PendingApproval/PendingApprovalPage';
-// SIDEBAR - INVENTARIOS - INVOICING-AND-POS
+// SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
 import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/01CreditNotes/CreditNotesPage';
 import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02DebitNotes/DebitNotesPage';
 import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03RecurringInvoices/RecurringInvoicesPage';
 import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/04ReceivedPayments/ReceivedPaymentsPage';
 import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/05Quotes/QuotesPage';
-// SIDEBAR - INVENTARIOS - ELECTRONIC-PAYROLL
+// SIDEBAR - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
 import PayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/01PayrollPayments/PayrollPaymentsPage';
 import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02Certifications/CertificationsPage';
 import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/03PayrollSettlement/PayrollSettlementPage';
 import EmployeesPage from './pages/Platform/PanelUser/06ElectronicPayroll/04Employees/EmployeesPage';
-// SIDEBAR - INVENTARIOS - CRM-CLIENT
+// SIDEBAR - CRM-CLIENT
 import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsCard/CrmClientsCardPage';
 import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
-// SIDEBAR - INVENTARIOS - CRM-SUPPLIER
+// SIDEBAR - CRM-SUPPLIER
 import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliers/CrmSuppliersCardPage';
 import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
-// SIDEBAR - INVENTARIOS - SUSTAINABILITY
+// SIDEBAR - SUSTAINABILITY
 import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/SustainabilityPage';
 import EnvironmentalStandardsConsultationPage from './pages/Platform/PanelUser/09Sustainability/01EnvironmentalStandardsConsultation/EnvironmentalStandardsConsultationPage';
 import PlanDesignPage from './pages/Platform/PanelUser/09Sustainability/02PlanDesign/PlanDesignPage';
 import AsgReportsPage from './pages/Platform/PanelUser/09Sustainability/03AsgReports/AsgReportsPage';
 import SustainabilityStoriesPage from './pages/Platform/PanelUser/09Sustainability/04SustainabilityStories/SustainabilityStoriesPage';
 import DiagnosticsPage from './pages/Platform/PanelUser/09Sustainability/05Diagnostics/DiagnosticsPage';
-// SIDEBAR - INVENTARIOS - REPORT-AND-INDICATORS
+// SIDEBAR - REPORT-AND-INDICATORS
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
 import BillingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/01BillingIndicators/BillingIndicatorsPage';
 import AccountsAndInventoryIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/AccountsAndInventoryIndicatorsPage';
@@ -142,11 +143,11 @@ import CustomReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/
 import DailyReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/06DailyReport/DailyReportPage';
 import EndOfMonthReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/07EndOfMonthReport/EndOfMonthReportPage';
 import SuggestedReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/08SuggestedReport/SuggestedReportPage';
-// SIDEBAR - INVENTARIOS - STRATEGIC-NOTIFICATIONS
+// SIDEBAR - STRATEGIC-NOTIFICATIONS
 import StrategicNotificationsPage from './pages/Platform/PanelUser/11StrategicNotifications/StrategicNotificationsPage';
 import ProductExpiryPage from './pages/Platform/PanelUser/11StrategicNotifications/01ProductExpiry/ProductExpiryPage';
 import TaxCalendarPage from './pages/Platform/PanelUser/11StrategicNotifications/02TaxCalendar/TaxCalendarPage';
-// SIDEBAR - INVENTARIOS - CONSULTANCIES
+// SIDEBAR - CONSULTANCIES
 import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/ConsultanciesPage';
 import ContactAnAdvisorPage from './pages/Platform/PanelUser/12Consultancies/01ContactAnAdvisor/ContactAnAdvisorPage';
 
@@ -256,7 +257,8 @@ function App() {
                             <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                             <Route path='/inventories/create-services' element={<CreateServicesPage />} />
                             {/* SideBar Cuentas */}
-                            <Route path='/accounts' element={<AccountsPage />} />
+                            <Route path='/home/accounts' element={<AccountsPage />} />
+                            <Route path='/accounts' element={<Accounts />} />
                             <Route path='/accounts/income' element={<IncomePage />} />
                             <Route path='/accounts/expenses' element={<ExpensesPage />} />
                             <Route path='/accounts/pending-approval' element={<PendingApprovalPage />} />
