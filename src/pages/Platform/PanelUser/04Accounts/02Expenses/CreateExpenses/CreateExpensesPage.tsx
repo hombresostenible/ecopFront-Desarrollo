@@ -6,17 +6,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
-import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import CashExpense from '../../../../../components/Platform/04Accounts/02Expenses/CashExpense/CashExpense';
-import CreditExpense from '../../../../../components/Platform/04Accounts/02Expenses/CreditExpense/CreditExpense';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../../components/Platform/Footer/Footer';
+import CashExpense from '../../../../../../components/Platform/04Accounts/02Expenses/CashExpense/CashExpense';
+import CreditExpense from '../../../../../../components/Platform/04Accounts/02Expenses/CreditExpense/CreditExpense';
+import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function ExpensesPage() {
+function CreateExpensesPage() {
     const token = jsCookie.get("token") || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -180,4 +180,4 @@ function ExpensesPage() {
     );
 }
 
-export default ExpensesPage;
+export default CreateExpensesPage;

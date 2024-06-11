@@ -1,19 +1,17 @@
-import NavBar from '../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../components/Platform/Footer/Footer';
+import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function Accounts() {
-
+function AccountsReceivablePage() {
     return (
         <div className='d-flex flex-column'>
             <NavBar />
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h2>Cuentas</h2>
-                        
+                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                        AccountsReceivablePage
                     </div>
                     <Footer />
                 </div>
@@ -22,4 +20,4 @@ function Accounts() {
     );
 }
 
-export default Accounts;
+export default AccountsReceivablePage;
