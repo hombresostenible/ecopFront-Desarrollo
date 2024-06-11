@@ -103,10 +103,13 @@ import ConsultServicesPage from './pages/Platform/PanelUser/03Inventories/05Inve
 import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateServices/CreateServicesPage';
 // SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
-import Accounts from './pages/Platform/PanelUser/04Accounts/Accounts';
-import IncomePage from './pages/Platform/PanelUser/04Accounts/01Income/IncomePage';
-import ExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ExpensesPage';
-import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/03PendingApproval/PendingApprovalPage';
+import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
+import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/CreateIncome/CreateIncomePage';
+import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ConsultExpenses/ConsultExpensesPage';
+import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/CreateExpenses/CreateExpensesPage';
+import AccountsReceivablePage from './pages/Platform/PanelUser/04Accounts/03AccountsReceivable/AccountsReceivablePage';
+import AccountsPayablePage from './pages/Platform/PanelUser/04Accounts/04AccountsPayable/AccountsPayablePage';
+import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/05PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
 import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/01CreditNotes/CreditNotesPage';
@@ -233,13 +236,25 @@ function App() {
                             {/* Sección NavBar - Configuration */}
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
+
+
+
                             {/* SideBar Home */}
-                            <Route path='/home' element={<Home />} />
+                            <Route path='/home' element={<Home />} />                                               {/* APARECEN TODOS LOS RECUADROS */}
+                            <Route path='/inventories' element={<InventoriesPage />} />                             {/* ACCESOS DIRECTOS A ASSETS, MERCHANDISES, PRODUCTS, RAWMATERIALS  SERVICES */}
+                            <Route path='/accounts' element={<AccountsPage />} />                              {/* ACCESOS DIRECTOS A INGRESOS, GASTOS, CXC, CXP, TX PENDIENTES DE APROBAR */}
+                            <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />                   {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />                {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />          {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />    {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/sustainability' element={<SustainabilityPage />} />                       {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />         {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />      {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/consultancies' element={<ConsultanciesPage />} />                         {/* ACCESOS DIRECTOS A  */}
+
                             {/* SideBar Tus Sedes */}
                             <Route path='/branches/consult-branches' element={<BranchCardPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
-                            {/* SideBar Inventarios */}
-                            <Route path='/inventories' element={<InventoriesPage />} />
                             {/* SideBar Inventarios - Assets */}
                             <Route path='/inventories/consult-assets' element={<ConsultAssetsPage />} />
                             <Route path='/inventories/create-assets' element={<CreateAssetsPage />} />
@@ -256,40 +271,42 @@ function App() {
                             {/* SideBar Inventarios - Services */}
                             <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                             <Route path='/inventories/create-services' element={<CreateServicesPage />} />
-                            {/* SideBar Cuentas */}
-                            <Route path='/home/accounts' element={<AccountsPage />} />
-                            <Route path='/accounts' element={<Accounts />} />
-                            <Route path='/accounts/income' element={<IncomePage />} />
-                            <Route path='/accounts/expenses' element={<ExpensesPage />} />
-                            <Route path='/accounts/pending-approval' element={<PendingApprovalPage />} />
+
+
+                            {/* SideBar Cuentas - Ingresos */}
+                            <Route path='/accounts/consult-incomes' element={<ConsultIncomePage />} />
+                            <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
+                            {/* SideBar Cuentas - Gastos */}
+                            <Route path='/accounts/consult-expenses' element={<ConsultExpensesPage />} />
+                            <Route path='/accounts/create-expenses' element={<CreateExpensesPage />} />
+                            {/* SideBar Cuentas - CXC */}
+                            <Route path='/accounts/consult-account-receivable' element={<AccountsReceivablePage />} />
+                            {/* SideBar Cuentas - CXP */}
+                            <Route path='/accounts/consult-accounts-payable' element={<AccountsPayablePage />} />
+                            {/* SideBar Cuentas - TX Pendientes de Aprobar */}
+                            <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                             {/* SideBar Facturación y POS */}
-                            <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
                             <Route path='/invoicing-and-pos/credit-notes' element={<CreditNotesPage />} />
                             <Route path='/invoicing-and-pos/debit-notes' element={<DebitNotesPage />} />
                             <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
                             <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
                             <Route path='/invoicing-and-pos/quotes' element={<QuotesPage />} />
                             {/* SideBar Nomina electrónica */}
-                            <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
                             <Route path='/electronic-payroll/payroll-payments' element={<PayrollPaymentsPage />} />
                             <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />
                             <Route path='/electronic-payroll/payroll-settlement' element={<PayrollSettlementPage />} />
                             <Route path='/electronic-payroll/employees' element={<EmployeesPage />} />
                             {/* SideBar CRM Clientes */}
-                            <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
                             <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
                             {/* SideBar CRM Proveedores */}
-                            <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />
                             <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
                             {/* SideBar Sostenibilidad */}
-                            <Route path='/sustainability' element={<SustainabilityPage />} />
                             <Route path='/sustainability/environmental-standards-consultation' element={<EnvironmentalStandardsConsultationPage />} />
                             <Route path='/sustainability/plan-design' element={<PlanDesignPage />} />
                             <Route path='/sustainability/asg-reports' element={<AsgReportsPage />} />
                             <Route path='/sustainability/sustainability-stories' element={<SustainabilityStoriesPage />} />
                             <Route path='/sustainability/diagnostics' element={<DiagnosticsPage />} />
                             {/* SideBar Reportes e indicadores */}
-                            <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />
                             <Route path='/reports-and-indicators/billing-indicators' element={<BillingIndicatorsPage />} />
                             <Route path='/reports-and-indicators/accounts-and-inventory-indicators' element={<AccountsAndInventoryIndicatorsPage />} />
                             <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
@@ -299,11 +316,9 @@ function App() {
                             <Route path='/reports-and-indicators/end-of-month-report' element={<EndOfMonthReportPage />} />
                             <Route path='/reports-and-indicators/suggested-report' element={<SuggestedReportPage />} />
                             {/* SideBar Notificaciones estratégicas */}
-                            <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />
                             <Route path='/strategic-notifications/product-expiry' element={<ProductExpiryPage />} />
                             <Route path='/strategic-notifications/tax-calendar' element={<TaxCalendarPage />} />
                             {/* SideBar Asesorías para toma de decisiones */}
-                            <Route path='/consultancies' element={<ConsultanciesPage />} />
                             <Route path='/consultancies/contact-an-advisor' element={<ContactAnAdvisorPage />} />
                         </Route>
                     {/* Sección Error 404 */}

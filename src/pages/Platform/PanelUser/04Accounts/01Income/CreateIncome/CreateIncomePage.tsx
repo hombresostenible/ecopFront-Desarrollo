@@ -6,17 +6,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
-import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import IncomeCash from '../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
-import IncomeCredit from '../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar';
-import Footer from '../../../../../components/Platform/Footer/Footer';
+import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
+import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
+import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
+import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function IncomePage () {
+function CreateIncomePage () {
     const token = jsCookie.get("token") || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -180,4 +180,4 @@ function IncomePage () {
     );
 }
 
-export default IncomePage;
+export default CreateIncomePage;
