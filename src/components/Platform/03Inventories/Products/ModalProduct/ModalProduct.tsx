@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../types/User/products.types';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
 interface ModalProductProps {
@@ -317,7 +317,7 @@ function ModalProduct({ token, idItem, product, branches, onCloseModal }: ModalP
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
                                 {product?.sellingPrice !== null && product?.sellingPrice !== undefined
-                                    ? `$ ${formatNumberWithCommas(product.sellingPrice)}`
+                                    ? `$ ${formatNumber(product.sellingPrice)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
