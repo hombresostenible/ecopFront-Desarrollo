@@ -40,6 +40,11 @@ const accountsBookSlice = createSlice({
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
         },
+        getAccountsBooksExpensesStart: (state, action: PayloadAction<IAccountsBook>) => {
+            state.loading = true;
+            state.accountsBook = action.payload;
+            state.errorAccountsBook = null;
+        },
         getAccountsBookByIdStart: (state, action: PayloadAction<IAccountsBook>) => {
             state.loading = false;
             state.accountsBook = action.payload;
@@ -61,5 +66,5 @@ const accountsBookSlice = createSlice({
     },
 });
 
-export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
+export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
 export default accountsBookSlice.reducer;
