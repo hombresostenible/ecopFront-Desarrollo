@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAccountsBook } from '../../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getAccountsBooksIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -118,6 +118,29 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
         }
     }
 };
+
+                    
+                    
+//OBTENER TODOS LOS REGISTRO DE GASTO DEL LIBRO DIARIO
+export const getAccountsBooksIncomesNotApproved = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/accountsBook/incomesNotApproved', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsBooksIncomesNotApprovedStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+
 
 //ACTUALIZA UN REGISTRO DEL LIBRO DIARIO
 export const putAccountsBook = (idAccountsBook: string, formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {

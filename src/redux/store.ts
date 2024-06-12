@@ -10,23 +10,28 @@ import rawMaterialReducer from './User/rawMaterialSlice/rawMaterialSlice';
 import serviceReducer from './User/serviceSlice/serviceSlice';
 import userReducer from './User/userSlice/userSlice';
 import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
+import finantialIndicatorsReducer from './User/indicator/finantialIndicators/finantialIndicatorsSlice'; // Asegúrate de ajustar el path correctamente
+
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
 
+const rootReducer = {
+    accountsBook: accountsBookReducer,
+    assets: assetsReducer,
+    branch: branchReducer,
+    crmClient: crmClientReducer,
+    crmSupplier: crmSupplierReducer,
+    merchandise: merchandiseReducer,
+    product: productReducer,
+    rawMaterial: rawMaterialReducer,
+    service: serviceReducer,
+    user: userReducer,
+    userPlatform: userPlatformReducer,
+    finantialIndicators: finantialIndicatorsReducer, // Añade esta línea
+};
+
 export const store = configureStore({
-    reducer: {
-        accountsBook: accountsBookReducer,
-        assets: assetsReducer,
-        branch: branchReducer,
-        crmClient: crmClientReducer,
-        crmSupplier: crmSupplierReducer,
-        merchandise: merchandiseReducer,
-        product: productReducer,
-        rawMaterial: rawMaterialReducer,
-        service: serviceReducer,
-        user: userReducer,
-        userPlatform: userPlatformReducer,
-    },
+    reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;
