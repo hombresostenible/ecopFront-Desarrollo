@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAccountsBook } from '../../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -43,7 +43,7 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
     }
 };
 
-//OBTENER TODOS LOS REGISTRO DEL LIBRO DIARIO
+//OBTENER TODOS LOS REGISTRO DE INGRESO DEL LIBRO DIARIO
 export const getAccountsBooksIncomes = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/accountsBook/incomes', {
@@ -53,6 +53,25 @@ export const getAccountsBooksIncomes = (token: string) => async (dispatch: AppDi
             }
         });
         dispatch(getAccountsBooksIncomesStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+}
+
+//OBTENER TODOS LOS REGISTRO DE GASTO DEL LIBRO DIARIO
+export const getAccountsBooksExpenses = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/accountsBook/expenses', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsBooksExpensesStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
