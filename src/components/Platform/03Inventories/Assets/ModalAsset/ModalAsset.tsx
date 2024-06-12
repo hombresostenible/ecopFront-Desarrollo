@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
 interface ModalAssetProps {
@@ -237,7 +237,7 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                                 onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>$ {formatNumberWithCommas(asset?.purchasePriceBeforeTax)}</p>
+                            <p className={`${styles.input} p-2 text-start border`}>$ {formatNumber(asset?.purchasePriceBeforeTax)}</p>
                         )}
                     </div>
                 </div>
@@ -273,7 +273,7 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                                 onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
                             />
                         ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>$ {formatNumberWithCommas(asset?.sellingPrice)}</p> 
+                            <p className={`${styles.input} p-2 text-start border`}>$ {formatNumber(asset?.sellingPrice)}</p> 
                         )}
                     </div>
                 </div>

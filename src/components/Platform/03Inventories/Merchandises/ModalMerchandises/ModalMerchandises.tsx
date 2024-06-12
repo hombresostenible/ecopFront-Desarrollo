@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../types/User/merchandise.types';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
 interface ModalMerchandiseProps {
@@ -298,7 +298,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
                                 {merchandise?.purchasePriceBeforeTax !== null && merchandise?.purchasePriceBeforeTax !== undefined
-                                    ? `$ ${formatNumberWithCommas(merchandise.purchasePriceBeforeTax)}`
+                                    ? `$ ${formatNumber(merchandise.purchasePriceBeforeTax)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
@@ -338,7 +338,7 @@ function ModalMerchandises({ token, idItem, merchandise, branches, onCloseModal 
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
                                 {merchandise?.sellingPrice !== null && merchandise?.sellingPrice !== undefined
-                                    ? `$ ${formatNumberWithCommas(merchandise.sellingPrice)}`
+                                    ? `$ ${formatNumber(merchandise.sellingPrice)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}

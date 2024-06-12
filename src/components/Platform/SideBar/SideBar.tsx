@@ -252,11 +252,11 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuAccounts ? 'show' : ''} `}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/accounts/consult-incomes' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/income' ? styles.active : ''} `}>Ingresos</Link>
-                            <Link to='/accounts/consult-expenses' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/expenses' ? styles.active : ''} `}>Gastos</Link>
-                            <Link to='/accounts/consult-account-receivable' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/account-receivable' ? styles.active : ''} `}>Cuentas por cobrar</Link>
-                            <Link to='/accounts/consult-accounts-payable' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/accounts-payable' ? styles.active : ''} `}>Cuentas por pagar</Link>
-                            <Link to='/accounts/consult-pending-approval' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/accounts/pending-approval' ? styles.active : ''} `}>Transacciones pendientes de aprobación</Link>
+                            <Link to='/accounts/consult-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Ingresos</Link>
+                            <Link to='/accounts/consult-expenses' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-expenses' || location.pathname === '/accounts/create-expenses') ? styles.active : ''} `}>Gastos</Link>
+                            <Link to='/accounts/consult-account-receivable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-account-receivable') ? styles.active : ''} `}>Cuentas por cobrar</Link>
+                            <Link to='/accounts/consult-accounts-payable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-accounts-payable') ? styles.active : ''} `}>Cuentas por pagar</Link>
+                            <Link to='/accounts/consult-pending-approval' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-pending-approval') ? styles.active : ''} `}>Transacciones pendientes de aprobación</Link>
                         </div>
                     </div>
                 </div>

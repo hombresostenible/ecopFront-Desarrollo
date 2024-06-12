@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
 interface ModalRawMaterialProps {
@@ -320,7 +320,7 @@ function ModalRawMaterial({ token, idItem, rawMaterial, branches, onCloseModal }
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
                                 {rawMaterial?.purchasePriceBeforeTax !== null && rawMaterial?.purchasePriceBeforeTax !== undefined
-                                    ? `$ ${formatNumberWithCommas(rawMaterial.purchasePriceBeforeTax)}`
+                                    ? `$ ${formatNumber(rawMaterial.purchasePriceBeforeTax)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
@@ -342,7 +342,7 @@ function ModalRawMaterial({ token, idItem, rawMaterial, branches, onCloseModal }
                     ) : (
                         <p className={`${styles.input} p-2 text-start border`}>
                             {rawMaterial?.sellingPrice !== null && rawMaterial?.sellingPrice !== undefined
-                                ? `$ ${formatNumberWithCommas(rawMaterial.sellingPrice)}`
+                                ? `$ ${formatNumber(rawMaterial.sellingPrice)}`
                                 : 'Precio no asignado'}
                         </p>
                     )}

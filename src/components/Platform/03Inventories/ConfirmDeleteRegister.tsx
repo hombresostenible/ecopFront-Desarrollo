@@ -7,13 +7,14 @@ import { deleteMerchandise, getMerchandises } from '../../../redux/User/merchand
 import { deleteProduct, getProducts } from '../../../redux/User/productSlice/actions';
 import { deleteRawMaterial, getRawMaterials } from '../../../redux/User/rawMaterialSlice/actions';
 import { deleteService, getServices } from '../../../redux/User/serviceSlice/actions';
+import { deleteAccountsBook, getAccountsBooks } from '../../../redux/User/accountsBookSlice/actions';
 import type { AppDispatch } from '../../../redux/store';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteRegisterProps {
     typeRegisterDelete: string;
     idItem: string;
-    nameRegister: string;
+    nameRegister?: string;
     onCloseModal: () => void;
 }
 
@@ -37,6 +38,9 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
         }
         else if (typeRegisterDelete === 'Service') {
             setTypeDelete('el Servicio')
+        }
+        else if (typeRegisterDelete === 'AccountsBook') {
+            setTypeDelete('este registro del libro diario')
         }
     }, [ typeRegisterDelete ]);
 
@@ -71,6 +75,12 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
                 // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getServices(token));
+            }
+            if (typeRegisterDelete === 'AccountsBook') {
+                dispatch(deleteAccountsBook(idItem, token));
+                // Simulamos un delay de la API
+                await new Promise(resolve => setTimeout(resolve, 500));
+                dispatch(getAccountsBooks(token));
             }
             onCloseModal();
         } catch (error) {

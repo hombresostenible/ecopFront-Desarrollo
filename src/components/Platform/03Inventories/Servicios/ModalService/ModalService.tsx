@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../types/User/services.types';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { formatNumberWithCommas } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import styles from './styles.module.css';
 
 interface ModalServiceProps {
@@ -153,7 +153,7 @@ function ModalService({ token, idItem, service, branches, onCloseModal }: ModalS
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>
                                 {service?.sellingPrice !== null && service?.sellingPrice !== undefined
-                                    ? `$ ${formatNumberWithCommas(service.sellingPrice)}`
+                                    ? `$ ${formatNumber(service.sellingPrice)}`
                                     : 'Precio no asignado'}
                             </p>
                         )}
