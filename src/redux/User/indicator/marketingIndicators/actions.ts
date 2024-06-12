@@ -9,12 +9,12 @@ import {
     getCustomerRetentionByBranchStart,
     getCustomerDigitalStart,
     getCustomerDigitalByBranchStart,
-} from './marketingIndicatorSlice';
+} from './marketingIndicatorsSlice';
 
 //
 export const getCustomerAcquisition = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/sustainabilityIndicators/', {
+        const response = await axiosInstance.get('/marketingIndicators/customerAcquisition', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const getCustomerAcquisition = (token: string) => async (dispatch: AppDis
 //
 export const getCustomerAcquisitionByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/sustainabilityIndicators/${idBranch}`, {
+        const response = await axiosInstance.get(`/marketingIndicators/customerAcquisitionBranch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const getCustomerAcquisitionByBranch = (idBranch: string, token: string) 
 //
 export const getCustomerRetention = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/sustainabilityIndicators/', {
+        const response = await axiosInstance.get('/marketingIndicators/customerRetention', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const getCustomerRetention = (token: string) => async (dispatch: AppDispa
 //
 export const getCustomerRetentionByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/sustainabilityIndicators/${idBranch}`, {
+        const response = await axiosInstance.get(`/marketingIndicators/customerRetentionBranch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export const getCustomerRetentionByBranch = (idBranch: string, token: string) =>
 //
 export const getCustomerDigital = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/sustainabilityIndicators/', {
+        const response = await axiosInstance.get('/marketingIndicators/customerDigital', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export const getCustomerDigital = (token: string) => async (dispatch: AppDispatc
 //
 export const getCustomerDigitalByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/sustainabilityIndicators/${idBranch}`, {
+        const response = await axiosInstance.get(`/marketingIndicators/customerDigitalBranch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
