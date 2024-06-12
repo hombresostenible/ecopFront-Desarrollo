@@ -12,7 +12,7 @@ import {
 //
 export const getEnergyConsumption = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/sustainabilityIndicators/', {
+        const response = await axiosInstance.get('/sustainabilityIndicators/energyConsumption', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const getEnergyConsumption = (token: string) => async (dispatch: AppDispa
 //
 export const getEnergyConsumptionByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/sustainabilityIndicators/${idBranch}`, {
+        const response = await axiosInstance.get(`/sustainabilityIndicators/energyConsumptionBranch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const getEnergyConsumptionByBranch = (idBranch: string, token: string) =>
 //
 export const getWaterConsumption = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/sustainabilityIndicators/', {
+        const response = await axiosInstance.get('/sustainabilityIndicators/waterConsumption', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const getWaterConsumption = (token: string) => async (dispatch: AppDispat
 //
 export const getWaterConsumptionByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/sustainabilityIndicators/${idBranch}`, {
+        const response = await axiosInstance.get(`/sustainabilityIndicators/waterConsumptionBranch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
