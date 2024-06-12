@@ -75,7 +75,7 @@ function CreateExpensesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <Link to='/inventories/create-assets'>Registros</Link>{/* CREAR EL COMPONENTE QUE VISUALIZA LOS REGITROS CREADOS DEL LIBRO DIARIO */}
+                        <Link to='/accounts/consult-expenses'>Tus Gastos</Link>
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div className="px-3">

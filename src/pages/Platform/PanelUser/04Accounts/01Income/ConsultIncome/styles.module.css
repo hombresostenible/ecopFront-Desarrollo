@@ -6,3 +6,158 @@
     height: calc(100vh - 70px);
     width: calc(100vw - 350px);
 }
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.buttonClearFilterAll {
+    padding: 5px 10px;
+    width: 300px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    background: #f28705;
+    color: #f8f9fa;
+}
+.inputDate {
+    margin: 0 5px;
+}
+.handleFilter {
+    padding: 5px 10px;
+    margin: 0 10px 0 5px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.handleFilter:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.clearFilter {
+    padding: 5px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    background: #dc3545;
+    color: #f8f9fa;
+}
+.clearFilter:hover {
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.branch {
+    width: 500px;
+}
+.h4 {
+    width: 200px;
+    color: #0a31bf;
+    font-weight: 600;
+    margin: 0 auto 10px auto;
+}
+
+
+/* TABLA */
+.container__Table{
+    width: 1000px;
+}
+.container__Head{
+    background: #e9ecef;
+    height: 60px;
+    width: 100%;
+    font-weight: 600;
+}
+.container__Tr{
+    height: 60px;
+}
+.column__Transaction_Date {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Registration_Date {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Branch {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Transaction_Type {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Mean_Payment {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Income_Category {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Name_Item {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Unit_Value {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Quantity {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Total_Value {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Credit_Cash {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Transaction_Counterpart {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Seller {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Transaction_Approved {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+.column__Action {
+    /* border: 1px solid red; */
+    width: 150px;
+}
+
+.text__Ellipsis {
+    opacity: 0.75;
+    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
+}
+.button__Delete {
+    font-size: 14px;
+    color: #6c757d;
+    height: 35px;
+    width: 50px;
+    padding: 0 16px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}
+.button__Edit {
+    color: #6c757d;
+    height: 35px;
+    width: 50px;
+    padding: 0 16px;
+}
+.button__Edit:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}
