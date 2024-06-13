@@ -11,29 +11,39 @@ function SustainabilityPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2>Sostenibilidad</h2>
-                        <p>Explicación sobre lo que se puede hacer en esta sección</p>
-                        <div className='d-flex flex-column'>
-                            <h4>Consulta normas ambientales</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus clientes</Link>
-                            <Link to='/inventories/create-assets' >Crea tus clientes</Link>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Sostenibilidad</h1>
+                        <p>Sección legal para tus temas pendientes de sostenibilidad empresarial y medioambiental</p>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Consulta normas ambientales</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus clientes</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus clientes</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Diseño de planes</h4>
-                            <Link to='/inventories/create-assets' >Registra el seguimiento de tus clientes</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Diseño de planes</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Registra el seguimiento de tus clientes</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Informes ASG</h4>
-                            <Link to='/inventories/create-assets' >Registra el seguimiento de tus clientes</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Informes ASG</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Registra el seguimiento de tus clientes</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Historias de sostenibilidad</h4>
-                            <Link to='/inventories/create-assets' >Registra el seguimiento de tus clientes</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Historias de sostenibilidad</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Registra el seguimiento de tus clientes</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Diagnósticos</h4>
-                            <Link to='/inventories/create-assets' >Registra el seguimiento de tus clientes</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Diagnósticos</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Registra el seguimiento de tus clientes</Link>
+                            </div>
                         </div>
                     </div>
                     <Footer />

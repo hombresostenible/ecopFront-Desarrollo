@@ -30,7 +30,7 @@ function AccountsAndInventoryIndicatorsPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <div>
-                            <h1 className={styles.title}>Elige el Indicador Financiero que quieres calcular</h1>
+                            <h1 className={styles.title}>Elige el Indicador de Cuentas e Inventarios que quieres calcular</h1>
                         </div>
 
 
