@@ -7,7 +7,6 @@
     width: calc(100vw - 350px);
 }
 .container__Plants_Table {
-    border: 1px solid red;
     width: 1200px;
     display: flex;
     flex-direction: column;
@@ -58,12 +57,4 @@
     border: 1px solid teal;
     width: 170px;
     height: 60px;
-}
-
-
-
-
-.ssssssss {
-    border: 1px solid red;
-    
 }
