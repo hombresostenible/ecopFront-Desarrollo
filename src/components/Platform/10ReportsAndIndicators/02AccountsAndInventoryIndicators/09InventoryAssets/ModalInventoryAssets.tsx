@@ -13,7 +13,7 @@ interface ModalInventoryAssetsProps {
     assetsInventory: IAssets[] | null;
 }
 
-function ModalInventoryAssets ({ assetsInventory }: ModalInventoryAssetsProps) {
+function ModalInventoryAssets({ assetsInventory }: ModalInventoryAssetsProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
