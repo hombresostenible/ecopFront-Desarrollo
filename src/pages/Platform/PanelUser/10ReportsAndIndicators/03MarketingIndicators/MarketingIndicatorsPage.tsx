@@ -19,7 +19,7 @@ function MarketingIndicatorsPage() {
     };
 
     const handleCalculate = () => {
-        navigate('/indicators/marketing-indicators/calculate-marketing-items', { state: { selectedItems } });
+        navigate('/reports-and-indicators/marketing-indicators/calculate-marketing-items', { state: { selectedItems } });
     };
 
     return (
