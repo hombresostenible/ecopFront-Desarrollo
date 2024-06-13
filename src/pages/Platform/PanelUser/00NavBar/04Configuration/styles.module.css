@@ -6,3 +6,45 @@
     height: calc(100vh - 70px);
     width: calc(100vw - 350px);
 }
+
+
+
+/*---------------UserRendering---------------*/
+.containerBranchPage {
+    min-height: calc(100vh - 120px);
+    max-width: 1000px;
+}
+.component {
+    padding: 10px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.active {
+    background: #718bd8;
+    color: #f8f9fa;
+    cursor: pointer;
+}
+
+
+
+/*---------------YourPlan---------------*/
+.container {
+    padding: 30px 0;
+}
+.containerUserCard {
+    width: 550px;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}

@@ -50,10 +50,9 @@ function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/your-registers');
+            navigate('/inventories/consult-assets');
         }
     }, [ shouldNavigate, navigate ]);
-
 
     return (
         <div className="p-3">
