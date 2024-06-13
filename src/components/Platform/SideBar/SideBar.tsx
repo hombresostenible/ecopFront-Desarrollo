@@ -202,7 +202,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <IoStorefrontSharp className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Tus Sedes</div>
+                            <Link to={'/branches/consult-branches'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Tus Sedes</Link>
                         </div>
                         {subMenuBranches ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuBranches} />
                         ) : ( 
@@ -221,7 +221,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <MdAppRegistration className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Inventarios</div>
+                            <Link to={'/inventories'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Inventarios</Link>
                         </div>
                         {subMenuInventory ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuInventory} />
                         ) : ( 
@@ -243,7 +243,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <FaFileInvoiceDollar className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Cuentas</div>
+                            <Link to={'/accounts'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Cuentas</Link>
                         </div>
                         {subMenuAccounts ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuAccounts} />
                         ) : ( 
@@ -252,10 +252,11 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuAccounts ? 'show' : ''} `}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/accounts/consult-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Ingresos</Link>
-                            <Link to='/accounts/consult-expenses' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-expenses' || location.pathname === '/accounts/create-expenses') ? styles.active : ''} `}>Gastos</Link>
-                            <Link to='/accounts/consult-account-receivable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-account-receivable') ? styles.active : ''} `}>Cuentas por cobrar</Link>
-                            <Link to='/accounts/consult-accounts-payable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-accounts-payable') ? styles.active : ''} `}>Cuentas por pagar</Link>
+                            <Link to='/accounts/consult-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Ver registros</Link>
+                            <Link to='/accounts/create-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/create-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Crea Ingresos y Cuentas por Cobrar</Link>
+                            <Link to='/accounts/create-expenses' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/create-expenses' || location.pathname === '/accounts/create-expenses') ? styles.active : ''} `}>Crea Gastos y Cuentas por Pagar</Link>
+                            {/* <Link to='/accounts/consult-account-receivable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-account-receivable') ? styles.active : ''} `}>Cuentas por cobrar</Link>
+                            <Link to='/accounts/consult-accounts-payable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-accounts-payable') ? styles.active : ''} `}>Cuentas por pagar</Link> */}
                             <Link to='/accounts/consult-pending-approval' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-pending-approval') ? styles.active : ''} `}>Transacciones pendientes de aprobación</Link>
                         </div>
                     </div>
@@ -265,7 +266,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <FaCashRegister className={`${styles.icon} `} />
-                            <div className={`p-1`}>Facturación y POS</div>
+                            <Link to={'/invoicing-and-pos'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Facturación y POS</Link>
                         </div>
                         {subMenuInvoicingAndPos ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuInvoicingAndPos} />
                         ) : ( 
@@ -288,7 +289,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <FaFileInvoiceDollar className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Nomina electrónica</div>
+                            <Link to={'/electronic-payroll'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Nomina electrónica</Link>
                         </div>
                         {subMenuElectronicPayroll ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuElectronicPayroll} />
                         ) : ( 
@@ -309,7 +310,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <TbCoin className={`${styles.icon} `}/>
-                            <div className={`p-1`}>CRM Clientes</div>
+                            <Link to={'/crm-clients/consult-crm-clients'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>CRM Clientes</Link>
                         </div>
                         {subMenuCrmClients ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuCrmClients} />
                         ) : ( 
@@ -328,7 +329,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <FaUsers className={`${styles.icon} `}/>
-                            <div className={`p-1`}>CRM Proveedores</div>
+                            <Link to={'/crm-suppliers/consult-crm-suppliers'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>CRM Proveedores</Link>
                         </div>
                         {subMenuCrmSuppliers ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuCrmSuppliers} />
                         ) : ( 
@@ -347,7 +348,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <BiSolidLeaf className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Sostenibilidad</div>
+                            <Link to={'/sustainability'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Sostenibilidad</Link>
                         </div>
                         {subMenuSustainability ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuSustainability} />
                         ) : ( 
@@ -369,7 +370,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <PiChartLineUp className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Reportes e indicadores</div>
+                            <Link to={'/reports-and-indicators'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Reportes e indicadores</Link>
                         </div>
                         {subMenuReportsAndIndicators ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuReportsAndIndicators} />
                         ) : ( 
@@ -378,14 +379,14 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuReportsAndIndicators ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/reports-and-indicators/billing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/billing-indicators' ? styles.active : ''}`}>Indicadores de facturación</Link>
+                            {/* <Link to='/reports-and-indicators/billing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/billing-indicators' ? styles.active : ''}`}>Indicadores de facturación</Link> */}
                             <Link to='/reports-and-indicators/accounts-and-inventory-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' ? styles.active : ''}`}>Indicadores cuentas e inventarios</Link>
                             <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active : ''}`}>Indicadores de mercadeo</Link>
                             <Link to='/reports-and-indicators/sustainability-indicators' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/sustainability-indicators' ? styles.active : ''}`}>Indicadores de sostenibilidad</Link>
-                            <Link to='/reports-and-indicators/custom-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/custom-report' ? styles.active : ''}`}>Reporte a tu medida</Link>
+                            {/* <Link to='/reports-and-indicators/custom-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/custom-report' ? styles.active : ''}`}>Reporte a tu medida</Link>
                             <Link to='/reports-and-indicators/daily-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/daily-report' ? styles.active : ''}`}>Reporte diario</Link>
                             <Link to='/reports-and-indicators/end-of-month-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/end-of-month-report' ? styles.active : ''}`}>Reporte cierre de mes</Link>
-                            <Link to='/reports-and-indicators/suggested-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/suggested-report' ? styles.active : ''}`}>Reporte sugerido</Link>
+                            <Link to='/reports-and-indicators/suggested-report' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/reports-and-indicators/suggested-report' ? styles.active : ''}`}>Reporte sugerido</Link> */}
                         </div>
                     </div>
                 </div>
@@ -394,7 +395,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <IoIosNotifications className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Notificaciones estratégicas</div>
+                            <Link to={'/strategic-notifications'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Notificaciones estratégicas</Link>
                         </div>
                         {subMenuStrategicNotifications ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuStrategicNotifications} />
                         ) : ( 
@@ -413,7 +414,7 @@ function SideBar() {
                     <div className="d-flex align-items-center justify-content-between w-100" >
                         <div className="d-flex align-items-center">
                             <TfiHeadphoneAlt className={`${styles.icon} `}/>
-                            <div className={`p-1`}>Asesoría para toma de decisiones</div>
+                            <Link to={'/consultancies'} className={`${styles.link__Sidebar} p-1 text-decoration-none`}>Asesoría para toma de decisiones</Link>
                         </div>
                         {subMenuConsultancies ?  ( <IoChevronUpOutline className={styles.icon__Plus} onClick={handleSubMenuConsultancies} />
                         ) : ( 

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 // REDUX
@@ -186,9 +185,8 @@ function PendingApprovalPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <div className="custom-container text-center" >
-                            <h1 className={`${styles.title} text-center`}>Ingresos</h1>
+                            <h1 className={`${styles.title} text-center`}>Transacciones pendientes de aprobar</h1>
                         </div>
-                        <Link to='/accounts/create-incomes'>Crea tus ingresos</Link>
 
                         <div className="mb-4 p-4 d-flex align-items-center justify-content-between border rounded">
                             <button className={`${styles.buttonClearFilterAll} border-0 text-decoration-none`} onClick={clearFilterAll}>Borrar todos los Filtros</button>
@@ -260,9 +258,9 @@ function PendingApprovalPage() {
                                         {selectedColumns.includes('transactionDate') && (
                                             <div className={`${styles.column__Transaction_Date} text-center d-flex align-items-center justify-content-center`}>Fecha de TX</div>
                                         )}
-                                        {selectedColumns.includes('registrationDate') && (
+                                        {/* {selectedColumns.includes('registrationDate') && (
                                             <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>Fecha de Registro</div>
-                                        )}
+                                        )} */}
                                         {selectedColumns.includes('branch') && (
                                             <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
                                         )}
@@ -287,9 +285,9 @@ function PendingApprovalPage() {
                                         {selectedColumns.includes('totalValue') && (
                                             <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>Total</div>
                                         )}
-                                        {selectedColumns.includes('creditCash') && (
+                                        {/* {selectedColumns.includes('creditCash') && (
                                             <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>Tipo de pago</div>
-                                        )}
+                                        )} */}
                                         {selectedColumns.includes('transactionCounterpartId') && (
                                             <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>Comprador</div>
                                         )}
@@ -314,12 +312,13 @@ function PendingApprovalPage() {
                                                         onChange={(e) => handleEditField(e, accountsBook, 'transactionDate')}
                                                     />
                                                 ) : (
+                                                    // <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionDate}</span>
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{new Date(accountsBook.transactionDate).toLocaleDateString('en-GB')}</span>
                                                 )}
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('registrationDate') && (
+                                        {/* {selectedColumns.includes('registrationDate') && (
                                             <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -331,7 +330,7 @@ function PendingApprovalPage() {
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{new Date(accountsBook.registrationDate).toLocaleDateString('en-GB')}</span>
                                                 )}
                                             </div>
-                                        )}
+                                        )} */}
 
                                         {selectedColumns.includes('branch') && (
                                             <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>
@@ -444,7 +443,7 @@ function PendingApprovalPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('creditCash') && (
+                                        {/* {selectedColumns.includes('creditCash') && (
                                             <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -456,7 +455,7 @@ function PendingApprovalPage() {
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
                                                 )}
                                             </div>
-                                        )}
+                                        )} */}
 
                                         {selectedColumns.includes('transactionCounterpartId') && (
                                             <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>

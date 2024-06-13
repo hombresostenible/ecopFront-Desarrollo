@@ -46,7 +46,7 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
 //OBTENER TODOS LOS REGISTRO DE INGRESO DEL LIBRO DIARIO
 export const getAccountsBooksIncomes = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/incomes', {
+        const response = await axiosInstance.get('/accountsBook', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
