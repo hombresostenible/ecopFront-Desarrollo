@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect, SetStateAction } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -148,6 +148,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus materias primas</h1>
                         
+                        <Link to='/inventories/consult-raw-materals' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus materias primas de forma masiva</button>
                         </div>
@@ -181,7 +182,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -274,7 +275,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <input
                                         type="number"
                                         {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.info} p-2 border rounded border-secundary `}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                         placeholder='Tu inventario acá'
                                         min={0}
                                         onKeyDown={(e) => {
@@ -375,7 +376,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                             <input
                                                 type="number"
                                                 {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded border-secundary `}
+                                                className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                                 placeholder='Valor numérico de lo que quieres aumentar'
                                                 min={0}
                                                 onKeyDown={(e) => {
@@ -423,7 +424,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <div>
                                         <select
                                             {...register('primaryPackageType')}
-                                            className={`${styles.info} p-2 border rounded border-secundary`}
+                                            className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                         >
                                             <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
@@ -532,7 +533,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <div>
                                         <select
                                             {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded border-secundary`}                                    
+                                            className={`${styles.info} p-2 border rounded border-secundary form-control`}                                  
                                         >
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>

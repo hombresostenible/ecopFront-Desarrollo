@@ -103,7 +103,8 @@ import ConsultServicesPage from './pages/Platform/PanelUser/03Inventories/05Inve
 import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateServices/CreateServicesPage';
 // SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
-import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
+// import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
+import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecords/SeeRecordsPage';
 import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/CreateIncome/CreateIncomePage';
 import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ConsultExpenses/ConsultExpensesPage';
 import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/CreateExpenses/CreateExpensesPage';
@@ -270,7 +271,8 @@ function App() {
                             <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                             <Route path='/inventories/create-services' element={<CreateServicesPage />} />
                             {/* SideBar Cuentas - Ingresos */}
-                            <Route path='/accounts/consult-incomes' element={<ConsultIncomePage />} />
+                            <Route path='/accounts/see-records' element={<SeeRecordsPage />} />
+                            {/* <Route path='/accounts/create-incomes' element={<ConsultIncomePage />} /> */}
                             <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
                             {/* SideBar Cuentas - Gastos */}
                             <Route path='/accounts/consult-expenses' element={<ConsultExpensesPage />} />

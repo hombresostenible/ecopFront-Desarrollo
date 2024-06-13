@@ -97,7 +97,7 @@ function ConsultAssetsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Equipos, herramientas y máquinas</h1>
 
-                        <Link to='/inventories/create-assets'>Registro de inventario</Link>
+                        <Link to='/inventories/create-assets' className={styles.link__Income_Create}>Registro de inventario</Link>
                         <div className="d-flex">
                             <div
                                 className={`${styles.linkTransfer} border-0 m-auto rounded text-decoration-none`}
@@ -107,12 +107,12 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <div>Filtrar por sede</div>
+                        {/* <div>Filtrar por sede</div>
                         <div>descargar en PDF</div>
                         <div>Descargar en Excel</div>
                         <div>Bloquear las unidades enviadas en una cotzación</div>
                         <div>Visualizar activos dados de baja</div>
-                        <div>Crear un filtro para cada columna</div>
+                        <div>Crear un filtro para cada columna</div> */}
 
                         <Modal show={showConsultAssetOff} onHide={() => setShowConsultAssetOff(false)} size="xl">
                             <Modal.Header closeButton>

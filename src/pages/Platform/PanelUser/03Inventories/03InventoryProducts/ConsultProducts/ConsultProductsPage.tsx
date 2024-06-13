@@ -90,8 +90,8 @@ function ConsultProductsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Productos</h1>
 
-                        <Link to='/inventories/create-products'>Crea tus productos</Link>
-                        <Link to='/inventories/quote-products'>Cotizar productos</Link>
+                        <Link to='/inventories/create-products' className={`${styles.link__Income_Create} `}>Registro de inventario</Link>
+                        <Link to='/inventories/quote-products' className={`${styles.link__Income_Create} mx-2`}>Cotizar productos</Link>
                         <div className='mt-4 d-flex flex-column align-items-center justify-content-center'>
                             <h2>Filtra tus productos por sede</h2>
                             <select
