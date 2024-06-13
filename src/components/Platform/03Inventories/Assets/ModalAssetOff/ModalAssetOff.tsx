@@ -17,16 +17,16 @@ interface ModalAssetOffProps {
 
 function ModalAssetOff ({ asset, onCloseModal }: ModalAssetOffProps) {
     const token = Cookies.get('token') || '';
+    const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
     const errorAssets = useSelector((state: RootState) => state.assets.errorAssets);
     
-    const navigate = useNavigate();
     // const location = useLocation();
     const { register, handleSubmit, formState: { errors } } = useForm<IAssets>();
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
-    const [ shouldNavigate, setShouldNavigate ] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
     
     // const isAssetStatusConsult = location.pathname === '/inventories/consult-assets';
 

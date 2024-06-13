@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps */
 import { useState, useEffect, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +31,7 @@ interface CashProps {
 
 function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: CashProps) {
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Estados de Redux
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
@@ -41,6 +43,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
     //Setea el cliente cuando se busca o se crea
     const [selectedClient, setSelectedClient] = useState<string | null>(null);
@@ -146,11 +149,18 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
             setFormSubmitted(true);
             setTimeout(() => {
                 setFormSubmitted(false);
+                setShouldNavigate(true);
             }, 1500);
         } catch (error) {
             throw new Error(`Error en el envío del formulario: ${error}`);
         }
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/accounts/see-records');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>
