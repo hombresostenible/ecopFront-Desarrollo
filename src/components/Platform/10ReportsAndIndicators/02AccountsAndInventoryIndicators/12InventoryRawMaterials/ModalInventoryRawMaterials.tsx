@@ -7,27 +7,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IBestClientValue } from "../../../../../types/User/financialIndicators.types";
+import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
 
-interface ModalBestClientValueProps {
-    consolidatedData: IBestClientValue[] | null;
+interface ModalInventoryRawMaterialProps {
+    rawMaterialsInventory: IRawMaterial[] | null;
 }
 
-function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) {
+function ModalInventoryRawMaterials ({ rawMaterialsInventory }: ModalInventoryRawMaterialProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IBestClientValue[] | null>(null); 
+    const [originalData, setOriginalData] = useState<IRawMaterial[] | null>(null); 
 
     useEffect(() => {
         dispatch(getBranches(token));
-        if (consolidatedData) {
-            setOriginalData(consolidatedData);
+        if (rawMaterialsInventory) {
+            setOriginalData(rawMaterialsInventory);
         }
-    }, [ selectedBranch, consolidatedData ]);
+    }, [ selectedBranch, rawMaterialsInventory ]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -38,10 +38,11 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
     const exportToExcel = () => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
-                'Puesto': item.transactionDate,
                 'Sede': item.branchId,
-                'Cliente': item.transactionCounterpartId,
-                'Valor total': item.value,
+                'Nombre de la materia prima': item.nameItem,
+                'Inventario': item.inventory,
+                'Unidad de medida': item.unitMeasure,
+                'Unidades vendidas': item.salesCount,
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
@@ -64,7 +65,7 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
     return (
         <div className="m-2 p-3 text-center m-auto">
             <div className="p-4 d-flex align-items-center justify-content-between">
-                <h2 className="text-primary-emphasis text-start">Mejor cliente por valor</h2>
+                <h2 className="text-primary-emphasis text-start">Inventario de materias primas</h2>
                 <div>
                     <button className="btn btn-success btn-sm" onClick={exportToExcel}>Exportar a Excel</button>
                 </div>
@@ -88,29 +89,31 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
                 </div>
             </div>
 
-            <div className="mt-4">    
-                {consolidatedData && consolidatedData.length > 0 ? (
+            <div className="mt-4">   
+                {rawMaterialsInventory && rawMaterialsInventory.length > 0 ? (
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Puesto</th>
                                 <th>Sede</th>
-                                <th>Cliente</th>
-                                <th>Valor total</th>
+                                <th>Nombre de la materia prima</th>
+                                <th>Inventario</th>                                
+                                <th>Unidades vendidas</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {consolidatedData.map((data, index) => (
-                                <tr key={data.id || index}>
-                                    <td>{index + 1}</td>
+                            {rawMaterialsInventory.map((rawMaterialInventory, index) => (
+                                <tr key={rawMaterialInventory.id || index}>
                                     <td>
-                                        {getBranchName(data.branchId)}
+                                        {getBranchName(rawMaterialInventory.branchId)}
                                     </td>
                                     <td>
-                                        {data.transactionCounterpartId ? (data.transactionCounterpartId) : 'N/A'}
+                                        {rawMaterialInventory.nameItem ? (rawMaterialInventory.nameItem) : 'N/A'}
                                     </td>
-                                    <td className='text-end'>
-                                        $ {data.value ? formatNumberWithCommas(data.value) : 'N/A'}
+                                    <td>
+                                        {rawMaterialInventory.inventory? formatNumberWithCommas(rawMaterialInventory.inventory) : 'N/A'}
+                                    </td>
+                                    <td>
+                                        {rawMaterialInventory.salesCount? formatNumberWithCommas(rawMaterialInventory.salesCount) : 'N/A'}
                                     </td>
                                 </tr>
                             ))}
@@ -126,4 +129,4 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
     );
 }
 
-export default ModalBestClientValue;
+export default ModalInventoryRawMaterials;
