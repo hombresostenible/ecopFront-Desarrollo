@@ -228,10 +228,10 @@ function SeeRecordsPage() {
                         </div>
 
                         <div className="mb-4 mt-4 p-4 border rounded d-flex justify-content-end align-items-center">
-                            <Link to='/accounts/consult-incomes' className={styles.ddddddd}>Ver tus Ingresos</Link>
+                            {/* <Link to='/accounts/consult-incomes' className={styles.ddddddd}>Ver tus Ingresos</Link>
                             <Link to='/accounts/consult-expenses' className={styles.ddddddd}>Ver tus Gastos</Link>
                             <Link to='/accounts/consult-account-receivable' className={styles.ddddddd}>Ver tus Cuentas por cobrar</Link>
-                            <Link to='/accounts/consult-accounts-payable' className={styles.ddddddd}>Ver tus Cuentas por Pagar</Link>
+                            <Link to='/accounts/consult-accounts-payable' className={styles.ddddddd}>Ver tus Cuentas por Pagar</Link> */}
                             <ColumnSelector
                                 selectedColumns={selectedColumns}
                                 onChange={handleColumnChange}
