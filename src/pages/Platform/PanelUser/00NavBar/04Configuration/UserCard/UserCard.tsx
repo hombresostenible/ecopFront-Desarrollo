@@ -145,7 +145,7 @@ function UserCard({ user }: UserCardProps) {
                         )}
                         {!userLogo && (
                             <div className={styles.containerTextLogo}>
-                                <p className="display-6 text-center">No tienes un Logo para mostrar</p>
+                                <p className="text-center">No tienes un Logo para mostrar</p>
                             </div>
                         )}
                     </div>
