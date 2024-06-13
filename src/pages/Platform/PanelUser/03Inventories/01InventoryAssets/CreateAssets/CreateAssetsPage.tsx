@@ -95,14 +95,14 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
     return (
         <div className='d-flex flex-column'>
-            {!onCreateComplete && <NavBar />}
+            <NavBar />
             <div className='d-flex'>
-                {!onCreateComplete && <SideBar />}
+                <SideBar /> 
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        {!onCreateComplete && <Link to='/inventories/consult-assets'>Consulta tus activos</Link>}
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Equipos, herramientas o máquinas</h2>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Equipos, herramientas o máquinas</h1>
 
+                        <Link to='/inventories/consult-assets'>Consulta tus activos</Link>
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
                         </div>
@@ -121,7 +121,6 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 />
                             </Modal.Body>
                         </Modal>
-
 
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (

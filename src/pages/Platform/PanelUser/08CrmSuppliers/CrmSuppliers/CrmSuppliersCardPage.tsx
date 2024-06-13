@@ -58,9 +58,9 @@ function CrmSuppliersCardPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>CRM Proveedores</h1>
                         <Link to='/crm-suppliers/create-crm-suppliers'>Crea tus proveedores</Link>
-                        <h2>CRM Proveedores</h2>
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>

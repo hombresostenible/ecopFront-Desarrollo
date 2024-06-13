@@ -12,11 +12,10 @@ function SustainabilityIndicatorsPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <div>
-                            <h1 className={styles.title}>Elige la familia de Indicadores de Sostenibilidad que quieres calcular</h1>
-                        </div>
-                        <div>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Elige la familia de Indicadores de Sostenibilidad que quieres calcular</h1>
+
+                        <div className={styles.container__Cards_Indicators}>
                             <div className={`${styles.containerIndicators} gap-4`} >
                                 <Link to="/indicators/sustainability-indicators/asg-indicators" className={`${styles.linkIndicators} p-2 text-decoration-none text-center d-flex align-items-center justify-content-center`} >
                                     <div className={`${styles.cardIndicatorASG} p-3`} >
