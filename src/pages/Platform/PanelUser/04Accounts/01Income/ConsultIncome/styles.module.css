@@ -8,10 +8,9 @@
 }
 .title {
     color: #f28705;
-    font-size: 50px;
     font-weight: 600;
     letter-spacing: 1px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', sans-serif;
 }
 .buttonClearFilterAll {
     padding: 5px 10px;

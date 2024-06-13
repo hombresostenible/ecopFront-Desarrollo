@@ -67,11 +67,9 @@ function BranchCardPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
-                            <div>
-                                <h1 className={`${styles.title} m-0 text-center`}>Tu lista de Sedes</h1>
-                            </div>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>
+                        <div className='mt-4 d-flex flex-column align-items-center justify-content-center'>
                             <h2>Filtra tu sede</h2>
                             <select
                                 value={selectedBranch || ''}

@@ -6,11 +6,11 @@
     height: calc(100vh - 70px);
     width: calc(100vw - 350px);
 }
-.subtitle {
+.title {
     color: #f28705;
-    font-size: 40px;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    font-family: 'Century Gothic', sans-serif;
 }
 .form {
     padding: 60px 0 0 0;
