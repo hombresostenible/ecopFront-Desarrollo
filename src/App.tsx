@@ -140,6 +140,7 @@ import DiagnosticsPage from './pages/Platform/PanelUser/09Sustainability/05Diagn
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
 import BillingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/01BillingIndicators/BillingIndicatorsPage';
 import AccountsAndInventoryIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/AccountsAndInventoryIndicatorsPage';
+import CalculateIndicatorsFinancialsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/CalculateFinancialIndicatorsPage';
 import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/MarketingIndicatorsPage';
 import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/04SustainabilityIndicators/SustainabilityIndicatorsPage';
 import CustomReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/05CustomReport/CustomReportPage';
@@ -236,13 +237,10 @@ function App() {
                             {/* Sección NavBar - Configuration */}
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
-
-
-
                             {/* SideBar Home */}
                             <Route path='/home' element={<Home />} />                                               {/* APARECEN TODOS LOS RECUADROS */}
                             <Route path='/inventories' element={<InventoriesPage />} />                             {/* ACCESOS DIRECTOS A ASSETS, MERCHANDISES, PRODUCTS, RAWMATERIALS  SERVICES */}
-                            <Route path='/accounts' element={<AccountsPage />} />                              {/* ACCESOS DIRECTOS A INGRESOS, GASTOS, CXC, CXP, TX PENDIENTES DE APROBAR */}
+                            <Route path='/accounts' element={<AccountsPage />} />                                   {/* ACCESOS DIRECTOS A INGRESOS, GASTOS, CXC, CXP, TX PENDIENTES DE APROBAR */}
                             <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />                   {/* ACCESOS DIRECTOS A  */}
                             <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />                {/* ACCESOS DIRECTOS A  */}
                             <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />          {/* ACCESOS DIRECTOS A  */}
@@ -251,7 +249,6 @@ function App() {
                             <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />         {/* ACCESOS DIRECTOS A  */}
                             <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />      {/* ACCESOS DIRECTOS A  */}
                             <Route path='/consultancies' element={<ConsultanciesPage />} />                         {/* ACCESOS DIRECTOS A  */}
-
                             {/* SideBar Tus Sedes */}
                             <Route path='/branches/consult-branches' element={<BranchCardPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
@@ -271,7 +268,6 @@ function App() {
                             {/* SideBar Inventarios - Services */}
                             <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                             <Route path='/inventories/create-services' element={<CreateServicesPage />} />
-
                             {/* SideBar Cuentas - Ingresos */}
                             <Route path='/accounts/consult-incomes' element={<ConsultIncomePage />} />
                             <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
@@ -307,8 +303,14 @@ function App() {
                             <Route path='/sustainability/diagnostics' element={<DiagnosticsPage />} />
                             {/* SideBar Reportes e indicadores */}
                             <Route path='/reports-and-indicators/billing-indicators' element={<BillingIndicatorsPage />} />
+
                             <Route path='/reports-and-indicators/accounts-and-inventory-indicators' element={<AccountsAndInventoryIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/accounts-and-inventory-indicators/calculate-financial-items' element={<CalculateIndicatorsFinancialsPage />} />
+
                             <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
+
+
+
                             <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} />
                             <Route path='/reports-and-indicators/custom-report' element={<CustomReportPage />} />
                             <Route path='/reports-and-indicators/daily-report' element={<DailyReportPage />} />
