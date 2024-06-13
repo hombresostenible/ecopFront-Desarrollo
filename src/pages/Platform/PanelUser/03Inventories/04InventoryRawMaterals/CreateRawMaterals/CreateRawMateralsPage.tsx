@@ -486,7 +486,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         <input
                                             type="number"
                                             {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                            className={`${styles.info} p-2 border rounded border-secundary`}
+                                            className={`${styles.info} p-2 border rounded form-control`}
                                             placeholder='Ej: 10'
                                             min={0}
                                             onKeyDown={(e) => {
