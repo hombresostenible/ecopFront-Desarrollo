@@ -140,8 +140,9 @@ import DiagnosticsPage from './pages/Platform/PanelUser/09Sustainability/05Diagn
 import ReportsAndIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/ReportsAndIndicatorsPage';
 import BillingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/01BillingIndicators/BillingIndicatorsPage';
 import AccountsAndInventoryIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/AccountsAndInventoryIndicatorsPage';
-import CalculateIndicatorsFinancialsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/CalculateFinancialIndicatorsPage';
+import CalculateIndicatorsFinancialsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/CalculateIndicatorsFinancials/CalculateFinancialIndicatorsPage';
 import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/MarketingIndicatorsPage';
+import CalculateIndicatorsMarketingPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/CalculateIndicatorsMarketing/CalculateIndicatorsMarketingPage';
 import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/04SustainabilityIndicators/SustainabilityIndicatorsPage';
 import CustomReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/05CustomReport/CustomReportPage';
 import DailyReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/06DailyReport/DailyReportPage';
@@ -238,17 +239,17 @@ function App() {
                             <Route path='/configuration' element={<ConfigurationPage />} />
                             <Route path='/configuration/profile' element={<ProfilePage />} />
                             {/* SideBar Home */}
-                            <Route path='/home' element={<Home />} />                                               {/* APARECEN TODOS LOS RECUADROS */}
                             <Route path='/inventories' element={<InventoriesPage />} />                             {/* ACCESOS DIRECTOS A ASSETS, MERCHANDISES, PRODUCTS, RAWMATERIALS  SERVICES */}
-                            <Route path='/accounts' element={<AccountsPage />} />                                   {/* ACCESOS DIRECTOS A INGRESOS, GASTOS, CXC, CXP, TX PENDIENTES DE APROBAR */}
-                            <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />                   {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />                {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />          {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />    {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/sustainability' element={<SustainabilityPage />} />                       {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />         {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />      {/* ACCESOS DIRECTOS A  */}
-                            <Route path='/consultancies' element={<ConsultanciesPage />} />                         {/* ACCESOS DIRECTOS A  */}
+                            <Route path='/home' element={<Home />} />                                               {/* INVENTARIOS*/}
+                            <Route path='/accounts' element={<AccountsPage />} />                                   {/* CUENTAS */}
+                            <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />                   {/* FACTRACION ELECTRONICA Y POS */}
+                            <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />                {/* NOMINA ELECTRONICA */}
+                            <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />          {/* CRM CLIENTES */}
+                            <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />    {/* CRM SUPPLIERS */}
+                            <Route path='/sustainability' element={<SustainabilityPage />} />                       {/* SOSTENIBILIDAD */}
+                            <Route path='/reports-and-indicators' element={<ReportsAndIndicatorsPage />} />         {/* REPORTES E INDICADORES */}
+                            <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />      {/* NOTIFICACIONES ESTRATEGICAS */}
+                            <Route path='/consultancies' element={<ConsultanciesPage />} />                         {/* ASESORIAS */}
                             {/* SideBar Tus Sedes */}
                             <Route path='/branches/consult-branches' element={<BranchCardPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
@@ -308,6 +309,7 @@ function App() {
                             <Route path='/reports-and-indicators/accounts-and-inventory-indicators/calculate-financial-items' element={<CalculateIndicatorsFinancialsPage />} />
 
                             <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
+                            <Route path='/reports-and-indicators/marketing-indicators/calculate-marketing-items' element={<CalculateIndicatorsMarketingPage />} />
 
 
 
