@@ -380,14 +380,41 @@ function SeeRecordsPage() {
                                             <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <select
-                                                        value={editingTransactions[accountsBook.id].creditCash}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'creditCash')}
+                                                        value={editingTransactions[accountsBook.id].meanPayment}
+                                                        onChange={(e) => handleEditField(e, accountsBook, 'meanPayment')}
                                                     >
-                                                        <option value='Contado'>Contado</option>
-                                                        <option value='Credito'>Crédito</option>
+                                                        <option value=''>Selecciona una opción</option>
+                                                        <optgroup label="Tradicionales">
+                                                            <option value='Efectivo'>Efectivo</option>
+                                                            <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
+                                                            <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
+                                                        </optgroup>
+                                                        <optgroup label="Billeteras digitales">
+                                                            <option value='Daviplata'>Daviplata</option>
+                                                            <option value='Nequi'>Nequi</option>
+                                                            <option value='Movii'>Movii</option>
+                                                            <option value='Tuya Pay'>Tuya Pay</option>
+                                                            <option value='Dale'>Dale</option>
+                                                            <option value='Nubank'>Nubank</option>
+                                                            <option value='Uala'>Uala</option>
+                                                            <option value='Lulo Bank'>Lulo Bank</option>
+                                                            <option value='Tpaga'>Tpaga</option>
+                                                            <option value='Powwi'>Powwi</option>
+                                                            <option value='BBVA Wallet'>BBVA Wallet</option>
+                                                            <option value='Ahorro a la mano'>Ahorro a la mano</option>
+                                                            <option value='Apple Pay'>Apple Pay</option>
+                                                            <option value='Rappipay'>Rappipay</option>
+                                                            <option value='Claro Pay'>Claro Pay</option>
+                                                            <option value='Powwi'>Powwi</option>
+                                                        </optgroup>
+                                                        <optgroup label="Otros">
+                                                            <option value='Baloto'>Baloto</option>
+                                                            <option value='Giro'>Giro</option>
+                                                            <option value='Cheque'>Cheque</option>
+                                                        </optgroup>
                                                     </select>
                                                 ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.meanPayment}</span>
                                                 )}
                                             </div>
                                         )}
