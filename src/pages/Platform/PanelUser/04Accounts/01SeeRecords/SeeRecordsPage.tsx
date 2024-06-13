@@ -5,21 +5,21 @@ import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsBooksIncomes, putAccountsBook, deleteAccountsBook } from '../../../../../../redux/User/accountsBookSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
-import type { RootState, AppDispatch } from '../../../../../../redux/store';
+import { getAccountsBooksIncomes, putAccountsBook, deleteAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
+import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from '../../../../../../types/User/accountsBook.types';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
-import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
-import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
+import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar';
+import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
+import Footer from '../../../../../components/Platform/Footer/Footer';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
 
-function ConsultIncomePage() {
+function SeeRecordsPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -528,4 +528,4 @@ function ConsultIncomePage() {
     );
 }
 
-export default ConsultIncomePage;
+export default SeeRecordsPage;

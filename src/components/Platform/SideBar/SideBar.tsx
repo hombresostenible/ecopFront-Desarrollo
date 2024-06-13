@@ -254,7 +254,7 @@ function SideBar() {
                     </div>
                     <div className={`collapse ${subMenuAccounts ? 'show' : ''} `}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
-                            <Link to='/accounts/consult-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Ver registros</Link>
+                            <Link to='/accounts/see-records' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/see-records') ? styles.active : ''} `}>Ver registros</Link>
                             <Link to='/accounts/create-incomes' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/create-incomes' || location.pathname === '/accounts/create-incomes') ? styles.active : ''} `}>Crea Ingresos y Cuentas por Cobrar</Link>
                             <Link to='/accounts/create-expenses' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/create-expenses' || location.pathname === '/accounts/create-expenses') ? styles.active : ''} `}>Crea Gastos y Cuentas por Pagar</Link>
                             {/* <Link to='/accounts/consult-account-receivable' className={`${styles.link__Service} text-decoration-none ${(location.pathname === '/accounts/consult-account-receivable') ? styles.active : ''} `}>Cuentas por cobrar</Link>

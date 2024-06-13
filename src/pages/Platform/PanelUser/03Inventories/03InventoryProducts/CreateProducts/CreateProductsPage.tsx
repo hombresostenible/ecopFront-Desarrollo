@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect, SetStateAction } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -143,6 +143,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Productos</h1>
 
+                        <Link to='/inventories/consult-products' className={styles.link__Income_Create}>Consulta tu inventario</Link>
+
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus productos de forma masiva</button>
                         </div>
@@ -176,7 +178,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (

@@ -77,7 +77,7 @@ function CreateIncomePage () {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Ingresos</h1>
 
-                        <Link to='/accounts/consult-incomes'>Tus Ingresos</Link>
+                        <Link to='/accounts/consult-incomes' className={styles.link__Income_Create}>Tus Ingresos</Link>
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div className="px-3">

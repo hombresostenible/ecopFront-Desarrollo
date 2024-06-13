@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -332,6 +332,8 @@ function CreateServicesPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Servicios</h1>
+
+                        <Link to='/inventories/consult-services' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus servicios de forma masiva</button>
@@ -366,7 +368,7 @@ function CreateServicesPage() {
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                         onChange={handleBranchChange}
                                     >
                                         <option value=''>Selecciona una Sede</option>
@@ -390,7 +392,7 @@ function CreateServicesPage() {
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                         placeholder='¿Qué servicio quieres registrar? '
                                     />
                                     {errors.nameItem && (
