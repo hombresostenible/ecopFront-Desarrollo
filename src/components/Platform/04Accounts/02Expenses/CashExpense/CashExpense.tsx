@@ -488,7 +488,7 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                 </div>
 
                 <div className="d-flex">
-                    <button className={styles.buttonSubmit} type='submit' >Enviar</button>
+                    <button className={`${styles.buttonSubmit} m-auto border-0 rounded text-decoration-none`} type='submit' >Enviar</button>
                 </div> 
             </form>
         </div>

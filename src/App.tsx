@@ -130,6 +130,8 @@ import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateC
 // SIDEBAR - CRM-SUPPLIER
 import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliers/CrmSuppliersCardPage';
 import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
+import TrackingYourPurchases from './pages/Platform/PanelUser/08CrmSuppliers/TrackingYourPurchases/TrackingYourPurchases';
+import CustomerTracking from './pages/Platform/PanelUser/07CrmClients/CustomerTracking/CustomerTracking';
 // SIDEBAR - SUSTAINABILITY
 import SustainabilityPage from './pages/Platform/PanelUser/09Sustainability/SustainabilityPage';
 import EnvironmentalStandardsConsultationPage from './pages/Platform/PanelUser/09Sustainability/01EnvironmentalStandardsConsultation/EnvironmentalStandardsConsultationPage';
@@ -296,8 +298,10 @@ function App() {
                             <Route path='/electronic-payroll/employees' element={<EmployeesPage />} />
                             {/* SideBar CRM Clientes */}
                             <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
+                            <Route path='/crm-clients/customer-tracking' element={<CustomerTracking />} />
                             {/* SideBar CRM Proveedores */}
                             <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
+                            <Route path='/crm-suppliers/tracking-your-purchases' element={<TrackingYourPurchases />} />
                             {/* SideBar Sostenibilidad */}
                             <Route path='/sustainability/environmental-standards-consultation' element={<EnvironmentalStandardsConsultationPage />} />
                             <Route path='/sustainability/plan-design' element={<PlanDesignPage />} />
@@ -306,15 +310,10 @@ function App() {
                             <Route path='/sustainability/diagnostics' element={<DiagnosticsPage />} />
                             {/* SideBar Reportes e indicadores */}
                             <Route path='/reports-and-indicators/billing-indicators' element={<BillingIndicatorsPage />} />
-
                             <Route path='/reports-and-indicators/accounts-and-inventory-indicators' element={<AccountsAndInventoryIndicatorsPage />} />
                             <Route path='/reports-and-indicators/accounts-and-inventory-indicators/calculate-financial-items' element={<CalculateIndicatorsFinancialsPage />} />
-
                             <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
                             <Route path='/reports-and-indicators/marketing-indicators/calculate-marketing-items' element={<CalculateIndicatorsMarketingPage />} />
-
-
-
                             <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} />
                             <Route path='/reports-and-indicators/custom-report' element={<CustomReportPage />} />
                             <Route path='/reports-and-indicators/daily-report' element={<DailyReportPage />} />

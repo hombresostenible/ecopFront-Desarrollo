@@ -19,6 +19,17 @@
     color: white;
     background: #718bd8;
 }
+.button__Detail {
+    padding: 5px 10px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Detail:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
 .form {
     padding: 60px 0 0 0;
     width: 600px;

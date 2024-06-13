@@ -15,7 +15,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyServices from './CreateManyServices';
+import CreateManyServices from '../../../../../../components/Platform/03Inventories/Servicios/CreateManyServices/CreateManyServices';
 import CreateAssetPage from '../../01InventoryAssets/CreateAssets/CreateAssetsPage';
 import CreateProductPage from '../../03InventoryProducts/CreateProducts/CreateProductsPage';
 import CreateRawMateralPage from '../../04InventoryRawMaterals/CreateRawMaterals/CreateRawMateralsPage';
@@ -27,6 +27,7 @@ import styles from './styles.module.css';
 function CreateServicesPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Estados de Redux
     const errorService = useSelector((state: RootState) => state.service.errorService);
@@ -35,7 +36,6 @@ function CreateServicesPage() {
     const product = useSelector((state: RootState) => state.product.product);
     const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
     
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IService>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -336,7 +336,7 @@ function CreateServicesPage() {
                         <Link to='/inventories/consult-services' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus servicios de forma masiva</button>
+                            <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus servicios de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
