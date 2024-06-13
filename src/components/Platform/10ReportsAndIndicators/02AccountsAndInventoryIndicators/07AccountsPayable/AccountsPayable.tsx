@@ -21,6 +21,7 @@ function AccountsPayable() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
+    const accountsPayable = useSelector((state: RootState) => state.finantialIndicators.accountsPayable);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
@@ -122,6 +123,13 @@ function AccountsPayable() {
         renderChart(originalData, null, null);
     };
 
+    useEffect(() => {
+        if (accountsPayable) {
+            setOriginalData(accountsPayable);
+            renderChart(accountsPayable, null, null);
+        }
+    }, [accountsPayable]);
+
     const exportToExcel = () => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
@@ -175,6 +183,7 @@ function AccountsPayable() {
                 </div>
                 
                 <div><canvas ref={chartContainer} /></div>
+                
                 <div className="p-4 d-flex align-items-center justify-content-around">
                     <div style={{ marginRight: '20px' }}>
                         <DatePicker
