@@ -1,19 +1,19 @@
 import { useLocation, Link } from 'react-router-dom';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar';
-import SalesPerPeriod from '../../../../../components/Platform/10ReportsAndIndicators/01SalesPerPeriod/SalesPerPeriod';
-import ExpensesPerPeriod from '../../../../../components/Platform/10ReportsAndIndicators//02ExpensesPerPeriod/ExpensesPerPeriod';
-import UtilityPerPeriod from '../../../../../components/Platform/10ReportsAndIndicators/03UtilityPerPeriod/UtilityPerPeriod';
-import BestClientValue from '../../../../../components/Platform/10ReportsAndIndicators/04BestClientValue/BestClientValue';
-import BestClientQuantity from '../../../../../components/Platform/10ReportsAndIndicators/05BestClientQuantity/BestClientQuantity';
-import AverageTicket from '../../../../../components/Platform/10ReportsAndIndicators/06AverageTicket/AverageTicket';
-import AccountsPayable from '../../../../../components/Platform/10ReportsAndIndicators/07AccountsPayable/AccountsPayable';
-import AccountsReceivable from '../../../../../components/Platform/10ReportsAndIndicators/08AccountsReceivable/AccountsReceivable';
-import InventoryAssets from '../../../../../components/Platform/10ReportsAndIndicators/09InventoryAssets/InventoryAssets';
-import InventoryMerchandises from '../../../../../components/Platform/10ReportsAndIndicators/10InventoryMerchandises/InventoryMerchandises';
-import InventoryProduct from '../../../../../components/Platform/10ReportsAndIndicators/11InventoryProduct/InventoryProduct';
-import InventoryRawMaterials from '../../../../../components/Platform/10ReportsAndIndicators/12InventoryRawMaterials/InventoryRawMaterials';
-import Footer from '../../../../../components/Platform/Footer/Footer';
+import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
+import SalesPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/01SalesPerPeriod/SalesPerPeriod';
+import ExpensesPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/02ExpensesPerPeriod/ExpensesPerPeriod';
+import UtilityPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/03UtilityPerPeriod/UtilityPerPeriod';
+import BestClientValue from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/04BestClientValue/BestClientValue';
+import BestClientQuantity from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/05BestClientQuantity/BestClientQuantity';
+import AverageTicket from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/06AverageTicket/AverageTicket';
+import AccountsPayable from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/07AccountsPayable/AccountsPayable';
+import AccountsReceivable from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/08AccountsReceivable/AccountsReceivable';
+import InventoryAssets from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/09InventoryAssets/InventoryAssets';
+import InventoryMerchandises from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/10InventoryMerchandises/InventoryMerchandises';
+import InventoryProduct from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/11InventoryProduct/InventoryProduct';
+import InventoryRawMaterials from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/12InventoryRawMaterials/InventoryRawMaterials';
+import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from '../styles.module.css';
 
 function CalculateIndicatorsFinancialsPage() {
