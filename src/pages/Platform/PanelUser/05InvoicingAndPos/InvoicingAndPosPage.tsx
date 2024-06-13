@@ -12,28 +12,36 @@ function InvoicingAndPosPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2>Facturación y POS</h2>
-                        <p>Explicación sobre lo que se puede hacer en esta sección</p>
-                        <div className='d-flex flex-column'>
-                            <h4>Nota Credito</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus notas Credito</Link>
-                            <Link to='/inventories/create-assets' >Crea notas Credito</Link>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                    <h1 className={`${styles.title} mb-4 mt-4`}>Facturación y POS</h1>
+                        <p>Aquí podrás expedir tus facturas electrónicas y POS para tu punto de venta</p>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Nota Credito</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus notas Credito</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea notas Credito</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Nota débito</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus notas débito</Link>
-                            <Link to='/inventories/create-assets' >Crea notas débito</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Nota débito</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus notas débito</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea notas débito</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Facturas frecuentes</h4>
-                            <Link to='/inventories/consult-assets' >Consulta tus clientes con facturas frecuentes</Link>
-                            <Link to='/inventories/consult-assets' >Crea facturas frecuentes</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Facturas frecuentes</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus clientes con facturas frecuentes</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Crea facturas frecuentes</Link>
+                            </div>
                         </div>
-                        <div className='d-flex flex-column'>
-                            <h4>Cotizaciones</h4>
-                            <Link to='/inventories/consult-assets' >Consulta todas tus cotizaciones enviadas</Link>
-                            <Link to='/inventories/consult-assets' >Crea una cotización</Link>
+                        <div className='m-4 d-flex flex-column'>
+                            <h4 className={`${styles.subtitle} `}>Cotizaciones</h4>
+                            <div className={`${styles.container__Link_Section} `}>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta todas tus cotizaciones enviadas</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Crea una cotización</Link>
+                            </div>
                         </div>
                     </div>
                     <Footer />

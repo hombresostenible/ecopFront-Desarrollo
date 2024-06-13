@@ -193,9 +193,11 @@ function SideBar() {
     return (
         <div className={`${styles.container} position-relative overflow-y-auto`}>
             <div className={`${styles.container__Component} p-2 `}>
-                <NavLink to="/home" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
-                    <IoHome className={`${styles.icon} `}/>
-                    <div className={` p-1 d-flex align-items-center justify-content-start`}>Home</div>
+                <NavLink to="/home" className={`${styles.section} mb-2 mx-1 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
+                    <div className="d-flex align-items-center">
+                        <IoHome className={`${styles.icon} `}/>
+                        <div className={`${styles.link__Sidebar} p-1 px-4text-decoration-none`}>Home</div>
+                    </div>
                 </NavLink>
 
                 <div ref={subMenuBranchesRef} className={`${styles.section} mb-2 p-1 d-flex flex-column align-items-start text-decoration-none`}>
