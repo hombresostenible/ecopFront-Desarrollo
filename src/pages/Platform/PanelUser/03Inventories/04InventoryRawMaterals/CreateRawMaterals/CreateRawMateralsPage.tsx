@@ -145,8 +145,9 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus materias primas</h2>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus materias primas</h1>
+                        
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus materias primas de forma masiva</button>
                         </div>

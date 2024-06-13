@@ -184,14 +184,10 @@ function ConsultIncomePage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <div className="custom-container text-center" >
-                            <h1 className={`${styles.title} text-center`}>Registros de cuentas</h1>
-                        </div>
-                        <div className={styles.container__ddddddd}>
-                            <Link to='/accounts/create-incomes' className={styles.ddddddd}>Crea tus ingresos</Link>
-                        </div>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                    <h1 className={`${styles.title} mb-4 mt-4`}>Registros de cuentas</h1>
 
+                        <Link to='/accounts/create-incomes' className={styles.ddddddd}>Crea tus ingresos</Link>
                         <div className="mb-4 p-4 d-flex align-items-center justify-content-between border rounded">
                             <button className={`${styles.buttonClearFilterAll} border-0 text-decoration-none`} onClick={clearFilterAll}>Borrar todos los Filtros</button>
                             <div>

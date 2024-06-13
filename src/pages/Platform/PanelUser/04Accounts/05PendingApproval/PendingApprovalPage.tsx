@@ -183,10 +183,8 @@ function PendingApprovalPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <div className="custom-container text-center" >
-                            <h1 className={`${styles.title} text-center`}>Transacciones pendientes de aprobar</h1>
-                        </div>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Transacciones pendientes de aprobar</h1>
 
                         <div className="mb-4 p-4 d-flex align-items-center justify-content-between border rounded">
                             <button className={`${styles.buttonClearFilterAll} border-0 text-decoration-none`} onClick={clearFilterAll}>Borrar todos los Filtros</button>

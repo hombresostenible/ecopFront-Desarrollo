@@ -91,8 +91,8 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Sedes</h2>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Sedes</h1>
                         <p>Acá podrás crear tus sedes, que son las unidades de negocio que tienes abiertas, cada colaborador, activo, mercancía, producto, etc, estará ligado a cada sede, de esta forma se te facilitará el entendimiento de tu negocio en aspectos como ingresos, inventarios y demás</p>
                         
                         <div className="d-flex">

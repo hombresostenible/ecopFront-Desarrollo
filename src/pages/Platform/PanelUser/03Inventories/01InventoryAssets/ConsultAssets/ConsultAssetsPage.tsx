@@ -94,7 +94,9 @@ function ConsultAssetsPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Equipos, herramientas y máquinas</h1>
+
                         <Link to='/inventories/create-assets'>Registro de inventario</Link>
                         <div className="d-flex">
                             <div
@@ -127,9 +129,6 @@ function ConsultAssetsPage() {
                         </Modal>
 
                         <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
-                            <div className='p-4'>
-                                <h1 className='text-2xl font-bold'>Equipos, herramientas y máquinas</h1>
-                            </div>
                             <h2>Filtra tus activos por sede</h2>
                             <select
                                 value={selectedBranch || ''}
