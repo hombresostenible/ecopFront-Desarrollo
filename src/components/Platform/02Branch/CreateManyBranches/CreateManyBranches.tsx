@@ -117,8 +117,6 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
 
     return (
         <div>
-            <h2 className="text-primary-emphasis text-start">Crea tus sedes de forma masiva</h2>
-
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
                 <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>

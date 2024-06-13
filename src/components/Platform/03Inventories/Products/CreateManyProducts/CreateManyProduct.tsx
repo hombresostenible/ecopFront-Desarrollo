@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyProducts } from '../../../../../../redux/User/productSlice/actions';
-import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
+import { postManyProducts } from '../../../../../redux/User/productSlice/actions';
+import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { IBranch } from '../../../../../../types/User/branch.types';
-import { IProduct } from "../../../../../../types/User/products.types";
+import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { IBranch } from '../../../../../types/User/branch.types';
+import { IProduct } from "../../../../../types/User/products.types";
 import styles from './styles.module.css';
 
 interface CreateManyProductsProps {

@@ -24,11 +24,11 @@ interface CreateBranchProps {
 function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
     
     // Estado de Redux
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
 
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBranch>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -101,7 +101,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
-                                <Modal.Title>Crea tus sedes de forma masiva</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus sedes de forma masiva</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <CreateManyBranches

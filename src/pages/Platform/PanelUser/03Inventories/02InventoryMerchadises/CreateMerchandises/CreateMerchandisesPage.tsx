@@ -12,7 +12,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../../types/User/merchandise.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyMerchandises from './CreateManyMerchandises';
+import CreateManyMerchandises from '../../../../../../components/Platform/03Inventories/Merchandises/CreateManyMerchandises/CreateManyMerchandises';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -131,7 +131,7 @@ function CreateMerchandisesPage() {
 
                         {/* <p>La mercancía son los artículos que se compran para vender</p> */}
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
+                            <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >

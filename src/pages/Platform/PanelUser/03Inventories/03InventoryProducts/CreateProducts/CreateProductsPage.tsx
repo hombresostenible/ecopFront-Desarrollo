@@ -12,7 +12,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyProduct from './CreateManyProduct';
+import CreateManyProduct from '../../../../../../components/Platform/03Inventories/Products/CreateManyProducts/CreateManyProduct';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -27,14 +27,11 @@ interface CreateProductPageProps {
 function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreated }: CreateProductPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Estados de Redux
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-
-    const navigate = useNavigate();
-
 
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IProduct>();
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -146,12 +143,12 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                         <Link to='/inventories/consult-products' className={styles.link__Income_Create}>Consulta tu inventario</Link>
 
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus productos de forma masiva</button>
+                            <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus productos de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
-                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus mercancías de forma masiva</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus productos de forma masiva</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <CreateManyProduct

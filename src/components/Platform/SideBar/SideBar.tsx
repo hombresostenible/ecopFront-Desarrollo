@@ -322,7 +322,7 @@ function SideBar() {
                     <div className={`collapse ${subMenuCrmClients ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/crm-clients/consult-crm-clients' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/consult-crm-clients' ? styles.active : ''}`}>Clientes</Link>
-                            <Link to='/crm-clients/create-crm-clients' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/create-crm-clients' ? styles.active : ''}`}>Seguimiento</Link>
+                            <Link to='/crm-clients/customer-tracking' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-clients/customer-tracking' ? styles.active : ''}`}>Seguimiento</Link>
                         </div>
                     </div>
                 </div>
@@ -341,7 +341,7 @@ function SideBar() {
                     <div className={`collapse ${subMenuCrmSuppliers ? 'show' : ''}`}>
                         <div className={`${styles.menu} d-flex flex-column align-items-start w-100`}>
                             <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/consult-crm-suppliers' ? styles.active : ''}`}>Proveedores</Link>
-                            <Link to='/crm-suppliers/create-crm-suppliers' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/create-crm-suppliers' ? styles.active : ''}`}>Seguimiento de tus compras</Link>
+                            <Link to='/crm-suppliers/tracking-your-purchases' className={`${styles.link__Service} text-decoration-none ${location.pathname === '/crm-suppliers/tracking-your-purchases' ? styles.active : ''}`}>Seguimiento de tus compras</Link>
                         </div>
                     </div>
                 </div>
