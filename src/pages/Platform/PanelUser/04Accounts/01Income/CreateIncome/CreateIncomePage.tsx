@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from 'react';
-// import { useState, useEffect, SetStateAction } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
@@ -10,21 +9,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-// import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
+import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
 // import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
-function CreateIncomePage() {
+function CreateIncomePage () {
     const token = jsCookie.get("token") || '';
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    // const [selectedBranch, setSelectedBranch] = useState('');
+    const [selectedBranch, setSelectedBranch] = useState('');
 
     useEffect(() => {
         if (token) {
@@ -35,16 +34,16 @@ function CreateIncomePage() {
     const branchesArray = Array.isArray(branches) ? branches : [];
 
     // Cambio de la sede
-    // const handleBranchChange = (e: any) => {
-        // const selectedId = e.target.value;
-        // setSelectedBranch(selectedId);
-    // };
+    const handleBranchChange = (e: any) => {
+        const selectedId = e.target.value;
+        setSelectedBranch(selectedId);
+    };
 
     //Fechas de registrationDate y transactionDate con el checkout
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
     const [registrationDate, setRegistrationDate] = useState<Date | undefined>(undefined);
     const [transactionDate, setTransactionDate] = useState<Date | undefined>(undefined);
-    // const [defaultDates, setDefaultDates] = useState<boolean>(true);
+    const [defaultDates, setDefaultDates] = useState<boolean>(true);
 
     //Es el check para las fechas de registro y de transacción
     const handleCheckDatesRegisterTx = () => {
@@ -54,20 +53,20 @@ function CreateIncomePage() {
             const currentDate = new Date();
             setRegistrationDate(currentDate);
             setTransactionDate(currentDate);
-            // setDefaultDates(true);
+            setDefaultDates(true);
         } else {
             // Si el checkbox no está seleccionado, permitir que el usuario seleccione manualmente
             setRegistrationDate(undefined);
             setTransactionDate(undefined);
-            // setDefaultDates(false);
+            setDefaultDates(false);
         }
     };
 
     //Setea si el Gasto o la Venta fue a Contado o a Credito
-    // const [creditCashOption, setCreditCashOption] = useState('Contado');
-    // const handleCreditCashChange = (event: { target: { value: SetStateAction<string> }}) => {
-        // setCreditCashOption(event.target.value);
-    // };
+    const [creditCashOption, setCreditCashOption] = useState('Contado');
+    const handleCreditCashChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setCreditCashOption(event.target.value);
+    };
 
     return (
         <div className='d-flex flex-column'>
@@ -87,7 +86,7 @@ function CreateIncomePage() {
                                 <div>
                                     <select
                                         className={`${styles.info} p-2 border rounded border-secundary`}
-                                        // onChange={handleBranchChange}
+                                        onChange={handleBranchChange}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {branchesArray && branchesArray.map((branch, index) => (
@@ -148,7 +147,7 @@ function CreateIncomePage() {
                                 <div>
                                     <select
                                         className={`${styles.info} p-2 border rounded border-secundary`}
-                                        // onChange={handleCreditCashChange}
+                                        onChange={handleCreditCashChange}
                                     >
                                         <option value='Contado'>Contado</option>
                                         <option value='Credito'>A cuotas</option>
@@ -156,7 +155,7 @@ function CreateIncomePage() {
                                 </div>
                             </div>
 
-                            {/* {creditCashOption === 'Contado' && (
+                            {creditCashOption === 'Contado' && (
                                 <IncomeCash
                                     token={token}
                                     selectedBranch={selectedBranch}
@@ -165,7 +164,7 @@ function CreateIncomePage() {
                                     transactionDate={transactionDate}
                                 />
                             )}
-                            {creditCashOption === 'Credito' && (
+                            {/* {creditCashOption === 'Credito' && (
                                 <IncomeCredit
                                     token={token}
                                     selectedBranch={selectedBranch}
