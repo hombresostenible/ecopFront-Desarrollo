@@ -33,7 +33,7 @@ function RegisterUserPagePage() {
     const {register, formState: { errors }, handleSubmit} = useForm<IUser>();
     
     useEffect(() => {
-        if (isAuthenticated) navigate("/configuration/profile");
+        if (isAuthenticated) navigate("/home");
     }, [ isAuthenticated ]);
 
     const [ selectedDepartment, setSelectedDepartment ] = useState('');
