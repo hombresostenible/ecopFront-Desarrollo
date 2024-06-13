@@ -217,7 +217,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
             {formSubmitted && (
                 <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
             )}
-            {errorAccountsBook?.map((error, i) => (
+            {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
 

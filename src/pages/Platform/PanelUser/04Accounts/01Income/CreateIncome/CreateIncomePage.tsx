@@ -10,7 +10,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
-// import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
+import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -164,7 +164,7 @@ function CreateIncomePage () {
                                     transactionDate={transactionDate}
                                 />
                             )}
-                            {/* {creditCashOption === 'Credito' && (
+                            {creditCashOption === 'Credito' && (
                                 <IncomeCredit
                                     token={token}
                                     selectedBranch={selectedBranch}
@@ -172,7 +172,7 @@ function CreateIncomePage () {
                                     registrationDate={registrationDate}
                                     transactionDate={transactionDate}
                                 />
-                            )} */}
+                            )}
                         </div>
                     </div>
                     <Footer />
