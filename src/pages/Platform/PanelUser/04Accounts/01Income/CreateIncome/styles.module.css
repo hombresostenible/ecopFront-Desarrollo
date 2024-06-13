@@ -12,3 +12,10 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
+.link__Income_Create {
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #718bd8;
+}

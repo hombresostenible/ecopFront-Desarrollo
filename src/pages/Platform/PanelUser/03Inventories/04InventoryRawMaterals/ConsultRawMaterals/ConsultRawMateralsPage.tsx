@@ -90,7 +90,7 @@ function ConsultRawMateralsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Materias primas</h1>
 
-                        <Link to='/inventories/create-raw-materals'>Crea tus materias primas</Link>
+                        <Link to='/inventories/create-raw-materals' className={styles.link__Income_Create}>Registro de inventario</Link>
                         <div className='mt-4 d-flex flex-column align-items-center justify-content-center'>
                             <h2>Filtra tus materias primas por sede</h2>
                             <select

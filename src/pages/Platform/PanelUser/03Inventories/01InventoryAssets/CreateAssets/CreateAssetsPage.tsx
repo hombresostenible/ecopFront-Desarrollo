@@ -100,9 +100,9 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                 <SideBar /> 
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Equipos, herramientas o máquinas</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus equipos, herramientas o máquinas</h1>
 
-                        <Link to='/inventories/consult-assets'>Consulta tus activos</Link>
+                        <Link to='/inventories/consult-assets' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
                         </div>
@@ -136,7 +136,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                         defaultValue={selectedBranchId || ''}
                                         disabled={!!selectedBranchId} // Deshabilita el select si se pasa una branchId
                                     >

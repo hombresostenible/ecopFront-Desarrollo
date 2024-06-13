@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect, SetStateAction } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -126,8 +126,10 @@ function CreateMerchandisesPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Mercancías</h1>
-                        <p>La mercancía son los artículos que se compran para vender</p>
 
+                        <Link to='/inventories/consult-merchandises' className={styles.link__Income_Create}>Consulta tu inventario</Link>
+
+                        {/* <p>La mercancía son los artículos que se compran para vender</p> */}
                         <div className="d-flex">
                             <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
                         </div>
@@ -161,7 +163,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
