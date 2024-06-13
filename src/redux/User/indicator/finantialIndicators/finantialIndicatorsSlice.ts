@@ -18,14 +18,14 @@ interface FinantialIndicatorState {
     bestClientQuantityByBranch: any;            //
     averageTicketPerPeriod: any;                //
     averageTicketPerPeriodByBranch: any;        //
-    productsInventory: any;                     //
-    productsInventoryByBranch: any;             //
-    rawmaterialsInventory: any;                 //
-    rawmaterialsInventoryByBranch: any;         //
     assetsInventory: any;                       //
     assetsInventoryByBranch: any;               //
     merchandisesInventory: any;                 //
     merchandisesInventoryByBranch: any;         //
+    productsInventory: any;                     //
+    productsInventoryByBranch: any;             //
+    rawmaterialsInventory: any;                 //
+    rawmaterialsInventoryByBranch: any;         //
     loading: boolean;
     errorFinantialIndicator: string[] | null;
 }
@@ -47,14 +47,14 @@ const initialState: FinantialIndicatorState = {
     bestClientQuantityByBranch: null,
     averageTicketPerPeriod: null,
     averageTicketPerPeriodByBranch: null,
-    productsInventory: null,
-    productsInventoryByBranch: null,
-    rawmaterialsInventory: null,
-    rawmaterialsInventoryByBranch: null,
     assetsInventory: null,
     assetsInventoryByBranch: null,
     merchandisesInventory: null,
     merchandisesInventoryByBranch: null,
+    productsInventory: null,
+    productsInventoryByBranch: null,
+    rawmaterialsInventory: null,
+    rawmaterialsInventoryByBranch: null,
     loading: false,
     errorFinantialIndicator: null,
 };
