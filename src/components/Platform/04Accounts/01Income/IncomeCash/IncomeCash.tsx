@@ -154,7 +154,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
     return (
         <div>
-            <h2 className="text-primary-emphasis text-center">Venta en efectivo</h2>
+            {/* <h2 className="text-primary-emphasis text-center">Venta en efectivo</h2> */}
             {formSubmitted && (
                 <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
             )}

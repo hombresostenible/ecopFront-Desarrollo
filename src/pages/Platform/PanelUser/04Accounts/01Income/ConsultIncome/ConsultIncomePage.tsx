@@ -186,9 +186,11 @@ function ConsultIncomePage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                         <div className="custom-container text-center" >
-                            <h1 className={`${styles.title} text-center`}>Ingresos</h1>
+                            <h1 className={`${styles.title} text-center`}>Registros de cuentas</h1>
                         </div>
-                        <Link to='/accounts/create-incomes'>Crea tus ingresos</Link>
+                        <div className={styles.container__ddddddd}>
+                            <Link to='/accounts/create-incomes' className={styles.ddddddd}>Crea tus ingresos</Link>
+                        </div>
 
                         <div className="mb-4 p-4 d-flex align-items-center justify-content-between border rounded">
                             <button className={`${styles.buttonClearFilterAll} border-0 text-decoration-none`} onClick={clearFilterAll}>Borrar todos los Filtros</button>
@@ -230,6 +232,10 @@ function ConsultIncomePage() {
                         </div>
 
                         <div className="mb-4 mt-4 p-4 border rounded d-flex justify-content-end align-items-center">
+                            <Link to='/accounts/consult-incomes' className={styles.ddddddd}>Ver tus Ingresos</Link>
+                            <Link to='/accounts/consult-expenses' className={styles.ddddddd}>Ver tus Gastos</Link>
+                            <Link to='/accounts/consult-account-receivable' className={styles.ddddddd}>Ver tus Cuentas por cobrar</Link>
+                            <Link to='/accounts/consult-accounts-payable' className={styles.ddddddd}>Ver tus Cuentas por Pagar</Link>
                             <ColumnSelector
                                 selectedColumns={selectedColumns}
                                 onChange={handleColumnChange}
