@@ -5,7 +5,7 @@ import axiosInstance from '../../../api/axios';
 import { IUser } from '../../../types/User/user.types';
 import { IResetPassword } from '../../../types/User/resetPassword.types';
 import { IResetPasswordBlocked } from '../../../types/User/resetPasswordBlocked.types';
-import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } from './userSlice';
+import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, putProfileUserStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } from './userSlice';
 
 //REGISTRO DE USUARIOS
 export const postRegisterClient = (formData: IUser) => async (dispatch: AppDispatch) => {
@@ -64,6 +64,30 @@ export const getProfileUser = (token: string) => async (dispatch: AppDispatch) =
     }
 };
 
+
+
+//ACTUALIZA UN USUARIO
+export const putPutProfileUser = (idUser: string, formData: IUser, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(putProfileUserStart());
+        const response = await axiosInstance.put(`/branch/${idUser}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(userData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(userErrors(error.response?.data.message));
+        } else {
+            dispatch(userErrors(error.message));
+        }
+    }
+};
+
+
+
 //ENVIA CORREO PARA SOLICITUD DE CAMBIO DE CONTRASEÑA
 export const sendEmailPasswordChangeUser = (email: string) => async (dispatch: AppDispatch) => {
     try {
@@ -107,7 +131,7 @@ export const accountUnlockingUser = (idUser: string, formData: IResetPasswordBlo
 };
 
 //CAMBIAR LA FOTO DE PERFIL
-export const logoChangeUser= (formData: IUser, token: string) => async (dispatch: AppDispatch) => {
+export const logoChangeUser = (formData: Partial<IUser>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(logoChange(formData));
         const response = await axiosInstance.patch('/user/logo', formData, {
