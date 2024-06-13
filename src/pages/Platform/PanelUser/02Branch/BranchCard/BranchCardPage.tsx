@@ -22,6 +22,7 @@ function BranchCardPage() {
     const dispatch: AppDispatch = useDispatch();
 
     const branches = useSelector((state: RootState) => state.branch.branch);
+    
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>(undefined);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showBranchModal, setShowBranchModal] = useState(false);

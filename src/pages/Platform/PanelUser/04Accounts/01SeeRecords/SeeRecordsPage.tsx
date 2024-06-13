@@ -156,19 +156,19 @@ function SeeRecordsPage() {
     };
 
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
-        'transactionDate',
-        'registrationDate',
-        'branch',
-        'transactionType',
-        'meanPayment',
-        'incomeCategory',
-        'nameItem',
-        'unitValue',
-        'quantity',
-        'totalValue',
-        'creditCash',
-        'transactionCounterpartId',
-        'seller',
+        'Fecha de transacción',
+        // 'registrationDate',
+        'Sede',
+        'Tipo de transacción',
+        'Medio de pago',
+        'Categoría',
+        'Nombre del item',
+        'Valor unitario',
+        'Cantidad',
+        'Valor total',
+        // 'creditCash',
+        // 'transactionCounterpartId',
+        // 'seller',
     ]);
 
     const handleColumnChange = (column: string) => {
@@ -237,19 +237,19 @@ function SeeRecordsPage() {
                                 onChange={handleColumnChange}
                                 minSelectedColumns={3}
                                 availableColumns={[
-                                    'transactionDate',
-                                    'registrationDate',
-                                    'branch',
-                                    'transactionType',
-                                    'meanPayment',
-                                    'incomeCategory',
-                                    'nameItem',
-                                    'unitValue',
-                                    'quantity',
-                                    'totalValue',
-                                    'creditCash',
-                                    'transactionCounterpartId',
-                                    'seller',
+                                    'Fecha de transacción',
+                                    // 'registrationDate',
+                                    'Sede',
+                                    'Tipo de transacción',
+                                    'Medio de pago',
+                                    'Categoría',
+                                    'Nombre del item',
+                                    'Valor unitario',
+                                    'Cantidad',
+                                    'Valor total',
+                                    // 'creditCash',
+                                    // 'transactionCounterpartId',
+                                    // 'seller',
                                 ]}
                             />
                         </div>
@@ -259,45 +259,45 @@ function SeeRecordsPage() {
                             <div>
                                 <div className={styles.container__Head}>
                                     <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                        {selectedColumns.includes('transactionDate') && (
+                                        {selectedColumns.includes('Fecha de transacción') && (
                                             <div className={`${styles.column__Transaction_Date} text-center d-flex align-items-center justify-content-center`}>Fecha de TX</div>
                                         )}
-                                        {selectedColumns.includes('registrationDate') && (
+                                        {/* {selectedColumns.includes('registrationDate') && (
                                             <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>Fecha de Registro</div>
-                                        )}
-                                        {selectedColumns.includes('branch') && (
+                                        )} */}
+                                        {selectedColumns.includes('Sede') && (
                                             <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
                                         )}
-                                        {selectedColumns.includes('transactionType') && (
+                                        {selectedColumns.includes('Tipo de transacción') && (
                                             <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>Tipo de TX</div>
                                         )}
-                                        {selectedColumns.includes('meanPayment') && (
+                                        {selectedColumns.includes('Medio de pago') && (
                                             <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>Medio de pago</div>
                                         )}
-                                        {selectedColumns.includes('incomeCategory') && (
+                                        {selectedColumns.includes('Categoría') && (
                                             <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>Categoría</div>
                                         )}
-                                        {selectedColumns.includes('nameItem') && (
+                                        {selectedColumns.includes('Nombre del item') && (
                                             <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre de Item</div>
                                         )}
-                                        {selectedColumns.includes('unitValue') && (
-                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>Valor unitario</div>
+                                        {selectedColumns.includes('Valor unitario') && (
+                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>Vr. unitario</div>
                                         )}
-                                        {selectedColumns.includes('quantity') && (
+                                        {selectedColumns.includes('Cantidad') && (
                                             <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>Cantidad</div>
                                         )}
-                                        {selectedColumns.includes('totalValue') && (
+                                        {selectedColumns.includes('Valor total') && (
                                             <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>Total</div>
                                         )}
-                                        {selectedColumns.includes('creditCash') && (
+                                        {/* {selectedColumns.includes('creditCash') && (
                                             <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>Tipo de pago</div>
-                                        )}
-                                        {selectedColumns.includes('transactionCounterpartId') && (
+                                        )} */}
+                                        {/* {selectedColumns.includes('transactionCounterpartId') && (
                                             <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>Comprador</div>
-                                        )}
-                                        {selectedColumns.includes('seller') && (
+                                        )} */}
+                                        {/* {selectedColumns.includes('seller') && (
                                             <div className={`${styles.column__Seller} d-flex align-items-center justify-content-center`}>Vendedor</div>
-                                        )}
+                                        )} */}
                                         <div className={`${styles.column__Transaction_Approved} d-flex align-items-center justify-content-center`}>Aprobada</div>
                                         <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                     </div>
@@ -306,7 +306,7 @@ function SeeRecordsPage() {
                                 <div className={`${styles.container__Body} d-flex flex-column align-items-center justify-content-between`}>
                                 {Array.isArray(accountsBooks) && accountsBooks.map((accountsBook) => (
                                     <div key={accountsBook.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        {selectedColumns.includes('transactionDate') && (
+                                        {selectedColumns.includes('Fecha de transacción') && (
                                             <div className={`${styles.column__Transaction_Date} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -321,7 +321,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('registrationDate') && (
+                                        {/* {selectedColumns.includes('registrationDate') && (
                                             <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -333,9 +333,9 @@ function SeeRecordsPage() {
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{new Date(accountsBook.registrationDate).toLocaleDateString('en-GB')}</span>
                                                 )}
                                             </div>
-                                        )}
+                                        )} */}
 
-                                        {selectedColumns.includes('branch') && (
+                                        {selectedColumns.includes('Sede') && (
                                             <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <select
@@ -360,7 +360,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('transactionType') && (
+                                        {selectedColumns.includes('Tipo de transacción') && (
                                             <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <select
@@ -376,7 +376,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('meanPayment') && (
+                                        {selectedColumns.includes('Medio de pago') && (
                                             <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <select
@@ -419,19 +419,19 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('incomeCategory') && (
+                                        {selectedColumns.includes('Categoría') && (
                                             <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.incomeCategory}</span>
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('nameItem') && (
+                                        {selectedColumns.includes('Nombre del item') && (
                                             <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.nameItem}</span>
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('unitValue') && (
+                                        {selectedColumns.includes('Valor unitario') && (
                                             <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -445,7 +445,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('quantity') && (
+                                        {selectedColumns.includes('Cantidad') && (
                                             <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -459,7 +459,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('totalValue') && (
+                                        {selectedColumns.includes('Valor total') && (
                                             <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -473,7 +473,7 @@ function SeeRecordsPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('creditCash') && (
+                                        {/* {selectedColumns.includes('creditCash') && (
                                             <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -485,9 +485,9 @@ function SeeRecordsPage() {
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
                                                 )}
                                             </div>
-                                        )}
+                                        )} */}
 
-                                        {selectedColumns.includes('transactionCounterpartId') && (
+                                        {/* {selectedColumns.includes('transactionCounterpartId') && (
                                             <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>
                                                 {editingTransactions[accountsBook.id] ? (
                                                     <input
@@ -499,11 +499,11 @@ function SeeRecordsPage() {
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionCounterpartId}</span>
                                                 )}
                                             </div>
-                                        )}
+                                        )} */}
 
-                                        <div className={`${styles.column__Seller} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                        {/* <div className={`${styles.column__Seller} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.seller}</span>
-                                        </div>
+                                        </div> */}
 
                                         <div className={`${styles.column__Transaction_Approved} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} text-center text-center overflow-hidden`}>{accountsBook.transactionApproved === true ? 'Si' : 'No'}</span>

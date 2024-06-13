@@ -79,7 +79,7 @@ import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notificatio
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 // SIDEBAR - HOME
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
-import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
+// import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
 // SIDEBAR - TUS SEDES
 import BranchCardPage from './pages/Platform/PanelUser/02Branch/BranchCard/BranchCardPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
@@ -240,7 +240,7 @@ function App() {
                             <Route path='/notifications' element={<NotificationsPage />} />
                             {/* Sección NavBar - Configuration */}
                             <Route path='/configuration' element={<ConfigurationPage />} />
-                            <Route path='/configuration/profile' element={<ProfilePage />} />
+                            {/* <Route path='/configuration' element={<ProfilePage />} /> */}
                             {/* SideBar Home */}
                             <Route path='/inventories' element={<InventoriesPage />} />                             {/* ACCESOS DIRECTOS A ASSETS, MERCHANDISES, PRODUCTS, RAWMATERIALS  SERVICES */}
                             <Route path='/home' element={<Home />} />                                               {/* INVENTARIOS*/}
