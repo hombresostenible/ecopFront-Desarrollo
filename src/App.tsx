@@ -274,7 +274,6 @@ function App() {
                             <Route path='/inventories/create-services' element={<CreateServicesPage />} />
                             {/* SideBar Cuentas - Ingresos */}
                             <Route path='/accounts/see-records' element={<SeeRecordsPage />} />
-                            {/* <Route path='/accounts/create-incomes' element={<ConsultIncomePage />} /> */}
                             <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
                             {/* SideBar Cuentas - Gastos */}
                             <Route path='/accounts/consult-expenses' element={<ConsultExpensesPage />} />
