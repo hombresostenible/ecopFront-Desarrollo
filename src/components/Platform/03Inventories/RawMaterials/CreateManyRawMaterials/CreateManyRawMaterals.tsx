@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyRawMaterials } from '../../../../../../redux/User/rawMaterialSlice/actions';
-import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
+import { postManyRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
+import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { IBranch } from '../../../../../../types/User/branch.types';
-import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
+import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { IBranch } from '../../../../../types/User/branch.types';
+import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
 import styles from './styles.module.css';
 
 interface CreateManyRawMateralsProps {

@@ -12,7 +12,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyAssets from './CreateManyAssets';
+import CreateManyAssets from '../../../../../../components/Platform/03Inventories/Assets/CreateManyAssets/CreateManyAssets';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -27,12 +27,12 @@ interface CreateAssetPageProps {
 function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }: CreateAssetPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Estados de Redux
     const errorAssets = useSelector((state: RootState) => state.assets.errorAssets);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const navigate = useNavigate();
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IAssets>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -43,7 +43,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
         }
     }, [token]);
 
-    const [ showCancelModal, setShowCancelModal ] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
     const onCloseAssetModal = () => {
         setShowCancelModal(false);
     };
@@ -104,7 +104,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                         <Link to='/inventories/consult-assets' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         <div className="d-flex">
-                            <button className={`${styles.buttonDetail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
+                            <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >

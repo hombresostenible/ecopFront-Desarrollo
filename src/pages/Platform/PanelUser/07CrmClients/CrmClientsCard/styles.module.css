@@ -12,6 +12,13 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
+.link__Income_Create {
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #718bd8;
+}
 .container__Table{
     width: 1000px;
 }
@@ -87,4 +94,7 @@
     transition: 300ms all ease;
     color: #718bd8;
     cursor: pointer;
+}
+.subTitle {
+    color: #f28705;
 }

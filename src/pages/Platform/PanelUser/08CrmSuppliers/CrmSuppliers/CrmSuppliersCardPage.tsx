@@ -60,8 +60,8 @@ function CrmSuppliersCardPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>CRM Proveedores</h1>
-                        <Link to='/crm-suppliers/create-crm-suppliers'>Crea tus proveedores</Link>
 
+                        <Link to='/crm-suppliers/create-crm-suppliers' className={styles.link__Income_Create}>Crea tus proveedores</Link>
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
@@ -153,8 +153,8 @@ function CrmSuppliersCardPage() {
                         </Modal>
   
                         <div className='d-flex flex-column'>
-                            <h4>Seguimiento</h4>
-                            <Link to='/inventories/create-assets' >Registra el seguimiento de tus provedores</Link>
+                            <h4 className={`${styles.subTitle} `}>Seguimiento</h4>
+                            <Link to='/inventories/create-assets' className={styles.link__Income_Create}>Registra el seguimiento de tus provedores</Link>
                         </div>
                     </div>
                     <Footer />
