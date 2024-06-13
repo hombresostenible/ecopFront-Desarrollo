@@ -154,11 +154,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
     return (
         <div>
-            {/* <h2 className="text-primary-emphasis text-center">Venta en efectivo</h2> */}
             {formSubmitted && (
                 <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
             )}
-            {errorAccountsBook?.map((error, i) => (
+            {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
 
