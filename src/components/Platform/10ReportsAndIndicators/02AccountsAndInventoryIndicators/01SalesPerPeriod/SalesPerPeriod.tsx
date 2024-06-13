@@ -11,8 +11,8 @@ import { getSalesPerPeriod, getSalesPerPeriodByBranch } from '../../../../../red
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import ModalSalesPerPeriod from './ModalSalesPerPeriod';
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import ModalSalesPerPeriod from './ModalSalesPerPeriod';
 import { BsCart } from 'react-icons/bs';
 import { PiExportBold } from "react-icons/pi";
 import 'react-datepicker/dist/react-datepicker.css';

@@ -28,7 +28,7 @@ function CalculateIndicatorsFinancialsPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div>
                         <div className={styles.containerButtonBackTo}>
-                            <Link to="/indicators/financial-indicators" className={styles.buttonBackTo}>
+                            <Link to="/reports-and-indicators/accounts-and-inventory-indicators" className={styles.buttonBackTo}>
                                 Volver
                             </Link>
                         </div>
