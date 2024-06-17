@@ -11,6 +11,7 @@ import serviceReducer from './User/serviceSlice/serviceSlice';
 import userReducer from './User/userSlice/userSlice';
 import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
 import finantialIndicatorsReducer from './User/indicator/finantialIndicators/finantialIndicatorsSlice'; // Asegúrate de ajustar el path correctamente
+import itemByBarCodeOrNameReducer from './User/itemBybarCodeOrName/itemBybarCodeOrNameSlice';
 
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
@@ -27,7 +28,8 @@ const rootReducer = {
     service: serviceReducer,
     user: userReducer,
     userPlatform: userPlatformReducer,
-    finantialIndicators: finantialIndicatorsReducer, // Añade esta línea
+    finantialIndicators: finantialIndicatorsReducer, // Engloba a todos los slices de indicadores
+    itemByBarCodeOrName: itemByBarCodeOrNameReducer,
 };
 
 export const store = configureStore({

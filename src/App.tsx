@@ -113,11 +113,13 @@ import AccountsPayablePage from './pages/Platform/PanelUser/04Accounts/04Account
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/05PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
-import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/01CreditNotes/CreditNotesPage';
-import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02DebitNotes/DebitNotesPage';
-import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03RecurringInvoices/RecurringInvoicesPage';
-import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/04ReceivedPayments/ReceivedPaymentsPage';
-import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/05Quotes/QuotesPage';
+import SellPointOfSalePage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/SellPointOfSalePage';
+import ElectronicInvoicingPage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/ElectronicInvoicing/ElectronicInvoicingPage';
+import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02CreditNotes/CreditNotesPage';
+import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03DebitNotes/DebitNotesPage';
+import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04RecurringInvoices/RecurringInvoicesPage';
+import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/05ReceivedPayments/ReceivedPaymentsPage';
+import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/06Quotes/QuotesPage';
 // SIDEBAR - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
 import PayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/01PayrollPayments/PayrollPaymentsPage';
@@ -285,6 +287,9 @@ function App() {
                             {/* SideBar Cuentas - TX Pendientes de Aprobar */}
                             <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                             {/* SideBar Facturación y POS */}
+                            <Route path='/invoicing-and-pos/pos' element={<SellPointOfSalePage />} />
+                            <Route path='/invoicing-and-pos/pos' element={<SellPointOfSalePage />} />
+                            <Route path='/invoicing-and-pos/electronic-invoicing' element={<ElectronicInvoicingPage />} />
                             <Route path='/invoicing-and-pos/credit-notes' element={<CreditNotesPage />} />
                             <Route path='/invoicing-and-pos/debit-notes' element={<DebitNotesPage />} />
                             <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
