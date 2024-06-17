@@ -1,0 +1,59 @@
+.container {
+    margin: 72px 0 0 0;
+    height: calc(100vh - 123px);
+}
+.containerBranchPage {
+    max-width: 1000px;
+    /* border: 1px solid red; */
+}
+.componentCreateRegisers {
+    height: 50px;
+    border-top: none;
+    border-left: 1px solid rgba(113, 139, 216, 0.1);
+    border-right: 1px solid rgba(113, 139, 216, 0.1);
+    border-bottom: 1px solid rgba(113, 139, 216, 0.1);
+    cursor: pointer;
+}
+.component {
+    height: 50px;
+    width: 250px;
+    border-top: none;
+    border-left: 1px solid rgba(113, 139, 216, 0.1);
+    border-right: 1px solid rgba(113, 139, 216, 0.1);
+    border-bottom: 1px solid rgba(113, 139, 216, 0.1);
+    cursor: pointer;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+.active {
+    background: #718bd8;
+    color: #f8f9fa;
+    cursor: pointer;
+}
+
+
+.selectContainer {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 200px; /* ajusta el máximo de altura según tus necesidades */
+}
+
+.selectContainer button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.selectContainer button:hover {
+    background-color: #f0f0f0;
+}
