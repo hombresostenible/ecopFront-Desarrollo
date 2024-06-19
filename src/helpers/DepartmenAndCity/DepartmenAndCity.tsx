@@ -8,55 +8,66 @@ import styles from './styles.module.css';
 interface DepartmenAndCityProps {
     onSelect: (department: string, city: string, codeDane: string, subregionCodeDane: string) => void;
     reset: boolean;
+    initialDepartment?: string;
+    initialCity?: string;
 }
 
-function DepartmenAndCity({ onSelect, reset }: DepartmenAndCityProps) {
-    const [ department, setDepartment ] = useState<{ value: string; label: string } | null>(null);
-    const [selectedDepartment, setSelectedDepartment] = useState<{ value: string; label: string } | null>();    
+function DepartmenAndCity({ onSelect, reset, initialDepartment, initialCity }: DepartmenAndCityProps) {
+    const [department, setDepartment] = useState<{ value: string; label: string } | null>(null);
+    const [city, setCity] = useState<{ value: string; label: string } | null>(null);
+
+    useEffect(() => {
+        if (initialDepartment) {
+            const departmentOption = departments.find(dep => dep.value === initialDepartment) || null;
+            setDepartment(departmentOption);
+        }
+
+        if (initialCity && initialDepartment) {
+            const cityOptions = citiesByDepartment[initialDepartment as keyof typeof citiesByDepartment] || [];
+            const cityOption = cityOptions.find(city => city.value === initialCity) || null;
+            setCity(cityOption);
+        }
+    }, [initialDepartment, initialCity]);
+
     const handleDepartmentChange = (selectedOption: any) => {
         setDepartment(selectedOption);
-        setSelectedDepartment(selectedOption);                                                                      // Actualiza el estado seleccionado del departamento
-        setCity(null);                                                                                              // Resetea el estado de la ciudad
-        setSelectedCity(null);                                                                                      // Resetea el estado seleccionado de la ciudad
+        setCity(null);
         const selectedDepartmentValue = selectedOption.value;
         const selectedCityValue = '';
         const selectedCityCodeDane = '';
         const selectedCitysubregionCodeDane = '';
-        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);  // Reseteamos la ciudad, el código y la subreión del Dane al camnbiar de departamento
+        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);
     };
 
-    const [ city, setCity ] = useState<{ value: string; label: string } | null>(null);    
-    const [ selectedCity, setSelectedCity ] = useState<{ value: string; label: string, codeDane:string } | null>();
     const handleCityChange = (selectedOption: any) => {
         setCity(selectedOption);
-        setSelectedCity(selectedOption);                                                                            // Actualiza el estado seleccionado de la ciudad
-        const selectedDepartmentValue = department!.value;                                                          // Setea el departamento
-        const selectedCityValue = selectedOption.value;                                                             // Setea la ciudad
-        const selectedCityCodeDane = selectedOption.codeDane;                                                       // Setea el código del Dane
-        const selectedCitysubregionCodeDane = selectedOption.subregionCodeDane;                                     // Setea el código de la subregión del Dane
-        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);  // Enviamos el departamento, la ciudad, el código y la subregión del Dane
+        const selectedDepartmentValue = department!.value;
+        const selectedCityValue = selectedOption.value;
+        const selectedCityCodeDane = selectedOption.codeDane;
+        const selectedCitysubregionCodeDane = selectedOption.subregionCodeDane;
+        onSelect(selectedDepartmentValue, selectedCityValue, selectedCityCodeDane, selectedCitysubregionCodeDane);
     };
 
-    const cityOptions: { value: string; label: string }[] = department ? citiesByDepartment[ department.value as keyof typeof citiesByDepartment ] || [] : [];
+    const cityOptions: { value: string; label: string }[] = department ? citiesByDepartment[department.value as keyof typeof citiesByDepartment] || [] : [];
 
     useEffect(() => {
         if (reset) {
-            setSelectedDepartment(null);
-            setSelectedCity(null);
+            setDepartment(null);
+            setCity(null);
         }
     }, [reset]);
 
     return (
-        <div className="d-flex align-items-center justify-content-center gap-3">
+        <div className="d-flex align-items-center justify-content-center gap-3 w-100">
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Departamento</h6>
                 <div className={styles.container__Input}>
                     <Select
                         className={`${styles.input} border-0`}
                         options={departments}
-                        value={selectedDepartment || department}
+                        value={department}
                         onChange={handleDepartmentChange}
-                        isSearchable={true}                     // Habilita la funcionalidad de búsqueda
+                        isSearchable={true}
                     />
                 </div>
             </div>
@@ -67,9 +78,9 @@ function DepartmenAndCity({ onSelect, reset }: DepartmenAndCityProps) {
                     <Select
                         className={`${styles.input} border-0`}
                         options={cityOptions}
-                        value={selectedCity || city}
+                        value={city}
                         onChange={handleCityChange}
-                        isSearchable={true}                     // Habilita la funcionalidad de búsqueda
+                        isSearchable={true}
                     />
                 </div>
             </div>

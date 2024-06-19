@@ -6,6 +6,7 @@ import { putBranch, getBranches } from '../../../../redux/User/branchSlice/actio
 import type { AppDispatch } from '../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../types/User/branch.types';
+import DepartmenAndCity from '../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 
 interface ModalBranchProps {
@@ -15,18 +16,30 @@ interface ModalBranchProps {
     onCloseModal: () => void;
 }
 
-const ModalBranch: React.FC<ModalBranchProps> = ({ idBranch, branch, token, onCloseModal }) => {
+function ModalBranch({ idBranch, branch, token, onCloseModal }: ModalBranchProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [isEditing, setIsEditing] = useState(false);
     const [editedBranch, setEditedBranch] = useState<IBranch | null>(null);
     const [editedTypeDocumentIdManager, setEditedTypeDocumentIdManager] = useState<string>(branch?.typeDocumentIdManager || 'Cedula de Ciudadania');
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedCity, setSelectedCity] = useState(''); 
+    const [selectedCodeDane, setSelectedCodeDane] = useState('');
+    const [selectedSubregionCodeDane, setSelectedSubregionCodeDane] = useState('');
+    const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);
+    const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
+        setSelectedDepartment(department);
+        setSelectedCity(city);
+        setSelectedCodeDane(codeDane);
+        setSelectedSubregionCodeDane(subregionCodeDane);
+    };
 
     useEffect(() => {
         if (branch) {
-            // console.log('branch updated:', branch);  // Debugging line
             setEditedBranch({ ...branch });
             setEditedTypeDocumentIdManager(branch.typeDocumentIdManager || 'Cedula de Ciudadania');
+            setSelectedDepartment(branch.department);
+            setSelectedCity(branch.city);
         }
     }, [branch]);
 
@@ -48,9 +61,15 @@ const ModalBranch: React.FC<ModalBranchProps> = ({ idBranch, branch, token, onCl
         if (editedBranch) {
             try {
                 editedBranch.typeDocumentIdManager = editedTypeDocumentIdManager as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte';
+                editedBranch.department = selectedDepartment as IBranch['department'];
+                editedBranch.city = selectedCity;
+                editedBranch.codeDane = selectedCodeDane;
+                editedBranch.subregionCodeDane = selectedSubregionCodeDane;
+                console.log('editedBranch: ', editedBranch)
                 dispatch(putBranch(idBranch, editedBranch, token));
                 // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
+                setResetDepartmenAndCity(true);
                 dispatch(getBranches(token));
                 setIsEditing(false);
                 onCloseModal();
@@ -104,6 +123,32 @@ const ModalBranch: React.FC<ModalBranchProps> = ({ idBranch, branch, token, onCl
                                 )}
                             </div>
                         </div>
+                    </div>
+
+                    <div className='d-flex gap-3'>
+                        {isEditing ? (
+                            <DepartmenAndCity
+                                onSelect={handleSelectDepartmentAndCity}
+                                reset={resetDepartmenAndCity}
+                                initialDepartment={selectedDepartment}
+                                initialCity={selectedCity}
+                            />
+                        ) : (
+                            <div className='d-flex gap-3 w-100'>
+                                <div className="w-100">
+                                    <h6 className={styles.label}>Departamento</h6>
+                                    <div className={styles.containerInput}>
+                                        <p className={`${styles.input} p-2 text-start border`}>{branch?.department}</p>
+                                    </div>
+                                </div>
+                                <div className="w-100">
+                                    <h6 className={styles.label}>Ciudad</h6>
+                                    <div className={styles.containerInput}>
+                                        <p className={`${styles.input} p-2 text-start border`}>{branch?.city}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className='d-flex gap-3'>
@@ -230,6 +275,6 @@ const ModalBranch: React.FC<ModalBranchProps> = ({ idBranch, branch, token, onCl
             )}
         </div>
     );
-};
+}
 
 export default ModalBranch;
