@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
-import { errorItemByBarCodeOrName, getItemByBarCodeStart, getItemByNameStart } from './itemBybarCodeOrNameSlice';
+import { errorItemByBarCodeOrName, getItemByBarCodeStart, getItemByNameStart } from './itemByBarCodeOrNameSlice';
 
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
 export const getItemByBarCode = (barCode: string, token: string) => async (dispatch: AppDispatch) => {

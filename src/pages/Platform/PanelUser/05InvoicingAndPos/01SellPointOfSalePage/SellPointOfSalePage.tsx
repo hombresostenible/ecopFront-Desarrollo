@@ -104,7 +104,7 @@ function SellPointOfSalePage() {
     }, [selectedPlasticBagOption, plasticBagQuantity]);
 
     useEffect(() => {
-        if (itemByBarCodeOrName) {
+        if (itemByBarCodeOrName && currentItem) {
             setScannedItems(prevProducts => [...prevProducts, { item: itemByBarCodeOrName, quantity: defaultQuantity }]);
         }
     }, [itemByBarCodeOrName, defaultQuantity]);
@@ -158,7 +158,7 @@ function SellPointOfSalePage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>POS</h1>
 
                         <Link to={'/invoicing-and-pos/electronic-invoicing'}>Facturación</Link>
-                        <div className={`${styles.branch} mb-1 p-3 border`}>
+                        <div className="mb-1 p-3 border">
                             <div className="d-flex justify-content-between ">
                                 <select
                                     className="border-0 p-1 text-center"

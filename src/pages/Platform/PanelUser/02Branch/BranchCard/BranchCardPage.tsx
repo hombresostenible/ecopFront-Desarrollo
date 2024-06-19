@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-// REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-// ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
@@ -22,13 +20,8 @@ function BranchCardPage() {
     const dispatch: AppDispatch = useDispatch();
 
     const branches = useSelector((state: RootState) => state.branch.branch);
-    
-    const [selectedBranch, setSelectedBranch] = useState<string | undefined>(undefined);
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showBranchModal, setShowBranchModal] = useState(false);
 
-    const [idBranch, setIdBranch] = useState('');
-    const [nameBranch, setNameBranch] = useState('');
+    const [selectedBranchModal, setSelectedBranchModal] = useState<IBranch | null>(null);
 
     useEffect(() => {
         if (token) {
@@ -36,8 +29,16 @@ function BranchCardPage() {
         }
     }, [token]);
 
+    const [selectedBranch, setSelectedBranch] = useState<string | undefined>(undefined);
+    const [idBranch, setIdBranch] = useState('');
+    const [nameBranch, setNameBranch] = useState('');
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showBranchModal, setShowBranchModal] = useState(false);
+    const [showTooltipDelete, setShowTooltipDelete] = useState<string | null>(null);
+    const [showTooltipEdit, setShowTooltipEdit] = useState<string | null>(null);
+
     const branchesToDisplay = Array.isArray(branches) ? branches : [];
-    
+
     const filteredBranches = selectedBranch
         ? branchesToDisplay.filter(branch => branch.id === selectedBranch)
         : branchesToDisplay;
@@ -49,17 +50,37 @@ function BranchCardPage() {
     };
 
     const handleEdit = (branch: IBranch) => {
+        setIdBranch(branch.id);
         setSelectedBranch(branch.id);
+        setSelectedBranchModal(branch);
         setShowBranchModal(true);
     };
 
-    const onCloseModal = () => {
+    const onCloseModal = useCallback(() => {
         setShowDeleteConfirmation(false);
         setShowBranchModal(false);
+        setSelectedBranch(undefined);
+        setSelectedBranchModal(null);
+    }, []);
+
+    // Tooltip que muestra aviso para eliminar una sede
+    const handleDeleteBranchMouseEnter = (idBranch: string) => {
+        setShowTooltipDelete(idBranch);
     };
 
-    const handleUpdateBranch = () => {
-        dispatch(getBranches(token));
+    // Tooltip que oculta aviso para eliminar una sede
+    const handleDeleteBranchMouseLeave = () => {
+        setShowTooltipDelete(null);
+    };
+
+    // Tooltip que muestra aviso para editar una sede
+    const handleEditBranchMouseEnter = (idBranch: string) => {
+        setShowTooltipEdit(idBranch);
+    };
+
+    // Tooltip que oculta aviso para editar una sede
+    const handleEditBranchMouseLeave = () => {
+        setShowTooltipEdit(null);
     };
 
     return (
@@ -70,11 +91,12 @@ function BranchCardPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>
-                        <div className='mt-4 d-flex flex-column align-items-center justify-content-center'>
-                            <h2>Filtra tu sede</h2>
+
+                        <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
+                            <h3 className='m-0'>Filtra tu sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-3 mb-3 m-center col-lg-5 col-md-4 col-sm-6 col-xs-12 text-center border rounded"
+                                className="mx-2 p-1 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value || undefined)}
                             >
                                 <option value=''>Todas</option>
@@ -85,6 +107,7 @@ function BranchCardPage() {
                                 ))}
                             </select>
                         </div>
+
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
@@ -97,65 +120,82 @@ function BranchCardPage() {
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
                             </div>
-                            <div className={`${styles.container__Body} d-flex flex-column align-items-center justify-content-between`}>
+
+                            <div className={`${styles.container__Body}`}>
                                 {Array.isArray(filteredBranches) && filteredBranches.map((branch) => (
-                                    <div key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.container__Branch} d-flex align-items-center justify-content-start`}>
+                                    <div key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
                                         </div>
-                                        <div className={`${styles.container__Department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.department}</span>
                                         </div>
-                                        <div className={`${styles.container__City} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.city} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.city}</span>
                                         </div>
-                                        <div className={`${styles.container__Address} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.address} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.addressBranch}</span>
                                         </div>
-                                        <div className={`${styles.container__Email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactEmailBranch}</span>
                                         </div>
-                                        <div className={`${styles.container__Phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactPhoneBranch}</span>
                                         </div>
-                                        <div className={`${styles.container__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center position-relative`}>
                                             <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center position-relative`}
+                                                onMouseEnter={() => handleDeleteBranchMouseEnter(branch.id)}
+                                                onMouseLeave={handleDeleteBranchMouseLeave}
                                                 onClick={() => {
                                                     handleDelete(branch);
                                                 }}
                                             />
+                                            {showTooltipDelete === branch.id && (
+                                                <div className={`${styles.modal__Delete_Branch} d-flex align-items-center justify-content-center position-absolute`}>
+                                                    Eliminar esta sede
+                                                </div>
+                                            )}
                                             <FaUserEdit
                                                 className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                onMouseEnter={() => handleEditBranchMouseEnter(branch.id)}
+                                                onMouseLeave={handleEditBranchMouseLeave}
                                                 onClick={() => {
                                                     handleEdit(branch)
                                                 }}
                                             />
+                                            {showTooltipEdit === branch.id && (
+                                                <div className={`${styles.modal__Edit_Branch} d-flex align-items-center justify-content-center position-absolute`}>
+                                                    Editar esta sede
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
+
                         <Modal show={showBranchModal} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title>Detalles de la sede</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {selectedBranch &&
-                                    <ModalBranch
-                                        branch={filteredBranches.find(branch => branch.id === selectedBranch)!}
-                                        token={token}
-                                        onUpdateBranch={handleUpdateBranch}
-                                    />}
+                                {selectedBranchModal && <ModalBranch
+                                    idBranch={idBranch}
+                                    branch={selectedBranchModal}
+                                    token={token}
+                                    onCloseModal={onCloseModal}
+                                />}
                             </Modal.Body>
                         </Modal>
+
                         <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
                             <Modal.Header closeButton>
                                 <Modal.Title>Confirmación para eliminar la sede</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <ConfirmDeleteBranch
-                                    id={idBranch}
+                                    idBranch={idBranch}
                                     nameBranch={nameBranch}
                                     onCloseModal={onCloseModal}
                                 />
