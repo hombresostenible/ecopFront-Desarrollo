@@ -15,6 +15,10 @@
 
 /* TABLA */
 .container__Table {
+<<<<<<< HEAD
+=======
+    width: 1000px;
+>>>>>>> d716eaa9802f5d21952c04035142c851b6cffdea
     width: 100%;
 }
 .container__Head {
@@ -23,6 +27,10 @@
     width: 100%;
     font-weight: 600;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d716eaa9802f5d21952c04035142c851b6cffdea
 .container__Tr {
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
