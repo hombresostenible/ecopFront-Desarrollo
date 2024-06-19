@@ -12,9 +12,6 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
-.container__Filter_Branch {
-    /* border: 1px solid red; */
-}
 
 /* TABLA */
 .container__Table {
@@ -111,7 +108,7 @@
     border-radius: 5px;
     z-index: 10;
     top: 0px;
-    right: 80px;
+    right: 100px;
     width: 190px;
     padding: 15px 20px;
     height: 60px;
