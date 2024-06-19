@@ -128,11 +128,11 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
-                            <h2>Filtra tus activos por sede</h2>
+                        <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
+                            <h3 className='m-0'>Filtra tus activos por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-3 mb-3 m-center col-lg-5 col-md-4 col-sm-6 col-xs-12 text-center border rounded"
+                                className="mx-2 p-1 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -147,37 +147,38 @@ function ConsultAssetsPage() {
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
-                                    <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
-                                    <div className={`${styles.column__Brand_Assets} d-flex align-items-center justify-content-center`}>Marca</div>
-                                    <div className={`${styles.column__Reference_Asset} d-flex align-items-center justify-content-center`}>Referencia</div>
-                                    <div className={`${styles.column__Condition_Asset} d-flex align-items-center justify-content-center`}>Condición</div>
-                                    <div className={`${styles.column__State_Asset} d-flex align-items-center justify-content-center`}>Estado</div>
-                                    <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
+                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</div>
+                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
+                                    <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center`}>Marca</div>
+                                    <div className={`${styles.reference__Asset} d-flex align-items-center justify-content-center`}>Referencia</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center`}>Condición</div>
+                                    <div className={`${styles.state__Asset} d-flex align-items-center justify-content-center`}>Estado</div>
+                                    <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
                             </div>
-                            <div className={`${styles.container__Body} d-flex flex-column align-items-center justify-content-between`}>
+
+                            <div className={`${styles.container__Body}`}>
                                 {Array.isArray(assets) && assets.map((asset) => (
-                                    <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.column__Branch} d-flex align-items-center justify-content-start`}>
+                                     <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.branchId}</span>
                                         </div>
-                                        <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-start`}>
+                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.nameItem}</span>
                                         </div>
-                                        <div className={`${styles.column__Brand_Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.brand__Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandAssets}</span>
                                         </div>
-                                        <div className={`${styles.column__Reference_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
                                         </div>
-                                        <div className={`${styles.column__Condition_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.conditionAssets}</span>
                                         </div>
-                                        <div className={`${styles.column__State_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
                                         </div>
-                                        <div className={`${styles.column__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <RiDeleteBin6Line
                                                 className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
                                                 onClick={() => {

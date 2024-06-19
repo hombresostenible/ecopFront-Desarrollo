@@ -19,8 +19,10 @@
     color: white;
     background: #718bd8;
 }
-.container__Table{
-    width: 1000px;
+
+/* TABLA */
+.container__Table {
+    width: 100%;
 }
 .container__Head{
     background: #e9ecef;
@@ -31,35 +33,44 @@
 .container__Tr{
     height: 60px;
 }
-.column__Branch{
+/* TITULOS DE LAS COLUMNAS */
+.branch{
     height: 60px;
-    width: 140px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Name_Item{
+.name__Item{
     height: 60px;
-    width: 140px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Brand_Assets{
+.brand__Assets{
     height: 60px;
-    width: 140px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Reference_Asset{  
+.reference__Asset{
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
+}
+.condition__Asset{
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
+}
+.state__Asset{
+    height: 60px;
+    width: 20%;
+    min-width: 200px;
+}
+.action{
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
 
-    height: 60px;
-    width: 140px;
-}
-.column__Condition_Asset{
-    height: 60px;
-    width: 140px;
-}
-.column__State_Asset{
-    height: 60px;
-    width: 200px;
-}
-.column__Action{
-    height: 60px;
-    width: 100px;
-}
+/* CONTENIDO DE LA TABLA */
 .container__Body{
     height: 60px;
     width: 100%;
