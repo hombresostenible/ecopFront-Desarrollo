@@ -117,7 +117,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorBranch?.map((error, i) => (
+                            {Array.isArray(errorBranch)&& errorBranch?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
@@ -154,6 +154,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     )}
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}>Email de la Sede</h6>
                                 <div className={styles.container__Input}>
@@ -168,6 +169,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     )}
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}>Número telefónico de la Sede</h6>
                                 <div className={styles.container__Input}>
@@ -182,6 +184,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     )}
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}>Nombre del gerente de la Sede</h6>
@@ -212,6 +215,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     </div>
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}>Tipo de identificación del Gerente de la Sede</h6>
                                 <div className={styles.container__Input}>
@@ -228,6 +232,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                     )}
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}>Número de identidad del Gerente de la Sede</h6>
                                 <div className={styles.container__Input}>

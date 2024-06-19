@@ -7,18 +7,18 @@ import type { AppDispatch } from '../../../../redux/store';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteBranchProps {
-    id: string;
+    idBranch: string;
     nameBranch: string;
     onCloseModal: () => void;
 }
 
-function ConfirmDeleteBranch ({ id, nameBranch, onCloseModal }: ConfirmDeleteBranchProps) {
+function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal }: ConfirmDeleteBranchProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
     const onDelete = async () => {
         try {
-            dispatch(deleteBranch(id, token));
+            dispatch(deleteBranch(idBranch, token));
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getBranches(token));
