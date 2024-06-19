@@ -1,0 +1,65 @@
+.container {
+    padding: 20px 0 15px 0;
+    background: #2d3748;
+}
+.containerNewsletterSuscribe {
+    height: 120px;
+    width: 600px;
+    padding: 10px 0 25px 0;
+}
+.text {
+    /* color: #718bd8; */
+    color: #dee2e6;
+}
+.textSuccess {
+    color: #4c956c;
+    top: 90px;
+    left: 215px;
+    right: 50px;
+    z-index: 1;
+}
+.error {
+    color: #d90429;
+    top: 90px;
+    left: 90px;
+    right: 50px;
+    z-index: 1;
+}
+.info {
+    width: 490px;
+    height: 40px;
+    overflow: hidden;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.input {
+    overflow: hidden;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    height: 40px;
+    border: 1px solid #dee2e6;
+    width: 400px;
+    padding: 0 0 0 15px;
+    outline-color: #718bd8;
+}
+.input::placeholder {
+    color: #718bd8; /* Cambia el color del placeholder a rojo */
+}
+.textDanger {
+    left: 80px;
+}
+.button {
+    top: 0px;
+    right: 0px;
+    height: 40px;
+    width: 100px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: #718bd8;
+    color: #dee2e6;
+    transition: all ease 300ms;
+}
+.button:hover {
+    cursor: pointer;
+    background: #3c6e71;
+}

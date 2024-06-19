@@ -1,0 +1,36 @@
+.container {
+    min-width: 100vw;
+    height: 100vh;
+}
+.container__Register {
+    width: 60%;
+    height: 100vh;
+}
+.logo {
+    height: 80px;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.program__Funder {
+    width: 400px;
+}
+.button__Program_Funder {
+    color: #f8f9fa;
+    padding: 5px 20px;
+    border-radius: 5px;
+    background: #9dbf22;
+    transition: all 300ms ease;
+}
+.button__Program_Funder:hover {
+    background: #003d23;
+}

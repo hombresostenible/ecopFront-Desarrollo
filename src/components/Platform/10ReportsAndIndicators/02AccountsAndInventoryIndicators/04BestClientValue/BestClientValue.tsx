@@ -1,0 +1,262 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from 'react';
+import jsCookie from 'js-cookie';
+import { Modal } from 'react-bootstrap';
+import * as XLSX from 'xlsx';
+// REDUX
+import { useDispatch, useSelector } from 'react-redux';
+import { getBestClientValue, getBestClientValueByBranch } from '../../../../../redux/User/indicator/finantialIndicators/actions';
+import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import type { RootState, AppDispatch } from '../../../../../redux/store';
+// ELEMENTOS DEL COMPONENTE
+import { IBestClientValue } from "../../../../../types/User/financialIndicators.types";
+import ModalBestClientValue from './ModalBestClientValue';
+import Uno from '../../../../../assets/Top-Uno.png';
+import Dos from '../../../../../assets/Top-Dos.png';
+import Tres from '../../../../../assets/Top-Tres.png';
+import { PiExportBold } from 'react-icons/pi';
+import styles from './styles.module.css';
+
+function BestClientValue() {
+    const token = jsCookie.get('token') || '';
+    const dispatch: AppDispatch = useDispatch();
+
+    const bestClientValue = useSelector((state: RootState) => state.finantialIndicators.bestClientValue);
+    const branches = useSelector((state: RootState) => state.branch.branch);
+
+    const [selectedBranch, setSelectedBranch] = useState('Todas');
+    const [originalData, setOriginalData] = useState<IBestClientValue[] | null>(null);
+    const [selectedMonth, setSelectedMonth] = useState('');
+    const [selectedYear, setSelectedYear] = useState('');
+    const [showCancelModal, setShowCancelModal] = useState(false);
+
+    useEffect(() => {
+        dispatch(getBranches(token));
+        if (selectedBranch === 'Todas') {
+            dispatch(getBestClientValue(token))
+                .then((response: any) => {
+                    setOriginalData(response.data);
+                })
+                .catch((error: any) => {
+                    console.error("Failed to fetch sales per period:", error);
+                });
+        } else {
+            dispatch(getBestClientValueByBranch(selectedBranch, token))
+                .then((response: any) => {
+                    setOriginalData(response.data);
+                })
+                .catch((error: any) => {
+                    console.error("Failed to fetch sales per period by branch:", error);
+                });
+        }
+    }, [selectedBranch, dispatch, token]);
+
+    const getBranchName = (branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    };
+
+    function valueClients(data: IBestClientValue[]) {
+        const valueClientsArray: IBestClientValue[] = [];
+        
+        data.forEach(item => {
+            const existingClient = valueClientsArray.find(client => client.transactionCounterpartId === item.transactionCounterpartId);    
+            if (existingClient) {
+                existingClient.value += item.totalValue;
+            } else {
+                valueClientsArray.push({
+                    id: item.id,
+                    branchId: item.branchId,
+                    transactionCounterpartId: item.transactionCounterpartId,
+                    totalValue: item.totalValue,
+                    transactionDate: item.transactionDate,
+                    value: item.totalValue
+                });
+            }
+        });    
+        valueClientsArray.sort((a, b) => b.value - a.value);
+        return valueClientsArray;
+    }
+
+    function formatNumberWithCommas(number: number): string {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    
+    const adjustTimeZone = (date: Date) => {
+        date.setUTCHours(5, 0, 0, 0);
+        return date;
+    };
+    
+    const exportToExcel = () => {
+        if (originalData) {
+            const dataForExcel = originalData.map(item => ({
+                'Sede': item.branchId,
+                'Fecha de Registro': item.transactionDate,
+                'Id de cliente': item.transactionCounterpartId,
+                'Tipo de Transacción': 'Venta',
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el Mejor Cliente por Valor del Período seleccionado');
+            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Mejor_Cliente_Por_Valor.xlsx';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    };
+    
+    //Función para el filtrado por fechas
+    const handleFilter = () => {
+        if (selectedMonth && selectedYear) {
+            const filterYear = parseInt(selectedYear);
+            const filterMonth = parseInt(selectedMonth);
+            const filterDate = new Date(filterYear, filterMonth - 1, 1);
+            const nextMonthDate = new Date(filterDate);
+            nextMonthDate.setMonth(nextMonthDate.getMonth() + 1, 0);
+            
+            const adjustedFilterDate = adjustTimeZone(filterDate);
+            const adjustedNextMonthDate = adjustTimeZone(nextMonthDate);
+            
+            const filteredData = originalData?.filter(item => {
+                const transactionDate = adjustTimeZone(new Date(item.transactionDate));
+                return (
+                    transactionDate >= adjustedFilterDate && transactionDate <= adjustedNextMonthDate
+                );
+            });
+            // Actualizar consolidatedData directamente aquí
+            setConsolidatedData(filteredData ? valueClients(filteredData) : null);
+        }
+    };
+        
+    //Setear toda la información consolidada de clientes con el acumulado de sus compras, se pasa por props a "ModalBestClientValue"
+    const [consolidatedData, setConsolidatedData] = useState<IBestClientValue[] | null>(null);
+
+    useEffect(() => {
+        if (bestClientValue) {
+            const valueClientsArray = valueClients(bestClientValue);
+            setConsolidatedData(valueClientsArray);
+        }
+    }, [ bestClientValue ]);
+
+    //Resetea tood para borras los filtros
+    const resetFilter = () => {
+        setSelectedMonth('');
+        setSelectedYear('');
+    };
+
+    return (
+        <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
+            <div className={styles.containerS}>
+                <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
+                    <h2 className="text-primary-emphasis text-start">Mejor cliente por valor</h2>
+                    <div className={styles.containerButtonExportT}>
+                        <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
+                    </div>
+                </div>
+
+                <div className="m-auto text-center border">
+                    <div className="d-flex justify-content-between">
+                        <select
+                            className="p-3 border-0 text-center"
+                            value={selectedBranch}
+                            onChange={(e) => setSelectedBranch(e.target.value)}
+                        >
+                            <option value=''>Todas las Sedes</option>
+                            {Array.isArray(branches) && branches.map((branch, index) => (
+                                <option key={index} value={branch.id}>
+                                    {branch.nameBranch}
+                                </option>
+                            ))}
+                        </select>
+                        <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
+                    </div>
+                </div>
+
+                <div className="p-3 d-flex flex-column align-items-center justify-content-center">
+                    <div className='d-flex'>
+                        <select
+                            className="m-2 p-3 border rounded text-center"
+                            value={selectedMonth}
+                            onChange={(e) => setSelectedMonth(e.target.value)}
+                        >
+                            <option value=''>Selecciona un Mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                        <select
+                            className="m-2 p-3 border rounded text-center"
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                        >
+                            <option value=''>Selecciona un Año</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button className={styles.buttonFilter} onClick={handleFilter}>Filtrar</button>
+                        <button className={styles.buttonFilter} onClick={resetFilter}>Borrar Filtros</button>
+                    </div>
+                </div>
+                
+                <div className={`${styles.containerInfoBestClient} `}>
+                    {bestClientValue ? (
+                        valueClients(bestClientValue).map((countedItem, index) => (
+                            <div key={index} className='mb-3 border rounded d-flex align-items-center justify-content-center'>
+                                {index < 3 && (
+                                    <div className={`${styles.infoBestClientImg} m-2`}>
+                                        {index === 0 && <img src={Uno} alt="1" style={{ width: '100px', height: '100px'}} />}
+                                        {index === 1 && <img src={Dos} alt="2" style={{ width: '100px', height: '100px'}} />}
+                                        {index === 2 && <img src={Tres} alt="3" style={{ width: '100px', height: '100px'}} />}
+                                    </div>
+                                )}
+                                <div className={`${styles.infoBestClient} m-2`}>
+                                    <h4 className="text-primary m-0">{index + 1} - {countedItem.transactionCounterpartId}</h4>
+                                    <p className="m-0 text-secondary">Valor de sus compras $ {formatNumberWithCommas(countedItem.value)}</p>
+                                    <p className="m-0 text-secondary">ID del cliente: {countedItem.transactionCounterpartId}</p>
+                                    <p className="m-0 text-secondary">{getBranchName(countedItem.branchId)}</p>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-center">
+                            <p>Los datos no están disponibles.</p>
+                        </div>
+                    )}
+                </div>
+                
+                <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl">
+                    <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
+                        <Modal.Title>Detalles de tus mejores clientes por valor</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ModalBestClientValue
+                            consolidatedData={consolidatedData}
+                        />
+                    </Modal.Body>
+                </Modal>
+            </div>
+
+            <div className="d-flex">
+                <button className={styles.buttonDetail} onClick={() => { setShowCancelModal(true) }} >Ver Detalles</button>
+            </div>
+        </div>
+    );
+}
+
+export default BestClientValue;

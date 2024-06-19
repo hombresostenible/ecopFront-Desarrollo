@@ -1,0 +1,45 @@
+.container {
+    padding: 30px;
+    width: 100%;
+    margin: 30px auto 0 auto;
+    background: #3c6e71;
+}
+.containerMetrics {
+    margin: 0 auto;
+    color: #f8f9fa;
+    width: 1100px;
+}
+.title {
+    color: #f28705;
+    font-size: 45px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.containerTags {
+    margin: 20px 0 0 0;
+}
+.titleHashtags {
+    color: #f8f9fa;
+    margin: 0;
+    font-size: 50px;
+    font-weight: 600;
+}
+.containerInfoHashtags {
+    margin: 15px 0 0 0;
+    gap: 15px;
+}
+.infoHashtags {
+    width: 270px;
+    height: 200px;
+}
+.countTags {
+    color: #f28705;
+    font-size: 80px;
+    font-weight: 600;
+    height: 100px;
+}
+.textTags {
+    border: 1px solid #f8f9fa;
+    border-radius: 10px;
+    height: 100px;
+}

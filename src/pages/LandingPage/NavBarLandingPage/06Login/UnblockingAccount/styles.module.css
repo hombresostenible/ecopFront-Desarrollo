@@ -1,0 +1,50 @@
+
+.containerPublicity {
+    width: 40%;
+    background: #718bd8;
+}
+.containerLogin {
+    width: 60%;
+}
+.login {
+    height: 400px;
+    width: 600px;
+}
+.logo {
+    height: 120px;
+}
+.errorsLogin {
+    top: -35px;
+    left: 0;
+}
+.title {
+    color: #718bd8;
+}
+.textDanger {
+    top: 44px;
+}
+.password {
+    border-radius: 5px;
+}
+.icon {
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #718bd8;
+}
+.buttonLogin {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.buttonLogin:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.link {
+    font-weight: 600;
+}

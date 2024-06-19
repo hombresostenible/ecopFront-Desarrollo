@@ -1,0 +1,111 @@
+.container {
+    margin: 100px auto;
+    width: 1250px;
+    min-height: calc(100vh - 570px);
+}
+.containerFormContact {
+    margin: 0 auto;
+    height: 600px;
+    width: 850px;
+}
+
+
+
+/*---------------Contenedor del formulario---------------*/
+.containerForm {
+    height: 600px;
+    width: 500px;
+}
+
+/*---------------Formulario---------------*/
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.text {
+    color: #495057;
+}
+.containerInfo {
+    width: 400px;
+}
+.containerInput {
+    margin: 5px 0;
+}
+.input {
+    width: 400px;
+    border-radius: 5px;
+}
+.label {
+    color: #495057;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 15px 0 0 0;
+}
+.containerAcceptedPolicy {
+    margin: 20px 0;
+    width: 400px;
+}
+.checkbox {
+    height: 30px;
+    width: 30px;
+    margin: 0 10px 0 0;
+}
+.buttonSubmit {
+    padding: 5px 10px;
+    border: none;
+    margin: auto;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.buttonSubmit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+
+
+/*---------------Informacoón de contacto---------------*/
+.containerContact {
+    height: 600px;
+    width: 350px;
+}
+.infoTitle {
+    color: #495057;
+}
+.infoP {
+    color: #495057;
+    margin: 30px 0 0 0;
+}
+.spanWhatsApp {
+    color: #25d366;
+    font-weight: 600;    
+}
+.infoEmail {
+    color: #d90429;
+    font-weight: 600;
+}
+.email {
+    color: #495057;
+    text-decoration: none;
+}
+.email:hover {
+    cursor: pointer;
+    color: #3a86ff;
+    text-decoration: underline;
+}
+.containerOpeningHours {
+    margin: 20px 0 0 0;
+}
+.opening {
+    color: #495057;
+}
+.hours {
+    color: #495057;
+}

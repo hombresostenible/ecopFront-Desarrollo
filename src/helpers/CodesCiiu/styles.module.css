@@ -1,0 +1,12 @@
+.containerInfo {
+    width: 600px;
+}
+.containerInput {
+    width: 600px;
+    border-radius: 3px;
+}
+.input {
+    margin: 0 0 30px 0;
+    border-radius: 3px;
+    width: 100%;
+}

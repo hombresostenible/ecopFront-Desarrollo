@@ -1,0 +1,76 @@
+/*---------Container Footer----------*/
+.container {
+    /* width: 100vw; */
+    background: #04151f;
+}
+.containerFooter {
+    width: 1250px;
+    height: 370px;
+    margin: auto;
+    color: #f8f9fa;
+}
+.columns {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 60px;
+}
+.columnSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.columnSection h6 {
+    letter-spacing: 1px;
+    color: #ced4da;
+}
+.linkFooter {
+    text-decoration: none;
+    color: #f8f9fa;
+}
+.linkP {
+    margin: 3px 0;
+}
+.socialMedia {
+    border-top: 1px solid #dee2e6;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+}
+.divIconSocial {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.linkedin, .instagram, .facebook, .xTwitter, .whatsapp, .telegram {
+    font-size: 25px;
+    color: #04151f;
+    transition: 300ms all ease;
+}
+.divIconSocial:hover {
+    transform: scale(1.1);
+}
+.containerCopyright {
+    width: 100%;
+    height: 50px;
+}
+.copyright {
+    width: 1250px;
+    margin: auto;
+    color: #f8f9fa;
+    height: 55px;
+    width: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

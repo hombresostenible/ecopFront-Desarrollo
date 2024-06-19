@@ -1,0 +1,38 @@
+/*---------------WhatsApp---------------*/
+.whatsappLandgin {
+    border: none;
+    border-radius: 10px;
+    position: fixed;    
+    bottom: 160px;
+    right: 20px;
+    z-index: 2;
+    transition: 300ms all ease;
+}
+.whatsappLandgin:hover {
+    cursor: pointer;
+    transform: scale(1.2) rotate(10deg);
+}
+.whatsapp {
+    height: 45px;
+    width: 45px;
+}
+
+
+/*---------------Telegram---------------*/
+.telegramLanding {
+    border: none;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 2;
+    transition: 300ms all ease;
+}
+.telegram {
+    height: 55px;
+    width: 55px;
+}
+.telegramLanding:hover {
+    cursor: pointer;
+    transform: scale(1.2) rotate(10deg);
+}

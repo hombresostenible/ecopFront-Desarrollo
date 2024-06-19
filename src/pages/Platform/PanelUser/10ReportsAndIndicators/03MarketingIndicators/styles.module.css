@@ -1,0 +1,151 @@
+.container {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 350px);
+}
+.container__Component {
+    height: calc(100vh - 70px);
+    width: calc(100vw - 350px);
+}
+.title {
+    color: #f28705;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Century Gothic', sans-serif;
+}
+.container__Cards_Indicators {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.containerIndicators {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 
+        repeat(
+            auto-fit,
+            minmax(400px, 1fr)
+        );
+}
+.linkIndicators {
+    margin: auto;
+    border: 1px solid #dee2e6;
+    height: 250px;
+    width: 350px;
+    border-radius: 10px;
+    font-size: 30px;
+    font-weight: 600;
+}
+.titleIndicator {
+    color: #718bd8;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+/* .cardFinantialIndicators {}
+.cardMarketingIndicators {}
+.cardSustainabilityIndicators {} */
+
+
+
+/*---------------Indicators---------------*/
+
+
+.divs {
+    display: flex;
+    gap: 20px;
+    margin: 0 0 20px 0;
+}
+.indicator {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+.div {
+    width: 310px;
+    height: 145px;
+    justify-content: space-between;
+    padding: 20px;
+}
+.div h5 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.div p {
+    text-align: center;
+}
+.buttonDiv {    
+    width: 150px;
+    text-align: center;
+    margin: 0 auto 20px auto;
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.buttonDiv:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.containerButtonBackTo {
+    margin: 5px;
+}
+.buttonBackTo {
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+    margin: 20px;
+    text-decoration: none;
+}
+.buttonBackTo:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.containerButton {
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+    text-decoration: none;
+}
+.button:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+
+
+/*Calculate Finantial Indicator*/
+.containerDiv {
+    margin: auto;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divRender {
+    margin: 20px auto;
+    height: 900px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
