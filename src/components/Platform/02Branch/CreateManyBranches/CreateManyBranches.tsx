@@ -41,6 +41,7 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                     "Nombre de la sede": "nameBranch",
                     "Departamento de la sede": "department",
                     "Ciudad de la sede": "city",
+                    
                     "Dirección de la sede": "addressBranch",
                     "Email de la sede": "contactEmailBranch",
                     "Teléfono de la sede": "contactPhoneBranch",
@@ -120,7 +121,7 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
                 <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/Download-Excels/Sedes.xlsx" download="Sedes.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Sedes.xlsx" download="Sedes.xlsx">Descargar Excel</a>
                 </div>
                 <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada una de tus sedes y facilitar la creación masiva.</p>
             </div>

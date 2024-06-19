@@ -11,7 +11,7 @@ import serviceReducer from './User/serviceSlice/serviceSlice';
 import userReducer from './User/userSlice/userSlice';
 import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
 import finantialIndicatorsReducer from './User/indicator/finantialIndicators/finantialIndicatorsSlice'; // Asegúrate de ajustar el path correctamente
-import itemByBarCodeOrNameReducer from './User/itemBybarCodeOrName/itemBybarCodeOrNameSlice';
+import itemByBarCodeOrNameReducer from './User/itemBybarCodeOrName/itemByBarCodeOrNameSlice';
 
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
