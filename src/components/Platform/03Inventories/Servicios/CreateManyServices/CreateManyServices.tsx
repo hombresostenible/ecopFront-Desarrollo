@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
+import { postManyServices } from '../../../../../redux/User/serviceSlice/actions';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
+import { IService } from '../../../../../types/User/services.types';
 import styles from './styles.module.css';
 
 interface CreateManyRawMateralsProps {
@@ -54,18 +54,9 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Nombre de la matería prima": "nameItem",
-                    "Código de barras": "barCode",
-                    "Inventario": "inventory",
-                    "Unidad de medida": "unitMeasure",
-                    "¿Autoincremento?": "inventoryIncrease",
-                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
-                    "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio de compra antes de impuestos": "purchasePriceBeforeTax",
+                    "Nombre del servicio": "nameItem",
+                    "Precio de venta": "sellingPrice",
                     "IVA": "IVA",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -101,18 +92,9 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "nameItem": "Nombre de la matería prima",
-        "barCode": "Código de barras",
-        "inventory": "Inventario",
-        "unitMeasure": "Unidad de medida",
-        "inventoryIncrease": "¿Autoincremento?",
-        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
-        "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "purchasePriceBeforeTax": "Precio de compra antes de impuestos",
+        "nameItem": "Nombre del servicio",
+        "sellingPrice": "Precio de venta",
         "IVA": "IVA",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -143,7 +125,7 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
                 userId: user?.id
             };
         });
-        dispatch(postManyRawMaterials(rawMateriaData as unknown as IRawMaterial[], token));
+        dispatch(postManyServices(rawMateriaData as unknown as IService[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
         setMessage('Se guardó masivamente tus materias primas con éxito');

@@ -28,7 +28,7 @@ export const postService = (formData: IService, token: string) => async (dispatc
 export const postManyServices = (formData: IService[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyServicesStart(formData));
-        const response = await axiosInstance.post('/service/createMany', formData, {
+        const response = await axiosInstance.post('/service/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

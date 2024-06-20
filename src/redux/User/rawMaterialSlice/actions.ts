@@ -28,7 +28,7 @@ export const postRawMaterial = (formData: IRawMaterial, token: string) => async 
 export const postManyRawMaterials = (formData: IRawMaterial[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyRawMaterialsStart(formData));
-        const response = await axiosInstance.post('/rawMaterial/createMany', formData, {
+        const response = await axiosInstance.post('/rawMaterial/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

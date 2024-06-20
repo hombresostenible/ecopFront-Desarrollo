@@ -358,7 +358,7 @@ function CreateServicesPage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorService?.map((error, i) => (
+                            {Array.isArray(errorService)&& errorService?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
