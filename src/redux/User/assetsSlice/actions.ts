@@ -28,7 +28,7 @@ export const postAsset = (formData: IAssets, token: string) => async (dispatch: 
 export const postManyAssets = (formData: IAssets[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyAssetsStart(formData));
-        const response = await axiosInstance.post('/asset/createMany', formData, {
+        const response = await axiosInstance.post('/asset/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
