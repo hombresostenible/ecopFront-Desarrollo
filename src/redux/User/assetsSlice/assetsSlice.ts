@@ -50,6 +50,16 @@ const assetsSlice = createSlice({
             state.assets = action.payload;
             state.errorAssets = null;
         },
+        getAssetsOffStart: (state, action: PayloadAction<IAssets[]>) => {
+            state.loading = true;
+            state.assets = action.payload;
+            state.errorAssets = null;
+        },
+        getAssetsOffByBranchStart: (state, action: PayloadAction<IAssets[]>) => {
+            state.loading = true;
+            state.assets = action.payload;
+            state.errorAssets = null;
+        },
         putAssetStart: (state) => {
             state.loading = true;
             state.errorAssets = null;
@@ -70,5 +80,5 @@ const assetsSlice = createSlice({
     },
 });
 
-export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = assetsSlice.actions;
+export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = assetsSlice.actions;
 export default assetsSlice.reducer;

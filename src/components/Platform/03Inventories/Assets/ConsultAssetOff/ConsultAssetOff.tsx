@@ -1,46 +1,37 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
 // REDUX
-import { useDispatch } from 'react-redux';
-import { patchAsset, getAssets } from '../../../../redux/User/assetsSlice/actions';
-import type { AppDispatch } from '../../../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { patchAsset, getAssetsOff, getAssets } from '../../../../../redux/User/assetsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { IAssets } from '../../../../types/User/assets.types';
-import { IBranch } from '../../../../types/User/branch.types';
+import { IAssets } from '../../../../../types/User/assets.types';
+import { IBranch } from '../../../../../types/User/branch.types';
 import styles from './styles.module.css';
 
 interface ConsultAssetOffProps {
     token: string;
-    assets: IAssets[];
     branches: IBranch[] | null;
     onCloseModal: () => void;
 }
 
-function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAssetOffProps) {
+function ConsultAssetOff({ token, branches, onCloseModal }: ConsultAssetOffProps) {
     const dispatch: AppDispatch = useDispatch();
 
-    const transformInventoryOff = (inventoryOff: (string | undefined)[]) => {
-        return inventoryOff.map((item) => {
-            if (typeof item === 'string' && item !== 'undefined') {
-                try {
-                    const parsedItem = JSON.parse(item.replace(/\\"/g, '"'));
-                    return parsedItem;
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
-                    return null;
-                }
-            }
-            return null;
-        }).filter(Boolean);
+    // Estados de Redux
+    const assets = useSelector((state: RootState) => state.assets.assets);
+
+    useEffect(() => {
+        if (token) {
+            dispatch(getAssetsOff(token));
+        }
+    }, [token]);
+
+    const calculateTotalInventoryOff = (inventoryOff: { quantity: number }[] = []) => {
+        return inventoryOff.reduce((total, item) => total + item.quantity, 0);
     };
 
-    const transformedInventoryOff = transformInventoryOff(assets.map(asset => JSON.stringify(asset.inventoryOff || [])));
-
-    const totalInventoryOff = transformedInventoryOff.reduce((acc, item) => {
-        if (item && typeof item.quantity === 'number') {
-            return acc + item.quantity;
-        }
-        return acc;
-    }, 0);
-
+    //ESTA FUNCION EDITA LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DADAS DE BAJA
     const onSubmit = (idAsset: string) => {
         try {
             const assetData: IAssets = {
@@ -48,6 +39,7 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                     date: new Date(),
                     quantity: 1, // O cualquier valor apropiado
                     reason: "Activo en uso",
+                    description: "Activo en uso",
                 }],
             } as IAssets;
             dispatch(patchAsset(idAsset, assetData, token));
@@ -74,7 +66,7 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                     </thead>
 
                     <tbody>
-                        {assets && assets.length > 0  ? (
+                        {Array.isArray(assets) && assets.length > 0 ? (
                             assets.map((asset) => (
                                 <tr key={asset.id}>
                                     <td className='align-middle text-center'>
@@ -95,9 +87,8 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                                     <td className='align-middle text-center'>
                                         <span>{asset.referenceAssets}</span>
                                     </td>
-
                                     <td className='align-middle text-center'>
-                                        <span>{totalInventoryOff}</span>
+                                        <span>{calculateTotalInventoryOff(asset.inventoryOff)}</span>
                                     </td>
                                     <td className='d-flex align-items-center justify-content-center align-middle text-center'>
                                         <div
@@ -106,12 +97,11 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                                                 onSubmit(asset.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
                                             }}
                                         >
-                                            Deshacer
+                                            Editar
                                         </div>
                                     </td>
                                 </tr>
                             ))
-
                         ) : (
                             <tr>
                                 <td colSpan={8} className="text-center">
@@ -119,7 +109,6 @@ function ConsultAssetOff({ token, assets, branches, onCloseModal }: ConsultAsset
                                 </td>
                             </tr>
                         )}
-
                     </tbody>
                 </table>
             </div>
