@@ -248,7 +248,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                                 </div>
                             </div>
                             
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>
