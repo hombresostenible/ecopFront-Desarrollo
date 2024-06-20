@@ -127,7 +127,13 @@ function ConsultProductsPage() {
                                 {Array.isArray(product) && product.map((product) => (
                                     <div key={product.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.branchId}</span>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                {Array.isArray(branches) && branches.map((branch, index) => (
+                                                    product.branchId === branch.id && (
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                    )
+                                                ))}
+                                            </span>
                                         </div>
                                         <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>

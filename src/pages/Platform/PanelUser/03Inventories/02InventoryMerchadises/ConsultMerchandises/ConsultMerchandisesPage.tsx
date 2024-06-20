@@ -120,11 +120,18 @@ function ConsultMerchandisesPage() {
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
                             </div>
-                            <div className={`${styles.container__Body} d-flex flex-column `}>
+
+                            <div className={`${styles.container__Body}`}>
                                 {Array.isArray(merchandise) && merchandise.map((merchadise) => (
                                     <div key={merchadise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.branchId}</span>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                {Array.isArray(branches) && branches.map((branch, index) => (
+                                                    merchadise.branchId === branch.id && (
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                    )
+                                                ))}
+                                            </span>
                                         </div>
                                         <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.nameItem}</span>
