@@ -15,7 +15,6 @@
 
 /* TABLA */
 .container__Table {
-    width: 1000px;
     width: 100%;
 }
 .container__Head {
@@ -24,11 +23,11 @@
     width: 100%;
     font-weight: 600;
 }
-
 .container__Tr {
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
+
 /* TITULOS DE LAS COLUMNAS */
 .branch {
     height: 60px;

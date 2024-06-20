@@ -19,8 +19,10 @@
     color: white;
     background: #718bd8;
 }
+
+/* TABLA */
 .container__Table{
-    width: 1000px;
+    width: 100%;
 }
 .container__Head{
     background: #e9ecef;
@@ -28,43 +30,56 @@
     width: 100%;
     font-weight: 600;
 }
-.container__Tr{
-    height: 60px;
-}
-.column__Branch{
-    height: 60px;
-    width: 140px;
-}
-.column__Name_Item{
-    height: 60px;
-    width: 140px;
-}
-.column__Brand_Assets{
-    height: 60px;
-    width: 140px;
-}
-.column__Reference_Asset{  
 
+/* TITULOS DE LAS COLUMNAS */
+.container__Tr{
+    border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
-    width: 140px;
 }
-.column__Condition_Asset{
+.branch{
     height: 60px;
-    width: 140px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__State_Asset{
+.name__Item{
     height: 60px;
-    width: 200px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Action{
+.brand__Assets{
     height: 60px;
-    width: 100px;
+    width: 14%;
+    min-width: 140px;
 }
+.reference__Asset{  
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
+}
+.condition__Asset{
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
+}
+.state__Asset{
+    height: 60px;
+    width: 20%;
+    min-width: 200px;
+}
+.action{
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+
+/* CONTENIDO DE LA TABLA */
 .container__Body{
     height: 60px;
     width: 100%;
 }
 .container__Info{
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
@@ -74,10 +89,11 @@
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
 }
 .button__Delete {
+    font-size: 16px;
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 5px;
+    padding: 0 12px;
 }
 .button__Delete:hover {
     transition: 300ms all ease;
@@ -88,7 +104,7 @@
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 5px;
+    padding: 0 12px;
 }
 .button__Edit:hover {
     transition: 300ms all ease;

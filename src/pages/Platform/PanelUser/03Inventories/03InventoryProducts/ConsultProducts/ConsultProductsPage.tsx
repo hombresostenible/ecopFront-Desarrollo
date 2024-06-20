@@ -92,11 +92,12 @@ function ConsultProductsPage() {
 
                         <Link to='/inventories/create-products' className={`${styles.link__Income_Create} `}>Registro de inventario</Link>
                         <Link to='/inventories/quote-products' className={`${styles.link__Income_Create} mx-2`}>Cotizar productos</Link>
-                        <div className='mt-4 d-flex flex-column align-items-center justify-content-center'>
-                            <h2>Filtra tus productos por sede</h2>
+
+                        <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
+                            <h3 className='m-0'>Filtra tus productos por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-3 mb-3 m-center col-lg-5 col-md-4 col-sm-6 col-xs-12 text-center border rounded"
+                                className="mx-2 p-1 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -110,42 +111,43 @@ function ConsultProductsPage() {
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} text-center d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
-                                    <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
-                                    <div className={`${styles.column__Inventory} d-flex align-items-center justify-content-center`}>Inventario</div>
-                                    <div className={`${styles.column__Unit_Measure} d-flex align-items-center justify-content-center`}>Unidad de medida</div>
-                                    <div className={`${styles.column__Selling_Price} d-flex align-items-center justify-content-center`}>Precio</div>
-                                    <div className={`${styles.column__Packaged} d-flex align-items-center justify-content-center`}>Empacado</div>
-                                    <div className={`${styles.column__Primary_Package_Type} d-flex align-items-center justify-content-center`}>Empaque principal</div>
-                                    <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
+                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</div>
+                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
+                                    <div className={`${styles.inventory} d-flex align-items-center justify-content-center`}>Inventario</div>
+                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center`}>Unidad de medida</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center`}>Precio</div>
+                                    <div className={`${styles.packaged} d-flex align-items-center justify-content-center`}>Empacado</div>
+                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center`}>Empaque principal</div>
+                                    <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
                             </div>
+
                             <div className={`${styles.container__Body} d-flex flex-column `}>
                                 {Array.isArray(product) && product.map((product) => (
                                     <div key={product.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.column__Branch} d-flex align-items-center justify-content-start`}>
+                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.branchId}</span>
                                         </div>
-                                        <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-start`}>
+                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
                                         </div>
-                                        <div className={`${styles.column__Inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                        <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory}</span>
                                         </div>
-                                        <div className={`${styles.column__Unit_Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                        <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.unitMeasure}</span>
                                         </div>
-                                        <div className={`${styles.column__Selling_Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                        <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.sellingPrice}</span>
                                         </div>
-                                        <div className={`${styles.column__Packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                        <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.packaged}</span>
                                         </div>
-                                        <div className={`${styles.column__Primary_Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.primaryPackageType}</span>
                                         </div>
-                                        <div className={`${styles.column__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
+                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                             <RiDeleteBin6Line
                                                 className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
                                                 onClick={() => {
