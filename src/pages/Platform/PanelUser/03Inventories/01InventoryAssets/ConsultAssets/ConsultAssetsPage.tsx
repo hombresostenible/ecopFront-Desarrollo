@@ -159,7 +159,7 @@ function ConsultAssetsPage() {
 
                             <div className={`${styles.container__Body}`}>
                                 {Array.isArray(assets) && assets.map((asset) => (
-                                     <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                    <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.branchId}</span>
                                         </div>

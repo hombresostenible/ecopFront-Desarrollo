@@ -90,7 +90,8 @@ function ConsultMerchandisesPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Mercancías</h1>
 
                         <Link to='/inventories/create-merchandises' className={styles.link__Income_Create}>Registro de inventario</Link>
-                        <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
+
+                        <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus mercancías por sede</h3>
                             <select
                                 value={selectedBranch || ''}
@@ -119,10 +120,9 @@ function ConsultMerchandisesPage() {
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
                             </div>
-
-                            <div className={`${styles.container__Body}`}>
+                            <div className={`${styles.container__Body} d-flex flex-column `}>
                                 {Array.isArray(merchandise) && merchandise.map((merchadise) => (
-                                    <div key={merchadise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                    <div key={merchadise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.branchId}</span>
                                         </div>
