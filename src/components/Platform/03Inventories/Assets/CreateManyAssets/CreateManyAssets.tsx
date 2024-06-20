@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+import { postManyAssets } from '../../../../../redux/User/assetsSlice/actions';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { IMerchandise } from "../../../../../types/User/merchandise.types";
+import { IAssets } from "../../../../../types/User/assets.types";
 import styles from './styles.module.css';
 
 interface CreateManyMerchandisesProps {
@@ -16,7 +16,7 @@ interface CreateManyMerchandisesProps {
     onCreateComplete: () => void;
 }
 
-function CreateManyAssets ({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
+function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const user = useSelector((state: RootState) => state.user.user);
@@ -53,19 +53,15 @@ function CreateManyAssets ({ branches, token, onCreateComplete }: CreateManyMerc
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Nombre de la mercancía": "nameItem",
+                    "Nombre del artículo": "nameItem",
                     "Código de barras": "barCode",
                     "Inventario": "inventory",
-                    "Unidad de medida": "unitMeasure",
-                    "¿Autoincremento?": "inventoryIncrease",
-                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
-                    "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio unitario de compra antes de impuestos": "purchasePriceBeforeTax",
+                    "Marca": "brandAssets",
+                    "Referencia": "referenceAssets",
+                    "Condición de compra": "conditionAssets",
+                    "Estado": "stateAssets",
+                    "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
-                    "Precio unitario de venta": "sellingPrice",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -100,19 +96,15 @@ function CreateManyAssets ({ branches, token, onCreateComplete }: CreateManyMerc
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "nameItem": "Nombre de la mercancía",
+        "nameItem": "Nombre del artículo",
         "barCode": "Código de barras",
         "inventory": "Inventario",
-        "unitMeasure": "Unidad de medida",
-        "inventoryIncrease": "¿Autoincremento?",
-        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
-        "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "purchasePriceBeforeTax": "Precio unitario de compra antes de impuestos",
+        "brandAssets": "Marca",
+        "referenceAssets": "Referencia",
+        "conditionAssets": "Condición de compra",
+        "stateAssets": "Estado",
+        "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
         "IVA": "IVA",
-        "sellingPrice": "Precio unitario de venta",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -120,14 +112,14 @@ function CreateManyAssets ({ branches, token, onCreateComplete }: CreateManyMerc
         if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const merchandiseData = nonEmptyRows.map(asset => ({
+        const assetData = nonEmptyRows.map(asset => ({
             ...asset,
             branchId: branchId,
             userId: user?.id,
         }));
-        dispatch(postManyMerchandises(merchandiseData as unknown as IMerchandise[], token));
+        dispatch(postManyAssets(assetData as unknown as IAssets[], token));
         setExcelData(null);
-        setMessage('Se guardó masivamente tus activos con exito');
+        setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
