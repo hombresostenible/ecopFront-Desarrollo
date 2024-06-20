@@ -28,7 +28,7 @@ export const postMerchandise = (formData: IMerchandise, token: string) => async 
 export const postManyMerchandises = (formData: IMerchandise[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyMerchandisesStart(formData));
-        const response = await axiosInstance.post('/merchandise/createMany', formData, {
+        const response = await axiosInstance.post('/merchandise/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
