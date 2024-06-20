@@ -136,7 +136,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         defaultValue={selectedBranchId || ''}
                                         disabled={!!selectedBranchId} // Deshabilita el select si se pasa una branchId
                                     >
@@ -161,7 +161,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Nombre de tu equipo, herramienta o maquinaría que quieres registrar'
                                         onChange={handleNameItem}
                                     />
@@ -179,7 +179,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     <input
                                         type="number"
                                         {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Tu inventario acá'
                                         min={0}
                                     />
@@ -197,7 +197,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     <input
                                         type="text"
                                         {...register('brandAssets', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Marca equipo, herramienta o maquinaría quieres registrar'
                                     />
                                     {errors.brandAssets && (
@@ -214,7 +214,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     <input
                                         type="text"
                                         {...register('referenceAssets', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Referencia o N/A'
                                     />
                                     {errors.referenceAssets && (
@@ -253,7 +253,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 <div>
                                     <select
                                         {...register('stateAssets', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                     >
                                         <option value=''>Seleccione una opción</option>
                                         <option value='Funciona correctamente'>Funciona correctamente</option>
@@ -267,7 +267,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 </div>
                             </div>
 
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>

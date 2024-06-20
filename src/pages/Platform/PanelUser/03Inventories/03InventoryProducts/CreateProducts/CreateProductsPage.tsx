@@ -314,43 +314,43 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         </div>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center w-100`}>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Diario' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Diario' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Diario')}
                                             >
                                                 Diario
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Semanal' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semanal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semanal')}
                                             >
                                                 Semanal
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Quincenal' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Quincenal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Quincenal')}
                                             >
                                                 Quincenal
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Mensual' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Mensual' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Mensual')}
                                             >
                                                 Mensual
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Bimestral' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Bimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Bimestral')}
                                             >
                                                 Bimestral
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Trimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Trimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Trimestral')}
                                             >
                                                 Trimestral
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Semestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semestral')}
                                             >
                                                 Semestral
@@ -553,7 +553,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 </div>
                             )}
 
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>

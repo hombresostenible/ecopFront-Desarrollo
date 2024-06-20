@@ -124,62 +124,69 @@ function ConsultProductsPage() {
                             </div>
 
                             <div className={`${styles.container__Body} d-flex flex-column `}>
-                                {Array.isArray(product) && product.map((product) => (
-                                    <div key={product.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                {Array.isArray(branches) && branches.map((branch, index) => (
-                                                    product.branchId === branch.id && (
-                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                    )
-                                                ))}
-                                            </span>
+                                {Array.isArray(product) && product.length > 0 ? (
+                                    product.map((product) => (
+                                        <div key={product.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {branchesArray.map((branch, index) => (
+                                                        product.branchId === branch.id && (
+                                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                        )
+                                                    ))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
+                                            </div>
+                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory}</span>
+                                            </div>
+                                            <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.unitMeasure}</span>
+                                            </div>
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.sellingPrice}</span>
+                                            </div>
+                                            <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.packaged}</span>
+                                            </div>
+                                            <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.primaryPackageType}</span>
+                                            </div>
+                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdProduct(product.id);
+                                                        setNameProduct(product.nameItem || '');
+                                                        handleDelete(product);
+                                                    }}
+                                                    aria-label={`Eliminar ${product.nameItem}`}
+                                                />
+                                                <BsPencil
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdProduct(product.id);
+                                                        handleEdit(product)
+                                                    }}
+                                                />
+                                                <IoIosCloseCircleOutline
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdProduct(product.id);
+                                                        setNameProduct(product.nameItem || '');
+                                                        handleOff(product)
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
-                                        </div>
-                                        <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory}</span>
-                                        </div>
-                                        <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.unitMeasure}</span>
-                                        </div>
-                                        <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.sellingPrice}</span>
-                                        </div>
-                                        <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.packaged}</span>
-                                        </div>
-                                        <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.primaryPackageType}</span>
-                                        </div>
-                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdProduct(product.id);
-                                                    setNameProduct(product.nameItem || '');
-                                                    handleDelete(product);
-                                                }}
-                                            />
-                                            <BsPencil
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdProduct(product.id);
-                                                    handleEdit(product)
-                                                }}
-                                            />
-                                            <IoIosCloseCircleOutline
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdProduct(product.id);
-                                                    setNameProduct(product.nameItem || '');
-                                                    handleOff(product)
-                                                }}
-                                            />
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noProductsMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes productos registrados
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
 

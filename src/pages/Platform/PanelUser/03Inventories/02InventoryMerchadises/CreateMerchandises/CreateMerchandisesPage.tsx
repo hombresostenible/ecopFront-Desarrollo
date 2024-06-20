@@ -163,7 +163,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -186,7 +186,7 @@ function CreateMerchandisesPage() {
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleNameItem}
                                         placeholder='¿Qué mercancía quieres registrar?'
                                     />
@@ -203,7 +203,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <select
                                         {...register('unitMeasure', { required: true })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleUnitMeasureChange}
                                     >                                         
                                         <option value=''>Selecciona una unidad de medida</option>
@@ -256,7 +256,7 @@ function CreateMerchandisesPage() {
                                     <input
                                         type="number"
                                         {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Tu inventario acá'
                                         min={0}
                                         onKeyDown={(e) => {
@@ -302,43 +302,43 @@ function CreateMerchandisesPage() {
                                         </div>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center w-100`}>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Diario' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Diario' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Diario')}
                                             >
                                                 Diario
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Semanal' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semanal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semanal')}
                                             >
                                                 Semanal
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Quincenal' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Quincenal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Quincenal')}
                                             >
                                                 Quincenal
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Mensual' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Mensual' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Mensual')}
                                             >
                                                 Mensual
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Bimestral' ? styles.selectedInventoryIncrease : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Bimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Bimestral')}
                                             >
                                                 Bimestral
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Trimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Trimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Trimestral')}
                                             >
                                                 Trimestral
                                             </div>
                                             <div
-                                                className={`${styles.conditionOptionInventoryIncrease} ${periodicityAutomaticIncrease === 'Semestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
                                                 onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semestral')}
                                             >
                                                 Semestral
@@ -357,7 +357,7 @@ function CreateMerchandisesPage() {
                                             <input
                                                 type="number"
                                                 {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded form-control`}
+                                                className={`${styles.input} p-2 border `}
                                                 placeholder='Valor numérico de lo que quieres aumentar'
                                                 min={0}
                                                 onKeyDown={(e) => {
@@ -405,7 +405,7 @@ function CreateMerchandisesPage() {
                                     <div>
                                         <select
                                             {...register('primaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded form-control`}
+                                            className={`${styles.input} p-2 border `}
                                         >
                                             <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
@@ -443,7 +443,7 @@ function CreateMerchandisesPage() {
                                             <input
                                                 type="number"
                                                 {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded form-control`}
+                                                className={`${styles.input} p-2 border `}
                                                 placeholder='Ej: 10'
                                                 min={0}
                                                 onKeyDown={(e) => {
@@ -514,7 +514,7 @@ function CreateMerchandisesPage() {
                                     <div>
                                         <select
                                             {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded form-control`}                                    
+                                            className={`${styles.input} p-2 border `}                                    
                                         >
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>
@@ -541,7 +541,7 @@ function CreateMerchandisesPage() {
                                 </div>
                             )}
 
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>
