@@ -19,10 +19,7 @@ function BranchCardPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
-<<<<<<< HEAD
     // Estados de Redux
-=======
->>>>>>> d716eaa9802f5d21952c04035142c851b6cffdea
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranchModal, setSelectedBranchModal] = useState<IBranch | null>(null);
