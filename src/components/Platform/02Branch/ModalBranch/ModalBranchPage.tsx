@@ -65,7 +65,6 @@ function ModalBranch({ idBranch, branch, token, onCloseModal }: ModalBranchProps
                 editedBranch.city = selectedCity;
                 editedBranch.codeDane = selectedCodeDane;
                 editedBranch.subregionCodeDane = selectedSubregionCodeDane;
-                console.log('editedBranch: ', editedBranch)
                 dispatch(putBranch(idBranch, editedBranch, token));
                 // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));

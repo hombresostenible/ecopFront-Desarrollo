@@ -141,10 +141,10 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <input
-                                type="text"
+                                type="number"
                                 className={`${styles.inputEdit} p-2 border w-100`}
                                 value={editedAsset.inventory}
-                                onChange={(e) => handleEditField(e, 'inventory', 'text')}
+                                onChange={(e) => handleEditField(e, 'inventory', 'number')}
                             />
                         ) : (
                             <p className={`${styles.input} p-2 text-start border`}>{asset?.inventory}</p>
@@ -185,13 +185,20 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                     </div>
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>Condición del activo</h6>
+                <h6 className={styles.label}>Condición del activo</h6>
                     <div className={styles.containerInput}>
                         {isEditing ? (
                             <select
                                 className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedAsset.conditionAssets}
-                                onChange={(e) => setEditedConditionAssets(e.target.value as 'Nuevo' | 'Usado')}
+                                value={editedAsset.conditionAssets || ''}
+                                onChange={(e) => {
+                                    const value = e.target.value as 'Nuevo' | 'Usado';
+                                    setEditedConditionAssets(value);
+                                    setEditedAsset((prevEdited) => ({
+                                        ...prevEdited,
+                                        conditionAssets: value,
+                                    }));
+                                }}
                             >
                                 <option value='Nuevo'>Nuevo</option>
                                 <option value='Usado'>Usado</option>
@@ -203,25 +210,30 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Estado del activo</h6>
-                    <div className={styles.containerInput}>
-                        {isEditing ? (
-                            <select
-                                className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedAsset.stateAssets}
-                                onChange={(e) => setEditedStateAssets(e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion')}
-                            >
-                                <option value='Funciona correctamente'>Funciona correctamente</option>
-                                <option value='Funciona requiere mantenimiento'>Funciona requiere mantenimiento</option>
-                                <option value='Dañada requiere cambio'>Dañada requiere cambio</option>
-                                <option value='Dañada requiere reparacion'>Dañada requiere reparacion</option>
-                            </select>
-                        ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{asset?.stateAssets}</p>
-                        )}
-                    </div>
+            <div className="w-100">
+                <h6 className={styles.label}>Estado del activo</h6>
+                <div className={styles.containerInput}>
+                    {isEditing ? (
+                        <select
+                            className={`${styles.inputEdit} p-2 border w-100`}
+                            value={editedAsset.stateAssets || ''}
+                            onChange={(e) => {
+                                const value = e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion';
+                                setEditedStateAssets(value);
+                                setEditedAsset((prevEdited) => ({
+                                    ...prevEdited,
+                                    stateAssets: value,
+                                }));
+                            }}
+                        >
+                            <option value='Funciona correctamente'>Funciona correctamente</option>
+                            <option value='Funciona requiere mantenimiento'>Funciona requiere mantenimiento</option>
+                            <option value='Dañada requiere cambio'>Dañada requiere cambio</option>
+                            <option value='Dañada requiere reparacion'>Dañada requiere reparacion</option>
+                        </select>
+                    ) : (
+                        <p className={`${styles.input} p-2 text-start border`}>{asset?.stateAssets}</p>
+                    )}
                 </div>
             </div>
 
@@ -248,7 +260,14 @@ function ModalAsset({ token, idItem, asset, branches, onCloseModal }: ModalAsset
                             <select
                                 className={`${styles.inputEdit} p-2 border w-100`}
                                 value={editedAsset.IVA ? editedAsset.IVA.toString() : ''}
-                                onChange={(e) => setEditedIVA(parseInt(e.target.value))}
+                                onChange={(e) => {
+                                    const value = parseInt(e.target.value);
+                                    setEditedIVA(value);
+                                    setEditedAsset((prevEdited) => ({
+                                        ...prevEdited,
+                                        IVA: value,
+                                    }));
+                                }}
                             >
                                 <option value='0'>0</option>
                                 <option value='5'>5</option>
