@@ -38,19 +38,23 @@
 }
 .branch{
     height: 60px;
-    width: 120px;
+    width: 12%;
+    min-width: 120px;
 }
 .name__Item{
     height: 60px;
-    width: 120px;
+    width: 12%;
+    min-width: 120px;
 }
 .selling__Price{
     height: 60px;
-    width: 120px;
+    width: 12%;
+    min-width: 120px;
 }
 .action{
     height: 60px;
-    width: 100px;
+    width: 10%;
+    min-width: 100px;
 }
 
 /* CONTENIDO DE LA TABLA */

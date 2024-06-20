@@ -118,7 +118,13 @@ function ConsultServicesPage() {
                                 {Array.isArray(service) && service.map((service) => (
                                     <div key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.branchId}</span>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                {Array.isArray(branches) && branches.map((branch, index) => (
+                                                    service.branchId === branch.id && (
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                    )
+                                                ))}
+                                            </span>
                                         </div>
                                         <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
