@@ -12,6 +12,15 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
+.link__Income_Create {
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #718bd8;
+}
+
+
 .buttonClearFilterAll {
     padding: 5px 10px;
     width: 300px;
@@ -47,20 +56,10 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
-.branch {
-    width: 500px;
-}
-.h4 {
-    width: 200px;
-    color: #0a31bf;
-    font-weight: 600;
-    margin: 0 auto 10px auto;
-}
-
 
 /* TABLA */
 .container__Table{
-    width: 1000px;
+    width: 100%;
 }
 .container__Head{
     background: #e9ecef;
@@ -68,66 +67,110 @@
     width: 100%;
     font-weight: 600;
 }
+
+/* TITULOS DE LAS COLUMNAS */
 .container__Tr{
+    border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
-.column__Transaction_Date {
-    width: 110px;
+.transaction__Date {
+    height: 60px;
+    width: 11%;
+    min-width: 110px;
 }
-.column__Registration_Date {
-    width: 140px;
+.registration__Date {
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Branch {
-    width: 120px;
+.branch {
+    height: 60px;
+    width: 12%;
+    min-width: 120px;
 }
-.column__Transaction_Type {
-    width: 100px;
+.transaction__Type {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
-.column__Mean_Payment {
-    width: 140px;
+.mean__Payment {
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Income_Category {
-    width: 120px;
+.income__Category {
+    height: 60px;
+    width: 12%;
+    min-width: 120px;
 }
-.column__Name_Item {
-    width: 140px;
+.name__Item {
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Unit_Value {
-    width: 110px;
+.unit__Value {
+    height: 60px;
+    width: 11%;
+    min-width: 110px;
 }
-.column__Quantity {
-    width: 90px;
+.quantity {
+    height: 60px;
+    width: 9%;
+    min-width: 90px;
 }
-.column__Total_Value {
-    width: 140px;
+.total__Value {
+    height: 60px;
+    width: 14%;
+    min-width: 140px;
 }
-.column__Credit_Cash {
-    width: 120px;
+.credit__Cash {
+    height: 60px;
+    width: 12%;
+    min-width: 120px;
 }
-.column__Transaction_Counterpart {
-    width: 110px;
+.transaction__Counterpart {
+    height: 60px;
+    width: 11%;
+    min-width: 110px;
 }
-.column__Seller {
-    width: 120px;
+.seller {
+    height: 60px;
+    width: 12%;
+    min-width: 120px;
 }
-.column__Transaction_Approved {
-    width: 100px;
+.transaction__Approved {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
-.column__Action {
-    width: 140px;
+.action {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 
+/* CONTENIDO DE LA TABLA */
+.container__Body{
+    height: 60px;
+    width: 100%;
+}
+.container__Info{
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
 .text__Ellipsis {
     opacity: 0.75;
     white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
 }
 .button__Delete {
-    font-size: 14px;
+    font-size: 16px;
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 16px;
+    padding: 0 12px;
 }
 .button__Delete:hover {
     transition: 300ms all ease;
@@ -138,27 +181,10 @@
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 16px;
+    padding: 0 12px;
 }
 .button__Edit:hover {
     transition: 300ms all ease;
     color: #718bd8;
     cursor: pointer;
-}
-
-
-
-.container__ddddddd {
-    padding: 20px;
-    display: flex;
-    align-items: start;
-    justify-content: flex-end;
-}
-.link__Income_Create {
-    border: none;
-    text-decoration: none;
-    padding: 15px 30px;
-    font-size: 20px;
-    color: white;
-    background: #718bd8;
 }

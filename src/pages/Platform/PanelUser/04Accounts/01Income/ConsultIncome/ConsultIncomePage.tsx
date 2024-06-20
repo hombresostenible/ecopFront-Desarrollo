@@ -5,7 +5,7 @@ import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsBooksIncomes, putAccountsBook, deleteAccountsBook } from '../../../../../../redux/User/accountsBookSlice/actions';
+import { getAccountsBooksIncomesApproved, putAccountsBook, deleteAccountsBook } from '../../../../../../redux/User/accountsBookSlice/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
@@ -39,7 +39,7 @@ function ConsultIncomePage() {
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAccountsBooksIncomes(token));
+            dispatch(getAccountsBooksIncomesApproved(token));
         }
     }, [token]);
 
@@ -69,7 +69,7 @@ function ConsultIncomePage() {
             };
             await dispatch(putAccountsBook(accountsBook.id, updatedTransaction, token));
             delete editingTransactions[accountsBook.id];
-            dispatch(getAccountsBooksIncomes(token));
+            dispatch(getAccountsBooksIncomesApproved(token));
         } catch (error) {
             throw new Error('Error al guardar cambios');
         } finally {
@@ -80,7 +80,7 @@ function ConsultIncomePage() {
     const handleDelete = (idAccountsBook: string) => {
         try {
             dispatch(deleteAccountsBook(idAccountsBook, token));
-            dispatch(getAccountsBooksIncomes(token));
+            dispatch(getAccountsBooksIncomesApproved(token));
         } catch (error) {
             throw new Error('Error al eliminar el registro');
         }

@@ -126,7 +126,13 @@ function ConsultRawMateralsPage() {
                                 {Array.isArray(rawMaterial) && rawMaterial.map((rawMaterial) => (
                                     <div key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                         <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.branchId}</span>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                {Array.isArray(branches) && branches.map((branch, index) => (
+                                                    rawMaterial.branchId === branch.id && (
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                    )
+                                                ))}
+                                            </span>
                                         </div>
                                         <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
