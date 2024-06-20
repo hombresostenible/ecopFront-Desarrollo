@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAssets } from '../../../types/User/assets.types';
-import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
+import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
@@ -101,6 +101,50 @@ export const getAssetsByBranch = (idBranch: string, token: string) => async (dis
     }
 };
 
+
+
+//OBTENER TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
+export const getAssetsOff = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/asset/assets-off', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAssetsOffStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAssets(error.response?.data.message));
+        } else {
+            dispatch(errorAssets(error.message));
+        }
+    }
+};
+
+
+
+//OBTENER TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS POR SEDE DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
+export const getAssetsOffByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/asset/assets-branch/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAssetsOffByBranchStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAssets(error.response?.data.message));
+        } else {
+            dispatch(errorAssets(error.message));
+        }
+    }
+};
+
+
+
 //ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
 export const putAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -142,7 +186,7 @@ export const putManyAssets = (formData: IAssets[], token: string) => async (disp
 };
 
 //DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const patchAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
+export const patchAsset = (idAssets: string, formData: Partial<IAssets>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAssetStart());
         const response = await axiosInstance.patch(`/asset/${idAssets}`, formData, {

@@ -17,7 +17,8 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalAsset from '../../../../../../components/Platform/03Inventories/Assets/ModalAsset/ModalAsset';
 import ModalAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ModalAssetOff/ModalAssetOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ConsultAssetOff';
+import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ConsultAssetOff/ConsultAssetOff';
+import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -63,7 +64,7 @@ function ConsultAssetsPage() {
         setShowConsultAssetOff(true);
     }, []);
 
-    const assetsWithInventoryOff = Array.isArray(assets) ? assets.filter(asset => asset.inventoryOff) : [];
+    // const assetsWithInventoryOff = Array.isArray(assets) ? assets.filter(asset => asset.inventoryOff) : [];
 
     const handleDelete = useCallback((asset: IAssets) => {
         setSelectedItem(asset);
@@ -97,13 +98,18 @@ function ConsultAssetsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Equipos, herramientas y máquinas</h1>
 
-                        <Link to='/inventories/create-assets' className={styles.link__Income_Create}>Registro de inventario</Link>
-                        <div className="d-flex">
-                            <div
-                                className={`${styles.linkTransfer} border-0 m-auto rounded text-decoration-none`}
-                                onClick={handleConsultAssetOff}
-                            >
-                                Visualiza tus activos dados de baja
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className="d-flex">
+                                <div
+                                    className={styles.link__Head_Navigate}
+                                    onClick={handleConsultAssetOff}
+                                >
+                                    Visualiza tus equipos, herramientas y máquinas dados de baja
+                                </div>
+                            </div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de inventario</Link>
                             </div>
                         </div>
 
@@ -121,7 +127,7 @@ function ConsultAssetsPage() {
                             <Modal.Body>
                                 <ConsultAssetOff
                                     token={token}
-                                    assets={assetsWithInventoryOff}
+                                    // assets={assetsWithInventoryOff}
                                     branches={branchesArray}
                                     onCloseModal={onCloseModal}
                                 />
@@ -151,7 +157,7 @@ function ConsultAssetsPage() {
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
                                     <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center`}>Marca</div>
                                     <div className={`${styles.reference__Asset} d-flex align-items-center justify-content-center`}>Referencia</div>
-                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center`}>Condición</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center`}>Inventario</div>
                                     <div className={`${styles.state__Asset} d-flex align-items-center justify-content-center`}>Estado</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
@@ -180,7 +186,7 @@ function ConsultAssetsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
                                             </div>
                                             <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.conditionAssets}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.inventory}</span>
                                             </div>
                                             <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>

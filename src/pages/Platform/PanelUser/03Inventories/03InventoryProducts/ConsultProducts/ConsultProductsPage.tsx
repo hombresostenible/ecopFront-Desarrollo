@@ -17,6 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalProduct from '../../../../../../components/Platform/03Inventories/Products/ModalProduct/ModalProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/ModalProductOff/ModalProductOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -90,8 +91,15 @@ function ConsultProductsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Productos</h1>
 
-                        <Link to='/inventories/create-products' className={`${styles.link__Income_Create} `}>Registro de inventario</Link>
-                        <Link to='/inventories/quote-products' className={`${styles.link__Income_Create} mx-2`}>Cotizar productos</Link>
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className={styles.link__Head_Navigate}>
+                                <Link to='/inventories/quote-products' className={`${styles.link} text-decoration-none`}>Cotizar productos</Link>
+                            </div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/inventories/create-products' className={`${styles.link} text-decoration-none`}>Registro de inventario</Link>
+                            </div>
+                        </div>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus productos por sede</h3>

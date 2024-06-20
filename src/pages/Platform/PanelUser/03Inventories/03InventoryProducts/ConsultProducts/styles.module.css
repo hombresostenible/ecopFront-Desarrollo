@@ -12,12 +12,16 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
-.link__Income_Create {
+.link__Head_Navigate {
     border: none;
     text-decoration: none;
     padding: 10px 20px;
     color: white;
     background: #718bd8;
+}
+.link {
+    color: #fff;
+    margin: 0;
 }
 
 /* TABLA */
