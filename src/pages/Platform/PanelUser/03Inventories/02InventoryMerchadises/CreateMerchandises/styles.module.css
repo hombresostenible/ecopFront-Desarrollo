@@ -63,6 +63,13 @@
 .info {
     width: 350px;
 }
+.input {
+    border-radius: 5px;
+    width: 350px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
 .conditionContainer {
     background-color: #eee;
     width: 200px;
@@ -71,6 +78,11 @@
     cursor: pointer;
     flex-grow: 1;
     transition: background-color 0.2s;
+}
+.conditionOption:hover {
+    cursor: pointer;
+    background: #718bd8;
+    color: #fff;
 }
 .selected {
     padding: 10px 20px;

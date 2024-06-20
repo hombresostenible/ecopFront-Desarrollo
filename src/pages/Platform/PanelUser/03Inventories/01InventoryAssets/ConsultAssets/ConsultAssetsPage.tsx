@@ -158,59 +158,65 @@ function ConsultAssetsPage() {
                             </div>
 
                             <div className={`${styles.container__Body}`}>
-                                {Array.isArray(assets) && assets.map((asset) => (
-                                    <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                {Array.isArray(branches) && branches.map((branch, index) => (
-                                                    asset.branchId === branch.id && (
-                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                    )
-                                                ))}
-                                            </span>
+                                {Array.isArray(assets) && assets.length > 0 ? (
+                                    assets.map((asset) => (
+                                        <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {Array.isArray(branches) && branches.map((branch, index) => (
+                                                        asset.branchId === branch.id && (
+                                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                        )
+                                                    ))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.nameItem}</span>
+                                            </div>
+                                            <div className={`${styles.brand__Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandAssets}</span>
+                                            </div>
+                                            <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
+                                            </div>
+                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.conditionAssets}</span>
+                                            </div>
+                                            <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
+                                            </div>
+                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdAsset(asset.id);
+                                                        setNameAsset(asset.nameItem || '');
+                                                        handleDelete(asset);
+                                                    }}
+                                                />
+                                                <BsPencil
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdAsset(asset.id);
+                                                        handleEdit(asset)
+                                                    }}
+                                                />
+                                                <IoIosCloseCircleOutline
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdAsset(asset.id);
+                                                        setNameAsset(asset.nameItem || '');
+                                                        handleOff(asset)
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.nameItem}</span>
-                                        </div>
-                                        <div className={`${styles.brand__Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandAssets}</span>
-                                        </div>
-                                        <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
-                                        </div>
-                                        <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.conditionAssets}</span>
-                                        </div>
-                                        <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
-                                        </div>
-                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdAsset(asset.id);
-                                                    setNameAsset(asset.nameItem || '');
-                                                    handleDelete(asset);
-                                                }}
-                                            />
-                                            <BsPencil
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdAsset(asset.id);
-                                                    handleEdit(asset)
-                                                }}
-                                            />
-                                            <IoIosCloseCircleOutline
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdAsset(asset.id);
-                                                    setNameAsset(asset.nameItem || '');
-                                                    handleOff(asset)
-                                                }}
-                                            />
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noAssetsMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes equipos, herramientas y máquinas registrados
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
 

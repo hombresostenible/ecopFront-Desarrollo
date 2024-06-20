@@ -115,50 +115,56 @@ function ConsultServicesPage() {
                             </div>
 
                             <div className={`${styles.container__Body} d-flex flex-column `}>
-                                {Array.isArray(service) && service.map((service) => (
-                                    <div key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                {Array.isArray(branches) && branches.map((branch, index) => (
-                                                    service.branchId === branch.id && (
-                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                    )
-                                                ))}
-                                            </span>
+                                {Array.isArray(service) && service.length > 0 ? (
+                                    service.map((service) => (
+                                        <div key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {Array.isArray(branches) && branches.map((branch, index) => (
+                                                        service.branchId === branch.id && (
+                                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                        )
+                                                    ))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
+                                            </div>
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.sellingPrice}</span>
+                                            </div>
+                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(service.id);
+                                                        setNameRawMaterial(service.nameItem || '');
+                                                        handleDelete(service);
+                                                    }}
+                                                />
+                                                <BsPencil
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(service.id);
+                                                        handleEdit(service)
+                                                    }}
+                                                />
+                                                <IoIosCloseCircleOutline
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(service.id);
+                                                        setNameRawMaterial(service.nameItem || '');
+                                                        handleOff(service)
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
-                                        </div>
-                                        <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.sellingPrice}</span>
-                                        </div>
-                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(service.id);
-                                                    setNameRawMaterial(service.nameItem || '');
-                                                    handleDelete(service);
-                                                }}
-                                            />
-                                            <BsPencil
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(service.id);
-                                                    handleEdit(service)
-                                                }}
-                                            />
-                                            <IoIosCloseCircleOutline
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(service.id);
-                                                    setNameRawMaterial(service.nameItem || '');
-                                                    handleOff(service)
-                                                }}
-                                            />
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noRawMaterialMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes servicios registrados
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
 

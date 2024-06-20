@@ -122,63 +122,69 @@ function ConsultRawMateralsPage() {
                                 </div>
                             </div>
 
-                            <div className={`${styles.container__Body} d-flex flex-column `}>
-                                {Array.isArray(rawMaterial) && rawMaterial.map((rawMaterial) => (
-                                    <div key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                {Array.isArray(branches) && branches.map((branch, index) => (
-                                                    rawMaterial.branchId === branch.id && (
-                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                    )
-                                                ))}
-                                            </span>
+                            <div className={`${styles.container__Body} d-flex flex-column`}>
+                                {Array.isArray(rawMaterial) && rawMaterial.length > 0 ? (
+                                    rawMaterial.map((rawMaterial) => (
+                                        <div key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {Array.isArray(branches) && branches.map((branch, index) => (
+                                                        rawMaterial.branchId === branch.id && (
+                                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                        )
+                                                    ))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
+                                            </div>
+                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory}</span>
+                                            </div>
+                                            <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.unitMeasure}</span>
+                                            </div>
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice}</span>
+                                            </div>
+                                            <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
+                                            </div>
+                                            <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.primaryPackageType}</span>
+                                            </div>
+                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(rawMaterial.id);
+                                                        setNameRawMaterial(rawMaterial.nameItem || '');
+                                                        handleDelete(rawMaterial);
+                                                    }}
+                                                />
+                                                <BsPencil
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(rawMaterial.id);
+                                                        handleEdit(rawMaterial)
+                                                    }}
+                                                />
+                                                <IoIosCloseCircleOutline
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onClick={() => {
+                                                        setIdRawMaterial(rawMaterial.id);
+                                                        setNameRawMaterial(rawMaterial.nameItem || '');
+                                                        handleOff(rawMaterial)
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
-                                        </div>
-                                        <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory}</span>
-                                        </div>
-                                        <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.unitMeasure}</span>
-                                        </div>
-                                        <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice}</span>
-                                        </div>
-                                        <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
-                                        </div>
-                                        <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.primaryPackageType}</span>
-                                        </div>
-                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(rawMaterial.id);
-                                                    setNameRawMaterial(rawMaterial.nameItem || '');
-                                                    handleDelete(rawMaterial);
-                                                }}
-                                            />
-                                            <BsPencil
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(rawMaterial.id);
-                                                    handleEdit(rawMaterial)
-                                                }}
-                                            />
-                                            <IoIosCloseCircleOutline
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    setIdRawMaterial(rawMaterial.id);
-                                                    setNameRawMaterial(rawMaterial.nameItem || '');
-                                                    handleOff(rawMaterial)
-                                                }}
-                                            />
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noRawMaterialMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes materias primas registradas
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
 
