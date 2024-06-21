@@ -16,6 +16,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalService from '../../../../../../components/Platform/03Inventories/Servicios/ModalService/ModalService';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -86,7 +87,13 @@ function ConsultServicesPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Servicios</h1>
 
-                        <Link to='/inventories/create-services' className={styles.link__Income_Create}>Registro de inventario</Link>
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className="d-flex"></div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/inventories/create-services' className={`${styles.link} text-decoration-none`}>Registro de artículos</Link>
+                            </div>
+                        </div>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus servicios por sede</h3>
