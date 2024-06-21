@@ -32,14 +32,14 @@ function ConsultAssetsPage() {
     const assets = useSelector((state: RootState) => state.assets.assets);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
-
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
             dispatch(getAssets(token));
         }
     }, [token]);
+    
+    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
 
     useEffect(() => {
         if (token) {
@@ -138,7 +138,7 @@ function ConsultAssetsPage() {
                             <h3 className='m-0'>Filtra tus activos por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-1 border rounded"
+                                className="mx-2 p-2 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -192,29 +192,35 @@ function ConsultAssetsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdAsset(asset.id);
-                                                        setNameAsset(asset.nameItem || '');
-                                                        handleDelete(asset);
-                                                    }}
-                                                />
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdAsset(asset.id);
-                                                        handleEdit(asset)
-                                                    }}
-                                                />
-                                                <IoIosCloseCircleOutline
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdAsset(asset.id);
-                                                        setNameAsset(asset.nameItem || '');
-                                                        handleOff(asset)
-                                                    }}
-                                                />
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdAsset(asset.id);
+                                                            setNameAsset(asset.nameItem || '');
+                                                            handleDelete(asset);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdAsset(asset.id);
+                                                            handleEdit(asset)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <IoIosCloseCircleOutline
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdAsset(asset.id);
+                                                            setNameAsset(asset.nameItem || '');
+                                                            handleOff(asset)
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     ))

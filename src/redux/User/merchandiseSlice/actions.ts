@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IMerchandise } from '../../../types/User/merchandise.types';
-import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
+import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchIncreaseInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
 //CREAR UNA MERCANCIA
 export const postMerchandise = (formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
@@ -146,6 +146,26 @@ export const patchMerchandise = (idMerchandise: string, formData: IMerchandise, 
     try {
         dispatch(patchMerchandiseStart());
         const response = await axiosInstance.patch(`/merchandise/${idMerchandise}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(merchandiseData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorMerchandise(error.response?.data.message));
+        } else {
+            dispatch(errorMerchandise(error.message));
+        }
+    }
+}
+
+//DA DE BAJA UNA MERCANCIAS DEL USER
+export const patchIncreaseInventoryMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(patchIncreaseInventoryMerchandiseStart());
+        const response = await axiosInstance.patch(`/merchandise/add-inventory/${idMerchandise}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
