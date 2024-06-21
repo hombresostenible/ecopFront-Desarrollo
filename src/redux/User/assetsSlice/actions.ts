@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAssets } from '../../../types/User/assets.types';
-import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } from './assetsSlice';
+import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
@@ -190,6 +190,26 @@ export const patchAsset = (idAssets: string, formData: Partial<IAssets>, token: 
     try {
         dispatch(patchAssetStart());
         const response = await axiosInstance.patch(`/asset/${idAssets}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(assetsData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorAssets(error.response?.data.message));
+        } else {
+            dispatch(errorAssets(error.message));
+        }
+    }
+}
+
+//AUMENTA UNIDADES DEL INVENTARIO DE UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
+export const patchAddInventoryAsset = (idAssets: string, formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(patchAddInventoryAssetStart());
+        const response = await axiosInstance.patch(`/asset/add-inventory/${idAssets}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IMerchandise } from '../../../types/User/merchandise.types';
-import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchIncreaseInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
+import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
 //CREAR UNA MERCANCIA
 export const postMerchandise = (formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
@@ -161,10 +161,10 @@ export const patchMerchandise = (idMerchandise: string, formData: IMerchandise, 
     }
 }
 
-//DA DE BAJA UNA MERCANCIAS DEL USER
-export const patchIncreaseInventoryMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
+//AUMENTA UNIDADES DEL INVENTARIO DE UNA MERCANCIA DEL USER
+export const patchAddInventoryMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(patchIncreaseInventoryMerchandiseStart());
+        dispatch(patchAddInventoryMerchandiseStart());
         const response = await axiosInstance.patch(`/merchandise/add-inventory/${idMerchandise}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,

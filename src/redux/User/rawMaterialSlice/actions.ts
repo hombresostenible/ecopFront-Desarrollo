@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IRawMaterial } from '../../../types/User/rawMaterial.types';
-import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
+import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postRawMaterial = (formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
@@ -64,9 +64,9 @@ export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) 
 };
 
 //OBTIENE UNA MATERIAS PRIMAS POR ID
-export const getRawMaterialById = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
+export const getRawMaterialById = (idRawMaterial: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/rawMaterial/${idProduct}`, {
+        const response = await axiosInstance.get(`/rawMaterial/${idRawMaterial}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -102,10 +102,10 @@ export const getRawMaterialsByBranch = (idBranch: string, token: string) => asyn
 };
 
 //ACTUALIZA UNA MATERIAS PRIMAS DEL USER
-export const putRawMaterial = (idProduct: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
+export const putRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putRawMaterialStart());
-        const response = await axiosInstance.put(`/rawMaterial/${idProduct}`, formData, {
+        const response = await axiosInstance.put(`/rawMaterial/${idRawMaterial}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -142,10 +142,30 @@ export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => 
 };
 
 //DA DE BAJA UNA MATERIAS PRIMAS DEL USER
-export const patchRawMaterial = (idProduct: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
+export const patchRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchRawMaterialStart());
-        const response = await axiosInstance.patch(`/rawMaterial/${idProduct}`, formData, {
+        const response = await axiosInstance.patch(`/rawMaterial/${idRawMaterial}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(rawMaterialData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorRawMaterial(error.response?.data.message));
+        } else {
+            dispatch(errorRawMaterial(error.message));
+        }
+    }
+}
+
+//AUMENTA UNIDADES DEL INVENTARIO DE UNA MATERIA PRIMA DEL USER
+export const patchAddInventoryRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(patchAddInventoryRawMaterialStart());
+        const response = await axiosInstance.patch(`/rawMaterial/add-inventory/${idRawMaterial}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -162,10 +182,10 @@ export const patchRawMaterial = (idProduct: string, formData: IRawMaterial, toke
 }
 
 //ELIMINA UNA MATERIAS PRIMAS DEL USER
-export const deleteRawMaterial = (idProduct: string, token: string) => async (dispatch: AppDispatch) => {
+export const deleteRawMaterial = (idRawMaterial: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteRawMaterialStart());
-        const response = await axiosInstance.delete(`/rawMaterial/${idProduct}`, {
+        const response = await axiosInstance.delete(`/rawMaterial/${idRawMaterial}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

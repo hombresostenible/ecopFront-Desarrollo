@@ -63,6 +63,10 @@ const productSlice = createSlice({
             state.loading = true;
             state.errorProduct = null;
         },
+        patchAddInventoryProductStart: (state) => {
+            state.loading = true;
+            state.errorProduct = null;
+        },
         deleteProductStart: (state) => {
             state.loading = true;
             state.errorProduct = null;
@@ -70,5 +74,5 @@ const productSlice = createSlice({
     },
 });
 
-export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, deleteProductStart } = productSlice.actions;
+export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } = productSlice.actions;
 export default productSlice.reducer;
