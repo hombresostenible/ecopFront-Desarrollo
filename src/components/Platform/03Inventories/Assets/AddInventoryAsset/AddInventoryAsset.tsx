@@ -3,39 +3,39 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { patchAddInventoryMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+import { patchAddInventoryAsset, getAssets } from '../../../../../redux/User/assetsSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { IAssets } from '../../../../../types/User/assets.types';
 import styles from './styles.module.css';
 
-interface AddInventoryMerchandiseProps {
+interface AddInventoryAssetProps {
     token: string;
     idItem: string;
     nameItem?: string;
     idBranch: string;
     onCloseModal: () => void;
 }
-function AddInventoryMerchandise({ token, idItem, nameItem, idBranch, onCloseModal }: AddInventoryMerchandiseProps) {
+function AddInventoryAsset({ token, idItem, nameItem, idBranch, onCloseModal }: AddInventoryAssetProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
+    const errorAssets = useSelector((state: RootState) => state.assets.errorAssets);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IMerchandise>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IAssets>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const onSubmit = async (values: IMerchandise) => {
+    const onSubmit = async (values: IAssets) => {
         try {
             const formData = {
                 ...values,
                 branchId: idBranch,
-            } as IMerchandise;
-            dispatch(patchAddInventoryMerchandise(idItem, formData, token));
+            } as IAssets;
+            dispatch(patchAddInventoryAsset(idItem, formData, token));
             setFormSubmitted(true);
             await new Promise(resolve => setTimeout(resolve, 500));
-            dispatch(getMerchandises(token));
+            dispatch(getAssets(token));
             onCloseModal();
             reset();
         } catch (error) {
@@ -49,7 +49,7 @@ function AddInventoryMerchandise({ token, idItem, nameItem, idBranch, onCloseMod
                 {formSubmitted && (
                     <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                 )}
-                {Array.isArray(errorMerchandise) && errorMerchandise?.map((error, i) => (
+                {Array.isArray(errorAssets) && errorAssets?.map((error, i) => (
                     <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                 ))}
 
@@ -84,4 +84,4 @@ function AddInventoryMerchandise({ token, idItem, nameItem, idBranch, onCloseMod
     );
 }
 
-export default AddInventoryMerchandise;
+export default AddInventoryAsset;
