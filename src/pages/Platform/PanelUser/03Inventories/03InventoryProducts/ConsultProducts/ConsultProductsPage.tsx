@@ -17,7 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalProduct from '../../../../../../components/Platform/03Inventories/Products/ModalProduct/ModalProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/ModalProductOff/ModalProductOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import AddInventoryProducts from '../../../../../../components/Platform/03Inventories/Products/AddInventoryProducts/AddInventoryProducts';
+import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/Products/AddInventoryProduct/AddInventoryProduct';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -260,7 +260,7 @@ function ConsultProductsPage() {
                                 <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <AddInventoryProducts
+                                <AddInventoryProduct
                                     token={token}
                                     idItem={idProduct}
                                     nameItem={nameProduct}
