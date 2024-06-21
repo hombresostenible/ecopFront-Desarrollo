@@ -28,7 +28,6 @@ function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal }: ConfirmDel
         }
     };
 
-
     return (
         <div className='d-flex flex-column align-items-center justify-content-center'>
             <p>¿Estas seguro de que quieres eliminar la sede "{nameBranch}"?</p>

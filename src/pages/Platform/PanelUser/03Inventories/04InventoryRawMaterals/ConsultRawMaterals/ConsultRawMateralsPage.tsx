@@ -96,7 +96,7 @@ function ConsultRawMateralsPage() {
                             <h3 className='m-0'>Filtra tus materias primas por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-1 border rounded"
+                                className="mx-2 p-2 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -145,7 +145,7 @@ function ConsultRawMateralsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.unitMeasure}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {rawMaterial.sellingPrice}</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
@@ -154,29 +154,35 @@ function ConsultRawMateralsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.primaryPackageType}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(rawMaterial.id);
-                                                        setNameRawMaterial(rawMaterial.nameItem || '');
-                                                        handleDelete(rawMaterial);
-                                                    }}
-                                                />
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(rawMaterial.id);
-                                                        handleEdit(rawMaterial)
-                                                    }}
-                                                />
-                                                <IoIosCloseCircleOutline
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(rawMaterial.id);
-                                                        setNameRawMaterial(rawMaterial.nameItem || '');
-                                                        handleOff(rawMaterial)
-                                                    }}
-                                                />
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(rawMaterial.id);
+                                                            setNameRawMaterial(rawMaterial.nameItem || '');
+                                                            handleDelete(rawMaterial);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(rawMaterial.id);
+                                                            handleEdit(rawMaterial)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <IoIosCloseCircleOutline
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(rawMaterial.id);
+                                                            setNameRawMaterial(rawMaterial.nameItem || '');
+                                                            handleOff(rawMaterial)
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     ))

@@ -28,7 +28,7 @@ export const postBranch = (formData: IBranch, token: string) => async (dispatch:
 export const postManyBranch = (formData: IBranch[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyBranchesStart(formData));
-        const response = await axiosInstance.post('/branch/createMany', formData, {
+        const response = await axiosInstance.post('/branch/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

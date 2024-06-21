@@ -17,7 +17,8 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalMerchandises from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchandises/ModalMerchandises';
 import ModalMerchadiseOff from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchadiseOff/ModalMerchadiseOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-// import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import AddInventoryMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/AddInventoryMerchandise/AddInventoryMerchandise';
+import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -28,7 +29,7 @@ function ConsultMerchandisesPage() {
     const dispatch: AppDispatch = useDispatch();
 
     ///ESTADOS DE REDUX
-    const merchandise = useSelector((state: RootState) => state.merchandise.merchandise);
+    const merchandises = useSelector((state: RootState) => state.merchandise.merchandise);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
@@ -52,11 +53,13 @@ function ConsultMerchandisesPage() {
     }, [selectedBranch, token, dispatch]);
 
     const [idMerchadise, setIdMerchadise] = useState('');
+    const [idBranch, setIdBranch] = useState('');
     const [nameMerchadise, setNameMerchadise] = useState('');
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IMerchandise>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleDelete = useCallback((merchadise: IMerchandise) => {
         setSelectedItem(merchadise);
@@ -68,12 +71,18 @@ function ConsultMerchandisesPage() {
         setShowItemModal(true);
     }, []);
 
+    const handleAddInventory = useCallback((merchadise: IMerchandise) => {
+        setSelectedItem(merchadise);
+        setShowAddInventory(true);
+    }, []);
+
     const handleOff = useCallback((merchadise: IMerchandise) => {
         setSelectedItem(merchadise);
         setShowOff(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowAddInventory(false);
         setShowDeleteConfirmation(false);
         setShowItemModal(false);
         setShowOff(false);
@@ -90,13 +99,19 @@ function ConsultMerchandisesPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Mercancías</h1>
 
-                        <Link to='/inventories/create-merchandises' className={styles.link__Income_Create}>Registro de inventario</Link>
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className="d-flex"></div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/inventories/create-merchandises' className={`${styles.link} text-decoration-none`}>Registro de artículos</Link>
+                            </div>
+                        </div>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus mercancías por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-1 border rounded"
+                                className="mx-2 p-2 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -123,8 +138,8 @@ function ConsultMerchandisesPage() {
                             </div>
 
                             <div className={`${styles.container__Body}`}>
-                                {Array.isArray(merchandise) && merchandise.length > 0 ? (
-                                    merchandise.map((merchadise) => (
+                                {Array.isArray(merchandises) && merchandises.length > 0 ? (
+                                    merchandises.map((merchadise) => (
                                         <div key={merchadise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                             <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
@@ -153,30 +168,47 @@ function ConsultMerchandisesPage() {
                                             <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.primaryPackageType}</span>
                                             </div>
-                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdMerchadise(merchadise.id);
-                                                        setNameMerchadise(merchadise.nameItem || '');
-                                                        handleDelete(merchadise);
-                                                    }}
-                                                />
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdMerchadise(merchadise.id);
-                                                        handleEdit(merchadise)
-                                                    }}
-                                                />
-                                                <IoIosCloseCircleOutline
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdMerchadise(merchadise.id);
-                                                        setNameMerchadise(merchadise.nameItem || '');
-                                                        handleOff(merchadise)
-                                                    }}
-                                                />
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} `}
+                                                        onClick={() => {
+                                                            setIdMerchadise(merchadise.id);
+                                                            setNameMerchadise(merchadise.nameItem || '');
+                                                            handleDelete(merchadise);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdMerchadise(merchadise.id);
+                                                            handleEdit(merchadise)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <FaPlus
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdMerchadise(merchadise.id);
+                                                            setNameMerchadise(merchadise.nameItem || '');
+                                                            setIdBranch(merchadise.branchId);
+                                                            handleAddInventory(merchadise)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <IoIosCloseCircleOutline
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdMerchadise(merchadise.id);
+                                                            setNameMerchadise(merchadise.nameItem || '');
+                                                            handleOff(merchadise)
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     ))
@@ -214,6 +246,21 @@ function ConsultMerchandisesPage() {
                                     typeRegisterDelete={'Merchandise'}
                                     idItem={idMerchadise}
                                     nameRegister={nameMerchadise}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddInventoryMerchandise
+                                    token={token}
+                                    idItem={idMerchadise}
+                                    nameItem={nameMerchadise}
+                                    idBranch={idBranch}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
