@@ -129,6 +129,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             {Array.isArray(errorAssets) && errorAssets?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
+                            
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
                                     <p className={`${styles.text} mb-0 p-2`}>Selecciona una Sede</p>

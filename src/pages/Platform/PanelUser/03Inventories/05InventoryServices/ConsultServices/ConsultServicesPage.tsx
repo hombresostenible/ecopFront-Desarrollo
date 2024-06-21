@@ -92,7 +92,7 @@ function ConsultServicesPage() {
                             <h3 className='m-0'>Filtra tus servicios por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-1 border rounded"
+                                className="mx-2 p-2 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -131,32 +131,38 @@ function ConsultServicesPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {service.sellingPrice}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(service.id);
-                                                        setNameRawMaterial(service.nameItem || '');
-                                                        handleDelete(service);
-                                                    }}
-                                                />
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(service.id);
-                                                        handleEdit(service)
-                                                    }}
-                                                />
-                                                <IoIosCloseCircleOutline
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdRawMaterial(service.id);
-                                                        setNameRawMaterial(service.nameItem || '');
-                                                        handleOff(service)
-                                                    }}
-                                                />
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(service.id);
+                                                            setNameRawMaterial(service.nameItem || '');
+                                                            handleDelete(service);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(service.id);
+                                                            handleEdit(service)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <IoIosCloseCircleOutline
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(service.id);
+                                                            setNameRawMaterial(service.nameItem || '');
+                                                            handleOff(service)
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     ))

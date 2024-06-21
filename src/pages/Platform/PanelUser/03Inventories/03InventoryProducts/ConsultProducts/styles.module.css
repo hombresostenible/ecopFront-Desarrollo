@@ -97,11 +97,16 @@
     white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
 }
+.container__Icons {
+    height: 100%;
+    width: 25px;
+    padding: 0 4px;
+}
 .button__Delete {
     color: #6c757d;
     height: 35px;
     width: 50px;
-    padding: 0 12px;
+    font-size: 14px;
 }
 .button__Delete:hover {
     transition: 300ms all ease;
@@ -110,9 +115,9 @@
 }
 .button__Edit {
     color: #6c757d;
+    font-size: 14px;
     height: 35px;
     width: 50px;
-    padding: 0 12px;
 }
 .button__Edit:hover {
     transition: 300ms all ease;

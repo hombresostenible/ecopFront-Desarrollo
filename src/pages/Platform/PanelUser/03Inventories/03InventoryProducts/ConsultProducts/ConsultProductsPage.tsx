@@ -105,7 +105,7 @@ function ConsultProductsPage() {
                             <h3 className='m-0'>Filtra tus productos por sede</h3>
                             <select
                                 value={selectedBranch || ''}
-                                className="mx-2 p-1 border rounded"
+                                className="mx-2 p-2 border rounded"
                                 onChange={(e) => setSelectedBranch(e.target.value)}
                             >
                                 <option value=''>Todas</option>
@@ -154,7 +154,7 @@ function ConsultProductsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.unitMeasure}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {product.sellingPrice}</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.packaged}</span>
@@ -163,30 +163,36 @@ function ConsultProductsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.primaryPackageType}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdProduct(product.id);
-                                                        setNameProduct(product.nameItem || '');
-                                                        handleDelete(product);
-                                                    }}
-                                                    aria-label={`Eliminar ${product.nameItem}`}
-                                                />
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdProduct(product.id);
-                                                        handleEdit(product)
-                                                    }}
-                                                />
-                                                <IoIosCloseCircleOutline
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setIdProduct(product.id);
-                                                        setNameProduct(product.nameItem || '');
-                                                        handleOff(product)
-                                                    }}
-                                                />
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdProduct(product.id);
+                                                            setNameProduct(product.nameItem || '');
+                                                            handleDelete(product);
+                                                        }}
+                                                        aria-label={`Eliminar ${product.nameItem}`}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdProduct(product.id);
+                                                            handleEdit(product)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <IoIosCloseCircleOutline
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdProduct(product.id);
+                                                            setNameProduct(product.nameItem || '');
+                                                            handleOff(product)
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     ))
