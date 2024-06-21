@@ -303,7 +303,7 @@ function CreateServicesPage() {
                             quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
                         })),
                 };
-    
+                console.log('Data: ', formDarta)
                 dispatch(postService(formDarta, token));
                 setFormSubmitted(true);
                 dispatch(getServices(token));
@@ -397,6 +397,40 @@ function CreateServicesPage() {
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre del servicio es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`} >¿A qué precio vendes tu servicio?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('sellingPrice', { required: true })}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        placeholder='¿A qué precio vendes tu servicio? '
+                                    />
+                                    {errors.sellingPrice && (
+                                        <p className='text-danger'>El precio del servicio es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el IVA del servicio?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        {...register('IVA', { required: true })}
+                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        placeholder='IVA del servicio'
+                                    />
+                                    {errors.IVA && (
+                                        <p className='text-danger'>El IVA del servicio es requerido</p>
                                     )}
                                 </div>
                             </div>
