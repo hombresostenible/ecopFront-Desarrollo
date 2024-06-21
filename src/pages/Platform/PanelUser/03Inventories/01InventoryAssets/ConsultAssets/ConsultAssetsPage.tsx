@@ -18,6 +18,7 @@ import ModalAsset from '../../../../../../components/Platform/03Inventories/Asse
 import ModalAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ModalAssetOff/ModalAssetOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
 import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ConsultAssetOff/ConsultAssetOff';
+import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/Assets/AddInventoryAsset/AddInventoryAsset';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -53,12 +54,14 @@ function ConsultAssetsPage() {
     }, [selectedBranch, token, dispatch]);
 
     const [idAsset, setIdAsset] = useState('');
+    const [idBranch, setIdBranch] = useState('');
     const [nameAsset, setNameAsset] = useState('');
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IAssets>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultAssetOff, setShowConsultAssetOff] = useState(false);
+    const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleConsultAssetOff = useCallback(() => {
         setShowConsultAssetOff(true);
@@ -76,12 +79,18 @@ function ConsultAssetsPage() {
         setShowItemModal(true);
     }, []);
 
+    const handleAddInventory = useCallback((asset: IAssets) => {
+        setSelectedItem(asset);
+        setShowAddInventory(true);
+    }, []);
+
     const handleOff = useCallback((asset: IAssets) => {
         setSelectedItem(asset);
         setShowOff(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowAddInventory(false);
         setShowDeleteConfirmation(false);
         setShowItemModal(false);
         setShowOff(false);
@@ -212,6 +221,17 @@ function ConsultAssetsPage() {
                                                     />
                                                 </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <FaPlus
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdAsset(asset.id);
+                                                            setNameAsset(asset.nameItem || '');
+                                                            setIdBranch(asset.branchId);
+                                                            handleAddInventory(asset)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <IoIosCloseCircleOutline
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
@@ -258,6 +278,21 @@ function ConsultAssetsPage() {
                                     typeRegisterDelete={'Asset'}
                                     idItem={idAsset}
                                     nameRegister={nameAsset}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddInventoryAsset
+                                    token={token}
+                                    idItem={idAsset}
+                                    nameItem={nameAsset}
+                                    idBranch={idBranch}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
