@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IProduct } from '../../../types/User/products.types';
-import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, deleteProductStart } from './productSlice';
+import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } from './productSlice';
 
 //CREAR DE UN PRODUCTO
 export const postProduct = (formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
@@ -146,6 +146,26 @@ export const patchProduct = (idProduct: string, formData: IProduct, token: strin
     try {
         dispatch(patchProductStart());
         const response = await axiosInstance.patch(`/product/${idProduct}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(productData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorProduct(error.response?.data.message));
+        } else {
+            dispatch(errorProduct(error.message));
+        }
+    }
+}
+
+//AUMENTA UNIDADES DEL INVENTARIO DE UN PRODUCTO DEL USER
+export const patchAddInventoryProduct = (idProduct: string, formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(patchAddInventoryProductStart());
+        const response = await axiosInstance.patch(`/product/add-inventory/${idProduct}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
