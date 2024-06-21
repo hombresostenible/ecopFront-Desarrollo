@@ -58,23 +58,6 @@ function CreateServicesPage() {
         setShowCancelModal(false);
     };
 
-    //ACTIVOS
-    const [ isCreatingAsset, setIsCreatingAsset ] = useState(false);
-    const [ selectedAssets, setSelectedAssets ] = useState<string[]>([]);
-    const [ showCancelModalAsset, setShowCancelModalAsset ] = useState(false);
-
-    //PRODUCTOS
-    const [ isCreatingProduct, setIsCreatingProduct ] = useState(false);
-    const [ selectedProducts, setSelectedProducts ] = useState<string[]>([]);
-    const [ productQuantities, setProductQuantities ] = useState<{ [key: string]: number }>({});
-    const [ showCancelModalProduct, setShowCancelModalProduct ] = useState(false);
-    
-    //MATERIAS PRIMAS
-    const [ isCreatingRawMaterial, setIsCreatingRawMaterial ] = useState(false);
-    const [ selectedRawMaterials, setSelectedRawMaterials ] = useState<string[]>([]);
-    const [ rawMaterialQuantities, setRawMaterialQuantities ] = useState<{ [key: string]: number }>({});
-    const [ showCancelModalRawMaterial, setShowCancelModalRawMaterial ] = useState(false);
-
     //Selección de la sede
     const handleBranchChange = (e: any) => {
         const selectedId = e.target.value;
@@ -82,7 +65,12 @@ function CreateServicesPage() {
     };
 
 
+    
 
+    //ACTIVOS
+    const [isCreatingAsset, setIsCreatingAsset] = useState(false);
+    const [selectedAssets, setSelectedAssets] = useState<string[]>([]);
+    const [showCancelModalAsset, setShowCancelModalAsset] = useState(false);
     //RENDERIZA TODOS LOS ACTIVOS
     const renderAssetInputs = () => {
         // Si assets es null, devolvemos null
@@ -133,7 +121,12 @@ function CreateServicesPage() {
     };
 
 
-    
+
+    //PRODUCTOS
+    const [isCreatingProduct, setIsCreatingProduct] = useState(false);
+    const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+    const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({});
+    const [showCancelModalProduct, setShowCancelModalProduct] = useState(false);
     //RENDERIZA TODOS LOS PRODUCTOS
     const renderProductInputs = () => {
         // Si product es null, devolvemos null
@@ -202,6 +195,12 @@ function CreateServicesPage() {
 
 
 
+    
+    //MATERIAS PRIMAS
+    const [isCreatingRawMaterial, setIsCreatingRawMaterial] = useState(false);
+    const [selectedRawMaterials, setSelectedRawMaterials] = useState<string[]>([]);
+    const [rawMaterialQuantities, setRawMaterialQuantities] = useState<{ [key: string]: number }>({});
+    const [showCancelModalRawMaterial, setShowCancelModalRawMaterial] = useState(false);
     //RENDERIZA TODAS LAS MATERIAS PRIMAS
     const renderRawMaterialInputs = () => {
         // Si assets es null, devolvemos null
@@ -233,8 +232,6 @@ function CreateServicesPage() {
             </div>
         ));
     };
-
-
 
     // Selecciona todas las materias primas utilizados en la prestación del servicio
     const handleRawMaterialCheckboxChange = (rawMaterialId: string, isChecked: boolean) => {
@@ -268,6 +265,8 @@ function CreateServicesPage() {
         setIsCreatingRawMaterial(false);
         dispatch(getRawMaterialsByBranch(idBranch, token));
     };
+
+
 
     const onSubmit = (values: IService) => {
         try {

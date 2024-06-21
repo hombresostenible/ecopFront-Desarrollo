@@ -10,7 +10,7 @@ export default function WhatsApp () {
     };
 
     return (
-        <div className={`${styles.whatsappLandgin} center`}>
+        <div className={`${styles.whatsappLanding} center`}>
             <div onClick={handleWhatsAppClick} >
                 <img className={`${styles.whatsapp}`} src={logo} alt="Logo WhatsApp" />
             </div>

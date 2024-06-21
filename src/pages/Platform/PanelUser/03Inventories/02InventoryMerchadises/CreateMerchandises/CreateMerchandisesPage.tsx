@@ -243,7 +243,7 @@ function CreateMerchandisesPage() {
                                         </optgroup>
                                     </select>
                                     {errors.unitMeasure && (
-                                        <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
+                                        <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
                                     )}
                                 </div>
                             </div>

@@ -50,23 +50,23 @@
 }
 .branch{
     height: 60px;
-    width: 12%;
-    min-width: 120px;
+    width: 20%;
+    min-width: 200px;
 }
 .name__Item{
     height: 60px;
-    width: 12%;
-    min-width: 120px;
+    width: 30%;
+    min-width: 200px;
 }
 .selling__Price{
     height: 60px;
-    width: 12%;
-    min-width: 120px;
+    width: 20%;
+    min-width: 200px;
 }
 .action{
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 15%;
+    min-width: 150px;
 }
 
 /* CONTENIDO DE LA TABLA */
