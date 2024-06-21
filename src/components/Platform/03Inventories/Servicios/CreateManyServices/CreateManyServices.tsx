@@ -40,6 +40,7 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
         setSelectedBranch(selectedId);
     };
 
+        // Renderiza el Excel adjuntado en la tabla del modal
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -78,7 +79,6 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
                             return obj;
                         }, {})
                     );
-
                     // Establecer los encabezados y los datos traducidos
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
@@ -104,37 +104,19 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-    
-        // Mapear los datos con la manipulación específica
-        const rawMateriaData = nonEmptyRows.map(rawmaterial => {
-            // Verificar si inventoryIncrease es No o packaged es No
-            if (rawmaterial.inventoryIncrease === 'No' || rawmaterial.packaged === 'No') {
-                return {
-                    ...rawmaterial,
-                    branchId: branchId,
-                    userId: user?.id,
-                    periodicityAutomaticIncrease: rawmaterial.inventoryIncrease === 'No' ? null : rawmaterial.periodicityAutomaticIncrease,
-                    automaticInventoryIncrease: rawmaterial.inventoryIncrease === 'No' ? null : rawmaterial.automaticInventoryIncrease,
-                    primaryPackageType: rawmaterial.packaged === 'No' ? null : rawmaterial.primaryPackageType
-                };
-            }
-    
-            return {
-                ...rawmaterial,
-                branchId: branchId,
-                userId: user?.id
-            };
-        });
-        dispatch(postManyServices(rawMateriaData as unknown as IService[], token));
+        const serviceData = nonEmptyRows.map(service => ({
+            ...service,
+            branchId: branchId,
+            userId: user?.id,
+        }));
+        dispatch(postManyServices(serviceData as unknown as IService[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
-        setMessage('Se guardó masivamente tus materias primas con éxito');
+        setMessage('Se guardó masivamente tus servicios con éxito');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
     };
-
-
 
     return (
         <div>

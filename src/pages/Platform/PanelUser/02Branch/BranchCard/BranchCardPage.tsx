@@ -123,56 +123,62 @@ function BranchCardPage() {
                             </div>
 
                             <div className={`${styles.container__Body}`}>
-                                {Array.isArray(filteredBranches) && filteredBranches.map((branch) => (
-                                    <div key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
+                                {Array.isArray(filteredBranches) && filteredBranches.length > 0 ? (
+                                    filteredBranches.map((branch) => (
+                                        <div key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
+                                            </div>
+                                            <div className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.department}</span>
+                                            </div>
+                                            <div className={`${styles.city} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.city}</span>
+                                            </div>
+                                            <div className={`${styles.address} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.addressBranch}</span>
+                                            </div>
+                                            <div className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactEmailBranch}</span>
+                                            </div>
+                                            <div className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactPhoneBranch}</span>
+                                            </div>
+                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center position-relative`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} d-flex align-items-center justify-content-center position-relative`}
+                                                    onMouseEnter={() => handleDeleteBranchMouseEnter(branch.id)}
+                                                    onMouseLeave={handleDeleteBranchMouseLeave}
+                                                    onClick={() => {
+                                                        handleDelete(branch);
+                                                    }}
+                                                />
+                                                {showTooltipDelete === branch.id && (
+                                                    <div className={`${styles.modal__Delete_Branch} d-flex align-items-center justify-content-center position-absolute`}>
+                                                        Eliminar esta sede
+                                                    </div>
+                                                )}
+                                                <FaUserEdit
+                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                    onMouseEnter={() => handleEditBranchMouseEnter(branch.id)}
+                                                    onMouseLeave={handleEditBranchMouseLeave}
+                                                    onClick={() => {
+                                                        handleEdit(branch)
+                                                    }}
+                                                />
+                                                {showTooltipEdit === branch.id && (
+                                                    <div className={`${styles.modal__Edit_Branch} d-flex align-items-center justify-content-center position-absolute`}>
+                                                        Editar esta sede
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.department}</span>
-                                        </div>
-                                        <div className={`${styles.city} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.city}</span>
-                                        </div>
-                                        <div className={`${styles.address} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.addressBranch}</span>
-                                        </div>
-                                        <div className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactEmailBranch}</span>
-                                        </div>
-                                        <div className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.contactPhoneBranch}</span>
-                                        </div>
-                                        <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center position-relative`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center position-relative`}
-                                                onMouseEnter={() => handleDeleteBranchMouseEnter(branch.id)}
-                                                onMouseLeave={handleDeleteBranchMouseLeave}
-                                                onClick={() => {
-                                                    handleDelete(branch);
-                                                }}
-                                            />
-                                            {showTooltipDelete === branch.id && (
-                                                <div className={`${styles.modal__Delete_Branch} d-flex align-items-center justify-content-center position-absolute`}>
-                                                    Eliminar esta sede
-                                                </div>
-                                            )}
-                                            <FaUserEdit
-                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                onMouseEnter={() => handleEditBranchMouseEnter(branch.id)}
-                                                onMouseLeave={handleEditBranchMouseLeave}
-                                                onClick={() => {
-                                                    handleEdit(branch)
-                                                }}
-                                            />
-                                            {showTooltipEdit === branch.id && (
-                                                <div className={`${styles.modal__Edit_Branch} d-flex align-items-center justify-content-center position-absolute`}>
-                                                    Editar esta sede
-                                                </div>
-                                            )}
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noAssetsMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes sedes registradas
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
 

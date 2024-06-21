@@ -41,7 +41,6 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                     "Nombre de la sede": "nameBranch",
                     "Departamento de la sede": "department",
                     "Ciudad de la sede": "city",
-                    
                     "Dirección de la sede": "addressBranch",
                     "Email de la sede": "contactEmailBranch",
                     "Teléfono de la sede": "contactPhoneBranch",
