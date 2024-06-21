@@ -12,12 +12,24 @@
     letter-spacing: 1px;
     font-family: 'Century Gothic', sans-serif;
 }
-.link__Income_Create {
+.link__Head_Navigate {
+    color: #fff;
     border: none;
     text-decoration: none;
     padding: 10px 20px;
     color: white;
     background: #718bd8;
+}
+.link__Head_Navigate:hover {
+    cursor: pointer;
+}
+.icon__Plus {
+    color: #fff;
+    margin: -2px 5px 0 0;
+}
+.link {
+    color: #fff;
+    margin: 0;
 }
 
 /* TABLA */
