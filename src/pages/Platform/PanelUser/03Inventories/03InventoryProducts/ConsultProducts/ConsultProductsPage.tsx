@@ -17,6 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalProduct from '../../../../../../components/Platform/03Inventories/Products/ModalProduct/ModalProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/ModalProductOff/ModalProductOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import AddInventoryProducts from '../../../../../../components/Platform/03Inventories/Products/AddInventoryProducts/AddInventoryProducts';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -53,11 +54,13 @@ function ConsultProductsPage() {
     }, [selectedBranch, token, dispatch]);
 
     const [idProduct, setIdProduct] = useState('');
+    const [idBranch, setIdBranch] = useState('');
     const [nameProduct, setNameProduct] = useState('');
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IProduct>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleDelete = useCallback((product: IProduct) => {
         setSelectedItem(product);
@@ -69,12 +72,18 @@ function ConsultProductsPage() {
         setShowItemModal(true);
     }, []);
 
+    const handleAddInventory = useCallback((product: IProduct) => {
+        setSelectedItem(product);
+        setShowAddInventory(true);
+    }, []);
+
     const handleOff = useCallback((product: IProduct) => {
         setSelectedItem(product);
         setShowOff(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowAddInventory(false);
         setShowDeleteConfirmation(false);
         setShowItemModal(false);
         setShowOff(false);
@@ -184,6 +193,17 @@ function ConsultProductsPage() {
                                                     />
                                                 </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <FaPlus
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdProduct(product.id);
+                                                            setNameProduct(product.nameItem || '');
+                                                            setIdBranch(product.branchId);
+                                                            handleAddInventory(product)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <IoIosCloseCircleOutline
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
@@ -230,6 +250,21 @@ function ConsultProductsPage() {
                                     typeRegisterDelete={'Product'}
                                     idItem={idProduct}
                                     nameRegister={nameProduct}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddInventoryProducts
+                                    token={token}
+                                    idItem={idProduct}
+                                    nameItem={nameProduct}
+                                    idBranch={idBranch}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
