@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProduct, getProducts } from '../../../../../../redux/User/productSlice/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getAssetsByBranch } from '../../../../../../redux/User/assetsSlice/actions';
+import { getRawMaterialsByBranch } from '../../../../../../redux/User/rawMaterialSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../../types/User/products.types';
@@ -16,10 +18,13 @@ import CreateManyProduct from '../../../../../../components/Platform/03Inventori
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
+import CreateAssetPage from '../../01InventoryAssets/CreateAssets/CreateAssetsPage';
+import CreateRawMateralPage from '../../04InventoryRawMaterals/CreateRawMaterals/CreateRawMateralsPage';
+import { GoPlus } from "react-icons/go";
 import styles from './styles.module.css';
 
 interface CreateProductPageProps {
-    selectedBranchId?: string;
+    selectedBranchId: string;
     onCreateComplete?: () => void;
     onProductCreated?: (idBranch: string, token: string) => void;
 }
@@ -32,6 +37,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     // Estados de Redux
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const assets = useSelector((state: RootState) => state.assets.assets);
+    const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
 
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IProduct>();
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -40,11 +47,15 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
+            if (selectedBranchId) {
+                getRawMaterialsByBranch(selectedBranchId, token);
+                getAssetsByBranch(selectedBranchId, token);
+            }
         }
-    }, [token]);
+    }, [token, selectedBranchId]);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
-    const onCloseMerchandiseModal = () => {
+    const onCloseProductModal = () => {
         setShowCancelModal(false);
     };
 
@@ -56,7 +67,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
     //Setea si el artículo aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
-    const [ periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
+    const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
     const handleInventoryIncrease = (value: 'Si' | 'No') => {
         setInventoryIncrease(value);
         setPeriodicityAutomaticInventoryIncrease(undefined)
@@ -68,7 +79,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setPeriodicityAutomaticInventoryIncrease(value);
     };
     
-    //Setea si la mercancía está empacada
+    //Setea si el producto está empacada
     const [selectedpackaged, setSelectedpackaged] = useState('Si');
     const handlepackagedChange = (value: 'Si' | 'No') => {
         setSelectedpackaged(value);
@@ -95,31 +106,236 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setValue('individualPackaging', value);
     };
 
+
+
+    //ACCESORISO DEL PRODUCTO
+    const [accessoriesProduct, setAccessoriesProduct] = useState<{ accesory: string; productAccesoryPackageType: string }[]>([]);
+    const [checkboxState, setCheckboxState] = useState<boolean[]>([]);
+
+    //Setea el valor 'Si' o 'No' si el producto incluye accesorios
+    const [selectedProductAccesory, setSelectedProductAccesory] = useState('Si');
+    const handleShowAccesory = (value: SetStateAction<string>) => {
+        setSelectedProductAccesory(value);
+    };
+
+    //Permite adicionar los accesorios
+    const [newAccessory, setNewAccessory] = useState<string>('');
+    const handleAddAccessory = () => {
+        if (newAccessory.trim() !== '') {
+            setAccessoriesProduct([...accessoriesProduct, { accesory: newAccessory, productAccesoryPackageType: '' }]);
+            setNewAccessory('');
+        }
+    };
+    
+    //ACCESORIOS
+    const handleCheckboxAccesoryChange = (index: number, checked: boolean) => {
+        setCheckboxState((prev) => {
+            const newState = [...prev];
+            newState[index] = checked;
+            return newState;
+        });
+
+        setAccessoriesProduct((prev) => {
+            const updatedAccessories = [...prev];
+            updatedAccessories[index] = {
+                ...updatedAccessories[index],
+                productAccesoryPackageType: checked ? '' : '',
+            };
+            return updatedAccessories;
+        });        
+    };
+
+    const handleAccesoryPackageTypeChange = (index: number, value: string) => {
+        setAccessoriesProduct((prev) => {
+            const updatedAccessories = [...prev];
+            updatedAccessories[index] = {
+                ...updatedAccessories[index],
+                productAccesoryPackageType: value,
+            };
+            return updatedAccessories;
+        });
+    };
+
+
+    
+    //ACTIVOS
+    const [isCreatingAsset, setIsCreatingAsset] = useState(false);
+    const [selectedAssets, setSelectedAssets] = useState<string[]>([]);
+    const [showCancelModalAsset, setShowCancelModalAsset] = useState(false);
+
+    //Setea el valor 'Si' o 'No' si para elaborar un producto se necesitan equipos, herramientas o máquinas
+    const [selectedProductAsset, setSelectedProductAsset] = useState('Si');
+    const handleShowAsset = (value: SetStateAction<string>) => {
+        setSelectedProductAsset(value);
+    };
+    //RENDERIZA LOS ACTIVOS
+    const renderAssetInputs = () => {
+        return Array.isArray(assets)&& assets.map((asset, index) => (
+            <div key={index} className='d-flex'>
+                <div className={`${styles.containerRender} d-flex align-items-center justify-content-center gap-2`}>
+                    <p className={`${styles.renderNameItem} m-0 p-1 border rounded`}>{asset.nameItem}</p>
+                    <input
+                        type="checkbox"
+                        checked={selectedAssets.includes(asset.id)}
+                        onChange={(e) => handleAssetCheckboxChange(asset.id, e.target.checked)}
+                        className={`${styles.inputCheck} border rounded`}
+                    />
+                </div>
+            </div>
+        ));
+    };
+    
+    // Selecciona todos los activos utilizados en la elaboración del producto
+    const handleAssetCheckboxChange = (assetId: string, isChecked: boolean) => {
+        setSelectedAssets((prevSelectedAssets) => {
+            if (isChecked) {
+                return [...prevSelectedAssets, assetId];
+            } else {
+                return prevSelectedAssets.filter((id) => id !== assetId);
+            }
+        });
+    };
+
+    const handleCreateAsset = () => {
+        setShowCancelModalAsset(true);
+        setIsCreatingAsset(true);
+    };
+
+    const onCloseAssetModal = () => {
+        setShowCancelModalAsset(false);
+        setIsCreatingAsset(false);
+    };
+
+    const onAssetCreated = (selectedBranchId: string, token: string) => {
+        getAssetsByBranch(selectedBranchId, token);
+        setIsCreatingAsset(false);
+    };
+
+
+
+
+    //MATERIAS PRIMAS
+    const [isCreatingRawMaterial, setIsCreatingRawMaterial] = useState(false);
+    const [selectedRawMaterials, setSelectedRawMaterials] = useState<string[]>([]);
+    const [rawMaterialQuantities, setRawMaterialQuantities] = useState<{ [key: string]: number }>({});
+    const [ShowCancelModalRawMaterial, setShowCancelModalRawMaterial] = useState(false);
+    //RENDERIZA TODAS LAS MATERIAS PRIMAS
+    const renderRawMaterialInputs = () => {
+        return Array.isArray(rawMaterial) && rawMaterial.map((rawMaterial, index) => (
+            <div key={index}>
+                <div className={`${styles.containerRender} d-flex align-items-center justify-content-center`}>
+                    <p className={`${styles.renderNameItem} m-0 p-1 border rounded text-start`}>{rawMaterial.nameItem}</p>
+                    <input
+                        type="checkbox"
+                        className={`${styles.inputCheck} border rounded`}
+                        checked={selectedRawMaterials.includes(rawMaterial.id)}
+                        onChange={(e) => handleRawMaterialCheckboxChange(rawMaterial.id, e.target.checked)}
+                    />
+                    <input
+                        type="number"
+                        className={`${styles.renderInputQuantity} p-2 border rounded`}
+                        value={rawMaterialQuantities[rawMaterial.id] || ''}
+                        onChange={(e) => handleRawMaterialQuantityChange(rawMaterial.id, parseInt(e.target.value, 10))}
+                        placeholder={`Cantidad de ${rawMaterial.nameItem}`}
+                        min={0}
+                    />
+                    <p className={`${styles.renderInputUnitMeasure} m-0 p-1 d-flex`}>{rawMaterial.unitMeasure}s</p>
+                </div>
+            </div>
+        ));
+    };
+
+    // Selecciona todas las materias primas para elaborar el producto
+    const handleRawMaterialCheckboxChange = (rawMaterialId: string, isChecked: boolean) => {
+        setSelectedRawMaterials((prevSelectedRawMaterials) => {
+            if (isChecked) {
+                return [...prevSelectedRawMaterials, rawMaterialId];
+            } else {
+                return prevSelectedRawMaterials.filter((id) => id !== rawMaterialId);
+            }
+        });
+    };
+
+    const handleRawMaterialQuantityChange = (rawMaterialId: string, quantity: number) => {
+        setRawMaterialQuantities((prevQuantities) => ({
+            ...prevQuantities,
+            [ rawMaterialId ]: quantity,
+        }));
+    };
+
+    const handleCreateRawMaterial = () => {
+        setShowCancelModalRawMaterial(true);
+        setIsCreatingRawMaterial(true);
+    };
+
+    const onCloseRawMaterialModal = () => {
+        setShowCancelModalRawMaterial(false);
+        setIsCreatingRawMaterial(false);
+    };
+
+    const onRawMaterialCreated = (selectedBranchId: string, token: string) => {
+        getAssetsByBranch(selectedBranchId, token);
+        setIsCreatingRawMaterial(false);
+    };
+
+
     const onSubmit = async (values: IProduct) => {
         try {
-            const formData = {
-                ...values,
-                returnablePackaging: selectedReturnablePackaging,
-                individualPackaging: selectedIndividualPackaging,
-                packaged: selectedpackaged,
-                inventoryIncrease: inventoryIncrease,
-                periodicityAutomaticIncrease: periodicityAutomaticIncrease,
-            } as IProduct;
-            await dispatch(postProduct(formData, token));
-            setFormSubmitted(true);
-            reset();
-            setTimeout(() => {
-                dispatch(getProducts(token));
-                setFormSubmitted(false);
-                if (onCreateComplete) {
-                    onCreateComplete();
-                } else {
-                    setShouldNavigate(true);
-                }
-                if (onProductCreated && selectedBranchId) {
-                    onProductCreated(selectedBranchId, token);
-                }
-            }, 1500);
+            if (!isCreatingRawMaterial && !isCreatingAsset) {
+                // Convertir assets, product y rawMaterial a arrays si no lo son ya
+                const assetsArray = Array.isArray(assets) ? assets : assets ? [assets] : [];
+                const rawMaterialsArray = Array.isArray(rawMaterial) ? rawMaterial : rawMaterial ? [rawMaterial] : [];
+    
+                if (values.inventoryIncrease === 'No') values.periodicityAutomaticIncrease = undefined;
+                if (values.packaged === 'No') values.primaryPackageType = undefined;
+    
+                const formData = {
+                    ...values,
+                    returnablePackaging: selectedReturnablePackaging,
+                    individualPackaging: selectedIndividualPackaging,
+                    packaged: selectedpackaged,
+                    inventoryIncrease: inventoryIncrease,
+                    periodicityAutomaticIncrease: periodicityAutomaticIncrease,
+    
+                    productAccesory: selectedProductAccesory,
+                    productAccesories: accessoriesProduct.map((accessory) => ({
+                        accesory: accessory.accesory,
+                        productAccesoryPackageType: accessory.productAccesoryPackageType || null,
+                    })),
+    
+                    productAssets: assetsArray
+                        .filter((asset) => selectedAssets.includes(asset.id))
+                        .map((asset) => ({
+                            nameAssets: asset.nameItem,
+                            assetId: asset.id,
+                        })),
+    
+                    productRawMaterials: rawMaterialsArray
+                        .filter((rawMaterial) => selectedRawMaterials.includes(rawMaterial.id))
+                        .map((rawMaterial) => ({
+                            nameItem: rawMaterial.nameItem,
+                            rawMaterialId: rawMaterial.id,
+                            unitMeasure: rawMaterial.unitMeasure,
+                            quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
+                        })),
+                } as IProduct;
+    
+                await dispatch(postProduct(formData, token));
+                setFormSubmitted(true);
+                reset();
+                setTimeout(() => {
+                    dispatch(getProducts(token));
+                    setFormSubmitted(false);
+                    if (onCreateComplete) {
+                        onCreateComplete();
+                    } else {
+                        setShouldNavigate(true);
+                    }
+                    if (onProductCreated && selectedBranchId) {
+                        onProductCreated(selectedBranchId, token);
+                    }
+                }, 1500);
+            }
         } catch (error) {
             throw new Error('Error en el envío del formulario');
         }
@@ -155,7 +371,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     branches={branches}
                                     token={token}
                                     onCreateComplete={() => {
-                                        onCloseMerchandiseModal();
+                                        onCloseProductModal();
                                     }}
                                 />
                             </Modal.Body>
@@ -192,7 +408,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la mercancía que vas a registrar?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre del producto que vas a registrar?</p>
                                 </div>
                                 <div>
                                     <input
@@ -200,17 +416,17 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.info} p-2 border rounded form-control`}
                                         onChange={handleNameItem}
-                                        placeholder='¿Qué mercancía quieres registrar?'
+                                        placeholder='¿Qué producto quieres registrar?'
                                     />
                                     {errors.nameItem && (
-                                        <p className='text-danger'>El nombre de la mercancía es requerido</p>
+                                        <p className='text-danger'>El nombre del producto es requerido</p>
                                     )}
                                 </div>
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>                           
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene la mercancía?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene el producto?</p>
                                 </div>
                                 <div>
                                     <select
@@ -255,14 +471,14 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         </optgroup>
                                     </select>
                                     {errors.unitMeasure && (
-                                        <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
+                                        <p className='text-danger'>El tipo de empaque de tu producto es requerido</p>
                                     )}
                                 </div>
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánto producto tienes en el inventario?</p>
                                 </div>
                                 <div>
                                     <input
@@ -278,7 +494,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         }}
                                     />
                                     {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
+                                        <p className='text-danger'>El inventario del producto es requerido</p>
                                     )}
                                 </div>
                             </div>
@@ -388,7 +604,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada en embalaje o envoltura?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿El producto viene empacada en embalaje o envoltura?</p>
                                 </div>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
@@ -412,7 +628,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                     <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si el producto viene empacado ¿Cuál es el tipo de empaque principal?</p>
                                     </div>
                                     <div>
                                         <select
@@ -439,7 +655,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                             <option value='Plastico de burbujas'>Plástico de burbujas</option>
                                         </select>
                                         {errors.primaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
+                                            <p className='text-danger'>El tipo de empaque de tu producto es requerido</p>
                                         )}
                                     </div>
                                 </div>
@@ -472,7 +688,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
-                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
+                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu producto es retornable?</p>
                                         </div>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                             <div
@@ -497,7 +713,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿El producto tiene empaques adicionales?</p>
                                 </div>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
                                     <div
@@ -521,7 +737,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {selectedIndividualPackaging === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                     <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si el producto tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
                                     </div>
                                     <div>
                                         <select
@@ -547,11 +763,178 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                             <option value='Plastico de burbujas'>Plástico de burbujas</option>
                                         </select>
                                         {errors.secondaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
+                                            <p className='text-danger'>El tipo de empaque de tu producto es requerido</p>
                                         )}
                                     </div>
                                 </div>
                             )}
+
+
+                            {/* ACCESORIOS */}
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Tu producto incluye accesorios?</p>
+                                </div>
+                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedProductAccesory === 'Si' ? styles.selected : ''} m-1 p-2 text-center`} 
+                                        onClick={() => handleShowAccesory('Si')}
+                                    >
+                                        Si
+                                    </div>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedProductAccesory === 'No' ? styles.selected : ''} m-1 p-2 text-center`} 
+                                        onClick={() => handleShowAccesory('No')}
+                                    >
+                                        No
+                                    </div>
+                                    {errors.returnablePackaging && (
+                                        <p className='text-danger'>Este dato es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {selectedProductAccesory === 'Si' && (
+                                <div className={` mb-3 p-3 border border-secundary rounded`}>
+                                    <h3 className={`${styles.subtitleSection} text-center`}>Accesorios</h3>
+                                    <p className='mt-2'>Ingresa aquí los accesorios de tu producto</p>
+                                    <div className={`m-3 d-flex align-items-center justify-content-center gap-3`}>
+                                        <input
+                                            type="text"
+                                            className={`${styles.info} p-2 border rounded border-secundary`}
+                                            value={newAccessory}
+                                            onChange={(e) => setNewAccessory(e.target.value)}
+                                        />
+                                        <div className={`${styles.containerIconAdd} d-flex align-items-center justify-content-center`}>
+                                            <GoPlus className={`${styles.iconAdd} m-0`} onClick={handleAddAccessory}/>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.containerAccesories} m-auto d-flex flex-column align-items-center justify-content-between`}>
+                                        <p>Si el accesorio contiene algún tipo de empaque, presiona el check y selecciona un tipo de las opciones</p>
+                                        {accessoriesProduct.map((accessory, index) => (
+                                            <div key={index} className={`${styles.accesories} d-flex flex-column`}>
+                                                <div className="m-auto p-2 d-flex" >
+                                                    <p className={`${styles.accesory} p-2 text-start border rounded`}>{accessory.accesory}</p>
+                                                    <input
+                                                        type="checkbox"
+                                                        className={styles.inputCheck}
+                                                        onChange={(e) => handleCheckboxAccesoryChange(index, e.target.checked)}
+                                                    />
+                                                    {checkboxState[index] && (
+                                                        <div>
+                                                            <select
+                                                                {...register(`productAccesories.${index}.productAccesoryPackageType`, { required: true })}
+                                                                value={accessory.productAccesoryPackageType || ''}
+                                                                onChange={(e) => handleAccesoryPackageTypeChange(index, e.target.value)}
+                                                                className={`${styles.accesorySelect} border rounded`}
+                                                            >
+                                                                <option value=''>Selecciona una opción</option>
+                                                                <option value='Papel'>Papel</option>
+                                                                <option value='Papel de archivo'>Papel de archivo</option>
+                                                                <option value='Carton'>Cartón</option>
+                                                                <option value='Aluminio'>Aluminio</option>
+                                                                <option value='Plegadiza'>Plegadiza</option>
+                                                                <option value='Vidrio'>Vidrio</option>
+                                                                <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
+                                                                <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                                                <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                                                <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                                                <option value='PP Polipropileno'>PP Polipropileno</option>
+                                                                <option value='PS Poliestireno'>PS Poliestireno</option>
+                                                                <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                                                <option value='Hierro'>Hierro</option>
+                                                                <option value='Icopor'>Icopor</option>
+                                                                <option value='Biodegradable'>Biodegradable</option>
+                                                                <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                                            </select>
+                                                            {errors.productAccesories && (
+                                                                <p className='text-danger'>El tipo de empaque de tu accesorio es requerido</p>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+
+                            {/* ACTIVOS */}
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Para elaborar tu producto ¿Utilizas equipos, herramientas o máquinas?</p>
+                                </div>
+                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedProductAsset === 'Si' ? styles.selected : ''} m-1 p-2 text-center`} 
+                                        onClick={() => handleShowAsset('Si')}
+                                        >
+                                        Si
+                                    </div>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedProductAsset === 'No' ? styles.selected : ''} m-1 p-2 text-center`} 
+                                        onClick={() => handleShowAsset('No')}
+                                    >
+                                        No
+                                    </div>
+                                    {errors.returnablePackaging && (
+                                        <p className='text-danger'>Este dato es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {selectedProductAsset === 'Si' && (
+                                <div className={` mb-3 p-3 border border-secundary rounded`}>
+                                    <div>
+                                        <h3 className={`${styles.subtitleSection} text-center`}>Equipos, herramientas o máquinas</h3>
+                                        <p>Selecciona los equipos, herramientas o máquinas que utilizas para elaborar tu producto</p>
+                                        <p className='mt-2'>Si el equipo, herramienta o máquina no existe, créalo <span className={`${styles.link} text-sky-500 text-decoration-none`} onClick={handleCreateAsset}>aquí</span></p>
+                                        <Modal show={showCancelModalAsset} onHide={() => setShowCancelModalAsset(false)} size="xl">
+                                            <Modal.Header closeButton onClick={() => setShowCancelModalAsset(false)}>
+                                                <Modal.Title>Crear Activo</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                            <CreateAssetPage
+                                                selectedBranchId={selectedBranchId}
+                                                onCreateComplete={() => {
+                                                    onCloseAssetModal();
+                                                    getRawMaterialsByBranch(selectedBranchId, token);
+                                                }}
+                                                onAssetCreated={onAssetCreated}
+                                            />
+                                            </Modal.Body>
+                                        </Modal>
+                                    </div>
+                                    <div>{renderAssetInputs()}</div>
+                                </div>
+                            )}
+
+
+                            {/* MATERIAS PRIMAS */}
+                            <div className={` mb-3 p-3 border border-secundary rounded`}>
+                                <div>
+                                    <h3 className={`${styles.subtitleSection} text-center`}>Materias primas</h3>
+                                    <p>Selecciona las materias primas y especifica la cantidad que utilizas para elaborar un (1) producto:</p>
+                                    <Modal show={ShowCancelModalRawMaterial} onHide={() => setShowCancelModalRawMaterial(false)} size="xl">
+                                        <Modal.Header closeButton onClick={() => setShowCancelModalRawMaterial(false)}>
+                                            <Modal.Title>Crear Materia Prima</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <CreateRawMateralPage
+                                                selectedBranchId={selectedBranchId}
+                                                onCreateComplete={() => {
+                                                    onCloseRawMaterialModal();
+                                                    getRawMaterialsByBranch(selectedBranchId, token);
+                                                }}
+                                                onRawMaterialCreated={onRawMaterialCreated}
+                                            />
+                                        </Modal.Body>
+                                    </Modal>
+                                </div>
+                                <div>{renderRawMaterialInputs()}</div>
+                                <p className='mt-2'>Si la materia prima no existe, créala <span className={`${styles.link} text-sky-500`} onClick={handleCreateRawMaterial}>aquí</span></p>
+                            </div>
 
                             <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>

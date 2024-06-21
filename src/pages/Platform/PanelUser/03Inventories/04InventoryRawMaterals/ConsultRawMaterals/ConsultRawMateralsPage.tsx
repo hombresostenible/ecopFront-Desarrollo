@@ -128,14 +128,14 @@ function ConsultRawMateralsPage() {
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</div>
-                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>Nombre del item</div>
-                                    <div className={`${styles.inventory} d-flex align-items-center justify-content-center`}>Inventario</div>
-                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center`}>Unidad de medida</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center`}>Precio</div>
-                                    <div className={`${styles.packaged} d-flex align-items-center justify-content-center`}>Empacado</div>
-                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center`}>Empaque principal</div>
-                                    <div className={`${styles.action} d-flex align-items-center justify-content-center`}>Acciones</div>
+                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
+                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
+                                    <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
+                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
+                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center text-center`}>Empaque principal</div>
+                                    <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
 
