@@ -17,6 +17,8 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterial/ModalRawMaterial';
 import ModalRawMaterialOff from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterialOff/ModalRawMaterialOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import AddInventoryRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/AddInventoryRawMaterial/AddInventoryRawMaterial';
+import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -52,11 +54,13 @@ function ConsultRawMateralsPage() {
     }, [selectedBranch, token, dispatch]);
 
     const [idRawMaterial, setIdRawMaterial] = useState('');
+    const [idBranch, setIdBranch] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IRawMaterial>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleDelete = useCallback((rawMaterial: IRawMaterial) => {
         setSelectedItem(rawMaterial);
@@ -68,12 +72,18 @@ function ConsultRawMateralsPage() {
         setShowItemModal(true);
     }, []);
 
+    const handleAddInventory = useCallback((rawMaterial: IRawMaterial) => {
+        setSelectedItem(rawMaterial);
+        setShowAddInventory(true);
+    }, []);
+
     const handleOff = useCallback((rawMaterial: IRawMaterial) => {
         setSelectedItem(rawMaterial);
         setShowOff(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowAddInventory(false);
         setShowDeleteConfirmation(false);
         setShowItemModal(false);
         setShowOff(false);
@@ -174,6 +184,17 @@ function ConsultRawMateralsPage() {
                                                     />
                                                 </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <FaPlus
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(rawMaterial.id);
+                                                            setNameRawMaterial(rawMaterial.nameItem || '');
+                                                            setIdBranch(rawMaterial.branchId);
+                                                            handleAddInventory(rawMaterial)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <IoIosCloseCircleOutline
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
@@ -220,6 +241,21 @@ function ConsultRawMateralsPage() {
                                     typeRegisterDelete={'RawMaterial'}
                                     idItem={idRawMaterial}
                                     nameRegister={nameRawMaterial}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddInventoryRawMaterial
+                                    token={token}
+                                    idItem={idRawMaterial}
+                                    nameItem={nameRawMaterial}
+                                    idBranch={idBranch}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
