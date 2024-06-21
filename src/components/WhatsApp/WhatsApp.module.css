@@ -1,5 +1,5 @@
 /*---------------WhatsApp---------------*/
-.whatsappLandgin {
+.whatsappLanding {
     border: none;
     border-radius: 10px;
     position: fixed;    
@@ -8,7 +8,7 @@
     z-index: 2;
     transition: 300ms all ease;
 }
-.whatsappLandgin:hover {
+.whatsappLanding:hover {
     cursor: pointer;
     transform: scale(1.2) rotate(10deg);
 }
