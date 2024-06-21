@@ -73,6 +73,10 @@ const assetsSlice = createSlice({
             state.loading = true;
             state.errorAssets = null;
         },
+        patchAddInventoryAssetStart: (state) => {
+            state.loading = true;
+            state.errorAssets = null;
+        },
         deleteAssetStart: (state) => {
             state.loading = true;
             state.errorAssets = null;
@@ -80,5 +84,5 @@ const assetsSlice = createSlice({
     },
 });
 
-export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, deleteAssetStart } = assetsSlice.actions;
+export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } = assetsSlice.actions;
 export default assetsSlice.reducer;

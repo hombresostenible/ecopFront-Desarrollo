@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { patchIncreaseInventoryMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+import { patchAddInventoryMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../types/User/merchandise.types';
@@ -32,7 +32,7 @@ function IncreaseYourInventoryMerchandise({ token, idItem, nameItem, idBranch, o
                 ...values,
                 branchId: idBranch,
             } as IMerchandise;
-            dispatch(patchIncreaseInventoryMerchandise(idItem, formData, token));
+            dispatch(patchAddInventoryMerchandise(idItem, formData, token));
             setFormSubmitted(true);
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getMerchandises(token));
