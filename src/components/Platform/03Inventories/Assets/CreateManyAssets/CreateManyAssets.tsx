@@ -19,6 +19,7 @@ interface CreateManyMerchandisesProps {
 function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
     const dispatch: AppDispatch = useDispatch();
 
+    // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -39,6 +40,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         setSelectedBranch(selectedId);
     };
 
+    // Renderiza el Excel adjuntado en la tabla del modal
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -111,6 +113,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     const onSubmit = () => {
         if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
+        // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
         const assetData = nonEmptyRows.map(asset => ({
             ...asset,
@@ -118,6 +121,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
             userId: user?.id,
         }));
         dispatch(postManyAssets(assetData as unknown as IAssets[], token));
+        // Restablecer estado y mensaje de éxito
         setExcelData(null);
         setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
         setTimeout(() => {
