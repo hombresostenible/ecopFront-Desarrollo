@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IRawMaterial } from '../../../types/User/rawMaterial.types';
-import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
+import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postRawMaterial = (formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
@@ -101,6 +101,25 @@ export const getRawMaterialsByBranch = (idBranch: string, token: string) => asyn
     }
 };
 
+//OBTENER TODAS LAS MATERIAS PRIMAS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
+export const getRawMaterialsOffS = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/rawMaterial/rawMaterials-off', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getRawMaterialsOffStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorRawMaterial(error.response?.data.message));
+        } else {
+            dispatch(errorRawMaterial(error.message));
+        }
+    }
+};
+
 //ACTUALIZA UNA MATERIAS PRIMAS DEL USER
 export const putRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -142,7 +161,7 @@ export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => 
 };
 
 //DA DE BAJA UNA MATERIAS PRIMAS DEL USER
-export const patchRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
+export const patchRawMaterial = (idRawMaterial: string, formData: Partial<IRawMaterial>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchRawMaterialStart());
         const response = await axiosInstance.patch(`/rawMaterial/${idRawMaterial}`, formData, {
