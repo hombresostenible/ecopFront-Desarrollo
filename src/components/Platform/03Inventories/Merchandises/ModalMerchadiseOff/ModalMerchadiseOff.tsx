@@ -21,9 +21,6 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
     // Estados de Redux
     const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
 
-
-    
-    
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<IMerchandise>();
 
@@ -62,7 +59,7 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
                 {formSubmitted && (
                     <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
                 )}
-                {errorMerchandise?.map((error, i) => (
+                {Array.isArray(errorMerchandise)&& errorMerchandise.map((error, i) => (
                     <div key={i} className='bg-red-500 my-2 p-2 text-white text-center'>{error}</div>
                 ))}
                 <form onSubmit={handleSubmit(onSubmit)} >

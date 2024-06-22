@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IProduct } from '../../../types/User/products.types';
-import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } from './productSlice';
+import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } from './productSlice';
 
 //CREAR DE UN PRODUCTO
 export const postProduct = (formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
@@ -101,6 +101,25 @@ export const getProductsByBranch = (idBranch: string, token: string) => async (d
     }
 };
 
+//OBTENER TODOS LOS PRODUCTOS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
+export const getProductsOff = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/product/products-off', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getProductsOffStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorProduct(error.response?.data.message));
+        } else {
+            dispatch(errorProduct(error.message));
+        }
+    }
+};
+
 //ACTUALIZA UN PRODUCTO DEL USER
 export const putProduct = (idProduct: string, formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -142,7 +161,7 @@ export const putManyProducts = (formData: IProduct[], token: string) => async (d
 };
 
 //DA DE BAJA UN PRODUCTO DEL USER
-export const patchProduct = (idProduct: string, formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
+export const patchProduct = (idProduct: string, formData: Partial<IProduct>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchProductStart());
         const response = await axiosInstance.patch(`/product/${idProduct}`, formData, {
