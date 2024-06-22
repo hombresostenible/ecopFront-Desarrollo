@@ -3,14 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
-// import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
 interface ModalInventoryRawMaterialProps {
     selectedRawMaterial: IRawMaterial | null;
 }
 
 function ModalGraphicInventoryRawMaterial ({ selectedRawMaterial }: ModalInventoryRawMaterialProps) {
-    console.log(selectedRawMaterial)
     const chartContainer = useRef<HTMLCanvasElement | null>(null);
     const chartInstance = useRef<Chart | null>(null);
     

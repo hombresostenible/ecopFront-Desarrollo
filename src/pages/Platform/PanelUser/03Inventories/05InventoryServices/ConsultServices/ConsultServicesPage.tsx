@@ -91,7 +91,7 @@ function ConsultServicesPage() {
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-services' className={`${styles.link} text-decoration-none`}>Registro de artículos</Link>
+                                <Link to='/inventories/create-services' className={`${styles.link} text-decoration-none`}>Registro de servicios</Link>
                             </div>
                         </div>
 

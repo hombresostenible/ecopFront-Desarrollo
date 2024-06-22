@@ -129,7 +129,6 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
             if (expenseCategory === 'Acueducto' || expenseCategory === 'Energia' || expenseCategory === 'Gas' || expenseCategory === 'Internet' || expenseCategory === 'Celular/Plan de datos') formData.unitValue = formData.totalValue;
             if (registrationDate) formData.registrationDate = registrationDate;
             if (transactionDate) formData.transactionDate = transactionDate;
-            console.log('formData: ', formData)
 
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);

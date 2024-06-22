@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import { IAssets, InventoryOffItem } from '../../../../../types/User/assets.type
 import styles from './styles.module.css';
 
 interface ModalAssetOffProps {
+    token: string;
     asset: IAssets;
     onCloseModal: () => void;
 }
@@ -21,8 +21,7 @@ interface FormValues {
     description: string;
 }
 
-function ModalAssetOff({ asset, onCloseModal }: ModalAssetOffProps) {
-    const token = Cookies.get('token') || '';
+function ModalAssetOff({ token, asset, onCloseModal }: ModalAssetOffProps) {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 

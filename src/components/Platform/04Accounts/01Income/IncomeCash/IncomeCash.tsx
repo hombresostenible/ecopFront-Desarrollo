@@ -144,7 +144,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
             }
             if (registrationDate) accountBookData.registrationDate = registrationDate;
             if (transactionDate) accountBookData.transactionDate = transactionDate;
-            console.log('accountBookData: ', accountBookData)
             dispatch(postAccountsBook(accountBookData, token));
             setFormSubmitted(true);
             setTimeout(() => {
