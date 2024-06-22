@@ -3,27 +3,27 @@ import { useEffect } from 'react';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { patchMerchandise, getMerchandisesOff, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+import { patchProduct, getProductsOff, getProducts } from '../../../../../redux/User/productSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { IProduct } from '../../../../../types/User/products.types';
 import { IBranch } from '../../../../../types/User/branch.types';
 import styles from './styles.module.css';
 
-interface ConsultMerchandisesOffProps {
+interface ConsultProductsOffProps {
     token: string;
     branches: IBranch[] | null;
     onCloseModal: () => void;
 }
 
-function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMerchandisesOffProps) {
+function ConsultProductsOff({ token, branches, onCloseModal }: ConsultProductsOffProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const merchandise = useSelector((state: RootState) => state.merchandise.merchandise);
+    const product = useSelector((state: RootState) => state.product.product);
 
     useEffect(() => {
         if (token) {
-            dispatch(getMerchandisesOff(token));
+            dispatch(getProductsOff(token));
         }
     }, [token]);
 
@@ -31,20 +31,20 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
         return inventoryOff.reduce((total, item) => total + item.quantity, 0);
     };
 
-    //ESTA FUNCION EDITA LAS MERCANCIAS DADAS DE BAJA
-    const onSubmit = (idMerchandise: string) => {
+    //ESTA FUNCION EDITA LOS PRODUCTOS DADOS DE BAJA
+    const onSubmit = (idProduct: string) => {
         try {
-            const assetData: IMerchandise = {
+            const assetData: IProduct = {
                 inventoryOff: [{
                     date: new Date(),
                     quantity: 1, // O cualquier valor apropiado
                     reason: "Activo en uso",
                     description: "Activo en uso",
                 }],
-            } as IMerchandise;
-            dispatch(patchMerchandise(idMerchandise, assetData, token));
+            } as IProduct;
+            dispatch(patchProduct(idProduct, assetData, token));
             onCloseModal();
-            dispatch(getMerchandises(token));
+            dispatch(getProducts(token));
         } catch (error) {
             throw new Error('Error en el envío del formulario');
         }
@@ -64,8 +64,8 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
                     </thead>
 
                     <tbody>
-                        {Array.isArray(merchandise) && merchandise.length > 0 ? (
-                            merchandise.map((asset) => (
+                        {Array.isArray(product) && product.length > 0 ? (
+                            product.map((asset) => (
                                 <tr key={asset.id}>
                                     <td className='align-middle text-center'>
                                         <span>
@@ -97,7 +97,7 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
                         ) : (
                             <tr>
                                 <td colSpan={8} className="text-center">
-                                    No hay mercancías dadas de baja
+                                    No hay productos dados de baja
                                 </td>
                             </tr>
                         )}
@@ -108,4 +108,4 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
     );
 }
 
-export default ConsultMerchandisesOff;
+export default ConsultProductsOff;

@@ -17,6 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalProduct from '../../../../../../components/Platform/03Inventories/Products/ModalProduct/ModalProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/ModalProductOff/ModalProductOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConsultProductsOff from '../../../../../../components/Platform/03Inventories/Products/ConsultProductsOff/ConsultProductsOff';
 import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/Products/AddInventoryProduct/AddInventoryProduct';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -60,7 +61,12 @@ function ConsultProductsPage() {
     const [selectedItem, setSelectedItem] = useState<IProduct>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
+
+    const handleConsultOff = useCallback(() => {
+        setShowConsultOff(true);
+    }, []);
 
     const handleDelete = useCallback((product: IProduct) => {
         setSelectedItem(product);
@@ -101,14 +107,32 @@ function ConsultProductsPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Productos</h1>
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
-                            <div className={styles.link__Head_Navigate}>
-                                <Link to='/inventories/quote-products' className={`${styles.link} text-decoration-none`}>Cotizar productos</Link>
+                            <div className="d-flex">
+                                <div
+                                    className={styles.link__Head_Navigate}
+                                    onClick={handleConsultOff}
+                                >
+                                    Dados de baja
+                                </div>
                             </div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
                                 <Link to='/inventories/create-products' className={`${styles.link} text-decoration-none`}>Registro de productos</Link>
                             </div>
                         </div>
+
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalle de los productos dadas de baja</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <ConsultProductsOff
+                                    token={token}
+                                    branches={branchesArray}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus productos por sede</h3>
