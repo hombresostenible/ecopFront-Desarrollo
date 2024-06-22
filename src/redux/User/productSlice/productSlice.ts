@@ -50,6 +50,11 @@ const productSlice = createSlice({
             state.product = action.payload;
             state.errorProduct = null;
         },
+        getProductsOffStart: (state, action: PayloadAction<IProduct[]>) => {
+            state.loading = true;
+            state.product = action.payload;
+            state.errorProduct = null;
+        },
         putProductStart: (state) => {
             state.loading = true;
             state.errorProduct = null;
@@ -74,5 +79,5 @@ const productSlice = createSlice({
     },
 });
 
-export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } = productSlice.actions;
+export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } = productSlice.actions;
 export default productSlice.reducer;
