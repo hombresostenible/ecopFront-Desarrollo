@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { patchMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { IMerchandise, InventoryOffItem } from '../../../../../types/User/merchandise.types';
 import styles from './styles.module.css';
 
 interface ModalMerchadiseOffProps {
@@ -15,22 +15,36 @@ interface ModalMerchadiseOffProps {
     onCloseModal: () => void;
 }
 
+interface FormValues {
+    reason: InventoryOffItem['reason'];
+    quantity: number;
+    description: string;
+}
+
 function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadiseOffProps) {
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Estados de Redux
     const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
 
-    const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm<IMerchandise>();
-
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
-    const onSubmit = (values: IMerchandise) => {
+    const onSubmit: SubmitHandler<FormValues> = (values) => {
         try {
-            const formData = {
-                ...values,
+            const formData: Partial<IMerchandise> = {
+                inventoryOff: [
+                    {
+                        date: new Date(),
+                        reason: values.reason,
+                        quantity: values.quantity,
+                        description: values.description,
+                    },
+                ],
+                inventory: merchandise.inventory - values.quantity, // Resta la cantidad descontada del inventario actual
             };
             dispatch(patchMerchandise(merchandise.id, formData, token));
             setFormSubmitted(true);
@@ -49,55 +63,75 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
         if (shouldNavigate) {
             navigate('/inventories/consult-merchandises');
         }
-    }, [ shouldNavigate, navigate ]);
+    }, [shouldNavigate, navigate]);
 
 
     return (
         <div className="p-3">
-            <div className={`${styles.containerModal} `}>
-                <p>Si deseas dar de baja tu "{merchandise?.nameItem}" del inventario de mercancías, selecciona el motivo:</p>
+            <div className={`${styles.container__Modal}`}>
+                <p>Si deseas dar de baja tu "{merchandise?.nameItem}" del inventario de activos, selecciona el motivo:</p>
+
                 {formSubmitted && (
                     <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
                 )}
-                {Array.isArray(errorMerchandise)&& errorMerchandise.map((error, i) => (
+                {Array.isArray(errorMerchandise) && errorMerchandise?.map((error, i) => (
                     <div key={i} className='bg-red-500 my-2 p-2 text-white text-center'>{error}</div>
                 ))}
-                <form onSubmit={handleSubmit(onSubmit)} >
+
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <div>
-                            <label>Selecciona el motivo</label>
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Selecciona el motivo</h6>
                             <select
-                                {...register('reasonManualDiscountingInventory', { required: true })}
-                                className={`${styles.info} p-2 border rounded border-secundary`}
+                                {...register('reason', { required: true })}
+                                className={`${styles.input} p-2 border `}
                             >
                                 <option value=''>Seleccione una opción</option>
+                                <option value='Dañado'>Dañado</option>
                                 <option value='Donado'>Donado</option>
                                 <option value='Desechado'>Desechado</option>
-                                <option value='Caducado'>Caducado</option>
-                                <option value='Perdido'>Perdido</option>
-                                <option value='Hurtado'>Hurtado</option>
+                                <option value='Reciclado'>Reciclado</option>
+                                <option value='Vendido'>Vendido</option>
                             </select>
-                            {errors.reasonManualDiscountingInventory && (
+                            {errors.reason && (
                                 <p className='text-danger'>Este dato es requerido</p>
                             )}
                         </div>
 
-                        <div className='mt-3'>
-                            <label>Selecciona la cantidad</label>
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Selecciona la cantidad</h6>
+                            <select
+                                {...register('quantity', { required: true, valueAsNumber: true })}
+                                className={`${styles.input} p-2 border `}
+                            >
+                                <option value=''>Seleccione una cantidad</option>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                                <option value={6}>6</option>
+                            </select>
+                            {errors.quantity && (
+                                <p className='text-danger'>La cantidad es requerida</p>
+                            )}
+                        </div>
+
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Descripción</h6>
                             <input
                                 type="text"
-                                {...register('inventory', { required: true })}
-                                className={`${styles.inputEdit} p-2 border w-100`}
-                                placeholder='Escribe la cantidad a dar de baja'
+                                className={`${styles.input} p-2 border `}
+                                {...register('description', { required: true })}
                             />
-                            {errors.inventory && (
-                                <p className='text-danger'>La cantidad es requerida</p>
+                            {errors.description && (
+                                <p className='text-danger'>La descripción es requerida</p>
                             )}
                         </div>
                     </div>
 
-                    <div className={` d-flex mt-3`}>
-                        <button className={styles.buttonSubmit} type='submit' >Enviar</button>
+                    <div className="d-flex align-items-center justify-content-center">
+                        <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                     </div>
                 </form>
             </div>

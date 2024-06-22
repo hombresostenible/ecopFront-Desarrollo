@@ -108,10 +108,7 @@ function ConsultProductsPage() {
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
                             <div className="d-flex">
-                                <div
-                                    className={styles.link__Head_Navigate}
-                                    onClick={handleConsultOff}
-                                >
+                                <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >
                                     Dados de baja
                                 </div>
                             </div>
