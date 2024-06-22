@@ -17,6 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalMerchandises from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchandises/ModalMerchandises';
 import ModalMerchadiseOff from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchadiseOff/ModalMerchadiseOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConsultMerchandisesOff from '../../../../../../components/Platform/03Inventories/Merchandises/ConsultMerchandisesOff/ConsultMerchandisesOff';
 import AddInventoryMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/AddInventoryMerchandise/AddInventoryMerchandise';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -59,7 +60,12 @@ function ConsultMerchandisesPage() {
     const [selectedItem, setSelectedItem] = useState<IMerchandise>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
+
+    const handleConsultOff = useCallback(() => {
+        setShowConsultOff(true);
+    }, []);
 
     const handleDelete = useCallback((merchadise: IMerchandise) => {
         setSelectedItem(merchadise);
@@ -100,12 +106,32 @@ function ConsultMerchandisesPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Mercancías</h1>
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
-                            <div className="d-flex"></div>
+                            <div className="d-flex">
+                                <div
+                                    className={styles.link__Head_Navigate}
+                                    onClick={handleConsultOff}
+                                >
+                                    Dados de baja
+                                </div>
+                            </div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-merchandises' className={`${styles.link} text-decoration-none`}>Registro de artículos</Link>
+                                <Link to='/inventories/create-merchandises' className={`${styles.link} text-decoration-none`}>Registro de mercancías</Link>
                             </div>
                         </div>
+
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalle de las mercancías dadas de baja</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <ConsultMerchandisesOff
+                                    token={token}
+                                    branches={branchesArray}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus mercancías por sede</h3>
@@ -268,7 +294,7 @@ function ConsultMerchandisesPage() {
 
                         <Modal show={showOff} onHide={() => setShowOff(false)} >
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para dar de baja del inventario de mercancías</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para dar de baja a tu mercancía "{nameMerchadise}"</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <ModalMerchadiseOff

@@ -6,7 +6,6 @@ import { errorItemByBarCodeOrName, getItemByBarCodeStart, getItemByNameStart } f
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
 export const getItemByBarCode = (barCode: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        console.log('Entra')
         const response = await axiosInstance.get(`/item-by-barCode-or-name/bar-code/${barCode}`, {
             headers: {
                 Authorization: `Bearer ${token}`,

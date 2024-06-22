@@ -101,8 +101,6 @@ export const getAssetsByBranch = (idBranch: string, token: string) => async (dis
     }
 };
 
-
-
 //OBTENER TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
 export const getAssetsOff = (token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -121,8 +119,6 @@ export const getAssetsOff = (token: string) => async (dispatch: AppDispatch) => 
         }
     }
 };
-
-
 
 //OBTENER TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS POR SEDE DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
 export const getAssetsOffByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {

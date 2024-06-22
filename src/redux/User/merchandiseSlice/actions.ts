@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IMerchandise } from '../../../types/User/merchandise.types';
-import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
+import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
 //CREAR UNA MERCANCIA
 export const postMerchandise = (formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
@@ -92,6 +92,25 @@ export const getMerchandisesByBranch = (idBranch: string, token: string) => asyn
             }
         });
         dispatch(getMerchandisesByBranchStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorMerchandise(error.response?.data.message));
+        } else {
+            dispatch(errorMerchandise(error.message));
+        }
+    }
+};
+
+//OBTENER TODAS LAS MERCANCIAS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
+export const getMerchandisesOff = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/merchandise/merchandises-off', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getMerchandisesOffStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorMerchandise(error.response?.data.message));
