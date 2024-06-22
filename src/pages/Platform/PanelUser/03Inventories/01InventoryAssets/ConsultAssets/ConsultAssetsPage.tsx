@@ -60,14 +60,12 @@ function ConsultAssetsPage() {
     const [selectedItem, setSelectedItem] = useState<IAssets>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
-    const [showConsultAssetOff, setShowConsultAssetOff] = useState(false);
+    const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
 
-    const handleConsultAssetOff = useCallback(() => {
-        setShowConsultAssetOff(true);
+    const handleConsultOff = useCallback(() => {
+        setShowConsultOff(true);
     }, []);
-
-    // const assetsWithInventoryOff = Array.isArray(assets) ? assets.filter(asset => asset.inventoryOff) : [];
 
     const handleDelete = useCallback((asset: IAssets) => {
         setSelectedItem(asset);
@@ -111,14 +109,14 @@ function ConsultAssetsPage() {
                             <div className="d-flex">
                                 <div
                                     className={styles.link__Head_Navigate}
-                                    onClick={handleConsultAssetOff}
+                                    onClick={handleConsultOff}
                                 >
-                                    Visualiza tus equipos, herramientas y máquinas dados de baja
+                                    Dados de baja
                                 </div>
                             </div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de inventario</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de activos</Link>
                             </div>
                         </div>
 
@@ -129,14 +127,13 @@ function ConsultAssetsPage() {
                         <div>Visualizar activos dados de baja</div>
                         <div>Crear un filtro para cada columna</div> */}
 
-                        <Modal show={showConsultAssetOff} onHide={() => setShowConsultAssetOff(false)} size="xl">
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de los equipos dados de baja</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalle de los equipos dados de baja</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <ConsultAssetOff
                                     token={token}
-                                    // assets={assetsWithInventoryOff}
                                     branches={branchesArray}
                                     onCloseModal={onCloseModal}
                                 />
@@ -304,6 +301,7 @@ function ConsultAssetsPage() {
                             </Modal.Header>
                             <Modal.Body>
                                 <ModalAssetOff
+                                    token={token}
                                     asset={selectedItem as IAssets}
                                     onCloseModal={onCloseModal}
                                 />

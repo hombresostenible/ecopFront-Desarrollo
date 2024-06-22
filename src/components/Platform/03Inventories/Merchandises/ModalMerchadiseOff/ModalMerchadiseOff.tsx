@@ -18,7 +18,11 @@ interface ModalMerchadiseOffProps {
 function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadiseOffProps) {
     const dispatch: AppDispatch = useDispatch();
 
+    // Estados de Redux
     const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
+
+
+    
     
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<IMerchandise>();

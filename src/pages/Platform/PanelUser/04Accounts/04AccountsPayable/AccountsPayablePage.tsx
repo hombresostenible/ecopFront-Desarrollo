@@ -178,7 +178,6 @@ function AccountsPayablePage() {
         setSelectedColumns(updatedColumns);
     };
     
-    console.log('accountsPayable: ', accountsPayable)
     return (
         <div className='d-flex flex-column'>
             <NavBar />

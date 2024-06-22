@@ -266,7 +266,7 @@ function App() {
                             <Route path='/inventories/create-merchandises' element={<CreateMerchandisesPage />} />
                             {/* SideBar Inventarios - Products */}
                             <Route path='/inventories/consult-products' element={<ConsultProductsPage />} />
-                            <Route path='/inventories/create-products' element={<CreateProductsPage />} />
+                            <Route path='/inventories/create-products' element={<CreateProductsPage selectedBranchId={''} />} />
                             <Route path='/inventories/quote-products' element={<QuoteProductsPage />} />
                             {/* SideBar Inventarios - Rawmaterals */}
                             <Route path='/inventories/consult-raw-materals' element={<ConsultRawMateralsPage />} />

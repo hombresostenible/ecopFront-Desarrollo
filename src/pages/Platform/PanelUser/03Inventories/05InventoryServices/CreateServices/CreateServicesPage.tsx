@@ -302,7 +302,6 @@ function CreateServicesPage() {
                             quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
                         })),
                 };
-                console.log('Data: ', formDarta)
                 dispatch(postService(formDarta, token));
                 setFormSubmitted(true);
                 dispatch(getServices(token));

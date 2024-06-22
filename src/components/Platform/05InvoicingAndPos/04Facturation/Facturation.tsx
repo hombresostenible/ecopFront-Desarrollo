@@ -15,7 +15,6 @@ function Facturation ({ totalPurchase }: FacturationProps) {
         const newUnitValue = parseFloat(event.target.value);
         setMoneyDisbursed(newUnitValue);
     };
-    console.log(moneyDisbursed)
 
     const handleCalculate = () => {
         if (moneyDisbursed && totalPurchase) {

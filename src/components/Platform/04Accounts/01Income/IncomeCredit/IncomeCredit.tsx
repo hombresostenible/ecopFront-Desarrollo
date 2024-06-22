@@ -203,7 +203,6 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                 accountBookData.unitValue = accountBookData.totalValue;
             }
 
-            console.log('accountBookData: ', accountBookData)
             dispatch(postAccountsBook(accountBookData, token));
             setFormSubmitted(true);
             setTimeout(() => {

@@ -50,6 +50,11 @@ const merchandiseSlice = createSlice({
             state.merchandise = action.payload;
             state.errorMerchandise = null;
         },
+        getMerchandisesOffStart: (state, action: PayloadAction<IMerchandise[]>) => {
+            state.loading = true;
+            state.merchandise = action.payload;
+            state.errorMerchandise = null;
+        },
         putMerchandiseStart: (state) => {
             state.loading = true;
             state.errorMerchandise = null;
@@ -74,5 +79,5 @@ const merchandiseSlice = createSlice({
     },
 });
 
-export const { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } = merchandiseSlice.actions;
+export const { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } = merchandiseSlice.actions;
 export default merchandiseSlice.reducer;
