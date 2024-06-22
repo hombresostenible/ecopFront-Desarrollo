@@ -50,6 +50,11 @@ const rawMaterialSlice = createSlice({
             state.rawMaterial = action.payload;
             state.errorRawMaterial = null;
         },
+        getRawMaterialsOffStart: (state, action: PayloadAction<IRawMaterial[]>) => {
+            state.loading = true;
+            state.rawMaterial = action.payload;
+            state.errorRawMaterial = null;
+        },
         putRawMaterialStart: (state) => {
             state.loading = true;
             state.errorRawMaterial = null;
@@ -74,5 +79,5 @@ const rawMaterialSlice = createSlice({
     },
 });
 
-export const { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } = rawMaterialSlice.actions;
+export const { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } = rawMaterialSlice.actions;
 export default rawMaterialSlice.reducer;

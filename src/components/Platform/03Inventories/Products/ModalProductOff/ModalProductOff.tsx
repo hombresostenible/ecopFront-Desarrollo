@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { patchProduct, getProducts } from '../../../../../redux/User/productSlice/actions';
@@ -27,13 +27,13 @@ function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps)
 
     // Estados de Redux
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
-    
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
-    const onSubmit: SubmitHandler<FormValues> = (values) => {
+    const onSubmit = (values: FormValues) => {
         try {
             const formData: Partial<IProduct> = {
                 inventoryOff: [
@@ -65,7 +65,6 @@ function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps)
         }
     }, [shouldNavigate, navigate]);
 
-
     return (
         <div className="p-3">
             <div className={`${styles.container__Modal}`}>
@@ -74,7 +73,7 @@ function ModalProductOff({ token, product, onCloseModal }: ModalProductOffProps)
                 {formSubmitted && (
                     <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
                 )}
-                {Array.isArray(errorProduct) && errorProduct?.map((error, i) => (
+                {Array.isArray(errorProduct) && errorProduct.map((error, i) => (
                     <div key={i} className='bg-red-500 my-2 p-2 text-white text-center'>{error}</div>
                 ))}
 

@@ -17,6 +17,7 @@ import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterial/ModalRawMaterial';
 import ModalRawMaterialOff from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterialOff/ModalRawMaterialOff';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConsultRawMaterialsOff from '../../../../../../components/Platform/03Inventories/RawMaterials/ConsultRawMaterialsOff/ConsultRawMaterialsOff';
 import AddInventoryRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/AddInventoryRawMaterial/AddInventoryRawMaterial';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -60,7 +61,12 @@ function ConsultRawMateralsPage() {
     const [selectedItem, setSelectedItem] = useState<IRawMaterial>();
     const [showItemModal, setShowItemModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
+    const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
+
+    const handleConsultOff = useCallback(() => {
+        setShowConsultOff(true);
+    }, []);
 
     const handleDelete = useCallback((rawMaterial: IRawMaterial) => {
         setSelectedItem(rawMaterial);
@@ -101,13 +107,29 @@ function ConsultRawMateralsPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Materias primas</h1>
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
-                            <div className="d-flex"></div>
+                            <div className="d-flex">
+                                <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >
+                                    Dados de baja
+                                </div>
+                            </div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
                                 <Link to='/inventories/create-raw-materals' className={`${styles.link} text-decoration-none`}>Registro de materias primas</Link>
                             </div>
                         </div>
 
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalle de las mercancías dadas de baja</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <ConsultRawMaterialsOff
+                                    token={token}
+                                    branches={branchesArray}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
 
                         <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
                             <h3 className='m-0'>Filtra tus materias primas por sede</h3>

@@ -161,7 +161,7 @@ export const putManyMerchandises = (formData: IMerchandise[], token: string) => 
 };
 
 //DA DE BAJA UNA MERCANCIAS DEL USER
-export const patchMerchandise = (idMerchandise: string, formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
+export const patchMerchandise = (idMerchandise: string, formData: Partial<IMerchandise>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchMerchandiseStart());
         const response = await axiosInstance.patch(`/merchandise/${idMerchandise}`, formData, {
