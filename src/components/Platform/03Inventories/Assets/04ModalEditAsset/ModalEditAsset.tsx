@@ -69,7 +69,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información del equipo, herramienta o máquina</h1>
+                <h1 className={`${styles.title} text-center`}>Edita la información del equipo, herramienta o máquina</h1>
             </div>
 
             <div className="w-100">
