@@ -16,6 +16,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ModalService from '../../../../../../components/Platform/03Inventories/Servicios/ModalService/ModalService';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -45,7 +46,6 @@ function ConsultServicesPage() {
             if (selectedBranch) {
                 dispatch(getServicesByBranch(selectedBranch, token));
             } else {
-                // Si no se selecciona ninguna sede, obtén todos los activos
                 dispatch(getServices(token));
             }
         }
@@ -66,10 +66,6 @@ function ConsultServicesPage() {
         setSelectedItem(service);
         setShowItemModal(true);
     }, []);
-
-    // const handleOff = useCallback((service: IService) => {
-    //     setSelectedItem(service);
-    // }, []);
 
     const onCloseModal = useCallback(() => {
         setShowDeleteConfirmation(false);
@@ -138,7 +134,7 @@ function ConsultServicesPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {service.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(service.sellingPrice)}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
@@ -160,16 +156,6 @@ function ConsultServicesPage() {
                                                         }}
                                                     />
                                                 </div>
-                                                {/* <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <IoIosCloseCircleOutline
-                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(service.id);
-                                                            setNameRawMaterial(service.nameItem || '');
-                                                            handleOff(service)
-                                                        }}
-                                                    />
-                                                </div> */}
                                             </div>
                                         </div>
                                     ))

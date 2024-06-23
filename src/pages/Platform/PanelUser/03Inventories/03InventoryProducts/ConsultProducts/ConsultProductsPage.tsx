@@ -20,6 +20,7 @@ import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inven
 import ModalEditProduct from '../../../../../../components/Platform/03Inventories/Products/04ModalEditProduct/ModalEditProduct';
 import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/Products/05AddInventoryProduct/AddInventoryProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/06ModalProductOff/ModalProductOff';
+import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -160,12 +161,13 @@ function ConsultProductsPage() {
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
+                                    <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
+                                    <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center text-center`}>Marca</div>
                                     <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
-                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
-                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center text-center`}>Empaque principal</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
@@ -184,22 +186,26 @@ function ConsultProductsPage() {
                                                 </span>
                                             </div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.barCode ? product.barCode : 'No asignado'}</span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
                                             </div>
-                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory}</span>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.brandItem ? product.brandItem : 'No asignada'}</span>
                                             </div>
-                                            <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.unitMeasure}</span>
+                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory} {product.unitMeasure}s</span>
+                                            </div>
+
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {product.IVA} %</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {product.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(product.sellingPrice)}</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.packaged}</span>
-                                            </div>
-                                            <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.primaryPackageType}</span>
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
