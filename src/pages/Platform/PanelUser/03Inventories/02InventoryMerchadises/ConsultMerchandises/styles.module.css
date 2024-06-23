@@ -49,41 +49,51 @@
     height: 60px;
 }
 .branch{
+    border: 1px solid red;
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
+.bar__Code{
+    border: 1px solid red;
+    height: 60px;
+    width: 16%;
+    min-width: 160px;
+}
 .name__Item{
+    border: 1px solid red;
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
 .inventory{
+    border: 1px solid red;
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.unit__Measure{
+.price{
+    border: 1px solid red;
     height: 60px;
     width: 12%;
     min-width: 120px;
 }
-.selling__Price{
+.IVA{
+    border: 1px solid red;
     height: 60px;
-    width: 12%;
-    min-width: 120px;
+    width: 100px;
 }
+
+
+
 .packaged{
+    border: 1px solid red;
     height: 60px;
     width: 12%;
-    min-width: 120px;
-}
-.primary__Package_Type{
-    height: 60px;
-    width: 16%;
-    min-width: 160px;
+    width: 100px;
 }
 .action{
+    border: 1px solid red;
     height: 60px;
     width: 10%;
     min-width: 100px;
@@ -101,6 +111,7 @@
     height: 60px;
 }
 .text__Ellipsis {
+    text-align: center;
     opacity: 0.75;
     white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */

@@ -14,12 +14,15 @@ import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import ModalAsset from '../../../../../../components/Platform/03Inventories/Assets/ModalAsset/ModalAsset';
-import ModalAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ModalAssetOff/ModalAssetOff';
+import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/Assets/01ConsultAssetOff/ConsultAssetOff';
+import SeeItemAsset from '../../../../../../components/Platform/03Inventories/Assets/02SeeItemAsset/SeeItemAsset';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/Assets/ConsultAssetOff/ConsultAssetOff';
-import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/Assets/AddInventoryAsset/AddInventoryAsset';
+import ModalEditAsset from '../../../../../../components/Platform/03Inventories/Assets/04ModalEditAsset/ModalEditAsset';
+import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/Assets/0504AddInventoryAsset/AddInventoryAsset';
+import ModalAssetOff from '../../../../../../components/Platform/03Inventories/Assets/06ModalAssetOff/ModalAssetOff';
+import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -56,15 +59,21 @@ function ConsultAssetsPage() {
     const [idAsset, setIdAsset] = useState('');
     const [idBranch, setIdBranch] = useState('');
     const [nameAsset, setNameAsset] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IAssets>();
-    const [showItemModal, setShowItemModal] = useState(false);
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditAssetModal, setShowIEditAssetModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleConsultOff = useCallback(() => {
         setShowConsultOff(true);
+    }, []);
+
+    const handleSeeItem = useCallback((asset: IAssets) => {
+        setSelectedItem(asset);
+        setShowSeeItem(true);
     }, []);
 
     const handleDelete = useCallback((asset: IAssets) => {
@@ -74,7 +83,7 @@ function ConsultAssetsPage() {
 
     const handleEdit = useCallback((asset: IAssets) => {
         setSelectedItem(asset);
-        setShowItemModal(true);
+        setShowIEditAssetModal(true);
     }, []);
 
     const handleAddInventory = useCallback((asset: IAssets) => {
@@ -88,9 +97,10 @@ function ConsultAssetsPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowAddInventory(false);
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowItemModal(false);
+        setShowIEditAssetModal(false);
+        setShowAddInventory(false);
         setShowOff(false);
     }, []);
 
@@ -116,16 +126,9 @@ function ConsultAssetsPage() {
                             </div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de activos</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de equipos, herramientas y máquinas</Link>
                             </div>
                         </div>
-
-                        {/* <div>Filtrar por sede</div>
-                        <div>descargar en PDF</div>
-                        <div>Descargar en Excel</div>
-                        <div>Bloquear las unidades enviadas en una cotzación</div>
-                        <div>Visualizar activos dados de baja</div>
-                        <div>Crear un filtro para cada columna</div> */}
 
                         <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
                             <Modal.Header closeButton>
@@ -141,7 +144,7 @@ function ConsultAssetsPage() {
                         </Modal>
 
                         <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
-                            <h3 className='m-0'>Filtra tus activos por sede</h3>
+                            <h3 className='m-0'>Filtra tus equipos, herramientas y máquinas por sede</h3>
                             <select
                                 value={selectedBranch || ''}
                                 className="mx-2 p-2 border rounded"
@@ -160,11 +163,15 @@ function ConsultAssetsPage() {
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
+                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
                                     <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center text-center`}>Marca</div>
                                     <div className={`${styles.reference__Asset} d-flex align-items-center justify-content-center text-center`}>Referencia</div>
-                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
                                     <div className={`${styles.state__Asset} d-flex align-items-center justify-content-center text-center`}>Estado</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Precio de compra</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
@@ -183,21 +190,43 @@ function ConsultAssetsPage() {
                                                 </span>
                                             </div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.barCode ? asset.barCode : 'No definido'}</span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.nameItem}</span>
                                             </div>
                                             <div className={`${styles.brand__Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandAssets}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandItem}</span>
                                             </div>
                                             <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
                                             </div>
-                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.inventory}</span>
-                                            </div>
                                             <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
                                             </div>
+                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.inventory}</span>
+                                            </div>
+                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(asset.purchasePriceBeforeTax)}</span>
+                                            </div>
+                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.IVA} %</span>
+                                            </div>
+                                            <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.sellingPrice ? formatNumber(asset.sellingPrice) : 'No definido'}</span>
+                                            </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdAsset(asset.id);
+                                                            setNameAsset(asset.nameItem || '');
+                                                            handleSeeItem(asset);
+                                                        }}
+                                                    />
+                                                </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
@@ -249,18 +278,15 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <Modal show={showItemModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Activo</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedItem &&
-                                    <ModalAsset
-                                        token={token}
-                                        idItem={idAsset}
+                                    <SeeItemAsset
                                         asset={selectedItem}
                                         branches={branchesArray}
-                                        onCloseModal={onCloseModal}
                                     />
                                 }
                             </Modal.Body>
@@ -277,6 +303,23 @@ function ConsultAssetsPage() {
                                     nameRegister={nameAsset}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showEditAssetModal} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Activo</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedItem &&
+                                    <ModalEditAsset
+                                        token={token}
+                                        idItem={idAsset}
+                                        asset={selectedItem}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
 

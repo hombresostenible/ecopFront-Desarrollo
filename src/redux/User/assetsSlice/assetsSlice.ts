@@ -3,12 +3,14 @@ import { IAssets } from '../../../types/User/assets.types';
 
 interface AssetState {
     assets: IAssets | IAssets[] | null;
+    assetsOff: IAssets | IAssets[] | null;
     loading: boolean;
     errorAssets: string[] | null;
 }
 
 const initialState: AssetState = {
     assets: null,
+    assetsOff: null,
     loading: false,
     errorAssets: null,
 };
@@ -52,12 +54,12 @@ const assetsSlice = createSlice({
         },
         getAssetsOffStart: (state, action: PayloadAction<IAssets[]>) => {
             state.loading = true;
-            state.assets = action.payload;
+            state.assetsOff = action.payload;
             state.errorAssets = null;
         },
         getAssetsOffByBranchStart: (state, action: PayloadAction<IAssets[]>) => {
             state.loading = true;
-            state.assets = action.payload;
+            state.assetsOff = action.payload;
             state.errorAssets = null;
         },
         putAssetStart: (state) => {

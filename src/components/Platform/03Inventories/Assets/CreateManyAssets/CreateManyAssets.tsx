@@ -58,7 +58,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                     "Nombre del artículo": "nameItem",
                     "Código de barras": "barCode",
                     "Inventario": "inventory",
-                    "Marca": "brandAssets",
+                    "Marca": "brandItem",
                     "Referencia": "referenceAssets",
                     "Condición de compra": "conditionAssets",
                     "Estado": "stateAssets",
@@ -101,7 +101,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         "nameItem": "Nombre del artículo",
         "barCode": "Código de barras",
         "inventory": "Inventario",
-        "brandAssets": "Marca",
+        "brandItem": "Marca",
         "referenceAssets": "Referencia",
         "conditionAssets": "Condición de compra",
         "stateAssets": "Estado",
@@ -115,12 +115,12 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         const branchId = selectedBranch;
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const assetData = nonEmptyRows.map(asset => ({
+        const formData = nonEmptyRows.map(asset => ({
             ...asset,
             branchId: branchId,
             userId: user?.id,
         }));
-        dispatch(postManyAssets(assetData as unknown as IAssets[], token));
+        dispatch(postManyAssets(formData as unknown as IAssets[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
         setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
