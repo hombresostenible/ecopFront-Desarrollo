@@ -19,7 +19,7 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const merchandise = useSelector((state: RootState) => state.merchandise.merchandise);
+    const merchandiseOff = useSelector((state: RootState) => state.merchandise.merchandiseOff);
 
     useEffect(() => {
         if (token) {
@@ -64,8 +64,8 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
                     </thead>
 
                     <tbody>
-                        {Array.isArray(merchandise) && merchandise.length > 0 ? (
-                            merchandise.map((asset) => (
+                        {Array.isArray(merchandiseOff) && merchandiseOff.length > 0 ? (
+                            merchandiseOff.map((asset) => (
                                 <tr key={asset.id}>
                                     <td className='align-middle text-center'>
                                         <span>

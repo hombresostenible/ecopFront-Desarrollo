@@ -79,9 +79,11 @@
     min-width: 200px;
 }
 .action{
+    border: 1px solid red;
     height: 60px;
-    width: 10%;
+    /* width: 10%; */
     min-width: 125px;
+    max-width: 125px;
 }
 
 /* CONTENIDO DE LA TABLA */
@@ -101,8 +103,9 @@
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
 }
 .container__Icons {
+    border: 1px solid red;
     height: 100%;
-    width: 25px;
+    width: 125px;
     padding: 0 4px;
 }
 .button__Delete {

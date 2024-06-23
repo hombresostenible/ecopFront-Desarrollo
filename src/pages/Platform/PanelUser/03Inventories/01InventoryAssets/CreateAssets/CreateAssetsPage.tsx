@@ -163,7 +163,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         type="text"
                                         {...register('barCode')}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='Cósigo de barras de tu equipo, herramienta o maquinaría que quieres registrar'
+                                        placeholder='Código de barras de la equipo, herramienta o maquinaría que quieres registrar'
                                     />
                                 </div>
                             </div>
@@ -188,7 +188,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de tu activo "{nameItem}"? Ej: Lenovo, Steel, Siemens</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la activo "{nameItem}"? Ej: Lenovo, Steel, Siemens</p>
                                 </div>
                                 <div>
                                     <input
@@ -198,7 +198,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         placeholder='Marca equipo, herramienta o maquinaría quieres registrar'
                                     />
                                     {errors.brandItem && (
-                                        <p className='text-danger'>La marca del equipo, herramienta o máquina es requerido</p>
+                                        <p className='text-danger'>La marca del equipo, herramienta o máquina es requerida</p>
                                     )}
                                 </div>
                             </div>
@@ -291,7 +291,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         type="number"
                                         {...register('purchasePriceBeforeTax', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
+                                        placeholder='precio del equipo, herramienta o máquina'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
@@ -300,7 +300,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         }}
                                     />
                                     {errors.purchasePriceBeforeTax && (
-                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
+                                        <p className='text-danger'>El precio de compra antes de impuestos es requerido</p>
                                     )}
                                 </div>
                             </div>
