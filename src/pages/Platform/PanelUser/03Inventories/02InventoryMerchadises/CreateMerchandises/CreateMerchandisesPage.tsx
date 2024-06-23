@@ -129,7 +129,6 @@ function CreateMerchandisesPage() {
 
                         <Link to='/inventories/consult-merchandises' className={styles.link__Income_Create}>Consulta tu inventario</Link>
 
-                        {/* <p>La mercancía son los artículos que se compran para vender</p> */}
                         <div className="d-flex">
                             <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
                         </div>
@@ -156,6 +155,7 @@ function CreateMerchandisesPage() {
                             {Array.isArray(errorMerchandise) && errorMerchandise?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
+
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
                                     <p className={`${styles.text} mb-0 p-2`}>Selecciona una Sede</p>
@@ -219,7 +219,7 @@ function CreateMerchandisesPage() {
                                         type="text"
                                         {...register('brandItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='Marca equipo, herramienta o maquinaría quieres registrar'
+                                        placeholder='Marca de la mercancía que quieres registrar'
                                     />
                                     {errors.brandItem && (
                                         <p className='text-danger'>La marca de la mercancía es requerida</p>
@@ -303,7 +303,7 @@ function CreateMerchandisesPage() {
                                     >
                                         No
                                     </div>
-                                    {errors.returnablePackaging && (
+                                    {errors.individualPackaging && (
                                         <p className='text-danger'>Este dato es requerido</p>
                                     )}
                                 </div>
@@ -581,7 +581,7 @@ function CreateMerchandisesPage() {
                                         type="number"
                                         {...register('purchasePriceBeforeTax', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='precio del equipo, herramienta o máquina'
+                                        placeholder='Precio de la mercancía'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
@@ -621,7 +621,7 @@ function CreateMerchandisesPage() {
                                         type="number"
                                         {...register('sellingPrice', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='precio del equipo, herramienta o máquina'
+                                        placeholder='Precio de venta de a mercancía'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
@@ -634,27 +634,6 @@ function CreateMerchandisesPage() {
                                     )}
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
-
-                            
-
-
-
-
-
-                            
-
-
-
-                            
 
                             <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>

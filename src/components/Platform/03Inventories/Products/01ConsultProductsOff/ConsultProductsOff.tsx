@@ -19,7 +19,7 @@ function ConsultProductsOff({ token, branches, onCloseModal }: ConsultProductsOf
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const product = useSelector((state: RootState) => state.product.product);
+    const productOff = useSelector((state: RootState) => state.product.productOff);
 
     useEffect(() => {
         if (token) {
@@ -64,29 +64,29 @@ function ConsultProductsOff({ token, branches, onCloseModal }: ConsultProductsOf
                     </thead>
 
                     <tbody>
-                        {Array.isArray(product) && product.length > 0 ? (
-                            product.map((asset) => (
-                                <tr key={asset.id}>
+                        {Array.isArray(productOff) && productOff.length > 0 ? (
+                            productOff.map((product) => (
+                                <tr key={product.id}>
                                     <td className='align-middle text-center'>
                                         <span>
                                             {branches && branches.map((branch, index) => (
-                                                asset.branchId === branch.id && (
+                                                product.branchId === branch.id && (
                                                     <span className="text-center" key={index}>{branch.nameBranch}</span>
                                                 )
                                             ))}
                                         </span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{asset.nameItem}</span>
+                                        <span>{product.nameItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{calculateTotalInventoryOff(asset.inventoryOff)}</span>
+                                        <span>{calculateTotalInventoryOff(product.inventoryOff)}</span>
                                     </td>
                                     <td className='d-flex align-items-center justify-content-center align-middle text-center'>
                                         <div
                                             className={styles.dsdsdsdsdsd}
                                             onClick={() => {
-                                                onSubmit(asset.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
+                                                onSubmit(product.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
                                             }}
                                         >
                                             Editar

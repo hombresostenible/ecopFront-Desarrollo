@@ -291,7 +291,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         type="number"
                                         {...register('purchasePriceBeforeTax', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='precio del equipo, herramienta o máquina'
+                                        placeholder='Precio del equipo, herramienta o máquina'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
