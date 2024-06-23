@@ -3,12 +3,14 @@ import { IProduct } from '../../../types/User/products.types';
 
 interface ProductState {
     product: IProduct | IProduct[] | null;
+    productOff: IProduct | IProduct[] | null;
     loading: boolean;
     errorProduct: string[] | null;
 }
 
 const initialState: ProductState = {
     product: null,
+    productOff: null,
     loading: false,
     errorProduct: null,
 };
@@ -52,7 +54,7 @@ const productSlice = createSlice({
         },
         getProductsOffStart: (state, action: PayloadAction<IProduct[]>) => {
             state.loading = true;
-            state.product = action.payload;
+            state.productOff = action.payload;
             state.errorProduct = null;
         },
         putProductStart: (state) => {
