@@ -63,6 +63,13 @@
 .info {
     width: 350px;
 }
+.input {
+    border-radius: 5px;
+    width: 350px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
 .conditionContainer {
     background-color: #eee;
     width: 200px;

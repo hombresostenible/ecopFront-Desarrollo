@@ -150,12 +150,13 @@ function ConsultMerchandisesPage() {
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
+                                    <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
                                     <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
-                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
+                                    <div className={`${styles.price} d-flex align-items-center justify-content-center text-center`}>Precio de compra</div>
+                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
-                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center text-center`}>Empaque principal</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
@@ -173,23 +174,26 @@ function ConsultMerchandisesPage() {
                                                     ))}
                                                 </span>
                                             </div>
+                                            <div className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.barCode ? merchadise.barCode : 'No definido'}</span>
+                                            </div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.nameItem}</span>
                                             </div>
                                             <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.inventory}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.inventory} {merchadise.unitMeasure}s</span>
                                             </div>
-                                            <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.unitMeasure}</span>
+                                            <div className={`${styles.price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.purchasePriceBeforeTax}</span>
                                             </div>
-                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.IVA} %</span>
+                                            </div>
+                                            <div className={`${styles.price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {merchadise.sellingPrice}</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.packaged}</span>
-                                            </div>
-                                            <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchadise.primaryPackageType}</span>
                                             </div>
                                             <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>

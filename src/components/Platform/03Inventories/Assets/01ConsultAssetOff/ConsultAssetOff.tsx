@@ -19,7 +19,7 @@ function ConsultAssetOff({ token, branches, onCloseModal }: ConsultAssetOffProps
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const assets = useSelector((state: RootState) => state.assets.assets);
+    const assetsOff = useSelector((state: RootState) => state.assets.assetsOff);
 
     useEffect(() => {
         if (token) {
@@ -66,8 +66,8 @@ function ConsultAssetOff({ token, branches, onCloseModal }: ConsultAssetOffProps
                     </thead>
 
                     <tbody>
-                        {Array.isArray(assets) && assets.length > 0 ? (
-                            assets.map((asset) => (
+                        {Array.isArray(assetsOff) && assetsOff.length > 0 ? (
+                            assetsOff.map((asset) => (
                                 <tr key={asset.id}>
                                     <td className='align-middle text-center'>
                                         <span>
@@ -82,7 +82,7 @@ function ConsultAssetOff({ token, branches, onCloseModal }: ConsultAssetOffProps
                                         <span>{asset.nameItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{asset.brandAssets}</span>
+                                        <span>{asset.brandItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
                                         <span>{asset.referenceAssets}</span>

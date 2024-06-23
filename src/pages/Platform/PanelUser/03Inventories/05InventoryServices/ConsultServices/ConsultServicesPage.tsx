@@ -19,7 +19,7 @@ import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inven
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
-import { IoIosCloseCircleOutline } from "react-icons/io";
+// import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from './styles.module.css';
 
 function ConsultServicesPage() {
@@ -67,9 +67,9 @@ function ConsultServicesPage() {
         setShowItemModal(true);
     }, []);
 
-    const handleOff = useCallback((service: IService) => {
-        setSelectedItem(service);
-    }, []);
+    // const handleOff = useCallback((service: IService) => {
+    //     setSelectedItem(service);
+    // }, []);
 
     const onCloseModal = useCallback(() => {
         setShowDeleteConfirmation(false);
@@ -160,7 +160,7 @@ function ConsultServicesPage() {
                                                         }}
                                                     />
                                                 </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                {/* <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <IoIosCloseCircleOutline
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
@@ -169,7 +169,7 @@ function ConsultServicesPage() {
                                                             handleOff(service)
                                                         }}
                                                     />
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     ))
