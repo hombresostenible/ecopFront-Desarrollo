@@ -153,7 +153,7 @@ function CreateMerchandisesPage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorMerchandise?.map((error, i) => (
+                            {Array.isArray(errorMerchandise) && errorMerchandise?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -180,6 +180,20 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
+                                    <p className={`${styles.text} mb-0 p-2`}>La mercancía que vas a registrar ¿Tiene código de barras?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        {...register('barCode')}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Código de barras de la mercancía que quieres registrar'
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
                                     <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la mercancía que vas a registrar?</p>
                                 </div>
                                 <div>
@@ -192,6 +206,213 @@ function CreateMerchandisesPage() {
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre de la mercancía es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la mercnacía "{nameItem}"?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        {...register('brandItem', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Marca equipo, herramienta o maquinaría quieres registrar'
+                                    />
+                                    {errors.brandItem && (
+                                        <p className='text-danger'>La marca de la mercancía es requerida</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada en embalaje o envoltura?</p>
+                                </div>
+                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                        onClick={() => handlepackagedChange('Si')}
+                                    >
+                                        Si
+                                    </div>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedpackaged === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                        onClick={() => handlepackagedChange('No')}
+                                    >
+                                        No
+                                    </div>
+                                    {errors.packaged && (
+                                        <p className='text-danger'>Este dato es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {selectedpackaged === 'Si' && (
+                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    <div>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
+                                    </div>
+                                    <div>
+                                        <select
+                                            {...register('primaryPackageType', { required: true })}
+                                            className={`${styles.input} p-2 border `}
+                                        >
+                                            <option value='Ninguno'>Ninguno</option>
+                                            <option value='Papel'>Papel</option>
+                                            <option value='Papel de archivo'>Papel de archivo</option>
+                                            <option value='Carton'>Cartón</option>
+                                            <option value='Aluminio'>Aluminio</option>
+                                            <option value='Plegadiza'>Plegadiza</option>
+                                            <option value='Vidrio'>Vidrio</option>
+                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
+                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                            <option value='PP Polipropileno'>PP Polipropileno</option>
+                                            <option value='PS Poliestireno'>PS Poliestireno</option>
+                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                            <option value='Hierro'>Hierro</option>
+                                            <option value='Icopor'>Icopor</option>
+                                            <option value='Biodegradable'>Biodegradable</option>
+                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                        </select>
+                                        {errors.primaryPackageType && (
+                                            <p className='text-danger'>La unidad de medida es requerida</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
+                                </div>
+                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                        onClick={() => handleIndividualPackagingChange('Si')}
+                                    >
+                                        Si
+                                    </div>
+                                    <div
+                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                        onClick={() => handleIndividualPackagingChange('No')}
+                                    >
+                                        No
+                                    </div>
+                                    {errors.returnablePackaging && (
+                                        <p className='text-danger'>Este dato es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {selectedIndividualPackaging === 'Si' && (
+                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    <div>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                    </div>
+                                    <div>
+                                        <select
+                                            {...register('secondaryPackageType', { required: true })}
+                                            className={`${styles.input} p-2 border `}                                    
+                                        >
+                                            <option value='Papel'>Papel</option>
+                                            <option value='Papel de archivo'>Papel de archivo</option>
+                                            <option value='Carton'>Cartón</option>                                                
+                                            <option value='Aluminio'>Aluminio</option>
+                                            <option value='Plegadiza'>Plegadiza</option>
+                                            <option value='Vidrio'>Vidrio</option>
+                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
+                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                            <option value='PP Polipropileno'>PP Polipropileno</option>
+                                            <option value='PS Poliestireno'>PS Poliestireno</option>
+                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                            <option value='Hierro'>Hierro</option>
+                                            <option value='Icopor'>Icopor</option>
+                                            <option value='Biodegradable'>Biodegradable</option>
+                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                        </select>
+                                        {errors.secondaryPackageType && (
+                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {selectedpackaged === 'Si' && (
+                                <div>
+                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                        <div>                                    
+                                            <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="number"
+                                                {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                                className={`${styles.input} p-2 border `}
+                                                placeholder='Ej: 10'
+                                                min={0}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            />
+                                            {errors.quantityPerPackage && (
+                                                <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                        <div>
+                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
+                                        </div>
+                                        <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
+                                            <div
+                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleReturnablePackagingChange('Si')}
+                                            >
+                                                Si
+                                            </div>
+                                            <div
+                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleReturnablePackagingChange('No')}
+                                            >
+                                                No
+                                            </div>
+                                            {errors.returnablePackaging && (
+                                                <p className='text-danger'>Este dato es requerido</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.inventory && (
+                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
                                     )}
                                 </div>
                             </div>
@@ -244,29 +465,6 @@ function CreateMerchandisesPage() {
                                     </select>
                                     {errors.unitMeasure && (
                                         <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
                                     )}
                                 </div>
                             </div>
@@ -376,170 +574,87 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada en embalaje o envoltura?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos?</p>
                                 </div>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedpackaged === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.packaged && (
-                                        <p className='text-danger'>Este dato es requerido</p>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('purchasePriceBeforeTax', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='precio del equipo, herramienta o máquina'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.purchasePriceBeforeTax && (
+                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
                                     )}
                                 </div>
                             </div>
 
-                            {selectedpackaged === 'Si' && (
-                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
-                                    </div>
-                                    <div>
-                                        <select
-                                            {...register('primaryPackageType', { required: true })}
-                                            className={`${styles.input} p-2 border `}
-                                        >
-                                            <option value='Ninguno'>Ninguno</option>
-                                            <option value='Papel'>Papel</option>
-                                            <option value='Papel de archivo'>Papel de archivo</option>
-                                            <option value='Carton'>Cartón</option>
-                                            <option value='Aluminio'>Aluminio</option>
-                                            <option value='Plegadiza'>Plegadiza</option>
-                                            <option value='Vidrio'>Vidrio</option>
-                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
-                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                            <option value='PP Polipropileno'>PP Polipropileno</option>
-                                            <option value='PS Poliestireno'>PS Poliestireno</option>
-                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                            <option value='Hierro'>Hierro</option>
-                                            <option value='Icopor'>Icopor</option>
-                                            <option value='Biodegradable'>Biodegradable</option>
-                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                        </select>
-                                        {errors.primaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
-                                        )}
-                                    </div>
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el IVA de la mercancía?</p>
                                 </div>
-                            )}
-
-                            {selectedpackaged === 'Si' && (
-                                <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>                                    
-                                            <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="number"
-                                                {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.input} p-2 border `}
-                                                placeholder='Ej: 10'
-                                                min={0}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                            {errors.quantityPerPackage && (
-                                                <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>
-                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
-                                        </div>
-                                        <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('Si')}
-                                            >
-                                                Si
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('No')}
-                                            >
-                                                No
-                                            </div>
-                                            {errors.returnablePackaging && (
-                                                <p className='text-danger'>Este dato es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
+                                <div className={styles.containerInput}>
+                                    <select
+                                        defaultValue={'0'}
+                                        className={`${styles.input} p-2 border `}
+                                        {...register('IVA', { required: true })}
+                                    >
+                                        <option value='0'>0 %</option>
+                                        <option value='5'>5 %</option>
+                                        <option value='19'>19 %</option>
+                                    </select>
                                 </div>
-                            )}
+                            </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de venta?</p>
                                 </div>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.returnablePackaging && (
-                                        <p className='text-danger'>Este dato es requerido</p>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('sellingPrice', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='precio del equipo, herramienta o máquina'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.sellingPrice && (
+                                        <p className='text-danger'>El precio de venta es requerido</p>
                                     )}
                                 </div>
                             </div>
 
-                            {selectedIndividualPackaging === 'Si' && (
-                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
-                                    </div>
-                                    <div>
-                                        <select
-                                            {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.input} p-2 border `}                                    
-                                        >
-                                            <option value='Papel'>Papel</option>
-                                            <option value='Papel de archivo'>Papel de archivo</option>
-                                            <option value='Carton'>Cartón</option>                                                
-                                            <option value='Aluminio'>Aluminio</option>
-                                            <option value='Plegadiza'>Plegadiza</option>
-                                            <option value='Vidrio'>Vidrio</option>
-                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
-                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                            <option value='PP Polipropileno'>PP Polipropileno</option>
-                                            <option value='PS Poliestireno'>PS Poliestireno</option>
-                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                            <option value='Hierro'>Hierro</option>
-                                            <option value='Icopor'>Icopor</option>
-                                            <option value='Biodegradable'>Biodegradable</option>
-                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                        </select>
-                                        {errors.secondaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
+
+
+
+
+
+
+
+
+
+                            
+
+
+
+
+
+                            
+
+
+
+                            
 
                             <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
