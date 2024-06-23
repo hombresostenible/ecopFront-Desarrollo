@@ -81,7 +81,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     
     //Setea si el producto está empacada
     const [selectedpackaged, setSelectedpackaged] = useState('Si');
-    const handlepackagedChange = (value: 'Si' | 'No') => {
+    const handlePackagedChange = (value: 'Si' | 'No') => {
         setSelectedpackaged(value);
         setValue('packaged', value);
     };
@@ -409,7 +409,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>El producti que vas a registrar ¿Tiene código de barras?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>El producto que vas a registrar ¿Tiene código de barras?</p>
                                 </div>
                                 <div>
                                     <input
@@ -441,18 +441,15 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca del producto que vas a registrar?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿El producto que vas a registrar tiene marca?</p>
                                 </div>
                                 <div>
                                     <input
                                         type="text"
-                                        {...register('brandItem', { required: true })}
+                                        {...register('brandItem')}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca del producto quieres registrar'
                                     />
-                                    {errors.brandItem && (
-                                        <p className='text-danger'>La marca del producto es requerida</p>
-                                    )}
                                 </div>
                             </div>
 
@@ -463,13 +460,13 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('Si')}
+                                        onClick={() => handlePackagedChange('Si')}
                                     >
                                         Si
                                     </div>
                                     <div
                                         className={`${styles.conditionOption} ${selectedpackaged === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('No')}
+                                        onClick={() => handlePackagedChange('No')}
                                     >
                                         No
                                     </div>

@@ -65,28 +65,28 @@ function ConsultMerchandisesOff({ token, branches, onCloseModal }: ConsultMercha
 
                     <tbody>
                         {Array.isArray(merchandiseOff) && merchandiseOff.length > 0 ? (
-                            merchandiseOff.map((asset) => (
-                                <tr key={asset.id}>
+                            merchandiseOff.map((merchandise) => (
+                                <tr key={merchandise.id}>
                                     <td className='align-middle text-center'>
                                         <span>
                                             {branches && branches.map((branch, index) => (
-                                                asset.branchId === branch.id && (
+                                                merchandise.branchId === branch.id && (
                                                     <span className="text-center" key={index}>{branch.nameBranch}</span>
                                                 )
                                             ))}
                                         </span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{asset.nameItem}</span>
+                                        <span>{merchandise.nameItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{calculateTotalInventoryOff(asset.inventoryOff)}</span>
+                                        <span>{calculateTotalInventoryOff(merchandise.inventoryOff)}</span>
                                     </td>
                                     <td className='d-flex align-items-center justify-content-center align-middle text-center'>
                                         <div
                                             className={styles.dsdsdsdsdsd}
                                             onClick={() => {
-                                                onSubmit(asset.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
+                                                onSubmit(merchandise.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
                                             }}
                                         >
                                             Editar

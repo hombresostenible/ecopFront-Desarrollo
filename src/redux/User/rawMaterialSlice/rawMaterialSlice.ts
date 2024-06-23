@@ -3,12 +3,14 @@ import { IRawMaterial } from '../../../types/User/rawMaterial.types';
 
 interface RawMaterialState {
     rawMaterial: IRawMaterial | IRawMaterial[] | null;
+    rawMaterialOff: IRawMaterial | IRawMaterial[] | null;
     loading: boolean;
     errorRawMaterial: string[] | null;
 }
 
 const initialState: RawMaterialState = {
     rawMaterial: null,
+    rawMaterialOff: null,
     loading: false,
     errorRawMaterial: null,
 };
@@ -52,7 +54,7 @@ const rawMaterialSlice = createSlice({
         },
         getRawMaterialsOffStart: (state, action: PayloadAction<IRawMaterial[]>) => {
             state.loading = true;
-            state.rawMaterial = action.payload;
+            state.rawMaterialOff = action.payload;
             state.errorRawMaterial = null;
         },
         putRawMaterialStart: (state) => {
