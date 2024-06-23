@@ -366,7 +366,7 @@ function CreateServicesPage() {
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleBranchChange}
                                     >
                                         <option value=''>Selecciona una Sede</option>
@@ -390,7 +390,7 @@ function CreateServicesPage() {
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='¿Qué servicio quieres registrar? '
                                     />
                                     {errors.nameItem && (
@@ -407,7 +407,7 @@ function CreateServicesPage() {
                                     <input
                                         type="number"
                                         {...register('sellingPrice', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='¿A qué precio vendes tu servicio? '
                                     />
                                     {errors.sellingPrice && (
@@ -420,16 +420,16 @@ function CreateServicesPage() {
                                 <div className="px-3">
                                     <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el IVA del servicio?</p>
                                 </div>
-                                <div>
-                                    <input
-                                        type="text"
+                                <div className={styles.containerInput}>
+                                    <select
+                                        defaultValue={'0'}
+                                        className={`${styles.input} p-2 border `}
                                         {...register('IVA', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
-                                        placeholder='IVA del servicio'
-                                    />
-                                    {errors.IVA && (
-                                        <p className='text-danger'>El IVA del servicio es requerido</p>
-                                    )}
+                                    >
+                                        <option value='0'>0 %</option>
+                                        <option value='5'>5 %</option>
+                                        <option value='19'>19 %</option>
+                                    </select>
                                 </div>
                             </div>
 

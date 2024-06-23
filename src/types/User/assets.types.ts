@@ -1,23 +1,23 @@
 export interface InventoryOffItem {
     date: Date;
-    reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Desechado"| "Reciclado" | "Vendido";
+    reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Desechado" | "Reciclado" | "Vendido";
     quantity: number;
     description?: string;
 }
 
 export interface IAssets {
     id: string;
-    nameItem: string;
     barCode?: string;
-    inventory: number;
-    inventoryOff?: InventoryOffItem[];
-    brandAssets: string;
+    nameItem: string;
+    brandItem?: string;
     referenceAssets?: string;
-    conditionAssets?: 'Nuevo' | 'Usado';
     stateAssets?: 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion';
-    purchasePriceBeforeTax?: number;
+    conditionAssets?: 'Nuevo' | 'Usado';
+    inventory: number;
+    purchasePriceBeforeTax: number;
     IVA?: number;
-    sellingPrice?: number;    
+    sellingPrice?: number;
+    inventoryOff?: InventoryOffItem[];
     
     //RELACION CON OTRAS TABLAS
     branchId: string;

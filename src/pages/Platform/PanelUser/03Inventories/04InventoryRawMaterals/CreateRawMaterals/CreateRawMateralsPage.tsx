@@ -182,7 +182,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -205,7 +205,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleNameItem}
                                         placeholder='¿Qué mercancía quieres registrar?'
                                     />
@@ -222,7 +222,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                 <div>
                                     <select
                                         {...register('unitMeasure', { required: true })}
-                                        className={`${styles.info} p-2 border rounded form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleUnitMeasureChange}
                                     >                                         
                                         <option value=''>Selecciona una unidad de medida</option>
@@ -275,7 +275,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <input
                                         type="number"
                                         {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Tu inventario acá'
                                         min={0}
                                         onKeyDown={(e) => {
@@ -376,7 +376,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                             <input
                                                 type="number"
                                                 {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                                className={`${styles.input} p-2 border `}
                                                 placeholder='Valor numérico de lo que quieres aumentar'
                                                 min={0}
                                                 onKeyDown={(e) => {
@@ -424,7 +424,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <div>
                                         <select
                                             {...register('primaryPackageType')}
-                                            className={`${styles.info} p-2 border rounded border-secundary form-control`}
+                                            className={`${styles.input} p-2 border `}
                                         >
                                             <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
@@ -486,7 +486,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         <input
                                             type="number"
                                             {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                            className={`${styles.info} p-2 border rounded form-control`}
+                                            className={`${styles.input} p-2 border `}
                                             placeholder='Ej: 10'
                                             min={0}
                                             onKeyDown={(e) => {
@@ -533,7 +533,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <div>
                                         <select
                                             {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.info} p-2 border rounded border-secundary form-control`}                                  
+                                            className={`${styles.input} p-2 border `}                                  
                                         >
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>

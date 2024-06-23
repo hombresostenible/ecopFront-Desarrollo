@@ -57,7 +57,7 @@ function InventoryAssets() {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
                 'Nombre del activo': item.nameItem,
-                'Marca del activo': item.brandAssets,
+                'Marca del activo': item.brandItem,
                 'Condición del activo': item.conditionAssets,
                 'Estado del activo': item.stateAssets,
             }));

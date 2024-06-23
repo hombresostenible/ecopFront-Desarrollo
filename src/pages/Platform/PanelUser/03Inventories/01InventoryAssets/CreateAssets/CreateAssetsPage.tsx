@@ -156,6 +156,20 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
+                                    <p className={`${styles.text} mb-0 p-2`}>El equipo, herramienta o maquinaría que vas a registrar ¿Tiene código de barras?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        {...register('barCode')}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Cósigo de barras de tu equipo, herramienta o maquinaría que quieres registrar'
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
                                     <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el nombre del equipo, herramienta o maquinaría que vas a registrar? Ej: Computador, Guadaña, torno</p>
                                 </div>
                                 <div>
@@ -174,34 +188,16 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuántos activos de este tipo tienes en el inventario?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
                                     <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de tu activo "{nameItem}"? Ej: Lenovo, Steel, Siemens</p>
                                 </div>
                                 <div>
                                     <input
                                         type="text"
-                                        {...register('brandAssets', { required: true })}
+                                        {...register('brandItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca equipo, herramienta o maquinaría quieres registrar'
                                     />
-                                    {errors.brandAssets && (
+                                    {errors.brandItem && (
                                         <p className='text-danger'>La marca del equipo, herramienta o máquina es requerido</p>
                                     )}
                                 </div>
@@ -220,6 +216,27 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     />
                                     {errors.referenceAssets && (
                                         <p className='text-danger'>La referencia del equipo, herramienta o máquina es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el estado del(de la) {nameItem}?</p>
+                                </div>
+                                <div>
+                                    <select
+                                        {...register('stateAssets', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                    >
+                                        <option value=''>Seleccione una opción</option>
+                                        <option value='Funciona correctamente'>Funciona correctamente</option>
+                                        <option value='Funciona requiere mantenimiento'>Funciona bien pero requiere pronto mantenimiento</option>
+                                        <option value='Dañada requiere cambio'>Dañada y requiere cambio</option>
+                                        <option value='Dañada requiere reparacion'>Dañada y requiere reparación</option>
+                                    </select>
+                                    {errors.stateAssets && (
+                                        <p className='text-danger'>El estado de la máquina es requerido</p>
                                     )}
                                 </div>
                             </div>
@@ -249,22 +266,59 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el estado del(de la) {nameItem}?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuántos activos de este tipo tienes en el inventario?</p>
                                 </div>
                                 <div>
-                                    <select
-                                        {...register('stateAssets', { required: true })}
+                                    <input
+                                        type="number"
+                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value=''>Seleccione una opción</option>
-                                        <option value='Funciona correctamente'>Funciona correctamente</option>
-                                        <option value='Funciona requiere mantenimiento'>Funciona bien pero requiere pronto mantenimiento</option>
-                                        <option value='Dañada requiere cambio'>Dañada y requiere cambio</option>
-                                        <option value='Dañada requiere reparacion'>Dañada y requiere reparación</option>
-                                    </select>
-                                    {errors.stateAssets && (
-                                        <p className='text-danger'>El estado de la máquina es requerido</p>
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                    />
+                                    {errors.inventory && (
+                                        <p className='text-danger'>El inventario es requerido</p>
                                     )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('purchasePriceBeforeTax', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.purchasePriceBeforeTax && (
+                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el IVA del equipo, herramienta o máquina?</p>
+                                </div>
+                                <div className={styles.containerInput}>
+                                    <select
+                                        defaultValue={'0'}
+                                        className={`${styles.input} p-2 border `}
+                                        {...register('IVA', { required: true })}
+                                    >
+                                        <option value='0'>0 %</option>
+                                        <option value='5'>5 %</option>
+                                        <option value='19'>19 %</option>
+                                    </select>
                                 </div>
                             </div>
 
