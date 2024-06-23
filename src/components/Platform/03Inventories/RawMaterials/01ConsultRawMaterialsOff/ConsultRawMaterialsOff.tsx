@@ -19,7 +19,7 @@ function ConsultRawMaterialsOff({ token, branches, onCloseModal }: ConsultRawMat
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
+    const rawMaterialOff = useSelector((state: RootState) => state.rawMaterial.rawMaterialOff);
 
     useEffect(() => {
         if (token) {
@@ -64,29 +64,29 @@ function ConsultRawMaterialsOff({ token, branches, onCloseModal }: ConsultRawMat
                     </thead>
 
                     <tbody>
-                        {Array.isArray(rawMaterial) && rawMaterial.length > 0 ? (
-                            rawMaterial.map((asset) => (
-                                <tr key={asset.id}>
+                        {Array.isArray(rawMaterialOff) && rawMaterialOff.length > 0 ? (
+                            rawMaterialOff.map((rawMaterial) => (
+                                <tr key={rawMaterial.id}>
                                     <td className='align-middle text-center'>
                                         <span>
                                             {branches && branches.map((branch, index) => (
-                                                asset.branchId === branch.id && (
+                                                rawMaterial.branchId === branch.id && (
                                                     <span className="text-center" key={index}>{branch.nameBranch}</span>
                                                 )
                                             ))}
                                         </span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{asset.nameItem}</span>
+                                        <span>{rawMaterial.nameItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{calculateTotalInventoryOff(asset.inventoryOff)}</span>
+                                        <span>{calculateTotalInventoryOff(rawMaterial.inventoryOff)}</span>
                                     </td>
                                     <td className='d-flex align-items-center justify-content-center align-middle text-center'>
                                         <div
                                             className={styles.dsdsdsdsdsd}
                                             onClick={() => {
-                                                onSubmit(asset.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
+                                                onSubmit(rawMaterial.id); // Llamamos a onSubmit al hacer clic en "Normalizar"
                                             }}
                                         >
                                             Editar

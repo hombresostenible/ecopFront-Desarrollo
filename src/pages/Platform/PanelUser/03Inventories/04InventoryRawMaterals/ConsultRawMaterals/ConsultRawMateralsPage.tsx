@@ -14,11 +14,14 @@ import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import ModalRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterial/ModalRawMaterial';
-import ModalRawMaterialOff from '../../../../../../components/Platform/03Inventories/RawMaterials/ModalRawMaterialOff/ModalRawMaterialOff';
+import ConsultRawMaterialsOff from '../../../../../../components/Platform/03Inventories/RawMaterials/01ConsultRawMaterialsOff/ConsultRawMaterialsOff';
+import SeeItemRawMaterials from '../../../../../../components/Platform/03Inventories/RawMaterials/02SeeItemRawMaterials/SeeItemRawMaterials';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import ConsultRawMaterialsOff from '../../../../../../components/Platform/03Inventories/RawMaterials/ConsultRawMaterialsOff/ConsultRawMaterialsOff';
-import AddInventoryRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/AddInventoryRawMaterial/AddInventoryRawMaterial';
+import ModalEditRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/04ModalEditRawMaterial/ModalEditRawMaterial';
+import AddInventoryRawMaterial from '../../../../../../components/Platform/03Inventories/RawMaterials/05AddInventoryRawMaterial/AddInventoryRawMaterial';
+import ModalRawMaterialOff from '../../../../../../components/Platform/03Inventories/RawMaterials/06ModalRawMaterialOff/ModalRawMaterialOff';
+import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -57,15 +60,21 @@ function ConsultRawMateralsPage() {
     const [idRawMaterial, setIdRawMaterial] = useState('');
     const [idBranch, setIdBranch] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IRawMaterial>();
-    const [showItemModal, setShowItemModal] = useState(false);
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditRawMaterialModal, setShowEditRawMaterialModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleConsultOff = useCallback(() => {
         setShowConsultOff(true);
+    }, []);
+
+    const handleSeeItem = useCallback((asset: IRawMaterial) => {
+        setSelectedItem(asset);
+        setShowSeeItem(true);
     }, []);
 
     const handleDelete = useCallback((rawMaterial: IRawMaterial) => {
@@ -75,7 +84,7 @@ function ConsultRawMateralsPage() {
 
     const handleEdit = useCallback((rawMaterial: IRawMaterial) => {
         setSelectedItem(rawMaterial);
-        setShowItemModal(true);
+        setShowEditRawMaterialModal(true);
     }, []);
 
     const handleAddInventory = useCallback((rawMaterial: IRawMaterial) => {
@@ -91,7 +100,7 @@ function ConsultRawMateralsPage() {
     const onCloseModal = useCallback(() => {
         setShowAddInventory(false);
         setShowDeleteConfirmation(false);
-        setShowItemModal(false);
+        setShowEditRawMaterialModal(false);
         setShowOff(false);
     }, []);
 
@@ -151,12 +160,14 @@ function ConsultRawMateralsPage() {
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
+                                    <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
+                                    <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center text-center`}>Marca</div>
                                     <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
-                                    <div className={`${styles.unit__Measure} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de compra</div>
+                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
-                                    <div className={`${styles.primary__Package_Type} d-flex align-items-center justify-content-center text-center`}>Empaque principal</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
@@ -175,24 +186,40 @@ function ConsultRawMateralsPage() {
                                                 </span>
                                             </div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.barCode}</span>
+                                            </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
                                             </div>
-                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory}</span>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.brandItem}</span>
                                             </div>
-                                            <div className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.unitMeasure}</span>
+                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory} {rawMaterial.unitMeasure}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {rawMaterial.sellingPrice}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.purchasePriceBeforeTax)}</span>
+                                            </div>
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.IVA)}</span>
+                                            </div>
+                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice ? `$ ${formatNumber(rawMaterial.sellingPrice)}` : 'No definido'}</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
                                             </div>
-                                            <div className={`${styles.primary__Package_Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.primaryPackageType}</span>
-                                            </div>
-                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} `}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(rawMaterial.id);
+                                                            setNameRawMaterial(rawMaterial.nameItem || '');
+                                                            handleSeeItem(rawMaterial);
+                                                        }}
+                                                    />
+                                                </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
@@ -244,18 +271,15 @@ function ConsultRawMateralsPage() {
                             </div>
                         </div>
 
-                        <Modal show={showItemModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu materia prima</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedItem &&
-                                    <ModalRawMaterial
-                                        token={token}
-                                        idItem={idRawMaterial}
+                                    <SeeItemRawMaterials
                                         rawMaterial={selectedItem}
                                         branches={branchesArray}
-                                        onCloseModal={onCloseModal}
                                     />
                                 }
                             </Modal.Body>
@@ -272,6 +296,23 @@ function ConsultRawMateralsPage() {
                                     nameRegister={nameRawMaterial}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showEditRawMaterialModal} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu materia prima</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedItem &&
+                                    <ModalEditRawMaterial
+                                        token={token}
+                                        idItem={idRawMaterial}
+                                        rawMaterial={selectedItem}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
 

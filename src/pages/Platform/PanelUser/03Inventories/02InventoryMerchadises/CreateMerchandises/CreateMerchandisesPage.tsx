@@ -50,7 +50,7 @@ function CreateMerchandisesPage() {
 
     //Setea si el artículo aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
-    const [ periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
+    const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
     const handleInventoryIncrease = (value: 'Si' | 'No') => {
         setInventoryIncrease(value);
         setPeriodicityAutomaticInventoryIncrease(undefined)
@@ -64,7 +64,7 @@ function CreateMerchandisesPage() {
     
     //Setea si la mercancía está empacada
     const [selectedpackaged, setSelectedpackaged] = useState('Si');
-    const handlepackagedChange = (value: 'Si' | 'No') => {
+    const handlePackagedChange = (value: 'Si' | 'No') => {
         setSelectedpackaged(value);
         setValue('packaged', value);
     };
@@ -212,35 +212,32 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la mercnacía "{nameItem}"?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la mercancía "{nameItem}"?</p>
                                 </div>
                                 <div>
                                     <input
                                         type="text"
-                                        {...register('brandItem', { required: true })}
+                                        {...register('brandItem')}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca de la mercancía que quieres registrar'
                                     />
-                                    {errors.brandItem && (
-                                        <p className='text-danger'>La marca de la mercancía es requerida</p>
-                                    )}
                                 </div>
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada en embalaje o envoltura?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada?</p>
                                 </div>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('Si')}
+                                        onClick={() => handlePackagedChange('Si')}
                                     >
                                         Si
                                     </div>
                                     <div
                                         className={`${styles.conditionOption} ${selectedpackaged === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlepackagedChange('No')}
+                                        onClick={() => handlePackagedChange('No')}
                                     >
                                         No
                                     </div>
@@ -347,7 +344,7 @@ function CreateMerchandisesPage() {
                             {selectedpackaged === 'Si' && (
                                 <div>
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>                                    
+                                        <div>
                                             <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
                                         </div>
                                         <div>
