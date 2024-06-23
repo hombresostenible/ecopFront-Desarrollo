@@ -14,13 +14,14 @@ import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import ModalService from '../../../../../../components/Platform/03Inventories/Servicios/ModalService/ModalService';
+import SeeItemService from '../../../../../../components/Platform/03Inventories/Servicios/01SeeItemService/SeeItemService';
+import ModalEditService from '../../../../../../components/Platform/03Inventories/Servicios/03ModalEditService/ModalEditService';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
-// import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from './styles.module.css';
 
 function ConsultServicesPage() {
@@ -53,23 +54,30 @@ function ConsultServicesPage() {
 
     const [idRawMaterial, setIdRawMaterial] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IService>();
-    const [showItemModal, setShowItemModal] = useState(false);
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditServiceModal, setShowEditServiceModal] = useState(false);
 
     const handleDelete = useCallback((service: IService) => {
         setSelectedItem(service);
         setShowDeleteConfirmation(true);
     }, []);
 
+    const handleSeeItem = useCallback((asset: IService) => {
+        setSelectedItem(asset);
+        setShowSeeItem(true);
+    }, []);
+
     const handleEdit = useCallback((service: IService) => {
         setSelectedItem(service);
-        setShowItemModal(true);
+        setShowEditServiceModal(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowItemModal(false);
+        setShowEditServiceModal(false);
     }, []);
 
     const branchesArray = Array.isArray(branches) ? branches : [];
@@ -112,7 +120,8 @@ function ConsultServicesPage() {
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
                             </div>
@@ -133,10 +142,23 @@ function ConsultServicesPage() {
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
                                             </div>
+                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA} %</span>
+                                            </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(service.sellingPrice)}</span>
                                             </div>
-                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} `}
+                                                        onClick={() => {
+                                                            setIdRawMaterial(service.id);
+                                                            setNameRawMaterial(service.nameItem || '');
+                                                            handleSeeItem(service);
+                                                        }}
+                                                    />
+                                                </div>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
@@ -167,18 +189,15 @@ function ConsultServicesPage() {
                             </div>
                         </div>
 
-                        <Modal show={showItemModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu materia prima</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedItem &&
-                                    <ModalService
-                                        token={token}
-                                        idItem={idRawMaterial}
+                                    <SeeItemService
                                         service={selectedItem}
                                         branches={branchesArray}
-                                        onCloseModal={onCloseModal}
                                     />
                                 }
                             </Modal.Body>
@@ -195,6 +214,23 @@ function ConsultServicesPage() {
                                     nameRegister={nameRawMaterial}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showEditServiceModal} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu materia prima</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedItem &&
+                                    <ModalEditService
+                                        token={token}
+                                        idItem={idRawMaterial}
+                                        service={selectedItem}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
                     </div>
