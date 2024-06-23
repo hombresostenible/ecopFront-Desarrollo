@@ -89,7 +89,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información de la meteria prima</h1>
+                <h1 className={`${styles.title} text-center`}>Edita la información de la meteria prima</h1>
             </div>
 
             <div className="w-100">

@@ -92,7 +92,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información del producto</h1>
+                <h1 className={`${styles.title} text-center`}>Edita la información del producto</h1>
             </div>
 
             <div className="w-100">

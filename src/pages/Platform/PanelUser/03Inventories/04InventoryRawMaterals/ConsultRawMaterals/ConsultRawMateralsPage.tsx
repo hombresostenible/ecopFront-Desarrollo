@@ -98,9 +98,10 @@ function ConsultRawMateralsPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowAddInventory(false);
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
         setShowEditRawMaterialModal(false);
+        setShowAddInventory(false);
         setShowOff(false);
     }, []);
 
@@ -201,7 +202,7 @@ function ConsultRawMateralsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.purchasePriceBeforeTax)}</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.IVA)}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{formatNumber(rawMaterial.IVA)} %</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice ? `$ ${formatNumber(rawMaterial.sellingPrice)}` : 'No definido'}</span>
