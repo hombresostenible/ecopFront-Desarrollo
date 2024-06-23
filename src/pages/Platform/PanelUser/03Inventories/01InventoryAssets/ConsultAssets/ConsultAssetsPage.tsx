@@ -18,7 +18,7 @@ import ConsultAssetOff from '../../../../../../components/Platform/03Inventories
 import SeeItemAsset from '../../../../../../components/Platform/03Inventories/Assets/02SeeItemAsset/SeeItemAsset';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
 import ModalEditAsset from '../../../../../../components/Platform/03Inventories/Assets/04ModalEditAsset/ModalEditAsset';
-import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/Assets/0504AddInventoryAsset/AddInventoryAsset';
+import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/Assets/05AddInventoryAsset/AddInventoryAsset';
 import ModalAssetOff from '../../../../../../components/Platform/03Inventories/Assets/06ModalAssetOff/ModalAssetOff';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
@@ -62,7 +62,7 @@ function ConsultAssetsPage() {
     const [selectedItem, setSelectedItem] = useState<IAssets>();
     const [showSeeItem, setShowSeeItem] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showEditAssetModal, setShowIEditAssetModal] = useState(false);
+    const [showModalEditAsset, setShowModalEditAsset] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
@@ -83,7 +83,7 @@ function ConsultAssetsPage() {
 
     const handleEdit = useCallback((asset: IAssets) => {
         setSelectedItem(asset);
-        setShowIEditAssetModal(true);
+        setShowModalEditAsset(true);
     }, []);
 
     const handleAddInventory = useCallback((asset: IAssets) => {
@@ -99,7 +99,7 @@ function ConsultAssetsPage() {
     const onCloseModal = useCallback(() => {
         setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowIEditAssetModal(false);
+        setShowModalEditAsset(false);
         setShowAddInventory(false);
         setShowOff(false);
     }, []);
@@ -216,7 +216,7 @@ function ConsultAssetsPage() {
                                             <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.sellingPrice ? formatNumber(asset.sellingPrice) : 'No definido'}</span>
                                             </div>
-                                            <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <MdOutlineRemoveRedEye
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
@@ -306,7 +306,7 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showEditAssetModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showModalEditAsset} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Activo</Modal.Title>
                             </Modal.Header>

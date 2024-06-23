@@ -14,12 +14,14 @@ import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import ModalMerchandises from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchandises/ModalMerchandises';
-import ModalMerchadiseOff from '../../../../../../components/Platform/03Inventories/Merchandises/ModalMerchadiseOff/ModalMerchadiseOff';
+import ConsultMerchandisesOff from '../../../../../../components/Platform/03Inventories/Merchandises/01ConsultMerchandisesOff/ConsultMerchandisesOff';
+import SeeItemMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/02SeeItemMerchandise/02SeeItemMerchandise';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import ConsultMerchandisesOff from '../../../../../../components/Platform/03Inventories/Merchandises/ConsultMerchandisesOff/ConsultMerchandisesOff';
-import AddInventoryMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/AddInventoryMerchandise/AddInventoryMerchandise';
+import ModalEditMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/04ModalEditMerchandise/ModalEditMerchandise';
+import AddInventoryMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/05AddInventoryMerchandise/AddInventoryMerchandise';
+import ModalMerchadiseOff from '../../../../../../components/Platform/03Inventories/Merchandises/06ModalMerchadiseOff/ModalMerchadiseOff';
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -56,15 +58,21 @@ function ConsultMerchandisesPage() {
     const [idMerchadise, setIdMerchadise] = useState('');
     const [idBranch, setIdBranch] = useState('');
     const [nameMerchadise, setNameMerchadise] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IMerchandise>();
-    const [showItemModal, setShowItemModal] = useState(false);
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditMerchandiseModal, setShowIEditMerchandiseModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleConsultOff = useCallback(() => {
         setShowConsultOff(true);
+    }, []);
+
+    const handleSeeItem = useCallback((asset: IMerchandise) => {
+        setSelectedItem(asset);
+        setShowSeeItem(true);
     }, []);
 
     const handleDelete = useCallback((merchadise: IMerchandise) => {
@@ -74,7 +82,7 @@ function ConsultMerchandisesPage() {
 
     const handleEdit = useCallback((merchadise: IMerchandise) => {
         setSelectedItem(merchadise);
-        setShowItemModal(true);
+        setShowIEditMerchandiseModal(true);
     }, []);
 
     const handleAddInventory = useCallback((merchadise: IMerchandise) => {
@@ -88,9 +96,10 @@ function ConsultMerchandisesPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowAddInventory(false);
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowItemModal(false);
+        setShowIEditMerchandiseModal(false);
+        setShowAddInventory(false);
         setShowOff(false);
     }, []);
 
@@ -197,6 +206,16 @@ function ConsultMerchandisesPage() {
                                             </div>
                                             <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} `}
+                                                        onClick={() => {
+                                                            setIdMerchadise(merchadise.id);
+                                                            setNameMerchadise(merchadise.nameItem || '');
+                                                            handleSeeItem(merchadise);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Delete} `}
                                                         onClick={() => {
@@ -247,18 +266,15 @@ function ConsultMerchandisesPage() {
                             </div>
                         </div>
 
-                        <Modal show={showItemModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedItem &&
-                                    <ModalMerchandises
-                                        token={token}
-                                        idItem={idMerchadise}
+                                    <SeeItemMerchandise
                                         merchandise={selectedItem}
                                         branches={branchesArray}
-                                        onCloseModal={onCloseModal}
                                     />
                                 }
                             </Modal.Body>
@@ -275,6 +291,23 @@ function ConsultMerchandisesPage() {
                                     nameRegister={nameMerchadise}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showEditMerchandiseModal} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedItem &&
+                                    <ModalEditMerchandise
+                                        token={token}
+                                        idItem={idMerchadise}
+                                        merchandise={selectedItem}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
 

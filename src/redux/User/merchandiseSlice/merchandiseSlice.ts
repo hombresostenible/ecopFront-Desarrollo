@@ -3,12 +3,14 @@ import { IMerchandise } from '../../../types/User/merchandise.types';
 
 interface MerchandiseState {
     merchandise: IMerchandise | IMerchandise[] | null;
+    merchandiseOff: IMerchandise | IMerchandise[] | null;
     loading: boolean;
     errorMerchandise: string[] | null;
 }
 
 const initialState: MerchandiseState = {
     merchandise: null,
+    merchandiseOff: null,
     loading: false,
     errorMerchandise: null,
 };
@@ -52,7 +54,7 @@ const merchandiseSlice = createSlice({
         },
         getMerchandisesOffStart: (state, action: PayloadAction<IMerchandise[]>) => {
             state.loading = true;
-            state.merchandise = action.payload;
+            state.merchandiseOff = action.payload;
             state.errorMerchandise = null;
         },
         putMerchandiseStart: (state) => {
