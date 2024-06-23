@@ -15,7 +15,7 @@ import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ConsultMerchandisesOff from '../../../../../../components/Platform/03Inventories/Merchandises/01ConsultMerchandisesOff/ConsultMerchandisesOff';
-import SeeItemMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/02SeeItemMerchandise/02SeeItemMerchandise';
+import SeeItemMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/02SeeItemMerchandise/SeeItemMerchandise';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
 import ModalEditMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/04ModalEditMerchandise/ModalEditMerchandise';
 import AddInventoryMerchandise from '../../../../../../components/Platform/03Inventories/Merchandises/05AddInventoryMerchandise/AddInventoryMerchandise';
@@ -61,7 +61,7 @@ function ConsultMerchandisesPage() {
     const [selectedItem, setSelectedItem] = useState<IMerchandise>();
     const [showSeeItem, setShowSeeItem] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showEditMerchandiseModal, setShowIEditMerchandiseModal] = useState(false);
+    const [showEditMerchandiseModal, setShowEditMerchandiseModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
@@ -82,7 +82,7 @@ function ConsultMerchandisesPage() {
 
     const handleEdit = useCallback((merchadise: IMerchandise) => {
         setSelectedItem(merchadise);
-        setShowIEditMerchandiseModal(true);
+        setShowEditMerchandiseModal(true);
     }, []);
 
     const handleAddInventory = useCallback((merchadise: IMerchandise) => {
@@ -98,7 +98,7 @@ function ConsultMerchandisesPage() {
     const onCloseModal = useCallback(() => {
         setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowIEditMerchandiseModal(false);
+        setShowEditMerchandiseModal(false);
         setShowAddInventory(false);
         setShowOff(false);
     }, []);

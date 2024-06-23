@@ -14,12 +14,14 @@ import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import ModalProduct from '../../../../../../components/Platform/03Inventories/Products/ModalProduct/ModalProduct';
-import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/ModalProductOff/ModalProductOff';
+import ConsultProductsOff from '../../../../../../components/Platform/03Inventories/Products/01ConsultProductsOff/ConsultProductsOff';
+import SeeItemProduct from '../../../../../../components/Platform/03Inventories/Products/02SeeItemProduct/SeeItemProduct';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
-import ConsultProductsOff from '../../../../../../components/Platform/03Inventories/Products/ConsultProductsOff/ConsultProductsOff';
-import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/Products/AddInventoryProduct/AddInventoryProduct';
+import ModalEditProduct from '../../../../../../components/Platform/03Inventories/Products/04ModalEditProduct/ModalEditProduct';
+import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/Products/05AddInventoryProduct/AddInventoryProduct';
+import ModalProductOff from '../../../../../../components/Platform/03Inventories/Products/06ModalProductOff/ModalProductOff';
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -57,15 +59,21 @@ function ConsultProductsPage() {
     const [idProduct, setIdProduct] = useState('');
     const [idBranch, setIdBranch] = useState('');
     const [nameProduct, setNameProduct] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IProduct>();
-    const [showItemModal, setShowItemModal] = useState(false);
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showEditProductModal, setShowEditProductModal] = useState(false);
     const [showOff, setShowOff] = useState(false);
     const [showConsultOff, setShowConsultOff] = useState(false);
     const [showAddInventory, setShowAddInventory] = useState(false);
 
     const handleConsultOff = useCallback(() => {
         setShowConsultOff(true);
+    }, []);
+
+    const handleSeeItem = useCallback((asset: IProduct) => {
+        setSelectedItem(asset);
+        setShowSeeItem(true);
     }, []);
 
     const handleDelete = useCallback((product: IProduct) => {
@@ -75,7 +83,7 @@ function ConsultProductsPage() {
 
     const handleEdit = useCallback((product: IProduct) => {
         setSelectedItem(product);
-        setShowItemModal(true);
+        setShowEditProductModal(true);
     }, []);
 
     const handleAddInventory = useCallback((product: IProduct) => {
@@ -89,9 +97,10 @@ function ConsultProductsPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowAddInventory(false);
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
-        setShowItemModal(false);
+        setShowEditProductModal(false);
+        setShowAddInventory(false);
         setShowOff(false);
     }, []);
 
@@ -194,6 +203,16 @@ function ConsultProductsPage() {
                                             </div>
                                             <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} `}
+                                                        onClick={() => {
+                                                            setIdProduct(product.id);
+                                                            setNameProduct(product.nameItem || '');
+                                                            handleSeeItem(product);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
@@ -245,18 +264,15 @@ function ConsultProductsPage() {
                             </div>
                         </div>
 
-                        <Modal show={showItemModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu producto</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedItem &&
-                                    <ModalProduct
-                                        token={token}
-                                        idItem={idProduct}
+                                    <SeeItemProduct
                                         product={selectedItem}
                                         branches={branchesArray}
-                                        onCloseModal={onCloseModal}
                                     />
                                 }
                             </Modal.Body>
@@ -273,6 +289,23 @@ function ConsultProductsPage() {
                                     nameRegister={nameProduct}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showEditProductModal} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu producto</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedItem &&
+                                    <ModalEditProduct
+                                        token={token}
+                                        idItem={idProduct}
+                                        product={selectedItem}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
 
