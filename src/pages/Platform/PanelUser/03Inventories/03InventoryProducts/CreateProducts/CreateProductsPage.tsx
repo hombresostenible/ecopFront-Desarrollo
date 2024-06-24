@@ -14,7 +14,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyProduct from '../../../../../../components/Platform/03Inventories/Products/CreateManyProducts/CreateManyProduct';
+import CreateManyProduct from '../../../../../../components/Platform/03Inventories/03Products/CreateManyProducts/CreateManyProduct';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -431,7 +431,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
                                         onChange={handleNameItem}
-                                        placeholder='¿Qué producto quieres registrar?'
+                                        placeholder='Nombre del producto que quieres crear'
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre del producto es requerido</p>
