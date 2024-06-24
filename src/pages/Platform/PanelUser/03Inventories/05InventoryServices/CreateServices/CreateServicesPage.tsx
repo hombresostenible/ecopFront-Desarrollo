@@ -15,10 +15,10 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyServices from '../../../../../../components/Platform/03Inventories/Servicios/CreateManyServices/CreateManyServices';
-import CreateAssetPage from '../../01InventoryAssets/CreateAssets/CreateAssetsPage';
-import CreateProductPage from '../../03InventoryProducts/CreateProducts/CreateProductsPage';
-import CreateRawMateralPage from '../../04InventoryRawMaterals/CreateRawMaterals/CreateRawMateralsPage';
+import CreateManyServices from '../../../../../../components/Platform/03Inventories/05Servicios/CreateManyServices/CreateManyServices';
+import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
+import CreateProduct from '../../../../../../components/Platform/03Inventories/CreateComponents/02CreateProduct';
+import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -391,7 +391,7 @@ function CreateServicesPage() {
                                         type="text"
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='¿Qué servicio quieres registrar? '
+                                        placeholder='Nombre del servicio que quieres crear'
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre del servicio es requerido</p>
@@ -444,7 +444,8 @@ function CreateServicesPage() {
                                                 <Modal.Title>Crear Activo</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateAssetPage
+                                                <CreateAsset
+                                                    token={token}
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseAssetModal();
@@ -470,7 +471,8 @@ function CreateServicesPage() {
                                                 <Modal.Title>Crear Producto</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateProductPage
+                                                <CreateProduct
+                                                    token={token}
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseProductModal();
@@ -496,7 +498,8 @@ function CreateServicesPage() {
                                                 <Modal.Title>Crear Materia Prima</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <CreateRawMateralPage
+                                                <CreateRawMateral
+                                                    token={token}
                                                     selectedBranchId={selectedBranch}
                                                     onCreateComplete={() => {
                                                         onCloseRawMaterialModal();

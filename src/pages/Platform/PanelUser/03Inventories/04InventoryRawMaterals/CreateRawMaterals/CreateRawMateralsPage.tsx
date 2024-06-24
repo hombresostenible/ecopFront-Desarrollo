@@ -12,7 +12,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyRawMaterals from '../../../../../../components/Platform/03Inventories/RawMaterials/CreateManyRawMaterials/CreateManyRawMaterals';
+import CreateManyRawMaterals from '../../../../../../components/Platform/03Inventories/04RawMaterials/CreateManyRawMaterials/CreateManyRawMaterals';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -217,7 +217,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
                                         onChange={handleNameItem}
-                                        placeholder='¿Qué mercancía quieres registrar?'
+                                        placeholder='Nombre de la materias prima quieres registrar'
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre de la mercancía es requerido</p>
