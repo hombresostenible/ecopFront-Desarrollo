@@ -117,6 +117,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
         const formData = nonEmptyRows.map(asset => ({
             ...asset,
+            referenceAssets: String(asset.referenceAssets),
             branchId: branchId,
             userId: user?.id,
         }));
