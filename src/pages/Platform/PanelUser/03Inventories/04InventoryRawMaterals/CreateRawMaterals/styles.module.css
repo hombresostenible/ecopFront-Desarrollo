@@ -32,7 +32,7 @@
 }
 .form {
     padding: 60px 0 0 0;
-    width: 600px;
+    width: 650px;
     margin: auto;
 }
 .alert__Success {
@@ -118,5 +118,10 @@
 .button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
+    cursor: pointer;
+}
+.link {
+    color: #718bd8;
+    font-weight: 600;
     cursor: pointer;
 }

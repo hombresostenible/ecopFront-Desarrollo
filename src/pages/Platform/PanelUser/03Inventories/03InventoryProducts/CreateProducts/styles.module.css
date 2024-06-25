@@ -32,7 +32,7 @@
 }
 .form {
     padding: 60px 0 0 0;
-    width: 600px;
+    width: 650px;
     margin: auto;
 }
 .alert__Success {
@@ -90,9 +90,6 @@
     background-color: #718bd8;
     color: #fff;
 }
-.container__Info {
-    width: 600px;
-}
 .container__Input {
     width: 100%;
     border-radius: 3px;
@@ -118,5 +115,14 @@
 .button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
+    cursor: pointer;
+}
+.subtitleSection {
+    color: #f28705;
+    letter-spacing: 1px;
+}
+.link {
+    color: #718bd8;
+    font-weight: 600;
     cursor: pointer;
 }
