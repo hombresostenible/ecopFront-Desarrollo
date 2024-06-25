@@ -2,12 +2,12 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyAssets } from '../../../../../redux/User/assetsSlice/actions';
-import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
+import { postManyAssets } from '../../../../../../redux/User/assetsSlice/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { IBranch } from '../../../../../types/User/branch.types';
-import { IAssets } from "../../../../../types/User/assets.types";
+import type { RootState, AppDispatch } from '../../../../../../redux/store';
+import { IBranch } from '../../../../../../types/User/branch.types';
+import { IAssets } from "../../../../../../types/User/assets.types";
 import styles from './styles.module.css';
 
 interface CreateManyMerchandisesProps {
@@ -58,7 +58,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                     "Nombre del artículo": "nameItem",
                     "Código de barras": "barCode",
                     "Inventario": "inventory",
-                    "Marca": "brandItem",
+                    "Marca": "brandAssets",
                     "Referencia": "referenceAssets",
                     "Condición de compra": "conditionAssets",
                     "Estado": "stateAssets",
@@ -101,7 +101,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         "nameItem": "Nombre del artículo",
         "barCode": "Código de barras",
         "inventory": "Inventario",
-        "brandItem": "Marca",
+        "brandAssets": "Marca",
         "referenceAssets": "Referencia",
         "conditionAssets": "Condición de compra",
         "stateAssets": "Estado",
@@ -129,12 +129,21 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         }, 1500);
     };
 
+    // Función para manejar cambios en los inputs
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, header: string) => {
+        const updatedData = [...(excelData || [])];
+        if (updatedData[rowIndex]) {
+            updatedData[rowIndex][header] = e.target.value;
+            setExcelData(updatedData);
+        }
+    };
+
     return (
         <div>
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
                 <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Equipos_Herramientas_y_Maquinaria.xlsx" download="Equipos_Herramientas_y_Maquinaria.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="../DownloadExcels/Equipos_Herramientas_y_Maquinara.xlsx" download="Equipos_Herramientass_y_Maquinara.xlsx">Descargar Excel</a>
                 </div>
                 <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
@@ -170,29 +179,40 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
             <div className="mt-4 table-responsive">
                 {excelData && (
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                {headers.map((header) => (
-                                    <th key={header} className="align-middle text-center">
-                                        {englishToSpanishColumnNames[header] || header}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {excelData.map((row, index) => (
-                                // Verificar si hay datos en la fila antes de renderizarla
-                                Object.values(row).some(value => !!value) && (
-                                    <tr key={index}>
-                                        {headers.map((header, columnIndex) => (
-                                            <td key={columnIndex} className="align-middle text-center">{row[header]}</td>
+                    <div className="table table-bordered table-striped">
+                        <div>
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        {headers.map((header) => (
+                                            <th key={header} className="align-middle text-center">
+                                                {englishToSpanishColumnNames[header] || header}
+                                            </th>
                                         ))}
                                     </tr>
-                                )
-                            ))}
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                    {excelData.map((row, index) => (
+                                        // Verificar si hay datos en la fila antes de renderizarla
+                                        Object.values(row).some(value => !!value) && (
+                                            <tr key={index}>
+                                                {headers.map((header, columnIndex) => (
+                                                    <td key={columnIndex} className="align-middle text-center">
+                                                        <input
+                                                            type="text"
+                                                            value={row[header] || ''}
+                                                            onChange={(e) => handleInputChange(e, index, header)}
+                                                            className={`${styles.input} border`}
+                                                        />
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        )
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 )}
             </div>
 
