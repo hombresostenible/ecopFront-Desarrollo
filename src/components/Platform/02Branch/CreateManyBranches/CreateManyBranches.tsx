@@ -46,8 +46,8 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                     "Teléfono de la sede": "contactPhoneBranch",
                     "Nombre del administrador de la sede": "nameManagerBranch",
                     "Apellido del administrador de la sede": "lastNameManagerBranch",
-                    "Tipo de documento": "typeDocumentIdManager",
-                    "Número de documento": "documentIdManager",
+                    "Tipo de documento del administrador de la sede": "typeDocumentIdManager",
+                    "Número de documento del administrador de la sede": "documentIdManager",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -90,8 +90,8 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
         "contactPhoneBranch": "Teléfono de la sede",
         "nameManagerBranch": "Nombre del administrador de la sede",
         "lastNameManagerBranch": "Apellido del administrador de la sede",
-        "typeDocumentIdManager": "Tipo de documento",
-        "documentIdManager": "Número de documento",
+        "typeDocumentIdManager": "Tipo de documento del administrador de la sede",
+        "documentIdManager": "Número de documento del administrador de la sede",
         // Agregar más nombres de columnas según sea necesario
     };
 
