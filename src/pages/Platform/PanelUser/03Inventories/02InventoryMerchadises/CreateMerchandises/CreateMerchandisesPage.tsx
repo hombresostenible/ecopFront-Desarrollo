@@ -180,7 +180,7 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>La mercancía que vas a registrar ¿Tiene código de barras?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>Si la mercancía tiene código de barras ¿Cuál es el código?</p>
                                 </div>
                                 <div>
                                     <input
