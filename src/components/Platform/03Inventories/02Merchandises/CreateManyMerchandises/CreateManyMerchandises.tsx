@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
-//REDUX
-import { postManyMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
-import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { IMerchandise } from "../../../../../types/User/merchandise.types";
+import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
+import { postManyMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
 import styles from './styles.module.css';
 
 interface CreateManyMerchandisesProps {
@@ -16,16 +15,14 @@ interface CreateManyMerchandisesProps {
     onCreateComplete: () => void;
 }
 
-function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
+function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
     const dispatch: AppDispatch = useDispatch();
-
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
-
-    const [selectedBranch, setSelectedBranch] = useState('');
-    const [message, setMessage] = useState('');
+    const [selectedBranch, setSelectedBranch] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
     useEffect(() => {
         if (token) {
@@ -33,10 +30,8 @@ function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateMa
         }
     }, [token]);
 
-    //Selección de la sede
-    const handleBranchChange = (e: any) => {
-        const selectedId = e.target.value;
-        setSelectedBranch(selectedId);
+    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedBranch(e.target.value);
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,46 +43,44 @@ function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateMa
                 const workbook = XLSX.read(data, { type: 'binary' });
                 const sheetName = workbook.SheetNames[0];
                 const sheet = workbook.Sheets[sheetName];
-    
+
                 const parsedData: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-    
-                // Obtener los nombres de las columnas en español desde el archivo de Excel
+
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre de la mercancía": "nameItem",
-                    "Código de barras": "barCode",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
-                    "¿Autoincremento?": "inventoryIncrease",
-                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
-                    "Cantidad de aumento automático": "automaticInventoryIncrease",
                     "Precio unitario de compra antes de impuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
                     "Precio unitario de venta": "sellingPrice",
+                    "Fecha de vencimiento": "expirationDate",
                     "¿Empacado?": "packaged",
                     "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
-                    // Agregar más nombres de columnas según sea necesario
+                    "Código de barras": "barCode",
+                    "¿Autoincremento?": "inventoryIncrease",
+                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
+                    "Cantidad de aumento automático": "automaticInventoryIncrease",
                 };
-    
-                // Tomar las filas 4 y 6 como encabezados y datos respectivamente
+
                 const originalHeaders: string[] = parsedData[3] || [];
                 const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
-    
-                // Traducir los encabezados originales al inglés
+
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
-                    // Obtener la traducción en inglés si está disponible, de lo contrario, mantener el nombre original
                     return spanishColumnNames[header] || header;
                 });
-    
+
                 if (currentHeaders.length > 0) {
-                    // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
                         currentHeaders.slice(1).reduce((obj: { [key: string]: any }, header, index) => {
-                            obj[header] = row[index + 1];
+                            let value = row[index + 1];
+                            if (header === 'expirationDate' && typeof value === 'number') {
+                                value = excelSerialToDate(value).toLocaleDateString(); // Convertir el número de serie a fecha legible
+                            }
+                            obj[header] = value;
                             return obj;
                         }, {})
                     );
-                    // Establecer los encabezados y los datos traducidos
+
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
                 } else {
@@ -101,33 +94,70 @@ function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateMa
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre de la mercancía",
-        "barCode": "Código de barras",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
-        "inventoryIncrease": "¿Autoincremento?",
-        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
-        "automaticInventoryIncrease": "Cantidad de aumento automático",
         "purchasePriceBeforeTax": "Precio unitario de compra antes de impuestos",
         "IVA": "IVA",
         "sellingPrice": "Precio unitario de venta",
+        "expirationDate": "Fecha de vencimiento",
         "packaged": "¿Empacado?",
         "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
+        "barCode": "Código de barras",
+        "inventoryIncrease": "¿Autoincremento?",
+        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
+        "automaticInventoryIncrease": "Cantidad de aumento automático",
         // Agregar más nombres de columnas según sea necesario
     };
 
-    const onSubmit = () => {
-        if (!excelData || !selectedBranch) return;
+    const excelSerialToDate = (serial: number): Date => {
+        const startDate = new Date(1900, 0, 1); // 1st January 1900
+        return new Date(startDate.getTime() + (serial - 1) * 24 * 60 * 60 * 1000);
+    };
+    
+    // Función para preparar los datos del formulario antes de enviarlos a Redux
+    const prepareFormData = (excelData: any[], selectedBranch: string, user?: { id: string } | null): IMerchandise[] => {
+        if (!excelData || !selectedBranch) return [];
+    
         const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const merchandiseData = nonEmptyRows.map(asset => ({
-            ...asset,
-            branchId: branchId,
-            userId: user?.id,
-        }));
-        dispatch(postManyMerchandises(merchandiseData as unknown as IMerchandise[], token));
+    
+        return nonEmptyRows.map(asset => {
+            // Asumiendo que asset.expirationDate es el serial de fecha que necesitas convertir
+            const expirationDate = typeof asset.expirationDate === 'number' ? excelSerialToDate(asset.expirationDate) : undefined;
+    
+            // Aquí creas cada objeto IMerchandise con los datos convertidos
+            const merchandise: IMerchandise = {
+                id: asset.id,
+                barCode: asset.barCode,
+                nameItem: asset.nameItem,
+                brandItem: asset.brandItem,
+                packaged: asset.packaged,
+                primaryPackageType: asset.primaryPackageType,
+                inventory: asset.inventory,
+                unitMeasure: asset.unitMeasure,
+                inventoryIncrease: asset.inventoryIncrease,
+                periodicityAutomaticIncrease: asset.periodicityAutomaticIncrease,
+                automaticInventoryIncrease: asset.automaticInventoryIncrease,
+                purchasePriceBeforeTax: asset.purchasePriceBeforeTax,
+                IVA: asset.IVA,
+                sellingPrice: asset.sellingPrice,
+                expirationDate: expirationDate,
+                branchId: branchId,
+                userId: user?.id,
+            };
+    
+            return merchandise;
+        });
+    };
+    
+    // Función onSubmit actualizada que usa prepareFormData
+    const onSubmit = () => {
+        if (!excelData || !selectedBranch) return;
+    
+        const formData = prepareFormData(excelData, selectedBranch, user);
+        dispatch(postManyMerchandises(formData, token));
         setExcelData(null);
-        setMessage('Se guardó masivamente tus activos con exito');
+        setMessage('Se guardaron exitosamente los activos');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
@@ -186,7 +216,6 @@ function CreateManyMerchandises ({ branches, token, onCreateComplete }: CreateMa
                         </thead>
                         <tbody>
                             {excelData.map((row, index) => (
-                                // Verificar si hay datos en la fila antes de renderizarla
                                 Object.values(row).some(value => !!value) && (
                                     <tr key={index}>
                                         {headers.map((header, columnIndex) => (
