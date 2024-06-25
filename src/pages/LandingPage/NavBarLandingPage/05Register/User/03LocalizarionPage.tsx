@@ -40,14 +40,11 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
                 <div className={styles.container__Input}>
                     <input
                         type="postalCode"
-                        {...register('postalCode', { required: true })}
+                        {...register('postalCode')}
                         className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
+                        placeholder='Si tienes código postal ¿Cuál es el código?'
                         min={0}
                     />
-                    {errors.postalCode && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El código postal del usuario es requerido</p>
-                    )}
                 </div>
             </div>
 

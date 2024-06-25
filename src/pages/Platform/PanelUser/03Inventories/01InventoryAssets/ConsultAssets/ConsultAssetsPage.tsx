@@ -121,7 +121,7 @@ function ConsultAssetsPage() {
                                     className={styles.link__Head_Navigate}
                                     onClick={handleConsultOff}
                                 >
-                                    Dados de baja
+                                    Ver dados de baja
                                 </div>
                             </div>
                             <div className={styles.link__Head_Navigate}>
