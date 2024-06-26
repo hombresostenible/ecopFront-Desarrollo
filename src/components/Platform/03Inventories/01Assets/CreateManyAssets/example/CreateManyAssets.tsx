@@ -1,32 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
-//REDUX
-import { postManyAssets } from '../../../../../../redux/User/assetsSlice/actions';
-import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
+import { postManyAssets } from '../../../../../../redux/User/assetsSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import { IAssets } from "../../../../../../types/User/assets.types";
+import { IAssets } from '../../../../../../types/User/assets.types';
 import styles from './styles.module.css';
 
-interface CreateManyMerchandisesProps {
+interface CreateManyAssetsProps {
     branches: IBranch | IBranch[] | null;
     token: string;
     onCreateComplete: () => void;
 }
 
-function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
+const CreateManyAssets: React.FC<CreateManyAssetsProps> = ({ branches, token, onCreateComplete }) => {
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
-
-    const [selectedBranch, setSelectedBranch] = useState('');
-    const [message, setMessage] = useState('');
+    const [selectedBranch, setSelectedBranch] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
     useEffect(() => {
         if (token) {
@@ -34,13 +30,10 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         }
     }, [token]);
 
-    //Selección de la sede
-    const handleBranchChange = (e: any) => {
-        const selectedId = e.target.value;
-        setSelectedBranch(selectedId);
+    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedBranch(e.target.value);
     };
 
-    // Renderiza el Excel adjuntado en la tabla del modal
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -53,7 +46,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     
                 const parsedData: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
     
-                // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre del artículo": "nameItem",
                     "Código de barras": "barCode",
@@ -67,25 +59,20 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                     // Agregar más nombres de columnas según sea necesario
                 };
     
-                // Tomar las filas 4 y 6 como encabezados y datos respectivamente
                 const originalHeaders: string[] = parsedData[3] || [];
                 const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
     
-                // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
-                    // Obtener la traducción en inglés si está disponible, de lo contrario, mantener el nombre original
                     return spanishColumnNames[header] || header;
                 });
     
                 if (currentHeaders.length > 0) {
-                    // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
                         currentHeaders.slice(1).reduce((obj: { [key: string]: any }, header, index) => {
                             obj[header] = row[index + 1];
                             return obj;
                         }, {})
                     );
-                    // Establecer los encabezados y los datos traducidos
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
                 } else {
@@ -96,7 +83,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         }
     };
 
-    // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre del artículo",
         "barCode": "Código de barras",
@@ -113,7 +99,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     const onSubmit = () => {
         if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
-        // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
         const formData = nonEmptyRows.map(asset => ({
             ...asset,
@@ -121,15 +106,13 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
             userId: user?.id,
         }));
         dispatch(postManyAssets(formData as unknown as IAssets[], token));
-        // Restablecer estado y mensaje de éxito
         setExcelData(null);
-        setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
+        setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con éxito');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
     };
 
-    // Función para manejar cambios en los inputs
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, header: string) => {
         const updatedData = [...(excelData || [])];
         if (updatedData[rowIndex]) {
@@ -154,12 +137,12 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                 </div>
                 <div>
                     <select
-                        className={`${styles.info} p-2 border rounded border-secundary`}
+                        className={`${styles.info} p-2 border rounded border-secondary`}
                         onChange={handleBranchChange}
                     >
                         <option value=''>Selecciona una Sede</option>
-                        {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
-                            <option key={index} value={branch.id}>
+                        {Array.isArray(branches) && branches.map((branch: IBranch) => (
+                            <option key={branch.id} value={branch.id}>
                                 {branch.nameBranch}
                             </option>
                         ))}
@@ -175,7 +158,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                 {message && (
                     <p className={`${styles.successMessage} p-1 text-center text-success position-absolute w-100`}>{message}</p>
                 )}
-            </div> 
+            </div>
 
             <div className="mt-4 table-responsive">
                 {excelData && (
@@ -193,7 +176,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                                 </thead>
                                 <tbody>
                                     {excelData.map((row, index) => (
-                                        // Verificar si hay datos en la fila antes de renderizarla
                                         Object.values(row).some(value => !!value) && (
                                             <tr key={index}>
                                                 {headers.map((header, columnIndex) => (
