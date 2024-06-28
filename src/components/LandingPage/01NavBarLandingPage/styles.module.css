@@ -16,19 +16,20 @@
     height: 70px;
 }
 .navTitle {
-    color: #6c757d;
+    color: #2d3748;
+    font-weight: 600;
     margin: 10px 5px;
     padding: 5px 15px;
     height: 50px;
 }
 .navTitle:hover {
-    background: #2d3748;
-    color: #dee2e6;
+    /* background: #2d3748; */
+    color: #0a31bf;
     border-radius: 5px;
 }
 .activeLink {
-    background: #2d3748;
-    color: #dee2e6;
+    /* background: #718bd8; */
+    color: #0a31bf;
     border-radius: 5px;
 }
 .playStore {
@@ -70,7 +71,7 @@
     border-radius: 5px;
     width: 110px;
     height: 50px;
-    background: #718bd8;
+    background: #0a31bf;
     color: #f8f9fa;
     transition: 300ms all ease;
 }

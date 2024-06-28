@@ -144,6 +144,9 @@ function CreateExpensesPage() {
                             )}
 
                             <div className="mb-5 p-2 d-flex align-items-center justify-content-center  border rounded">
+                                <div className="px-3">
+                                    <p className={`${styles.text} mb-0 p-2`}>La compra ¿Es de contado o a crédito?</p>
+                                </div>
                                 <div>
                                     <select
                                         className={`${styles.info} p-2 border rounded border-secundary`}

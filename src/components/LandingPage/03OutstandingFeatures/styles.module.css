@@ -1,5 +1,6 @@
 .subtitle {
     color: #f28705;
+    font-weight: 600;
 }
 .containerFunctionality {
     padding: 10px 0;
@@ -9,7 +10,7 @@
     border-radius: 10px;
     width: 390px;
     height: 80px; 
-    background: #718bd8;
+    background: #0a31bf;
     transition: all 300ms ease;
 }
 .containerTextA:hover {
@@ -27,11 +28,11 @@
 }
 .iconItem {
     font-size: 30px;
-    color: #718bd8;
+    color: #0a31bf;
 }
 .iconItemInvoiceSolid {
     font-size: 35px;
-    color: #718bd8;
+    color: #0a31bf;
 }
 .textFunctionality {
     margin: 0;
