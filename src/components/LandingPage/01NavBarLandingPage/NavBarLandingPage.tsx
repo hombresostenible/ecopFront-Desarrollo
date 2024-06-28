@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 function NavBarLandingPage() {
     const location = useLocation();
-    const currentPath = useLocation().pathname;
+    // const currentPath = useLocation().pathname;
     const navBarRef = useRef(null);
 
 
@@ -21,8 +21,8 @@ function NavBarLandingPage() {
                         <Link to="/" className={`${styles.navTitle} ${location.pathname === '/' ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`} >Inicio</Link>
                         <Link to="/paymentPlans" className={`${styles.navTitle} ${location.pathname === '/paymentPlans' ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Planes</Link>
                         <Link to="/contactUs" className={`${styles.navTitle} ${location.pathname === '/contactUs' ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Contáctanos</Link>
-                        <Link to="/fastSimulator" className={`${styles.navTitle} ${location.pathname === '/fastSimulator' ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Haz una simulación</Link>
-                        <Link to="/appointment" className={`${styles.navTitle} ${currentPath.includes('/appointment') ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Agenda una cita</Link>
+                        <Link to="/fastSimulator" className={`${styles.navTitle} ${location.pathname === '/fastSimulator' ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Prueba tu demo</Link>
+                        {/* <Link to="/appointment" className={`${styles.navTitle} ${currentPath.includes('/appointment') ? styles.activeLink : ''} text-center d-flex align-items-center justify-content-center text-decoration-none`}>Agenda una cita</Link> */}
                         <Link to="/register" className={`${styles.navSignIn} d-flex align-items-center justify-content-center text-decoration-none`}>
                             Regístrate
                         </Link>

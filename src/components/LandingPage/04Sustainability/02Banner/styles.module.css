@@ -1,0 +1,72 @@
+.container {
+    margin: 110px 0 0 0;
+}
+.button__Next, .button__Prev {
+    top: 45%;
+    background: rgba(252, 252, 252, 0.5);
+    box-shadow: 1px 1px 5px -1px rgb(0 0 0 / 30%);
+    cursor: pointer;
+    background: white;
+    height: 50px;
+    width: 50px;
+    z-index: 1;
+    border-radius: 50%;
+}
+.button__Next {
+    left: 10px;
+}
+.button__Prev {
+    right: 10px;
+}
+.button__Next, .button__Prev {
+    color: #e4002b;
+}
+.button__Next:hover, .button__Prev:hover {
+    box-shadow: 1px 2px 10px -1px rgb(0 0 0 / 30%);
+}
+.image__Banner {
+    width: 100%;
+}
+.icon__Arrow {
+    font-size: 30px;
+}
+
+
+.container__First_Component, .container__Second_Component, .container__Third_Component, .container__Fourth_Component {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+.container__First_Component {
+    background: #888b8d;
+}
+.container__Second_Component {
+    background: #c1c6c8;
+}
+.container__Third_Component {
+    background: #dde5ed;
+}
+.container__Fourth_Component {
+    background: rgba(0, 0, 0, 0.05);
+}
+.logo {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    right: 20px;
+}
+.ghhhhh {
+    font-weight: 700;
+}
+.ggggggg {
+    /* border: 1px solid red; */
+    width: 600px;
+    color: white;
+    font-size: 25px;
+    top: 30px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    filter: blur(0.1);
+    left: 50px;
+}
