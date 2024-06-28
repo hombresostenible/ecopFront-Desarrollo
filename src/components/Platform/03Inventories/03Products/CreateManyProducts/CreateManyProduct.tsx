@@ -18,12 +18,10 @@ interface CreateManyProductsProps {
 
 function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyProductsProps) {
     const dispatch: AppDispatch = useDispatch();
-
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
-
     const [selectedBranch, setSelectedBranch] = useState('');
     const [message, setMessage] = useState('');
 
@@ -33,10 +31,8 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
         }
     }, [token]);
 
-    //Selección de la sede
-    const handleBranchChange = (e: any) => {
-        const selectedId = e.target.value;
-        setSelectedBranch(selectedId);
+    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedBranch(e.target.value);
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,17 +50,17 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre del producto": "nameItem",
-                    "Código de barras": "barCode",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
+                    "Precio de venta": "sellingPrice",
+                    "IVA": "IVA",
+                    "Fecha de vencimiento": "expirationDate",
+                    "¿Empacado?": "packaged",
+                    "Tipo de empaque principal": "primaryPackageType",
+                    "Código de barras": "barCode",
                     "¿Autoincremento?": "inventoryIncrease",
                     "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
                     "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio de venta": "sellingPrice",
-                    "IVA": "IVA",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -100,51 +96,64 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre del producto",
-        "barCode": "Código de barras",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
+        "sellingPrice": "Precio de venta",        
+        "IVA": "IVA",
+        "expirationDate": "Fecha de vencimiento",
+        "packaged": "¿Empacado?",
+        "primaryPackageType": "Tipo de empaque principal",
+        "barCode": "Código de barras",
         "inventoryIncrease": "¿Autoincremento?",
         "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
         "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "sellingPrice": "Precio de venta",        
-        "IVA": "IVA",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
         // Agregar más nombres de columnas según sea necesario
     };
 
-    const onSubmit = async () => {
-        if (!excelData || !selectedBranch) return;
-        const branchId = selectedBranch;
+    const excelSerialToDate = (serial: number): Date => {
+        const startDate = new Date(1900, 0, 1); // 1st January 1900
+        return new Date(startDate.getTime() + (serial - 1) * 24 * 60 * 60 * 1000);
+    };
+
+    // Función para preparar los datos del formulario antes de enviarlos a Redux
+    const prepareFormData = (excelData: any[], selectedBranch: string, user?: { id: string } | null): IProduct[] => {
+        if (!excelData || !selectedBranch) return [];
     
-        // Filtrar las filas no vacías del excelData
+        const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
     
-        // Mapear los datos con la manipulación específica
-        const rawMateriaData = nonEmptyRows.map(product => {
-            // Verificar si inventoryIncrease es No o packaged es No
-            if (product.inventoryIncrease === 'No' || product.packaged === 'No') {
-                return {
-                    ...product,
-                    branchId: branchId,
-                    userId: user?.id,
-                    periodicityAutomaticIncrease: product.inventoryIncrease === 'No' ? null : product.periodicityAutomaticIncrease,
-                    automaticInventoryIncrease: product.inventoryIncrease === 'No' ? null : product.automaticInventoryIncrease,
-                    primaryPackageType: product.packaged === 'No' ? null : product.primaryPackageType
-                };
-            }
+        return nonEmptyRows.map(product => {
+            const expirationDate = typeof product.expirationDate === 'number' ? excelSerialToDate(product.expirationDate) : undefined;
     
-            return {
-                ...product,
+            const productPrepare: IProduct = {
+                id: product.id,
+                nameItem: product.nameItem,
+                inventory: product.inventory,
+                unitMeasure: product.unitMeasure,
+                sellingPrice: product.sellingPrice,
+                IVA: product.IVA,
+                expirationDate: expirationDate,
+                packaged: product.packaged,
+                primaryPackageType: product.primaryPackageType,
+                barCode: product.barCode,
+                brandItem: product.brandItem,
+                inventoryIncrease: product.inventoryIncrease,
+                periodicityAutomaticIncrease: product.periodicityAutomaticIncrease,
+                automaticInventoryIncrease: product.automaticInventoryIncrease,
                 branchId: branchId,
-                userId: user?.id
+                userId: user?.id,
             };
+            return productPrepare;
         });
-        dispatch(postManyProducts(rawMateriaData as unknown as IProduct[], token));
-        // Restablecer estado y mensaje de éxito
+    };
+
+    // Función onSubmit actualizada que usa prepareFormData
+    const onSubmit = () => {
+        if (!excelData || !selectedBranch) return;
+        const formData = prepareFormData(excelData, selectedBranch, user);
+        dispatch(postManyProducts(formData, token));
         setExcelData(null);
-        setMessage('Se guardó masivamente tus productos con éxito');
+        setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);

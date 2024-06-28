@@ -121,43 +121,39 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
         const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
     
-        return nonEmptyRows.map(asset => {
-            // Asumiendo que asset.expirationDate es el serial de fecha que necesitas convertir
-            const expirationDate = typeof asset.expirationDate === 'number' ? excelSerialToDate(asset.expirationDate) : undefined;
+        return nonEmptyRows.map(merchandise => {
+            const expirationDate = typeof merchandise.expirationDate === 'number' ? excelSerialToDate(merchandise.expirationDate) : undefined;
     
-            // Aquí creas cada objeto IMerchandise con los datos convertidos
-            const merchandise: IMerchandise = {
-                id: asset.id,
-                barCode: asset.barCode,
-                nameItem: asset.nameItem,
-                brandItem: asset.brandItem,
-                packaged: asset.packaged,
-                primaryPackageType: asset.primaryPackageType,
-                inventory: asset.inventory,
-                unitMeasure: asset.unitMeasure,
-                inventoryIncrease: asset.inventoryIncrease,
-                periodicityAutomaticIncrease: asset.periodicityAutomaticIncrease,
-                automaticInventoryIncrease: asset.automaticInventoryIncrease,
-                purchasePriceBeforeTax: asset.purchasePriceBeforeTax,
-                IVA: asset.IVA,
-                sellingPrice: asset.sellingPrice,
+            const merchandisePrepare: IMerchandise = {
+                id: merchandise.id,
+                barCode: merchandise.barCode,
+                nameItem: merchandise.nameItem,
+                brandItem: merchandise.brandItem,
+                packaged: merchandise.packaged,
+                primaryPackageType: merchandise.primaryPackageType,
+                inventory: merchandise.inventory,
+                unitMeasure: merchandise.unitMeasure,
+                inventoryIncrease: merchandise.inventoryIncrease,
+                periodicityAutomaticIncrease: merchandise.periodicityAutomaticIncrease,
+                automaticInventoryIncrease: merchandise.automaticInventoryIncrease,
+                purchasePriceBeforeTax: merchandise.purchasePriceBeforeTax,
+                IVA: merchandise.IVA,
+                sellingPrice: merchandise.sellingPrice,
                 expirationDate: expirationDate,
                 branchId: branchId,
                 userId: user?.id,
             };
-    
-            return merchandise;
+            return merchandisePrepare;
         });
     };
     
     // Función onSubmit actualizada que usa prepareFormData
     const onSubmit = () => {
         if (!excelData || !selectedBranch) return;
-    
         const formData = prepareFormData(excelData, selectedBranch, user);
         dispatch(postManyMerchandises(formData, token));
         setExcelData(null);
-        setMessage('Se guardaron exitosamente los activos');
+        setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
