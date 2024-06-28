@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ImageBanner from '../../../assets/LandingPage/02Introduction/ImageBanner.png';
+import ImageBanner from '../../../assets/Imagen1.png';
 import styles from './styles.module.css';
 
 function Introduction() {
@@ -11,11 +11,11 @@ function Introduction() {
                     <img src={ImageBanner} alt="Ecopcion" className={styles.image} />
                 </div>
                 <div className={`${styles.textInformation} `}>
-                    <div className={`${styles.containerTitle} `}>
-                        <h1 className={`${styles.title} text-center`}>La transformación digital y la sostenibilidad ambiental determinarán el éxito de los negocios en el futuro.</h1>
+                    <div className={`${styles.containerTitle} mb-4`}>
+                        <h1 className={`${styles.title} `}>Aumenta la competitividad y sostenibilidad de tu pyme.</h1>
                     </div>
                     <div>
-                        <p className={`${styles.text} text-center`}>Cada vez son más los negocios que digitalizan sus procesos administrativos y además, cuidan su gestión ambiental.</p>
+                        <p className={`${styles.text} text-center`}>Organiza, controla y lleva al día, las finanzas, la gestión de clientes y la sostenibilidad de tu negocio para tomar decisiones con tranquilidad.</p>
                     </div>
                 </div>
             </div>

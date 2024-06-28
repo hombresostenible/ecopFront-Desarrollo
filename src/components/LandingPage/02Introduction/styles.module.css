@@ -1,26 +1,33 @@
 .container {
-    height: 500px;
-    background: #2d3748;
+    height: 400px;
+    background: #f28705;
     margin: 70px 0 20px 0;
 }
 .containerIntroduction {
     margin: 0 auto;
+    /* border: 1px solid red; */
     width: 1250px;
-    height: 500px;
+    height: 400px;
 }
 .imageInformation {
     width: 623px;
     height: 450px;
 }
 .image {
-    width: 600px;
+    width: 300px;
 }
 .textInformation {
+    /* border: 1px solid teal; */
     margin: 0 auto;
-    width: 623px;
+    width: 700px;
+}
+.containerTitle {
+    /* border: 1px solid red; */
+    width: 700px;
 }
 .title {
-    color: #f28705;
+    text-align: right;
+    color: #0a31bf;
     font-size: 45px;
     font-weight: 600;
     letter-spacing: 1px;

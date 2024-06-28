@@ -9,9 +9,10 @@ function ViewDownloadReports() {
             <NavBarLandingPage />
             <div className={`${styles.container} `}>
                 <div className="d-flex flex-column">
-                    <h2 className={`${styles.subtitle} text-center`}>Visualizar y descargar informes para gerentes, socios, inversionistas o clientes</h2>
-                    <p className='mb-5'>Con base en los indicadores calculados, podrás descargar informes en dos versiones PDF y excel. EL PDF te servirá para compartirlo con clientes, proveedores, inversionistas. El excel te servirá como herramienta de apoyo para el equipo de trabajo. </p>
-                    <p className='mb-5'>En un principio podrás   por indicador y además a futuro, podrás personalizar tus informes incluyendo los indicadores que deseas mostrar a tus clientes, proveedores, inversionistas o equipo de trabajo. </p>
+                    <h2 className={`${styles.subtitle} text-center`}>Calcula + de 100 indicadores y genera reportes</h2>
+                    <p className='mb-5'>Con base en los inventarios que hayas cargado, y en la facturación o el registro permanente de tus transacciones, podrás calcular +-80 indicadores de finanzas, mercadeo y sostenibilidad de tu negocio y generar reportes</p>
+                    <p className='mb-5'>Puedes calcular indicadores de finanzas - cuentas, inventarios y facturación-, gestión de clientes y ventas y sostenibilidad o impacto.  Podrás hacer filtros temporales -por año, mes, día- por ítem -producto, servicio o mercancía- y además, podrás ver detalles o información específica de cada indicador para mejorar su entendimiento.</p>
+                    <p className='mb-5'>Podrás generar informes en PDF o excel a tu medida, diarios, de cierre de mes o sugeridos para públicos específicos como bancos, clientes, proveedores o inversionistas.  Los informes los podrás utilizar para tomar decisiones clave que harán más competitivo y sostenible tu negocio.</p>
                 </div>
             </div>
             <Footer />
