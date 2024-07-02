@@ -62,13 +62,14 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
     const onSubmit = async (values: IAssets) => {
         try {
-            const assetData = {
+            const formData = {
                 ...values,
-                conditionAssets: selectedCondition,
                 branchId: selectedBranchId || values.branchId, // Usa el branchId pasado como prop si está disponible
+                referenceAssets: String(values.referenceAssets),
+                conditionAssets: selectedCondition,
             } as IAssets;
 
-            await dispatch(postAsset(assetData, token));
+            await dispatch(postAsset(formData, token));
             setFormSubmitted(true);
             reset();
             setTimeout(() => {

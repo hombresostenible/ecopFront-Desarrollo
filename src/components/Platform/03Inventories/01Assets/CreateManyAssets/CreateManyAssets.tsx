@@ -2,24 +2,23 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyAssets } from '../../../../../redux/User/assetsSlice/actions';
+import { postManyProducts } from '../../../../../redux/User/productSlice/actions';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IBranch } from '../../../../../types/User/branch.types';
-import { IAssets } from "../../../../../types/User/assets.types";
+import { IProduct } from "../../../../../types/User/products.types";
 import styles from './styles.module.css';
 
-interface CreateManyMerchandisesProps {
+interface CreateManyProductsProps {
     branches: IBranch | IBranch[] | null;
     token: string;
     onCreateComplete: () => void;
 }
 
-function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
+function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyProductsProps) {
     const dispatch: AppDispatch = useDispatch();
 
-    // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -40,7 +39,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         setSelectedBranch(selectedId);
     };
 
-    // Renderiza el Excel adjuntado en la tabla del modal
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -55,15 +53,18 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Nombre del artículo": "nameItem",
+                    "Nombre del producto": "nameItem",
                     "Inventario": "inventory",
-                    "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
+                    "Unidad de medida": "unitMeasure",
+                    "Precio de venta": "sellingPrice",
                     "IVA": "IVA",
+                    "Fecha de vencimiento": "expirationDate",
+                    "¿Empacado?": "packaged",
+                    "Tipo de empaque principal": "primaryPackageType",
                     "Código de barras": "barCode",
-                    "Marca": "brandItem",
-                    "Referencia": "referenceAssets",
-                    "Condición de compra": "conditionAssets",
-                    "Estado": "stateAssets",
+                    "¿Autoincremento?": "inventoryIncrease",
+                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
+                    "Cantidad de aumento automático": "automaticInventoryIncrease",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -98,32 +99,52 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "nameItem": "Nombre del artículo",
+        "nameItem": "Nombre del producto",
         "inventory": "Inventario",
-        "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
+        "unitMeasure": "Unidad de medida",
+        "sellingPrice": "Precio de venta",
         "IVA": "IVA",
+        "expirationDate": "Fecha de vencimiento",
+        "packaged": "¿Empacado?",
+        "primaryPackageType": "Tipo de empaque principal",
         "barCode": "Código de barras",
-        "brandItem": "Marca",
-        "referenceAssets": "Referencia",
-        "conditionAssets": "Condición de compra",
-        "stateAssets": "Estado",
+        "inventoryIncrease": "¿Autoincremento?",
+        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
+        "automaticInventoryIncrease": "Cantidad de aumento automático",
         // Agregar más nombres de columnas según sea necesario
     };
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
+    
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const formData = nonEmptyRows.map(asset => ({
-            ...asset,
-            branchId: branchId,
-            userId: user?.id,
-        }));
-        dispatch(postManyAssets(formData as unknown as IAssets[], token));
+    
+        // Mapear los datos con la manipulación específica
+        const rawMateriaData = nonEmptyRows.map(product => {
+            // Verificar si inventoryIncrease es No o packaged es No
+            if (product.inventoryIncrease === 'No' || product.packaged === 'No') {
+                return {
+                    ...product,
+                    branchId: branchId,
+                    userId: user?.id,
+                    periodicityAutomaticIncrease: product.inventoryIncrease === 'No' ? null : product.periodicityAutomaticIncrease,
+                    automaticInventoryIncrease: product.inventoryIncrease === 'No' ? null : product.automaticInventoryIncrease,
+                    primaryPackageType: product.packaged === 'No' ? null : product.primaryPackageType
+                };
+            }
+    
+            return {
+                ...product,
+                branchId: branchId,
+                userId: user?.id
+            };
+        });
+        dispatch(postManyProducts(rawMateriaData as unknown as IProduct[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
-        setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
+        setMessage('Se guardó masivamente tus productos con éxito');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
@@ -132,11 +153,11 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     return (
         <div>
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
-                <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
+                <div className={`${styles.containerDownloadFile} mt-3 mb-3 m-auto p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Equipos_Herramientas_y_Maquinaria.xlsx" download="Equipos_Herramientas_y_Maquinaria.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Productos.xlsx" download="Productos.xlsx">Descargar Excel</a>
                 </div>
-                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
+                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus productos y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
 
             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -182,7 +203,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                         </thead>
                         <tbody>
                             {excelData.map((row, index) => (
-                                // Verificar si hay datos en la fila antes de renderizarla
                                 Object.values(row).some(value => !!value) && (
                                     <tr key={index}>
                                         {headers.map((header, columnIndex) => (
@@ -203,4 +223,4 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     );
 }
 
-export default CreateManyAssets;
+export default CreateManyProducts;

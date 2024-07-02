@@ -1,41 +1,43 @@
-.container__Download_File {
-    width: 600px;
-}
-.download__File {
-    width: 150px;
+.alert__Success {
+    border: 1px solid rgba(76, 149, 108, 0.7);
+    color: #4c956c;
+    background: rgba(76, 149, 108, 0.4);
     border-radius: 5px;
-    background: #f28705;
-    color: #f8f9fa;
-    transition: 300ms all ease;
-}
-.download__File:hover {
-    background: #0a31bf;
-    cursor: pointer;
-}
-.input {
-    border-radius: 5px;
-    width: 350px;
-}
-.input:focus{
-    outline-color: #718bd8;
+    top: 10px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
 }
 .alert__Danger {
     border: 1px solid rgba(230, 57, 70, 0.7);
     color: #e63946;
     background: rgba(230, 57, 70, 0.4);
     border-radius: 5px;
-    top: 60px;
+    top: 10px;
     left: 50px;
     right: 50px;
     padding: 5px 10px;
     z-index: 1;
 }
-.success {
-    height: 50px;
+.container__Info {
+    width: 500px;
+}
+.name__Item {
+    font-weight: 600;
+}
+.inventory {
     width: 400px;
 }
-.alert__Success {
-    top: 5px;
+.input {
+    border-radius: 5px;
+    width: 250px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
+.text__Danger {
+    top: 65px;
 }
 .button__Submit {
     padding: 7px 25px;
