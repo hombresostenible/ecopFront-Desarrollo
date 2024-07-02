@@ -10,7 +10,7 @@
     border-radius: 10px;
     width: 390px;
     height: 80px; 
-    background: #0a31bf;
+    background: #718bd8;
     transition: all 300ms ease;
 }
 .containerTextA:hover {
@@ -28,11 +28,11 @@
 }
 .iconItem {
     font-size: 30px;
-    color: #0a31bf;
+    color: #718bd8;
 }
 .iconItemInvoiceSolid {
     font-size: 35px;
-    color: #0a31bf;
+    color: #718bd8;
 }
 .textFunctionality {
     margin: 0;

@@ -119,7 +119,7 @@ function InventoryAssets() {
                                         <th className="text-center align-middle">Sede</th>
                                         <th className="text-center align-middle">Nombre del activo</th>
                                         <th className="text-center align-middle">Condición del activo</th>
-                                        <th className="text-center align-middle">Estado del activo</th>
+                                        {/* <th className="text-center align-middle">Estado del activo</th> */}
                                         <th className="text-center align-middle">Ver gráfica</th>
                                     </tr>
                                 </thead>
@@ -129,7 +129,7 @@ function InventoryAssets() {
                                             <td>{getBranchName(asset.branchId)}</td>
                                             <td>{asset.nameItem}</td>
                                             <td>{asset.conditionAssets}</td>
-                                            <td>{asset.stateAssets}</td>
+                                            {/* <td>{asset.stateAssets}</td> */}
                                             <td>
                                                 <button
                                                     className='border'

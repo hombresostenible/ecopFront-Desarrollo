@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import jsCookie from 'js-cookie';
-import { format } from 'date-fns';
+import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsBooksIncomesNotApproved, putAccountsBook, deleteAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
+import { getAccountsBooksIncomesNotApproved, getAccountsBooksIncomesNotApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
 import { getBranches } from '../../../../..//redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
+import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+import SeeRegisterPendingApproval from '../../../../../components/Platform/04Accounts/05PendingApproval/01SeeRegisterPendingApproval/SeeRegisterPendingApproval';
+import ConfirmDeleteRegister from '../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ModalEdit from '../../../../../components/Platform/04Accounts/05PendingApproval/03ModalEdit/ModalEdit';
+import ApprovalRegister from '../../../../../components/Platform/04Accounts/05PendingApproval/04ApprovalRegister/ApprovalRegister';
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
+import { FaCheck } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 function PendingApprovalPage() {
@@ -23,18 +29,9 @@ function PendingApprovalPage() {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    const accountsPayable = useSelector((state: RootState) => state.finantialIndicators.accountsPayable);
+    const accountsBook = useSelector((state: RootState) => state.accountsBook.accountsBook);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const [editingTransactions, setEditingTransactions] = useState<Record<string, any>>({});
-    const [isSaving, setIsSaving] = useState(false);
-
-    const [startDate, setStartDate] = useState<string | null>(null);
-    const [endDate, setEndDate] = useState<string | null>(null);
-    const [filteredTransactions, setFilteredTransactions] = useState<IAccountsBook[] | null>(null);
-
-    const [selectedBranch, setSelectedBranch] = useState('');
-    
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
@@ -42,117 +39,17 @@ function PendingApprovalPage() {
         }
     }, [token]);
 
-    const handleEditField = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, 
-        accountsBook: IAccountsBook,
-        field: string
-    ) => {
-        const newValue = e.target.value;
-        setEditingTransactions((prevEditingTransactions) => ({
-            ...prevEditingTransactions,
-            [accountsBook.id]: { ...prevEditingTransactions[accountsBook.id], [field]: newValue },
-        }));
-    };
-
-    const handleSaveChanges = async (accountsBook: IAccountsBook) => {
-        try {
-            setIsSaving(true);
-            const updatedTransaction = {
-                ...editingTransactions[accountsBook.id],
-                unitValue: parseFloat(editingTransactions[accountsBook.id].unitValue),
-                quantity: parseFloat(editingTransactions[accountsBook.id].quantity),
-                totalValue: parseFloat(editingTransactions[accountsBook.id].totalValue),
-                numberOfPayments: parseFloat(editingTransactions[accountsBook.id].numberOfPayments),
-                paymentValue: parseFloat(editingTransactions[accountsBook.id].paymentValue),
-                iDTransactionCounterpart: parseFloat(editingTransactions[accountsBook.id].iDTransactionCounterpart),
-            };
-            await dispatch(putAccountsBook(accountsBook.id, updatedTransaction, token));
-            delete editingTransactions[accountsBook.id];
-            dispatch(getAccountsBooksIncomesNotApproved(token));
-        } catch (error) {
-            throw new Error('Error al guardar cambios');
-        } finally {
-            setIsSaving(false);
-        }
-    };
-
-    const handleDelete = (idAccountsBook: string) => {
-        try {
-            dispatch(deleteAccountsBook(idAccountsBook, token));
-            dispatch(getAccountsBooksIncomesNotApproved(token));
-        } catch (error) {
-            throw new Error('Error al eliminar el registro');
-        }
-    };
-
-    const handleFilter = () => {
-        if (!startDate || !endDate) {
-            setFilteredTransactions(null);
-            return;
-        }    
-        if (accountsPayable === null) return;    
-        const formattedStartDate = format(new Date(startDate), 'yyyy-MM-dd');
-        const endDateForFilter = new Date(endDate);
-        endDateForFilter.setDate(endDateForFilter.getDate() + 1);
-        const formattedEndDate = format(endDateForFilter, 'yyyy-MM-dd');    
-        const filtered = Array.isArray(accountsPayable)
-            ? accountsPayable.filter((accountsBook) => {
-                const transactionDate = format(new Date(accountsBook.transactionDate), 'yyyy-MM-dd');
-                return (
-                    transactionDate >= formattedStartDate &&
-                    transactionDate <= formattedEndDate &&
-                    (!selectedBranch || accountsBook.branchId === selectedBranch)
-                );
-            }) : [];   
-            setFilteredTransactions(filtered);
-    };
-
-    const clearFilterDate = () => {
-        setStartDate(null);
-        setEndDate(null);
-        setFilteredTransactions(null);
-    };
-
-    const clearFilterBranch = () => {
-        setSelectedBranch('');
-    };
-
-    const clearFilterAll = () => {
-        setStartDate(null);
-        setEndDate(null);
-        setFilteredTransactions(null);
-        setSelectedBranch('');
-    };
-
-    const transactionsToDisplay = filteredTransactions !== null ? filteredTransactions : accountsPayable;
-    const [sortedTransactions, setSortedTransactions] = useState<IAccountsBook[]>([]);
+    const [selectedBranch, setSelectedBranch] = useState('');
 
     useEffect(() => {
-        if (Array.isArray(transactionsToDisplay)) {
-            const sorted = [...transactionsToDisplay].sort((a, b) => {
-                const dateA = a ? new Date(a.registrationDate) : null;
-                const dateB = b ? new Date(b.registrationDate) : null;
-                if (dateA && dateB) {
-                    return dateB.getTime() - dateA.getTime();
-                } else if (dateA) {
-                    return -1;
-                } else if (dateB) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-            setSortedTransactions(sorted);
+        if (token) {
+            if (selectedBranch) {
+                dispatch(getAccountsBooksIncomesNotApprovedByBranch(selectedBranch, token));
+            } else {
+                dispatch(getAccountsBooksIncomesNotApproved(token));
+            }
         }
-    }, [transactionsToDisplay]);
-
-    const cancelEditing = (accountsBookId: string) => {
-        setEditingTransactions((prevEditingTransactions) => {
-            const updatedTransactions = { ...prevEditingTransactions };
-            delete updatedTransactions[accountsBookId];
-            return updatedTransactions;
-        });
-    };
+    }, [selectedBranch, token, dispatch]);
 
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
         'transactionDate',
@@ -177,6 +74,44 @@ function PendingApprovalPage() {
         setSelectedColumns(updatedColumns);
     };
 
+    const [idRegisterAccount, setIdRegisterAccount] = useState('');
+    const [idBranch, setIdBranch] = useState('');
+    const [selectedRegisterAccount, setSelectedRegisterAccount] = useState<IAccountsBook>();
+    const [showSeeRegisterAccount, setShowSeeRegisterAccount] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showModalEdit, setShowModalEdit] = useState(false);
+    const [showApproval, setShowApproval] = useState(false);
+
+    const handleSeeItem = useCallback((accountsBook: IAccountsBook) => {
+        setSelectedRegisterAccount(accountsBook);
+        setShowSeeRegisterAccount(true);
+    }, []);
+
+    const handleDelete = useCallback((accountsBook: IAccountsBook) => {
+        setSelectedRegisterAccount(accountsBook);
+        setShowDeleteConfirmation(true);
+    }, []);
+
+    const handleEdit = useCallback((accountsBook: IAccountsBook) => {
+        setSelectedRegisterAccount(accountsBook);
+        setShowModalEdit(true);
+    }, []);
+
+    const handleAddInventory = useCallback((accountsBook: IAccountsBook) => {
+        setSelectedRegisterAccount(accountsBook);
+        setShowApproval(true);
+    }, []);
+
+    const onCloseModal = useCallback(() => {
+        setShowSeeRegisterAccount(false);
+        setShowDeleteConfirmation(false);
+        setShowModalEdit(false);
+        setShowApproval(false);
+    }, []);
+    
+    const branchesArray = Array.isArray(branches) ? branches : [];
+    
+    
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -185,10 +120,25 @@ function PendingApprovalPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Transacciones pendientes de aprobar</h1>
+    
+                        <div className='d-flex align-items-center justify-content-between'>
+                            <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
+                                <h3 className='m-0'>Filtra por sede</h3>
+                                <select
+                                    className="mx-2 p-1 border rounded"
+                                    value={selectedBranch}
+                                    onChange={(e) => setSelectedBranch(e.target.value)}
+                                >
+                                    <option value=''>Todas</option>
+                                    {Array.isArray(branches) && branches.map((branch, index) => (
+                                        <option key={index} value={branch.id}>
+                                            {branch.nameBranch}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <div className="mb-4 p-4 d-flex align-items-center justify-content-between border rounded">
-                            <button className={`${styles.buttonClearFilterAll} border-0 text-decoration-none`} onClick={clearFilterAll}>Borrar todos los Filtros</button>
-                            <div>
+                            {/* <div>
                                 <input
                                     type="date"
                                     className={`${styles.inputDate} border p-1 text-secondary`}
@@ -203,28 +153,9 @@ function PendingApprovalPage() {
                                 />
                                 <button className={`${styles.handleFilter} border-0 text-decoration-none`} onClick={handleFilter}>Filtrar</button>
                                 <button className={`${styles.clearFilter} border-0 text-decoration-none`} onClick={clearFilterDate}>Borrar Filtro de fechas</button>
-                            </div>
+                            </div> */}
                         </div>
-
-                        <div className={`${styles.branch} m-auto p-3 border`}>
-                            <h4 className={`${styles.h4} text-center`}>Filtra por sede</h4>
-                            <div className="d-flex justify-content-between ">
-                                <select
-                                    className="border-0 p-1 text-center"
-                                    value={selectedBranch}
-                                    onChange={(e) => setSelectedBranch(e.target.value)}
-                                >
-                                    <option value=''>Selecciona una Sede</option>
-                                    {Array.isArray(branches) && branches.map((branch, index) => (
-                                        <option key={index} value={branch.id}>
-                                            {branch.nameBranch}
-                                        </option>
-                                    ))}
-                                </select>
-                                <button className={`${styles.clearFilter} border-0 text-decoration-none`} onClick={clearFilterBranch}>Borrar Filtro de sedes</button>
-                            </div>
-                        </div>
-
+    
                         <div className="mb-4 mt-4 p-4 border rounded d-flex justify-content-end align-items-center">
                             <ColumnSelector
                                 selectedColumns={selectedColumns}
@@ -249,101 +180,58 @@ function PendingApprovalPage() {
                         </div>
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                        {Array.isArray(sortedTransactions) && sortedTransactions.length > 0 ? (
-                            <div>
-                                <div className={styles.container__Head}>
-                                    <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                        {selectedColumns.includes('transactionDate') && (
-                                            <div className={`${styles.column__Transaction_Date} text-center d-flex align-items-center justify-content-center`}>Fecha de TX</div>
-                                        )}
-                                        {/* {selectedColumns.includes('registrationDate') && (
-                                            <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>Fecha de Registro</div>
-                                        )} */}
-                                        {selectedColumns.includes('branch') && (
-                                            <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
-                                        )}
-                                        {selectedColumns.includes('transactionType') && (
-                                            <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>Tipo de TX</div>
-                                        )}
-                                        {selectedColumns.includes('meanPayment') && (
-                                            <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>Medio de pago</div>
-                                        )}
-                                        {selectedColumns.includes('incomeCategory') && (
-                                            <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>Categoría</div>
-                                        )}
-                                        {selectedColumns.includes('nameItem') && (
-                                            <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre de Item</div>
-                                        )}
-                                        {selectedColumns.includes('unitValue') && (
-                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>Valor unitario</div>
-                                        )}
-                                        {selectedColumns.includes('quantity') && (
-                                            <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>Cantidad</div>
-                                        )}
-                                        {selectedColumns.includes('totalValue') && (
-                                            <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>Total</div>
-                                        )}
-                                        {/* {selectedColumns.includes('creditCash') && (
-                                            <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>Tipo de pago</div>
-                                        )} */}
-                                        {selectedColumns.includes('transactionCounterpartId') && (
-                                            <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>Comprador</div>
-                                        )}
-                                        {selectedColumns.includes('seller') && (
-                                            <div className={`${styles.column__Seller} d-flex align-items-center justify-content-center`}>Vendedor</div>
-                                        )}
-                                        <div className={`${styles.column__Transaction_Approved} d-flex align-items-center justify-content-center`}>Aprobada</div>
-                                        <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
-                                    </div>
+                            <div className={styles.container__Head}>
+                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                    {selectedColumns.includes('transactionDate') && (
+                                        <div className={`${styles.column__Transaction_Date} d-flex align-items-center justify-content-center`}>Fecha de TX</div>
+                                    )}
+                                    {selectedColumns.includes('branch') && (
+                                        <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Sede</div>
+                                    )}
+                                    {selectedColumns.includes('transactionType') && (
+                                        <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>Tipo de TX</div>
+                                    )}
+                                    {selectedColumns.includes('meanPayment') && (
+                                        <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>Medio de pago</div>
+                                    )}
+                                    {selectedColumns.includes('incomeCategory') && (
+                                        <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>Categoría</div>
+                                    )}
+                                    {selectedColumns.includes('nameItem') && (
+                                        <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre de Item</div>
+                                    )}
+                                    {selectedColumns.includes('unitValue') && (
+                                        <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>Valor unitario</div>
+                                    )}
+                                    {selectedColumns.includes('quantity') && (
+                                        <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>Cantidad</div>
+                                    )}
+                                    {selectedColumns.includes('totalValue') && (
+                                        <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>Total</div>
+                                    )}
+                                    {selectedColumns.includes('transactionCounterpartId') && (
+                                        <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>Comprador</div>
+                                    )}
+                                    {selectedColumns.includes('seller') && (
+                                        <div className={`${styles.column__Seller} d-flex align-items-center justify-content-center`}>Vendedor</div>
+                                    )}
+                                    <div className={`${styles.column__Transaction_Approved} d-flex align-items-center justify-content-center`}>Aprobada</div>
+                                    <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
                                 </div>
+                            </div>
 
-                                <div className={`${styles.container__Body} d-flex flex-column align-items-center justify-content-between`}>
-                                {Array.isArray(accountsPayable) && accountsPayable.map((accountsBook) => (
-                                    <div key={accountsBook.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                        {selectedColumns.includes('transactionDate') && (
-                                            <div className={`${styles.column__Transaction_Date} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        className={`${styles.text__Ellipsis} overflow-hidden`}
-                                                        type="date"
-                                                        value={editingTransactions[accountsBook.id].transactionDate}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'transactionDate')}
-                                                    />
-                                                ) : (
-                                                    // <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionDate}</span>
+                            <div className={`${styles.container__Body}`}>
+                                {Array.isArray(accountsBook) && accountsBook.length > 0 ? (
+                                    accountsBook.map((accountsBook) => (
+                                        <div key={accountsBook.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            {selectedColumns.includes('transactionDate') && (
+                                                <div className={`${styles.column__Transaction_Date} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{new Date(accountsBook.transactionDate).toLocaleDateString('en-GB')}</span>
-                                                )}
-                                            </div>
-                                        )}
+                                                </div>
+                                            )}
 
-                                        {/* {selectedColumns.includes('registrationDate') && (
-                                            <div className={`${styles.column__Registration_Date} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="date"
-                                                        value={editingTransactions[accountsBook.id].registrationDate}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'registrationDate')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{new Date(accountsBook.registrationDate).toLocaleDateString('en-GB')}</span>
-                                                )}
-                                            </div>
-                                        )} */}
-
-                                        {selectedColumns.includes('branch') && (
-                                            <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <select
-                                                        value={editingTransactions[accountsBook.id].branchId}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'branchId')}
-                                                    >
-                                                        {Array.isArray(branches) && branches.map((branch, index) => (
-                                                            <option key={index} value={branch.id}>
-                                                                {branch.nameBranch}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                ) : (
+                                            {selectedColumns.includes('branch') && (
+                                                <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>
                                                     <span>
                                                         {Array.isArray(branches) && branches.map((branch, index) => (
                                                             accountsBook.branchId === branch.id && (
@@ -351,170 +239,175 @@ function PendingApprovalPage() {
                                                             )
                                                         ))}
                                                     </span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('transactionType') && (
-                                            <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <select
-                                                        value={editingTransactions[accountsBook.id].transactionType}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'transactionType')}
-                                                    >
-                                                        <option value='Venta'>Venta</option>
-                                                        <option value='Gasto'>Gasto</option>
-                                                    </select>
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionType}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('meanPayment') && (
-                                            <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <select
-                                                        value={editingTransactions[accountsBook.id].creditCash}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'creditCash')}
-                                                    >
-                                                        <option value='Contado'>Contado</option>
-                                                        <option value='Credito'>Crédito</option>
-                                                    </select>
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('incomeCategory') && (
-                                            <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.incomeCategory}</span>
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('nameItem') && (
-                                            <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.nameItem}</span>
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('unitValue') && (
-                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].unitValue}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'unitValue')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>$ {accountsBook.unitValue? formatNumber(accountsBook.unitValue) : 'N/A'}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('quantity') && (
-                                            <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].quantity}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'quantity')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.quantity? formatNumber(accountsBook.quantity) : 'N/A'}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('totalValue') && (
-                                            <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].totalValue}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'totalValue')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.totalValue? `$ ${formatNumber(accountsBook.totalValue)}` : 'N/A'}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* {selectedColumns.includes('creditCash') && (
-                                            <div className={`${styles.column__Credit_Cash} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].creditCash}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'creditCash')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
-                                                )}
-                                            </div>
-                                        )} */}
-
-                                        {selectedColumns.includes('transactionCounterpartId') && (
-                                            <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].totalValue}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'transactionCounterpartId')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionCounterpartId}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        <div className={`${styles.column__Seller} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.seller}</span>
-                                        </div>
-
-                                        <div className={`${styles.column__Transaction_Approved} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <span className={`${styles.text__Ellipsis} text-center text-center overflow-hidden`}>{accountsBook.transactionApproved === true ? 'Si' : 'No'}</span>
-                                        </div>
-
-                                        <div className={`${styles.column__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                onClick={() => {
-                                                    handleDelete(accountsBook.id);
-                                                }}
-                                            />
-                                            {editingTransactions[accountsBook.id] ? (
-                                                <div>
-                                                    <button className="btn btn-primary" onClick={() => handleSaveChanges(accountsBook)}>Guardar</button>
-                                                    <button className="btn btn-secondary" onClick={() => cancelEditing(accountsBook.id)}>Cancelar</button>
                                                 </div>
-                                            ) : (
-                                                <BsPencil
-                                                    className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                    onClick={() => {
-                                                        setEditingTransactions({
-                                                            ...editingTransactions,
-                                                            [accountsBook.id]: { ...accountsBook }
-                                                        });
-                                                    }}
-                                                />
                                             )}
 
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            </div>
-                        ): (
-                            !isSaving && (
-                                <div className="text-center">
-                                    <h3>No hay transacciones disponibles.</h3>
-                                </div>
-                            )
-                        )}
+                                            {selectedColumns.includes('transactionType') && (
+                                                <div className={`${styles.column__Transaction_Type} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionType}</span>
+                                                </div>
+                                            )}
 
+                                            {selectedColumns.includes('meanPayment') && (
+                                                <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.creditCash}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('incomeCategory') && (
+                                                <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.incomeCategory}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('nameItem') && (
+                                                <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.nameItem}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('unitValue') && (
+                                                <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>$ {accountsBook.unitValue? formatNumber(accountsBook.unitValue) : 'N/A'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('quantity') && (
+                                                <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.quantity? formatNumber(accountsBook.quantity) : 'N/A'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('totalValue') && (
+                                                <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.totalValue? `$ ${formatNumber(accountsBook.totalValue)}` : 'N/A'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedColumns.includes('transactionCounterpartId') && (
+                                                <div className={`${styles.column__Transaction_Counterpart} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.transactionCounterpartId}</span>
+                                                </div>
+                                            )}
+
+                                            <div className={`${styles.column__Seller} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.seller}</span>
+                                            </div>
+
+                                            <div className={`${styles.column__Transaction_Approved} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} text-center text-center overflow-hidden`}>{accountsBook.transactionApproved === true ? 'Si' : 'No'}</span>
+                                            </div>
+
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRegisterAccount(accountsBook.id);
+                                                            handleSeeItem(accountsBook);
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRegisterAccount(accountsBook.id);
+                                                            handleDelete(accountsBook);
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRegisterAccount(accountsBook.id);
+                                                            handleEdit(accountsBook)
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <FaCheck
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRegisterAccount(accountsBook.id);
+                                                            setIdBranch(accountsBook.branchId);
+                                                            handleAddInventory(accountsBook)
+                                                        }}
+                                                    />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.noAssetsMessage} d-flex align-items-center justify-content-center`}>
+                                        No tienes transacciones pendientes de aprobar
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
+                        <Modal show={showSeeRegisterAccount} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Registro</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedRegisterAccount &&
+                                    <SeeRegisterPendingApproval
+                                        accountsBook={selectedRegisterAccount}
+                                        branches={branchesArray}
+                                    />
+                                }
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el registro pendiente de aprobar</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <ConfirmDeleteRegister
+                                    typeRegisterDelete={'AccountsBook'}
+                                    idItem={idRegisterAccount}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showModalEdit} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del registro</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedRegisterAccount &&
+                                    <ModalEdit
+                                        token={token}
+                                        idItem={idRegisterAccount}
+                                        registerAccount={selectedRegisterAccount}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showApproval} onHide={() => setShowApproval(false)} size="lg">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aprueba el registro</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <ApprovalRegister
+                                    token={token}
+                                    idItem={idRegisterAccount}
+                                    idBranch={idBranch}
+                                    onCloseModal={onCloseModal}
+                                />
+                            </Modal.Body>
+                        </Modal>
                     </div>
                     <Footer />
                 </div>
