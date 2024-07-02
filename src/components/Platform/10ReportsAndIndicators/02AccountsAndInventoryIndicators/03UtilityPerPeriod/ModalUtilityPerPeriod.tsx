@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any  */
 import { useState, useEffect, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import jsCookie from 'js-cookie';
-import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTransactionsPerPeriod, getAllTransactionsPerPeriodByBranch } from '../../../../../redux/User/indicator/finantialIndicators/actions';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 
 function ModalUtilityPerPeriod () {
     const token = jsCookie.get('token') || '';
@@ -17,35 +17,16 @@ function ModalUtilityPerPeriod () {
     const allTransactionsPerPeriod = useSelector((state: RootState) => state.finantialIndicators.allTransactionsPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null); 
+    const [selectedBranch, setSelectedBranch] = useState('Todas'); 
 
     useEffect(() => {
         dispatch(getBranches(token));
         if (selectedBranch === 'Todas') {
-            dispatch(getAllTransactionsPerPeriod(token))
-            .then((response: any) => {
-                setOriginalData(response.data);
-            })
-            .catch((error: any) => {
-                console.error("Failed to fetch sales per period:", error);
-            });
+            dispatch(getAllTransactionsPerPeriod(token));
         } else {
-            dispatch(getAllTransactionsPerPeriodByBranch(selectedBranch, token))
-            .then((response: any) => {
-                setOriginalData(response.data);
-            })
-            .catch((error: any) => {
-                console.error("Failed to fetch sales per period by branch:", error);
-            });
+            dispatch(getAllTransactionsPerPeriodByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
-
-    useEffect(() => {
-        if (allTransactionsPerPeriod) {
-            setOriginalData(allTransactionsPerPeriod);
-        }
-    }, [ allTransactionsPerPeriod ]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -78,56 +59,12 @@ function ModalUtilityPerPeriod () {
         const expenses = transactions.filter(t => t.transactionType === 'Gasto').reduce((sum, t) => sum + t.totalValue, 0);
         return income - expenses;
     };
-    
-    const exportToExcel = () => {
-        if (originalData) {
-            const dataForExcel = Array.from(groupTransactionsByDateAndBranch()).map(([key, values]) => {
-                const [date, branchId] = key.split('_');
-                const branchName = getBranchName(branchId);
-    
-                // Calcular totales acumulados
-                const totalIngreso = values.reduce((sum, t) => t.transactionType === 'Ingreso' ? sum + t.totalValue : sum, 0);
-                const totalEgreso = values.reduce((sum, t) => t.transactionType === 'Gasto' ? sum + t.totalValue : sum, 0);
-                const utilidad = calculateDailyUtility(values);
-    
-                return {
-                    'Fecha': new Date(date).toLocaleDateString('en-GB'),
-                    'Sede': branchName,
-                    'Total ingreso del día': totalIngreso,
-                    'Total egreso del día': totalEgreso,
-                    'Utilidad del día': utilidad,
-                };
-            });
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Utilidad del período');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Utilidad_del_período.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
 
     return (
-        <div className="m-2 p-3 text-center m-auto">
-            <div className="p-4 d-flex align-items-center justify-content-between">
-                <h2 className="text-primary-emphasis text-start">Utilidad del período</h2>
-                <div>
-                    <button className="btn btn-success btn-sm" onClick={exportToExcel}>Exportar a Excel</button>
-                </div>
+        <div className="p-3 text-center m-auto border">
+            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                <h2 className="m-0 text-primary-emphasis text-start">Utilidad del período</h2>
             </div>
-
-
-
-
 
             <div className="border">
                 <div className="d-flex justify-content-between">
@@ -169,9 +106,9 @@ function ModalUtilityPerPeriod () {
                                         <tr key={index}>
                                             <td>{new Date(date).toLocaleDateString('en-GB')}</td>
                                             <td>{branchName}</td>
-                                            <td className='text-end'>${formatNumberWithCommas(transactions.filter(t => t.transactionType === 'Ingreso').reduce((sum, t) => sum + t.totalValue, 0))}</td>
-                                            <td className='text-end'>${formatNumberWithCommas(transactions.filter(t => t.transactionType === 'Gasto').reduce((sum, t) => sum + t.totalValue, 0))}</td>
-                                            <td className='text-end'>${formatNumberWithCommas(calculateDailyUtility(transactions))}</td>
+                                            <td className='text-end'>${formatNumber(transactions.filter(t => t.transactionType === 'Ingreso').reduce((sum, t) => sum + t.totalValue, 0))}</td>
+                                            <td className='text-end'>${formatNumber(transactions.filter(t => t.transactionType === 'Gasto').reduce((sum, t) => sum + t.totalValue, 0))}</td>
+                                            <td className='text-end'>${formatNumber(calculateDailyUtility(transactions))}</td>
                                         </tr>
                                     );
                                 })}

@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any  */
 import { useState, useEffect, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import jsCookie from 'js-cookie';
-import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccountsReceivable, getAccountsReceivableByBranch } from '../../../../../redux/User/indicator/finantialIndicators/actions';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 
 function ModalAccountsReceivable () {
     const token = jsCookie.get('token') || '';
@@ -17,35 +16,16 @@ function ModalAccountsReceivable () {
     const accountsReceivable = useSelector((state: RootState) => state.finantialIndicators.accountsPayable);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null); 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
 
     useEffect(() => {
         dispatch(getBranches(token));
         if (selectedBranch === 'Todas') {
-            dispatch(getAccountsReceivable(token))
-            .then((response: any) => {
-                setOriginalData(response.data);
-            })
-            .catch((error: any) => {
-                console.error("Failed to fetch sales per period:", error);
-            });
+            dispatch(getAccountsReceivable(token));
         } else {
-            dispatch(getAccountsReceivableByBranch(selectedBranch, token))
-            .then((response: any) => {
-                setOriginalData(response.data);
-            })
-            .catch((error: any) => {
-                console.error("Failed to fetch sales per period by branch:", error);
-            });
+            dispatch(getAccountsReceivableByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
-
-    useEffect(() => {
-        if (accountsReceivable) {
-            setOriginalData(accountsReceivable);
-        }
-    }, [ accountsReceivable ]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -53,39 +33,10 @@ function ModalAccountsReceivable () {
         return branch ? branch.nameBranch : "Sede no encontrada";
     };
 
-    const exportToExcel = () => {
-        if (originalData) {
-            const dataForExcel = originalData.map(item => ({
-                'Fecha de transacción': item.transactionDate,
-                'Sede': item.branchId,
-                'Crédito': item.creditCash,
-                'Tipo': item.incomeCategory,
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información de productos');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Cuentas_X_Cobrar.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
     return (
-        <div className="m-2 p-3 text-center m-auto">
-            <div className="p-4 d-flex align-items-center justify-content-between">
-                <h2 className="text-primary-emphasis text-start">Cuentas por Cobrar</h2>
-                <div>
-                    <button className="btn btn-success btn-sm" onClick={exportToExcel}>Exportar a Excel</button>
-                </div>
+        <div className="p-3 text-center m-auto border">
+            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                <h2 className="m-0 text-primary-emphasis text-start">Cuentas por Cobrar</h2>
             </div>
 
             <div className="text-center border m-auto">
@@ -139,13 +90,13 @@ function ModalAccountsReceivable () {
                                             {accountsReceivable.incomeCategory}
                                         </td>
                                         <td>
-                                            $ {accountsReceivable.totalValue? formatNumberWithCommas(accountsReceivable.totalValue) : 'N/A'}
+                                            $ {accountsReceivable.totalValue? formatNumber(accountsReceivable.totalValue) : 'N/A'}
                                         </td>
                                         <td>
                                             {accountsReceivable.numberOfPayments}
                                         </td>
                                         <td>
-                                            $ {accountsReceivable.paymentValue? formatNumberWithCommas(accountsReceivable.paymentValue) : 'N/A'}
+                                            $ {accountsReceivable.paymentValue? formatNumber(accountsReceivable.paymentValue) : 'N/A'}
                                         </td>
                                         <td>
                                             {accountsReceivable.paymentNumber}

@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAccountsBook } from '../../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getAccountsBooksIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getAccountsBooksIncomesNotApprovedStart, getAccountsBooksIncomesNotApprovedByBranchStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -140,7 +140,7 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
 
                     
                     
-//OBTENER TODOS LOS REGISTRO DE GASTO DEL LIBRO DIARIO
+//OBTENER TODOS LOS INGRESOS NO APROBADOS
 export const getAccountsBooksIncomesNotApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/accountsBook/incomes-not-approved', {
@@ -158,6 +158,40 @@ export const getAccountsBooksIncomesNotApproved = (token: string) => async (disp
         }
     }
 };
+
+
+//OBTENER TODOS LOS INGRESOS NO APROBADOS POR SEDE
+export const getAccountsBooksIncomesNotApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/accountsBook/incomes-not-approved/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsBooksIncomesNotApprovedByBranchStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

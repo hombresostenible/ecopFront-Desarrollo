@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import jsCookie from 'js-cookie';
-import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBestClientValue } from "../../../../../types/User/financialIndicators.types";
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 
 interface ModalBestClientValueProps {
     consolidatedData: IBestClientValue[] | null;
@@ -20,13 +20,9 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IBestClientValue[] | null>(null); 
 
     useEffect(() => {
         dispatch(getBranches(token));
-        if (consolidatedData) {
-            setOriginalData(consolidatedData);
-        }
     }, [ selectedBranch, consolidatedData ]);
 
     const getBranchName = (branchId: string) => {
@@ -35,39 +31,10 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
         return branch ? branch.nameBranch : "Sede no encontrada";
     };
 
-    const exportToExcel = () => {
-        if (originalData) {
-            const dataForExcel = originalData.map(item => ({
-                'Puesto': item.transactionDate,
-                'Sede': item.branchId,
-                'Cliente': item.transactionCounterpartId,
-                'Valor total': item.value,
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Ventas del período');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Ventas_del_período.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
     return (
-        <div className="m-2 p-3 text-center m-auto">
-            <div className="p-4 d-flex align-items-center justify-content-between">
-                <h2 className="text-primary-emphasis text-start">Mejor cliente por valor</h2>
-                <div>
-                    <button className="btn btn-success btn-sm" onClick={exportToExcel}>Exportar a Excel</button>
-                </div>
+        <div className="p-3 text-center m-auto border">
+            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                <h2 className="m-0 text-primary-emphasis text-start">Mejor cliente por valor</h2>
             </div>
 
             <div className="border">
@@ -110,7 +77,7 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
                                         {data.transactionCounterpartId ? (data.transactionCounterpartId) : 'N/A'}
                                     </td>
                                     <td className='text-end'>
-                                        $ {data.value ? formatNumberWithCommas(data.value) : 'N/A'}
+                                        $ {data.value ? formatNumber(data.value) : 'N/A'}
                                     </td>
                                 </tr>
                             ))}
