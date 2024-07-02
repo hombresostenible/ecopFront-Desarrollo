@@ -136,9 +136,7 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
             dispatch(errorAccountsBook(error.message));
         }
     }
-};
-
-                    
+};                    
                     
 //OBTENER TODOS LOS INGRESOS NO APROBADOS
 export const getIncomesNotApproved = (token: string) => async (dispatch: AppDispatch) => {
@@ -158,7 +156,6 @@ export const getIncomesNotApproved = (token: string) => async (dispatch: AppDisp
         }
     }
 };
-
 
 //OBTENER TODOS LOS INGRESOS NO APROBADOS POR SEDE
 export const getIncomesNotApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
@@ -198,14 +195,6 @@ export const patchIncomesNotApproved = (idAccountsBook: string, token: string) =
         }
     }
 }
-
-
-
-
-
-
-
-
 
 //ACTUALIZA UN REGISTRO DEL LIBRO DIARIO
 export const putAccountsBook = (idAccountsBook: string, formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
