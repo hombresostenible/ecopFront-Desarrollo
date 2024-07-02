@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
+import DownloadInventoryRawMaterials from './DownloadInventoryRawMaterials';
 import ModalInventoryRawMaterials from './ModalInventoryRawMaterials';
 import ModalGraphicInventoryRawMaterial from './ModalGraphicInventoryRawMaterial';
 import { PiExportBold } from "react-icons/pi";
@@ -30,32 +32,29 @@ function InventoryRawMaterials() {
     
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getRawmaterialsInventory(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getRawmaterialsInventory(token));
         } else {
-            dispatch(getRawmaterialsInventoryByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getRawmaterialsInventoryByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
 
-    const getBranchName = (branchId: string) => {
+    useEffect(() => {
+        if (rawmaterialsInventory && rawmaterialsInventory.length > 0) {
+            setOriginalData(rawmaterialsInventory);
+        }
+    }, [rawmaterialsInventory]);
+
+    const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
-    };
-    
-    const exportToExcel = () => {
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
@@ -65,7 +64,7 @@ function InventoryRawMaterials() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el inventario de materias primas de tu negocio');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventario_De_Materia_Prima');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -75,7 +74,7 @@ function InventoryRawMaterials() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
@@ -83,6 +82,14 @@ function InventoryRawMaterials() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Inventario de Materia Prima</h2>
                     <div className={styles.containerButtonExportT}>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadInventoryRawMaterials data={originalData} />}
+                                fileName="Inventario_De_Materia_Prima.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>

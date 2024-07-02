@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-import { PDFDownloadLink, Document, Page, Text } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +10,10 @@ import { getBestClientQuantity, getBestClientQuantityByBranch } from '../../../.
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
 import { IBestClientQuantity } from "../../../../../types/User/financialIndicators.types";
+import DownloadBestClientQuantity from './DownloadBestClientQuantity';
 import ModalBestClientQuantity from './ModalBestClientQuantity';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import Uno from '../../../../../assets/Top-Uno.png';
 import Dos from '../../../../../assets/Top-Dos.png';
 import Tres from '../../../../../assets/Top-Tres.png';
@@ -34,30 +35,49 @@ function BestClientQuantity() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getBestClientQuantity(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getBestClientQuantity(token));
         } else {
-            dispatch(getBestClientQuantityByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getBestClientQuantityByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
 
-    const getBranchName = (branchId: string) => {
+    useEffect(() => {
+        if (bestClientQuantity && bestClientQuantity.length > 0) {
+            setOriginalData(bestClientQuantity);
+        }
+    }, [bestClientQuantity]);
+
+    const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
-    };
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
+        if (originalData) {
+            const dataForExcel = originalData.map(item => ({
+                'Sede': item.branchId,
+                'Fecha de Registro': item.transactionDate,
+                'Id de cliente': item.transactionCounterpartId,
+                'Tipo de Transacción': 'Venta',
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Mejor_Cliente_Frecuente');
+            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Mejor_Cliente_Frecuente.xlsx';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    }, [originalData, getBranchName]);
 
     function countedClients(data: IBestClientQuantity[]) {
         const countedClients: IBestClientQuantity[] = [];
@@ -124,62 +144,20 @@ function BestClientQuantity() {
         setSelectedYear('');
     };
 
-    const exportToPDF = () => {
-        if (originalData) {
-          const MyDocument = () => (
-            <Document>
-              <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Información sobre el Mejor Cliente Frecuente del Período seleccionado</Text>
-                {originalData.map((item, index) => (
-                  <Text key={index} style={stylesPDF.text}>
-                    Sede: {item.branchId}, Fecha de Registro: {item.transactionDate}, Id de cliente: {item.transactionCounterpartId}, Tipo de Transacción: Venta
-                  </Text>
-                ))}
-              </Page>
-            </Document>
-          );
-    
-          return (
-            <PDFDownloadLink document={<MyDocument />} fileName="Mejor_Cliente_Frecuente.pdf">
-              {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar PDF')}
-            </PDFDownloadLink>
-          );
-        }
-    };
-
-    const exportToExcel = () => {
-        if (originalData) {
-            const dataForExcel = originalData.map(item => ({
-                'Sede': item.branchId,
-                'Fecha de Registro': item.transactionDate,
-                'Id de cliente': item.transactionCounterpartId,
-                'Tipo de Transacción': 'Venta',
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el Mejor Cliente Frecuente del Período seleccionado');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Mejor_Cliente_Frecuente.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Cliente frecuente</h2>
                     <div className={styles.containerButtonExportT}>
-                        <button className={styles.buttonPDF} onClick={() => exportToPDF()}>PDF <PiExportBold className={styles.icon} /></button>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadBestClientQuantity data={originalData} />}
+                                fileName="Mejor_Cliente_Frecuente.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
@@ -252,7 +230,7 @@ function BestClientQuantity() {
                                 )}
                                 <div className={`${styles.infoBestClient} m-2`}>
                                     <h4 className="text-primary m-0">{index + 1} - {countedItem.transactionCounterpartId}</h4>
-                                    <p className="m-0 text-secondary">Cantidad de compras: {formatNumberWithCommas(countedItem.count)}</p>
+                                    <p className="m-0 text-secondary">Cantidad de compras: {formatNumber(countedItem.count)}</p>
                                     <p className="m-0 text-secondary">ID del cliente: {countedItem.transactionCounterpartId}</p>
                                     <p className="m-0 text-secondary">{getBranchName(countedItem.branchId)}</p>
                                 </div>

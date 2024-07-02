@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback, useRef } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import DownloadExpensesPerPeriod from './DownloadExpensesPerPeriod';
 import ModalExpensesPerPeriod from './ModalExpensesPerPeriod';
 import Chart from 'chart.js/auto';
 import { BsCart } from 'react-icons/bs';
@@ -35,24 +37,21 @@ function ExpensesPerPeriod() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getExpensesPerPeriod(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getExpensesPerPeriod(token));
         } else {
-            dispatch(getExpensesPerPeriodByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getExpensesPerPeriodByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
+
+    useEffect(() => {
+        if (expensesPerPeriod && expensesPerPeriod.length > 0) {
+            setOriginalData(expensesPerPeriod);
+        }
+    }, [expensesPerPeriod]);
 
     const renderChart = (data: IAccountsBook[] | null, start: Date | null, end: Date | null) => {
         if (chartContainer.current && data) {
@@ -131,7 +130,13 @@ function ExpensesPerPeriod() {
         renderChart(originalData, null, null);
     };
 
-    const exportToExcel = () => {
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
@@ -141,7 +146,7 @@ function ExpensesPerPeriod() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre las Gastos del Período seleccionado');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Gastos_del_Período');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -151,7 +156,7 @@ function ExpensesPerPeriod() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     const [expensesToday, setExpensesToday] = useState(0);
     const [expensesThisMonth, setExpensesThisMonth] = useState(0);
@@ -213,7 +218,15 @@ function ExpensesPerPeriod() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Gastos del período</h2>
                     <div className={styles.containerButtonExportT}>
-                        <button className={`${styles.buttonExcel} border-0 btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadExpensesPerPeriod data={originalData} />}
+                                fileName="Gastos_del_Período.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
+                        <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
 
