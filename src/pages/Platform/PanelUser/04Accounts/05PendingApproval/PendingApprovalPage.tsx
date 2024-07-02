@@ -4,7 +4,7 @@ import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsBooksIncomesNotApproved, getAccountsBooksIncomesNotApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
+import { getIncomesNotApproved, getIncomesNotApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
 import { getBranches } from '../../../../..//redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
@@ -15,7 +15,7 @@ import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import SeeRegisterPendingApproval from '../../../../../components/Platform/04Accounts/05PendingApproval/01SeeRegisterPendingApproval/SeeRegisterPendingApproval';
-import ConfirmDeleteRegister from '../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConfirmDeleteRegister from '../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEdit from '../../../../../components/Platform/04Accounts/05PendingApproval/03ModalEdit/ModalEdit';
 import ApprovalRegister from '../../../../../components/Platform/04Accounts/05PendingApproval/04ApprovalRegister/ApprovalRegister';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -35,7 +35,7 @@ function PendingApprovalPage() {
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAccountsBooksIncomesNotApproved(token));
+            dispatch(getIncomesNotApproved(token));
         }
     }, [token]);
 
@@ -44,9 +44,9 @@ function PendingApprovalPage() {
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
-                dispatch(getAccountsBooksIncomesNotApprovedByBranch(selectedBranch, token));
+                dispatch(getIncomesNotApprovedByBranch(selectedBranch, token));
             } else {
-                dispatch(getAccountsBooksIncomesNotApproved(token));
+                dispatch(getIncomesNotApproved(token));
             }
         }
     }, [selectedBranch, token, dispatch]);
@@ -75,7 +75,6 @@ function PendingApprovalPage() {
     };
 
     const [idRegisterAccount, setIdRegisterAccount] = useState('');
-    const [idBranch, setIdBranch] = useState('');
     const [selectedRegisterAccount, setSelectedRegisterAccount] = useState<IAccountsBook>();
     const [showSeeRegisterAccount, setShowSeeRegisterAccount] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -334,7 +333,6 @@ function PendingApprovalPage() {
                                                         className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
                                                             setIdRegisterAccount(accountsBook.id);
-                                                            setIdBranch(accountsBook.branchId);
                                                             handleAddInventory(accountsBook)
                                                         }}
                                                     />
@@ -395,7 +393,7 @@ function PendingApprovalPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showApproval} onHide={() => setShowApproval(false)} size="lg">
+                        <Modal show={showApproval} onHide={() => setShowApproval(false)} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Aprueba el registro</Modal.Title>
                             </Modal.Header>
@@ -403,7 +401,6 @@ function PendingApprovalPage() {
                                 <ApprovalRegister
                                     token={token}
                                     idItem={idRegisterAccount}
-                                    idBranch={idBranch}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
