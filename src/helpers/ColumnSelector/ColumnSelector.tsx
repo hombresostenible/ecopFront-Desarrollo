@@ -15,7 +15,7 @@ function ColumnSelector ({ onChange, selectedColumns, minSelectedColumns, availa
     };
 
     return (
-        <div className={`${styles.containerColumnSelector} p-2 border rounded overflow-auto d-flex flex-column align-items-start justify-content-start`}>
+        <div className={`${styles.container__Column_Selector} overflow-auto d-flex flex-column align-items-start justify-content-start`}>
             {availableColumns.map((column) => (
                 <div key={column} className={`${styles.columnSelector} pb-2`}>
                     <input

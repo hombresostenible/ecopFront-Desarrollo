@@ -16,7 +16,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ConsultRawMaterialsOff from '../../../../../../components/Platform/03Inventories/04RawMaterials/01ConsultRawMaterialsOff/ConsultRawMaterialsOff';
 import SeeItemRawMaterials from '../../../../../../components/Platform/03Inventories/04RawMaterials/02SeeItemRawMaterials/SeeItemRawMaterials';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditRawMaterial from '../../../../../../components/Platform/03Inventories/04RawMaterials/04ModalEditRawMaterial/ModalEditRawMaterial';
 import AddInventoryRawMaterial from '../../../../../../components/Platform/03Inventories/04RawMaterials/05AddInventoryRawMaterial/AddInventoryRawMaterial';
 import ModalRawMaterialOff from '../../../../../../components/Platform/03Inventories/04RawMaterials/06ModalRawMaterialOff/ModalRawMaterialOff';

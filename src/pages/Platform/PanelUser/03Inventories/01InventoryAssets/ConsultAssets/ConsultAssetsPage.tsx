@@ -16,7 +16,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/01Assets/01ConsultAssetOff/ConsultAssetOff';
 import SeeItemAsset from '../../../../../../components/Platform/03Inventories/01Assets/02SeeItemAsset/SeeItemAsset';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditAsset from '../../../../../../components/Platform/03Inventories/01Assets/04ModalEditAsset/ModalEditAsset';
 import AddInventoryAsset from '../../../../../../components/Platform/03Inventories/01Assets/05AddInventoryAsset/AddInventoryAsset';
 import ModalAssetOff from '../../../../../../components/Platform/03Inventories/01Assets/06ModalAssetOff/ModalAssetOff';

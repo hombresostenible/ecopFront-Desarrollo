@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 // REDUX
@@ -25,22 +26,23 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
     const [typeDelete, setTypeDelete] = useState('');
     useEffect(() => {
         if (typeRegisterDelete === 'Asset') {
-            setTypeDelete('el Activo')
+            setTypeDelete(`¿Estas seguro de que quieres eliminar el equipo, herramienta o máquina ${nameRegister}?`)
         } 
-        else if (typeRegisterDelete === 'Merchandise') {            
-            setTypeDelete('la Mercancia')
+        else if (typeRegisterDelete === 'Merchandise') {
+            setTypeDelete(`¿Estas seguro de que quieres eliminar la Mercancía ${nameRegister}?`)
         }
-        else if (typeRegisterDelete === 'Product') {
-            setTypeDelete('el Producto')            
+        else if (typeRegisterDelete === 'Product') {      
+            setTypeDelete(`¿Estas seguro de que quieres eliminar el Producto ${nameRegister}?`)
         }
-        else if (typeRegisterDelete === 'RawMaterial') {
-            setTypeDelete('la Materia Prima')            
+        else if (typeRegisterDelete === 'RawMaterial') {  
+            setTypeDelete(`¿Estas seguro de que quieres eliminar la Materia Prima ${nameRegister}?`)
         }
         else if (typeRegisterDelete === 'Service') {
-            setTypeDelete('el Servicio')
+            setTypeDelete(`¿Estas seguro de que quieres eliminar el Servicio ${nameRegister}?`)
         }
         else if (typeRegisterDelete === 'AccountsBook') {
             setTypeDelete('este registro del libro diario')
+            setTypeDelete(`¿Estas seguro de que quieres eliminar este registro del libro diario?`)
         }
     }, [ typeRegisterDelete ]);
 
@@ -90,7 +92,7 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
 
     return (
         <div className="p-3">
-            <p>¿Estas seguro de que quieres eliminar {typeDelete} "{nameRegister}"?</p>
+            <p>{typeDelete}</p>
             <div className={` d-flex mt-3`}>
                 <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onDelete} >Enviar</button>
             </div>  

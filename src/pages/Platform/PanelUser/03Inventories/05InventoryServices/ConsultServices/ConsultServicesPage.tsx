@@ -15,7 +15,7 @@ import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import SeeItemService from '../../../../../../components/Platform/03Inventories/05Servicios/01SeeItemService/SeeItemService';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditService from '../../../../../../components/Platform/03Inventories/05Servicios/03ModalEditService/ModalEditService';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
