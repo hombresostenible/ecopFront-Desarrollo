@@ -16,7 +16,7 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ConsultProductsOff from '../../../../../../components/Platform/03Inventories/03Products/01ConsultProductsOff/ConsultProductsOff';
 import SeeItemProduct from '../../../../../../components/Platform/03Inventories/03Products/02SeeItemProduct/SeeItemProduct';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/03Inventories/ConfirmDeleteRegister';
+import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditProduct from '../../../../../../components/Platform/03Inventories/03Products/04ModalEditProduct/ModalEditProduct';
 import AddInventoryProduct from '../../../../../../components/Platform/03Inventories/03Products/05AddInventoryProduct/AddInventoryProduct';
 import ModalProductOff from '../../../../../../components/Platform/03Inventories/03Products/06ModalProductOff/ModalProductOff';

@@ -1,29 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import { useState } from 'react';
-// import { useForm } from 'react-hook-form';
 // REDUX
-// import { useDispatch, useSelector } from 'react-redux';
-// import { patchAddInventoryAsset, getAssets } from '../../../../../redux/User/assetsSlice/actions';
-// import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { useDispatch } from 'react-redux';
+import { patchIncomesNotApproved, getIncomesNotApproved } from '../../../../../redux/User/accountsBookSlice/actions';
+import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-// import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
-// import styles from './styles.module.css';
+import styles from './styles.module.css';
 
 interface ApprovalRegisterProps {
     token: string;
     idItem: string;
-    idBranch: string;
     onCloseModal: () => void;
 }
-function ApprovalRegister({ token, idItem, idBranch, onCloseModal }: ApprovalRegisterProps) {
-    console.log('token: ', token)
-    console.log('idItem: ', idItem)
-    console.log('idBranch: ', idBranch)
-    console.log('onCloseModal: ', onCloseModal)
+function ApprovalRegister({ token, idItem, onCloseModal }: ApprovalRegisterProps) {
+    const dispatch: AppDispatch = useDispatch();
+
+    const onSubmit = async () => {
+        try {
+            dispatch(patchIncomesNotApproved(idItem, token));
+            // Simulamos un delay de la API
+            await new Promise(resolve => setTimeout(resolve, 500));
+            dispatch(getIncomesNotApproved(token));
+            onCloseModal();
+        } catch (error) {
+            throw new Error('Error al aprobar el registro');
+        }
+    };
 
     return (
-        <div>
-            
+        <div className="p-3">
+            <p>¿Estás seguro de que quieres aprobar este registro?</p>
+            <div className={` d-flex mt-3`}>
+                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onSubmit} >Enviar</button>
+            </div>  
         </div>
     );
 }
