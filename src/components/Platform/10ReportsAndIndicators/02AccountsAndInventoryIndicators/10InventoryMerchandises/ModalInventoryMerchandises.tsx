@@ -7,6 +7,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../types/User/merchandise.types';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 
 interface ModalInventoryMerchandiseProps {
     merchandisesInventory: IMerchandise[] | null;
@@ -30,13 +31,12 @@ function ModalInventoryMerchandises ({ merchandisesInventory }: ModalInventoryMe
         return branch ? branch.nameBranch : "Sede no encontrada";
     };
 
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
     return (
-        <div className="m-2 p-3 text-center m-auto">
-            <h2 className="text-primary-emphasis text-start">Inventario de Mercancías</h2>
+        <div className="p-3 text-center m-auto border">
+            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                <h2 className="m-0 text-primary-emphasis text-start">Inventario de Mercancías</h2>
+            </div>
+  
             <div className="border">
                 <div className="d-flex justify-content-between">
                     <select
@@ -76,10 +76,10 @@ function ModalInventoryMerchandises ({ merchandisesInventory }: ModalInventoryMe
                                         {merchandiseInventory.nameItem ? (merchandiseInventory.nameItem) : 'N/A'}
                                     </td>
                                     <td>
-                                        {merchandiseInventory.inventory? formatNumberWithCommas(merchandiseInventory.inventory) : 'N/A'}
+                                        {merchandiseInventory.inventory? formatNumber(merchandiseInventory.inventory) : 'N/A'}
                                     </td>
                                     <td>
-                                        {merchandiseInventory.salesCount? formatNumberWithCommas(merchandiseInventory.salesCount) : 'N/A'}
+                                        {merchandiseInventory.salesCount? formatNumber(merchandiseInventory.salesCount) : 'N/A'}
                                     </td>
                                 </tr>
                             ))}

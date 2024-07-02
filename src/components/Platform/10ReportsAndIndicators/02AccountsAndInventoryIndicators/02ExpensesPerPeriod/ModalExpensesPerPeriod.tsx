@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react';
 import jsCookie from 'js-cookie';
-import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getExpensesPerPeriod, getExpensesPerPeriodByBranch } from '../../../../../redux/User/indicator/finantialIndicators/actions';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 
 function ModalExpensesPerPeriod () {
     const token = jsCookie.get('token') || '';
@@ -17,35 +16,16 @@ function ModalExpensesPerPeriod () {
     const expensesPerPeriod = useSelector((state: RootState) => state.finantialIndicators.expensesPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
     
-    const [selectedBranch, setSelectedBranch] = useState('Todas');   
-    const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null); 
+    const [selectedBranch, setSelectedBranch] = useState('Todas'); 
 
     useEffect(() => {
         dispatch(getBranches(token));
         if (selectedBranch === 'Todas') {
-            dispatch(getExpensesPerPeriod(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getExpensesPerPeriod(token));
         } else {
-            dispatch(getExpensesPerPeriodByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getExpensesPerPeriodByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
-
-    useEffect(() => {
-        if (expensesPerPeriod) {
-            setOriginalData(expensesPerPeriod);
-        }
-    }, [ expensesPerPeriod ]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -53,43 +33,10 @@ function ModalExpensesPerPeriod () {
         return branch ? branch.nameBranch : "Sede no encontrada";
     };
 
-    const exportToExcel = () => {
-        if (originalData) {
-            const dataForExcel = originalData.map(item => ({
-                'Fecha de transacción': item.transactionDate,
-                'Sede': item.branchId,
-                'Concepto de egreso': item.incomeCategory,
-                'Nombre del artículo': item.nameItem,
-                'Valor unitario': item.unitValue,
-                'Cantidad': item.quantity,
-                'Valor total': item.totalValue,
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Gastos del período');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Gastos_del_período.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
     return (
-        <div className="m-2 p-3 text-center m-auto">
-            <div className="p-4 d-flex align-items-center justify-content-between">
-                <h2 className="text-primary-emphasis text-start">Gastos del período</h2>
-                <div>
-                    {/* <button className="btn btn-danger btn-sm m-2" onClick={exportToPDF}>Exportar a PDF</button> */}
-                    <button className="btn btn-success btn-sm" onClick={exportToExcel}>Exportar a Excel</button>
-                </div>
+        <div className="p-3 text-center m-auto border">
+            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
+                <h2 className="m-0 text-primary-emphasis text-start">Gastos del período</h2>
             </div>
             
             <div className="border">
@@ -142,13 +89,12 @@ function ModalExpensesPerPeriod () {
                                         </td>
                                         <td className='text-end'>
                                             $ {expensePerPeriod.unitValue}
-                                            {/* $ {expensePerPeriod.unitValue !== undefined ? formatNumberWithCommas(expensePerPeriod.unitValue) : 'N/A'} */}
                                         </td>
                                         <td>
-                                            {expensePerPeriod.quantity? formatNumberWithCommas(expensePerPeriod.quantity) : 'N/A'}
+                                            $ {expensePerPeriod.quantity? formatNumber(expensePerPeriod.quantity) : 'N/A'}
                                         </td>
                                         <td className='text-end'>
-                                            $ {expensePerPeriod.totalValue !== undefined ? formatNumberWithCommas(expensePerPeriod.totalValue) : 'N/A'}
+                                            $ {expensePerPeriod.totalValue !== undefined ? formatNumber(expensePerPeriod.totalValue) : 'N/A'}
                                         </td>
                                     </tr>
                                 ))}
