@@ -126,7 +126,7 @@ function BranchCardPage() {
                                 {Array.isArray(filteredBranches) && filteredBranches.length > 0 ? (
                                     filteredBranches.map((branch) => (
                                         <div key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
                                             </div>
                                             <div className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>

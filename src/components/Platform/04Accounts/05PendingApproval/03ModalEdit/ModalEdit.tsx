@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-// import React, { useState } from 'react';
-// // REDUX
-// import { useDispatch } from 'react-redux';
-// import { getAssets, putAsset } from '../../../../../redux/User/assetsSlice/actions';
-// import type { AppDispatch } from '../../../../../redux/store';
+import React, { useState } from 'react';
+// REDUX
+import { useDispatch } from 'react-redux';
+import { getIncomesNotApproved, putAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
+import type { AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
 import { IBranch } from '../../../../../types/User/branch.types';
@@ -18,12 +18,46 @@ interface ModalEditProps {
 }
 
 function ModalEdit({ token, idItem, registerAccount, branches, onCloseModal }: ModalEditProps) {
-    console.log('token: ', token)
-    console.log('idItem: ', idItem)
-    console.log('registerAccount: ', registerAccount)
-    console.log('branches: ', branches)
-    console.log('onCloseModal: ', onCloseModal)
-    
+    const dispatch: AppDispatch = useDispatch();
+
+    const [editedAccountsBook, setEditedAccountsBook] = useState<IAccountsBook>({ ...registerAccount });
+
+    const handleEditField = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+        field: keyof IAccountsBook,
+        dataType: 'text' | 'number' | 'date' = 'text'
+    ) => {
+        const newValue = e.target.value;
+        if (dataType === 'number') {
+            const numericValue = parseFloat(newValue);
+            if (!isNaN(numericValue)) {
+                setEditedAccountsBook((prevEdited) => ({
+                    ...prevEdited,
+                    [field]: numericValue,
+                }));
+            }
+        } else {
+            setEditedAccountsBook((prevEdited) => ({
+                ...prevEdited,
+                [field]: newValue,
+            }));
+        }
+    };
+
+    const handleSaveChanges = async (editedAccountsBook: IAccountsBook) => {
+        try {
+            await dispatch(putAccountsBook(idItem, editedAccountsBook, token));
+            dispatch(getIncomesNotApproved(token));
+            onCloseModal();
+        } catch (error) {
+            console.error('Error al guardar cambios:', error);
+        }
+    };
+
+    const cancelEditing = () => {
+        onCloseModal();
+        setEditedAccountsBook({ ...registerAccount });
+    };
 
     return (
         <div>
@@ -31,11 +65,11 @@ function ModalEdit({ token, idItem, registerAccount, branches, onCloseModal }: M
                 <h1 className={`${styles.title} text-center`}>Edita la información del registro pendiente de aprobar</h1>
             </div>
 
-            {/* <div className="w-100">
+            <div className="w-100">
                 <h6 className={styles.label}>Nombre de la sede asignada al registro</h6>
                 <div className={styles.containerInput}>
                     <select
-                        value={editedAsset.branchId || ''}
+                        value={editedAccountsBook.branchId || ''}
                         className={`${styles.inputEdit} p-2 border w-100`}
                         onChange={(e) => handleEditField(e, 'branchId')}
                     >
@@ -46,170 +80,39 @@ function ModalEdit({ token, idItem, registerAccount, branches, onCloseModal }: M
                         ))}
                     </select>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className='d-flex gap-3'>
+            <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Nombre del activo</h6>
+                    <h6 className={styles.label}>Fecha de registro</h6>
                     <div className={styles.containerInput}>
                         <input
-                            type="text"
+                            type="date"
                             className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.nameItem}
-                            onChange={(e) => handleEditField(e, 'nameItem', 'text')}
+                            value={editedAccountsBook.registrationDate ? new Date(editedAccountsBook.registrationDate).toISOString().split('T')[0] : ''}
+                            onChange={(e) => handleEditField(e, 'registrationDate', 'date')}
                         />
                     </div>
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>Código de barras</h6>
+                    <h6 className={styles.label}>Fecha de transacción</h6>
                     <div className={styles.containerInput}>
                         <input
-                            type="text"
+                            type="date"
                             className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.barCode || ''}
-                            onChange={(e) => handleEditField(e, 'barCode', 'text')}
+                            value={editedAccountsBook.transactionDate ? new Date(editedAccountsBook.transactionDate).toISOString().split('T')[0] : ''}
+                            onChange={(e) => handleEditField(e, 'transactionDate', 'date')}
                         />
                     </div>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Inventario</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="number"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.inventory}
-                            onChange={(e) => handleEditField(e, 'inventory', 'number')}
-                        />
-                    </div>
-                </div>
-                <div className="w-100">
-                    <h6 className={styles.label}>Marca del activo</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.brandItem}
-                            onChange={(e) => handleEditField(e, 'brandItem', 'text')}
-                        />
-                    </div>
-                </div>
-            </div> */}
-
-            {/* <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Referencia del activo</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.referenceAssets}
-                            onChange={(e) => handleEditField(e, 'referenceAssets', 'text')}
-                        />
-                    </div>
-                </div>
-                <div className="w-100">
-                <h6 className={styles.label}>Condición del activo</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.conditionAssets || ''}
-                            onChange={(e) => {
-                                const value = e.target.value as 'Nuevo' | 'Usado';
-                                setEditedConditionAssets(value);
-                                setEditedAsset((prevEdited) => ({
-                                    ...prevEdited,
-                                    conditionAssets: value,
-                                }));
-                            }}
-                        >
-                            <option value='Nuevo'>Nuevo</option>
-                            <option value='Usado'>Usado</option>
-                        </select>
-                    </div>
-                </div>
-            </div> */}
-
-            {/* <div className="w-100">
-                <h6 className={styles.label}>Estado del activo</h6>
-                <div className={styles.containerInput}>
-                    <select
-                        className={`${styles.inputEdit} p-2 border w-100`}
-                        value={editedAsset.stateAssets || ''}
-                        onChange={(e) => {
-                            const value = e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion';
-                            setEditedStateAssets(value);
-                            setEditedAsset((prevEdited) => ({
-                                ...prevEdited,
-                                stateAssets: value,
-                            }));
-                        }}
-                    >
-                        <option value='Funciona correctamente'>Funciona correctamente</option>
-                        <option value='Funciona requiere mantenimiento'>Funciona requiere mantenimiento</option>
-                        <option value='Dañada requiere cambio'>Dañada requiere cambio</option>
-                        <option value='Dañada requiere reparacion'>Dañada requiere reparacion</option>
-                    </select>
-                </div>
-            </div> */}
-
-            {/* <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Precio de compra</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.purchasePriceBeforeTax}
-                            onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
-                        />
-                    </div>
-                </div>
-                <div className="w-100">
-                    <h6 className={styles.label}>IVA del activo</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.IVA ? editedAsset.IVA.toString() : ''}
-                            onChange={(e) => {
-                                const value = parseInt(e.target.value);
-                                setEditedIVA(value);
-                                setEditedAsset((prevEdited) => ({
-                                    ...prevEdited,
-                                    IVA: value,
-                                }));
-                            }}
-                        >
-                            <option value='0'>0</option>
-                            <option value='5'>5</option>
-                            <option value='19'>19</option>
-                        </select>
-                    </div>
-                </div>
-            </div> */}
-
-            {/* <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Precio de venta</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.sellingPrice}
-                            onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
-                        />
-                    </div>
-                </div>
-            </div> */}
-
-            {/* <div className="w-100">
+            <div className="w-100">
                 <div className="d-flex align-items-center justify-content-center">
-                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
+                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedAccountsBook)}>Guardar</button>
                     <button className={`${styles.buttonCancel} border-0`} onClick={cancelEditing}>Cancelar</button>
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 }
