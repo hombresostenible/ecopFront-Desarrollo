@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAccountsBook } from '../../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksIncomesStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksIncomesStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -44,15 +44,15 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
 };
 
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
-export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBooksIncomesApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/incomes-branch/${idBranch}`, {
+        const response = await axiosInstance.get('/accountsBook/incomes', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksIncomesApprovedByBranchStart(response.data));
+        dispatch(getAccountsBooksIncomesStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -63,15 +63,15 @@ export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token:
 }
 
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
-export const getAccountsBooksIncomesApproved = (token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/incomes', {
+        const response = await axiosInstance.get(`/accountsBook/incomes-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksIncomesStart(response.data));
+        dispatch(getAccountsBooksIncomesApprovedByBranchStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -137,7 +137,7 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
         }
     }
 };                    
-                    
+
 //OBTENER TODOS LOS INGRESOS NO APROBADOS
 export const getIncomesNotApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
