@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Cookies from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Chart from 'chart.js/auto';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import DownloadAccountsReceivable from './DownloadAccountsReceivable';
 import ModalAccountsReceivable from './ModalAccountsReceivable';
 import { PiExportBold } from "react-icons/pi";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -34,24 +36,21 @@ function AccountsReceivable() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getAccountsReceivable(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getAccountsReceivable(token));
         } else {
-            dispatch(getAccountsReceivableByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getAccountsReceivableByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
+
+    useEffect(() => {
+        if (accountsReceivable && accountsReceivable.length > 0) {
+            setOriginalData(accountsReceivable);
+        }
+    }, [accountsReceivable]);
 
     const renderChart = (data: IAccountsBook[] | null, start: Date | null, end: Date | null) => {
         if (!data || !chartContainer.current) return;
@@ -130,7 +129,13 @@ function AccountsReceivable() {
         }
     }, [accountsReceivable]);
 
-    const exportToExcel = () => {
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
@@ -141,17 +146,17 @@ function AccountsReceivable() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información de Ventas');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Cuentas_Por_Cobrar');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Cuentas_X_Cobrar.xlsx';
+            a.download = 'Cuentas_Por_Cobrar.xlsx';
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
@@ -159,6 +164,14 @@ function AccountsReceivable() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Cuentas por Cobrar</h2>
                     <div className={styles.containerButtonExportT}>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadAccountsReceivable data={originalData} />}
+                                fileName="Cuentas_Por_Cobrar.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>

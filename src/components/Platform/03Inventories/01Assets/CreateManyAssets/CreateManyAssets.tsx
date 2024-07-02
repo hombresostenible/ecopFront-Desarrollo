@@ -27,7 +27,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
     const [selectedBranch, setSelectedBranch] = useState('');
     const [message, setMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         if (token) {
@@ -56,15 +55,15 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Código de barras": "barCode",
                     "Nombre del artículo": "nameItem",
-                    "Marca": "brandItem",
-                    "Referencia": "referenceAssets",
                     "Inventario": "inventory",
                     "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
-                    "Estado": "stateAssets",
+                    "Código de barras": "barCode",
+                    "Marca": "brandItem",
+                    "Referencia": "referenceAssets",
                     "Condición de compra": "conditionAssets",
+                    "Estado": "stateAssets",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -99,23 +98,20 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "barCode": "Código de barras",
         "nameItem": "Nombre del artículo",
-        "brandItem": "Marca",
-        "referenceAssets": "Referencia",
         "inventory": "Inventario",
         "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
         "IVA": "IVA",
-        "stateAssets": "Estado",
+        "barCode": "Código de barras",
+        "brandItem": "Marca",
+        "referenceAssets": "Referencia",
         "conditionAssets": "Condición de compra",
+        "stateAssets": "Estado",
         // Agregar más nombres de columnas según sea necesario
     };
 
     const onSubmit = () => {
-        if (!excelData || !selectedBranch) {
-            setErrorMessage('Por favor, selecciona una sede antes de enviar.');
-            return;
-        }
+        if (!excelData || !selectedBranch) return;
         const branchId = selectedBranch;
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
@@ -123,13 +119,11 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
             ...asset,
             branchId: branchId,
             userId: user?.id,
-            referenceAssets: String(asset.referenceAssets), // Asegúrate de que sea siempre una cadena
         }));
         dispatch(postManyAssets(formData as unknown as IAssets[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
         setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
-        setErrorMessage('');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
@@ -138,20 +132,20 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     return (
         <div>
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
-                <div className={`${styles.container__Download_File} mt-3 mb-3 mx-auto p-2 d-flex align-items-center justify-content-between border rounded`}>
+                <div className={`${styles.containerDownloadFile} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.download__File} pt-1 pb-1 px-2 text-center text-decoration-none`} href="/DownloadExcels/Equipos_Herramientas_y_Maquinaria.xlsx" download="Equipos_Herramientas_y_Maquinaria.xlsx">Descargar Excel</a>
+                    <a className={`${styles.downloadFile} text-center text-decoration-none`} href="/DownloadExcels/Equipos_Herramientas_y_Maquinaria.xlsx" download="Equipos_Herramientas_y_Maquinaria.xlsx">Descargar Excel</a>
                 </div>
                 <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
 
-            <div className="mb-5 p-2 d-flex align-items-center justify-content-center border rounded position-relative">
+            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                 <div>
-                    <p className="mb-0 p-2">Selecciona una Sede</p>
+                    <p className={`${styles.text} mb-0 p-2`}>Selecciona una Sede</p>
                 </div>
                 <div>
                     <select
-                        className={`${styles.input} p-2 border `}
+                        className={`${styles.info} p-2 border rounded border-secundary`}
                         onChange={handleBranchChange}
                     >
                         <option value=''>Selecciona una Sede</option>
@@ -162,12 +156,6 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                         ))}
                     </select>
                 </div>
-
-                {errorMessage && (
-                    <div className={`${styles.alert__Danger} text-center position-absolute`} role="alert">
-                        {errorMessage}
-                    </div>
-                )}
             </div>
 
             <div className="d-flex">
@@ -176,7 +164,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
             <div className={`${styles.success} m-auto position-relative`}>
                 {message && (
-                    <div className={`${styles.alert__Success} p-1 text-center text-success position-absolute alert-success`}>{message}</div>
+                    <p className={`${styles.successMessage} p-1 text-center text-success position-absolute w-100`}>{message}</p>
                 )}
             </div> 
 
@@ -208,8 +196,8 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                 )}
             </div>
 
-            <div className="mb-4 d-flex align-items-center justify-content-center">
-                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} onClick={onSubmit}>Enviar</button>
+            <div className="d-flex">
+                <button className={`${styles.buttonSubmit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
             </div>
         </div>
     );

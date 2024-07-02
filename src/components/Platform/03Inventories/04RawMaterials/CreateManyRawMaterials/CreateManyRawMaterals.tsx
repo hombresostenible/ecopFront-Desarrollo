@@ -54,17 +54,17 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre de la matería prima": "nameItem",
-                    "Código de barras": "barCode",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
+                    "Precio de compra antes de impuestos": "purchasePriceBeforeTax",
+                    "IVA": "IVA",
+                    "Fecha de vencimiento": "expirationDate",
+                    "¿Empacado?": "packaged",
+                    "Tipo de empaque principal": "primaryPackageType",
+                    "Código de barras": "barCode",
                     "¿Autoincremento?": "inventoryIncrease",
                     "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
                     "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio de compra antes de impuestos": "purchasePriceBeforeTax",
-                    "IVA": "IVA",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
                 // Tomar las filas 4 y 6 como encabezados y datos respectivamente
@@ -98,17 +98,17 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre de la matería prima",
-        "barCode": "Código de barras",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
+        "purchasePriceBeforeTax": "Precio de compra antes de impuestos",
+        "IVA": "IVA",
+        "expirationDate": "Fecha de vencimiento",
+        "packaged": "¿Empacado?",
+        "primaryPackageType": "Tipo de empaque principal",
+        "barCode": "Código de barras",
         "inventoryIncrease": "¿Autoincremento?",
         "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
         "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "purchasePriceBeforeTax": "Precio de compra antes de impuestos",
-        "IVA": "IVA",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
         // Agregar más nombres de columnas según sea necesario
     };
 
