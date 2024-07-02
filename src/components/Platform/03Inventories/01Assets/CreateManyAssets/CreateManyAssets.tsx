@@ -56,14 +56,14 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre del artículo": "nameItem",
-                    "Código de barras": "barCode",
                     "Inventario": "inventory",
+                    "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
+                    "IVA": "IVA",
+                    "Código de barras": "barCode",
                     "Marca": "brandItem",
                     "Referencia": "referenceAssets",
                     "Condición de compra": "conditionAssets",
                     "Estado": "stateAssets",
-                    "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
-                    "IVA": "IVA",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -99,14 +99,14 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre del artículo",
-        "barCode": "Código de barras",
         "inventory": "Inventario",
+        "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
+        "IVA": "IVA",
+        "barCode": "Código de barras",
         "brandItem": "Marca",
         "referenceAssets": "Referencia",
         "conditionAssets": "Condición de compra",
         "stateAssets": "Estado",
-        "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
-        "IVA": "IVA",
         // Agregar más nombres de columnas según sea necesario
     };
 

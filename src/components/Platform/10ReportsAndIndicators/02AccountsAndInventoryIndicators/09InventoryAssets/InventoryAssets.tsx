@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../types/User/assets.types';
+import DownloadInventoryAssets from './DownloadInventoryAssets';
 import ModalInventoryAssets from './ModalInventoryAssets';
 import { PiExportBold } from "react-icons/pi";
 import styles from './styles.module.css';
@@ -22,40 +24,37 @@ function InventoryAssets() {
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IAssets[] | null>(null);  
+    const [originalData, setOriginalData] = useState<IAssets[] | null>(null);
     const [showCancelModal, setShowCancelModal] = useState(false);
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getAssetsInventory(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getAssetsInventory(token));
         } else {
-            dispatch(getAssetsInventoryByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getAssetsInventoryByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
 
-    const getBranchName = (branchId: string) => {
+    useEffect(() => {
+        if (assetsInventory && assetsInventory.length > 0) {
+            setOriginalData(assetsInventory);
+        }
+    }, [assetsInventory]);
+
+    const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
-    };
-    
-    const exportToExcel = () => {
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
-                'Sede': item.branchId,
+                'Sede': getBranchName(item.branchId),
                 'Nombre del activo': item.nameItem,
                 'Marca del activo': item.brandItem,
                 'Condición del activo': item.conditionAssets,
@@ -63,7 +62,7 @@ function InventoryAssets() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el inventario de activos de tu negocio');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventario_De_Activos');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -73,7 +72,7 @@ function InventoryAssets() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
@@ -81,6 +80,14 @@ function InventoryAssets() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Inventario de Activos</h2>
                     <div className={styles.containerButtonExportT}>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadInventoryAssets data={originalData} />}
+                                fileName="Inventario_De_Activos.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
@@ -92,14 +99,14 @@ function InventoryAssets() {
                             value={selectedBranch}
                             onChange={(e) => setSelectedBranch(e.target.value)}
                         >
-                            <option value=''>Todas las Sedes</option>
+                            <option value='Todas'>Todas las Sedes</option>
                             {Array.isArray(branches) && branches.map((branch, index) => (
                                 <option key={index} value={branch.id}>
                                     {branch.nameBranch}
                                 </option>
                             ))}
                         </select>
-                        <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
+                        <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
                     </div>
                 </div>
 
@@ -117,26 +124,16 @@ function InventoryAssets() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {assetsInventory.map((asset: { id: Key | null | undefined; branchId: string; nameItem: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; conditionAssets: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; stateAssets: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }) => (
+                                    {assetsInventory.map((asset: IAssets) => (
                                         <tr key={asset.id}>
-                                            <td>
-                                                {getBranchName(asset.branchId)}
-                                            </td>
-                                            <td>
-                                                {asset.nameItem}
-                                            </td>
-                                            <td>
-                                                {asset.conditionAssets}
-                                            </td>
-                                            <td>
-                                                {asset.stateAssets}
-                                            </td>
+                                            <td>{getBranchName(asset.branchId)}</td>
+                                            <td>{asset.nameItem}</td>
+                                            <td>{asset.conditionAssets}</td>
+                                            <td>{asset.stateAssets}</td>
                                             <td>
                                                 <button
                                                     className='border'
-                                                    onClick={() => {
-                                                        setShowCancelModal(true);
-                                                    }}
+                                                    onClick={() => setShowCancelModal(true)}
                                                 >
                                                     Ver Gráfica
                                                 </button>
@@ -154,22 +151,20 @@ function InventoryAssets() {
                 </div>
 
                 <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl">
-                    <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
+                    <Modal.Header closeButton>
                         <Modal.Title>Detalle del inventario de tus activos</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <ModalInventoryAssets
-                            assetsInventory={assetsInventory}
-                        />
+                        <ModalInventoryAssets assetsInventory={assetsInventory} />
                     </Modal.Body>
                 </Modal>
             </div>
 
             <div className="d-flex">
-                <button className={styles.buttonDetail} onClick={() => { setShowCancelModal(true) }} >Ver Detalles</button>
-            </div> 
+                <button className={styles.buttonDetail} onClick={() => setShowCancelModal(true)}>Ver Detalles</button>
+            </div>
         </div>
-    )
+    );
 }
 
-export default InventoryAssets
+export default InventoryAssets;

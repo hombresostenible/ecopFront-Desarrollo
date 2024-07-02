@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,9 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBestClientValue } from "../../../../../types/User/financialIndicators.types";
+import DownloadBestClientValue from './DownloadBestClientValue';
 import ModalBestClientValue from './ModalBestClientValue';
+import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import Uno from '../../../../../assets/Top-Uno.png';
 import Dos from '../../../../../assets/Top-Dos.png';
 import Tres from '../../../../../assets/Top-Tres.png';
@@ -32,30 +35,21 @@ function BestClientValue() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getBestClientValue(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getBestClientValue(token));
         } else {
-            dispatch(getBestClientValueByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getBestClientValueByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
 
-    const getBranchName = (branchId: string) => {
-        if (!Array.isArray(branches)) return "Sede no encontrada";
-        const branch = branches.find((b: { id: string }) => b.id === branchId);
-        return branch ? branch.nameBranch : "Sede no encontrada";
-    };
+    useEffect(() => {
+        if (bestClientValue && bestClientValue.length > 0) {
+            setOriginalData(bestClientValue);
+        }
+    }, [bestClientValue]);
 
     function valueClients(data: IBestClientValue[]) {
         const valueClientsArray: IBestClientValue[] = [];
@@ -78,17 +72,19 @@ function BestClientValue() {
         valueClientsArray.sort((a, b) => b.value - a.value);
         return valueClientsArray;
     }
-
-    function formatNumberWithCommas(number: number): string {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
     
     const adjustTimeZone = (date: Date) => {
         date.setUTCHours(5, 0, 0, 0);
         return date;
     };
-    
-    const exportToExcel = () => {
+
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
@@ -98,7 +94,7 @@ function BestClientValue() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el Mejor Cliente por Valor del Período seleccionado');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Mejor_Cliente_Por_Valor');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -108,7 +104,7 @@ function BestClientValue() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
     
     //Función para el filtrado por fechas
     const handleFilter = () => {
@@ -155,6 +151,14 @@ function BestClientValue() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Mejor cliente por valor</h2>
                     <div className={styles.containerButtonExportT}>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadBestClientValue data={originalData} />}
+                                fileName="Mejor_Cliente_Por_Valor.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
@@ -227,7 +231,7 @@ function BestClientValue() {
                                 )}
                                 <div className={`${styles.infoBestClient} m-2`}>
                                     <h4 className="text-primary m-0">{index + 1} - {countedItem.transactionCounterpartId}</h4>
-                                    <p className="m-0 text-secondary">Valor de sus compras $ {formatNumberWithCommas(countedItem.value)}</p>
+                                    <p className="m-0 text-secondary">Valor de sus compras $ {formatNumber(countedItem.value)}</p>
                                     <p className="m-0 text-secondary">ID del cliente: {countedItem.transactionCounterpartId}</p>
                                     <p className="m-0 text-secondary">{getBranchName(countedItem.branchId)}</p>
                                 </div>

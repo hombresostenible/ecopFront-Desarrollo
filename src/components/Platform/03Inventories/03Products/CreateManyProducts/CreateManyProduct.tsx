@@ -54,17 +54,17 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
                     "Nombre del producto": "nameItem",
-                    "Código de barras": "barCode",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
+                    "Precio de venta": "sellingPrice",
+                    "IVA": "IVA",
+                    "Fecha de vencimiento": "expirationDate",
+                    "¿Empacado?": "packaged",
+                    "Tipo de empaque principal": "primaryPackageType",
+                    "Código de barras": "barCode",
                     "¿Autoincremento?": "inventoryIncrease",
                     "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
                     "Cantidad de aumento automático": "automaticInventoryIncrease",
-                    "Precio de venta": "sellingPrice",
-                    "IVA": "IVA",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Fecha de vencimiento": "expirationDate"
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -100,17 +100,17 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
         "nameItem": "Nombre del producto",
-        "barCode": "Código de barras",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
+        "sellingPrice": "Precio de venta",
+        "IVA": "IVA",
+        "expirationDate": "Fecha de vencimiento",
+        "packaged": "¿Empacado?",
+        "primaryPackageType": "Tipo de empaque principal",
+        "barCode": "Código de barras",
         "inventoryIncrease": "¿Autoincremento?",
         "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
         "automaticInventoryIncrease": "Cantidad de aumento automático",
-        "sellingPrice": "Precio de venta",        
-        "IVA": "IVA",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "expirationDate": "Fecha de vencimiento"
         // Agregar más nombres de columnas según sea necesario
     };
 

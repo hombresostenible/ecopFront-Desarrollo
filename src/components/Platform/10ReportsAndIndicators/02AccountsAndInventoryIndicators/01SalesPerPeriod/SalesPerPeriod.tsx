@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Chart from 'chart.js/auto';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import DownloadSalesPerPeriod from './DownloadSalesPerPeriod';
 import ModalSalesPerPeriod from './ModalSalesPerPeriod';
 import { BsCart } from 'react-icons/bs';
 import { PiExportBold } from "react-icons/pi";
@@ -35,24 +37,21 @@ function SalesPerPeriod() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getSalesPerPeriod(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getSalesPerPeriod(token));
         } else {
-            dispatch(getSalesPerPeriodByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getSalesPerPeriodByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
+
+    useEffect(() => {
+        if (salesPerPeriod && salesPerPeriod.length > 0) {
+            setOriginalData(salesPerPeriod);
+        }
+    }, [salesPerPeriod]);
 
     const renderChart = (data: IAccountsBook[] | null, start: Date | null, end: Date | null) => {
         if (chartContainer.current && data) {
@@ -185,17 +184,23 @@ function SalesPerPeriod() {
         }
     };
 
-    const exportToExcel = () => {
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
-                'Sede': item.branchId,
+                'Sede': getBranchName(item.branchId),
                 'Fecha de Registro': item.transactionDate,
                 'Valor Total': item.totalValue,
                 'Tipo de Transacción': 'Venta'
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre las Ventas del Período seleccionado');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Ventas_del_Período');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -205,7 +210,7 @@ function SalesPerPeriod() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
@@ -213,7 +218,15 @@ function SalesPerPeriod() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Ventas del período</h2>
                     <div className={styles.containerButtonExportT}>
-                        <button className={`${styles.buttonExcel} border-0 btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadSalesPerPeriod data={originalData} />}
+                                fileName="Ventas_del_Período.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
+                        <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
 

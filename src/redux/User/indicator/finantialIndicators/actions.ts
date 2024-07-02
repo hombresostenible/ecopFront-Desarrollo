@@ -222,7 +222,7 @@ export const getAccountsPayableByBranch = (idBranch: string, token: string) => a
 //
 export const getBestClientValue = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/bestClientValue', {
+        const response = await axiosInstance.get('/financialIndicator/best-client-value', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -241,7 +241,7 @@ export const getBestClientValue = (token: string) => async (dispatch: AppDispatc
 //
 export const getBestClientValueByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/bestClientValue/${idBranch}`, {
+        const response = await axiosInstance.get(`/financialIndicator/best-client-value/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -260,7 +260,7 @@ export const getBestClientValueByBranch = (idBranch: string, token: string) => a
 //
 export const getBestClientQuantity = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/bestClientQuantity', {
+        const response = await axiosInstance.get('/financialIndicator/best-client-quantity', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -279,7 +279,7 @@ export const getBestClientQuantity = (token: string) => async (dispatch: AppDisp
 //
 export const getBestClientQuantityByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/bestClientQuantity/${idBranch}`, {
+        const response = await axiosInstance.get(`/financialIndicator/best-client-quantity/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

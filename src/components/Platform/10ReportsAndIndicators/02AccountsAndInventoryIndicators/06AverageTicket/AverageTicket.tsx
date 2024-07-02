@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-import { PDFDownloadLink, Document, Page, Text } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +10,8 @@ import { getAverageTicketPerPeriod, getAverageTicketPerPeriodByBranch } from '..
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import DownloadAverageTicket from './DownloadAverageTicket';
 import ModalAverageTicket from './ModalAverageTicket';
 import { BsCart } from 'react-icons/bs';
 import { PiExportBold } from "react-icons/pi";
@@ -36,27 +35,23 @@ function AverageTicket () {
     const [filteredAverageTicket, setFilteredAverageTicket] = useState<number>(0);
     const [showCancelModal, setShowCancelModal] = useState(false);
 
-
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getAverageTicketPerPeriod(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getAverageTicketPerPeriod(token));
         } else {
-            dispatch(getAverageTicketPerPeriodByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getAverageTicketPerPeriodByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
+
+    useEffect(() => {
+        if (averageTicketPerPeriod && averageTicketPerPeriod.length > 0) {
+            setOriginalData(averageTicketPerPeriod);
+        }
+    }, [averageTicketPerPeriod]);
 
     useEffect(() => {
         if (averageTicketPerPeriod) {
@@ -101,47 +96,30 @@ function AverageTicket () {
         setAverageTicketThisYear(averageTicketThisYearValue);
     }, [salesToday, salesThisMonth, salesThisYear]);
 
-    const exportToPDF = () => {
-        if (originalData) {
-          const MyDocument = () => (
-            <Document>
-              <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Información sobre el Mejor Cliente Frecuente del Período seleccionado</Text>
-                {originalData.map((item, index) => (
-                  <Text key={index} style={stylesPDF.text}>
-                    Sede: {item.branchId}, Fecha de Registro: {new Date(item.transactionDate).toLocaleDateString()}, Id de cliente: {item.transactionCounterpartId}, Tipo de Transacción: Venta
-                    </Text>
-                ))}
-              </Page>
-            </Document>
-          );
-    
-          return (
-            <PDFDownloadLink document={<MyDocument />} fileName="Mejor_Cliente_Frecuente.pdf">
-              {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar PDF')}
-            </PDFDownloadLink>
-          );
-        }
-    };
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
 
-    const exportToExcel = () => {
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información de activos');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Ticket_Promedio');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Ticket_Promedio_de_im_negocio.xlsx';
+            a.download = 'Ticket_Promedio.xlsx';
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     const handleFilter = () => {
         if (!selectedMonth || !selectedYear) {
@@ -178,7 +156,14 @@ function AverageTicket () {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Ticket promedio</h2>
                     <div className={styles.containerButtonExportT}>
-                    <button className={styles.buttonPDF} onClick={() => exportToPDF()}>PDF <PiExportBold className={styles.icon} /></button>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadAverageTicket data={originalData} />}
+                                fileName="Ticket_Promedio.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>

@@ -12,8 +12,8 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-// import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/CreateManyAssets';
-import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/example/CreateManyAssets';
+import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/CreateManyAssets';
+// import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/example/CreateManyAssets';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';

@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../types/User/products.types';
+import DownloadInventoryProduct from './DownloadInventoryProduct';
 import ModalInventoryProduct from './ModalInventoryProduct';
 import ModalGraphicInventoryProduct from './ModalGraphicInventoryProduct';
 import { PiExportBold } from "react-icons/pi";
@@ -30,32 +32,29 @@ function InventoryProduct() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
         if (selectedBranch === 'Todas') {
-            dispatch(getProductsInventory(token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period:", error);
-                });
+            dispatch(getProductsInventory(token));
         } else {
-            dispatch(getProductsInventoryByBranch(selectedBranch, token))
-                .then((response: any) => {
-                    setOriginalData(response.data);
-                })
-                .catch((error: any) => {
-                    console.error("Failed to fetch sales per period by branch:", error);
-                });
+            dispatch(getProductsInventoryByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
 
-    const getBranchName = (branchId: string) => {
+    useEffect(() => {
+        if (productsInventory && productsInventory.length > 0) {
+            setOriginalData(productsInventory);
+        }
+    }, [productsInventory]);
+
+    const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
-    };
-    
-    const exportToExcel = () => {
+    }, [branches]);
+
+    const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
                 'Sede': item.branchId,
@@ -65,7 +64,7 @@ function InventoryProduct() {
             }));
             const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Información sobre el inventario de productos de tu negocio');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventario_De_Productos');
             const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const url = URL.createObjectURL(data);
@@ -75,7 +74,7 @@ function InventoryProduct() {
             a.click();
             URL.revokeObjectURL(url);
         }
-    };
+    }, [originalData, getBranchName]);
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
@@ -83,6 +82,14 @@ function InventoryProduct() {
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Inventario de Productos</h2>
                     <div className={styles.containerButtonExportT}>
+                        {originalData && (
+                            <PDFDownloadLink
+                                document={<DownloadInventoryProduct data={originalData} />}
+                                fileName="Inventario_De_Productos.pdf"
+                            >
+                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
+                            </PDFDownloadLink>
+                        )}
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
