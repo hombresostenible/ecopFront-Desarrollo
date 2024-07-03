@@ -196,10 +196,10 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                                 <option value='Declaracion de Renta'>Declaracion de Renta</option>
                                 <option value='Retencion en la Fuente'>Retencion en la Fuente</option>
                                 <option value='Predial'>Predial</option>
-                                <option value='Vehículos y motos'>Vehículos y motos</option>
+                                <option value='Vehiculos y motos'>Vehiculos y motos</option>
                             </optgroup>
                             <optgroup label="Otros gastos">
-                                <option value='Asesoría Contable'>Asesoría Contable</option>
+                                <option value='Asesoria Contable'>Asesoria Contable</option>
                                 <option value='Renovacion Camara de Comercio'>Renovacion Camara de Comercio</option>
                                 <option value='Licencias y permisos'>Licencias y permisos</option>
                                 <option value='Asesoria Juridica'>Asesoria Juridica</option>
@@ -351,8 +351,8 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                     expenseCategory === 'Materia Prima' || expenseCategory === 'Mercancia' || expenseCategory === 'Servicio' || expenseCategory === 'Activo' ||  
                     expenseCategory === 'Arriendo' || expenseCategory === 'Reparaciones locativas' || expenseCategory === 'Transporte' || expenseCategory === 'Combustible' || 
                     expenseCategory === 'Nomina' || expenseCategory === 'Seguridad Social y/o parafiscales' || expenseCategory === 'IVA' || expenseCategory === 'IVA' || 
-                    expenseCategory === 'Declaracion de Renta' || expenseCategory === 'Retencion en la Fuente' || expenseCategory === 'Predial' || expenseCategory === 'Vehículos y motos' || 
-                    expenseCategory === 'Asesoría Contable' || expenseCategory === 'Renovacion Camara de Comercio' || expenseCategory === 'Licencias y permisos' || expenseCategory === 'Asesoria Juridica' || 
+                    expenseCategory === 'Declaracion de Renta' || expenseCategory === 'Retencion en la Fuente' || expenseCategory === 'Predial' || expenseCategory === 'Vehiculos y motos' || 
+                    expenseCategory === 'Asesoria Contable' || expenseCategory === 'Renovacion Camara de Comercio' || expenseCategory === 'Licencias y permisos' || expenseCategory === 'Asesoria Juridica' || 
                     expenseCategory === 'Honorarios de contratista' || expenseCategory === 'Honorarios de contratista'
                 ) && (
                     <div>

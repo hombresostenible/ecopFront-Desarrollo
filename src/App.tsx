@@ -104,7 +104,7 @@ import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05Inven
 // SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 // import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
-import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecords/SeeRecordsPage';
+import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/SeeRecordsAccountsBookPage';
 import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/CreateIncome/CreateIncomePage';
 import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ConsultExpenses/ConsultExpensesPage';
 import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/CreateExpenses/CreateExpensesPage';

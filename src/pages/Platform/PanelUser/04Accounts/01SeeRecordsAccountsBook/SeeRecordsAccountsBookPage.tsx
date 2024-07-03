@@ -16,12 +16,14 @@ import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import SeeRegisterAccountsBook from '../../../../../components/Platform/04Accounts/05PendingApproval/01SeeRegisterAccountsBook/SeeRegisterAccountsBook';
-import ApprovalRegister from '../../../../../components/Platform/04Accounts/05PendingApproval/04ApprovalRegister/ApprovalRegister';
+import ConfirmDeleteRegister from '../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
+import ModalEditAccountsBook from '../../../../../components/Platform/04Accounts/03ModalEditAccountsBook/ModalEditAccountsBook';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FaCheck } from "react-icons/fa6";
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
 
-function SeeRecordsPage() {
+function SeeRecordsAccountsBookPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -121,21 +123,27 @@ function SeeRecordsPage() {
     const [idRegisterAccount, setIdRegisterAccount] = useState('');
     const [selectedRegisterAccount, setSelectedRegisterAccount] = useState<IAccountsBook>();
     const [showSeeRegisterAccount, setShowSeeRegisterAccount] = useState(false);
-    const [showApproval, setShowApproval] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showModalEditAsset, setShowModalEditAsset] = useState(false);
 
     const handleSeeItem = useCallback((accountsBook: IAccountsBook) => {
         setSelectedRegisterAccount(accountsBook);
         setShowSeeRegisterAccount(true);
     }, []);
 
-    const handleAddInventory = useCallback((accountsBook: IAccountsBook) => {
+    const handleDelete = useCallback((accountsBook: IAccountsBook) => {
         setSelectedRegisterAccount(accountsBook);
-        setShowApproval(true);
+        setShowDeleteConfirmation(true);
+    }, []);
+
+    const handleEdit = useCallback((accountsBook: IAccountsBook) => {
+        setSelectedRegisterAccount(accountsBook);
+        setShowModalEditAsset(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
         setShowSeeRegisterAccount(false);
-        setShowApproval(false);
+        setShowDeleteConfirmation(false);
     }, []);
 
     const branchesArray = Array.isArray(branches) ? branches : [];
@@ -322,13 +330,21 @@ function SeeRecordsPage() {
                                                         }}
                                                     />
                                                 </div>
-
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <FaCheck
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdRegisterAccount(accountsBook.id);
+                                                            handleDelete(accountsBook);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
                                                         className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
                                                         onClick={() => {
                                                             setIdRegisterAccount(accountsBook.id);
-                                                            handleAddInventory(accountsBook)
+                                                            handleEdit(accountsBook)
                                                         }}
                                                     />
                                                 </div>
@@ -357,16 +373,33 @@ function SeeRecordsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showApproval} onHide={() => setShowApproval(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Aprueba el registro</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el registro</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <ApprovalRegister
-                                    token={token}
+                                <ConfirmDeleteRegister
+                                    typeRegisterDelete={'AccountsBook'}
                                     idItem={idRegisterAccount}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showModalEditAsset} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Registro</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedRegisterAccount &&
+                                    <ModalEditAccountsBook
+                                        token={token}
+                                        idItem={idRegisterAccount}
+                                        registerAccount={selectedRegisterAccount}
+                                        branches={branchesArray}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
                     </div>
@@ -377,4 +410,4 @@ function SeeRecordsPage() {
     );
 }
 
-export default SeeRecordsPage;
+export default SeeRecordsAccountsBookPage;
