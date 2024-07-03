@@ -61,7 +61,6 @@
     width: 100%;
 }
 .container__Info{
-    border: 1px solid red;
     min-height: 60px;
 }
 .text__Ellipsis {
@@ -69,19 +68,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 .input {
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 350px;
@@ -89,31 +75,6 @@
 .input:focus {
     outline-color: #718bd8;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .button__Submit {
     padding: 7px 25px;
     letter-spacing: 1px;

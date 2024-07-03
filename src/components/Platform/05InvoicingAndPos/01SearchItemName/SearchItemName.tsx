@@ -8,19 +8,17 @@ import styles from './styles.module.css';
 
 interface SearchItemNameProps {
     token: string;
-    onItemSelect: (item: any) => void;                                  // Esta función recibe el ítem seleccionado y lo pasa al padre
+    onItemSelect: (item: any) => void;
 }
 
 function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
     const dispatch: AppDispatch = useDispatch();
-
     const itemByBarCodeOrName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCodeOrName);
+
     const [nameItem, setNameItem] = useState('');
     const [debouncedNameItem, setDebouncedNameItem] = useState('');
-    const [selectedItem, setSelectedItem] = useState<any>(null);
-    const [isSelectingItem, setIsSelectingItem] = useState(false);      // Nuevo estado para controlar la selección
+    const [searchResults, setSearchResults] = useState<any[]>([]); // Nuevo estado local para resultados de búsqueda
 
-    // Memoize la función debounce
     const debouncedSearch = useMemo(() => debounce((nextValue: string) => setDebouncedNameItem(nextValue), 500), []);
 
     useEffect(() => {
@@ -29,26 +27,26 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
         }
     }, [debouncedNameItem, token, dispatch]);
 
+    useEffect(() => {
+        if (itemByBarCodeOrName) {
+            // Convierte itemByBarCodeOrName a un array de any si es necesario
+            const results = Array.isArray(itemByBarCodeOrName) ? itemByBarCodeOrName : [itemByBarCodeOrName];
+            setSearchResults(results);
+        }
+    }, [itemByBarCodeOrName]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setNameItem(value);
         debouncedSearch(value);
-        setSelectedItem(null);                  // Limpiar el selectedItem al cambiar el texto
     };
 
     const handleItemClick = (item: any) => {
-        setSelectedItem(item);                  // Actualizar selectedItem al seleccionar un ítem
-        setIsSelectingItem(true);               // Marcar que se está seleccionando un ítem
+        onItemSelect(item);
+        setNameItem('');
+        setDebouncedNameItem('');
+        setSearchResults([]);
     };
-
-    useEffect(() => {
-        // Verificar si selectedItem no es null y si se está seleccionando un ítem
-        if (selectedItem && isSelectingItem) {
-            onItemSelect(selectedItem);
-            setIsSelectingItem(false);          // Reiniciar el estado de selección
-            setNameItem('');                    // Limpiar el input después de seleccionar un ítem
-        }
-    }, [selectedItem, isSelectingItem, onItemSelect]);
 
     return (
         <div className="d-flex align-items-center justify-content-center">
@@ -61,9 +59,9 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
                     onChange={handleChange}
                     placeholder='Escribe el nombre del artículo'
                 />
-                {itemByBarCodeOrName && (
+                {searchResults.length > 0 && ( // Renderizar solo si hay resultados en la búsqueda local
                     <div className={`${styles.select__Container} position-absolute overflow-y-auto`}>
-                        {Array.isArray(itemByBarCodeOrName) && itemByBarCodeOrName.map((item, index) => (
+                        {searchResults.map((item, index) => (
                             <button key={index} onClick={() => handleItemClick(item)} className={`${styles.button__Selected_Item} text-start display-block p-2 border-0`}>
                                 {item.nameItem}
                             </button>
