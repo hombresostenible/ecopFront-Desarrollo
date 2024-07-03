@@ -29,8 +29,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
-    // const itemByBarCodeOrName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCodeOrName);
-    // const branches = useSelector((state: RootState) => state.branch.branch);
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
 
     useEffect(() => {
@@ -52,7 +50,18 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
     const [scannedItems, setScannedItems] = useState<{ item: any, quantity: number }[]>([]);
     const handleItemSelect = (item: any) => {
-        setScannedItems(prevItems => [...prevItems, { item, quantity: 1 }]);
+        setScannedItems(prevItems => {
+            const existingItem = prevItems.find(scannedItem => scannedItem.item.id === item.id);
+            if (existingItem) {
+                return prevItems.map(scannedItem =>
+                    scannedItem.item.id === item.id
+                        ? { ...scannedItem, quantity: scannedItem.quantity + 1 }
+                        : scannedItem
+                );
+            } else {
+                return [...prevItems, { item, quantity: 1 }];
+            }
+        });
     };
 
     useEffect(() => {
@@ -62,9 +71,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         }
     }, [scannedItems]);
     
-
-
-
     //Setea el cliente cuando se busca o se crea
     const [selectedClient, setSelectedClient] = useState<string | null>(null);
 
@@ -189,47 +195,18 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
                         <div className="d-flex align-items-start justify-content-between">
                             <div className="d-flex align-items-center justify-content-between">
-                                <p className={`${styles.text} mb-0 p-2`}>Medio de Pago</p>
-                                <div>
-                                    <select
-                                        {...register('meanPayment', { required: true })}
-                                        className={`${styles.input} p-2`}
-                                        onChange={handleMeanPaymentChange}
-                                    >
-                                        <option value=''>Selecciona una opción</option>
-                                        <optgroup label="Tradicionales">
-                                            <option value='Efectivo'>Efectivo</option>
-                                            <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
-                                            <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
-                                        </optgroup>
-                                        <optgroup label="Billeteras digitales">
-                                            <option value='Daviplata'>Daviplata</option>
-                                            <option value='Nequi'>Nequi</option>
-                                            <option value='Movii'>Movii</option>
-                                            <option value='Tuya Pay'>Tuya Pay</option>
-                                            <option value='Dale'>Dale</option>
-                                            <option value='Nubank'>Nubank</option>
-                                            <option value='Uala'>Uala</option>
-                                            <option value='Lulo Bank'>Lulo Bank</option>
-                                            <option value='Tpaga'>Tpaga</option>
-                                            <option value='Powwi'>Powwi</option>
-                                            <option value='BBVA Wallet'>BBVA Wallet</option>
-                                            <option value='Ahorro a la mano'>Ahorro a la mano</option>
-                                            <option value='Apple Pay'>Apple Pay</option>
-                                            <option value='Rappipay'>Rappipay</option>
-                                            <option value='Claro Pay'>Claro Pay</option>
-                                            <option value='Powwi'>Powwi</option>
-                                        </optgroup>
-                                        <optgroup label="Otros">
-                                            <option value='Baloto'>Baloto</option>
-                                            <option value='Giro'>Giro</option>
-                                            <option value='Cheque'>Cheque</option>
-                                        </optgroup>
-                                    </select>
-                                    {errors.meanPayment && (
-                                        <p className='text-danger'>El medio de pago es requerido</p>
-                                    )}
-                                </div>
+                                <p className={`${styles.label} m-0 text-start me-3`}>Medio de pago</p>
+                                <select
+                                    className={`${styles.input} p-2 me-4`}
+                                    value={meanPayment}
+                                    onChange={handleMeanPaymentChange}
+                                    required
+                                >
+                                    <option value="">Seleccione medio de pago</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                                    <option value="Transferencia">Transferencia</option>
+                                </select>
                             </div>
 
                             <div className="d-flex align-items-center justify-content-between">
@@ -240,7 +217,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                         {...register('seller', { required: 'El vendedor es requerido' })}
                                         className={`${styles.input} p-2`}
                                         placeholder='Nombre del vendedor'
-                                        />
+                                    />
                                     {errors.seller && (
                                         <div className='invalid-feedback'>{errors.seller.message}</div>
                                     )}
@@ -250,14 +227,8 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                     </div>
                 )}
 
-                {typeIncome === 'Otros ingresos' && (
-                    <div>
-                        bbbbbbb
-                    </div>
-                )}
-
-                <div className="mb-4 d-flex align-items-center justify-content-center">
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                <div className='mt-3 d-flex justify-content-end'>
+                    <button type='submit' className='btn btn-primary'>Registrar</button>
                 </div>
             </form>
         </div>
@@ -265,12 +236,3 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 }
 
 export default IncomeCash;
-
-/*
--ESCOGER EL ARTICULO
--VER EL VR UNITARIO
--ESCRIBIR LA CANTIDAD
--VER EL VR TOTAL
--SELECCIONAR EL MEDIO DE PAGO
-
-*/
