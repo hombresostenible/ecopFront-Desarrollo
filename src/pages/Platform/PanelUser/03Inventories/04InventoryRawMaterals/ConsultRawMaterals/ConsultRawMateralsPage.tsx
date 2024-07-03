@@ -265,7 +265,7 @@ function ConsultRawMateralsPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className={`${styles.noRawMaterialMessage} d-flex align-items-center justify-content-center`}>
+                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
                                         No tienes materias primas registradas
                                     </div>
                                 )}

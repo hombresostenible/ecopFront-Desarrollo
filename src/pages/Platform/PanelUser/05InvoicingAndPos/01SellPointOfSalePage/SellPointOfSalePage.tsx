@@ -3,10 +3,12 @@ import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
+// REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
+// ELEMENTOS DEL COMPONENTE
 import SearchItemName from '../../../../../components/Platform/05InvoicingAndPos/01SearchItemName/SearchItemName';
 import SelectQuantity from '../../../../../components/Platform/05InvoicingAndPos/02SelectQuantity/SelectQuantity';
 import PlasticBagCharged from '../../../../../components/Platform/05InvoicingAndPos/03PlasticBagCharged/PlasticBagCharged';
@@ -176,8 +178,8 @@ function SellPointOfSalePage() {
                         </div>
 
                         <div className='d-flex justify-content-between'>
-                            <div className={`${styles.infoRegister} border rounded`}>
-                                <p className={`${styles.barCodettext} m-0`}>Código de barras</p>
+                            <div className={`${styles.info__Register} d-flex align-items-center justify-content-between border rounded`}>
+                                <p className={`${styles.barCode} m-0 text-center`}>Código de barras</p>
                                 <input
                                     id="barCodeInput"
                                     type="text"

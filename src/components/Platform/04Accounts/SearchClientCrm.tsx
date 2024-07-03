@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
     token: string;
-    typeSell: string;
+    typeSell?: string;
     onClientSelect: (value: string | null) => void;
 }
 
@@ -55,10 +55,14 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
         label: '¿No existe tu cliente? Créalo acá',
     };
 
-    const options = Array.isArray(crmClients) ? crmClients.map((crmClient) => ({
+    const options = Array.isArray(crmClients)
+    ? crmClients.map((crmClient) => ({
         value: crmClient.documentId,
-        label: `${crmClient.documentId} - ${crmClient.name} ${crmClient.lastName}`
-    })) : [];
+        label: crmClient.name && crmClient.lastName 
+          ? `${crmClient.documentId} - ${crmClient.name} ${crmClient.lastName}` 
+          : `${crmClient.documentId} - ${crmClient.corporateName}`
+      }))
+    : [];
     
     options?.unshift(createClientOption);
 
@@ -93,7 +97,7 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
             </div>
             <div>
                 <Select
-                    className={`${styles.info} p-1 border rounded border-secundary`}
+                    className={`${styles.info} p-1 border-secundary`}
                     value={selectedOption}
                     inputValue={filterText}
                     onInputChange={handleInputChange}
