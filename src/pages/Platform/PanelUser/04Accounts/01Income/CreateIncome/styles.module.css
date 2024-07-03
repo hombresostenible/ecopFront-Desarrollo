@@ -10,12 +10,57 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
-    font-family: 'Century Gothic', sans-serif;
 }
-.link__Income_Create {
-    border: none;
-    text-decoration: none;
-    padding: 10px 20px;
-    color: white;
+
+/* CONTENEDOR DE LAS FECHAS */
+.container__Check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkbox {
+    height: 20px;
+    width: 20px;
+}
+.container__Calendars {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1;
+    top: 0px;
+    right: 0;
+    background: white;
+}
+.calendar {
+    border-radius: 5px;
+    width: 350px;
+}
+.custom__Calendar {
+    background-color: #f8f9fa;
+}
+.weekend__Day {
+    color: #e4002b;
+}
+.weekday {
+    color: #212529;
+}
+.input {
+    border-radius: 5px;
+    width: 350px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
+.type__Income {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 200px;
+    padding: 10px 0;
+}
+.type__Income:hover {
+    cursor: pointer;
+}
+.active {
     background: #718bd8;
+    color: #f8f9fa;
+    border: none;
 }
