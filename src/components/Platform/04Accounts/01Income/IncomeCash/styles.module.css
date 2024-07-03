@@ -23,15 +23,47 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
+.container__Quantity {
+    /* border: 1px solid teal; */
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container__FaPlus {
+    /* border: 1px solid teal; */
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* .icon__FaPlus {
+
+} */
+.icon__FaPlus {
+    color: #6c757d;
+    font-size: 12px;
+    height: 25px;
+    width: 25px;
+    margin: 5px;
+}
+.icon__FaPlus:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}
 .quantity{
+    /* border: 1px solid red; */
     height: 60px;
     width: 15%;
     min-width: 150px;
 }
 .description__Item{
     height: 60px;
-    width: 40%;
-    min-width: 400px;
+    width: 35%;
+    min-width: 350px;
 }
 .price__Unit{
     height: 60px;
@@ -47,6 +79,23 @@
     height: 60px;
     width: 15%;
     min-width: 150px;
+}
+.delete{
+    height: 60px;
+    width: 5%;
+    min-width: 50px;
+}
+.button__Action {
+    color: #6c757d;
+    font-size: 14px;
+    height: 35px;
+    width: 25px;
+    margin: 5px;
+}
+.button__Action:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
 }
 .message__Unrelated_Items {
     min-height: 60px;
@@ -85,5 +134,17 @@
 .button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
+    cursor: pointer;
+}
+.button__Cancel {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #e9ecef;
+}
+.button__Cancel:hover {
+    background: #6c757d;
+    transition: 300ms all ease;
+    color: #f8f9fa;
     cursor: pointer;
 }
