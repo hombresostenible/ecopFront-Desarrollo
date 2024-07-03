@@ -2,6 +2,7 @@
 import { useState, useEffect, ChangeEvent, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { postAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
@@ -11,8 +12,11 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
 import SearchItemName from '../../../../../components/Platform/05InvoicingAndPos/01SearchItemName/SearchItemName';
+import ModalChangeQuantityPerItem from './ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../SearchClientCrm';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 interface CashProps {
@@ -64,12 +68,35 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         });
     };
 
+    // 
     useEffect(() => {
         const inputElement = document.getElementById("barCodeInput") as HTMLInputElement;
         if (inputElement) {
             inputElement.value = '';
         }
     }, [scannedItems]);
+
+    // BORRA EL ARTÍCULO RELACIONADO EN LA TABLA PARA COMPRA
+    const handleDeleteItem = (index: number) => {
+        setScannedItems(prevItems => {
+            const updatedItems = [...prevItems];
+            updatedItems.splice(index, 1); // Elimina el artículo en la posición `index`
+            return updatedItems;
+        });
+    };
+
+    // Estado para controlar el índice del artículo en `scannedItems` que se está editando
+    const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
+
+    // Función para abrir el modal de cambio de cantidad
+    const handleChangeQuantityPerItem = (index: number) => {
+        setChangeQuantityIndex(index);
+    };
+
+    // Función para cerrar el modal
+    const handleCloseModal = () => {
+        setChangeQuantityIndex(null);
+    };
     
     //Setea el cliente cuando se busca o se crea
     const [selectedClient, setSelectedClient] = useState<string | null>(null);
@@ -153,9 +180,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                     <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio incluido IVA</div>
                                     <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
                                     <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
+                                    <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
                                 </div>
                             </div>
 
@@ -164,19 +192,33 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                     scannedItems.map((product, index) => (
                                         <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <div className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.quantity}</span>
+                                                <div className={`${styles.container__Quantity} `}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.quantity}</span>
+                                                </div>
+                                                <div className={`${styles.container__FaPlus} `}>
+                                                    <FaPlus
+                                                        className={`${styles.icon__FaPlus} `}
+                                                        onClick={() => handleChangeQuantityPerItem(index)}
+                                                    />
+                                                </div>
                                             </div>
                                             <div className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.item.nameItem}</span>
                                             </div>
-                                            <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(product.item.sellingPrice)}</span>
-                                            </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.item.IVA} %</span>
                                             </div>
+                                            <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(product.item.sellingPrice)}</span>
+                                            </div>
                                             <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span>{formatNumber((product.quantity) * (product.item.sellingPrice))}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((product.quantity) * (product.item.sellingPrice))}</span>
+                                            </div>
+                                            <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Action} `}
+                                                    onClick={() => handleDeleteItem(index)}
+                                                />
                                             </div>
                                         </div>
                                     ))
@@ -188,6 +230,29 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             </div>
                         </div>
 
+                        <Modal show={changeQuantityIndex !== null} onHide={handleCloseModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Aumentar Cantidad</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {changeQuantityIndex !== null && (
+                                    <ModalChangeQuantityPerItem
+                                        onSaveQuantity={(newQuantity) => {
+                                            if (changeQuantityIndex !== null) {
+                                                setScannedItems(prevItems => {
+                                                    const updatedItems = [...prevItems];
+                                                    updatedItems[changeQuantityIndex].quantity = newQuantity;
+                                                    return updatedItems;
+                                                });
+                                            }
+                                            handleCloseModal(); // Cierra el modal después de guardar
+                                        }}
+                                        onClose={handleCloseModal}
+                                    />
+                                )}
+                            </Modal.Body>
+                        </Modal>
+
                         <SearchClientCrm
                             token={token}
                             onClientSelect={(client) => setSelectedClient(client)}
@@ -197,7 +262,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             <div className="d-flex align-items-center justify-content-between">
                                 <p className={`${styles.label} m-0 text-start me-3`}>Medio de pago</p>
                                 <select
-                                    className={`${styles.input} p-2 me-4`}
+                                    className={`${styles.input} p-2`}
                                     value={meanPayment}
                                     onChange={handleMeanPaymentChange}
                                     required
@@ -227,8 +292,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                     </div>
                 )}
 
-                <div className='mt-3 d-flex justify-content-end'>
-                    <button type='submit' className='btn btn-primary'>Registrar</button>
+                {}
+
+                <div className="mb-4 d-flex align-items-center justify-content-center">
+                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                 </div>
             </form>
         </div>
