@@ -176,7 +176,7 @@ function ConsultAssetsPage() {
                                 </div>
                             </div>
 
-                            <div className={`${styles.container__Body}`}>
+                            <div className={`${styles.container__Body} `}>
                                 {Array.isArray(assets) && assets.length > 0 ? (
                                     assets.map((asset) => (
                                         <div key={asset.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
@@ -271,7 +271,7 @@ function ConsultAssetsPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className={`${styles.noAssetsMessage} d-flex align-items-center justify-content-center`}>
+                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
                                         No tienes equipos, herramientas y máquinas registrados
                                     </div>
                                 )}

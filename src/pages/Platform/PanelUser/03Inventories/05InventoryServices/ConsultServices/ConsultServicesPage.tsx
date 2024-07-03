@@ -182,7 +182,7 @@ function ConsultServicesPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className={`${styles.noRawMaterialMessage} d-flex align-items-center justify-content-center`}>
+                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
                                         No tienes servicios registrados
                                     </div>
                                 )}

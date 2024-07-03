@@ -144,6 +144,7 @@ function SeeRecordsAccountsBookPage() {
     const onCloseModal = useCallback(() => {
         setShowSeeRegisterAccount(false);
         setShowDeleteConfirmation(false);
+        setShowModalEditAsset(false);
     }, []);
 
     const branchesArray = Array.isArray(branches) ? branches : [];
