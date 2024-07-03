@@ -170,3 +170,14 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
+.button__Delete {
+    color: #6c757d;
+    height: 35px;
+    width: 25px;
+    font-size: 14px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}

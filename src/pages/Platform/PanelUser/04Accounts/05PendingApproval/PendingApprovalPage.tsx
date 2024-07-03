@@ -359,7 +359,7 @@ function PendingApprovalPage() {
 
                         <Modal show={showApproval} onHide={() => setShowApproval(false)} >
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Aprueba el registro</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Aprobación de registros</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <ApprovalRegister
