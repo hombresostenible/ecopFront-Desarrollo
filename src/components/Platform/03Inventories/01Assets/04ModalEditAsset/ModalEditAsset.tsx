@@ -152,7 +152,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                     </div>
                 </div>
                 <div className="w-100">
-                <h6 className={styles.label}>Condición del activo</h6>
+                    <h6 className={styles.label}>Condición del activo</h6>
                     <div className={styles.containerInput}>
                         <select
                             className={`${styles.inputEdit} p-2 border w-100`}

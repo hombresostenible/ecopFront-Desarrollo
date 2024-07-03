@@ -8,7 +8,7 @@ import { deleteMerchandise, getMerchandises } from '../../../redux/User/merchand
 import { deleteProduct, getProducts } from '../../../redux/User/productSlice/actions';
 import { deleteRawMaterial, getRawMaterials } from '../../../redux/User/rawMaterialSlice/actions';
 import { deleteService, getServices } from '../../../redux/User/serviceSlice/actions';
-import { deleteAccountsBook, getAccountsBooks } from '../../../redux/User/accountsBookSlice/actions';
+import { deleteAccountsBook, getAccountsBooksIncomesApproved } from '../../../redux/User/accountsBookSlice/actions';
 import type { AppDispatch } from '../../../redux/store';
 import styles from './styles.module.css';
 
@@ -82,7 +82,7 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
                 dispatch(deleteAccountsBook(idItem, token));
                 // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
-                dispatch(getAccountsBooks(token));
+                dispatch(getAccountsBooksIncomesApproved(token));
             }
             onCloseModal();
         } catch (error) {

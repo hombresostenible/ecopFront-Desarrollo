@@ -257,10 +257,10 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
                                 <option value='Declaracion de Renta'>Declaracion de Renta</option>
                                 <option value='Retencion en la Fuente'>Retencion en la Fuente</option>
                                 <option value='Predial'>Predial</option>
-                                <option value='Vehículos y motos'>Vehículos y motos</option>
+                                <option value='Vehiculos y motos'>Vehiculos y motos</option>
                             </optgroup>
                             <optgroup label="Otros gastos">
-                                <option value='Asesoría Contable'>Asesoría Contable</option>
+                                <option value='Asesoria Contable'>Asesoria Contable</option>
                                 <option value='Renovacion Camara de Comercio'>Renovacion Camara de Comercio</option>
                                 <option value='Licencias y permisos'>Licencias y permisos</option>
                                 <option value='Asesoria Juridica'>Asesoria Juridica</option>
