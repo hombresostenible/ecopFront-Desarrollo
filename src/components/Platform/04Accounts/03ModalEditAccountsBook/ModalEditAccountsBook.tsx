@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
-import { getIncomesNotApproved, putAccountsBook } from '../../../../redux/User/accountsBookSlice/actions';
+import { getAccountsBooksIncomesApproved, putAccountsBook } from '../../../../redux/User/accountsBookSlice/actions';
 import type { AppDispatch } from '../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../types/User/accountsBook.types';
@@ -52,11 +52,13 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
             editedAccountsBook.transactionType = editedTransactionType;
             editedAccountsBook.creditCash = editedCreditCash;
             editedAccountsBook.meanPayment = editedMeanPayment;
-            await dispatch(putAccountsBook(idItem, editedAccountsBook, token));
-            dispatch(getIncomesNotApproved(token));
+            dispatch(putAccountsBook(idItem, editedAccountsBook, token));
+            // Simulamos un delay de la API
+            await new Promise(resolve => setTimeout(resolve, 500));
+            dispatch(getAccountsBooksIncomesApproved(token));
             onCloseModal();
         } catch (error) {
-            console.error('Error al guardar cambios:', error);
+            throw new Error('Error al guardar cambios');
         }
     };
 
