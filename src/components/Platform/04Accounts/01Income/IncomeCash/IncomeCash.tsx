@@ -10,7 +10,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
+import { IAccountsBook, IItemsSold } from "../../../../../types/User/accountsBook.types";
 import SearchItemName from '../../../../../components/Platform/05InvoicingAndPos/01SearchItemName/SearchItemName';
 import ModalChangeQuantityPerItem from './ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../SearchClientCrm';
@@ -52,20 +52,19 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     };
     
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
-    const [scannedItems, setScannedItems] = useState<{ item: any, quantity: number }[]>([]);
+    const [scannedItems, setScannedItems] = useState<IItemsSold[]>([]);
     const handleItemSelect = (item: any) => {
-        setScannedItems(prevItems => {
-            const existingItem = prevItems.find(scannedItem => scannedItem.item.id === item.id);
-            if (existingItem) {
-                return prevItems.map(scannedItem =>
-                    scannedItem.item.id === item.id
-                        ? { ...scannedItem, quantity: scannedItem.quantity + 1 }
-                        : scannedItem
-                );
-            } else {
-                return [...prevItems, { item, quantity: 1 }];
-            }
-        });
+        const selectedItems: IItemsSold = {
+            nameItem: item.nameItem,
+            id: item.id,
+            type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service', // Asegúrate de que el tipo coincida con la enumeración permitida
+            IVA: item.IVA,
+            sellingPrice: item.sellingPrice,
+            quantity: 1, // Puedes inicializar la cantidad según tu lógica de selección
+            subTotalValue: item.sellingPrice * 1 // Calcula el subtotal según tu lógica
+        };
+    
+        setScannedItems([...scannedItems, selectedItems]);
     };
 
     // 
@@ -109,14 +108,13 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        return total + (scannedItem.quantity * scannedItem.item.sellingPrice);
+        return total + (scannedItem.quantity * scannedItem.sellingPrice);
     }, 0);
 
     // Estado para almacenar el monto del pago recibido
     const [paymentAmount, setPaymentAmount] = useState<number>(0);
 
     // Calcular el cambio
-    // const changeAmount = paymentAmount - totalPurchaseAmount;
     const [changeAmount, setChangeAmount] = useState<number | null>(null);
     const handleCalculateChange = () => {
         setChangeAmount(paymentAmount - totalPurchaseAmount);
@@ -126,19 +124,20 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         try {
             const accountBookData = {
                 ...values,
-                branchId: selectedBranch,
                 transactionType: "Ingreso",
                 creditCash: "Contado",
-
                 meanPayment,
+                itemsSold: scannedItems,
                 transactionCounterpartId: selectedClient,
+                totalValue: totalPurchaseAmount,
+                branchId: selectedBranch,
             } as IAccountsBook;
             if (defaultDates) {
-                accountBookData.registrationDate = new Date();
-                accountBookData.transactionDate = new Date();
+                accountBookData.registrationDate = new Date().toLocaleDateString();
+                accountBookData.transactionDate = new Date().toLocaleDateString();
             }
-            if (registrationDate) accountBookData.registrationDate = registrationDate;
-            if (transactionDate) accountBookData.transactionDate = transactionDate;
+            if (registrationDate) accountBookData.registrationDate = registrationDate.toLocaleDateString();
+            if (transactionDate) accountBookData.transactionDate = transactionDate.toLocaleDateString();
             dispatch(postAccountsBook(accountBookData, token));
             setFormSubmitted(true);
             setTimeout(() => {
@@ -218,16 +217,16 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                                 </div>
                                             </div>
                                             <div className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.item.nameItem}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
                                             </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.item.IVA} %</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.IVA} %</span>
                                             </div>
                                             <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(product.item.sellingPrice)}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(product.sellingPrice)}</span>
                                             </div>
                                             <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((product.quantity) * (product.item.sellingPrice))}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((product.quantity) * (product.sellingPrice))}</span>
                                             </div>
                                             <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
                                                 <RiDeleteBin6Line
@@ -282,10 +281,35 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                     onChange={handleMeanPaymentChange}
                                     required
                                 >
-                                    <option value="">Seleccione medio de pago</option>
-                                    <option value="Efectivo">Efectivo</option>
-                                    <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
-                                    <option value="Transferencia">Transferencia</option>
+                                    <option value="">Seleccione el medio de pago</option>
+                                    <optgroup label="Tradicionales">
+                                        <option value='Efectivo'>Efectivo</option>
+                                        <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
+                                        <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
+                                    </optgroup>
+                                    <optgroup label="Billeteras digitales">
+                                        <option value='Daviplata'>Daviplata</option>
+                                        <option value='Nequi'>Nequi</option>
+                                        <option value='Movii'>Movii</option>
+                                        <option value='Tuya Pay'>Tuya Pay</option>
+                                        <option value='Dale'>Dale</option>
+                                        <option value='Nubank'>Nubank</option>
+                                        <option value='Uala'>Uala</option>
+                                        <option value='Lulo Bank'>Lulo Bank</option>
+                                        <option value='Tpaga'>Tpaga</option>
+                                        <option value='Powwi'>Powwi</option>
+                                        <option value='BBVA Wallet'>BBVA Wallet</option>
+                                        <option value='Ahorro a la mano'>Ahorro a la mano</option>
+                                        <option value='Apple Pay'>Apple Pay</option>
+                                        <option value='Rappipay'>Rappipay</option>
+                                        <option value='Claro Pay'>Claro Pay</option>
+                                        <option value='Powwi'>Powwi</option>
+                                    </optgroup>
+                                    <optgroup label="Otros">
+                                        <option value='Baloto'>Baloto</option>
+                                        <option value='Giro'>Giro</option>
+                                        <option value='Cheque'>Cheque</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
