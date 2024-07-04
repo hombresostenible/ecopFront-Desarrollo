@@ -65,7 +65,7 @@ import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configurati
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
 // import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
 // SIDEBAR - TUS SEDES
-import BranchCardPage from './pages/Platform/PanelUser/02Branch/BranchCard/BranchCardPage';
+import ConsultBranchPage from './pages/Platform/PanelUser/02Branch/ConsultBranch/ConsultBranchPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
 // SIDEBAR - INVENTARIOS
 import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
@@ -224,7 +224,7 @@ function App() {
                             <Route path='/strategic-notifications' element={<StrategicNotificationsPage />} />      {/* NOTIFICACIONES ESTRATEGICAS */}
                             <Route path='/consultancies' element={<ConsultanciesPage />} />                         {/* ASESORIAS */}
                             {/* SideBar Tus Sedes */}
-                            <Route path='/branches/consult-branches' element={<BranchCardPage />} />
+                            <Route path='/branches/consult-branches' element={<ConsultBranchPage />} />
                             <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
                             {/* SideBar Inventarios - Assets */}
                             <Route path='/inventories/consult-assets' element={<ConsultAssetsPage />} />
