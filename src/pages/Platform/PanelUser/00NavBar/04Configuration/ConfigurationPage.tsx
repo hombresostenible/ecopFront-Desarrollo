@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import UserCard from './01Profile/UserCard';
+import ProfileUser from './01ProfileUser/ProfileUser';
+import YourCurrentPlan from './02YourCurrentPlan/YourCurrentPlan';
 import BillingConfiguration from './03BillingConfiguration/BillingConfiguration';
-import YourPlan from './02Yourcurrentplan/YourPlan';
-import RoleInformation from './04Roleinformation/RoleInformation';
-import UseYourEmail from './05Mailconfiguration/UseYourEmail';
+import RoleInformation from './04RoleInformation/RoleInformation';
+import MailConfiguration from './05MailConfiguration/MailConfiguration';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
@@ -28,7 +28,7 @@ function ConfigurationPage() {
         }
     }, [token, dispatch]);
 
-    const [selectedComponent, setSelectedComponent] = useState('general');
+    const [selectedComponent, setSelectedComponent] = useState('profileUser');
 
     const handleComponentChange = (component: SetStateAction<string>) => {
         setSelectedComponent(component);
@@ -43,13 +43,13 @@ function ConfigurationPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <div className='mb-4 d-flex gap-2'>
                             <div
-                                className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'general' ? styles.active : ''}`}
-                                onClick={() => handleComponentChange('general')}
+                                className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'profileUser' ? styles.active : ''}`}
+                                onClick={() => handleComponentChange('profileUser')}
                             >
                                 Perfil
                             </div>
-                            <div className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'yourPlan' ? styles.active : ''}`}
-                                onClick={() => handleComponentChange('yourPlan')}
+                            <div className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'yourCurrentPlan' ? styles.active : ''}`}
+                                onClick={() => handleComponentChange('yourCurrentPlan')}
                             >
                                 Tu plan actual
                             </div>
@@ -63,19 +63,19 @@ function ConfigurationPage() {
                             >
                                 Información de roles
                             </div>
-                            <div className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'useYourEmail' ? styles.active : ''}`}
-                                onClick={() => handleComponentChange('useYourEmail')}
+                            <div className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'mailConfiguration' ? styles.active : ''}`}
+                                onClick={() => handleComponentChange('mailConfiguration')}
                             >
                                 Configuración de correo
                             </div>
                         </div>
 
-                        {selectedComponent === 'general' && (
-                            user ? <UserCard user={user} /> : <p>Loading...</p>
+                        {selectedComponent === 'profileUser' && (
+                            user ? <ProfileUser user={user} /> : <p>Loading...</p>
                         )}
 
-                        {selectedComponent === 'yourPlan' && (
-                            <YourPlan />
+                        {selectedComponent === 'yourCurrentPlan' && (
+                            <YourCurrentPlan />
                         )}
                         {selectedComponent === 'billingConfiguration' && (
                             <BillingConfiguration />
@@ -83,8 +83,8 @@ function ConfigurationPage() {
                         {selectedComponent === 'roleInformation' && (
                             <RoleInformation />
                         )}
-                        {selectedComponent === 'useYourEmail' && (
-                            <UseYourEmail />
+                        {selectedComponent === 'mailConfiguration' && (
+                            <MailConfiguration />
                         )}
                     </div>
                     <Footer />

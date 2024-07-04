@@ -6,3 +6,8 @@
     height: calc(100vh - 70px);
     width: calc(100vw - 350px);
 }
+.title {
+    color: #f28705;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
