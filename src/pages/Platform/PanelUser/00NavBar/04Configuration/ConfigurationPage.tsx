@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import UserCard from './UserCard/UserCard';
-import BillingConfiguration from './Profile/BillingConfiguration';
-import YourPlan from './Profile/YourPlan';
-import RoleInformation from './Profile/RoleInformation';
-import UseYourEmail from './Profile/UseYourEmail';
+import UserCard from './01Profile/UserCard';
+import BillingConfiguration from './03BillingConfiguration/BillingConfiguration';
+import YourPlan from './02Yourcurrentplan/YourPlan';
+import RoleInformation from './04Roleinformation/RoleInformation';
+import UseYourEmail from './05Mailconfiguration/UseYourEmail';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
@@ -40,8 +40,8 @@ function ConfigurationPage() {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} px-2 overflow-hidden overflow-y-auto`}>
-                        <div className='d-flex gap-2'>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
+                        <div className='mb-4 d-flex gap-2'>
                             <div
                                 className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'general' ? styles.active : ''}`}
                                 onClick={() => handleComponentChange('general')}
@@ -66,7 +66,7 @@ function ConfigurationPage() {
                             <div className={` ${styles.component} d-flex align-items-center justify-content-center ${selectedComponent === 'useYourEmail' ? styles.active : ''}`}
                                 onClick={() => handleComponentChange('useYourEmail')}
                             >
-                                Envío de correos
+                                Configuración de correo
                             </div>
                         </div>
 
