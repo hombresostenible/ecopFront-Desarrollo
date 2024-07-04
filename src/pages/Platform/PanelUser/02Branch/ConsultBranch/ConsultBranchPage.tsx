@@ -15,7 +15,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaUserEdit } from "react-icons/fa";
 import styles from './styles.module.css';
 
-function BranchCardPage() {
+function ConsultBranchPage() {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -216,4 +216,4 @@ function BranchCardPage() {
     );
 }
 
-export default BranchCardPage;
+export default ConsultBranchPage;
