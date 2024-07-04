@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import meanPaymentSelects from './MeanPayment';
+import meanPaymentSelects from './StateAssets';
 import styles from './styles.module.css';
 
-interface SelectMeanPaymentProps {
-    onSelect: (meanPaymentProps: string) => void;
+interface SelectStateAssetsProps {
+    onSelect: (selectStateAssetsProps: string) => void;
     reset: boolean;
-    initialMeanPayment?: string;
+    initialStateAssets?: string;
 }
 
 const customStyles = {
@@ -25,39 +25,39 @@ const customStyles = {
     }),
 };
 
-function SelectMeanPayment({ onSelect, reset, initialMeanPayment }: SelectMeanPaymentProps) {
-    const [meanPayment, setMeanPayment] = useState<{ value: string; label: string } | null>(null);
-    const [selectedMeanPayment, setSelectedMeanPayment] = useState<{ value: string; label: string } | null>(initialMeanPayment ? { value: initialMeanPayment, label: initialMeanPayment } : null);
+function SelectStateAssets({ onSelect, reset, initialStateAssets }: SelectStateAssetsProps) {
+    const [stateAssets, setStateAssets] = useState<{ value: string; label: string } | null>(null);
+    const [selectedStateAssets, setSelectedStateAssets] = useState<{ value: string; label: string } | null>(initialStateAssets ? { value: initialStateAssets, label: initialStateAssets } : null);
 
     const handlePropChange = (selectedOption: any) => {
-        setMeanPayment(selectedOption);
-        setSelectedMeanPayment(selectedOption);
+        setStateAssets(selectedOption);
+        setSelectedStateAssets(selectedOption);
         const selectedValue = selectedOption.value;
         onSelect(selectedValue);
     };
 
     useEffect(() => {
         if (reset) {
-            setSelectedMeanPayment(null);
+            setSelectedStateAssets(null);
         }
     }, [reset]);
 
     return (
         <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-            <h6 className={styles.label}>Medio de pago</h6>
+            <h6 className={styles.label}>Estado del equipo, herramienta o máquina</h6>
             <div className={styles.container__Input}>
                 <Select
                     styles={customStyles}
                     className={`${styles.input} border-0`}
                     options={meanPaymentSelects}
-                    value={selectedMeanPayment || meanPayment}
+                    value={selectedStateAssets || stateAssets}
                     onChange={handlePropChange}
                     isSearchable={true}
-                    placeholder='Medio de pago'
+                    placeholder='Estado del equipo, herramienta o máquina'
                 />
             </div>
         </div>
     );
 }
 
-export default SelectMeanPayment;
+export default SelectStateAssets;

@@ -53,7 +53,7 @@ function SelectPackageType({ onSelect, reset, initialPackageType }: SelectPackag
                     value={selectedPackageType || packageType}
                     onChange={handlePropChange}
                     isSearchable={true}
-                    placeholder='packageType'
+                    placeholder='Empaque principal'
                 />
             </div>
         </div>
