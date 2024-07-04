@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps */
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState } from 'react';
+// import { useState, useEffect, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { postAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
-import { getAssetsByBranch } from '../../../../../redux/User/assetsSlice/actions';
-import { getMerchandisesByBranch } from '../../../../../redux/User/merchandiseSlice/actions';
-import { getRawMaterialsByBranch } from '../../../../../redux/User/rawMaterialSlice/actions';
-import { getServicesByBranch } from '../../../../../redux/User/serviceSlice/actions';
+// import { getAssetsByBranch } from '../../../../../redux/User/assetsSlice/actions';
+// import { getMerchandisesByBranch } from '../../../../../redux/User/merchandiseSlice/actions';
+// import { getRawMaterialsByBranch } from '../../../../../redux/User/rawMaterialSlice/actions';
+// import { getServicesByBranch } from '../../../../../redux/User/serviceSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
-import { IAssets } from '../../../../../types/User/assets.types';
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
-import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
-import { IService } from '../../../../../types/User/services.types';
-import SearchSupplierCrm from '../../SearchSupplierCrm';
+// import { IAssets } from '../../../../../types/User/assets.types';
+// import { IMerchandise } from '../../../../../types/User/merchandise.types';
+// import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
+// import { IService } from '../../../../../types/User/services.types';
+// import SearchSupplierCrm from '../../SearchSupplierCrm';
 import styles from './styles.module.css';
 
 interface CashProps {
@@ -27,88 +28,91 @@ interface CashProps {
 }
 
 function CashExpense({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: CashProps) {
+    console.log('defaultDates: ', defaultDates)
+    console.log('registrationDate: ', registrationDate)
+    console.log('transactionDate: ', transactionDate)
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
-    const assets = useSelector((state: RootState) => state.assets.assets);
-    const merchandises = useSelector((state: RootState) => state.merchandise.merchandise);
-    const rawMaterials = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
-    const services = useSelector((state: RootState) => state.service.service);
+    // const assets = useSelector((state: RootState) => state.assets.assets);
+    // const merchandises = useSelector((state: RootState) => state.merchandise.merchandise);
+    // const rawMaterials = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
+    // const services = useSelector((state: RootState) => state.service.service);
 
     const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     //Setea el cliente cuando se busca o se crea
-    const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
+    // const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
 
     //Setea el nombre de lo que se va a comprar
-    const [nameItem, setNameItem] = useState('');
+    // const [nameItem, setNameItem] = useState('');
 
     //Selección de la tabla que se consultará para renderizar los activos, mercancías, etc que se compraron a contado
-    const [expenseCategory, setTypeExpenses] = useState('');
-    const handleTypeExpenses = (event: { target: { value: SetStateAction<string> }}) => {
-        setTypeExpenses(event.target.value);
-    };
+    // const [expenseCategory, setTypeExpenses] = useState('');
+    // const handleTypeExpenses = (event: { target: { value: SetStateAction<string> }}) => {
+    //     setTypeExpenses(event.target.value);
+    // };
 
     //Selección el medio de pago
-    const [meanPayment, setMeansPayment] = useState('');
-    const handleMeanPaymentChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setMeansPayment(event.target.value);
-    };
+    // const [meanPayment, setMeansPayment] = useState('');
+    // const handleMeanPaymentChange = (event: { target: { value: SetStateAction<string> }}) => {
+    //     setMeansPayment(event.target.value);
+    // };
 
     //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancia, MP, etc
-    useEffect(() => {
-        if (expenseCategory === 'Activo') {
-            dispatch(getAssetsByBranch(selectedBranch, token));
-        }
-        if (expenseCategory === 'Mercancia') {
-            dispatch(getMerchandisesByBranch(selectedBranch, token));
-        }
-        if (expenseCategory === 'Materia Prima') {
-            dispatch(getRawMaterialsByBranch(selectedBranch, token));
-        }
-        if (expenseCategory === 'Servicio') {
-            dispatch(getServicesByBranch(selectedBranch, token));
-        }
-    }, [ expenseCategory, token ]);
+    // useEffect(() => {
+    //     if (expenseCategory === 'Activo') {
+    //         dispatch(getAssetsByBranch(selectedBranch, token));
+    //     }
+    //     if (expenseCategory === 'Mercancia') {
+    //         dispatch(getMerchandisesByBranch(selectedBranch, token));
+    //     }
+    //     if (expenseCategory === 'Materia Prima') {
+    //         dispatch(getRawMaterialsByBranch(selectedBranch, token));
+    //     }
+    //     if (expenseCategory === 'Servicio') {
+    //         dispatch(getServicesByBranch(selectedBranch, token));
+    //     }
+    // }, [ expenseCategory, token ]);
     
     //Muestra los nombres de los registros
-    const getItemInfoTypeExpenses = () => {
-        switch (expenseCategory) {
-            case 'Activo':
-                return { labelTypeExpenses: 'el activo', dataTypeExpenses: assets as IAssets[] };
-            case 'Mercancia':
-                return { labelTypeExpenses: 'la mercancía', dataTypeExpenses: merchandises as IMerchandise[] };
-            case 'Materia Prima':
-                return { labelTypeExpenses: 'la materia prima', dataTypeExpenses: rawMaterials as IRawMaterial[] };
-            case 'Servicio':
-                return { labelTypeExpenses: 'el servicio', dataTypeExpenses: services as IService[] };
-            default:
-                return { labelTypeExpenses: '', dataTypeExpenses: [] };
-        }
-    };
-    const { labelTypeExpenses, dataTypeExpenses } = getItemInfoTypeExpenses();
+    // const getItemInfoTypeExpenses = () => {
+    //     switch (expenseCategory) {
+    //         case 'Activo':
+    //             return { labelTypeExpenses: 'el activo', dataTypeExpenses: assets as IAssets[] };
+    //         case 'Mercancia':
+    //             return { labelTypeExpenses: 'la mercancía', dataTypeExpenses: merchandises as IMerchandise[] };
+    //         case 'Materia Prima':
+    //             return { labelTypeExpenses: 'la materia prima', dataTypeExpenses: rawMaterials as IRawMaterial[] };
+    //         case 'Servicio':
+    //             return { labelTypeExpenses: 'el servicio', dataTypeExpenses: services as IService[] };
+    //         default:
+    //             return { labelTypeExpenses: '', dataTypeExpenses: [] };
+    //     }
+    // };
+    // const { labelTypeExpenses, dataTypeExpenses } = getItemInfoTypeExpenses();
 
     //Periodicidad de pago de los servicios públicos si es Mensual o Bimestral
-    const [periodicityPayService, setPeriodicityPayService] = useState('');
-    const handlePeriodicityPayService = (event: { target: { value: SetStateAction<string> }}) => {
-        setPeriodicityPayService(event.target.value);
-    };
+    // const [periodicityPayService, setPeriodicityPayService] = useState('');
+    // const handlePeriodicityPayService = (event: { target: { value: SetStateAction<string> }}) => {
+    //     setPeriodicityPayService(event.target.value);
+    // };
 
     //Setea el valor unitario de la compra, gasto o pago
-    const [unitValue, setUnitValue] = useState<number>(0);
-    const handleUnitValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newUnitValue = parseFloat(event.target.value);
-        setUnitValue(newUnitValue);
-    };
+    // const [unitValue, setUnitValue] = useState<number>(0);
+    // const handleUnitValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const newUnitValue = parseFloat(event.target.value);
+    //     setUnitValue(newUnitValue);
+    // };
 
     //Setea la cantidad de unidades de la compra, gasto o pago
-    const [quantity, setQuantity] = useState<number>(0);
-    const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newQuantity = parseFloat(event.target.value);
-        setQuantity(newQuantity);
-    };
+    // const [quantity, setQuantity] = useState<number>(0);
+    // const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const newQuantity = parseFloat(event.target.value);
+    //     setQuantity(newQuantity);
+    // };
 
     const onSubmit = async (values: IAccountsBook) => {
         try {
@@ -117,18 +121,18 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                 branchId: selectedBranch,
                 transactionType: "Gasto",
                 creditCash: "Contado",
-                nameItem,
-                meanPayment,
-                transactionCounterpartId: selectedSupplier,
+                // nameItem,
+                // meanPayment,
+                // transactionCounterpartId: selectedSupplier,
             } as IAccountsBook;
-            if (defaultDates) {
-                formData.registrationDate = new Date();
-                formData.transactionDate = new Date();
-            }
+            // if (defaultDates) {
+            //     formData.registrationDate = new Date();
+            //     formData.transactionDate = new Date();
+            // }
 
-            if (expenseCategory === 'Acueducto' || expenseCategory === 'Energia' || expenseCategory === 'Gas' || expenseCategory === 'Internet' || expenseCategory === 'Celular/Plan de datos') formData.unitValue = formData.totalValue;
-            if (registrationDate) formData.registrationDate = registrationDate;
-            if (transactionDate) formData.transactionDate = transactionDate;
+            // if (expenseCategory === 'Acueducto' || expenseCategory === 'Energia' || expenseCategory === 'Gas' || expenseCategory === 'Internet' || expenseCategory === 'Celular/Plan de datos') formData.unitValue = formData.totalValue;
+            // if (registrationDate) formData.registrationDate = registrationDate;
+            // if (transactionDate) formData.transactionDate = transactionDate;
 
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
@@ -151,7 +155,7 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
             ))}
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                     <div className="px-3">
                         <p className={`${styles.text} mb-0 p-2`}>¿Qué compraste, gastaste o pagaste o por qué salió dinero de tu negocio?</p>
                     </div>
@@ -214,9 +218,9 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                             <p className='text-danger'>El rubro es requerido</p>
                         )}
                     </div>
-                </div>
+                </div> */}
 
-                {(expenseCategory === 'Activo' || expenseCategory === 'Mercancia' || expenseCategory === 'Materia Prima' || expenseCategory === 'Servicio') && (
+                {/* {(expenseCategory === 'Activo' || expenseCategory === 'Mercancia' || expenseCategory === 'Materia Prima' || expenseCategory === 'Servicio') && (
                     <div className="mb-3 p-2 d-flex flex-column justify-content-center align-items-center border rounded">
                         <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                             <div className="px-3">
@@ -245,9 +249,9 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
 
-                {(expenseCategory === 'Acueducto' || expenseCategory === 'Energia' || expenseCategory === 'Gas' || expenseCategory === 'Internet' || expenseCategory === 'Celular/Plan de datos') && (
+                {/* {(expenseCategory === 'Acueducto' || expenseCategory === 'Energia' || expenseCategory === 'Gas' || expenseCategory === 'Internet' || expenseCategory === 'Celular/Plan de datos') && (
                     <div>
                         <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                             <div className="px-3">
@@ -345,9 +349,9 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
 
-                {(
+                {/* {(
                     expenseCategory === 'Materia Prima' || expenseCategory === 'Mercancia' || expenseCategory === 'Servicio' || expenseCategory === 'Activo' ||  
                     expenseCategory === 'Arriendo' || expenseCategory === 'Reparaciones locativas' || expenseCategory === 'Transporte' || expenseCategory === 'Combustible' || 
                     expenseCategory === 'Nomina' || expenseCategory === 'Seguridad Social y/o parafiscales' || expenseCategory === 'IVA' || expenseCategory === 'IVA' || 
@@ -413,11 +417,10 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                                 )}
                             </div>
                         </div>
-
                     </div>
-                )}
+                )} */}
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                     <div className="px-3">
                         <p className={`${styles.text} mb-0 p-2`}>Medio de Pago</p>
                     </div>
@@ -461,13 +464,13 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                             <p className='text-danger'>El medio de pago es requerido es requerido</p>
                         )}
                     </div>
-                </div>
+                </div> */}
                 
-                <SearchSupplierCrm
+                {/* <SearchSupplierCrm
                     token={token}
                     expenseCategory={expenseCategory}
                     onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
-                />
+                /> */}
 
                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                     <div className="px-3">
