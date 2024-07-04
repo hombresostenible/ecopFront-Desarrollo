@@ -107,6 +107,21 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         setMeansPayment(event.target.value);
     };
 
+    // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
+    const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
+        return total + (scannedItem.quantity * scannedItem.item.sellingPrice);
+    }, 0);
+
+    // Estado para almacenar el monto del pago recibido
+    const [paymentAmount, setPaymentAmount] = useState<number>(0);
+
+    // Calcular el cambio
+    // const changeAmount = paymentAmount - totalPurchaseAmount;
+    const [changeAmount, setChangeAmount] = useState<number | null>(null);
+    const handleCalculateChange = () => {
+        setChangeAmount(paymentAmount - totalPurchaseAmount);
+    };
+
     const onSubmit = async (values: IAccountsBook) => {
         try {
             const accountBookData = {
@@ -174,7 +189,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             />
                         </div>
 
-                        <div className={`${styles.container__Table} mt-5 mb-5 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                        <div className={`${styles.container__Table} mt-5 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <h3 className="mb-3 text-primary-emphasis text-start">Relación de artículos</h3>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
@@ -245,7 +260,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                                     return updatedItems;
                                                 });
                                             }
-                                            handleCloseModal(); // Cierra el modal después de guardar
+                                            handleCloseModal();
                                         }}
                                         onClose={handleCloseModal}
                                     />
@@ -258,11 +273,11 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             onClientSelect={(client) => setSelectedClient(client)}
                         />
 
-                        <div className="d-flex align-items-start justify-content-between">
-                            <div className="d-flex align-items-center justify-content-between">
-                                <p className={`${styles.label} m-0 text-start me-3`}>Medio de pago</p>
+                        <div className={`${styles.container__Info_Purchase} m-5 d-flex flex-column align-items-start justify-content-between`}>
+                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Medio de pago</p>
                                 <select
-                                    className={`${styles.input} p-2`}
+                                    className={`${styles.input__Info_Purchase} p-2`}
                                     value={meanPayment}
                                     onChange={handleMeanPaymentChange}
                                     required
@@ -274,26 +289,63 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 </select>
                             </div>
 
-                            <div className="d-flex align-items-center justify-content-between">
-                                <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
-                                <div>
-                                    <input
-                                        type="text"
-                                        {...register('seller', { required: 'El vendedor es requerido' })}
-                                        className={`${styles.input} p-2`}
-                                        placeholder='Nombre del vendedor'
-                                    />
-                                    {errors.seller && (
-                                        <div className='invalid-feedback'>{errors.seller.message}</div>
-                                    )}
+                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                <p className={`${styles.text__Purchase} m-0 p-2`}>Total de la compra</p>
+                                <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
+                            </div>
+
+                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Monto recibido</p>
+                                <input
+                                    type="number"
+                                    id="paymentAmount"
+                                    className={`${styles.input__Info_Purchase} p-2 text-end`}
+                                    value={paymentAmount}
+                                    onChange={(e) => setPaymentAmount(parseFloat(e.target.value))}
+                                />
+                            </div>
+
+                            <div className={`${styles.container__Change_Amount} m-auto d-flex flex-column align-items-center justify-content-between`}>
+                                <button
+                                    type="button"
+                                    className={`${styles.button__Calculate} mb-3 border-0`}
+                                    onClick={handleCalculateChange}
+                                >
+                                    Calcular cambio
+                                </button>
+                                <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                    <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Cambio</p>
+                                    <div className="m-0 text-end">
+                                        {changeAmount !== null && (
+                                            <input
+                                                type="number"
+                                                className={`${styles.input__Change__Amount} m-0 p-2 text-end`}
+                                                value={changeAmount}
+                                                readOnly
+                                            />
+                                        )}
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                            <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
+                            <div>
+                                <input
+                                    type="text"
+                                    {...register('seller', { required: 'El vendedor es requerido' })}
+                                    className={`${styles.input} p-2`}
+                                    placeholder='Nombre del vendedor'
+                                />
+                                {errors.seller && (
+                                    <div className='invalid-feedback'>{errors.seller.message}</div>
+                                )}
                             </div>
                         </div>
                     </div>
                 )}
-
-                {}
-
+                
                 <div className="mb-4 d-flex align-items-center justify-content-center">
                     <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                 </div>
