@@ -38,8 +38,8 @@ function CreateIncomePage () {
 
     //Fechas de registrationDate y transactionDate con el checkout
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
-    const [registrationDate, setRegistrationDate] = useState<Date | undefined>(undefined);
-    const [transactionDate, setTransactionDate] = useState<Date | undefined>(undefined);
+    const [registrationDate, setRegistrationDate] = useState<Date>();
+    const [transactionDate, setTransactionDate] = useState<Date>();
     const [defaultDates, setDefaultDates] = useState<boolean>(true);
 
     //Es el check para las fechas de registro y de transacción

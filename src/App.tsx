@@ -105,12 +105,12 @@ import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05Inven
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 // import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
 import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/SeeRecordsAccountsBookPage';
-import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/CreateIncome/CreateIncomePage';
-import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/ConsultExpenses/ConsultExpensesPage';
-import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/02Expenses/CreateExpenses/CreateExpensesPage';
-import AccountsReceivablePage from './pages/Platform/PanelUser/04Accounts/03AccountsReceivable/AccountsReceivablePage';
-import AccountsPayablePage from './pages/Platform/PanelUser/04Accounts/04AccountsPayable/AccountsPayablePage';
-import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/05PendingApproval/PendingApprovalPage';
+import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/02Income/CreateIncome/CreateIncomePage';
+// import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
+import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
+// import AccountsReceivablePage from './pages/Platform/PanelUser/04Accounts/03AccountsReceivable/AccountsReceivablePage';
+// import AccountsPayablePage from './pages/Platform/PanelUser/04Accounts/04AccountsPayable/AccountsPayablePage';
+import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/04PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
 import SellPointOfSalePage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/SellPointOfSalePage';
@@ -278,12 +278,12 @@ function App() {
                             <Route path='/accounts/see-records' element={<SeeRecordsPage />} />
                             <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
                             {/* SideBar Cuentas - Gastos */}
-                            <Route path='/accounts/consult-expenses' element={<ConsultExpensesPage />} />
+                            {/* <Route path='/accounts/consult-expenses' element={<ConsultExpensesPage />} /> */}
                             <Route path='/accounts/create-expenses' element={<CreateExpensesPage />} />
                             {/* SideBar Cuentas - CXC */}
-                            <Route path='/accounts/consult-account-receivable' element={<AccountsReceivablePage />} />
+                            {/* <Route path='/accounts/consult-account-receivable' element={<AccountsReceivablePage />} /> */}
                             {/* SideBar Cuentas - CXP */}
-                            <Route path='/accounts/consult-accounts-payable' element={<AccountsPayablePage />} />
+                            {/* <Route path='/accounts/consult-accounts-payable' element={<AccountsPayablePage />} /> */}
                             {/* SideBar Cuentas - TX Pendientes de Aprobar */}
                             <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                             {/* SideBar Facturación y POS */}
