@@ -24,11 +24,6 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
     const [editedTransactionType, setEditedTransactionType] = useState(registerAccount?.transactionType);
     const [editedCreditCash, setEditedCreditCash] = useState(registerAccount?.creditCash);
     const [editedMeanPayment, setEditedMeanPayment] = useState(registerAccount?.meanPayment);
-    const [editedIncomeCategory, setEditedIncomeCategory] = useState(registerAccount?.incomeCategory);
-    const [editedExpenseCategory, setEditedExpenseCategory] = useState(registerAccount?.expenseCategory);
-    const [editedPeriodicityPayService, setEditedPeriodicityPayService] = useState(registerAccount?.periodicityPayService);
-    const [editedPeriodPayService, setEditedPeriodPayService] = useState(registerAccount?.periodPayService);
-    const [editedCreditWithInterest, setEditedCreditWithInterest] = useState(registerAccount?.creditWithInterest);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -57,11 +52,6 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
             editedAccountsBook.transactionType = editedTransactionType;
             editedAccountsBook.creditCash = editedCreditCash;
             editedAccountsBook.meanPayment = editedMeanPayment;
-            editedAccountsBook.incomeCategory = editedIncomeCategory;
-            editedAccountsBook.expenseCategory = editedExpenseCategory;
-            editedAccountsBook.periodicityPayService = editedPeriodicityPayService;
-            editedAccountsBook.periodPayService = editedPeriodPayService;
-            editedAccountsBook.creditWithInterest = editedCreditWithInterest;
             await dispatch(putAccountsBook(idItem, editedAccountsBook, token));
             dispatch(getIncomesNotApproved(token));
             onCloseModal();
@@ -207,173 +197,9 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
                         </select>
                     </div>
                 </div>
-
-                <div className="w-100">
-                    <h6 className={styles.label}>Categoría de ingreso</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.incomeCategory || ''}
-                            onChange={(e) => {
-                                const value = e.target.value as 'Producto' | 'Materia Prima' | 'Mercancia' | 'Servicio' | 'Activo' | 'Credito del Banco' | 'Credito en Cooperativa' | 'Gota gota' | 'Credito de almacen' | 'Credito de servicios publicos';
-                                setEditedIncomeCategory(value);
-                                setEditedAccountsBook((prevEdited) => ({
-                                    ...prevEdited,
-                                    incomeCategory: value,
-                                }));
-                            }}
-                        >
-                            <option value='Producto'>Producto</option>
-                            <option value='Materia Prima'>Materia Prima</option>
-                            <option value='Mercancia'>Mercancia</option>
-                            <option value='Servicio'>Servicio</option>
-                            <option value='Activo'>Activo</option>
-                            <option value='Credito del Banco'>Credito del Banco</option>
-                            <option value='Credito en Cooperativa'>Credito en Cooperativa</option>
-                            <option value='Gota gota'>Gota gota</option>
-                            <option value='Credito de almacen'>Credito de almacen</option>
-                            <option value='Credito de servicios publicos'>Credito de servicios publicos</option>
-                        </select>
-                    </div>
-                </div>
             </div>
 
             <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Categoría de gasto</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                        className={`${styles.inputEdit} p-2 border w-100`}
-                        value={editedAccountsBook.expenseCategory || ''}
-                        onChange={(e) => {
-                            const value = e.target.value as 'Materia Prima' | 'Mercancia' | 'Activo' | 'Arriendo' | 'Mantenimiento de equipos, maquinaria, herramientas' | 'Reparaciones locativas' | 'Transporte' | 'Combustible' | 'Nomina' | 'Seguridad Social y/o parafiscales' | 'Acueducto' | 'Energia' | 'Gas' | 'Internet' | 'Celular/Plan de datos' | 'Credito del Banco' | 'Credito en Cooperativa' | 'Gota gota' | 'Credito de almacen' | 'Credito de servicios publicos' | 'IVA' | 'ICA' | 'Declaracion de Renta' | 'Retencion en la Fuente' | 'Predial' | 'Vehiculos y motos' | 'Asesoria Contable' | 'Renovacion Camara de Comercio' | 'Licencias y permisos' | 'Asesoria Juridica' | 'Honorarios de contratista';
-                            setEditedExpenseCategory(value);
-                            setEditedAccountsBook((prevEdited) => ({
-                            ...prevEdited,
-                            expenseCategory: value,
-                            }));
-                        }}
-                        >
-                        <option value='Materia Prima'>Materia Prima</option>
-                        <option value='Mercancia'>Mercancia</option>
-                        <option value='Activo'>Activo</option>
-                        <option value='Arriendo'>Arriendo</option>
-                        <option value='Mantenimiento de equipos, maquinaria, herramientas'>Mantenimiento de equipos, maquinaria, herramientas</option>
-                        <option value='Reparaciones locativas'>Reparaciones locativas</option>
-                        <option value='Transporte'>Transporte</option>
-                        <option value='Combustible'>Combustible</option>
-                        <option value='Nomina'>Nomina</option>
-                        <option value='Seguridad Social y/o parafiscales'>Seguridad Social y/o parafiscales</option>
-                        <option value='Acueducto'>Acueducto</option>
-                        <option value='Energia'>Energia</option>
-                        <option value='Gas'>Gas</option>
-                        <option value='Internet'>Internet</option>
-                        <option value='Celular/Plan de datos'>Celular/Plan de datos</option>
-                        <option value='Credito del Banco'>Credito del Banco</option>
-                        <option value='Credito en Cooperativa'>Credito en Cooperativa</option>
-                        <option value='Gota gota'>Gota gota</option>
-                        <option value='Credito de almacen'>Credito de almacen</option>
-                        <option value='Credito de servicios publicos'>Credito de servicios publicos</option>
-                        <option value='IVA'>IVA</option>
-                        <option value='ICA'>ICA</option>
-                        <option value='Declaracion de Renta'>Declaracion de Renta</option>
-                        <option value='Retencion en la Fuente'>Retencion en la Fuente</option>
-                        <option value='Predial'>Predial</option>
-                        <option value='Vehiculos y motos'>Vehiculos y motos</option>
-                        <option value='Asesoria Contable'>Asesoria Contable</option>
-                        <option value='Renovacion Camara de Comercio'>Renovacion Camara de Comercio</option>
-                        <option value='Licencias y permisos'>Licencias y permisos</option>
-                        <option value='Asesoria Juridica'>Asesoria Juridica</option>
-                        <option value='Honorarios de contratista'>Honorarios de contratista</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="w-100">
-                    <h6 className={styles.label}>Categoría de gasto</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.periodicityPayService || ''}
-                            onChange={(e) => {
-                                const value = e.target.value as 'Mensual' | 'Bimestral';
-                                setEditedPeriodicityPayService(value);
-                                setEditedAccountsBook((prevEdited) => ({
-                                    ...prevEdited,
-                                    periodicityPayService: value,
-                                }));
-                            }}
-                        >
-                            <option value='Mensual'>Mensual</option>
-                            <option value='Bimestral'>Bimestral</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Categoría de gasto</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                        className={`${styles.inputEdit} p-2 border w-100`}
-                        value={editedAccountsBook.periodPayService || ''}
-                        onChange={(e) => {
-                            const value = e.target.value as 'Enero de 2024' | 'Febrero de 2024' | 'Marzo de 2024' | 'Abril de 2024' | 'Mayo de 2024' | 'Junio de 2024' | 'Julio de 2024' | 'Agosto de 2024' | 'Septiembre de 2024' | 'Octubre de 2024' | 'Noviembre de 2024' | 'Diciembre de 2024' | 'Julio - Agosto de 2024' | 'Marzo - Abril de 2024' | 'Mayo - Junio de 2024' | 'Julio - Agosto de 2024' | 'Septiembre - Octubre de 2024' | 'Noviembre - Diciembre de 2024';
-                            setEditedPeriodPayService(value);
-                            setEditedAccountsBook((prevEdited) => ({
-                            ...prevEdited,
-                            periodPayService: value,
-                            }));
-                        }}
-                        >
-                        <option value='Enero de 2024'>Enero de 2024</option>
-                        <option value='Febrero de 2024'>Febrero de 2024</option>
-                        <option value='Marzo de 2024'>Marzo de 2024</option>
-                        <option value='Abril de 2024'>Abril de 2024</option>
-                        <option value='Mayo de 2024'>Mayo de 2024</option>
-                        <option value='Junio de 2024'>Junio de 2024</option>
-                        <option value='Julio de 2024'>Julio de 2024</option>
-                        <option value='Agosto de 2024'>Agosto de 2024</option>
-                        <option value='Septiembre de 2024'>Septiembre de 2024</option>
-                        <option value='Octubre de 2024'>Octubre de 2024</option>
-                        <option value='Noviembre de 2024'>Noviembre de 2024</option>
-                        <option value='Diciembre de 2024'>Diciembre de 2024</option>
-                        <option value='Julio - Agosto de 2024'>Julio - Agosto de 2024</option>
-                        <option value='Marzo - Abril de 2024'>Marzo - Abril de 2024</option>
-                        <option value='Mayo - Junio de 2024'>Mayo - Junio de 2024</option>
-                        <option value='Septiembre - Octubre de 2024'>Septiembre - Octubre de 2024</option>
-                        <option value='Noviembre - Diciembre de 2024'>Noviembre - Diciembre de 2024</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="w-100">
-                    <h6 className={styles.label}>Valor unitario</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="number"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.unitValue}
-                            readOnly
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Cantidad</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="number"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.quantity}
-                            onChange={(e) => handleEditField(e, 'quantity', 'number')}
-                        />
-                    </div>
-                </div>
-                
                 <div className="w-100">
                     <h6 className={styles.label}>Valor total</h6>
                     <div className={styles.containerInput}>
@@ -381,51 +207,15 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
                             type="number"
                             className={`${styles.inputEdit} p-2 border w-100`}
                             value={editedAccountsBook.totalValue}
+                            onChange={(e) => handleEditField(e, 'totalValue', 'number')}
                         />
                     </div>
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Dewscripción del crédito</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.creditDescription}
-                            onChange={(e) => handleEditField(e, 'creditDescription', 'text')}
-                        />
-                    </div>
-                </div>
-                
-                <div className="w-100">
-                    <h6 className={styles.label}>Categoría de gasto</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAccountsBook.creditWithInterest || ''}
-                            onChange={(e) => {
-                                const value = e.target.value as 'Si' | 'No';
-                                setEditedCreditWithInterest(value);
-                                setEditedAccountsBook((prevEdited) => ({
-                                ...prevEdited,
-                                creditWithInterest: value,
-                                }));
-                            }}
-                            >
-                            <option value='Si'>Si</option>
-                            <option value='No'>No</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-100">
-                <div className="d-flex align-items-center justify-content-center">
-                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedAccountsBook)}>Guardar</button>
-                    <button className={`${styles.buttonCancel} border-0`} onClick={cancelEditing}>Cancelar</button>
-                </div>
+            <div className="mb-4 d-flex align-items-center justify-content-center gap-4">
+                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} onClick={() => handleSaveChanges(editedAccountsBook)}>Guardar</button>
+                <button className={`${styles.button__Cancel} border-0 rounded text-decoration-none`} onClick={cancelEditing}>Cancelar</button>
             </div>
         </div>
     );

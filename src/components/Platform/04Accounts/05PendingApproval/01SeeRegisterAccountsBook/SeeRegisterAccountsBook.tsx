@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-// ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
 import { IBranch } from '../../../../../types/User/branch.types';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
@@ -15,7 +13,7 @@ function SeeRegisterAccountsBook({ accountsBook, branches }: SeeRegisterAccounts
     return (
         <div>
             <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información del registro pendiente de aprobar</h1>
+                <h1 className={`${styles.title} text-center`}>Información del registro</h1>
             </div>
 
             <div className="w-100">
@@ -35,21 +33,13 @@ function SeeRegisterAccountsBook({ accountsBook, branches }: SeeRegisterAccounts
                 <div className="w-100">
                     <h6 className={styles.label}>Fecha de registro</h6>
                     <div className={styles.containerInput}>
-                        <input
-                            type="date"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={accountsBook.registrationDate ? new Date(accountsBook.registrationDate).toISOString().split('T')[0] : ''}
-                        />
+                        <p className={`${styles.input} p-2 text-start border`}>{accountsBook.registrationDate ? new Date(accountsBook.registrationDate).toISOString().split('T')[0] : ''}</p>
                     </div>
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Fecha de transacción</h6>
                     <div className={styles.containerInput}>
-                        <input
-                            type="date"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={accountsBook.transactionDate ? new Date(accountsBook.transactionDate).toISOString().split('T')[0] : ''}
-                        />
+                        <p className={`${styles.input} p-2 text-start border`}>{accountsBook.transactionDate ? new Date(accountsBook.transactionDate).toISOString().split('T')[0] : ''}</p>
                     </div>
                 </div>
             </div>
@@ -70,40 +60,6 @@ function SeeRegisterAccountsBook({ accountsBook, branches }: SeeRegisterAccounts
             </div>
 
             <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Medio de pago</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{accountsBook.meanPayment}</p>
-                    </div>
-                </div>
-                <div className="w-100">
-                <h6 className={styles.label}>Categoría del ingreso</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{accountsBook.incomeCategory}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-100">
-                <h6 className={styles.label}>Nombre del item</h6>
-                <div className={styles.containerInput}>
-                    <p className={`${styles.input} p-2 text-start border`}>{accountsBook.nameItem}</p>
-                </div>
-            </div>
-
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Precio unitario</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>$ {formatNumber(accountsBook.unitValue)}</p>
-                    </div>
-                </div>
-                <div className="w-100">
-                    <h6 className={styles.label}>Cantidad</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{accountsBook?.quantity}</p>
-                    </div>
-                </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Total</h6>
                     <div className={styles.containerInput}>
