@@ -17,6 +17,9 @@
     color: #343a40;
     font-size: 25px;
 }
+.icon__Question:hover {
+    cursor: pointer;
+}
 .container__Services {
     height: 70px;
     width: 70px;
@@ -33,12 +36,23 @@
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     top: 70px;
-    left: 0;
+    right: 0;
     background: white;
-    width: 250px;
+    width: 400px;
 }
-.link__Service {
-    margin: 3px 0;
+.link__NavBar {
+    color: #343a40;
+    opacity: 0.75;
+}
+.link__NavBar:hover {
+    opacity: 1;
+}
+.active {
+    color: #4361ee;
+    width: 270px;
+    width: 100%;
+    margin: 0 0 0 -10px;
+    padding: 0 0 0 10px;
 }
 .container__Notification {
     height: 70px;

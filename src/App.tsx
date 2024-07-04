@@ -51,28 +51,12 @@ import Error404 from './pages/Error404/Error404';
 import ProtectedRoute from './ProtectedRoute';
 // NAVBAR PLATAFORMA - QUESTIONS
 import QuestionsPage from './pages/Platform/PanelUser/00NavBar/01Questions/QuestionsPage';
-import QuestionInformationManageYourBusinessPage from './pages/Platform/PanelUser/00NavBar/01Questions/01QuestionInformationManageYourBusiness/QuestionInformationManageYourBusinessPage';
-import QuestionActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/01Questions/02QuestionActivateNewPlans/QuestionActivateNewPlansPage';
-import QuestionAccountsAndInventoriesPage from './pages/Platform/PanelUser/00NavBar/01Questions/03QuestionAccountsAndInventories/QuestionAccountsAndInventoriesPage';
-import QuestionInvoicingAndPosPage from './pages/Platform/PanelUser/00NavBar/01Questions/04QuestionInvoicingAndPos/QuestionInvoicingAndPosPage';
-import QuestionElectronicPayrollPage from './pages/Platform/PanelUser/00NavBar/01Questions/05QuestionElectronicPayroll/QuestionElectronicPayrollPage';
-import QuestionCrmPage from './pages/Platform/PanelUser/00NavBar/01Questions/06QuestionCrm/QuestionCrmPage';
-import QuestionSustainabilityPage from './pages/Platform/PanelUser/00NavBar/01Questions/07QuestionSustainability/QuestionSustainabilityPage';
-import QuestionConsultanciesPage from './pages/Platform/PanelUser/00NavBar/01Questions/08QuestionConsultancies/QuestionConsultanciesPage';
-import QuestionStrategicNotificationsPage from './pages/Platform/PanelUser/00NavBar/01Questions/09QuestionStrategicNotifications/QuestionStrategicNotificationsPage';
+import KeyInformationManageYourBusiness from './pages/Platform/PanelUser/00NavBar/01Questions/01KeyInformationManageYourBusiness/KeyInformationManageYourBusiness';
+import ContactSupport from './pages/Platform/PanelUser/00NavBar/01Questions/02ContactSupport/ContactSupport';
+import OperationPlatform from './pages/Platform/PanelUser/00NavBar/01Questions/03OperationPlatform/OperationPlatform';
 // NAVBAR PLATAFORMA - SERVICES
 import ServicesPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/ServicesPage';
-import ServiceSupportContactPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/01ServiceSupportContact/ServiceSupportContactPage';
-import ServiceActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/02ServiceActivateNewPlans/ServiceActivateNewPlansPage';
-import ServicePlatformFunctionalityPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/03ServicePlatformFunctionalityPage/ServicePlatformFunctionalityPage';
-import ServiceInventoriesPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/04ServiceInventories/ServiceInventoriesPage';
-import ServiceAccountsPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/05ServiceAccounts/ServiceAccountsPage';
-import ServiceBillingAndPosPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/06ServiceBillingAndPos/ServiceBillingAndPosPage';
-import ServiceElectronicPayrollPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/07ServiceElectronicPayroll/ServiceElectronicPayrollPage';
-import ServiceCrmClientPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/08ServiceCrmClient/ServiceCrmClientPage';
-import ServiceCrmSupplierPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/09ServiceCrmSupplier/ServiceCrmSupplierPage';
-import ServiceSustainabilityPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/10ServiceSustainability/ServiceSustainabilityPage';
-import ServiceStrategyAndDecisionMakingPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/11ServiceStrategyAndDecisionMaking/ServiceStrategyAndDecisionMakingPage';
+import ServiceActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02ServicesPage/01ServiceActivateNewPlans/ServiceActivateNewPlansPage';
 // NAVBAR PLATAFORMA - NOTIFICATIONS
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
 // NAVBAR PLATAFORMA - CONFIGURATION
@@ -216,28 +200,12 @@ function App() {
                         <Route element={<ProtectedRoute />}>
                             {/* Sección NavBar - Questions */}
                             <Route path='/questions' element={<QuestionsPage />} />
-                            <Route path='/questions/information-manage-your-business' element={<QuestionInformationManageYourBusinessPage />} />
-                            <Route path='/questions/activate-new-plans' element={<QuestionActivateNewPlansPage />} />
-                            <Route path='/questions/accounts-and-inventories' element={<QuestionAccountsAndInventoriesPage />} />
-                            <Route path='/questions/invoicing-and-pos' element={<QuestionInvoicingAndPosPage />} />
-                            <Route path='/questions/electronic-payroll' element={<QuestionElectronicPayrollPage />} />
-                            <Route path='/questions/crm' element={<QuestionCrmPage />} />
-                            <Route path='/questions/sustainability' element={<QuestionSustainabilityPage />} />
-                            <Route path='/questions/consultancies' element={<QuestionConsultanciesPage />} />
-                            <Route path='/questions/strategic-notifications' element={<QuestionStrategicNotificationsPage />} />
+                            <Route path='/questions/information-manage-your-business' element={<KeyInformationManageYourBusiness />} />
+                            <Route path='/questions/support-contact' element={<ContactSupport />} />
+                            <Route path='/questions/operation-platform' element={<OperationPlatform />} />
                             {/* Sección NavBar - Services */}
                             <Route path='/services' element={<ServicesPage />} />
-                            <Route path='/services/support-contact' element={<ServiceSupportContactPage />} />
                             <Route path='/services/activate-new-plans' element={<ServiceActivateNewPlansPage />} />
-                            <Route path='/services/platform-functionality' element={<ServicePlatformFunctionalityPage />} />
-                            <Route path='/services/inventories' element={<ServiceInventoriesPage />} />
-                            <Route path='/services/accounts' element={<ServiceAccountsPage />} />
-                            <Route path='/services/billing-and-pos' element={<ServiceBillingAndPosPage />} />
-                            <Route path='/services/electronic-payroll' element={<ServiceElectronicPayrollPage />} />
-                            <Route path='/services/crm-client' element={<ServiceCrmClientPage />} />
-                            <Route path='/services/crm-supplier' element={<ServiceCrmSupplierPage />} />
-                            <Route path='/services/sustainability' element={<ServiceSustainabilityPage />} />
-                            <Route path='/services/strategy-and-decision-making' element={<ServiceStrategyAndDecisionMakingPage />} />
                             {/* Sección NavBar - Notifications */}
                             <Route path='/notifications' element={<NotificationsPage />} />
                             {/* Sección NavBar - Configuration */}
