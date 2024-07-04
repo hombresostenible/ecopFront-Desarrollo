@@ -1,10 +1,7 @@
-.containerForm {
+.container {
     width: 450px;
 }
-.form {
-    padding: 60px 0 0 0;
-}
-.alertSuccess {
+.alert__Success {
     border: 1px solid rgba(76, 149, 108, 0.7);
     color: #4c956c;
     background: rgba(76, 149, 108, 0.4);
@@ -15,7 +12,7 @@
     padding: 5px 10px;
     z-index: 1;
 }
-.alertDanger {
+.alert__Danger {
     border: 1px solid rgba(230, 57, 70, 0.7);
     color: #e63946;
     background: rgba(230, 57, 70, 0.4);
@@ -26,29 +23,39 @@
     padding: 5px 10px;
     z-index: 1;
 }
-.containerInfo {
-    width: 400px;
+.label {
+    margin-bottom: 5px;
+}
+.container__Info {
+    width: 450px;
+}
+.info {
+    width: 450px;
 }
 .label {
     margin-bottom: 5px;
 }
-.containerInput {
+.container__Input {
     width: 100%;
+    border-radius: 3px;
 }
 .input {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 0 30px 0;
     width: 100%;
-    margin: 0 0 16px 0;
 }
-.buttonSave {
-    padding: 5px 10px;
-    width: 100px;
-    margin: 0 10px;
-    border-radius: 4px;
+.input:focus{
+    outline-color: #718bd8;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
     background: #718bd8;
     color: #f8f9fa;
 }
-.buttonSave:hover {
-    transition: 300ms all ease;
+.button__Submit:hover {
     background: #0a31bf;
+    transition: 300ms all ease;
     cursor: pointer;
 }

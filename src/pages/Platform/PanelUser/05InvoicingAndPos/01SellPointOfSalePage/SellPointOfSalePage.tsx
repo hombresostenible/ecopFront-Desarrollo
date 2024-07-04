@@ -248,14 +248,6 @@ function SellPointOfSalePage() {
                             </p>
                         </div>
 
-                        <div className={`${styles.totalPurchase} border rounded border-secundary`}>
-                            <p className={`${styles.infoPurchaseText} m-0`}>Total de la compra</p>
-                            <p className={`${styles.infoPurchaseValue} m-0 text-end`}>
-                                <span>$</span>
-                                {formatNumber(totalPurchaseAmount)}
-                            </p>
-                        </div>
-
                         <div className={`${styles.plasticBagTax} border rounded border-secundary`}>
                             <p className={`${styles.infoPlasticBagText} m-0`}>Impuesto bolsa plástica</p>
                             <p className={`${styles.infoPlasticBagQuantity} m-0`}>Cantidad: <span>{plasticBagQuantity ? plasticBagQuantity : '--'}</span></p>
