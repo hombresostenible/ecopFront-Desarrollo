@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import ivaSelects from './IVA';
+import meanPaymentSelects from './MeanPayment';
 import styles from './styles.module.css';
 
-interface SelectIVAProps {
-    onSelect: (ivaProps: string) => void;
+interface SelectMeanPaymentProps {
+    onSelect: (meanPaymentProps: string) => void;
     reset: boolean;
-    initialIva?: string;
+    initialMeanPayment?: string;
 }
 
 const customStyles = {
@@ -25,39 +25,39 @@ const customStyles = {
     }),
 };
 
-function SelectIVA({ onSelect, reset, initialIva }: SelectIVAProps) {
-    const [iva, setIVA] = useState<{ value: string; label: string } | null>(null);
-    const [selectedIVA, setSelectedIVA] = useState<{ value: string; label: string } | null>(initialIva ? { value: initialIva, label: initialIva } : null);
+function SelectMeanPayment({ onSelect, reset, initialMeanPayment }: SelectMeanPaymentProps) {
+    const [meanPayment, setMeanPayment] = useState<{ value: string; label: string } | null>(null);
+    const [selectedMeanPayment, setSelectedMeanPayment] = useState<{ value: string; label: string } | null>(initialMeanPayment ? { value: initialMeanPayment, label: initialMeanPayment } : null);
 
     const handlePropChange = (selectedOption: any) => {
-        setIVA(selectedOption);
-        setSelectedIVA(selectedOption);
+        setMeanPayment(selectedOption);
+        setSelectedMeanPayment(selectedOption);
         const selectedValue = selectedOption.value;
         onSelect(selectedValue);
     };
 
     useEffect(() => {
         if (reset) {
-            setSelectedIVA(null);
+            setSelectedMeanPayment(null);
         }
     }, [reset]);
 
     return (
         <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-            <h6 className={styles.label}>IVA</h6>
+            <h6 className={styles.label}>Medio de pago</h6>
             <div className={styles.container__Input}>
                 <Select
                     styles={customStyles}
                     className={`${styles.input} border-0`}
-                    options={ivaSelects}
-                    value={selectedIVA || iva}
+                    options={meanPaymentSelects}
+                    value={selectedMeanPayment || meanPayment}
                     onChange={handlePropChange}
                     isSearchable={true}
-                    placeholder='IVA'
+                    placeholder='meanPayment'
                 />
             </div>
         </div>
     );
 }
 
-export default SelectIVA;
+export default SelectMeanPayment;
