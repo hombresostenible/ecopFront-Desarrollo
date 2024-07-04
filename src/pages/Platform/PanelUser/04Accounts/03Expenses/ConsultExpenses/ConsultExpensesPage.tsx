@@ -161,10 +161,6 @@ function ConsultExpensesPage() {
         'branch',
         'transactionType',
         'meanPayment',
-        'expenseCategory',
-        'nameItem',
-        'unitValue',
-        'quantity',
         'totalValue',
         'creditCash',
         'transactionCounterpartId',
@@ -240,10 +236,6 @@ function ConsultExpensesPage() {
                                     'branch',
                                     'transactionType',
                                     'meanPayment',
-                                    'expenseCategory',
-                                    'nameItem',
-                                    'unitValue',
-                                    'quantity',
                                     'totalValue',
                                     'creditCash',
                                     'transactionCounterpartId',
@@ -271,18 +263,6 @@ function ConsultExpensesPage() {
                                         )}
                                         {selectedColumns.includes('meanPayment') && (
                                             <div className={`${styles.column__Mean_Payment} d-flex align-items-center justify-content-center`}>Medio de pago</div>
-                                        )}
-                                        {selectedColumns.includes('expenseCategory') && (
-                                            <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>Categoría</div>
-                                        )}
-                                        {selectedColumns.includes('nameItem') && (
-                                            <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Nombre de Item</div>
-                                        )}
-                                        {selectedColumns.includes('unitValue') && (
-                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>Valor unitario</div>
-                                        )}
-                                        {selectedColumns.includes('quantity') && (
-                                            <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>Cantidad</div>
                                         )}
                                         {selectedColumns.includes('totalValue') && (
                                             <div className={`${styles.column__Total_Value} d-flex align-items-center justify-content-center`}>Total</div>
@@ -393,40 +373,6 @@ function ConsultExpensesPage() {
                                         {selectedColumns.includes('expenseCategory') && (
                                             <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.expenseCategory}</span>
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('nameItem') && (
-                                            <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.nameItem}</span>
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('unitValue') && (
-                                            <div className={`${styles.column__Unit_Value} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].unitValue}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'unitValue')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>$ {accountsBook.unitValue? formatNumber(accountsBook.unitValue) : 'N/A'}</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {selectedColumns.includes('quantity') && (
-                                            <div className={`${styles.column__Quantity} d-flex align-items-center justify-content-center`}>
-                                                {editingTransactions[accountsBook.id] ? (
-                                                    <input
-                                                        type="number"
-                                                        value={editingTransactions[accountsBook.id].quantity}
-                                                        onChange={(e) => handleEditField(e, accountsBook, 'quantity')}
-                                                    />
-                                                ) : (
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.quantity? formatNumber(accountsBook.quantity) : 'N/A'}</span>
-                                                )}
                                             </div>
                                         )}
 
