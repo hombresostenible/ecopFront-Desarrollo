@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import stateAssetsSelects from './StateAssets';
+import typeDocumentIdSelects from './TypeDocumentId';
 import styles from './styles.module.css';
 
-interface SelectStateAssetsProps {
-    onSelect: (selectStateAssetsProps: string) => void;
+interface SelectTypeDocumentIdProps {
+    onSelect: (selectTypeDocumentIdProps: string) => void;
     reset: boolean;
-    initialStateAssets?: string;
+    initialTypeDocumentId?: string;
 }
 
 const customStyles = {
@@ -25,39 +25,39 @@ const customStyles = {
     }),
 };
 
-function SelectStateAssets({ onSelect, reset, initialStateAssets }: SelectStateAssetsProps) {
-    const [stateAssets, setStateAssets] = useState<{ value: string; label: string } | null>(null);
-    const [selectedStateAssets, setSelectedStateAssets] = useState<{ value: string; label: string } | null>(initialStateAssets ? { value: initialStateAssets, label: initialStateAssets } : null);
+function SelectTypeDocumentId({ onSelect, reset, initialTypeDocumentId }: SelectTypeDocumentIdProps) {
+    const [typeDocumentId, setTypeDocumentId] = useState<{ value: string; label: string } | null>(null);
+    const [selectedTypeDocumentId, setSelectedTypeDocumentId] = useState<{ value: string; label: string } | null>(initialTypeDocumentId ? { value: initialTypeDocumentId, label: initialTypeDocumentId } : null);
 
     const handlePropChange = (selectedOption: any) => {
-        setStateAssets(selectedOption);
-        setSelectedStateAssets(selectedOption);
+        setTypeDocumentId(selectedOption);
+        setSelectedTypeDocumentId(selectedOption);
         const selectedValue = selectedOption.value;
         onSelect(selectedValue);
     };
 
     useEffect(() => {
         if (reset) {
-            setSelectedStateAssets(null);
+            setSelectedTypeDocumentId(null);
         }
     }, [reset]);
 
     return (
         <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-            <h6 className={styles.label}>Estado del equipo, herramienta o máquina</h6>
+            <h6 className={styles.label}>Tipo de documento de identidad</h6>
             <div className={styles.container__Input}>
                 <Select
                     styles={customStyles}
                     className={`${styles.input} border-0`}
-                    options={stateAssetsSelects}
-                    value={selectedStateAssets || stateAssets}
+                    options={typeDocumentIdSelects}
+                    value={selectedTypeDocumentId || typeDocumentId}
                     onChange={handlePropChange}
                     isSearchable={true}
-                    placeholder='Estado del equipo, herramienta o máquina'
+                    placeholder='Tipo de documento de identidad'
                 />
             </div>
         </div>
     );
 }
 
-export default SelectStateAssets;
+export default SelectTypeDocumentId;
