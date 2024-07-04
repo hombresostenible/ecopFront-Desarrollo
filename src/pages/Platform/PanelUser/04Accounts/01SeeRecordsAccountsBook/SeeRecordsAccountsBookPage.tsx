@@ -105,10 +105,6 @@ function SeeRecordsAccountsBookPage() {
         'Sede',
         'Tipo de transacción',
         'Medio de pago',
-        'Categoría de ingreso',
-        'Nombre del item',
-        'Valor unitario',
-        'Cantidad',
         'Valor total',
         'Comprador',
     ]);
@@ -207,10 +203,6 @@ function SeeRecordsAccountsBookPage() {
                                             'Sede',
                                             'Tipo de transacción',
                                             'Medio de pago',
-                                            'Categoría de ingreso',
-                                            'Nombre del item',
-                                            'Valor unitario',
-                                            'Cantidad',
                                             'Valor total',
                                             'Comprador',
                                         ]}
@@ -233,18 +225,6 @@ function SeeRecordsAccountsBookPage() {
                                     )}
                                     {selectedColumns.includes('Medio de pago') && (
                                         <div className={`${styles.mean__Payment} text-center d-flex align-items-center justify-content-center`}>Medio de pago</div>
-                                    )}
-                                    {selectedColumns.includes('Categoría de ingreso') && (
-                                        <div className={`${styles.income__Category} text-center d-flex align-items-center justify-content-center`}>Categoría</div>
-                                    )}
-                                    {selectedColumns.includes('Nombre del item') && (
-                                        <div className={`${styles.name__Item} text-center d-flex align-items-center justify-content-center`}>Nombre de Item</div>
-                                    )}
-                                    {selectedColumns.includes('Valor unitario') && (
-                                        <div className={`${styles.unit__Value} text-center d-flex align-items-center justify-content-center`}>Valor unitario</div>
-                                    )}
-                                    {selectedColumns.includes('Cantidad') && (
-                                        <div className={`${styles.quantity} text-center d-flex align-items-center justify-content-center`}>Cantidad</div>
                                     )}
                                     {selectedColumns.includes('Valor total') && (
                                         <div className={`${styles.total__Value} text-center d-flex align-items-center justify-content-center`}>Total</div>
@@ -285,26 +265,6 @@ function SeeRecordsAccountsBookPage() {
                                             {selectedColumns.includes('Medio de pago') && (
                                                 <div className={`${styles.mean__Payment} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.creditCash}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Categoría de ingreso') && (
-                                                <div className={`${styles.income__Category} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.incomeCategory}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Nombre del item') && (
-                                                <div className={`${styles.name__Item} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.nameItem}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Valor unitario') && (
-                                                <div className={`${styles.unit__Value} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {accountsBook.unitValue? formatNumber(accountsBook.unitValue) : 'N/A'}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Cantidad') && (
-                                                <div className={`${styles.quantity} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.quantity? formatNumber(accountsBook.quantity) : 'N/A'}</span>
                                                 </div>
                                             )}
                                             {selectedColumns.includes('Valor total') && (
