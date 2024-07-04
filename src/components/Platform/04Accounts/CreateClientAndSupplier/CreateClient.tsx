@@ -3,7 +3,7 @@ import { useEffect, useState, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postCrmClient } from '../../../../redux/User/crmClientSlice/actions';
+import { postCrmClient, getCrmClients } from '../../../../redux/User/crmClientSlice/actions';
 import { getProfileUser } from '../../../../redux/User/userSlice/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
@@ -16,7 +16,7 @@ interface CreateClientProps {
     onClientCreated: (token: string) => void;
 }
 
-function CreateClient ({ token, onCreateComplete, onClientCreated }:CreateClientProps) {
+function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -39,20 +39,19 @@ function CreateClient ({ token, onCreateComplete, onClientCreated }:CreateClient
         settypeDocumentId(event.target.value);
     };
 
-    const onSubmit = (values: ICrmClient) => {
+    const onSubmit = async (values: ICrmClient) => {
         try {
             const formData = {
                 ...values,
                 entityUserId: userId,
             } as ICrmClient;
             dispatch(postCrmClient(formData, token));
+            // Simulamos un delay de la API
+            await new Promise(resolve => setTimeout(resolve, 500));
+            dispatch(getCrmClients(token));
             setFormSubmitted(true);
             onCreateComplete();
             onClientCreated(token);
-            setTimeout(() => {
-                setFormSubmitted(false);
-            }, 1500);
-
         } catch (error) {
             throw new Error('Error en el envío del formulario');
         }
