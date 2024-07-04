@@ -24,7 +24,6 @@
     height: 60px;
 }
 .container__Quantity {
-    /* border: 1px solid teal; */
     height: 50px;
     width: 50px;
     display: flex;
@@ -32,7 +31,6 @@
     justify-content: center;
 }
 .container__FaPlus {
-    /* border: 1px solid teal; */
     height: 50px;
     width: 50px;
     display: flex;
@@ -55,7 +53,6 @@
     cursor: pointer;
 }
 .quantity{
-    /* border: 1px solid red; */
     height: 60px;
     width: 15%;
     min-width: 150px;
@@ -121,9 +118,41 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 350px;
 }
-.input:focus {
+.input:focus, .input__Info_Purchase:focus, .input__Change__Amount:focus {
     outline-color: #718bd8;
 }
+
+/* RELACION DE PAGO */
+.container__Info_Purchase {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+.container__Section_Info_Purchase {
+    width: 500px;
+}
+.text__Purchase {
+    width: 200px;
+}
+.button__Calculate {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 200px;
+    padding: 10px 0;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Calculate:hover {
+    background: #0a31bf;
+}
+.input__Info_Purchase {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+.input__Change__Amount {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+/* ENVIAR */
 .button__Submit {
     padding: 7px 25px;
     letter-spacing: 1px;

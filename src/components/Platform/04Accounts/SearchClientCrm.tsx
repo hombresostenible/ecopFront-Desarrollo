@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from 'react';
 import { Modal } from 'react-bootstrap';
@@ -15,6 +16,40 @@ interface SearchClientCrmProps {
     typeSell?: string;
     onClientSelect: (value: string | null) => void;
 }
+
+const customStyles = {
+    control: (provided: any, state: any) => ({
+        ...provided,
+        backgroundColor: 'white',
+        borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)',
+        boxShadow: state.isFocused ? '0 0 0 1px #718bd8' : null,
+        '&:hover': {
+            borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)'
+        },
+        padding: '5px',
+        borderRadius: '0px'
+    }),
+    // option: (provided: any, state: any) => ({
+    //     ...provided,
+    //     backgroundColor: state.isSelected ? 'blue' : 'white',
+    //     color: state.isSelected ? 'white' : 'black',
+    //     '&:hover': {
+    //         backgroundColor: state.isFocused ? 'lightgray' : 'white'
+    //     }
+    // }),
+    // placeholder: (provided: any) => ({
+    //     ...provided,
+    //     color: 'gray'
+    // }),
+    // singleValue: (provided: any) => ({
+    //     ...provided,
+    //     color: 'black'
+    // }),
+    // menu: (provided: any) => ({
+    //     ...provided,
+    //     zIndex: 10
+    // })
+};
 
 function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmProps) {
     const dispatch: AppDispatch = useDispatch();
@@ -88,16 +123,10 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
     };
 
     return (
-        <div
-            ref={selectRef}
-            className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded"
-        >
-            <div className="px-3">                    
-                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(typeSell === 'Credito' || typeSell === 'Credito del Banco' || typeSell === 'CooperativeCredit' || typeSell === 'LoanShark' || typeSell === 'WarehouseCredit' || typeSell === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le vendiste'}?</p>
-            </div>
+        <div ref={selectRef} className="mb-3 m-auto d-flex align-items-center justify-content-center">
+            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(typeSell === 'Credito' || typeSell === 'Credito del Banco' || typeSell === 'CooperativeCredit' || typeSell === 'LoanShark' || typeSell === 'WarehouseCredit' || typeSell === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le vendiste'}?</p>
             <div>
                 <Select
-                    className={`${styles.info} p-1 border-secundary`}
                     value={selectedOption}
                     inputValue={filterText}
                     onInputChange={handleInputChange}
@@ -105,6 +134,7 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
                     options={options}
                     placeholder='Busca por nombre o número de cédula'
                     isSearchable
+                    styles={customStyles}
                 />
             </div>
 
