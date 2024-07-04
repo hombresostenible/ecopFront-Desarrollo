@@ -16,11 +16,11 @@ const customStyles = {
         margin: '0 0 30px 0',
         borderRadius: '3px',
         width: '100%',
-        outline: state.isFocused ? '1px solid #e4002b' : 'none',
-        boxShadow: state.isFocused ? '0 0 0 1px #e4002b' : 'none',
-        borderColor: state.isFocused ? '#e4002b' : provided.borderColor,
+        outline: state.isFocused ? '1px solid #718bd8' : 'none',
+        boxShadow: state.isFocused ? '0 0 0 1px #718bd8' : 'none',
+        borderColor: state.isFocused ? '#718bd8' : provided.borderColor,
         '&:hover': {
-            borderColor: state.isFocused ? '#e4002b' : provided.borderColor,
+            borderColor: state.isFocused ? '#718bd8' : provided.borderColor,
         },
     }),
 };
