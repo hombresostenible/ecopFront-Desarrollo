@@ -66,10 +66,10 @@ export const getProfileUser = (token: string) => async (dispatch: AppDispatch) =
 
 
 //ACTUALIZA UN USUARIO
-export const putPutProfileUser = (idUser: string, formData: IUser, token: string) => async (dispatch: AppDispatch) => {
+export const putPutProfileUser = (formData: IUser, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putProfileUserStart());
-        const response = await axiosInstance.put(`/branch/${idUser}`, formData, {
+        const response = await axiosInstance.put(`/user/profile-user`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
