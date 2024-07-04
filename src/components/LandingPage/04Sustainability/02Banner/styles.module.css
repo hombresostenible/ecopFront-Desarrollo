@@ -19,7 +19,7 @@
     right: 10px;
 }
 .button__Next, .button__Prev {
-    color: #e4002b;
+    color: #718bd8;
 }
 .button__Next:hover, .button__Prev:hover {
     box-shadow: 1px 2px 10px -1px rgb(0 0 0 / 30%);
