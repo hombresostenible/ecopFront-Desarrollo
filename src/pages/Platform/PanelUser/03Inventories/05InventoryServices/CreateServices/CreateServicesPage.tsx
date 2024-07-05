@@ -436,7 +436,7 @@ function CreateServicesPage() {
                             {selectedBranch && (
                                 <div className={` mb-3 p-3 border border-secundary rounded`}>
                                     <div>
-                                    <h3 className={`${styles.subtitleSection} text-center`}>Activos</h3>
+                                    <h3 className={`${styles.subtitleSection} text-center`}>Equipos, herramientas o máquinas</h3>
                                         <p>Selecciona los equipos, herramientas o máquinas que implementas para prestar tu servicio</p>
                                         <p className='mt-2'>Si el equipo, herramienta o máquina no existe, créala <span className={`${styles.link} text-sky-500`} onClick={handleCreateAsset}>aquí</span></p>
                                         <Modal show={showCancelModalAsset} onHide={() => setShowCancelModalAsset(false)} size="xl">

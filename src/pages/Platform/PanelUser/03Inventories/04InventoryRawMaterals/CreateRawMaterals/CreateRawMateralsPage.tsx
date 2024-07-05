@@ -49,10 +49,10 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
     };
 
     //Setea el nombre del artículo
-    const [nameItem, setNameItem] = useState('');
-    const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-        setNameItem(event.target.value);
-    };
+    // const [nameItem, setNameItem] = useState('');
+    // const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
+    //     setNameItem(event.target.value);
+    // };
 
     //Setea si el producto aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
@@ -195,7 +195,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>La materia primas que vas a registrar ¿Tiene código de barras?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>Si tiene código de barras ¿Cuál es el código?</p>
                                 </div>
                                 <div>
                                     <input
@@ -216,7 +216,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         type="text"
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        onChange={handleNameItem}
+                                        // onChange={handleNameItem}
                                         placeholder='Nombre de la materias prima quieres registrar'
                                     />
                                     {errors.nameItem && (
@@ -227,7 +227,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la materia prima?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia de la materia prima?</p>
                                 </div>
                                 <div>
                                     <input
@@ -236,6 +236,82 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca de la materia prima que quieres registrar'
                                     />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu materia prima?</p>
+                                </div>
+                                <div>
+                                    <select
+                                        {...register('unitMeasure', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        onChange={handleUnitMeasureChange}
+                                    >                                         
+                                        <option value=''>Selecciona una unidad de medida</option>
+                                        <optgroup label="Unidades">
+                                            <option value='Unidades'>Unidades</option>
+                                            <option value='Ristra'>Ristra</option>
+                                            <option value='Decena'>Decena</option>
+                                            <option value='Docena'>Docena</option>
+                                        </optgroup>
+                                        <optgroup label="Líquidos">
+                                            <option value='Mililitro'>Mililitro</option>
+                                            <option value='Onza'>Onza</option>
+                                            <option value='Botella'>Botella</option>
+                                            <option value='Litro'>Litro</option>
+                                            <option value='Galon'>Galón</option>
+                                            <option value='Pimpina'>Pimpina</option>
+                                            <option value='Metro cubico'>Metro cúbico</option>
+                                        </optgroup>
+                                        <optgroup label="Sólidos">
+                                            <option value='Miligramo'>Miligramo</option>
+                                            <option value='Gramo'>Gramo</option>
+                                            <option value='Libra'>Libra</option>
+                                            <option value='Kilogramo'>Kilogramo</option>
+                                            <option value='Caja'>Caja</option>
+                                            <option value='Paca'>Paca</option>
+                                            <option value='Arroba'>Arroba</option>
+                                            <option value='Bulto'>Bulto</option>
+                                            <option value='Saco'>Saco</option>
+                                            <option value='Tonelada'>Tonelada</option>
+                                        </optgroup>
+                                        <optgroup label="longitud">
+                                            <option value='Milimetro'>Milimetro</option>
+                                            <option value='Centrimetro'>Centrimetro</option>
+                                            <option value='Pulgada'>Pulgada</option>
+                                            <option value='Metro'>Metro</option>
+                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
+                                            <option value='Metro cuadrado'>Metro cuadrado</option>
+                                        </optgroup>
+                                    </select>
+                                    {errors.unitMeasure && (
+                                        <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta materia prima tienes en el inventario?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.inventory && (
+                                        <p className='text-danger'>El inventario de la materia prima es requerido</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -324,7 +400,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             {selectedIndividualPackaging === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                     <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la materi prima tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                        <p className={`${styles.text} mb-0 p-2`} >Si la materia prima tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
                                     </div>
                                     <div>
                                         <select
@@ -350,7 +426,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                             <option value='Plastico de burbujas'>Plástico de burbujas</option>
                                         </select>
                                         {errors.secondaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu materi aprima es requerido</p>
+                                            <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
                                         )}
                                     </div>
                                 </div>
@@ -358,7 +434,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
 
                             {selectedpackaged === 'Si' && (
                                 <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div className="px-3">
                                             <p className={`${styles.text} mb-0 p-2`} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
                                         </div>
@@ -379,11 +455,11 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                                 <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
                                             )}
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
-                                            <p className={`${styles.text} mb-0 p-2`} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
+                                            <p className={`${styles.text} mb-0 p-2`} >¿El empaque, embalaje o envoltura de tu materia prima es retornable?</p>
                                         </div>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                             <div
@@ -406,80 +482,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                 </div>
                             )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta materia prima tienes en el inventario?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la materia prima es requerido</p>
-                                    )}
-                                </div>
-                            </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene la materia prima?</p>
-                                </div>
-                                <div>
-                                    <select
-                                        {...register('unitMeasure', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleUnitMeasureChange}
-                                    >                                         
-                                        <option value=''>Selecciona una unidad de medida</option>
-                                        <optgroup label="Unidades">
-                                            <option value='Unidades'>Unidades</option>
-                                            <option value='Ristra'>Ristra</option>
-                                            <option value='Decena'>Decena</option>
-                                            <option value='Docena'>Docena</option>
-                                        </optgroup>
-                                        <optgroup label="Líquidos">
-                                            <option value='Mililitro'>Mililitro</option>
-                                            <option value='Onza'>Onza</option>
-                                            <option value='Litro'>Litro</option>
-                                            <option value='Galon'>Galón</option>
-                                            <option value='Pimpina'>Pimpina</option>
-                                            <option value='Metro cubico'>Metro cúbico</option>
-                                        </optgroup>
-                                        <optgroup label="Sólidos">
-                                            <option value='Miligramo'>Miligramo</option>
-                                            <option value='Gramo'>Gramo</option>
-                                            <option value='Libra'>Libra</option>
-                                            <option value='Kilogramo'>Kilogramo</option>
-                                            <option value='Caja'>Caja</option>
-                                            <option value='Paca'>Paca</option>
-                                            <option value='Arroba'>Arroba</option>
-                                            <option value='Bulto'>Bulto</option>
-                                            <option value='Saco'>Saco</option>
-                                            <option value='Tonelada'>Tonelada</option>
-                                        </optgroup>
-                                        <optgroup label="longitud">
-                                            <option value='Milimetro'>Milimetro</option>
-                                            <option value='Centrimetro'>Centrimetro</option>
-                                            <option value='Pulgada'>Pulgada</option>
-                                            <option value='Metro'>Metro</option>
-                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
-                                            <option value='Metro cuadrado'>Metro cuadrado</option>
-                                        </optgroup>
-                                    </select>
-                                    {errors.unitMeasure && (
-                                        <p className='text-danger'>El tipo de empaque de tu materia prima es requerido</p>
-                                    )}
-                                </div>
-                            </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
@@ -586,7 +589,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
                                 </div>
                                 <div>
                                     <input

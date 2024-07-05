@@ -202,7 +202,7 @@ function CreateMerchandisesPage() {
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
                                         onChange={handleNameItem}
-                                        placeholder='Nombre de la materia prima que quieres crear'
+                                        placeholder='Nombre de la mercancía que quieres crear'
                                     />
                                     {errors.nameItem && (
                                         <p className='text-danger'>El nombre de la mercancía es requerido</p>
@@ -212,7 +212,7 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca de la mercancía "{nameItem}"?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia de la mercancía "{nameItem}"?</p>
                                 </div>
                                 <div>
                                     <input
@@ -221,6 +221,82 @@ function CreateMerchandisesPage() {
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca de la mercancía que quieres registrar'
                                     />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu mercancía?</p>
+                                </div>
+                                <div>
+                                    <select
+                                        {...register('unitMeasure', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        onChange={handleUnitMeasureChange}
+                                    >                                         
+                                        <option value=''>Selecciona una unidad de medida</option>
+                                        <optgroup label="Unidades">
+                                            <option value='Unidades'>Unidades</option>
+                                            <option value='Ristra'>Ristra</option>
+                                            <option value='Decena'>Decena</option>
+                                            <option value='Docena'>Docena</option>
+                                        </optgroup>
+                                        <optgroup label="Líquidos">
+                                            <option value='Mililitro'>Mililitro</option>
+                                            <option value='Onza'>Onza</option>
+                                            <option value='Litro'>Litro</option>
+                                            <option value='Botella'>Botella</option>
+                                            <option value='Galon'>Galón</option>
+                                            <option value='Pimpina'>Pimpina</option>
+                                            <option value='Metro cubico'>Metro cúbico</option>
+                                        </optgroup>
+                                        <optgroup label="Sólidos">
+                                            <option value='Miligramo'>Miligramo</option>
+                                            <option value='Gramo'>Gramo</option>
+                                            <option value='Libra'>Libra</option>
+                                            <option value='Kilogramo'>Kilogramo</option>
+                                            <option value='Caja'>Caja</option>
+                                            <option value='Paca'>Paca</option>
+                                            <option value='Arroba'>Arroba</option>
+                                            <option value='Bulto'>Bulto</option>
+                                            <option value='Saco'>Saco</option>
+                                            <option value='Tonelada'>Tonelada</option>
+                                        </optgroup>
+                                        <optgroup label="longitud">
+                                            <option value='Milimetro'>Milimetro</option>
+                                            <option value='Centrimetro'>Centrimetro</option>
+                                            <option value='Pulgada'>Pulgada</option>
+                                            <option value='Metro'>Metro</option>
+                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
+                                            <option value='Metro cuadrado'>Metro cuadrado</option>
+                                        </optgroup>
+                                    </select>
+                                    {errors.unitMeasure && (
+                                        <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.inventory && (
+                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -341,30 +417,32 @@ function CreateMerchandisesPage() {
                                 </div>
                             )}
 
+                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada paquete o presentación?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Ej: 10'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.quantityPerPackage && (
+                                        <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
+                                    )}
+                                </div>
+                            </div> */}                            
+
                             {selectedpackaged === 'Si' && (
                                 <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>
-                                            <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="number"
-                                                {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.input} p-2 border `}
-                                                placeholder='Ej: 10'
-                                                min={0}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                            {errors.quantityPerPackage && (
-                                                <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
+                                    
 
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
@@ -390,81 +468,6 @@ function CreateMerchandisesPage() {
                                     </div>
                                 </div>
                             )}
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>                           
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene la mercancía?</p>
-                                </div>
-                                <div>
-                                    <select
-                                        {...register('unitMeasure', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleUnitMeasureChange}
-                                    >                                         
-                                        <option value=''>Selecciona una unidad de medida</option>
-                                        <optgroup label="Unidades">
-                                            <option value='Unidades'>Unidades</option>
-                                            <option value='Ristra'>Ristra</option>
-                                            <option value='Decena'>Decena</option>
-                                            <option value='Docena'>Docena</option>
-                                        </optgroup>
-                                        <optgroup label="Líquidos">
-                                            <option value='Mililitro'>Mililitro</option>
-                                            <option value='Onza'>Onza</option>
-                                            <option value='Litro'>Litro</option>
-                                            <option value='Galon'>Galón</option>
-                                            <option value='Pimpina'>Pimpina</option>
-                                            <option value='Metro cubico'>Metro cúbico</option>
-                                        </optgroup>
-                                        <optgroup label="Sólidos">
-                                            <option value='Miligramo'>Miligramo</option>
-                                            <option value='Gramo'>Gramo</option>
-                                            <option value='Libra'>Libra</option>
-                                            <option value='Kilogramo'>Kilogramo</option>
-                                            <option value='Caja'>Caja</option>
-                                            <option value='Paca'>Paca</option>
-                                            <option value='Arroba'>Arroba</option>
-                                            <option value='Bulto'>Bulto</option>
-                                            <option value='Saco'>Saco</option>
-                                            <option value='Tonelada'>Tonelada</option>
-                                        </optgroup>
-                                        <optgroup label="longitud">
-                                            <option value='Milimetro'>Milimetro</option>
-                                            <option value='Centrimetro'>Centrimetro</option>
-                                            <option value='Pulgada'>Pulgada</option>
-                                            <option value='Metro'>Metro</option>
-                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
-                                            <option value='Metro cuadrado'>Metro cuadrado</option>
-                                        </optgroup>
-                                    </select>
-                                    {errors.unitMeasure && (
-                                        <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
-                                    )}
-                                </div>
-                            </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
@@ -571,7 +574,7 @@ function CreateMerchandisesPage() {
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos?</p>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
                                 </div>
                                 <div>
                                     <input
