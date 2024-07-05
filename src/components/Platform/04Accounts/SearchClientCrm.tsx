@@ -20,6 +20,7 @@ interface SearchClientCrmProps {
 const customStyles = {
     control: (provided: any, state: any) => ({
         ...provided,
+        width: 400,
         backgroundColor: 'white',
         borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)',
         boxShadow: state.isFocused ? '0 0 0 1px #718bd8' : null,
@@ -29,26 +30,6 @@ const customStyles = {
         padding: '5px',
         borderRadius: '0px'
     }),
-    // option: (provided: any, state: any) => ({
-    //     ...provided,
-    //     backgroundColor: state.isSelected ? 'blue' : 'white',
-    //     color: state.isSelected ? 'white' : 'black',
-    //     '&:hover': {
-    //         backgroundColor: state.isFocused ? 'lightgray' : 'white'
-    //     }
-    // }),
-    // placeholder: (provided: any) => ({
-    //     ...provided,
-    //     color: 'gray'
-    // }),
-    // singleValue: (provided: any) => ({
-    //     ...provided,
-    //     color: 'black'
-    // }),
-    // menu: (provided: any) => ({
-    //     ...provided,
-    //     zIndex: 10
-    // })
 };
 
 function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmProps) {
@@ -123,7 +104,7 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
     };
 
     return (
-        <div ref={selectRef} className="mb-3 m-auto d-flex align-items-center justify-content-center">
+        <div ref={selectRef} className="m-auto d-flex align-items-center justify-content-center">
             <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(typeSell === 'Credito' || typeSell === 'Credito del Banco' || typeSell === 'CooperativeCredit' || typeSell === 'LoanShark' || typeSell === 'WarehouseCredit' || typeSell === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le vendiste'}?</p>
             <div>
                 <Select
