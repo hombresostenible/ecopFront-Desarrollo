@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
-import { errorItemByBarCodeOrName, getItemByBarCodeStart, getItemByNameStart } from './itemByBarCodeOrNameSlice';
+import { errorItemByBarCode, getItemByBarCodeStart, errorItemByName, getItemByNameStart } from './itemByBarCodeOrNameSlice';
 
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
 export const getItemByBarCode = (barCode: string, token: string) => async (dispatch: AppDispatch) => {
@@ -15,9 +15,9 @@ export const getItemByBarCode = (barCode: string, token: string) => async (dispa
         dispatch(getItemByBarCodeStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
-            dispatch(errorItemByBarCodeOrName(error.response?.data.message));
+            dispatch(errorItemByBarCode(error.response?.data.message));
         } else {
-            dispatch(errorItemByBarCodeOrName(error.message));
+            dispatch(errorItemByBarCode(error.message));
         }
     }
 };
@@ -27,6 +27,7 @@ export const getItemByBarCode = (barCode: string, token: string) => async (dispa
 //BUSCA UN ITEM POR NOMBRE EN TODAS LAS TABLAS
 export const getItemByName = (nameItem: string, token: string) => async (dispatch: AppDispatch) => {
     try {
+        console.log('Hola')
         const response = await axiosInstance.get(`/item-by-barCode-or-name/name-item/query?nameItem=${nameItem}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -36,9 +37,9 @@ export const getItemByName = (nameItem: string, token: string) => async (dispatc
         dispatch(getItemByNameStart(response.data.result));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
-            dispatch(errorItemByBarCodeOrName(error.response?.data.message));
+            dispatch(errorItemByName(error.response?.data.message));
         } else {
-            dispatch(errorItemByBarCodeOrName(error.message));
+            dispatch(errorItemByName(error.message));
         }
     }
 };

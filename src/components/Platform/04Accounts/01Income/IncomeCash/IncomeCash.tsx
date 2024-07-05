@@ -23,8 +23,8 @@ interface CashProps {
     token: string;
     selectedBranch: string;
     defaultDates: boolean;
-    registrationDate: Date | undefined;
-    transactionDate: Date | undefined;
+    registrationDate: string | undefined;
+    transactionDate: string | undefined;
     typeIncome: string;
 }
 
@@ -154,18 +154,18 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                 accountBookData.registrationDate = new Date().toLocaleDateString();
                 accountBookData.transactionDate = new Date().toLocaleDateString();
             }
-            if (registrationDate) accountBookData.registrationDate = registrationDate.toLocaleDateString();
-            if (transactionDate) accountBookData.transactionDate = transactionDate.toLocaleDateString();
+            if (registrationDate) accountBookData.registrationDate = registrationDate;
+            if (transactionDate) accountBookData.transactionDate = transactionDate;
 
             if (!selectedBranch) {
                 setMessageSelectedBranch('Debes de seleccionar una sede');
-                setTimeout(() => setMessageSelectedBranch(null), 5000); // Ocultar el mensaje después de 5 segundos
+                setTimeout(() => setMessageSelectedBranch(null), 5000);
                 return;
             }
 
             if (!selectedClient) {
                 setMessageSelectedClient('Debes de seleccionar un cliente');
-                setTimeout(() => setMessageSelectedClient(null), 5000); // Ocultar el mensaje después de 5 segundos
+                setTimeout(() => setMessageSelectedClient(null), 5000);
                 return;
             }
 

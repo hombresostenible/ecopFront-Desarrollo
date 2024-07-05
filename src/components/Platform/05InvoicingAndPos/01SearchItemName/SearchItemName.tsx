@@ -13,11 +13,11 @@ interface SearchItemNameProps {
 
 function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
     const dispatch: AppDispatch = useDispatch();
-    const itemByBarCodeOrName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCodeOrName);
+    const itemByName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByName);
 
     const [nameItem, setNameItem] = useState('');
     const [debouncedNameItem, setDebouncedNameItem] = useState('');
-    const [searchResults, setSearchResults] = useState<any[]>([]); // Nuevo estado local para resultados de búsqueda
+    const [searchResults, setSearchResults] = useState<any[]>([]);
 
     const debouncedSearch = useMemo(() => debounce((nextValue: string) => setDebouncedNameItem(nextValue), 500), []);
 
@@ -28,12 +28,21 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
     }, [debouncedNameItem, token, dispatch]);
 
     useEffect(() => {
-        if (itemByBarCodeOrName) {
-            // Convierte itemByBarCodeOrName a un array de any si es necesario
-            const results = Array.isArray(itemByBarCodeOrName) ? itemByBarCodeOrName : [itemByBarCodeOrName];
+        if (itemByName) {
+            const results = Array.isArray(itemByName) ? itemByName : [itemByName];
             setSearchResults(results);
+        } else {
+            setSearchResults([]);
         }
-    }, [itemByBarCodeOrName]);
+    }, [itemByName]);
+
+    useEffect(() => {
+        return () => {
+            setSearchResults([]);
+            setNameItem('');
+            setDebouncedNameItem('');
+        };
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -59,7 +68,7 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
                     onChange={handleChange}
                     placeholder='Escribe el nombre del artículo'
                 />
-                {searchResults.length > 0 && ( // Renderizar solo si hay resultados en la búsqueda local
+                {nameItem && searchResults.length > 0 && (
                     <div className={`${styles.select__Container} position-absolute overflow-y-auto`}>
                         {searchResults.map((item, index) => (
                             <button key={index} onClick={() => handleItemClick(item)} className={`${styles.button__Selected_Item} text-start display-block p-2 border-0`}>
