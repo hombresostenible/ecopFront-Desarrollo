@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IProduct } from '../../../../../types/User/products.types';
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
+import { stylesPDF } from '../../../../../helpers/StylesComponents/StylesPDF';
 
 interface DownloadInventoryProductProps {
     data: IProduct[];

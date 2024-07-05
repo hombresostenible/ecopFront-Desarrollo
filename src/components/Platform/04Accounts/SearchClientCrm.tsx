@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from 'react';
 import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
@@ -9,6 +8,7 @@ import { getCrmClients } from '../../../redux/User/crmClientSlice/actions';
 import type { RootState, AppDispatch } from '../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import CreateClient from './CreateClientAndSupplier/CreateClient';
+import { StylesReactSelect } from '../../../helpers/StylesComponents/StylesReactSelect';
 import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
@@ -17,22 +17,7 @@ interface SearchClientCrmProps {
     onClientSelect: (value: string | null) => void;
 }
 
-const customStyles = {
-    control: (provided: any, state: any) => ({
-        ...provided,
-        width: 400,
-        backgroundColor: 'white',
-        borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)',
-        boxShadow: state.isFocused ? '0 0 0 1px #718bd8' : null,
-        '&:hover': {
-            borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)'
-        },
-        padding: '5px',
-        borderRadius: '0px'
-    }),
-};
-
-function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmProps) {
+function SearchClientCrm({ token, typeSell, onClientSelect }: SearchClientCrmProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -115,7 +100,7 @@ function SearchClientCrm ({ token, typeSell, onClientSelect }: SearchClientCrmPr
                     options={options}
                     placeholder='Busca por nombre o número de cédula'
                     isSearchable
-                    styles={customStyles}
+                    styles={StylesReactSelect}
                 />
             </div>
 
