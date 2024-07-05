@@ -313,7 +313,7 @@ function SeeRecordsAccountsBookPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className={`${styles.noAssetsMessage} d-flex align-items-center justify-content-center`}>
+                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
                                         No tienes transacciones registradas
                                     </div>
                                 )}

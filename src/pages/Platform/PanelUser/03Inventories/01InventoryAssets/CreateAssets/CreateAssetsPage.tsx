@@ -158,7 +158,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>El equipo, herramienta o maquinaría que vas a registrar ¿Tiene código de barras?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>Si tiene código de barras ¿Cuál es el código?</p>
                                 </div>
                                 <div>
                                     <input

@@ -18,8 +18,8 @@ import CreateManyProduct from '../../../../../../components/Platform/03Inventori
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import CreateAssetPage from '../../01InventoryAssets/CreateAssets/CreateAssetsPage';
-import CreateRawMateralPage from '../../04InventoryRawMaterals/CreateRawMaterals/CreateRawMateralsPage';
+import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
+import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';
 import { GoPlus } from "react-icons/go";
 import styles from './styles.module.css';
 
@@ -60,10 +60,10 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     };
 
     //Setea el nombre del artículo
-    const [nameItem, setNameItem] = useState('');
-    const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-        setNameItem(event.target.value);
-    };
+    // const [nameItem, setNameItem] = useState('');
+    // const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
+    //     setNameItem(event.target.value);
+    // };
 
     //Setea si el artículo aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
@@ -94,10 +94,10 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     };
 
     //Setea la unidad de medida
-    const [showUnitMeasure, setShowUnitMeasure] = useState('');
-    const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setShowUnitMeasure(event.target.value);
-    };
+    // const [showUnitMeasure, setShowUnitMeasure] = useState('');
+    // const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
+    //     setShowUnitMeasure(event.target.value);
+    // };
 
     //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
     const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
@@ -164,10 +164,10 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     const [showCancelModalAsset, setShowCancelModalAsset] = useState(false);
 
     //Setea el valor 'Si' o 'No' si para elaborar un producto se necesitan equipos, herramientas o máquinas
-    const [selectedProductAsset, setSelectedProductAsset] = useState('Si');
-    const handleShowAsset = (value: SetStateAction<string>) => {
-        setSelectedProductAsset(value);
-    };
+    // const [selectedProductAsset, setSelectedProductAsset] = useState('Si');
+    // const handleShowAsset = (value: SetStateAction<string>) => {
+    //     setSelectedProductAsset(value);
+    // };
     //RENDERIZA LOS ACTIVOS
     const renderAssetInputs = () => {
         return Array.isArray(assets)&& assets.map((asset, index) => (
@@ -409,7 +409,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>El producto que vas a registrar ¿Tiene código de barras?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>Si tiene código de barras ¿Cuál es el código?</p>
                                 </div>
                                 <div>
                                     <input
@@ -430,7 +430,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         type="text"
                                         {...register('nameItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
-                                        onChange={handleNameItem}
+                                        // onChange={handleNameItem}
                                         placeholder='Nombre del producto que quieres crear'
                                     />
                                     {errors.nameItem && (
@@ -441,7 +441,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿El producto que vas a registrar tiene marca?</p>
+                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia del producto que vas a registrar?</p>
                                 </div>
                                 <div>
                                     <input
@@ -450,6 +450,83 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Marca del producto quieres registrar'
                                     />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu producto?</p>
+                                </div>
+                                <div>
+                                    <select
+                                        {...register('unitMeasure', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        // onChange={handleUnitMeasureChange}
+                                    >                                         
+                                        <option value=''>Selecciona una unidad de medida</option>
+                                        <optgroup label="Unidades">                                              
+                                            <option value='Unidades'>Unidades</option>
+                                            <option value='Ristra'>Ristra</option>
+                                            <option value='Decena'>Decena</option>
+                                            <option value='Docena'>Docena</option>
+                                        </optgroup>
+                                        <optgroup label="Líquidos">
+                                            <option value='Mililitro'>Mililitro</option>
+                                            <option value='Onza'>Onza</option>
+                                            <option value='Botella'>Botella</option>
+                                            <option value='Litro'>Litro</option>
+                                            <option value='Galon'>Galón</option>
+                                            <option value='Pimpina'>Pimpina</option>
+                                            <option value='Metro cubico'>Metro cúbico</option>
+                                        </optgroup>
+                                        <optgroup label="Sólidos">
+                                            <option value='Miligramo'>Miligramo</option>
+                                            <option value='Gramo'>Gramo</option>
+                                            <option value='Libra'>Libra</option>
+                                            <option value='Kilogramo'>Kilogramo</option>
+                                            <option value='Caja'>Caja</option>
+                                            <option value='Paca'>Paca</option>
+                                            <option value='Paquete'>Paquete</option>
+                                            <option value='Arroba'>Arroba</option>
+                                            <option value='Bulto'>Bulto</option>
+                                            <option value='Saco'>Saco</option>
+                                            <option value='Tonelada'>Tonelada</option>
+                                        </optgroup>
+                                        <optgroup label="longitud">
+                                            <option value='Milimetro'>Milimetro</option>
+                                            <option value='Centrimetro'>Centrimetro</option>
+                                            <option value='Pulgada'>Pulgada</option>
+                                            <option value='Metro'>Metro</option>
+                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
+                                            <option value='Metro cuadrado'>Metro cuadrado</option>
+                                        </optgroup>
+                                    </select>
+                                    {errors.unitMeasure && (
+                                        <p className='text-danger'>El tipo de empaque de tu producto es requerido</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánto producto tienes en el inventario?</p>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Tu inventario acá'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.inventory && (
+                                        <p className='text-danger'>El inventario del producto es requerido</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -572,7 +649,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             {selectedpackaged === 'Si' && (
                                 <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                    {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
                                             <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
                                         </div>
@@ -593,7 +670,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                                 <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
                                             )}
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
@@ -619,81 +696,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     </div>
                                 </div>
                             )}
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánto producto tienes en el inventario?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario del producto es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida viene el producto?</p>
-                                </div>
-                                <div>
-                                    <select
-                                        {...register('unitMeasure', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleUnitMeasureChange}
-                                    >                                         
-                                        <option value=''>Selecciona una unidad de medida</option>
-                                        <optgroup label="Unidades">                                              
-                                            <option value='Unidades'>Unidades</option>
-                                            <option value='Ristra'>Ristra</option>
-                                            <option value='Decena'>Decena</option>
-                                            <option value='Docena'>Docena</option>
-                                        </optgroup>
-                                        <optgroup label="Líquidos">
-                                            <option value='Mililitro'>Mililitro</option>
-                                            <option value='Onza'>Onza</option>
-                                            <option value='Litro'>Litro</option>
-                                            <option value='Galon'>Galón</option>
-                                            <option value='Pimpina'>Pimpina</option>
-                                            <option value='Metro cubico'>Metro cúbico</option>
-                                        </optgroup>
-                                        <optgroup label="Sólidos">
-                                            <option value='Miligramo'>Miligramo</option>
-                                            <option value='Gramo'>Gramo</option>
-                                            <option value='Libra'>Libra</option>
-                                            <option value='Kilogramo'>Kilogramo</option>
-                                            <option value='Caja'>Caja</option>
-                                            <option value='Paca'>Paca</option>
-                                            <option value='Arroba'>Arroba</option>
-                                            <option value='Bulto'>Bulto</option>
-                                            <option value='Saco'>Saco</option>
-                                            <option value='Tonelada'>Tonelada</option>
-                                        </optgroup>
-                                        <optgroup label="longitud">
-                                            <option value='Milimetro'>Milimetro</option>
-                                            <option value='Centrimetro'>Centrimetro</option>
-                                            <option value='Pulgada'>Pulgada</option>
-                                            <option value='Metro'>Metro</option>
-                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
-                                            <option value='Metro cuadrado'>Metro cuadrado</option>
-                                        </optgroup>
-                                    </select>
-                                    {errors.unitMeasure && (
-                                        <p className='text-danger'>El tipo de empaque de tu producto es requerido</p>
-                                    )}
-                                </div>
-                            </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
@@ -932,7 +934,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
 
                             {/* ACTIVOS */}
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <div>
                                     <p className={`${styles.text} mb-0 p-2`} >Para elaborar tu producto ¿Utilizas equipos, herramientas o máquinas?</p>
                                 </div>
@@ -953,33 +955,34 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                         <p className='text-danger'>Este dato es requerido</p>
                                     )}
                                 </div>
-                            </div>
+                            </div> */}
 
-                            {selectedProductAsset === 'Si' && (
-                                <div className={` mb-3 p-3 border border-secundary rounded`}>
-                                    <div>
-                                        <h3 className={`${styles.subtitleSection} text-center`}>Equipos, herramientas o máquinas</h3>
-                                        <p>Selecciona los equipos, herramientas o máquinas que utilizas para elaborar tu producto</p>
-                                        <p className='mt-2'>Si el equipo, herramienta o máquina no existe, créalo <span className={`${styles.link} text-sky-500 text-decoration-none`} onClick={handleCreateAsset}>aquí</span></p>
-                                        <Modal show={showCancelModalAsset} onHide={() => setShowCancelModalAsset(false)} size="xl">
-                                            <Modal.Header closeButton onClick={() => setShowCancelModalAsset(false)}>
-                                                <Modal.Title>Crear Activo</Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                            <CreateAssetPage
-                                                selectedBranchId={selectedBranchId}
-                                                onCreateComplete={() => {
-                                                    onCloseAssetModal();
-                                                    getRawMaterialsByBranch(selectedBranchId, token);
-                                                }}
-                                                onAssetCreated={onAssetCreated}
-                                            />
-                                            </Modal.Body>
-                                        </Modal>
-                                    </div>
-                                    <div>{renderAssetInputs()}</div>
+                            <div className={` mb-3 p-3 border border-secundary rounded`}>
+                                <div>
+                                    <h3 className={`${styles.subtitleSection} text-center`}>Equipos, herramientas o máquinas</h3>
+                                    <p>Selecciona los equipos, herramientas o máquinas que utilizas para elaborar tu producto</p>
+                                    <p className='mt-2'>Si el equipo, herramienta o máquina no existe, créalo <span className={`${styles.link} text-sky-500 text-decoration-none`} onClick={handleCreateAsset}>aquí</span></p>
+                                    <Modal show={showCancelModalAsset} onHide={() => setShowCancelModalAsset(false)} size="xl">
+                                        <Modal.Header closeButton onClick={() => setShowCancelModalAsset(false)}>
+                                            <Modal.Title>Crear Activo</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                        <CreateAsset
+                                            token={token}
+                                            selectedBranchId={selectedBranchId}
+                                            onCreateComplete={() => {
+                                                onCloseAssetModal();
+                                                getRawMaterialsByBranch(selectedBranchId, token);
+                                            }}
+                                            onAssetCreated={onAssetCreated}
+                                        />
+                                        </Modal.Body>
+                                    </Modal>
                                 </div>
-                            )}
+                                <div>{renderAssetInputs()}</div>
+                            </div>
+                            {/* {selectedProductAsset === 'Si' && (
+                            )} */}
 
 
 
@@ -993,7 +996,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                             <Modal.Title>Crear Materia Prima</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <CreateRawMateralPage
+                                            <CreateRawMateral
+                                                token={token}
                                                 selectedBranchId={selectedBranchId}
                                                 onCreateComplete={() => {
                                                     onCloseRawMaterialModal();
