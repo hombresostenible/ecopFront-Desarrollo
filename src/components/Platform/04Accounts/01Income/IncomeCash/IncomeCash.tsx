@@ -42,6 +42,8 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
+    const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
+    const [messageSelectedClient, setMessageSelectedClient] = useState<string | null>(null);
 
     // BUSCAR Y SETEAR EL ARTICULO POR CODIGO DE BARRAS
     const [barCode, setBarCode] = useState<string>('');
@@ -60,14 +62,13 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
             type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service', // Asegúrate de que el tipo coincida con la enumeración permitida
             IVA: item.IVA,
             sellingPrice: item.sellingPrice,
-            quantity: 1, // Puedes inicializar la cantidad según tu lógica de selección
-            subTotalValue: item.sellingPrice * 1 // Calcula el subtotal según tu lógica
+            quantity: 1,                                // Puedes inicializar la cantidad según tu lógica de selección
+            subTotalValue: item.sellingPrice * 1,       // Calcula el subtotal según tu lógica
         };
     
         setScannedItems([...scannedItems, selectedItems]);
     };
 
-    // 
     useEffect(() => {
         const inputElement = document.getElementById("barCodeInput") as HTMLInputElement;
         if (inputElement) {
@@ -111,13 +112,30 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         return total + (scannedItem.quantity * scannedItem.sellingPrice);
     }, 0);
 
-    // Estado para almacenar el monto del pago recibido
-    const [paymentAmount, setPaymentAmount] = useState<number>(0);
+    const [paymentAmount, setPaymentAmount] = useState<string>('');                 // Estado para almacenar el monto del pago recibido
+    const [changeAmount, setChangeAmount] = useState<number | null>(null);          // Estado para almacenar el cambio
 
-    // Calcular el cambio
-    const [changeAmount, setChangeAmount] = useState<number | null>(null);
+    // Función para formatear el valor como moneda
+    const formatCurrency = (value: string) => {
+        if (!value) return '';
+        const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
+        return `$ ${new Intl.NumberFormat('es-ES').format(numberValue)}`;
+    };
+
+    // Manejar el cambio en el monto recibido
+    const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/[^\d]/g, '');                         // Eliminar caracteres no numéricos
+        setPaymentAmount(value);
+    };
+
+    // Calcular el cambio y actualizar el estado
     const handleCalculateChange = () => {
-        setChangeAmount(paymentAmount - totalPurchaseAmount);
+        const numericValue = parseFloat(paymentAmount.replace(/[^\d]/g, ''));
+        if (!isNaN(numericValue)) {
+            setChangeAmount(numericValue - totalPurchaseAmount);                    // totalPurchaseAmount debe estar definido y accesible aquí
+        } else {
+            setChangeAmount(null);
+        }
     };
 
     const onSubmit = async (values: IAccountsBook) => {
@@ -138,8 +156,22 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
             }
             if (registrationDate) accountBookData.registrationDate = registrationDate.toLocaleDateString();
             if (transactionDate) accountBookData.transactionDate = transactionDate.toLocaleDateString();
+
+            if (!selectedBranch) {
+                setMessageSelectedBranch('Debes de seleccionar una sede');
+                setTimeout(() => setMessageSelectedBranch(null), 5000); // Ocultar el mensaje después de 5 segundos
+                return;
+            }
+
+            if (!selectedClient) {
+                setMessageSelectedClient('Debes de seleccionar un cliente');
+                setTimeout(() => setMessageSelectedClient(null), 5000); // Ocultar el mensaje después de 5 segundos
+                return;
+            }
+
             dispatch(postAccountsBook(accountBookData, token));
             setFormSubmitted(true);
+            setSelectedClient('');
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
@@ -157,19 +189,15 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
 
     return (
         <div>
-            {formSubmitted && (
-                <div className='alert alert-success'>El formulario se ha enviado con éxito</div>
-            )}
             {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
 
             <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} `}>
-
                 {typeIncome === 'Venta de articulos' && (
                     <div className='mt-4 mb-4'>
-                        <div className={`${styles.container__Search} d-flex align-items-start justify-content-between`}>
-                            <div className={`${styles.info__Register} d-flex align-items-center justify-content-between`}>
+                        <div className="d-flex align-items-start justify-content-between">
+                            <div className="d-flex align-items-center justify-content-between">
                                 <p className={`${styles.barCode} m-0 text-center`}>Código de barras</p>
                                 <input
                                     id="barCodeInput"
@@ -206,10 +234,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                     scannedItems.map((product, index) => (
                                         <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <div className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
-                                                <div className={`${styles.container__Quantity} `}>
+                                                <div className={`${styles.container__Quantity} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.quantity}</span>
                                                 </div>
-                                                <div className={`${styles.container__FaPlus} `}>
+                                                <div className={`${styles.container__FaPlus} d-flex align-items-center justify-content-center`}>
                                                     <FaPlus
                                                         className={`${styles.icon__FaPlus} `}
                                                         onClick={() => handleChangeQuantityPerItem(index)}
@@ -267,10 +295,18 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             </Modal.Body>
                         </Modal>
 
-                        <SearchClientCrm
-                            token={token}
-                            onClientSelect={(client) => setSelectedClient(client)}
-                        />
+                        <div className={`${styles.container__Selected_Client} position-relative`}>
+                            <SearchClientCrm
+                                token={token}
+                                onClientSelect={(client) => setSelectedClient(client)}
+                            />
+                            {messageSelectedClient && (
+                                <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                    <div className={`${styles.triangle} position-absolute`}></div>
+                                    <p className='m-0'>Selecciona el cliente acá</p>
+                                </div>
+                            )}
+                        </div>
 
                         <div className={`${styles.container__Info_Purchase} m-5 d-flex flex-column align-items-start justify-content-between`}>
                             <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
@@ -321,11 +357,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
                                 <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Monto recibido</p>
                                 <input
-                                    type="number"
-                                    id="paymentAmount"
+                                    type="text"
                                     className={`${styles.input__Info_Purchase} p-2 text-end`}
-                                    value={paymentAmount}
-                                    onChange={(e) => setPaymentAmount(parseFloat(e.target.value))}
+                                    value={formatCurrency(paymentAmount)}
+                                    onChange={handlePaymentAmountChange}
                                 />
                             </div>
 
@@ -339,12 +374,12 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 </button>
                                 <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
                                     <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Cambio</p>
-                                    <div className="m-0 text-end">
+                                    <div className={`${styles.input__Change__Amount} m-0`}>
                                         {changeAmount !== null && (
                                             <input
-                                                type="number"
-                                                className={`${styles.input__Change__Amount} m-0 p-2 text-end`}
-                                                value={changeAmount}
+                                                type="text" // Cambiado a text para manejar la visualización del cambio como moneda
+                                                className={`${styles.input__Change} m-0 p-2 text-end border-0`}
+                                                value={`$ ${new Intl.NumberFormat('es-ES').format(changeAmount)}`} // Formatear cambio como moneda
                                                 readOnly
                                             />
                                         )}
@@ -353,13 +388,13 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Section_Info_Purchase} mb-5 m-auto d-flex align-items-center justify-content-between`}>
                             <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
                             <div>
                                 <input
                                     type="text"
                                     {...register('seller', { required: 'El vendedor es requerido' })}
-                                    className={`${styles.input} p-2`}
+                                    className={`${styles.input__Info_Purchase} p-2 text-end`}
                                     placeholder='Nombre del vendedor'
                                 />
                                 {errors.seller && (
@@ -369,8 +404,17 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                         </div>
                     </div>
                 )}
-                
-                <div className="mb-4 d-flex align-items-center justify-content-center">
+
+                <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
+                    {formSubmitted && (
+                        <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
+                    )}
+                    {messageSelectedBranch && (
+                        <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
+                    )}
+                    {messageSelectedClient && (
+                        <div className={`${styles.error__Message_Selected_Client} position-absolute`}>{messageSelectedClient}</div>
+                    )}
                     <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                 </div>
             </form>
