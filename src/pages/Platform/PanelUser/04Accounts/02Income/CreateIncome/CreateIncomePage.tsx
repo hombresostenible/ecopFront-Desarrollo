@@ -83,7 +83,7 @@ function CreateIncomePage () {
                         <div className="mb-1 p-3 border">
                             <div className="d-flex justify-content-between">
                                 <select
-                                    className="border-0 p-1 text-center"
+                                    className={`${styles.input} p-2 border `}
                                     value={selectedBranch}
                                     onChange={handleBranchChange}
                                 >
