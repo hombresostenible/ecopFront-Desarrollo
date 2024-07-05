@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IAccountsBook } from "../../../../../types/User/accountsBook.types";
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
+import { stylesPDF } from '../../../../../helpers/StylesComponents/StylesPDF';
 
 interface DownloadExpensesPerPeriodProps {
     data: IAccountsBook[];

@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IBestClientQuantity } from "../../../../../types/User/financialIndicators.types";
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
+import { stylesPDF } from '../../../../../helpers/StylesComponents/StylesPDF';
 
 interface DownloadBestClientQuantityProps {
     data: IBestClientQuantity[];

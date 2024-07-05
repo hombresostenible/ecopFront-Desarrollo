@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IAssets } from '../../../../../types/User/assets.types';
-import { stylesPDF } from '../../../../../helpers/StylesPDF/StylesPDF';
+import { stylesPDF } from '../../../../../helpers/StylesComponents/StylesPDF';
 
 interface DownloadInventoryAssetsProps {
     data: IAssets[];
