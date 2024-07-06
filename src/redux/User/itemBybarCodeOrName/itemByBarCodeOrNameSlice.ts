@@ -49,7 +49,6 @@ const itemByBarCodeOrNameSlice = createSlice({
             state.loading = true;
             state.itemByName = action.payload;
             state.errorItemByBarCodeOrName = null;
-            console.log('Entonces')
         },
 
     },
