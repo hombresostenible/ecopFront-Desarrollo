@@ -48,12 +48,6 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
         setShowCancelModal(false);
     };
 
-    //Setea el nombre del artículo
-    // const [nameItem, setNameItem] = useState('');
-    // const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-    //     setNameItem(event.target.value);
-    // };
-
     //Setea si el producto aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
     const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
@@ -108,6 +102,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease,
             } as IRawMaterial;
+
             dispatch(postRawMaterial(formData, token));
             setFormSubmitted(true);
             reset();
@@ -618,11 +613,11 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     <select
                                         defaultValue={'0'}
                                         className={`${styles.input} p-2 border `}
-                                        {...register('IVA', { required: true })}
+                                        {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
-                                        <option value='0'>0 %</option>
-                                        <option value='5'>5 %</option>
-                                        <option value='19'>19 %</option>
+                                        <option value={0}>0 %</option>
+                                        <option value={5}>5 %</option>
+                                        <option value={19}>19 %</option>
                                     </select>
                                 </div>
                             </div>

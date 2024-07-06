@@ -40,7 +40,6 @@ export const postManyAssets = (formData: IAssets[], token: string) => async (dis
             dispatch(errorAssets(error.response?.data.message));
         } else {
             dispatch(errorAssets(error.response.data));
-            // console.log(error.response.data)
         }
     }
 };
