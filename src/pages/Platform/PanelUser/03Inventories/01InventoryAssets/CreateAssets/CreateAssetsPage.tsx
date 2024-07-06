@@ -277,6 +277,11 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Tu inventario acá'
                                         min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     {errors.inventory && (
                                         <p className='text-danger'>El inventario es requerido</p>
@@ -291,7 +296,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 <div>
                                     <input
                                         type="number"
-                                        {...register('purchasePriceBeforeTax', { required: true })}
+                                        {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Precio del equipo, herramienta o máquina'
                                         min={0}
