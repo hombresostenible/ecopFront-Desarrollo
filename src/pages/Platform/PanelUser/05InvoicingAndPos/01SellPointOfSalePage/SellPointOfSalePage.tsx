@@ -24,7 +24,7 @@ function SellPointOfSalePage() {
     const token = jsCookie.get("token") || '';
     const dispatch: AppDispatch = useDispatch();
 
-    const itemByBarCodeOrName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCodeOrName);
+    const itemByName = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByName);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
@@ -106,10 +106,10 @@ function SellPointOfSalePage() {
     }, [selectedPlasticBagOption, plasticBagQuantity]);
 
     useEffect(() => {
-        if (itemByBarCodeOrName && currentItem) {
-            setScannedItems(prevProducts => [...prevProducts, { item: itemByBarCodeOrName, quantity: defaultQuantity }]);
+        if (itemByName && currentItem) {
+            setScannedItems(prevProducts => [...prevProducts, { item: itemByName, quantity: defaultQuantity }]);
         }
-    }, [itemByBarCodeOrName, defaultQuantity]);
+    }, [itemByName, defaultQuantity]);
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyQuantity as unknown as EventListener);
