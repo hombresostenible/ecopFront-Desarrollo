@@ -238,6 +238,11 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                         onChange={(e) => handleRawMaterialQuantityChange(rawMaterial.id, parseInt(e.target.value, 10))}
                         placeholder={`Cantidad de ${rawMaterial.nameItem}`}
                         min={0}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                     <p className={`${styles.renderInputUnitMeasure} m-0 p-1 d-flex`}>{rawMaterial.unitMeasure}s</p>
                 </div>
@@ -824,7 +829,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 <div>
                                     <input
                                         type="number"
-                                        {...register('sellingPrice', { required: true })}
+                                        {...register('sellingPrice', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Precio de venta del producto'
                                         min={0}
