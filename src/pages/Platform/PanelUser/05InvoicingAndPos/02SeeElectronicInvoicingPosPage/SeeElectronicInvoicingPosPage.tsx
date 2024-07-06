@@ -2,6 +2,7 @@
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+// import { MdOutlineRemoveRedEye } from "react-icons/md";
 import styles from './styles.module.css';
 
 function SeeElectronicInvoicingPosPage() {

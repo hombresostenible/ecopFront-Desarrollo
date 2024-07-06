@@ -266,8 +266,6 @@ function CreateServicesPage() {
         dispatch(getRawMaterialsByBranch(idBranch, token));
     };
 
-
-
     const onSubmit = (values: IService) => {
         try {
             if (!isCreatingRawMaterial && !isCreatingProduct && !isCreatingAsset) {
@@ -276,7 +274,7 @@ function CreateServicesPage() {
                 const productsArray = Array.isArray(product) ? product : product ? [product] : [];
                 const rawMaterialsArray = Array.isArray(rawMaterial) ? rawMaterial : rawMaterial ? [rawMaterial] : [];
     
-                const formDarta: IService = {
+                const formData: IService = {
                     ...values,
                     serviceAssets: assetsArray
                         .filter((asset) => selectedAssets.includes(asset.id))
@@ -302,7 +300,8 @@ function CreateServicesPage() {
                             quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
                         })),
                 };
-                dispatch(postService(formDarta, token));
+
+                dispatch(postService(formData, token));
                 setFormSubmitted(true);
                 dispatch(getServices(token));
                 reset();
@@ -406,9 +405,11 @@ function CreateServicesPage() {
                                 <div>
                                     <input
                                         type="number"
-                                        {...register('sellingPrice', { required: true })}
+                                        {...register('sellingPrice', { setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='¿A qué precio vendes tu servicio? '
+                                        placeholder='¿A qué precio vendes tu servicio?'
+                                        inputMode="numeric"
+                                        min={0}
                                     />
                                     {errors.sellingPrice && (
                                         <p className='text-danger'>El precio del servicio es requerido</p>
@@ -422,13 +423,13 @@ function CreateServicesPage() {
                                 </div>
                                 <div className={styles.containerInput}>
                                     <select
-                                        defaultValue={'0'}
+                                        defaultValue={0}
                                         className={`${styles.input} p-2 border `}
-                                        {...register('IVA', { required: true })}
+                                        {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
-                                        <option value='0'>0 %</option>
-                                        <option value='5'>5 %</option>
-                                        <option value='19'>19 %</option>
+                                        <option value={0}>0 %</option>
+                                        <option value={5}>5 %</option>
+                                        <option value={19}>19 %</option>
                                     </select>
                                 </div>
                             </div>
