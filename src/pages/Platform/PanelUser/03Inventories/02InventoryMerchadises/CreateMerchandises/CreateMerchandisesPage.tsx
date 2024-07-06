@@ -579,7 +579,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <input
                                         type="number"
-                                        {...register('purchasePriceBeforeTax', { required: true })}
+                                        {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Precio de la mercancía'
                                         min={0}
@@ -619,7 +619,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <input
                                         type="number"
-                                        {...register('sellingPrice', { required: true })}
+                                        {...register('sellingPrice', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Precio de venta de a mercancía'
                                         min={0}

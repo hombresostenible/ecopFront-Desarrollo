@@ -152,6 +152,11 @@ function CreateServicesPage() {
                         onChange={(e) => handleProductQuantityChange(product.id, parseInt(e.target.value, 10))}
                         placeholder={`Cantidad de ${product.nameItem}`}
                         min={0}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                 </div>
             </div>
@@ -226,7 +231,12 @@ function CreateServicesPage() {
                         onChange={(e) => handleRawMaterialQuantityChange(rawMaterial.id, parseInt(e.target.value, 10))}
                         placeholder={`Cantidad de ${rawMaterial.nameItem}`}
                         min={0}
-                        />
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
                     <p className={`${styles.renderInputUnitMeasure} m-0 p-1 d-flex`}>{rawMaterial.unitMeasure}s</p>
                 </div>
             </div>
@@ -410,6 +420,11 @@ function CreateServicesPage() {
                                         placeholder='¿A qué precio vendes tu servicio?'
                                         inputMode="numeric"
                                         min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     {errors.sellingPrice && (
                                         <p className='text-danger'>El precio del servicio es requerido</p>
