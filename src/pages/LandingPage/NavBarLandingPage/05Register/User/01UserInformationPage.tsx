@@ -67,11 +67,10 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                         <input
                             type="number"
                             {...register('verificationDigit', {
-                                required: true,
                                 pattern: /^\d{1}$/ // Expresión regular para 9 dígitos exactos
                             })}
                             className={`${styles.input} p-2 border `}
-                            placeholder='¿Cuál es el dígito de verificación de tu empresa?'
+                            placeholder='Opcional ¿Cuál es el dígito de verificación de tu empresa?'
                             min={0}
                             onKeyDown={(e) => {
                                 if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
@@ -79,9 +78,6 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                                 }
                             }}
                         />
-                        {errors.verificationDigit && (
-                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El dígito de verificación es requerido</p>
-                        )}
                     </div>
                 </div>
             </div>
