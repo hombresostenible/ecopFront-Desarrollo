@@ -64,7 +64,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                 {formSubmitted && (
                     <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                 )}
-                {errorCrmClient?.map((error, i) => (
+                {Array.isArray(errorCrmClient) && errorCrmClient?.map((error, i) => (
                     <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                 ))}
 
@@ -92,10 +92,16 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                         <h6 className={styles.label}>No. de identificación</h6>
                         <div className={styles.container__Input}>
                             <input
-                                type="text"
-                                {...register('documentId', { required: true })}
-                                className={`${styles.input} p-2`}
-                                placeholder='¿Cuál es tu número de identificación?'
+                                type="number"
+                                {...register('documentId', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder='¿Cuál es el número de identificación?'
+                                min={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                        e.preventDefault();
+                                    }
+                                }}
                             />
                             {errors.lastName && (
                                 <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>

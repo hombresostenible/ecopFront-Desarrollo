@@ -193,7 +193,7 @@ function SideBar() {
     return (
         <div className={`${styles.container} position-relative overflow-y-auto`}>
             <div className={`${styles.container__Component} p-2 `}>
-                <NavLink to="/home" className={`${styles.section} mb-2 mx-1 p-1 d-flex align-items-center justify-content-start text-decoration-none ${location.pathname === '/home' ? styles.active : ''} `}>
+                <NavLink to="/home" className={`${styles.section} mb-2 p-1 d-flex align-items-center justify-content-start text-decoration-none `}>
                     <div className="d-flex align-items-center">
                         <IoHome className={`${styles.icon} `}/>
                         <div className={`${styles.link__Sidebar} p-1 px-4text-decoration-none`}>Home</div>
