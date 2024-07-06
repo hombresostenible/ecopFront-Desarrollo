@@ -99,6 +99,7 @@ function CreateMerchandisesPage() {
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease,
             } as IMerchandise;
+
             await dispatch(postMerchandise(formData, token));
             setFormSubmitted(true);
             reset();
@@ -603,11 +604,11 @@ function CreateMerchandisesPage() {
                                     <select
                                         defaultValue={'0'}
                                         className={`${styles.input} p-2 border `}
-                                        {...register('IVA', { required: true })}
+                                        {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
-                                        <option value='0'>0 %</option>
-                                        <option value='5'>5 %</option>
-                                        <option value='19'>19 %</option>
+                                        <option value={0}>0 %</option>
+                                        <option value={5}>5 %</option>
+                                        <option value={19}>19 %</option>
                                     </select>
                                 </div>
                             </div>
