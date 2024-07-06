@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
-//REDUX
+// REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getCrmClients } from '../../../redux/User/crmClientSlice/actions';
 import type { RootState, AppDispatch } from '../../../redux/store';
@@ -13,11 +13,10 @@ import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
     token: string;
-    typeSell?: string;
-    onClientSelect: (value: string | null) => void;
+    onClientSelect: (value: number | null) => void;
 }
 
-function SearchClientCrm({ token, typeSell, onClientSelect }: SearchClientCrmProps) {
+function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -25,15 +24,13 @@ function SearchClientCrm({ token, typeSell, onClientSelect }: SearchClientCrmPro
 
     const [filterText, setFilterText] = useState<string>('');
     const [selectedOption, setSelectedOption] = useState<{ value: string; label: string } | null>(null);
-
     const [showCancelModalCreateClient, setShowCancelModalCreateClient] = useState(false);
-
     const selectRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         dispatch(getCrmClients(token));
-    }, [ token ]);
-   
+    }, [token]);
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -45,37 +42,45 @@ function SearchClientCrm({ token, typeSell, onClientSelect }: SearchClientCrmPro
                 setFilterText('');
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [ selectRef, selectedOption ]);
+    }, [selectRef, selectedOption]);
 
     const createClientOption = {
         value: 'createClient',
         label: '¿No existe tu cliente? Créalo acá',
     };
 
-    const options = Array.isArray(crmClients)
-    ? crmClients.map((crmClient) => ({
-        value: crmClient.documentId,
-        label: crmClient.name && crmClient.lastName 
-          ? `${crmClient.documentId} - ${crmClient.name} ${crmClient.lastName}` 
-          : `${crmClient.documentId} - ${crmClient.corporateName}`
-      }))
-    : [];
-    
-    options?.unshift(createClientOption);
+    const filteredOptions = Array.isArray(crmClients)
+        ? crmClients
+              .filter((crmClient) =>
+                  crmClient.documentId.toString().includes(filterText) ||
+                  (crmClient.name && crmClient.name.toLowerCase().includes(filterText.toLowerCase())) ||
+                  (crmClient.lastName && crmClient.lastName.toLowerCase().includes(filterText.toLowerCase())) ||
+                  (crmClient.corporateName && crmClient.corporateName.toLowerCase().includes(filterText.toLowerCase()))
+              )
+              .map((crmClient) => ({
+                  value: crmClient.documentId.toString(),
+                  label:
+                      crmClient.name && crmClient.lastName
+                          ? `${crmClient.documentId} - ${crmClient.name} ${crmClient.lastName}`
+                          : `${crmClient.documentId} - ${crmClient.corporateName}`,
+              }))
+        : [];
+
+    filteredOptions.unshift(createClientOption);
 
     const handleInputChange = (inputValue: string) => {
         setFilterText(inputValue);
     };
-    
+
     const handleSelectChange = (option: { value: string; label: string } | null) => {
         if (option?.value === 'createClient') {
             setShowCancelModalCreateClient(true);
         } else {
-            onClientSelect(option?.value || null);  // Solo pasa el valor de `value` como argumento.
+            onClientSelect(option?.value ? parseInt(option.value) : null); // Pasa el valor de `value` como número.
             setSelectedOption(option);
         }
     };
@@ -84,37 +89,35 @@ function SearchClientCrm({ token, typeSell, onClientSelect }: SearchClientCrmPro
         setShowCancelModalCreateClient(false);
     };
 
-    const onCreateClientCreated = (token: string) => {
+    const onCreateClient = (token: string) => {
         dispatch(getCrmClients(token));
     };
 
     return (
         <div ref={selectRef} className="m-auto d-flex align-items-center justify-content-center">
-            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(typeSell === 'Credito' || typeSell === 'Credito del Banco' || typeSell === 'CooperativeCredit' || typeSell === 'LoanShark' || typeSell === 'WarehouseCredit' || typeSell === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le vendiste'}?</p>
+            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa a la que le vendiste?</p>
             <div>
                 <Select
                     value={selectedOption}
                     inputValue={filterText}
                     onInputChange={handleInputChange}
                     onChange={handleSelectChange}
-                    options={options}
-                    placeholder='Busca por nombre o número de cédula'
+                    options={filteredOptions}
+                    placeholder="Busca por nombre o número de cédula"
                     isSearchable
                     styles={StylesReactSelect}
                 />
             </div>
 
-            <Modal show={showCancelModalCreateClient} onHide={() => setShowCancelModalCreateClient(false)} >
-                <Modal.Header closeButton onClick={() => setShowCancelModalCreateClient(false)}>
+            <Modal show={showCancelModalCreateClient} onHide={onCloseCreateClientModal}>
+                <Modal.Header closeButton>
                     <Modal.Title>Crea tu cliente</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <CreateClient
                         token={token}
-                        onCreateComplete={() => {
-                            onCloseCreateClientModal();
-                        }}
-                        onClientCreated={onCreateClientCreated}
+                        onCreateComplete={onCloseCreateClientModal}
+                        onClientCreated={onCreateClient}
                     />
                 </Modal.Body>
             </Modal>

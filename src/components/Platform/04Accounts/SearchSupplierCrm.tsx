@@ -8,25 +8,23 @@ import { getCrmSuppliers } from '../../../redux/User/crmSupplierSlice/actions';
 import type { RootState, AppDispatch } from '../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import CreateSupplier from './CreateClientAndSupplier/CreateSupplier';
+import { StylesReactSelect } from '../../../helpers/StylesComponents/StylesReactSelect';
 import styles from './styles.module.css';
 
 interface SearchSupplierCrmCrmProps {
     token: string;
-    expenseCategory: string;
-    onSupplierSelect: (value: string | null) => void;
+    onSupplierSelect: (value: number | null) => void;
 }
 
-function SearchSupplierCrm ({ token, expenseCategory, onSupplierSelect }: SearchSupplierCrmCrmProps) {
+function SearchSupplierCrm({ token, onSupplierSelect }: SearchSupplierCrmCrmProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const crmSuppliers = useSelector((state: RootState) => state.crmSupplier.crmSupplier);
-
+    
     const [filterText, setFilterText] = useState<string>('');
     const [selectedOption, setSelectedOption] = useState<{ value: string; label: string } | null>(null);
-
     const [showCancelModalCreateSupplier, setShowCancelModalCreateSupplier] = useState(false);
-
     const selectRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -55,17 +53,24 @@ function SearchSupplierCrm ({ token, expenseCategory, onSupplierSelect }: Search
         label: '¿No existe tu proveedor? Créalo acá',
     };
 
-    const options = Array.isArray(crmSuppliers) ? crmSuppliers.map((crmClient) => {
-        const label = crmClient.name || crmClient.corporateName || ''; // Usamos un valor por defecto para evitar 'undefined'
-        return {
-            value: crmClient.documentId,
-            label: label,
-        };
-    }) : [];
+    const filteredOptions = Array.isArray(crmSuppliers)
+        ? crmSuppliers
+              .filter((suppliers) =>
+                  suppliers.documentId.toString().includes(filterText) ||
+                  (suppliers.name && suppliers.name.toLowerCase().includes(filterText.toLowerCase())) ||
+                  (suppliers.lastName && suppliers.lastName.toLowerCase().includes(filterText.toLowerCase())) ||
+                  (suppliers.corporateName && suppliers.corporateName.toLowerCase().includes(filterText.toLowerCase()))
+              )
+              .map((suppliers) => ({
+                  value: suppliers.documentId.toString(),
+                  label:
+                      suppliers.name && suppliers.lastName
+                          ? `${suppliers.documentId} - ${suppliers.name} ${suppliers.lastName}`
+                          : `${suppliers.documentId} - ${suppliers.corporateName}`,
+              }))
+        : [];
 
-    options?.unshift(createSupplierOption);
-
-    options?.unshift(createSupplierOption);
+    filteredOptions.unshift(createSupplierOption);
 
     const handleInputChange = (inputValue: string) => {
         setFilterText(inputValue);
@@ -75,51 +80,46 @@ function SearchSupplierCrm ({ token, expenseCategory, onSupplierSelect }: Search
         if (option?.value === 'createSupplier') {
             setShowCancelModalCreateSupplier(true);
         } else {
-            onSupplierSelect(option?.value || null);  // Solo pasa el valor de `value` como argumento.
+            onSupplierSelect(option?.value ? parseInt(option.value) : null);
             setSelectedOption(option);
         }
     };
 
-    const onCloseCreateClientModal = () => {
+    const onCloseCreateSupplierModal = () => {
         setShowCancelModalCreateSupplier(false);
     };
 
-    const onCreateSupplierCreated = (token: string) => {
+    const onCreateSupplier = (token: string) => {
         dispatch(getCrmSuppliers(token));
     };
 
     return (
-        <div
-            ref={selectRef}
-            className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded"
-        >
-            <div className="px-3">                    
-                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa {(expenseCategory === 'Credito' || expenseCategory === 'Credito del Banco' || expenseCategory === 'CooperativeCredit' || expenseCategory === 'LoanShark' || expenseCategory === 'WarehouseCredit' || expenseCategory === 'PublicUtilitiesCredit') ? 'que te prestó' : 'a la que le pagaste'}?</p>
-            </div>
+        <div ref={selectRef} className="mb-4 m-auto d-flex align-items-center justify-content-center">
+            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa que te prestó?</p>
             <div>
                 <Select
-                    className={`${styles.info} p-1 border rounded border-secundary`}
                     value={selectedOption}
                     inputValue={filterText}
                     onInputChange={handleInputChange}
                     onChange={handleSelectChange}
-                    options={options}
+                    options={filteredOptions}
                     placeholder='Busca por nombre o número de NIT'
                     isSearchable
+                    styles={StylesReactSelect}
                 />
             </div>
 
             <Modal show={showCancelModalCreateSupplier} onHide={() => setShowCancelModalCreateSupplier(false)} >
                 <Modal.Header closeButton onClick={() => setShowCancelModalCreateSupplier(false)}>
-                    <Modal.Title>Crea tu cliente</Modal.Title>
+                    <Modal.Title>Crea tu proveedor</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <CreateSupplier
                         token={token}
                         onCreateComplete={() => {
-                            onCloseCreateClientModal();
+                            onCloseCreateSupplierModal();
                         }}
-                        onSupplierCreated={onCreateSupplierCreated}
+                        onSupplierCreated={onCreateSupplier}
                     />
                 </Modal.Body>
             </Modal>

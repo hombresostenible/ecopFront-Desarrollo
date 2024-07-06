@@ -163,7 +163,7 @@ function CreateIncomePage() {
                             </div>
                         </div>
 
-                        <div className="mb-1 p-3 d-flex align-items-center justify-content-between border position-relative">
+                        <div className="mb-4 p-3 d-flex align-items-center justify-content-between border position-relative">
                             <div className="d-flex justify-content-start">
                                 <p className="mb-0 p-2">La venta ¿Es de contado o a crédito?</p>
                                 <div>

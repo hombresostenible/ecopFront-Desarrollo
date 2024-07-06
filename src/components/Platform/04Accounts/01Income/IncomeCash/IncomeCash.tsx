@@ -14,6 +14,7 @@ import { IAccountsBook, IItemsSold } from "../../../../../types/User/accountsBoo
 import SearchItemName from '../../../../../components/Platform/05InvoicingAndPos/01SearchItemName/SearchItemName';
 import ModalChangeQuantityPerItem from './ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../SearchClientCrm';
+import SearchSupplierCrm from '../../SearchSupplierCrm';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";
@@ -39,7 +40,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         if (token) dispatch(getBranches(token));
     }, [token]);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
@@ -99,7 +100,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     };
     
     //Setea el cliente cuando se busca o se crea
-    const [selectedClient, setSelectedClient] = useState<string | null>(null);
+    const [selectedClient, setSelectedClient] = useState<number | null>(null);
 
     //Selección el medio de pago
     const [meanPayment, setMeansPayment] = useState('');
@@ -138,16 +139,76 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         }
     };
 
+
+
+
+    // OTROS INGRESOS
+    //Setea el cliente cuando se busca o se crea
+    const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
+
+    const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
+    const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/[^\d]/g, '');                         // Eliminar caracteres no numéricos
+        setTotalValueOtherIncome(value);
+    };
+
+    const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
+    const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const newCreditWithInterest = event.target.value as 'No' | 'Si';
+        setCreditWithInterest(newCreditWithInterest);
+        setValue('creditWithInterest', newCreditWithInterest);
+    };
+
+    const [interestRateChange, setInterestRateChange] = useState<number>(0);                    //Setea la tasa de interés de la venta a cuotas
+    const handleInterestRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const interestRate = parseFloat(event.target.value);
+        setInterestRateChange(interestRate);
+    };
+
+    const [numberOfPayments, setNumberOfPayments] = useState<number>(0);                      //Setea la cantidad de cuotas
+    const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newUnitValue = parseFloat(event.target.value);
+        setNumberOfPayments(newUnitValue);
+    };
+
+    //Setea el valor de la cuota
+    const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
+
+    //Calcula el valor de la cuota con o sin interés
+    useEffect(() => {
+        if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
+            if (interestRateChange !== 0) {
+                const totalValue = Number(totalValueOtherIncome);
+                const cuotaSinInteres = totalValue / numberOfPayments;       // Calcula la cuota con interés
+                const tasaInteresMensual = interestRateChange / 100 / 12;               // Calcula la tasa de interés mensual
+                let saldoRestante = totalValue;                              // Calcula el interés acumulado sobre el monto total adeudado
+                let cuotaConInteres = 0;
+        
+                for (let i = 0; i < numberOfPayments; i++) {
+                    const interesMensual = saldoRestante * tasaInteresMensual;
+                    cuotaConInteres = cuotaSinInteres + interesMensual;                 // Calcula la cuota con interés y amortización
+                    saldoRestante -= cuotaSinInteres;                                   // Resta la parte que corresponde a la amortización
+                }
+                setPaymentValue(cuotaConInteres);
+            } else {
+                const totalValue = Number(totalValueOtherIncome);
+                const cuotaSinInteres = totalValue / numberOfPayments;       // Lógica cuando no hay interés (puedes personalizar esto según tus necesidades)
+                setPaymentValue(cuotaSinInteres);
+            }
+        }
+    }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
+
     const onSubmit = async (values: IAccountsBook) => {
+        const totalValueOtherIncomeNumber = Number(totalValueOtherIncome);
         try {
             const accountBookData = {
                 ...values,
                 transactionType: "Ingreso",
                 creditCash: "Contado",
-                meanPayment,
+                meanPayment: meanPayment ? meanPayment : null,
                 itemsSold: scannedItems,
-                transactionCounterpartId: selectedClient,
-                totalValue: totalPurchaseAmount,
+                transactionCounterpartId: selectedClient ? selectedClient : selectedSupplier,
+                totalValue: totalPurchaseAmount || totalValueOtherIncomeNumber,
                 branchId: selectedBranch,
             } as IAccountsBook;
             if (defaultDates) {
@@ -163,15 +224,16 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                 return;
             }
 
-            if (!selectedClient) {
-                setMessageSelectedClient('Debes de seleccionar un cliente');
+            if (!selectedClient && !selectedSupplier) {
+                setMessageSelectedClient('Debes de seleccionar un cliente o un proveedor');
                 setTimeout(() => setMessageSelectedClient(null), 5000);
                 return;
             }
 
             dispatch(postAccountsBook(accountBookData, token));
             setFormSubmitted(true);
-            setSelectedClient('');
+            setSelectedClient(null);
+            setSelectedSupplier(null);
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
@@ -377,7 +439,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                     <div className={`${styles.input__Change__Amount} m-0`}>
                                         {changeAmount !== null && (
                                             <input
-                                                type="text" // Cambiado a text para manejar la visualización del cambio como moneda
+                                                type="text"
                                                 className={`${styles.input__Change} m-0 p-2 text-end border-0`}
                                                 value={`$ ${new Intl.NumberFormat('es-ES').format(changeAmount)}`} // Formatear cambio como moneda
                                                 readOnly
@@ -387,23 +449,163 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 </div>
                             </div>
                         </div>
+                    </div>
+                )}
 
-                        <div className={`${styles.container__Section_Info_Purchase} mb-5 m-auto d-flex align-items-center justify-content-between`}>
-                            <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
+                {typeIncome === 'Otros ingresos' && (
+                    <div>
+                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center">
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona el concepto de otros ingresos</p>
+                            <div>
+                                <select
+                                    {...register('otherIncome', { required: true })}
+                                    className={`${styles.input__Info_Purchase} p-2`}
+                                >
+                                    <option value=''>Selecciona una opción</option>
+                                    <option value='Credito del Banco'>Credito del Banco</option>
+                                    <option value='Credito en Cooperativa'>Credito en Cooperativa</option>
+                                    <option value='Gota gota'>Gota gota</option>
+                                    <option value='Credito de almacen'>Credito de almacen</option>
+                                    <option value='Credito de servicios publicos'>Credito de servicios publicos</option>
+                                </select>
+                                {errors.otherIncome && (
+                                    <p className='text-danger'>El dato es requerido</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Selected_Client} position-relative`}>
+                            <SearchSupplierCrm
+                                token={token}
+                                onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
+                            />
+                            {messageSelectedClient && (
+                                <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                    <div className={`${styles.triangle} position-absolute`}></div>
+                                    <p className='m-0'>Selecciona el cliente acá</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mb-3 d-flex align-items-center justify-content-center">
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Describe tu crédito</p>
                             <div>
                                 <input
                                     type="text"
-                                    {...register('seller', { required: 'El vendedor es requerido' })}
+                                    {...register('creditDescription', { required: true })}
                                     className={`${styles.input__Info_Purchase} p-2 text-end`}
-                                    placeholder='Nombre del vendedor'
+                                    placeholder='Describe tu crédito: Venta de arroz a don Lucho'
                                 />
-                                {errors.seller && (
-                                    <div className='invalid-feedback'>{errors.seller.message}</div>
+                                {errors.creditDescription && (
+                                    <div className='invalid-feedback'>La descripión es requerida</div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="mb-3 d-flex align-items-center justify-content-center">
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Valor total del préstamo</p>
+                            <input
+                                type="text"
+                                {...register('totalValue' )}
+                                className={`${styles.input__Info_Purchase} p-2 text-end`}
+                                onChange={handleTotalValueOtherIncome}
+                                value={formatCurrency(totalValueOtherIncome)}
+                            />
+                            {errors.totalValue && (
+                                <p className='invalid-feedback'>El valor total es requerido</p>
+                            )}
+                        </div>
+
+                        <div className="mb-3 d-flex align-items-center justify-content-center" >
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>¿Es con interés?</p>
+                            <div>
+                                <select
+                                    {...register('creditWithInterest', { required: true })}
+                                    className={`${styles.input__Info_Purchase} p-2`}
+                                    onChange={handleCreditWithInterest}
+                                >
+                                    <option value='Si'>Si</option>
+                                    <option value='No'>No</option>
+                                </select>
+                                {errors.creditWithInterest && (
+                                    <p className='text-danger'>El dato es requerido</p>
+                                )}
+                            </div>
+                        </div>
+
+                        {creditWithInterest === 'Si' && (
+                            <div className="mt-3 mb-3 d-flex align-items-center justify-content-center" >
+                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Tasa de interés</p>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('creditInterestRate', { setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input__Info_Purchase} p-2`}
+                                        placeholder='5'
+                                        inputMode="numeric"
+                                        onChange={handleInterestRateChange}
+                                        min={0}
+                                    />
+                                    {errors.creditInterestRate && (
+                                        <div className='invalid-feedback'>{errors.creditInterestRate.message}</div>
+                                        )}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="mb-3 d-flex align-items-center justify-content-center">
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>¿A cuántas cuotas te van a pagar?</p>
+                            <div>
+                                <input
+                                    type="number"
+                                    {...register('numberOfPayments', { setValueAs: (value) => parseFloat(value) })}
+                                    className={`${styles.input__Info_Purchase} p-2`}
+                                    placeholder='Número de cuotas'
+                                    inputMode="numeric"
+                                    onChange={handleNumberOfPaymentsChange}
+                                    min={0}
+                                />
+                                {errors.numberOfPayments && (
+                                    <div className='invalid-feedback'>{errors.numberOfPayments.message}</div>
+                                )}
+                            </div>
+                        </div> 
+
+                        <div className="mb-3 d-flex align-items-center justify-content-center">
+                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Vr, aproximado de cada cuota</p>
+                            <div>
+                                <input
+                                    type="number"
+                                    {...register('paymentValue', { setValueAs: (value) => parseFloat(value) })}
+                                    className={`${styles.input__Info_Purchase} p-2`}
+                                    placeholder='Valor de cada cuota'
+                                    inputMode="numeric"
+                                    readOnly
+                                    value={paymentValue}
+                                    min={0}
+                                />
+                                {errors.paymentValue && (
+                                    <div className='invalid-feedback'>{errors.paymentValue.message}</div>
                                 )}
                             </div>
                         </div>
                     </div>
                 )}
+
+                <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                    <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Vendedor(a)</p>
+                    <div>
+                        <input
+                            type="text"
+                            {...register('seller', { required: 'El vendedor es requerido' })}
+                            className={`${styles.input__Info_Purchase} p-2 text-center`}
+                            placeholder='Nombre del vendedor'
+                        />
+                        {errors.seller && (
+                            <div className='invalid-feedback'>{errors.seller.message}</div>
+                        )}
+                    </div>
+                </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
                     {formSubmitted && (
