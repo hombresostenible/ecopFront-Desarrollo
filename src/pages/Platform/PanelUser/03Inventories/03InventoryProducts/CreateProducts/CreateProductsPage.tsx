@@ -59,12 +59,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setShowCancelModal(false);
     };
 
-    //Setea el nombre del artículo
-    // const [nameItem, setNameItem] = useState('');
-    // const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-    //     setNameItem(event.target.value);
-    // };
-
     //Setea si el artículo aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
     const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
@@ -92,12 +86,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setSelectedReturnablePackaging(value);
         setValue('returnablePackaging', value);
     };
-
-    //Setea la unidad de medida
-    // const [showUnitMeasure, setShowUnitMeasure] = useState('');
-    // const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
-    //     setShowUnitMeasure(event.target.value);
-    // };
 
     //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
     const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
@@ -163,11 +151,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     const [selectedAssets, setSelectedAssets] = useState<string[]>([]);
     const [showCancelModalAsset, setShowCancelModalAsset] = useState(false);
 
-    //Setea el valor 'Si' o 'No' si para elaborar un producto se necesitan equipos, herramientas o máquinas
-    // const [selectedProductAsset, setSelectedProductAsset] = useState('Si');
-    // const handleShowAsset = (value: SetStateAction<string>) => {
-    //     setSelectedProductAsset(value);
-    // };
     //RENDERIZA LOS ACTIVOS
     const renderAssetInputs = () => {
         return Array.isArray(assets)&& assets.map((asset, index) => (
@@ -324,7 +307,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
                         })),
                 } as IProduct;
-    
+
                 await dispatch(postProduct(formData, token));
                 setFormSubmitted(true);
                 reset();
@@ -813,11 +796,11 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     <select
                                         defaultValue={'0'}
                                         className={`${styles.input} p-2 border `}
-                                        {...register('IVA', { required: true })}
+                                        {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
-                                        <option value='0'>0 %</option>
-                                        <option value='5'>5 %</option>
-                                        <option value='19'>19 %</option>
+                                        <option value={0}>0 %</option>
+                                        <option value={5}>5 %</option>
+                                        <option value={19}>19 %</option>
                                     </select>
                                 </div>
                             </div>

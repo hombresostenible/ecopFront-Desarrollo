@@ -56,13 +56,13 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
 
     const onSubmit = async (values: IAssets) => {
         try {
-            const assetData = {
+            const formData = {
                 ...values,
                 conditionAssets: selectedCondition,
                 branchId: selectedBranchId || values.branchId,
             } as IAssets;
 
-            await dispatch(postAsset(assetData, token));
+            await dispatch(postAsset(formData, token));
             setFormSubmitted(true);
             reset();
             setTimeout(() => {
@@ -283,11 +283,11 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
                         <select
                             defaultValue={'0'}
                             className={`${styles.input} p-2 border `}
-                            {...register('IVA', { required: true })}
+                            {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                         >
-                            <option value='0'>0 %</option>
-                            <option value='5'>5 %</option>
-                            <option value='19'>19 %</option>
+                            <option value={0}>0 %</option>
+                            <option value={5}>5 %</option>
+                            <option value={19}>19 %</option>
                         </select>
                     </div>
                 </div>
