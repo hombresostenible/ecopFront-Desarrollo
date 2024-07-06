@@ -5,7 +5,7 @@ export interface IUser {
     corporateName?: string;
     typeDocumentId: 'NIT' | 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte';
     documentId: string;
-    verificationDigit: string;
+    verificationDigit?: string;
     commercialName?: string;
     logo?: string;
     userType: 'User';
