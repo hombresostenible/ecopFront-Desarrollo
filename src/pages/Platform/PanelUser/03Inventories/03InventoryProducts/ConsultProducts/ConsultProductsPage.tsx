@@ -163,10 +163,10 @@ function ConsultProductsPage() {
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
                                     <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
-                                    <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center text-center`}>Marca</div>
+                                    <div className={`${styles.brand} d-flex align-items-center justify-content-center text-center`}>Marca</div>
                                     <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
                                     <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
-                                    <div className={`${styles.price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
+                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
@@ -185,20 +185,20 @@ function ConsultProductsPage() {
                                                     ))}
                                                 </span>
                                             </div>
-                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                            <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.barCode ? product.barCode : 'No asignado'}</span>
                                             </div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.nameItem}</span>
                                             </div>
-                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                            <div className={`${styles.brand} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.brandItem ? product.brandItem : 'No asignada'}</span>
                                             </div>
                                             <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.inventory} {product.unitMeasure}s</span>
                                             </div>
 
-                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.IVA} %</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>

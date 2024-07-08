@@ -120,7 +120,7 @@ function ConsultServicesPage() {
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
                                     <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
                                     <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
@@ -142,7 +142,7 @@ function ConsultServicesPage() {
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
                                             </div>
-                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
+                                            <div className={`${styles.IVA} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA} %</span>
                                             </div>
                                             <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
