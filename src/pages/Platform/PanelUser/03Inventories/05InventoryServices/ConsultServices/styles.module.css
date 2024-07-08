@@ -58,6 +58,11 @@
     width: 30%;
     min-width: 200px;
 }
+.IVA{
+    height: 60px;
+    width: 15%;
+    min-width: 150px;
+}
 .selling__Price{
     height: 60px;
     width: 20%;
