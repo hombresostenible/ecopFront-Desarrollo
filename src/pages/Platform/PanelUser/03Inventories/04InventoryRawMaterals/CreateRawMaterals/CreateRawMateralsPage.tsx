@@ -429,42 +429,19 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
 
                             {selectedpackaged === 'Si' && (
                                 <div>
-                                    {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div className="px-3">
-                                            <p className={`${styles.text} mb-0 p-2`} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada empaque o paquete?</p>
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="number"
-                                                {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.input} p-2 border `}
-                                                placeholder='Ej: 10'
-                                                min={0}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                            {errors.quantityPerPackage && (
-                                                <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                            )}
-                                        </div>
-                                    </div> */}
-
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                         <div>
                                             <p className={`${styles.text} mb-0 p-2`} >¿El empaque, embalaje o envoltura de tu materia prima es retornable?</p>
                                         </div>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                             <div
-                                                className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
                                                 onClick={() => handleReturnablePackagingChange('Si')}
                                             >
                                                 Si
                                             </div>
                                             <div
-                                                className={`${styles.conditionOption} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
                                                 onClick={() => handleReturnablePackagingChange('No')}
                                             >
                                                 No
