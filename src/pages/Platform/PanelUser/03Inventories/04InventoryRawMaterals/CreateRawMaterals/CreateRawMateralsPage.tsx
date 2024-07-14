@@ -568,7 +568,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                         type="number"
                                         {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='Precio de la materia prima'
+                                        placeholder='Precio de compra de la materia prima'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccountsBooksIncomesApproved, getAccountsBooksIncomesApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
+import { getAccountsBooksApproved, getAccountsBooksApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
 import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
@@ -34,7 +34,7 @@ function SeeRecordsAccountsBookPage() {
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAccountsBooksIncomesApproved(token));
+            dispatch(getAccountsBooksApproved(token));
         }
     }, [token]);
 
@@ -43,9 +43,9 @@ function SeeRecordsAccountsBookPage() {
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
-                dispatch(getAccountsBooksIncomesApprovedByBranch(selectedBranch, token));
+                dispatch(getAccountsBooksApprovedByBranch(selectedBranch, token));
             } else {
-                dispatch(getAccountsBooksIncomesApproved(token));
+                dispatch(getAccountsBooksApproved(token));
             }
         }
     }, [selectedBranch, token, dispatch]);

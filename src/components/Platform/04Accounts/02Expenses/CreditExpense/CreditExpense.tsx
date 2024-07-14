@@ -23,9 +23,10 @@ interface IncomeCreditProps {
     token: string;
     selectedBranch: string;
     defaultDates: boolean;
-    registrationDate: Date | undefined;
-    transactionDate: Date | undefined;
+    registrationDate: string | undefined;
+    transactionDate: string | undefined;
 }
+
 
 function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: IncomeCreditProps) {
     console.log('defaultDates: ', defaultDates)

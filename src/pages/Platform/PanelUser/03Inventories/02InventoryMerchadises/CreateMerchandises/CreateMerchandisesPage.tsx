@@ -582,7 +582,7 @@ function CreateMerchandisesPage() {
                                         type="number"
                                         {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
                                         className={`${styles.input} p-2 border `}
-                                        placeholder='Precio de la mercancía'
+                                        placeholder='Precio de compra de la mercancía'
                                         min={0}
                                         onKeyDown={(e) => {
                                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
