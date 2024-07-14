@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useState, useEffect, SetStateAction } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import jsCookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
+import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,42 +31,58 @@ function CreateExpensesPage() {
         }
     }, [token]);
 
-    const branchesArray = Array.isArray(branches) ? branches : [];
-
     // Cambio de la sede
     const handleBranchChange = (e: any) => {
         const selectedId = e.target.value;
         setSelectedBranch(selectedId);
     };
 
-    //Fechas de registrationDate y transactionDate con el checkout
+    // Estado para manejar el checkbox de fechas automáticas
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
-    const [registrationDate, setRegistrationDate] = useState<Date | undefined>(undefined);
-    const [transactionDate, setTransactionDate] = useState<Date | undefined>(undefined);
+
+    // Estados para las fechas de registro y transacción
+    const [registrationDate, setRegistrationDate] = useState<Date>();
+    const [transactionDate, setTransactionDate] = useState<Date>();
     const [defaultDates, setDefaultDates] = useState<boolean>(true);
 
-    //Es el check para las fechas de registro y de transacción
+    // Manejar cambio en el checkbox de fechas automáticas
     const handleCheckDatesRegisterTx = () => {
-        setCheckDatesRegisterTx((prevCheckDatesRegisterTx) => !prevCheckDatesRegisterTx);
-        // Si el checkbox está seleccionado, establecer las fechas por defecto
-        if (!checkDatesRegisterTx) {
+        setCheckDatesRegisterTx(prevCheckDatesRegisterTx => !prevCheckDatesRegisterTx);
+    };
+
+    // Manejar cambio en el tipo de pago (contado o crédito)
+    const handleCreditCashChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCreditCashOption(event.target.value);
+    };
+
+    // Manejar cambio en el tipo de gasto (venta de artículos u otros gastos)
+    const handleTypeExpenseChange = (incomeType: string) => {
+        setTypeIncome(incomeType);
+    };
+
+    // Estado para seleccionar contado o crédito
+    const [creditCashOption, setCreditCashOption] = useState('Contado');
+
+    // Estado para seleccionar tipo de ingreso
+    const [typeExpense, setTypeIncome] = useState<string>('Compra de articulos');
+
+    // Efecto para establecer las fechas por defecto o manualmente
+    useEffect(() => {
+        if (checkDatesRegisterTx) {
             const currentDate = new Date();
             setRegistrationDate(currentDate);
             setTransactionDate(currentDate);
             setDefaultDates(true);
         } else {
-            // Si el checkbox no está seleccionado, permitir que el usuario seleccione manualmente
             setRegistrationDate(undefined);
             setTransactionDate(undefined);
             setDefaultDates(false);
         }
-    };
+    }, [checkDatesRegisterTx]);
 
-    //Setea si el Gasto o la Venta fue a Contado o a Credito
-    const [creditCashOption, setCreditCashOption] = useState('Contado');
-    const handleCreditCashChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setCreditCashOption(event.target.value);
-    };
+    // Formatear las fechas para pasarlas como props
+    const formattedRegistrationDate = registrationDate ? format(registrationDate, 'yyyy-MM-dd HH:mm:ss') : undefined;
+    const formattedTransactionDate = transactionDate ? format(transactionDate, 'yyyy-MM-dd HH:mm:ss') : undefined;
 
     return (
         <div className='d-flex flex-column'>
@@ -77,79 +93,85 @@ function CreateExpensesPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Gastos</h1>
 
-                        <Link to='/accounts/consult-expenses' className={styles.link__Income_Create}>Tus Gastos</Link>
-                        <div className='mt-4 border d-flex flex-column align-items-center justify-content-center'>
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div className="px-3">
-                                    <p className={`${styles.text} mb-0 p-2`}>Selecciona una Sede</p>
-                                </div>
-                                <div>
-                                    <select
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
-                                        onChange={handleBranchChange}
-                                    >
-                                        <option value=''>Selecciona una Sede</option>
-                                        {branchesArray && branchesArray.map((branch, index) => (
-                                            <option key={index} value={branch.id}>
-                                                {branch.nameBranch}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                        <div className="mb-1 p-3 border">
+                            <div className="d-flex justify-content-between">
+                                <select
+                                    className={`${styles.input} p-2 border `}
+                                    value={selectedBranch}
+                                    onChange={handleBranchChange}
+                                >
+                                    <option value=''>Selecciona una Sede</option>
+                                    {Array.isArray(branches) && branches.map((branch, index) => (
+                                        <option key={index} value={branch.id}>
+                                            {branch.nameBranch}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
+                        </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div className="px-3">
-                                    <p className={`${styles.text} mb-0 p-2`}>Selecciona el check si la fecha de registro es la fecha de la transacción</p>
-                                </div>
-                                <div>
+                        <div className="mb-4 mt-4 d-flex align-items-center justify-content-between position-relative">
+                            <div className="d-flex justify-content-start">
+                                <p className="mb-0 p-2">Selecciona el check si la fecha de registro es la fecha de la transacción</p>
+                                <div className={`${styles.container__Check} `}>
                                     <input
                                         type="checkbox"
                                         onChange={handleCheckDatesRegisterTx}
-                                        className={`${styles.checkbox} border`}
+                                        className={`${styles.checkbox} `}
                                         defaultChecked={true}
                                     />
                                 </div>
                             </div>
-                        
-                            {checkDatesRegisterTx === false && (
-                                <div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div className="px-3">
-                                            <p className={`${styles.text} mb-0 p-2`}>Fecha de registro de la información</p>
-                                        </div>
-                                        <div>
-                                            <DatePicker
-                                                selected={registrationDate || undefined}
-                                                onChange={(date) => setRegistrationDate(date || undefined)}
-                                                className={`${styles.info} p-2 border rounded border-secundary`}
-                                                placeholderText='Fecha de registro'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div className="px-3">
-                                            <p className={`${styles.text} mb-0 p-2`}>Fecha en que se realizó la transacción</p>
-                                        </div>
-                                        <div>
-                                            <DatePicker
-                                                selected={transactionDate || undefined}
-                                                onChange={(date) => setTransactionDate(date || undefined)}
-                                                className={`${styles.info} p-2 border rounded border-secundary`}
-                                                placeholderText='Fecha de transacción'
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
 
-                            <div className="mb-5 p-2 d-flex align-items-center justify-content-center  border rounded">
-                                <div className="px-3">
-                                    <p className={`${styles.text} mb-0 p-2`}>La compra ¿Es de contado o a crédito?</p>
+                            <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
+                                <div className="d-flex flex-column align-items-start justify-content-center">
+                                    <p className="mb-1">Fecha de registro</p>
+                                    <div>
+                                        <DatePicker
+                                            selected={registrationDate || undefined}
+                                            onChange={(date) => setRegistrationDate(date || undefined)}
+                                            className={`${styles.input} p-2 border `}
+                                            calendarClassName={styles.custom__Calendar}
+                                            dayClassName={(date) =>
+                                                date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                            }
+                                            placeholderText='Fecha de registro'
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
+                                            disabled={checkDatesRegisterTx}
+                                        />
+                                    </div>
                                 </div>
+
+                                <div className="d-flex flex-column align-items-start justify-content-center">
+                                    <p className="mb-1">Fecha de transacción</p>
+                                    <div>
+                                        <DatePicker
+                                            selected={transactionDate || undefined}
+                                            onChange={(date) => setTransactionDate(date || undefined)}
+                                            className={`${styles.input} p-2 border `}
+                                            calendarClassName={styles.custom__Calendar}
+                                            dayClassName={(date) =>
+                                                date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                            }
+                                            placeholderText='Fecha de transacción'
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
+                                            disabled={checkDatesRegisterTx}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mb-4 p-3 d-flex align-items-center justify-content-between border position-relative">
+                            <div className="d-flex justify-content-start">
+                                <p className="mb-0 p-2">La venta ¿Es de contado o a crédito?</p>
                                 <div>
                                     <select
-                                        className={`${styles.info} p-2 border rounded border-secundary`}
+                                        className={`${styles.input} p-2 border `}
                                         onChange={handleCreditCashChange}
                                     >
                                         <option value='Contado'>Contado</option>
@@ -158,25 +180,45 @@ function CreateExpensesPage() {
                                 </div>
                             </div>
 
-                            {creditCashOption === 'Contado' && (
-                                <CashExpense
-                                    token={token}
-                                    selectedBranch={selectedBranch}
-                                    defaultDates={defaultDates}
-                                    registrationDate={registrationDate}
-                                    transactionDate={transactionDate}
-                                />
-                            )}
-                            {creditCashOption === 'Credito' && (
-                                <CreditExpense
-                                    token={token}
-                                    selectedBranch={selectedBranch}
-                                    defaultDates={defaultDates}
-                                    registrationDate={registrationDate}
-                                    transactionDate={transactionDate}
-                                />
-                            )}
+                            <div className="d-flex justify-content-start">
+                                <p className="mb-0 p-2">Tipo de gasto</p>
+                                <div className="d-flex align-items-center justify-content-center gap-4">
+                                    <div
+                                        className={`${styles.type__Income} ${typeExpense === 'Compra de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleTypeExpenseChange('Compra de articulos')}
+                                    >
+                                        Compra de artículos
+                                    </div>
+                                    <div
+                                        className={`${styles.type__Income} ${typeExpense === 'Otros gastos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleTypeExpenseChange('Otros gastos')}
+                                    >
+                                        Otros gastos
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        {creditCashOption === 'Contado' && (
+                            <CashExpense
+                                token={token}
+                                selectedBranch={selectedBranch}
+                                defaultDates={defaultDates}
+                                registrationDate={formattedRegistrationDate}
+                                transactionDate={formattedTransactionDate}
+                                typeExpense={typeExpense}
+                            />
+                        )}
+
+                        {creditCashOption === 'Credito' && (
+                            <CreditExpense
+                                token={token}
+                                selectedBranch={selectedBranch}
+                                defaultDates={defaultDates}
+                                registrationDate={formattedRegistrationDate}
+                                transactionDate={formattedTransactionDate}
+                            />
+                        )}
                     </div>
                     <Footer />
                 </div>
