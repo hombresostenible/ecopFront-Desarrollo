@@ -83,7 +83,6 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
         setChangeQuantityIndex(index);
     };
 
-    // const [changeIva, setChangeIva] = useState<number | null>(null);
     const handleChangeIva = (event: React.ChangeEvent<HTMLSelectElement>, index: number) => {
         const newIva = parseFloat(event.target.value);
         setScannedItems(prevItems => {
@@ -180,7 +179,6 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                 setTimeout(() => setMessageSelectedSupplier(null), 5000);
                 return;
             }
-            console.log('formData: ', formData)
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
             setSelectedSupplier(null);
