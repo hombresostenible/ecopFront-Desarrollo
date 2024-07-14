@@ -2,16 +2,18 @@
 import { useState, useEffect } from 'react';
 import jsCookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
+import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
+// REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import { RootState, AppDispatch } from '../../../../../../redux/store';
+// ELEMENTOS DEL COMPONENTE
 import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
 import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import { format } from 'date-fns';
 import styles from './styles.module.css';
 
 function CreateIncomePage() {
@@ -29,6 +31,12 @@ function CreateIncomePage() {
         }
     }, [token]);
 
+    // Manejar cambio de la sede
+    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId = e.target.value;
+        setSelectedBranch(selectedId);
+    };
+
     // Estado para manejar el checkbox de fechas automáticas
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
 
@@ -36,12 +44,6 @@ function CreateIncomePage() {
     const [registrationDate, setRegistrationDate] = useState<Date>();
     const [transactionDate, setTransactionDate] = useState<Date>();
     const [defaultDates, setDefaultDates] = useState<boolean>(true);
-
-    // Manejar cambio de la sede
-    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = e.target.value;
-        setSelectedBranch(selectedId);
-    };
 
     // Manejar cambio en el checkbox de fechas automáticas
     const handleCheckDatesRegisterTx = () => {
