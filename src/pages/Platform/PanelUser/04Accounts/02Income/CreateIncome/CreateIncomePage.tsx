@@ -66,7 +66,7 @@ function CreateIncomePage() {
     // Estado para seleccionar tipo de ingreso
     const [typeIncome, setTypeIncome] = useState<string>('Venta de articulos');
 
-    // Efecto para establecer las fechas por defecto o manualmente
+    // useEffect para establecer las fechas por defecto o manualmente
     useEffect(() => {
         if (checkDatesRegisterTx) {
             const currentDate = new Date();

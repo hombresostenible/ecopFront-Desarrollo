@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getItemByName } from '../../../../redux/User/itemBybarCodeOrName/actions';
-import type { RootState, AppDispatch } from '../../../../redux/store';
+import { getItemByName } from '../../redux/User/itemBybarCodeOrName/actions';
+import type { RootState, AppDispatch } from '../../redux/store';
 import debounce from 'lodash/debounce';
 import styles from './styles.module.css';
 
