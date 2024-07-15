@@ -3,6 +3,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import jsCookie from 'js-cookie';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 // import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
@@ -19,10 +20,14 @@ function ElectronicInvoicingPage() {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
+    const user = useSelector((state: RootState) => state.user.user);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
-        if (token) dispatch(getBranches(token));
+        if (token) {
+            dispatch(getProfileUser(token));
+            dispatch(getBranches(token))
+        }
     }, [token]);
 
     const [selectedBranch, setSelectedBranch] = useState('');
@@ -61,7 +66,7 @@ function ElectronicInvoicingPage() {
                         <div className={styles.container__aaaaaa}>
                             <div className={`${styles.container__Header} mb-4`}>
                                 <div className={styles.container__Logo}>
-                                    <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Exxon_Mobil_Logo.svg/2560px-Exxon_Mobil_Logo.svg.png'} alt="Logo" className={`${styles.logo} `}/>
+                                    <img src={user?.logo} alt="Logo" className={`${styles.logo} `}/>
                                 </div>
                                 <div className={styles.container__General_Information_Invoincing}>
                                     <div className={styles.container_Dates_Invoicing}>
@@ -81,19 +86,21 @@ function ElectronicInvoicingPage() {
                                     <div className={styles.title__Section}>Datos del Emisor</div>
                                     <div className={styles.container__Section_aaaaa}>
                                         <h4 className={styles.aaaaaaaa}>Razón social/Nombre</h4>
-                                        <p className={styles.bbbbbb}>Carlos Mario Reyes</p>
+                                        <p className={styles.bbbbbb}>{user?.name ? `${user.name} ${user.lastName}` : user?.corporateName}</p>
                                     </div>
+
                                     <div className={styles.container__Section_aaaaa}>
                                         <h4 className={styles.aaaaaaaa}>NIT/CC</h4>
-                                        <p className={styles.bbbbbb}>900400200-1</p>
+                                        <p className={styles.bbbbbb}>{user?.verificationDigit ? `${user.documentId}-${user.verificationDigit}` : user?.documentId}</p>
                                     </div>
+
                                     <div className={styles.container__Section_aaaaa}>
                                         <h4 className={styles.aaaaaaaa}>Dirección:</h4>
-                                        <p className={styles.bbbbbb}>Cra 10 # 10 - 10</p>
+                                        <p className={styles.bbbbbb}>{user?.address}</p>
                                     </div>
                                     <div className={styles.container__Section_aaaaa}>
                                         <h4 className={styles.aaaaaaaa}>Teléfono:</h4>
-                                        <p className={styles.bbbbbb}>300 100 2020</p>
+                                        <p className={styles.bbbbbb}>{user?.phone}</p>
                                     </div>
                                 </div>
 
