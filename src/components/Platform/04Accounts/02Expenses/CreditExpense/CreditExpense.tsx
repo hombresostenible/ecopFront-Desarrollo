@@ -51,30 +51,30 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
     // const [nameItem, setNameItem] = useState('');
 
     //Selección de la tabla que se consultará para renderizar los activos, mercancías, etc que se compraron a contado
-    // const [expenseCategory, setTypeExpenses] = useState('');
+    // const [otherExpenses, setTypeExpenses] = useState('');
     // const handleTypeExpenses = (event: { target: { value: SetStateAction<string> }}) => {
     //     setTypeExpenses(event.target.value);
     // };
 
     //Hace la petición get a la base de datos cuando se selecciona Equipos, Mercancia, MP, etc
     // useEffect(() => {
-    //     if (expenseCategory === 'Activo') {
+    //     if (otherExpenses === 'Activo') {
     //         dispatch(getAssetsByBranch(selectedBranch, token));
     //     }
-    //     if (expenseCategory === 'Mercancia') {
+    //     if (otherExpenses === 'Mercancia') {
     //         dispatch(getMerchandisesByBranch(selectedBranch, token));
     //     }
-    //     if (expenseCategory === 'Materia Prima') {
+    //     if (otherExpenses === 'Materia Prima') {
     //         dispatch(getRawMaterialsByBranch(selectedBranch, token));
     //     }
-    //     if (expenseCategory === 'Servicio') {
+    //     if (otherExpenses === 'Servicio') {
     //         dispatch(getServicesByBranch(selectedBranch, token));
     //     }
-    // }, [ expenseCategory, token ]);
+    // }, [ otherExpenses, token ]);
 
     //Muestra los nombres de los registros
     // const getItemInfoTypeExpenses = () => {
-    //     switch (expenseCategory) {
+    //     switch (otherExpenses) {
     //         case 'Activo':
     //             return { labelTypeExpenses: 'el activo', dataTypeExpenses: assets as IAssets[] };
     //         case 'Mercancia':
@@ -192,7 +192,7 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
             // if (registrationDate) accountBookData.registrationDate = registrationDate;
             // if (transactionDate) accountBookData.transactionDate = transactionDate;
 
-            // if (expenseCategory === 'Credito del Banco' || expenseCategory === 'Credito en Cooperativa' || expenseCategory === 'Gota gota' || expenseCategory === 'Credito de almacen' || expenseCategory === 'Credito de servicios publicos') {
+            // if (otherExpenses === 'Credito del Banco' || otherExpenses === 'Credito en Cooperativa' || otherExpenses === 'Gota gota' || otherExpenses === 'Credito de almacen' || otherExpenses === 'Credito de servicios publicos') {
             //     accountBookData.incomeCategory = 'Credito del Banco';
             //     accountBookData.unitValue = accountBookData.totalValue;
             // }
@@ -223,7 +223,7 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
                     </div>
                     <div>
                         <select
-                            {...register('expenseCategory', { required: true })}
+                            {...register('otherExpenses', { required: true })}
                             className={`${styles.info} p-2 border rounded border-secundary`}
                             onChange={handleTypeExpenses}
                         >
@@ -276,13 +276,13 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
                                 <option value='Otro'>Otro</option>
                             </optgroup>
                         </select>
-                        {errors.expenseCategory && (
+                        {errors.otherExpenses && (
                             <p className='text-danger'>El rubro es requerido</p>
                         )}
                     </div>
                 </div> */}
 
-                {/* {(expenseCategory === 'Activo' || expenseCategory === 'Mercancia' || expenseCategory === 'Materia Prima' || expenseCategory === 'Servicio') && (
+                {/* {(otherExpenses === 'Activo' || otherExpenses === 'Mercancia' || otherExpenses === 'Materia Prima' || otherExpenses === 'Servicio') && (
                     <div className="mb-3 p-2 d-flex flex-column justify-content-center align-items-center border rounded">
                         <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                             <div className="px-3">
@@ -479,7 +479,7 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
 
                 {/* <SearchSupplierCrm
                     token={token}
-                    expenseCategory={expenseCategory}
+                    otherExpenses={otherExpenses}
                     onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
                 /> */}
 
