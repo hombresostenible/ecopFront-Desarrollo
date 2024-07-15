@@ -12,8 +12,11 @@ import { ICrmClient } from '../../../../../types/User/crmClient.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+import SeeCrmClient from '../../../../../components/Platform/07CrmClients/01SeeCrmClient/SeeCrmClient';
 import ModalCrmClient from '../../../../../components/Platform/07CrmClients/ModalCrmClient/ModalCrmClient';
 import ConfirmDeleteCRMClient from '../../../../../components/Platform/07CrmClients/ConfirmDeleteCRMClient/ConfirmDeleteCRMClient';
+import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
@@ -33,13 +36,19 @@ function CrmClientsCardPage() {
 
     const [idCrmClient, setIdCrmClient] = useState('');
     const [nameCrmClient, setNameCrmClient] = useState('');
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [selectedCrmClient, setSelectedCrmClient] = useState<ICrmClient>();
+    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showCrmClientModal, setShowCrmClientModal] = useState(false);
 
     const handleDelete = useCallback((crmClient: ICrmClient) => {
         setSelectedCrmClient(crmClient);
         setShowDeleteConfirmation(true);
+    }, []);
+
+    const handleSeeItem = useCallback((crmClient: ICrmClient) => {
+        setSelectedCrmClient(crmClient);
+        setShowSeeItem(true);
     }, []);
 
     const handleEdit = useCallback((crmClient: ICrmClient) => {
@@ -48,6 +57,7 @@ function CrmClientsCardPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowSeeItem(false);
         setShowDeleteConfirmation(false);
         setShowCrmClientModal(false);
     }, []);
@@ -61,66 +71,102 @@ function CrmClientsCardPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>CRM Clientes</h1>
 
-                        <Link to='/crm-clients/create-crm-clients' className={styles.link__Income_Create}>Crea tus clientes</Link>
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                            <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.column__Branch} d-flex align-items-center justify-content-center`}>Nombre completo</div>
-                                    <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-center`}>Tipo de Doc. Id</div>
-                                    <div className={`${styles.column__Brand_Assets} d-flex align-items-center justify-content-center`}>Documento identidad</div>
-                                    <div className={`${styles.column__Reference_Asset} d-flex align-items-center justify-content-center`}>Email</div>
-                                    <div className={`${styles.column__Condition_Asset} d-flex align-items-center justify-content-center`}>Teléfono</div>
-                                    <div className={`${styles.column__State_Asset} d-flex align-items-center justify-content-center`}>Departamento</div>
-                                    <div className={`${styles.column__State_Asset} d-flex align-items-center justify-content-center`}>Ciudad</div>
-                                    <div className={`${styles.column__Action} d-flex align-items-center justify-content-center`}>Acciones</div>
-                                </div>
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className="d-flex"></div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/crm-clients/create-crm-clients' className={`${styles.link} text-decoration-none`}>Crea tus clientes</Link>
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Body} d-flex flex-column align-items-center justify-content-between`}>
-                            {Array.isArray(crmClients) && crmClients.map((crmClient) => (
-                                <div key={crmClient.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                    <div className={`${styles.column__Branch} d-flex align-items-center justify-content-start`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.typeDocumentId === 'NIT' ? crmClient.corporateName : `${crmClient.name} ${crmClient.lastName}`}</span>
-                                    </div>
-                                    <div className={`${styles.column__Name_Item} d-flex align-items-center justify-content-start`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.typeDocumentId}</span>
-                                    </div>
-                                    <div className={`${styles.column__Brand_Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.documentId}</span>
-                                    </div>
-                                    <div className={`${styles.column__Reference_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.email}</span>
-                                    </div>
-                                    <div className={`${styles.column__Condition_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.phone}</span>
-                                    </div>
-                                    <div className={`${styles.column__State_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.department}</span>
-                                    </div>
-                                    <div className={`${styles.column__State_Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.city}</span>
-                                    </div>
-                                    <div className={`${styles.column__Action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-start overflow-hidden`}>
-                                        <RiDeleteBin6Line
-                                            className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                            onClick={() => {
-                                                setIdCrmClient(crmClient.id);
-                                                setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
-                                                handleDelete(crmClient);
-                                            }}
-                                        />
-                                        <BsPencil
-                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                            onClick={() => {
-                                                setIdCrmClient(crmClient.id);
-                                                handleEdit(crmClient)
-                                            }}
-                                        />
-                                    </div>
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                            <div className={styles.container__Head}>
+                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                    <div className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center text-center`}>Tipo de Doc. Id</div>
+                                    <div className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento identidad</div>
+                                    <div className={`${styles.email} d-flex align-items-center justify-content-center text-center`}>Email</div>
+                                    <div className={`${styles.phone} d-flex align-items-center justify-content-center text-center`}>Teléfono</div>
+                                    <div className={`${styles.department} d-flex align-items-center justify-content-center text-center`}>Departamento</div>
+                                    <div className={`${styles.city} d-flex align-items-center justify-content-center text-center`}>Ciudad</div>
+                                    <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                 </div>
-                            ))}
+                            </div>
+
+                            <div className={`${styles.container__Body} d-flex flex-column `}>
+                                {Array.isArray(crmClients) && crmClients.length > 0 ? (
+                                    crmClients.map((crmClient) => (
+                                        <div key={crmClient.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
+                                            <div className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.typeDocumentId}</span>
+                                            </div>
+                                            <div className={`${styles.document__Id} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.documentId}</span>
+                                            </div>
+                                            <div className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.email}</span>
+                                            </div>
+                                            <div className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.phone}</span>
+                                            </div>
+                                            <div className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.department ? crmClient.department : 'No definido'}</span>
+                                            </div>
+                                            <div className={`${styles.city} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.city ? crmClient.city : 'No definido'}</span>
+                                            </div>
+                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <MdOutlineRemoveRedEye
+                                                        className={`${styles.button__Edit} `}
+                                                        onClick={() => {
+                                                            setIdCrmClient(crmClient.id);
+                                                            setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
+                                                            handleSeeItem(crmClient);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdCrmClient(crmClient.id);
+                                                            setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
+                                                            handleDelete(crmClient);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <BsPencil
+                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                        onClick={() => {
+                                                            setIdCrmClient(crmClient.id);
+                                                            handleEdit(crmClient)
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                        No tienes clientes registrados
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
+                            <Modal.Header closeButton>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedCrmClient &&
+                                    <SeeCrmClient
+                                        selectedCrmClient={selectedCrmClient}
+                                    />
+                                }
+                            </Modal.Body>
+                        </Modal>
 
                         <Modal show={showCrmClientModal} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
@@ -152,10 +198,10 @@ function CrmClientsCardPage() {
                             </Modal.Body>
                         </Modal>
   
-                        <div className='d-flex flex-column'>
+                        {/* <div className='d-flex flex-column'>
                             <h4 className={`${styles.subTitle} `}>Seguimiento</h4>
                             <Link to='/inventories/create-assets' className={styles.link__Income_Create}>Registra el seguimiento de tus clientes</Link>
-                        </div>
+                        </div> */}
                     </div>
                     <Footer />
                 </div>
