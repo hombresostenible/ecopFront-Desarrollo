@@ -370,9 +370,9 @@ function ConsultExpensesPage() {
                                             </div>
                                         )}
 
-                                        {selectedColumns.includes('expenseCategory') && (
+                                        {selectedColumns.includes('otherExpenses') && (
                                             <div className={`${styles.column__Income_Category} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.expenseCategory}</span>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{accountsBook.otherExpenses}</span>
                                             </div>
                                         )}
 
