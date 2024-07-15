@@ -37,7 +37,7 @@ function CrmClientsCardPage() {
     const [idCrmClient, setIdCrmClient] = useState('');
     const [nameCrmClient, setNameCrmClient] = useState('');
     const [selectedCrmClient, setSelectedCrmClient] = useState<ICrmClient>();
-    const [showSeeItem, setShowSeeItem] = useState(false);
+    const [showSeeCrmClient, setShowSeeCrmClient] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showCrmClientModal, setShowCrmClientModal] = useState(false);
 
@@ -46,9 +46,9 @@ function CrmClientsCardPage() {
         setShowDeleteConfirmation(true);
     }, []);
 
-    const handleSeeItem = useCallback((crmClient: ICrmClient) => {
+    const handleSeeCrmClient = useCallback((crmClient: ICrmClient) => {
         setSelectedCrmClient(crmClient);
-        setShowSeeItem(true);
+        setShowSeeCrmClient(true);
     }, []);
 
     const handleEdit = useCallback((crmClient: ICrmClient) => {
@@ -57,7 +57,7 @@ function CrmClientsCardPage() {
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowSeeItem(false);
+        setShowSeeCrmClient(false);
         setShowDeleteConfirmation(false);
         setShowCrmClientModal(false);
     }, []);
@@ -121,7 +121,7 @@ function CrmClientsCardPage() {
                                                         onClick={() => {
                                                             setIdCrmClient(crmClient.id);
                                                             setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
-                                                            handleSeeItem(crmClient);
+                                                            handleSeeCrmClient(crmClient);
                                                         }}
                                                     />
                                                 </div>
@@ -155,9 +155,9 @@ function CrmClientsCardPage() {
                             </div>
                         </div>
 
-                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeCrmClient} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu cliente</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedCrmClient &&
