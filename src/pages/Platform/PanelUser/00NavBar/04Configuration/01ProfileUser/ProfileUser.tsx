@@ -139,44 +139,44 @@ function ProfileUser({ user }: UserCardProps) {
             <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
                 <h1 className={`${styles.title} mb-4`}>Tu información de perfil</h1>
                 <div className={`${styles.container__Card} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                    <div className={`${styles.containerImageIcon} position-relative rounded-circle d-flex align-items-center justify-content-center`}>
+                    <div className={`${styles.container__Image_Icon} mb-4 position-relative r d-flex align-items-center justify-content-center`}>
                         <div>
                             {userLogo && (
-                                <img className={`${styles.logo} rounded-circle`} src={userLogo} alt="Logo del usuario" />
+                                <img className={`${styles.logo} `} src={userLogo} alt="Logo del usuario" />
                             )}
                             {!userLogo && (
-                                <div className={styles.containerTextLogo}>
+                                <div className={styles.container__Text_Logo}>
                                     <p className="text-center">No tienes un logo para mostrar</p>
                                 </div>
                             )}
                         </div>
-                        <div className={`${styles.containerImage} rounded-circle`}>
-                            <div className={`${styles.containerIcon} position-absolute rounded-circle d-flex align-items-center justify-content-center`} onClick={handleEditClick} >
+                        <div className={`${styles.container__Image} `}>
+                            <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center position-absolute`} onClick={handleEditClick} >
                                 <BsPencil className={`${styles.iconLogo} `} />
                             </div>
                             {menuVisible && (
-                                <div ref={menuRef} className={`${styles.menu} position-absolute`}>
+                                <div ref={menuRef} className={`${styles.menu} d-flex align-items-center justify-content-center position-absolute`}>
                                     {selectedImage ? (
                                         <div>
                                             <button onClick={() => handleUploadImage(selectedImage)}>Cargar imagen</button>
                                         </div>
                                     ) : (
                                         <div>
-                                            <div className={styles.textMenu} onClick={() => handleMenuOptionClick('CargarImagen')}>Cargar imagen</div>
-                                            <div className={styles.textMenu} onClick={() => handleMenuOptionClick('EliminarImagen')}>Eliminar imagen</div>
+                                            <div className={styles.text__Menu} onClick={() => handleMenuOptionClick('CargarImagen')}>Cargar imagen</div>
+                                            <div className={styles.text__Menu} onClick={() => handleMenuOptionClick('EliminarImagen')}>Eliminar imagen</div>
                                         </div>
                                     )}
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Nombres</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Nombres</h6>
                         <div className={styles.containerInput}>
                             {isEditing ? (
                                 <input
                                     type="text"
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     value={editedUser.name}
                                     onChange={(e) => handleEditField(e, 'name', 'text')}
                                 />
@@ -185,13 +185,13 @@ function ProfileUser({ user }: UserCardProps) {
                             )}
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Apellidos</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Apellidos</h6>
                         <div>
                             {isEditing ? (
                                 <input
                                     type="text"
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     value={editedUser.lastName}
                                     onChange={(e) => handleEditField(e, 'lastName', 'text')}
                                 />
@@ -200,13 +200,13 @@ function ProfileUser({ user }: UserCardProps) {
                             )}
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Tipo de identificación</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Tipo de identificación</h6>
                         <div>
                             {isEditing ? (
                                 <select
                                     value={editedtypeDocumentId || ''}
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     onChange={(e) => setEditedtypeDocumentId(e.target.value as 'NIT' | 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte')}
                                 >
                                     <option value='NIT'>Cédula de Ciudadanía</option>
@@ -220,14 +220,14 @@ function ProfileUser({ user }: UserCardProps) {
                         </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center w-100 gap-2">
-                        <div className="w-100">
-                            <h6 className={styles.label}>Identificación</h6>
+                        <div className="mb-2 w-100">
+                            <h6 className={`${styles.label} mb-1`}>Identificación</h6>
                             <div>
                                 {isEditing ? (
                                     <input
                                         type="text"
                                         value={editedUser.documentId || ''}
-                                        className={`${styles.inputEdit} p-2 border form-control`}
+                                        className={`${styles.input} mb-2 p-2 border`}
                                         onChange={(e) => handleEditField(e, 'documentId', 'text')}
                                     />
                                 ) : (
@@ -235,13 +235,13 @@ function ProfileUser({ user }: UserCardProps) {
                                 )}
                             </div>
                         </div>
-                        <div className="w-100">
-                            <h6 className={styles.label}>Dígito de verificación</h6>
+                        <div className="mb-2 w-100">
+                            <h6 className={`${styles.label} mb-1`}>Dígito de verificación</h6>
                             <div>
                                 {isEditing ? (
                                     <input
                                         type="text"
-                                        className={`${styles.inputEdit} p-2 border form-control`}
+                                        className={`${styles.input} mb-2 p-2 border`}
                                         value={editedUser.verificationDigit || ''}
                                         onChange={(e) => handleEditField(e, 'verificationDigit', 'text')}
                                     />
@@ -251,13 +251,13 @@ function ProfileUser({ user }: UserCardProps) {
                             </div>
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Nombre comercial de tu empresa</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Nombre comercial de tu empresa</h6>
                         <div>
                             {isEditing ? (
                                 <input
                                     type="text"
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     value={editedUser.commercialName || ''}
                                     onChange={(e) => handleEditField(e, 'commercialName', 'text')}
                                 />
@@ -266,25 +266,25 @@ function ProfileUser({ user }: UserCardProps) {
                             )}
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Email</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Email</h6>
                         <div>
                             <p className={`${styles.input} p-2 text-start border`}>{user.email || ''}</p>
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Rol del usuario</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Rol del usuario</h6>
                         <div>
                             <p className={`${styles.input} p-2 text-start border`}>{user.typeRole || ''}</p>
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Celular</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Celular</h6>
                         <div>
                             {isEditing ? (
                                 <input
                                     type="text"
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     value={editedUser.phone || ''}
                                     onChange={(e) => handleEditField(e, 'phone', 'text')}
                                 />
@@ -294,13 +294,13 @@ function ProfileUser({ user }: UserCardProps) {
                         </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center w-100 gap-2">
-                        <div className="w-100">
-                            <h6 className={styles.label}>Departamento</h6>
+                        <div className="mb-2 w-100">
+                            <h6 className={`${styles.label} mb-1`}>Departamento</h6>
                             <div>
                                 {isEditing ? (
                                     <select
                                         value={editedDepartment || ''}
-                                        className={`${styles.inputEdit} p-2 border form-control`}
+                                        className={`${styles.input} mb-2 p-2 border`}
                                         onChange={(e) => setEditedDepartment(e.target.value as 'Bogota D.C.' | 'Amazonas' | 'Antioquia' | 'Arauca' | 'Atlantico' | 'Bolivar' | 'Boyaca' | 'Caldas' | 'Caqueta' | 'Casanare' | 'Cauca' | 'Cesar' | 'Choco' | 'Cordoba' | 'Cundinamarca' | 'Guainia' | 'Guaviare' | 'Huila' | 'La Guajira' | 'Magdalena' | 'Meta' | 'Nariño' | 'Norte de Santander' | 'Putumayo' | 'Quindio' | 'Risaralda' | 'San Andres y Providencia' | 'Santander' | 'Sucre' | 'Tolima' | 'Valle del Cauca' | 'Vaupes' | 'Vichada')}
                                     >
                                         <option value='Bogota D.C.'>Bogotá D.C.</option>
@@ -342,13 +342,13 @@ function ProfileUser({ user }: UserCardProps) {
                                 )}
                             </div>
                         </div>
-                        <div className="w-100">
-                            <h6 className={styles.label}>Ciudad</h6>
+                        <div className="mb-2 w-100">
+                            <h6 className={`${styles.label} mb-1`}>Ciudad</h6>
                             <div>
                                 {isEditing ? (
                                     <input
                                         type="text"
-                                        className={`${styles.inputEdit} p-2 border form-control`}
+                                        className={`${styles.input} mb-2 p-2 border`}
                                         value={editedUser.city || ''}
                                         onChange={(e) => handleEditField(e, 'city', 'text')}
                                     />
@@ -358,13 +358,13 @@ function ProfileUser({ user }: UserCardProps) {
                             </div>
                         </div>
                     </div>
-                    <div className="w-100">
-                        <h6 className={styles.label}>Dirección</h6>
+                    <div className="mb-2 w-100">
+                        <h6 className={`${styles.label} mb-1`}>Dirección</h6>
                         <div>
                             {isEditing ? (
                                 <input
                                     type="text"
-                                    className={`${styles.inputEdit} p-2 border form-control`}
+                                    className={`${styles.input} mb-2 p-2 border`}
                                     value={editedUser.address || ''}
                                     onChange={(e) => handleEditField(e, 'address', 'text')}
                                 />
@@ -374,13 +374,13 @@ function ProfileUser({ user }: UserCardProps) {
                         </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center w-100 gap-2">
-                        <div className="w-100">
-                            <h6 className={styles.label}>Sector económico</h6>
+                        <div className="mb-2 w-100">
+                            <h6 className={`${styles.label} mb-1`}>Sector económico</h6>
                             <div>
                                 {isEditing ? (
                                     <select
                                         value={editedEconomicSector || ''}
-                                        className={`${styles.inputEdit} p-2 border form-control`}
+                                        className={`${styles.input} mb-2 p-2 border`}
                                         onChange={(e) => setEditedEconomicSector(e.target.value as 'Agricultura' | 'Manufactura' | 'Comercio' | 'Servicios' | 'Construcción' | 'Turismo' | 'Otro')}
                                     >
                                         <option value='Agricultura'>Agricultura</option>
@@ -398,11 +398,11 @@ function ProfileUser({ user }: UserCardProps) {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-4 w-100">
+                    <div className="mb-2 w-100">
                         {isEditing ? (
                             <div className="d-flex align-items-center justify-content-center">
-                                <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedUser)}>Guardar</button>
-                                <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(user.id)}>Cancelar</button>
+                                <button className={`${styles.button__Save} mx-2 pt-1 pb-1 px-2 border-0`} onClick={() => handleSaveChanges(editedUser)}>Guardar</button>
+                                <button className={`${styles.button__Cancel} mx-2 pt-1 pb-1 px-2 border-0`} onClick={() => cancelEditing(user.id)}>Cancelar</button>
                             </div>
                         ) : (
                             <div

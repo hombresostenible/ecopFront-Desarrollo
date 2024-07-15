@@ -11,10 +11,10 @@ import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook, IItemsAccountsBook } from "../../../../../types/User/accountsBook.types";
-import SearchItemName from '../../../../../components/Platform/05InvoicingAndPos/01SearchItemName/SearchItemName';
+import SearchItemName from '../../../../../helpers/SearchItemName/SearchItemName';
 import ModalChangeQuantityPerItem from '../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
-import SearchClientCrm from '../../SearchClientCrm';
-import SearchSupplierCrm from '../../SearchSupplierCrm';
+import SearchClientCrm from '../../../../../helpers/SearchClientCrm/SearchClientCrm';
+import SearchSupplierCrm from '../../../../../helpers/SearchSupplierCrm/SearchSupplierCrm';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";

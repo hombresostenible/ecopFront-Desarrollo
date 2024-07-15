@@ -4,11 +4,11 @@ import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getCrmClients } from '../../../redux/User/crmClientSlice/actions';
-import type { RootState, AppDispatch } from '../../../redux/store';
+import { getCrmClients } from '../../redux/User/crmClientSlice/actions';
+import type { RootState, AppDispatch } from '../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import CreateClient from './CreateClientAndSupplier/CreateClient';
-import { StylesReactSelect } from '../../../helpers/StylesComponents/StylesReactSelect';
+import CreateClient from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateClient';
+import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
