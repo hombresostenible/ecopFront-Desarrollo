@@ -15,10 +15,11 @@
 /* CONTENEDOR DE LA FACTURA */
 .container__Invoice {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
 }
 .container__Header {
+    /* border: 1px solid red; */
     height: 300px;
     width: 100%;
 }
@@ -38,6 +39,34 @@
     height: 100%;
     width: 50%;
 }
+
+/* CALENDARIO */
+.container__Calendars {
+    z-index: 3;
+    top: -10px;
+    right: 0;
+    background: white;
+}
+.calendar {
+    border-radius: 5px;
+    width: 200px;
+}
+.custom__Calendar {
+    background-color: #f8f9fa;
+}
+.weekend__Day {
+    color: #718bd8;
+}
+.weekday {
+    color: #212529;
+}
+.input {
+    border-radius: 5px;
+    width: 250px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
 .container_Qr_Invoicing{
     height: 100%;
     width: 50%;
@@ -47,255 +76,194 @@
     max-width: 60%;
 }
 
-
-
-
-
-.container__Dates_Client {
+/* CONTENEDOR DE DATOS DEL EMISOR Y DEL ADQUIRIENTE */
+.container__Dates {
     border: 5px solid rgba(0, 0, 0, 0.2);;
     width: 100%;
-    display: flex;
-    padding: 10px;
 }
-.container__Ecopcion_User_Data {
-    /* border: 1px solid red; */
+.container__Issuer_Data {
     width: 50%;
-    /* height: 300px; */
-    margin: 0 0 30px 0;
 }
 .title__Section {
     border-bottom: 5px solid rgba(0, 0, 0, 0.2);
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     font-size: 20px;
     font-weight: 700;
 }
-.container__Section_aaaaa {
-    /* border: 1px solid blue; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.aaaaaaaa {
-    /* border: 1px solid red; */
-    width: 300px;
+.subtitle__Section {
     height: 50px;
+    width: 250px;
     margin: 0;
     font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
 }
-.bbbbbb {
-    /* border: 1px solid gold; */
+.data__Section {
     height: 50px;
     min-width: calc(100% - 300px);
-    margin: 0;
     font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
 }
 .container__User_Customer_Data {
     width: 50%;
     height: 300px;
 }
 
-
-
-
-
-
-
-
-.container__Table {
+/* TABLA */
+.container__Table{
     border: 5px solid rgba(0, 0, 0, 0.8);
     width: 100%;
-    width: 1080px;
 }
-.contaner__Columns_Titles {
-    display: flex;
-    height: 50px;
+.container__Head{
+    background: #e9ecef;
+    height: 60px;
+    width: 100%;
+    font-weight: 600;
 }
 
+/* TITULOS DE LAS COLUMNAS */
+.container__Tr{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
 .number {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 .code {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 .product__Service {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 255px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 15%;
+    min-width: 150px;
 }
 .unit__Value {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 .quantity {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 .discount {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 95px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
 }
 .discount__Value {
-    border-right: 5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 15%;
+    min-width: 150px;
 }
 .total__Value {
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 15%;
+    min-width: 150px;
 }
-.delete {
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    width: 30px;
+.action {
+    height: 60px;
+    width: 5%;
+    min-width: 50px;
 }
 
-
-.container__Button__Add {
+/* CONTENIDO DE LA TABLA */
+.container__Body{
+    height: 60px;
     width: 100%;
 }
-.button__Add {
-    width: 200px;
-    padding: 10px 20px;
-    background: #718bd8;
-    display: flex;
-    color: white;
-    align-items: center;
-    justify-content: space-between;
-    transition: ease 300ms all;
+.container__Info{
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
 }
-.button__Add:hover {
+.text__Ellipsis {
+    text-align: center;
+    opacity: 0.75;
+    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
+    text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
+}
+.container__Icons {
+    height: 100%;
+    width: 125px;
+}
+.button__Delete {
+    color: #6c757d;
+    height: 35px;
+    width: 25px;
+    font-size: 14px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
     cursor: pointer;
-    background: blue;
 }
-.button__Add {
-    font-size: 16px;
-    color: white;
+.message__Unrelated_Items {
+    height: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.container__Button__Add {
+    width: 120px;
+    padding: 10px 20px;
+    color: #fff;
+    background: #718bd8;
+}
+.container__Button__Add:hover {
+    cursor: pointer;
+}
+.icon__Plus {
+    color: #fff;
+    margin: 4px 5px 0 0;
 }
 
-
-
-
-
-
+/* TOTALES */
 .container__Taxes_And_Values {
-    border: 5px solid red;
-    width: 100%;
+    border: 1px solid red;
     height: 250px;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
+    width: 100%;
 }
 .container__Taxes {
-    /* border: 5px solid teal; */
     width: 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
-.cccccccc {
-    border: 1px solid teal;
-    display: flex;
+.input {
+    border-radius: 5px;
+    width: 300px;
 }
-.dddddd {
-    border: 1px solid teal;
-    width: 200px;
+.input:focus{
+    outline-color: #718bd8;
 }
-.eeeeee {
-    border: 1px solid teal;
-    width: 250px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.continer__Retention {
+.container__Retention {
     border: 1px solid red;
+    height: 60px;
     width: 450px;
-    height: 50px;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
 }
 .continer__Retention_Title {
-    border: 1px solid red;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
     width: 450px;
-    height: 50px;
-    font-size: 14px;
-    display: flex;
 }
 .retention {
-    border: 1px solid red;
-    width: 150px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
+    width: 140px;
 }
 .percentage__Value {
-    border: 1px solid red;
-    width: 150px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
+    width: 170px;
 }
 .retention__Value {
-    border: 1px solid red;
-    width: 150px;
-    height: 50px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 60px;
+    width: 140px;
 }
+
+
+
 
 
 

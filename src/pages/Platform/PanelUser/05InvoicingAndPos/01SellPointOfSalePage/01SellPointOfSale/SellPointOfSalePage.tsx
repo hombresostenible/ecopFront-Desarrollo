@@ -37,11 +37,11 @@ function SellPointOfSalePage() {
         setSelectedBranch(selectedId);
     };
 
-    // Efecto para establecer la fecha actual
-    const [registrationDate, setRegistrationDate] = useState<Date>();
+    // useEffect para establecer la fecha actual
+    const [currentDate, setCurrentDate] = useState<Date>();
     useEffect(() => {
         const currentDate = new Date();
-        setRegistrationDate(currentDate);
+        setCurrentDate(currentDate);
     }, []);
 
     return (
@@ -80,8 +80,8 @@ function SellPointOfSalePage() {
                                     <p className="mb-1">Fecha de registro</p>
                                     <div>
                                         <DatePicker
-                                            selected={registrationDate || undefined}
-                                            onChange={(date) => setRegistrationDate(date || undefined)}
+                                            selected={currentDate || undefined}
+                                            onChange={(date) => setCurrentDate(date || undefined)}
                                             className={`${styles.input} p-2 border `}
                                             calendarClassName={styles.custom__Calendar}
                                             dayClassName={(date) =>
@@ -102,7 +102,7 @@ function SellPointOfSalePage() {
                             // user={user}
                             token={token}
                             selectedBranch={selectedBranch}
-                            defaultDates={registrationDate}
+                            defaultDates={currentDate}
                         />
                     </div>
                     <Footer />

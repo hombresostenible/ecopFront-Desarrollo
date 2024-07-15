@@ -7,23 +7,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCrmClients } from '../../redux/User/crmClientSlice/actions';
 import type { RootState, AppDispatch } from '../../redux/store';
 // ELEMENTOS DEL COMPONENTE
+import { ICrmClient } from '../../types/User/crmClient.types';
 import CreateClient from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateClient';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
-import styles from './styles.module.css';
+// import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
     token: string;
-    onClientSelect: (value: number | null) => void;
+    onClientSelect?: (value: number | null) => void;
+    onDataClientSelect?: (data: ICrmClient) => void; // Prop adicional
 }
 
-function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
+interface OptionType {
+    value: string;
+    label: string;
+    data?: ICrmClient; // Propiedad opcional
+}
+
+function SearchClientCrm({ token, onClientSelect, onDataClientSelect }: SearchClientCrmProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const crmClients = useSelector((state: RootState) => state.crmClient.crmClient);
 
     const [filterText, setFilterText] = useState<string>('');
-    const [selectedOption, setSelectedOption] = useState<{ value: string; label: string } | null>(null);
+    const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
     const [showCancelModalCreateClient, setShowCancelModalCreateClient] = useState(false);
     const selectRef = useRef<HTMLDivElement | null>(null);
 
@@ -48,12 +56,12 @@ function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
         };
     }, [selectRef, selectedOption]);
 
-    const createClientOption = {
+    const createClientOption: OptionType = {
         value: 'createClient',
         label: '¿No existe tu cliente? Créalo acá',
     };
 
-    const filteredOptions = Array.isArray(crmClients)
+    const filteredOptions: OptionType[] = Array.isArray(crmClients)
         ? crmClients
               .filter((crmClient) =>
                   crmClient.documentId.toString().includes(filterText) ||
@@ -67,6 +75,7 @@ function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
                       crmClient.name && crmClient.lastName
                           ? `${crmClient.documentId} - ${crmClient.name} ${crmClient.lastName}`
                           : `${crmClient.documentId} - ${crmClient.corporateName}`,
+                  data: crmClient, // Incluimos los datos completos del cliente
               }))
         : [];
 
@@ -76,11 +85,16 @@ function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
         setFilterText(inputValue);
     };
 
-    const handleSelectChange = (option: { value: string; label: string } | null) => {
+    const handleSelectChange = (option: OptionType | null) => {
         if (option?.value === 'createClient') {
             setShowCancelModalCreateClient(true);
         } else {
-            onClientSelect(option?.value ? parseInt(option.value) : null); // Pasa el valor de `value` como número.
+            if (onClientSelect) {
+                onClientSelect(option?.value ? parseInt(option.value) : null); // Llama la función `onClientSelect` si está definida
+            }
+            if (onDataClientSelect && option?.data) {
+                onDataClientSelect(option.data); // Llama la función `onDataClientSelect` con los datos completos del cliente
+            }
             setSelectedOption(option);
         }
     };
@@ -95,7 +109,7 @@ function SearchClientCrm({ token, onClientSelect }: SearchClientCrmProps) {
 
     return (
         <div ref={selectRef} className="m-auto d-flex align-items-center justify-content-center">
-            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa a la que le vendiste?</p>
+            {/* <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa a la que le vendiste?</p> */}
             <div>
                 <Select
                     value={selectedOption}

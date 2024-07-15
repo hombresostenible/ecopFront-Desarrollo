@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
 import { useState, useEffect, ChangeEvent } from 'react';
 import jsCookie from 'js-cookie';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
@@ -8,10 +10,12 @@ import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
+import { ICrmClient } from '../../../../../../types/User/crmClient.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
-import { IoIosClose } from "react-icons/io";
+import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa";
 import styles from './styles.module.css';
 
@@ -38,6 +42,16 @@ function ElectronicInvoicingPage() {
         setSelectedBranch(value);
     };
 
+    // useEffect para establecer la fecha actual
+    const [currentDate, setCurrentDate] = useState<Date>();
+    useEffect(() => {
+        const currentDate = new Date();
+        setCurrentDate(currentDate);
+    }, []);
+
+    //Setea el cliente cuando se busca o se crea
+    const [selectedClient, setSelectedClient] = useState<ICrmClient | null>(null);
+
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -63,7 +77,7 @@ function ElectronicInvoicingPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Invoice} mt-4 p-4`}>
+                        <div className={`${styles.container__Invoice} mt-4 p-5`}>
                             <div className={`${styles.container__Header} mb-4 d-flex align-items-center justify-content-between`}>
                                 <div className={`${styles.container__Logo} d-flex align-items-center justify-content-center`}>
                                     <img src={user?.logo} alt="Logo" className={`${styles.logo} `}/>
@@ -72,8 +86,24 @@ function ElectronicInvoicingPage() {
                                     <div className={`${styles.container_Dates_Invoicing} d-flex flex-column align-items-center justify-content-center`}>
                                         <h4 className='text-center m-0'>Factura de venta N°</h4>
                                         <h4 className='text-center m-0'>9593122DFDF-1</h4>
-                                        <h4 className='text-center m-0'>FECHA: (Fecha de generación)</h4>
-                                        <h4 className='text-center m-0'>FECHA DE VENCIMIENTO: (Fecha de vencimiento)</h4>
+                                        <h4 className='text-center m-0'>FECHA: {currentDate  && currentDate.toLocaleDateString()}</h4>
+                                        <h4 className='text-center m-0'>FECHA DE VENCIMIENTO:</h4>
+                                        <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
+                                        <div className="d-flex flex-column align-items-start justify-content-center">
+                                            <DatePicker
+                                                selected={currentDate || undefined}
+                                                onChange={(date) => setCurrentDate(date || undefined)}
+                                                className={`${styles.input} p-2 border text-center`}
+                                                calendarClassName={styles.custom__Calendar}
+                                                dayClassName={(date) =>
+                                                    date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                                }
+                                                showMonthDropdown
+                                                showYearDropdown
+                                                dropdownMode="select"
+                                            />
+                                        </div>
+                                    </div>
                                     </div>                                    
                                     <div className={`${styles.container_Qr_Invoicing} d-flex align-items-center justify-content-center`}>
                                         <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Codigo_QR.svg/1200px-Codigo_QR.svg.png'} alt="Logo" className={`${styles.qr__Code} `}/>
@@ -81,124 +111,139 @@ function ElectronicInvoicingPage() {
                                 </div>
                             </div>
 
-                            <div className={`${styles.container__Dates_Client} mb-4`}>
-                                <div className={`${styles.container__Ecopcion_User_Data} `}>
+                            <div className={`${styles.container__Dates} mb-4 P-2 d-flex`}>
+                                <div className={`${styles.container__Issuer_Data} `}>
                                     <div className={styles.title__Section}>Datos del Emisor</div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Razón social/Nombre</h4>
-                                        <p className={styles.bbbbbb}>{user?.name ? `${user.name} ${user.lastName}` : user?.corporateName}</p>
-                                    </div>
-
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>NIT/CC</h4>
-                                        <p className={styles.bbbbbb}>{user?.verificationDigit ? `${user.documentId}-${user.verificationDigit}` : user?.documentId}</p>
-                                    </div>
-
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Dirección:</h4>
-                                        <p className={styles.bbbbbb}>{user?.address}</p>
-                                    </div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Teléfono:</h4>
-                                        <p className={styles.bbbbbb}>{user?.phone}</p>
+                                    <div className="px-2">
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Razón social/Nombre</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.name ? `${user.name} ${user.lastName}` : user?.corporateName}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>NIT/CC</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.verificationDigit ? `${user.documentId}-${user.verificationDigit}` : user?.documentId}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección:</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.address}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono:</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.phone}</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className={styles.container__Ecopcion_User_Data}>
-                                    <div className={styles.title__Section}>Datos del Adquiriente</div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Razón social/Nombre</h4>
-                                        <p className={styles.bbbbbb}>Felipe Hernández</p>
-                                    </div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>NIT/CC</h4>
-                                        <p className={styles.bbbbbb}>900400200-1</p>
-                                    </div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Dirección:</h4>
-                                        <p className={styles.bbbbbb}>Cra 10 # 10 - 10</p>
-                                    </div>
-                                    <div className={styles.container__Section_aaaaa}>
-                                        <h4 className={styles.aaaaaaaa}>Teléfono:</h4>
-                                        <p className={styles.bbbbbb}>300 100 2020</p>
+                                <div className={styles.container__Issuer_Data}>
+                                    <div className={`${styles.title__Section} d-flex align-items-center justify-content-start`}>Datos del Adquiriente</div>
+                                    <div className="px-2">
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>NIT/CC</h4>
+                                            <div>
+                                                <SearchClientCrm
+                                                    token={token}
+                                                    onDataClientSelect={(client) => setSelectedClient(client)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Razón social/Nombre</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{selectedClient?.name ? `${selectedClient?.name} ${selectedClient.lastName}` : selectedClient?.corporateName}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección:</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{selectedClient?.address ? selectedClient?.address : 'No asignada aún'}</p>
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono:</h4>
+                                            <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{selectedClient?.phone}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div className={`${styles.container__Table} mb-4`}>
-                                <div className={styles.contaner__Columns_Titles}>
-                                    <div className={`${styles.number} `}>#</div>
-                                    <div className={`${styles.code} `}>Código</div>
-                                    <div className={`${styles.product__Service} `}>Producto/Servicio</div>
-                                    <div className={`${styles.unit__Value} `}>Valor Unitario</div>
-                                    <div className={`${styles.quantity} `}>Cant.</div>
-                                    <div className={`${styles.discount} `}>Descuento</div>
-                                    <div className={`${styles.discount__Value} `}>Valor Descuento</div>
-                                    <div className={`${styles.total__Value} `}>Valor Total</div>
-                                    <div className={`${styles.delete} `}></div>
+                            <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                                <div className={`${styles.container__Head} `}>
+                                    <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        <div className={`${styles.number} d-flex align-items-center justify-content-center text-center`}>#</div>
+                                        <div className={`${styles.code} d-flex align-items-center justify-content-center text-center`}>Código</div>
+                                        <div className={`${styles.product__Service} d-flex align-items-center justify-content-center text-center`}>Producto/Servicio</div>
+                                        <div className={`${styles.unit__Value} d-flex align-items-center justify-content-center text-center`}>Valor Unitario</div>
+                                        <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cant.</div>
+                                        <div className={`${styles.discount} d-flex align-items-center justify-content-center text-center`}>Descuento</div>
+                                        <div className={`${styles.discount__Value} d-flex align-items-center justify-content-center text-center`}>Valor Descuento</div>
+                                        <div className={`${styles.total__Value} d-flex align-items-center justify-content-center text-center`}>Valor Total</div>
+                                        <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}></div>
+                                    </div>
                                 </div>
 
-                                <div className={`${styles.contaner__Columns_Titles} `} >
-                                    <div className={`${styles.number} d-flex align-items-center justify-content-start`}>
-                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>9999</span>
-                                    </div>
-                                    <div className={`${styles.code} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>7701024000016</span>
-                                    </div>
-                                    <div className={`${styles.product__Service} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>Arroz Supremo</span>
-                                    </div>
-                                    <div className={`${styles.unit__Value} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ 2.100</span>
-                                    </div>
-                                    <div className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>10</span>
-                                    </div>
-                                    <div className={`${styles.discount} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>18%</span>
-                                    </div>
-                                    <div className={`${styles.discount__Value} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>$200</span>
-                                    </div>
-                                    <div className={`${styles.total__Value} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ 21.000</span>
-                                    </div>
-                                    <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
-                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                            <IoIosClose
-                                                // className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                // onClick={() => {
-                                                //     handleDelete(branch);
-                                                // }}
-                                            />
-                                        </span>
+                                <div className={`${styles.container__Body} `}>
+                                    <div className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
+                                        <div className={`${styles.number} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>9999</span>
+                                        </div>
+                                        <div className={`${styles.code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>7701024000016</span>
+                                        </div>
+                                        <div className={`${styles.product__Service} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>Arroz Supremo</span>
+                                        </div>
+                                        <div className={`${styles.unit__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ 2.100</span>
+                                        </div>
+                                        <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>10</span>
+                                        </div>
+                                        <div className={`${styles.discount} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>18%</span>
+                                        </div>
+                                        <div className={`${styles.discount__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>$200</span>
+                                        </div>
+                                        <div className={`${styles.total__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ 21.000</span>
+                                        </div>
+                                        <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Delete} `}
+                                                    // className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                    // onClick={() => {
+                                                    //     handleDelete(branch);
+                                                    // }}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div>CADA PRODUCTO SE DEBE DE AGREAGR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
 
-                            <div className={`${styles.container__Button__Add} mb-4`}>
-                                <div className={styles.button__Add}>Agregar <FaPlus className={styles.icon__Add}/></div>
+                            <div className={`${styles.container__Button__Add} mb-4 d-flex`}>
+                                <FaPlus className={styles.icon__Plus}/>
+                                <p className='m-0'>Agregar</p>
                             </div>
                             
-                            <div className={`${styles.container__Taxes_And_Values} d-flex`}>
-                                <div className={`${styles.container__Taxes}`}>
-                                    <div className={styles.cccccccc}>
-                                        <h4 className={styles.dddddd}>Medio de pago</h4>
-                                        <div className={styles.eeeeee}>
-                                            <select name="" id="">
+                            <div className={`${styles.container__Taxes_And_Values} d-flex align-items-start justify-content-between`}>
+                                <div className={`${styles.container__Taxes} d-flex flex-column gap-4`}>
+                                    <div className="d-flex align-items-center justify-content-between">
+                                        <p className="m-0">Medio de pago</p>
+                                        <div>
+                                            <select
+                                                className={`${styles.input} p-2 border `}
+                                            >
                                                 <option value="">CONTADO</option>
                                                 <option value="">CREDITO</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div className={styles.continer__Retention}>
-                                        <div className={styles.continer__Retention_Title}>
-                                            <div className={styles.retention}>Retención</div>
-                                            <div className={styles.percentage__Value}>Valor Porcentual (%)</div>
-                                            <div className={styles.retention__Value}>Importe</div>
+                                    <div className={`´${styles.container__Retention} d-flex flex-column`}>
+                                        <div className={`${styles.continer__Retention_Title} d-flex`}>
+                                            <div className={`${styles.retention} d-flex align-items-center justify-content-center`}>Retención</div>
+                                            <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>Valor Porcentual (%)</div>
+                                            <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>Importe</div>
                                         </div>
 
                                         <div className={styles.container__Retention_Values}>

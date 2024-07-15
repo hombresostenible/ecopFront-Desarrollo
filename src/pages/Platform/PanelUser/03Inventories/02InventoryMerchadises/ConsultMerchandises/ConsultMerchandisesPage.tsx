@@ -171,7 +171,7 @@ function ConsultMerchandisesPage() {
                                 </div>
                             </div>
 
-                            <div className={`${styles.container__Body}`}>
+                            <div className={`${styles.container__Body} `}>
                                 {Array.isArray(merchandises) && merchandises.length > 0 ? (
                                     merchandises.map((merchadise) => (
                                         <div key={merchadise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
