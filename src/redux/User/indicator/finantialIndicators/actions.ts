@@ -32,7 +32,7 @@ import {
 //
 export const getSalesPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/salesPerPeriod', {
+        const response = await axiosInstance.get('/financial-indicator/sales-per-period', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const getSalesPerPeriod = (token: string) => async (dispatch: AppDispatch
 //
 export const getSalesPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/salesPerPeriod/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/sales-per-period/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const getSalesPerPeriodByBranch = (idBranch: string, token: string) => as
 //
 export const getExpensesPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/expensesPerPeriod', {
+        const response = await axiosInstance.get('/financial-indicator/expenses-per-period', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const getExpensesPerPeriod = (token: string) => async (dispatch: AppDispa
 //
 export const getExpensesPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/expensesPerPeriod/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/expenses-per-period/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export const getExpensesPerPeriodByBranch = (idBranch: string, token: string) =>
 //
 export const getAllTransactionsPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/allTransactionsPerPeriod', {
+        const response = await axiosInstance.get('/financial-indicator/all-transactions-per-period', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -127,7 +127,7 @@ export const getAllTransactionsPerPeriod = (token: string) => async (dispatch: A
 //
 export const getAllTransactionsPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/allTransactionsPerPeriod/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/all-transactions-per-period/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -146,7 +146,7 @@ export const getAllTransactionsPerPeriodByBranch = (idBranch: string, token: str
 //
 export const getAccountsReceivable = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/accountsReceivable', {
+        const response = await axiosInstance.get('/financial-indicator/accounts-receivable', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -165,7 +165,7 @@ export const getAccountsReceivable = (token: string) => async (dispatch: AppDisp
 //
 export const getAccountsReceivableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/accountsReceivable/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -184,7 +184,7 @@ export const getAccountsReceivableByBranch = (idBranch: string, token: string) =
 //
 export const getAccountsPayable = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/accountsPayable', {
+        const response = await axiosInstance.get('/financial-indicator/accounts-payable', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -203,7 +203,7 @@ export const getAccountsPayable = (token: string) => async (dispatch: AppDispatc
 //
 export const getAccountsPayableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/accountsPayable/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-payable/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -222,7 +222,7 @@ export const getAccountsPayableByBranch = (idBranch: string, token: string) => a
 //
 export const getBestClientValue = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/best-client-value', {
+        const response = await axiosInstance.get('/financial-indicator/best-client-value', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -241,7 +241,7 @@ export const getBestClientValue = (token: string) => async (dispatch: AppDispatc
 //
 export const getBestClientValueByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/best-client-value/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/best-client-value/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -260,7 +260,7 @@ export const getBestClientValueByBranch = (idBranch: string, token: string) => a
 //
 export const getBestClientQuantity = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/best-client-quantity', {
+        const response = await axiosInstance.get('/financial-indicator/best-client-quantity', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -279,7 +279,7 @@ export const getBestClientQuantity = (token: string) => async (dispatch: AppDisp
 //
 export const getBestClientQuantityByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/best-client-quantity/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/best-client-quantity/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -298,7 +298,7 @@ export const getBestClientQuantityByBranch = (idBranch: string, token: string) =
 //
 export const getAverageTicketPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/averageTicketPerPeriod', {
+        const response = await axiosInstance.get('/financial-indicator/average-ticket-per-period', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -317,7 +317,7 @@ export const getAverageTicketPerPeriod = (token: string) => async (dispatch: App
 //
 export const getAverageTicketPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/averageTicketPerPeriod/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/average-ticket-per-period/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -336,7 +336,7 @@ export const getAverageTicketPerPeriodByBranch = (idBranch: string, token: strin
 //
 export const getAssetsInventory = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/assetsInventory', {
+        const response = await axiosInstance.get('/financial-indicator/assets-inventory', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -355,7 +355,7 @@ export const getAssetsInventory = (token: string) => async (dispatch: AppDispatc
 //
 export const getAssetsInventoryByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/assetsInventory/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/assets-inventory/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -374,7 +374,7 @@ export const getAssetsInventoryByBranch = (idBranch: string, token: string) => a
 //
 export const getMerchandisesInventory = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/merchandisesInventory', {
+        const response = await axiosInstance.get('/financial-indicator/merchandises-inventory', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -393,7 +393,7 @@ export const getMerchandisesInventory = (token: string) => async (dispatch: AppD
 //
 export const getMerchandisesInventoryByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/merchandisesInventory/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/merchandises-inventory/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -412,7 +412,7 @@ export const getMerchandisesInventoryByBranch = (idBranch: string, token: string
 //
 export const getProductsInventory = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/productsInventory', {
+        const response = await axiosInstance.get('/financial-indicator/products-inventory', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -431,7 +431,7 @@ export const getProductsInventory = (token: string) => async (dispatch: AppDispa
 //
 export const getProductsInventoryByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/productsInventory/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/products-inventory/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -450,7 +450,7 @@ export const getProductsInventoryByBranch = (idBranch: string, token: string) =>
 //
 export const getRawmaterialsInventory = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financialIndicator/rawmaterialsInventory', {
+        const response = await axiosInstance.get('/financial-indicator/rawmaterials-inventory', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -469,7 +469,7 @@ export const getRawmaterialsInventory = (token: string) => async (dispatch: AppD
 //
 export const getRawmaterialsInventoryByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financialIndicator/rawmaterialsInventory/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/rawmaterials-inventory/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
