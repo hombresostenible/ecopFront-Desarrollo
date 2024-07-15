@@ -10,66 +10,44 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
-    font-family: 'Century Gothic', sans-serif;
 }
 
-
-.container__aaaaaa {
-    /* border: 1px solid red; */
-    width: 100%;
+/* CONTENEDOR DE LA FACTURA */
+.container__Invoice {
+    border: 1px solid rgba(0, 0, 0, 0.2);
     height: 100%;
+    width: 100%;
 }
 .container__Header {
-    border: 1px solid teal;
     height: 300px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
-
 .container__Logo {
-    border: 1px solid black;
-    width: 50%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 50%;
 }
 .logo {
-    max-width: 70%;
     max-height: 60%;
+    max-width: 70%;
 }
-
-
-
 .container__General_Information_Invoincing {
-    border: 1px solid gold;
-    width: 50%;
     height: 100%;
-    display: flex;
+    width: 50%;
 }
 .container_Dates_Invoicing{
-    border: 1px solid red;
-    width: 50%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 50%;
 }
 .container_Qr_Invoicing{
-    border: 1px solid blue;
-    width: 50%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 50%;
 }
 .qr__Code {
     max-height: 100%;
     max-width: 60%;
 }
+
+
 
 
 

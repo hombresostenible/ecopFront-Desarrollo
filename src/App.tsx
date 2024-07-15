@@ -97,8 +97,8 @@ import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/04PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
-import SellPointOfSalePage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/SellPointOfSale/SellPointOfSalePage';
-import ElectronicInvoicingPage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/ElectronicInvoicing/ElectronicInvoicingPage';
+import SellPointOfSalePage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/01SellPointOfSale/SellPointOfSalePage';
+import ElectronicInvoicingPage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/02ElectronicInvoicing/ElectronicInvoicingPage';
 import SeeElectronicInvoicingPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/02SeeElectronicInvoicingPosPage/SeeElectronicInvoicingPosPage';
 import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02CreditNotes/CreditNotesPage';
 import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03DebitNotes/DebitNotesPage';
