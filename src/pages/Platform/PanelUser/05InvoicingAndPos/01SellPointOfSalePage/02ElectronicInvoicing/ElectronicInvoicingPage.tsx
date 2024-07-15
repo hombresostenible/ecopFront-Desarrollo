@@ -63,19 +63,19 @@ function ElectronicInvoicingPage() {
                             </div>
                         </div>
 
-                        <div className={styles.container__aaaaaa}>
-                            <div className={`${styles.container__Header} mb-4`}>
-                                <div className={styles.container__Logo}>
+                        <div className={`${styles.container__Invoice} mt-4 p-4`}>
+                            <div className={`${styles.container__Header} mb-4 d-flex align-items-center justify-content-between`}>
+                                <div className={`${styles.container__Logo} d-flex align-items-center justify-content-center`}>
                                     <img src={user?.logo} alt="Logo" className={`${styles.logo} `}/>
                                 </div>
-                                <div className={styles.container__General_Information_Invoincing}>
-                                    <div className={styles.container_Dates_Invoicing}>
-                                        <h4 className='text-center m-0'>Factura de venta N° </h4>
+                                <div className={`${styles.container__General_Information_Invoincing} d-flex`}>
+                                    <div className={`${styles.container_Dates_Invoicing} d-flex flex-column align-items-center justify-content-center`}>
+                                        <h4 className='text-center m-0'>Factura de venta N°</h4>
                                         <h4 className='text-center m-0'>9593122DFDF-1</h4>
                                         <h4 className='text-center m-0'>FECHA: (Fecha de generación)</h4>
                                         <h4 className='text-center m-0'>FECHA DE VENCIMIENTO: (Fecha de vencimiento)</h4>
                                     </div>                                    
-                                    <div className={styles.container_Qr_Invoicing}>
+                                    <div className={`${styles.container_Qr_Invoicing} d-flex align-items-center justify-content-center`}>
                                         <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Codigo_QR.svg/1200px-Codigo_QR.svg.png'} alt="Logo" className={`${styles.qr__Code} `}/>
                                     </div>
                                 </div>
