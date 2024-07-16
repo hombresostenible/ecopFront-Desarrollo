@@ -218,7 +218,7 @@ function ElectronicInvoicingPage() {
                                 </div>
                             </div>
 
-                            <div>CADA PRODUCTO SE DEBE DE AGREAGR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
+                            <div>CADA PRODUCTO SE DEBE DE AGREGAR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
 
                             <div className={`${styles.container__Button__Add} mb-4 d-flex`}>
                                 <FaPlus className={styles.icon__Plus}/>
