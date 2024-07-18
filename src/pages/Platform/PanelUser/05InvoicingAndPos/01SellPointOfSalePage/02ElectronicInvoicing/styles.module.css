@@ -15,11 +15,9 @@
 /* CONTENEDOR DE LA FACTURA */
 .container__Invoice {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    /* height: 100%; */
     width: 100%;
 }
 .container__Header {
-    /* border: 1px solid red; */
     height: 300px;
     width: 100%;
 }
@@ -85,25 +83,24 @@
     width: 50%;
 }
 .title__Section {
-    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-    height: 50px;
     font-size: 20px;
     font-weight: 700;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+    height: 50px;
 }
 .subtitle__Section {
+    font-size: 20px;
     height: 50px;
     width: 250px;
-    margin: 0;
-    font-size: 20px;
 }
 .data__Section {
+    font-size: 20px;
     height: 50px;
     min-width: calc(100% - 300px);
-    font-size: 20px;
 }
 .container__User_Customer_Data {
-    width: 50%;
     height: 300px;
+    width: 50%;
 }
 
 /* TABLA */
@@ -112,10 +109,10 @@
     width: 100%;
 }
 .container__Head{
+    font-weight: 600;
     background: #e9ecef;
     height: 60px;
     width: 100%;
-    font-weight: 600;
 }
 
 /* TITULOS DE LAS COLUMNAS */
@@ -125,18 +122,18 @@
 }
 .number {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 8%;
+    min-width: 80px;
 }
 .code {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 14%;
+    min-width: 140px;
 }
 .product__Service {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 18%;
+    min-width: 180px;
 }
 .unit__Value {
     height: 60px;
@@ -145,28 +142,28 @@
 }
 .quantity {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 9%;
+    min-width: 90px;
 }
 .discount {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 9%;
+    min-width: 90px;
 }
 .discount__Value {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 14%;
+    min-width: 140px;
 }
 .total__Value {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 14%;
+    min-width: 140px;
 }
 .action {
     height: 60px;
-    width: 5%;
-    min-width: 50px;
+    width: 4%;
+    min-width: 40px;
 }
 
 /* CONTENIDO DE LA TABLA */
@@ -181,7 +178,6 @@
     height: 60px;
 }
 .text__Ellipsis {
-    text-align: center;
     opacity: 0.75;
     white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
     text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
@@ -208,9 +204,8 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .container__Button__Add {
-    width: 120px;
-    padding: 10px 20px;
     color: #fff;
+    width: 120px;
     background: #718bd8;
 }
 .container__Button__Add:hover {
@@ -223,7 +218,6 @@
 
 /* TOTALES */
 .container__Taxes_And_Values {
-    border: 1px solid red;
     height: 250px;
     width: 100%;
 }
@@ -237,23 +231,20 @@
 .input:focus{
     outline-color: #718bd8;
 }
+
+/* CONTENEDOR DE RETENCIONES */
 .container__Retention {
-    border: 1px solid red;
-    height: 60px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     width: 450px;
 }
-.continer__Retention_Title {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    height: 60px;
+.continer__Retention_Titles {
     width: 450px;
 }
 .retention {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
     height: 60px;
     width: 140px;
 }
 .percentage__Value {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
     height: 60px;
     width: 170px;
 }
@@ -261,394 +252,40 @@
     height: 60px;
     width: 140px;
 }
-
-
-
-
-
-
 .container__Retention_Values {
-    border: 1px solid red;
-    width: 450px;
-    /* height: 50px; */
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
     font-size: 14px;
-    display: flex;
-    flex-direction: column;
+    width: 450px;
 }
 .retention__Values {
     height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.title_Retention__Rows {
-    border: 1px solid teal;
-    font-size: 14px;
-    width: 150px;
-    height: 30px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.percentage_Retention__Rows {
-    border: 1px solid gold;
-    font-size: 14px;
-    width: 150px;
-    height: 30px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.value_Retention__Rows {
-    border: 1px solid red;
-    font-size: 14px;
-    width: 150px;
-    height: 30px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
 }
 
-
-
-
-
-
-
+/* CONTENEDOR DE TOTALES */
 .container__Totales {
-    border: 1px solid teal;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     width: 500px;
-    /* height: 300px; */
 }
 .title__Container_Totales {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
-    border: 1px solid teal;
-    text-align: center;
 }
 .ffffffffff {
-    border: 1px solid red;
-    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
-.ggggggggg {
-    border: 1px solid black;
+.container__Column_Totals {
     width: 300px;
-    /* height: 200px; */
 }
-.hhhhhhh {
-    text-align: end;
-}
-.fffffff {
-    border: 1px solid teal;
+.container__Values_Totals {
     width: 200px;
-
 }
-.iiiiiiiii {
-    border: 1px solid red;
-    width: 100%;
+.totals {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-.jjjjjjjjj {
-    border: 1px solid red;
     width: 100%;
+}
+.letter__Amount {
     height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-.container__Electronic_Invoicing {
-    border: 1px solid red;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: flex-start;
     width: 100%;
 }
-.header__Electronic_Invoicing {
-    border: 1px solid teal;
-    height: 150px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.container__Logo_Company {
-    width: 300px;
-    height: 150px;
-    border: 1px solid red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.logo {
-    width: 300px;
-}
-.container__Info_Company {
-    border: 1px solid black;
-    height: 150px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.container__Invoicing_Number {
-    border: 1px solid blue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 150px;
-    width: 300px;
-}
-.invoicing__Number {
-    border: 1px solid gold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 150px;
-    width: 100px;
-}
-.setting__Invoicing_Number {
-    border: 1px solid red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 150px;
-    width: 50px;
-}
-.icon__Setting {
-    font-size: 30px;
-}
-
-
-
-
-
-.container_Dates_Invoicing_Client {
-    border: 1px solid blue;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.container__Contact_Client {
-    border: 1px solid blue;
-    height: 200px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-
-.container__Contact {
-    border: 1px solid gold;
-    height: 50px;
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.title__Section {
-    border: 1px solid teal;
-    width: 100px;
-    margin: 0;
-}
-.select__Contact {
-    border: 1px solid teal;
-    width: 200px;
-}
-
-
-
-.container__Identification {
-    border: 1px solid black;
-    height: 50px;
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.container__Phone {
-    border: 1px solid peru;
-    height: 50px;
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.input {
-    width: 200px;
-}
-
-
-
-
-
-
-
-.container__Create_Contact {
-    border: 1px solid green;
-    height: 200px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: flex-start;
-}
-.create_Contact {
-    border: 1px solid green;
-    height: 50px;
-    width: 300px;
-}
-.question {
-    border: 1px solid green;
-    height: 50px;
-    width: 300px;
-}
-
-
-.container__Contact_Client {
-    border: 1px solid blue;
-    height: 200px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-
-
-
-
-
-
-
-.container__Table{
-    width: 1050px;
-}
-.container__Head{
-    background: #e9ecef;
-    height: 60px;
-    width: 100%;
-    font-weight: 600;
-}
-.container__Tr{
-    height: 60px;
-}
-.item {
-    overflow: hidden;
-    height: 60px;
-    width: 125px;
-}
-.reference{
-    height: 60px;
-    width: 125px;
-}
-.price{
-    height: 60px;
-    width: 125px;
-}
-.discount{
-    height: 60px;
-    width: 125px;
-}
-.tax{
-    height: 60px;
-    width: 125px;
-}
-.description{
-    height: 60px;
-    width: 125px;
-}
-.quantity{
-    height: 60px;
-    width: 125px;
-}
-.total{
-    height: 60px;
-    width: 125px;
-}
-.delete{
-    height: 60px;
-    width: 50px;
-}
-.container__Body{
-    height: 60px;
-    width: 100%;
-}
-.container__Info{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    height: 60px;
-}
-
-.container__Action{
-    white-space: nowrap;
-    height: 60px;
-    width: 100px;
-}
-.button__Delete {
-    color: #6c757d;
-    height: 35px;
-    width: 50px;
-    padding: 0 12px;
-}
-.button__Delete:hover {
-    color: #718bd8;
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-.button__Edit {
-    color: #6c757d;
-    height: 35px;
-    width: 50px;
-    padding: 0 12px;
-}
-.button__Edit:hover {
-    color: #718bd8;
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-
-
-.text__Ellipsis {
-    opacity: 0.75;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-} */

@@ -6,7 +6,7 @@ import { errorItemByBarCode, getItemByBarCodeStart, errorItemByName, getItemByNa
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
 export const getItemByBarCode = (barCode: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/item-by-barCode-or-name/bar-code/${barCode}`, {
+        const response = await axiosInstance.get(`/all-items/bar-code/${barCode}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export const getItemByBarCode = (barCode: string, token: string) => async (dispa
 //BUSCA UN ITEM POR NOMBRE EN TODAS LAS TABLAS
 export const getItemByName = (nameItem: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/item-by-barCode-or-name/name-item/query?nameItem=${nameItem}`, {
+        const response = await axiosInstance.get(`/all-items/name-item/query?nameItem=${nameItem}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
