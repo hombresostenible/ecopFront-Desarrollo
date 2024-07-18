@@ -207,10 +207,6 @@ function ElectronicInvoicingPage() {
                                             <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <RiDeleteBin6Line
                                                     className={`${styles.button__Delete} `}
-                                                    // className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                    // onClick={() => {
-                                                    //     handleDelete(branch);
-                                                    // }}
                                                 />
                                             </div>
                                         </div>
@@ -220,7 +216,7 @@ function ElectronicInvoicingPage() {
 
                             <div>CADA PRODUCTO SE DEBE DE AGREGAR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
 
-                            <div className={`${styles.container__Button__Add} mb-4 d-flex`}>
+                            <div className={`${styles.container__Button__Add} mb-4 pt-2 pb-2 px-4  d-flex`}>
                                 <FaPlus className={styles.icon__Plus}/>
                                 <p className='m-0'>Agregar</p>
                             </div>
@@ -239,53 +235,53 @@ function ElectronicInvoicingPage() {
                                         </div>
                                     </div>
 
-                                    <div className={`´${styles.container__Retention} d-flex flex-column`}>
-                                        <div className={`${styles.continer__Retention_Title} d-flex`}>
+                                    <div className={`${styles.container__Retention} d-flex flex-column`}>
+                                        <div className={`${styles.continer__Retention_Titles} d-flex`}>
                                             <div className={`${styles.retention} d-flex align-items-center justify-content-center`}>Retención</div>
                                             <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>Valor Porcentual (%)</div>
                                             <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>Importe</div>
                                         </div>
 
-                                        <div className={styles.container__Retention_Values}>
-                                            <div className={styles.retention__Values}>
-                                                <p className={styles.title_Retention__Rows}>Retefuente</p>
-                                                <div className={styles.percentage_Retention__Rows}>10%</div>
-                                                <div className={styles.value_Retention__Rows}>$ 2.100</div>
+                                        <div className={`${styles.container__Retention_Values} d-flex flex-column`}>
+                                            <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente</div>
+                                                <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
                                             </div>
-                                            <div className={styles.retention__Values}>
-                                                <p className={styles.title_Retention__Rows}>Rete IVA</p>
-                                                <div className={styles.percentage_Retention__Rows}>10%</div>
-                                                <div className={styles.value_Retention__Rows}>$ 2.100</div>
+                                            <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete IVA</div>
+                                                <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
                                             </div>
-                                            <div className={styles.retention__Values}>
-                                                <p className={styles.title_Retention__Rows}>Rete ICA</p>
-                                                <div className={styles.percentage_Retention__Rows}>10%</div>
-                                                <div className={styles.value_Retention__Rows}>$ 2.100</div>
+                                            <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete ICA</div>
+                                                <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className={styles.container__Totales}>
-                                    <div className={styles.title__Container_Totales}>Totales</div>
-                                    <div className={styles.ffffffffff}>
-                                        <div className={styles.ggggggggg}>
-                                            <p className={`${styles.hhhhhhh} m-0`}>Base antes de descuentos:</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>Descuentos:</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>Total Base Imponible:</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>IVA:</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>Total Impuestos:</p>
+                                    <div className={`${styles.title__Container_Totales} text-center`}>Totales</div>
+                                    <div className={`${styles.ffffffffff} d-flex`}>
+                                        <div className={styles.container__Column_Totals}>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>Base antes de descuentos:</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>Descuentos:</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>Total Base Imponible:</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>IVA:</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>Total Impuestos:</p>
                                         </div>
-                                        <div className={styles.fffffff}>
-                                            <p className={`${styles.hhhhhhh} m-0`}>XXXXXXX</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>XXXXXXX</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>XXXXXXX</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>XXXXXXX</p>
-                                            <p className={`${styles.hhhhhhh} m-0`}>XXXXXXX</p>
+                                        <div className={styles.container__Values_Totals}>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
+                                            <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
                                         </div>
                                     </div>
-                                    <div className={styles.iiiiiiiii}>XXXXXXXXXX</div>
-                                    <div className={styles.jjjjjjjjj}>
+                                    <div className={`${styles.totals} d-flex align-items-center justify-content-end`}>XXXXXXXXXX</div>
+                                    <div className={`${styles.letter__Amount} d-flex align-items-center justify-content-center`}>
                                         MONTO EN LETRAS PERO NUESTRO CLIENTE LO DEBE DE ESCRIBIR
                                     </div>
                                 </div>
