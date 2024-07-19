@@ -21,7 +21,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
     const dispatch: AppDispatch = useDispatch();
 
     const [editedService, setEditedService] = useState<IService>({ ...service });
-    const [editedIVA, setEditedIVA] = useState(service?.IVA);
+    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19 | undefined>(service?.IVA);
     const [ editedIsDiscounted, setEditedIsDiscounted ] = useState(service?.isDiscounted);
 
     const handleEditField = (
@@ -135,11 +135,11 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                         <select
                             className={`${styles.inputEdit} p-2 border w-100`}
                             value={editedIVA}
-                            onChange={(e) => setEditedIVA(parseInt(e.target.value))}
-                            >
-                            <option value='0'>0</option>
-                            <option value='5'>5</option>
-                            <option value='19'>19</option>
+                            onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                        >
+                            <option value={0}>0 %</option>
+                            <option value={5}>5 %</option>
+                            <option value={19}>19 %</option>
                         </select>
                     </div>
                 </div>

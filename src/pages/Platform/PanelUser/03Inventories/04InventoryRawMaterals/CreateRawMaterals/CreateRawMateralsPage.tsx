@@ -588,7 +588,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                 </div>
                                 <div className={styles.containerInput}>
                                     <select
-                                        defaultValue={'0'}
+                                        defaultValue={0}
                                         className={`${styles.input} p-2 border `}
                                         {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
