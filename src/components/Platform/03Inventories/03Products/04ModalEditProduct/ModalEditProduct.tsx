@@ -24,7 +24,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState(product?.IVA);
+    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19 | undefined>(product?.IVA);
     const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
     const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
     const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(product?.expirationDate ? new Date(product.expirationDate) : undefined);
@@ -249,11 +249,11 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
                         <select
                             className={`${styles.inputEdit} p-2 border w-100`}
                             value={editedIVA}
-                            onChange={(e) => setEditedIVA(parseInt(e.target.value))}
-                            >
-                            <option value='0'>0</option>
-                            <option value='5'>5</option>
-                            <option value='19'>19</option>
+                            onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                        >
+                            <option value={0}>0 %</option>
+                            <option value={5}>5 %</option>
+                            <option value={19}>19 %</option>
                         </select>
                     </div>
                 </div>
