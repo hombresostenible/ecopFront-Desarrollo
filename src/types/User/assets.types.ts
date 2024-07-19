@@ -15,9 +15,10 @@ export interface IAssets {
     conditionAssets?: 'Nuevo' | 'Usado';
     inventory: number;
     purchasePriceBeforeTax: number;
-    IVA?: number;
     sellingPrice?: number;
     inventoryOff?: InventoryOffItem[];
+    // Impuestos
+    IVA: 0 | 5 | 19;
     
     //RELACION CON OTRAS TABLAS
     branchId: string;
