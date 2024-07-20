@@ -45,7 +45,7 @@ export interface IMerchandise {
     // Impuestos
     IVA: 0 | 5 | 19;
     consumptionTax?: '4' | '8' | '16';
-    ivaAiu?: number;
+    ivaAiu?: '0' | '1';
     taxesUltraProcessedSugarSweetenedBeverages?: number;
     valueTaxesUltraProcessedSugarSweetenedBeverages?: '0' | '18' | '28' | '35' | '38' | '55' | '65';
     taxesUltraProcessedFoodProducts?: '10' | '15' | '20';
