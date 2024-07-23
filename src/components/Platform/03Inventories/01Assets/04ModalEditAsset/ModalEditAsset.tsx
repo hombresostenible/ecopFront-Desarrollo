@@ -24,7 +24,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
 
     const [editedConditionAssets, setEditedConditionAssets] = useState(asset?.conditionAssets);
     const [editedStateAssets, setEditedStateAssets] = useState(asset?.stateAssets);
-    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19 | undefined>(asset?.IVA);
+    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19>(asset?.IVA);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -213,7 +213,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                     <div className={styles.containerInput}>
                         <select
                             className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.IVA ? editedAsset.IVA.toString() : ''}
+                            value={editedAsset.IVA}
                             onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
                             >
                                 <option value={0}>0 %</option>
