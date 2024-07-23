@@ -4,7 +4,7 @@
 }
 .title {
     box-decoration-break: clone;
-    text-decoration: underline #2a9d8f 7px;
+    /* text-decoration: underline #95c11f 7px; */
 }
 .comunication {
     height: 190px;

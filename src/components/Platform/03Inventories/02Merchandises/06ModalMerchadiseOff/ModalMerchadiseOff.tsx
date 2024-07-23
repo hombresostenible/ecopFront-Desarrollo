@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchMerchandise, getMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IMerchandise, InventoryOffItem } from '../../../../../types/User/merchandise.types';
+import { IMerchandise, IInventoryOffItem } from '../../../../../types/User/merchandise.types';
 import styles from './styles.module.css';
 
 interface ModalMerchadiseOffProps {
@@ -16,7 +16,7 @@ interface ModalMerchadiseOffProps {
 }
 
 interface FormValues {
-    reason: InventoryOffItem['reason'];
+    reason: IInventoryOffItem['reason'];
     quantity: number;
     description: string;
 }

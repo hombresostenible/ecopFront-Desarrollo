@@ -136,7 +136,8 @@ function SeeElectronicInvoicingPosPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Ver Facturación y POS</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Gestión de Facturas y POS</h1>
+                        <p>Poner la funcionalidad de convertir un POS a Factua electrónica y viceverza</p>
 
                         <div className='d-flex align-items-center justify-content-between'>
                             <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>

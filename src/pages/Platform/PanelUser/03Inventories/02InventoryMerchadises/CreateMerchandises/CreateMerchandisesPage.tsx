@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { postMerchandise, getMerchandises } from '../../../../../../redux/User/merchandiseSlice/actions';
@@ -27,7 +27,11 @@ function CreateMerchandisesPage() {
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const navigate = useNavigate();
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IMerchandise>();
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<IMerchandise>();
+    const { fields, remove } = useFieldArray({
+        control,
+        name: 'retentions'
+    });
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
@@ -42,64 +46,19 @@ function CreateMerchandisesPage() {
         setShowCancelModal(false);
     };
 
-    //Setea el nombre del artículo
-    const [nameItem, setNameItem] = useState('');
-    const handleNameItem = (event: { target: { value: SetStateAction<string>; }; }) => {
-        setNameItem(event.target.value);
-    };
-
-    //Setea si el artículo aumentará de forma periódica en el inventario
-    const [inventoryIncrease, setInventoryIncrease] = useState('Si');
-    const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
-    const handleInventoryIncrease = (value: 'Si' | 'No') => {
-        setInventoryIncrease(value);
-        setPeriodicityAutomaticInventoryIncrease(undefined)
-        setValue('inventoryIncrease', value);
-    };
-
-    //Setea la periodicidad en la que se aumentará el inventario
-    const handlePeriodicityAutomaticInventoryIncrease = (value: string) => {
-        setPeriodicityAutomaticInventoryIncrease(value);
-    };
-    
-    //Setea si la mercancía está empacada
-    const [selectedpackaged, setSelectedpackaged] = useState('Si');
-    const handlePackagedChange = (value: 'Si' | 'No') => {
-        setSelectedpackaged(value);
-        setValue('packaged', value);
-    };
-
-    //Setea el valor 'Si' o 'No' en la propiedad "returnablePackaging"
-    const [selectedReturnablePackaging, setSelectedReturnablePackaging] = useState('Si');
-    const handleReturnablePackagingChange = (value: 'Si' | 'No') => {
-        setSelectedReturnablePackaging(value);
-        setValue('returnablePackaging', value);
-    };
-
-    //Setea la unidad de medida
-    const [showUnitMeasure, setShowUnitMeasure] = useState('');
-    const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setShowUnitMeasure(event.target.value);
-    };
-
-    //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
-    const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
-    const handleIndividualPackagingChange = (value: 'Si' | 'No') => {
-        setSelectedIndividualPackaging(value);
-        setValue('individualPackaging', value);
+    //Setea el tipo de retención
+    const [retention, setShowRetention] = useState('');
+    const handleRetentionChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowRetention(event.target.value);
     };
 
     const onSubmit = async (values: IMerchandise) => {
         try {
             const formData = {
                 ...values,
-                returnablePackaging: selectedReturnablePackaging,
-                individualPackaging: selectedIndividualPackaging,
-                packaged: selectedpackaged,
-                inventoryIncrease: inventoryIncrease,
-                periodicityAutomaticIncrease: periodicityAutomaticIncrease ? periodicityAutomaticIncrease : null,
             } as IMerchandise;
 
+            console.log('formData: ', formData)
             await dispatch(postMerchandise(formData, token));
             setFormSubmitted(true);
             reset();
@@ -162,7 +121,7 @@ function CreateMerchandisesPage() {
                                 <div>
                                     <select
                                         {...register('branchId', { required: true })}
-                                        className={`${styles.input} p-2 border `}
+                                        className={`${styles.input} p-2 border`}
                                     >
                                         <option value=''>Selecciona una Sede</option>
                                         {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -178,25 +137,12 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`}>Si la mercancía tiene código de barras ¿Cuál es el código?</p>
-                                <div>
-                                    <input
-                                        type="text"
-                                        {...register('barCode')}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Código de barras de la mercancía que quieres registrar'
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la mercancía que vas a registrar?</p>
                                 <div>
                                     <input
                                         type="text"
                                         {...register('nameItem', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleNameItem}
+                                        className={`${styles.input} p-2 border`}
                                         placeholder='Nombre de la mercancía que quieres crear'
                                     />
                                     {errors.nameItem && (
@@ -205,659 +151,214 @@ function CreateMerchandisesPage() {
                                 </div>
                             </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia de la mercancía "{nameItem}"?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="text"
-                                        {...register('brandItem')}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Marca de la mercancía que quieres registrar'
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu mercancía?</p>
-                                <div>
-                                    <select
-                                        {...register('unitMeasure', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleUnitMeasureChange}
-                                    >                                         
-                                        <option value=''>Selecciona una unidad de medida</option>
-                                        <optgroup label="Unidades">
-                                            <option value='Unidades'>Unidades</option>
-                                            <option value='Ristra'>Ristra</option>
-                                            <option value='Decena'>Decena</option>
-                                            <option value='Docena'>Docena</option>
-                                        </optgroup>
-                                        <optgroup label="Líquidos">
-                                            <option value='Mililitro'>Mililitro</option>
-                                            <option value='Onza'>Onza</option>
-                                            <option value='Litro'>Litro</option>
-                                            <option value='Botella'>Botella</option>
-                                            <option value='Galon'>Galón</option>
-                                            <option value='Pimpina'>Pimpina</option>
-                                            <option value='Metro cubico'>Metro cúbico</option>
-                                        </optgroup>
-                                        <optgroup label="Sólidos">
-                                            <option value='Miligramo'>Miligramo</option>
-                                            <option value='Gramo'>Gramo</option>
-                                            <option value='Libra'>Libra</option>
-                                            <option value='Kilogramo'>Kilogramo</option>
-                                            <option value='Caja'>Caja</option>
-                                            <option value='Paca'>Paca</option>
-                                            <option value='Arroba'>Arroba</option>
-                                            <option value='Bulto'>Bulto</option>
-                                            <option value='Saco'>Saco</option>
-                                            <option value='Tonelada'>Tonelada</option>
-                                        </optgroup>
-                                        <optgroup label="longitud">
-                                            <option value='Milimetro'>Milimetro</option>
-                                            <option value='Centrimetro'>Centrimetro</option>
-                                            <option value='Pulgada'>Pulgada</option>
-                                            <option value='Metro'>Metro</option>
-                                            <option value='Centimetro cuadrado'>Centimetro cuadrado</option>
-                                            <option value='Metro cuadrado'>Metro cuadrado</option>
-                                        </optgroup>
-                                    </select>
-                                    {errors.unitMeasure && (
-                                        <p className='text-danger'>La unidad de medida de tu mercancía es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Tu inventario acá'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.inventory && (
-                                        <p className='text-danger'>El inventario de la mercancía es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada?</p>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlePackagedChange('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedpackaged === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handlePackagedChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.packaged && (
-                                        <p className='text-danger'>Este dato es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {selectedpackaged === 'Si' && (
-                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
-                                    <div>
-                                        <select
-                                            {...register('primaryPackageType', { required: true })}
-                                            className={`${styles.input} p-2 border `}
-                                        >
-                                            <option value='Ninguno'>Ninguno</option>
-                                            <option value='Papel'>Papel</option>
-                                            <option value='Papel de archivo'>Papel de archivo</option>
-                                            <option value='Carton'>Cartón</option>
-                                            <option value='Aluminio'>Aluminio</option>
-                                            <option value='Plegadiza'>Plegadiza</option>
-                                            <option value='Vidrio'>Vidrio</option>
-                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
-                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                            <option value='PP Polipropileno'>PP Polipropileno</option>
-                                            <option value='PS Poliestireno'>PS Poliestireno</option>
-                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                            <option value='Hierro'>Hierro</option>
-                                            <option value='Icopor'>Icopor</option>
-                                            <option value='Biodegradable'>Biodegradable</option>
-                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                        </select>
-                                        {errors.primaryPackageType && (
-                                            <p className='text-danger'>La unidad de medida es requerida</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.conditionOption} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.individualPackaging && (
-                                        <p className='text-danger'>Este dato es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {selectedIndividualPackaging === 'Si' && (
-                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
-                                    <div>
-                                        <select
-                                            {...register('secondaryPackageType', { required: true })}
-                                            className={`${styles.input} p-2 border `}                                    
-                                        >
-                                            <option value='Papel'>Papel</option>
-                                            <option value='Papel de archivo'>Papel de archivo</option>
-                                            <option value='Carton'>Cartón</option>                                                
-                                            <option value='Aluminio'>Aluminio</option>
-                                            <option value='Plegadiza'>Plegadiza</option>
-                                            <option value='Vidrio'>Vidrio</option>
-                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
-                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                            <option value='PP Polipropileno'>PP Polipropileno</option>
-                                            <option value='PS Poliestireno'>PS Poliestireno</option>
-                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                            <option value='Hierro'>Hierro</option>
-                                            <option value='Icopor'>Icopor</option>
-                                            <option value='Biodegradable'>Biodegradable</option>
-                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                        </select>
-                                        {errors.secondaryPackageType && (
-                                            <p className='text-danger'>El tipo de empaque de tu mercancía es requerido</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada paquete o presentación?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Ej: 10'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.quantityPerPackage && (
-                                        <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                    )}
-                                </div>
-                            </div> */}                            
-
-                            {selectedpackaged === 'Si' && (
-                                <div>
-                                    
-
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
-                                        <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('Si')}
-                                            >
-                                                Si
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${selectedReturnablePackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                                onClick={() => handleReturnablePackagingChange('No')}
-                                            >
-                                                No
-                                            </div>
-                                            {errors.returnablePackaging && (
-                                                <p className='text-danger'>Este dato es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Deseas sumar existencias a tu inventario de manera periódica?</p>
-                                <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
-                                    <div
-                                        className={`${styles.conditionOption} ${inventoryIncrease === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleInventoryIncrease('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.conditionOption} ${inventoryIncrease === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleInventoryIncrease('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.inventoryIncrease && (
-                                        <p className='text-danger'>Este dato es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {inventoryIncrease === 'Si' && (
-                                <div>
-                                    <div className="mb-3 p-2 d-flex flex-column align-items-center justify-content-center border rounded">
-                                        <p className="text-center mb-0 p-2">¿Cada cuánto quieres sumar existencias a tu inventario?</p>
-                                        <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center w-100`}>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Diario' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Diario')}
-                                            >
-                                                Diario
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semanal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semanal')}
-                                            >
-                                                Semanal
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Quincenal' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Quincenal')}
-                                            >
-                                                Quincenal
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Mensual' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Mensual')}
-                                            >
-                                                Mensual
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Bimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Bimestral')}
-                                            >
-                                                Bimestral
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Trimestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Trimestral')}
-                                            >
-                                                Trimestral
-                                            </div>
-                                            <div
-                                                className={`${styles.conditionOption} ${periodicityAutomaticIncrease === 'Semestral' ? styles.selected : ''} rounded m-1 p-2 text-center`}
-                                                onClick={() => handlePeriodicityAutomaticInventoryIncrease('Semestral')}
-                                            >
-                                                Semestral
-                                            </div>
-                                            {errors.periodicityAutomaticIncrease && (
-                                                <p className='text-danger'>Este dato es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <p className={`${styles.text} mb-0 p-2`} >Inventario: A futuro, ¿Cuánto deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
-                                        <div>
-                                            <input
-                                                type="number"
-                                                {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                                className={`${styles.input} p-2 border `}
-                                                placeholder='Valor numérico de lo que quieres aumentar'
-                                                min={0}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                            {errors.automaticInventoryIncrease && (
-                                                <p className='text-danger'>Este dato es requerido</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Precio de compra de la mercancía'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.purchasePriceBeforeTax && (
-                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de venta?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('sellingPrice', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Precio de venta de a mercancía'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.sellingPrice && (
-                                        <p className='text-danger'>El precio de venta es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-
                             {/* RETENCIONES */}
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >Si está grabado ¿Cuál es el tipo de retención?</p>
                                 <div>
-                                    <select
-                                        {...register('retentionType', { required: true })}
-                                        className={`${styles.input} p-2 border `}                                    
-                                    >
-                                        <option value='No tiene'>No tiene</option>
-                                        <option value='Retefuente'>Retefuente</option>
-                                        <option value='Rete IVA'>Rete IVA</option>                                                
-                                        <option value='Rete ICA'>Rete ICA</option>
-                                    </select>
-                                    {errors.retentionType && (
-                                        <p className='text-danger'>El tipo de retención es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                    {fields.length > 0 && fields.map((field, index) => (
+                                        <div key={field.id} className="mb-2">
+                                            {/* Selección del tipo de retención */}
+                                            <div className="mb-2">
+                                                <select
+                                                    {...register(`retentions.${index}.retentionType`, { required: true })}
+                                                    className={`${styles.input} p-2 border `}
+                                                >
+                                                    <option value=''>Selecciona un tipo de retención</option>
+                                                    <option value='Retefuente'>Retefuente</option>
+                                                    <option value='Rete IVA'>Rete IVA</option>
+                                                    <option value='Rete ICA'>Rete ICA</option>
+                                                    {/* Agrega más opciones según sea necesario */}
+                                                </select>
+                                                {errors.retentions?.[index]?.retentionType && (
+                                                    <p className='text-danger'>El tipo de retención es requerido</p>
+                                                )}
+                                                <button type="button" onClick={() => remove(index)}>Eliminar</button>
+                                            </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención de honorarios y consultoría?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageFeesConsulting', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='2'>2</option>
-                                        <option value='4'>4</option>
-                                        <option value='6'>6</option>
-                                        <option value='10'>10</option>
-                                        <option value='11'>11</option>
-                                    </select>
-                                    {errors.retentionPercentageFeesConsulting && (
-                                        <p className='text-danger'>El porcentaje de retención de honorarios y consultoría es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {/* Selección del porcentaje de retención */}
+                                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención de honorarios y consultoría?</p>
+                                                <div>
+                                                    <select
+                                                        {...register(`retentions.${index}.retention`, { required: true })}
+                                                        className={`${styles.input} p-2 border `}
+                                                        onChange={(e) => handleRetentionChange(e)}
+                                                    >
+                                                        <option value='retentionFeesConsulting'>retentionFeesConsulting</option>
+                                                        <option value='retentionServices'>retentionServices</option>
+                                                        <option value='retentionPurchases'>retentionPurchases</option>
+                                                        <option value='retentionOthers'>retentionOthers</option>
+                                                        <option value='retentionForeignPaymentsDividends'>retentionForeignPaymentsDividends</option>
+                                                        <option value='retentionIVA'>retentionIVA</option>
+                                                        <option value='retentionICA'>retentionICA</option>
+                                                    </select>
+                                                    {errors.retentions?.[index]?.retention && (
+                                                        <p className='text-danger'>El porcentaje de retención de honorarios y consultoría es requerido</p>
+                                                    )}
+                                                </div>
+                                            </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención de servicios?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageServices', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='1'>1</option>
-                                        <option value='2'>2</option>
-                                        <option value='3.5'>3.5</option>
-                                        <option value='4'>4</option>
-                                        <option value='6'>6</option>
-                                    </select>
-                                    {errors.retentionPercentageServices && (
-                                        <p className='text-danger'>El porcentaje de retención de servicios es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {/* Porcentaje específico según el tipo de retención */}
+                                            {retention === 'retentionFeesConsulting' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención de honorarios y consultoría?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageFeesConsulting`, { required: true })}
+                                                            className={`${styles.input} p-2 border `}
+                                                        >
+                                                            <option value='2'>2</option>
+                                                            <option value='4'>4</option>
+                                                            <option value='6'>6</option>
+                                                            <option value='10'>10</option>
+                                                            <option value='11'>11</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageFeesConsulting && (
+                                                            <p className='text-danger'>El porcentaje de retención de honorarios y consultoría es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención de compras?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentagePurchases', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='0.1'>0.1</option>
-                                        <option value='0.5'>0.5</option>
-                                        <option value='1'>1</option>
-                                        <option value='1.5'>1.5</option>
-                                        <option value='2.5'>2.5</option>
-                                        <option value='3'>3</option>
-                                        <option value='3.5'>3.5</option>
-                                    </select>
-                                    {errors.retentionPercentagePurchases && (
-                                        <p className='text-danger'>El porcentaje de retención de compras es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {retention === 'retentionServices' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención de servicios?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageServices`, { required: true })}
+                                                            className={`${styles.input} p-2 border `}
+                                                        >
+                                                            <option value='1'>1</option>
+                                                            <option value='2'>2</option>
+                                                            <option value='3.5'>3.5</option>
+                                                            <option value='4'>4</option>
+                                                            <option value='6'>6</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageServices && (
+                                                            <p className='text-danger'>El porcentaje de retención de servicios es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención de otros?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageOthers', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='2'>2</option>
-                                        <option value='2.5'>2.5</option>
-                                        <option value='3'>3</option>
-                                        <option value='4'>4</option>
-                                        <option value='7'>7</option>
-                                        <option value='10'>10</option>
-                                        <option value='20'>20</option>
-                                    </select>
-                                    {errors.retentionPercentageOthers && (
-                                        <p className='text-danger'>El porcentaje de retención de otros es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {retention === 'retentionPurchases' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención de compras?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentagePurchases`, { required: true })}
+                                                            className={`${styles.input} p-2 border `}
+                                                        >
+                                                            <option value='0.1'>0.1</option>
+                                                            <option value='0.5'>0.5</option>
+                                                            <option value='1'>1</option>
+                                                            <option value='1.5'>1.5</option>
+                                                            <option value='2.5'>2.5</option>
+                                                            <option value='3'>3</option>
+                                                            <option value='3.5'>3.5</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentagePurchases && (
+                                                            <p className='text-danger'>El porcentaje de retención de compras es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención por pagos al exterior y dividendos?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageForeignPaymentsDividends', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='0'>0</option>
-                                        <option value='1'>1</option>
-                                        <option value='2'>2</option>
-                                        <option value='5'>5</option>
-                                        <option value='7'>7</option>
-                                        <option value='8'>8</option>
-                                        <option value='10'>10</option>
-                                        <option value='15'>15</option>
-                                        <option value='20'>20</option>
-                                        <option value='33'>33</option>
-                                        <option value='35'>35</option>
-                                        <option value='35 + Num. 51'>35 + Num. 51</option>
-                                    </select>
-                                    {errors.retentionPercentageForeignPaymentsDividends && (
-                                        <p className='text-danger'>El porcentaje de retención por pagos al exterior y dividendos es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {retention === 'retentionOthers' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención de otros?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageOthers`, { required: true })}
+                                                            className={`${styles.input} p-2 border `}
+                                                        >
+                                                            <option value='2'>2</option>
+                                                            <option value='2.5'>2.5</option>
+                                                            <option value='3'>3</option>
+                                                            <option value='4'>4</option>
+                                                            <option value='7'>7</option>
+                                                            <option value='10'>10</option>
+                                                            <option value='20'>20</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageOthers && (
+                                                            <p className='text-danger'>El porcentaje de retención de otros es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención por IVA?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageIVA', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='15'>15</option>
-                                        <option value='100'>100</option>
-                                    </select>
-                                    {errors.retentionPercentageIVA && (
-                                        <p className='text-danger'>El porcentaje de retención por IVA es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {retention === 'retentionForeignPaymentsDividends' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención por pagos al exterior y dividendos?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageForeignPaymentsDividends`, { required: true })}
+                                                            className={`${styles.input} p-2 border `}
+                                                        >
+                                                            <option value='0'>0</option>
+                                                            <option value='1'>1</option>
+                                                            <option value='2'>2</option>
+                                                            <option value='5'>5</option>
+                                                            <option value='7'>7</option>
+                                                            <option value='8'>8</option>
+                                                            <option value='10'>10</option>
+                                                            <option value='15'>15</option>
+                                                            <option value='20'>20</option>
+                                                            <option value='33'>33</option>
+                                                            <option value='35'>35</option>
+                                                            <option value='35 + Num. 51'>35 + Num. 51</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageForeignPaymentsDividends && (
+                                                            <p className='text-danger'>El porcentaje de retención por pagos al exterior y dividendos es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de retención por ICA?</p>
-                                <div>
-                                    <select
-                                        {...register('retentionPercentageICA', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='2'>2</option>
-                                        <option value='3.4'>3.4</option>
-                                        <option value='4.14'>4.14</option>
-                                        <option value='5'>5</option>
-                                        <option value='6.9'>6.9</option>
-                                        <option value='8'>8</option>
-                                        <option value='9.66'>9.66</option>
-                                        <option value='11.04'>11.04</option>
-                                        <option value='13.8'>13.8</option>
-                                    </select>
-                                    {errors.retentionPercentageICA && (
-                                        <p className='text-danger'>El porcentaje de retención por ICA es requerido</p>
-                                    )}
-                                </div>
-                            </div>
+                                            {retention === 'retentionIVA' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`{${styles.text} mb-0 p-2}`}>¿Cuál es el porcentaje de retención por IVA?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageIVA`, { required: true })}
+                                                            className={`{${styles.input} p-2 border} `}
+                                                        >
+                                                            <option value='15'>15</option>
+                                                            <option value='100'>100</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageIVA && (
+                                                            <p className='text-danger'>El porcentaje de retención por IVA es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
 
-
-                            {/* IMPUESTOS */}
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de IVA de la mercancía?</p>
-                                <div className={styles.containerInput}>
-                                    <select
-                                        defaultValue={0}
-                                        className={`${styles.input} p-2 border `}
-                                        {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
-                                    >
-                                        <option value={0}>0 %</option>
-                                        <option value={5}>5 %</option>
-                                        <option value={19}>19 %</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de ICA de la mercancía?</p>
-                                <div>
-                                    <select
-                                        {...register('consumptionTax', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='4'>4</option>
-                                        <option value='8'>8</option>
-                                        <option value='16'>16</option>
-                                    </select>
-                                    {errors.consumptionTax && (
-                                        <p className='text-danger'>El porcentaje de ICA es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de AIU de la mercancía?</p>
-                                <div>
-                                    <select
-                                        {...register('ivaAiu', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='0'>0</option>
-                                        <option value='1'>1</option>
-                                    </select>
-                                    {errors.ivaAiu && (
-                                        <p className='text-danger'>El porcentaje de AIU es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el valor del impuesto a las bebidas azucaradas?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('taxesUltraProcessedSugarSweetenedBeverages', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Valor del impuesto a las bebidas azucaradas'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.taxesUltraProcessedSugarSweetenedBeverages && (
-                                        <p className='text-danger'>El valor del impuesto a las bebidas azucaradas es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de impuesto sobre el valor añadido a las bebidas azucaradas ultraprocesadas?</p>
-                                <div>
-                                    <select
-                                        {...register('valueTaxesUltraProcessedSugarSweetenedBeverages', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='0'>0</option>
-                                        <option value='18'>18</option>
-                                        <option value='28'>28</option>
-                                        <option value='35'>35</option>
-                                        <option value='38'>38</option>
-                                        <option value='55'>55</option>
-                                        <option value='65'>65</option>
-                                    </select>
-                                    {errors.valueTaxesUltraProcessedSugarSweetenedBeverages && (
-                                        <p className='text-danger'>El porcentaje de de impuesto sobre el valor añadido a las bebidas azucaradas ultraprocesadas es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de impuestos a productos alimentarios ultraprocesados?</p>
-                                <div>
-                                    <select
-                                        {...register('taxesUltraProcessedFoodProducts', { required: true })}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='10'>10</option>
-                                        <option value='15'>15</option>
-                                        <option value='20'>20</option>
-                                    </select>
-                                    {errors.taxesUltraProcessedFoodProducts && (
-                                        <p className='text-danger'>El porcentaje de impuestos a productos alimentarios ultraprocesados es requerido</p>
-                                    )}
+                                            {retention === 'retentionICA' && (
+                                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el porcentaje de retención por ICA?</p>
+                                                    <div>
+                                                        <select
+                                                            {...register(`retentions.${index}.retentionPercentageICA`, { required: true })}
+                                                            className={`${styles.input} p-2 border`}
+                                                        >
+                                                            <option value='0.2'>0.2</option>
+                                                            <option value='0.5'>0.5</option>
+                                                            <option value='1'>1</option>
+                                                            <option value='1.5'>1.5</option>
+                                                            <option value='2'>2</option>
+                                                            <option value='2.5'>2.5</option>
+                                                            <option value='3'>3</option>
+                                                            <option value='4'>4</option>
+                                                            <option value='6'>6</option>
+                                                        </select>
+                                                        {errors.retentions?.[index]?.retentionPercentageICA && (
+                                                            <p className='text-danger'>El porcentaje de retención por ICA es requerido</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
@@ -874,3 +375,4 @@ function CreateMerchandisesPage() {
 }
 
 export default CreateMerchandisesPage;
+
