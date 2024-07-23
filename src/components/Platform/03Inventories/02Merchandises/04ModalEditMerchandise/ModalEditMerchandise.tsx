@@ -24,7 +24,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(merchandise?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(merchandise?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(merchandise?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19 | undefined>(merchandise?.IVA);
+    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19>(merchandise?.IVA);
     const [editedPackaged, setEditedPackaged] = useState(merchandise?.packaged || 'No');
     const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(merchandise?.primaryPackageType);    
     const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(merchandise?.expirationDate ? new Date(merchandise.expirationDate) : undefined);
@@ -257,13 +257,13 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <div className={styles.containerInput}>
                         <select
                             className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedIVA}
+                            value={editedMerchandise.IVA}
                             onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
-                        >
-                            <option value={0}>0 %</option>
-                            <option value={5}>5 %</option>
-                            <option value={19}>19 %</option>
-                        </select> 
+                            >
+                                <option value={0}>0 %</option>
+                                <option value={5}>5 %</option>
+                                <option value={19}>19 %</option>
+                        </select>
                     </div>
                 </div>
             </div>
