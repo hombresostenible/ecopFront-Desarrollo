@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ImageBanner from '../../../assets/Imagen1.png';
+import Mono from '../../../assets/Mono/Sostenibilidad1.png'
 import styles from './styles.module.css';
 
 function Introduction() {
@@ -8,7 +8,7 @@ function Introduction() {
         <div className={`${styles.container} `}>
             <div className={`${styles.containerIntroduction} d-flex align-items-center justify-content-center`}>
                 <div className={`${styles.imageInformation} d-flex align-items-center justify-content-center`}>
-                    <img src={ImageBanner} alt="Ecopcion" className={styles.image} />
+                    <img src={Mono} alt="Ecopcion" className={styles.image} />
                 </div>
                 <div className={`${styles.textInformation} `}>
                     <div className={`${styles.containerTitle} mb-4`}>

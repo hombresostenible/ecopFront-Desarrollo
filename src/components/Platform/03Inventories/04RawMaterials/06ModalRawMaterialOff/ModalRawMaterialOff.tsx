@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchRawMaterial, getRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IRawMaterial, InventoryOffItem } from '../../../../../types/User/rawMaterial.types';
+import { IRawMaterial, IInventoryOffItem } from '../../../../../types/User/rawMaterial.types';
 import styles from './styles.module.css';
 
 interface ModalRawMaterialOffProps {
@@ -16,7 +16,7 @@ interface ModalRawMaterialOffProps {
 }
 
 interface FormValues {
-    reason: InventoryOffItem['reason'];
+    reason: IInventoryOffItem['reason'];
     quantity: number;
     description: string;
 }

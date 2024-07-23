@@ -1,20 +1,23 @@
 .container {
-    height: 400px;
-    background: #f28705;
+    /* border: 1px solid red; */
+    height: 350px;
+    background: #FFF;
     margin: 70px 0 20px 0;
 }
 .containerIntroduction {
-    margin: 0 auto;
     /* border: 1px solid red; */
+    margin: 0 auto;
     width: 1250px;
-    height: 400px;
+    height: 350px;
 }
 .imageInformation {
     width: 623px;
     height: 450px;
 }
 .image {
-    width: 300px;
+    /* border: 1px solid red; */
+    /* width: 300px; */
+    height: 280px;
 }
 .textInformation {
     /* border: 1px solid teal; */
@@ -27,13 +30,13 @@
 }
 .title {
     text-align: right;
-    color: #0a31bf;
+    color: #f28705;
     font-size: 45px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 .text {
-    color: #dee2e6;
+    /* color: #f28705; */
     font-size: 20px;
 }
 .item {
