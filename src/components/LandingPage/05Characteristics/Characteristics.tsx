@@ -2,13 +2,21 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import RegisterTransactions from '../../../assets/LandingPage/05Characteristics/RegisterTransactions.png';
-import ManageYourElectronicInvoicing from '../../../assets/LandingPage/05Characteristics/ManageYourElectronicInvoicing.png';
-import ManageYourCustomers from '../../../assets/LandingPage/05Characteristics/ManageYourCustomers.png';
-import CalculateIndicators from '../../../assets/LandingPage/05Characteristics/CalculateIndicators.png';
-import ViewAndDownload from '../../../assets/LandingPage/05Characteristics/ViewAndDownload.png';
-import ReceiveCounseling from '../../../assets/LandingPage/05Characteristics/ReceiveCounseling.png';
-import MakingInformedDecisions from '../../../assets/LandingPage/05Characteristics/MakingInformedDecisions.png';
+import Contabilidad from '../../../assets/Mono/Contabilidad.png';
+import DATAFONO from '../../../assets/Mono/DATAFONO.png';
+import CRM from '../../../assets/Mono/CRM.png';
+import Sostenibilidad2 from '../../../assets/Mono/Sostenibilidad2.png';
+import Reportes from '../../../assets/Mono/Reportes.png';
+import Inventario from '../../../assets/Mono/Inventario.png';
+import PagoNomina from '../../../assets/Mono/PagoNomina.png';
+import Asesorias from '../../../assets/Mono/Asesorias.png';
+
+
+// import ManageYourCustomers from '../../../assets/LandingPage/05Characteristics/ManageYourCustomers.png';
+// import CalculateIndicators from '../../../assets/LandingPage/05Characteristics/CalculateIndicators.png';
+// import ViewAndDownload from '../../../assets/LandingPage/05Characteristics/ViewAndDownload.png';
+// import ReceiveCounseling from '../../../assets/LandingPage/05Characteristics/ReceiveCounseling.png';
+// import MakingInformedDecisions from '../../../assets/LandingPage/05Characteristics/MakingInformedDecisions.png';
 import styles from './styles.module.css';
 
 interface AnimatedBlockProps {
@@ -109,7 +117,7 @@ function Characteristics () {
                     title="Registrar tus transacciones diarias"
                     content="Cada vez que realices una venta, ingrese dinero al negocio o hagas una compra o pago, podrás registrar el movimiento en tu libro diario digital."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={RegisterTransactions}
+                    image={Contabilidad}
                     route="register-your-transactions"
                     textButton="Saber más"
                 />
@@ -117,7 +125,7 @@ function Characteristics () {
                     title="Gestionar tus facturas electrónicas"
                     content="Una vez realices la venta, podrás enviar la factura a la Dian, recibir su aprobación e imprimir o enviar el documento a tu cliente. También si lo deseas, podrás reversar o anular tus facturas."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={ManageYourElectronicInvoicing}
+                    image={DATAFONO}
                     route="manage-your-electronic-invoices"
                     textButton="¡Quiero ver!"
                 />
@@ -125,15 +133,15 @@ function Characteristics () {
                     title="Gestionar tus clientes y mejorar las ventas"
                     content="A través de nuestro CRM, podrás gestionar tus clientes y hacer seguimiento a tu proceso de ventas."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={ManageYourCustomers}
+                    image={CRM}
                     route="manage-your-customers"
                     textButton="El CRM ya!"
                 />
                 <AnimatedBlockRight
-                    title="Gestión de la sostenibilida de tu negocio"
+                    title="Gestión de la sostenibilidad de tu negocio"
                     content="Lograr que tu negocio sea sostenible es uno de los propósitos fundamentales en ecopción. Con nosotros podrás dar el salto hacia la sostenibilidad cumpliendo con las normas ambientales, compartiendo con tus clientes la historia de impacto de tu negocio y tomando decisiones que, aumenten el impacto de tu empresa en la sociedad, el planeta y la economía local."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={CalculateIndicators}
+                    image={Sostenibilidad2}
                     route="calculate-indicators-plus"
                     textButton="Conoce cómo"
                 />
@@ -141,7 +149,7 @@ function Characteristics () {
                     title="Calcula + de 100 indicadores y genera reportes"
                     content="En cualquier momento, podrás calcular indicadores y generar informes que te permitan medir y entender cómo está la gestión de tu negocio en términos de plata, ventas e impacto generado en el planeta."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={ViewAndDownload}
+                    image={Reportes}
                     route="view-download-reports"
                     textButton="Quiero saber más"
                 />
@@ -149,7 +157,7 @@ function Characteristics () {
                     title="Recibir asesorías personalizadas"
                     content="Podrás agendar una cita de 20 minutos con asesores empresariales para tomar decisiones de tu negocio con base en los indicadores."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={ReceiveCounseling}
+                    image={Inventario}
                     route="personalized-advisories"
                     textButton="Saber más"
                 />
@@ -157,7 +165,7 @@ function Characteristics () {
                     title="Notificaciones estratégicas"
                     content="Ecopcion te enviará notificaciones y/o avisos importantes y estratégicos que te ayudarán a tomar mejores decisiones sobre tu negocio."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={MakingInformedDecisions}
+                    image={PagoNomina}
                     route="informed-decisions"
                     textButton="Intentémoslo"
                 />
@@ -165,7 +173,7 @@ function Characteristics () {
                     title="Toma decisiones informadas"
                     content="Con base en la asesoría y el ejercicio de análisis hagas con posterioridad, podrás tomar la decisión en conjunto con tu equipo."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
-                    image={ReceiveCounseling}
+                    image={Asesorias}
                     route="personalized-advisories"
                     textButton="Saber más"
                 />

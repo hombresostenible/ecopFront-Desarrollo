@@ -1,12 +1,8 @@
 .container {
-    background: #2d3748;
     padding: 30px;
 }
 .title {
-    color: #e9ecef;
-}
-.text {
-    color: #adb5bd;
+    color: #718bd8;
 }
 .containerCard {
     display: flex;

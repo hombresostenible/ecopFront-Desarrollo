@@ -1,8 +1,9 @@
 .container {
+    /* border: 1px solid red; */
     padding: 30px;
     width: 100%;
     margin: 30px auto 0 auto;
-    background: #3c6e71;
+    background: #718bd8;
 }
 .containerMetrics {
     margin: 0 auto;

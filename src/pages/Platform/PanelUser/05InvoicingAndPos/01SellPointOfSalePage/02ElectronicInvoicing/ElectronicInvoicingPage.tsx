@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
 import { useState, useEffect, ChangeEvent } from 'react';
+import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,6 +16,7 @@ import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';
+import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa";
 import styles from './styles.module.css';
@@ -59,7 +61,17 @@ function ElectronicInvoicingPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Facturación</h1>
+
+
+                        <div className="d-flex align-items-center justify-content-between">
+                            <h1 className={`${styles.title} mb-4 mt-4`}>Facturación</h1>
+                            <div className={styles.link__Head_Navigate}>
+                                <LiaFileInvoiceSolid className={`${styles.icon__Plus} `}/>
+                                <Link to='/invoicing-and-pos/pos' className={`${styles.link} text-decoration-none`}>POS</Link>
+                            </div>
+                        </div>
+
+                        
                         <div className={`${styles.branch} mb-1 p-3 border`}>
                             <div className="d-flex justify-content-between ">
                                 <select
