@@ -1,4 +1,4 @@
-export interface InventoryOffItem {
+export interface IInventoryOffItem {
     date: Date;
     reason: "Activo en uso" | "Activo en reposo" | "Dañado" | "Donado" | "Desechado" | "Reciclado" | "Vendido";
     quantity: number;
@@ -22,14 +22,14 @@ export interface IMerchandise {
     periodicityAutomaticIncrease?: 'Diario' | 'Semanal' | 'Quincenal' | 'Mensual' | 'Bimestral' | 'Trimestral' | 'Semestral';
     automaticInventoryIncrease?: number;
     purchasePriceBeforeTax: number;
-    IVA: number;
+    IVA: 0 | 5 | 19;
     sellingPrice: number;
     isDiscounted?: 'Si' | 'No';
     discountPercentage?: number;
     expirationDate?: Date;
     inventoryChanges?: { date: string; quantity: number, type: 'Ingreso' | 'Salida' }[];
     salesCount?: number;
-    inventoryOff?: InventoryOffItem[];
+    inventoryOff?: IInventoryOffItem[];
     reasonManualDiscountingInventory?: 'Donado' | 'Desechado' | 'Caducado' | 'Perdido' | 'Hurtado';
     quantityManualDiscountingInventory?: number;
     
