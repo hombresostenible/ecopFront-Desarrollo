@@ -24,7 +24,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19 | undefined>(product?.IVA);
+    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19>(product?.IVA);
     const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
     const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
     const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(product?.expirationDate ? new Date(product.expirationDate) : undefined);
