@@ -105,7 +105,7 @@ function CreateMerchandisesPage() {
                 packaged: selectedpackaged,
                 inventoryIncrease: inventoryIncrease,
                 periodicityAutomaticIncrease: periodicityAutomaticIncrease ? periodicityAutomaticIncrease : null,
-                retentions: values.retentions.map(retention => ({
+                retentions: values.retentions?.map(retention => ({
                     ...retention,
                     retentionPercentageFeesConsulting: retention.retentionPercentageFeesConsulting || 0
                 }))
