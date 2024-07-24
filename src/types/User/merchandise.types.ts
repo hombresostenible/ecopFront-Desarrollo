@@ -44,7 +44,7 @@ export interface IMerchandise {
     reasonManualDiscountingInventory?: 'Donado' | 'Desechado' | 'Caducado' | 'Perdido' | 'Hurtado';
     quantityManualDiscountingInventory?: number;
     // Retenciones
-    retentions: IWithholdingTax[];
+    retentions?: IWithholdingTax[];
     // Impuestos
     IVA: 0 | 5 | 19;
     consumptionTax?: 4 | 8 | 16;
