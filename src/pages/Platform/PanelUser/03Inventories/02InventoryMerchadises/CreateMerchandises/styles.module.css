@@ -107,6 +107,49 @@
 .text__Danger {
     top: 65px;
 }
+
+/* RETENCIONES */
+.container__Retetions {
+    width: 100%;
+}
+.container__Retetion {
+    width: 500px;
+}
+.input__Retention {
+    border-radius: 5px;
+    width: 200px;
+}
+.input__Retention:focus{
+    outline-color: #718bd8;
+}
+.container__Icons {
+    height: 100%;
+    width: 125px;
+}
+.button__Delete {
+    color: #6c757d;
+    height: 35px;
+    width: 25px;
+    font-size: 14px;
+}
+.button__Delete:hover {
+    transition: 300ms all ease;
+    color: #718bd8;
+    cursor: pointer;
+}
+.container__Append {
+    width: 250px;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #718bd8;
+}
+.container__Append:hover {
+    cursor: pointer;
+}
+/* ENVIAR */
 .button__Submit {
     padding: 7px 25px;
     letter-spacing: 1px;
