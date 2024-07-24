@@ -7,7 +7,7 @@ export interface IInventoryOffItem {
 
 export interface IWithholdingTax {
     retentionType?: 'No tiene' | 'Retefuente' | 'Rete IVA' | 'Rete ICA';
-    retention: 'retentionFeesConsulting' | 'retentionServices' | 'retentionPurchases' | 'retentionOthers' | 'retentionForeignPaymentsDividends';
+    retention?: 'retentionFeesConsulting' | 'retentionServices' | 'retentionPurchases' | 'retentionOthers' | 'retentionForeignPaymentsDividends';
     retentionPercentageFeesConsulting?: '2' | '4' | '6' | '10' | '11';
     retentionPercentageServices?: '1' | '2' | '3.5' | '4' | '6';
     retentionPercentagePurchases?: '0.1' | '0.5' | '1' | '1.5' | '2.5' | '3' | '3.5';
@@ -47,36 +47,12 @@ export interface IMerchandise {
     retentions: IWithholdingTax[];
     // Impuestos
     IVA: 0 | 5 | 19;
-    consumptionTax?: '4' | '8' | '16';
-    ivaAiu?: '0' | '1';
+    consumptionTax?: 4 | 8 | 16;
+    ivaAiu?: 0 | 1;
     taxesUltraProcessedSugarSweetenedBeverages?: number;
-    valueTaxesUltraProcessedSugarSweetenedBeverages?: '0' | '18' | '28' | '35' | '38' | '55' | '65';
-    taxesUltraProcessedFoodProducts?: '10' | '15' | '20';
+    valueTaxesUltraProcessedSugarSweetenedBeverages?: 0 | 18 | 28 | 35 | 38 | 55 | 65;
+    taxesUltraProcessedFoodProducts?: 10 | 15 | 20;
     //RELACION CON OTRAS TABLAS
     branchId: string;
     userId?: string;
 }
-
-
-/*
-
-
-retentions: [
-    {
-        retentionType?: 'Retefuente';
-        retention: 'retentionFeesConsulting';
-        retentionPercentageFeesConsulting: '2';
-    },
-    {
-        retentionType?: 'Rete IVA';
-        retentionPercentageIVA: '15';
-    },
-    {
-        retentionType?: 'Rete ICA';
-        retentionPercentageICA: '2';
-    }
-]
-
-
-
-*/
