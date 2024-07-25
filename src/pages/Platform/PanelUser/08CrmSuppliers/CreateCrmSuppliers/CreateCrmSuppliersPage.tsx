@@ -48,7 +48,7 @@ function CreateCrmSupplierPage() {
 
     const onSubmit = async (values: ICrmSupplier) => {
         try {
-            const branchData = {
+            const formData = {
                 ...values,
                 // entityUserId: userId,
                 department: selectedDepartment,
@@ -56,7 +56,8 @@ function CreateCrmSupplierPage() {
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as ICrmSupplier;
-            await dispatch(postCrmSupplier(branchData, token));
+            console.log('formData: ', formData)
+            await dispatch(postCrmSupplier(formData, token));
             setFormSubmitted(true);    
             reset();
             setTimeout(() => {
@@ -105,8 +106,8 @@ function CreateCrmSupplierPage() {
                                         onChange={handleTypeDocumentIdChange}
                                     >
                                         <option value='NIT'>NIT</option>
-                                        <option value='Cedula de Ciudadania'></option>
-                                        <option value='Cedula de Extranjeria'></option>
+                                        <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                                        <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
                                         <option value='Pasaporte'>Pasaporte</option>
                                     </select>
                                     {errors.typeDocumentId && (
@@ -120,10 +121,19 @@ function CreateCrmSupplierPage() {
                                     <h6 className={styles.label}>Número de identificación</h6>
                                     <div className={styles.container__Input}>
                                         <input
-                                            type="text"
-                                            {...register('documentId', { required: true })}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el número de identificación?'
+                                            type="number"
+                                            {...register('documentId', { 
+                                                required: true,
+                                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
+                                            })}
+                                            className={`${styles.input} p-2 border `}
+                                            placeholder='¿Cuál es tu número de identificación?'
+                                            min={0}
+                                            onKeyDown={(e) => {
+                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                    e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         {errors.documentId && (
                                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
@@ -247,7 +257,7 @@ function CreateCrmSupplierPage() {
                                 </div>
                             </div>
 
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>
