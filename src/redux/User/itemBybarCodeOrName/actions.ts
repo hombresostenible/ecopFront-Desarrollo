@@ -38,6 +38,7 @@ export const getItemByName = (nameItem: string, token: string) => async (dispatc
         console.log('Artículos: ', response.data.result)
         dispatch(getItemByNameStart(response.data.result));
     } catch (error: any) {
+        console.log('Error: ', error)
         if (error.response && error.response.status === 401) {
             dispatch(errorItemByName(error.response?.data.message));
         } else {
