@@ -201,7 +201,7 @@ function ConsultRawMateralsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.purchasePriceBeforeTax)}</span>
                                             </div>
                                             <div className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{formatNumber(rawMaterial.IVA)} %</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.IVA} %</span>
                                             </div>
                                             <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
