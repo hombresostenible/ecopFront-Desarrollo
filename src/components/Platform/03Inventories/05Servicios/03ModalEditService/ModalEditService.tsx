@@ -21,7 +21,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
     const dispatch: AppDispatch = useDispatch();
 
     const [editedService, setEditedService] = useState<IService>({ ...service });
-    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19>(service?.IVA);
+    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(service?.IVA);
     const [ editedIsDiscounted, setEditedIsDiscounted ] = useState(service?.isDiscounted);
 
     const handleEditField = (
