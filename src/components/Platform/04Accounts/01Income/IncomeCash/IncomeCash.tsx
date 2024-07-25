@@ -369,7 +369,8 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Selected_Client} position-relative`}>
+                        <div className={`${styles.container__Selected_Client} m-auto d-flex align-items-center justify-content-between position-relative`}>
+                            <p className='m-0'>Selecciona o crea a tu cliente</p>
                             <SearchClientCrm
                                 token={token}
                                 onClientSelect={(client) => setSelectedClient(client)}

@@ -108,7 +108,7 @@ function SearchClientCrm({ token, onClientSelect, onDataClientSelect }: SearchCl
     };
 
     return (
-        <div ref={selectRef} className="m-auto d-flex align-items-center justify-content-center">
+        <div ref={selectRef} className="d-flex align-items-center justify-content-center">
             {/* <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa a la que le vendiste?</p> */}
             <div>
                 <Select
