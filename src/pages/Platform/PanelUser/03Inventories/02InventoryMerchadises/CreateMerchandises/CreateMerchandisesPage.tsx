@@ -197,6 +197,18 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <p className={`${styles.text} mb-0 p-2`}>Si tiene código de barras ¿Cuál es el código?</p>
+                                <div>
+                                    <input
+                                        type="text"
+                                        {...register('barCode')}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Código de barras del producto que quieres registrar'
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el nombre de la mercancía que vas a registrar?</p>
                                 <div>
                                     <input
@@ -213,9 +225,7 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia de la mercancía "{nameItem}"?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`}>¿Cuál es la marca o referencia de la mercancía "{nameItem}"?</p>
                                 <div>
                                     <input
                                         type="text"
@@ -227,9 +237,7 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu mercancía?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`} >¿En qué unidad de medida desear registrar el inventario de tu mercancía?</p>
                                 <div>
                                     <select
                                         {...register('unitMeasure', { required: true })}
@@ -280,9 +288,7 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`} >Hoy siendo la primer vez que registras información, ¿Cuánta mercancía tienes en el inventario?</p>
                                 <div>
                                     <input
                                         type="number"
@@ -303,9 +309,7 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`} >¿La mercancía viene empacada?</p>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -327,9 +331,7 @@ function CreateMerchandisesPage() {
 
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
-                                    </div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Si la mercancía viene empacada ¿Cuál es el tipo de empaque principal?</p>
                                     <div>
                                         <select
                                             {...register('primaryPackageType', { required: true })}
@@ -361,9 +363,7 @@ function CreateMerchandisesPage() {
                             )}
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`} >¿La mercancía tiene empaques adicionales?</p>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -385,9 +385,7 @@ function CreateMerchandisesPage() {
 
                             {selectedIndividualPackaging === 'Si' && (
                                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                    <div>
-                                        <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
-                                    </div>
+                                    <p className={`${styles.text} mb-0 p-2`} >Si la mercancía tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
                                     <div>
                                         <select
                                             {...register('secondaryPackageType', { required: true })}
@@ -421,9 +419,7 @@ function CreateMerchandisesPage() {
                             {selectedpackaged === 'Si' && (
                                 <div>
                                     <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                        <div>
-                                            <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
-                                        </div>
+                                        <p className={`${styles.text} `} >¿El empaque, embalaje o envoltura de tu mercancía es retornable?</p>
                                         <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                             <div
                                                 className={`${styles.conditionOption} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -446,9 +442,7 @@ function CreateMerchandisesPage() {
                             )}
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} mb-0 p-2`} >¿Deseas sumar existencias a tu inventario de manera periódica?</p>
-                                </div>
+                                <p className={`${styles.text} mb-0 p-2`} >¿Deseas sumar existencias a tu inventario de manera periódica?</p>
                                 <div className={`${styles.conditionContainer} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.conditionOption} ${inventoryIncrease === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -846,58 +840,6 @@ function CreateMerchandisesPage() {
                                     </div>
                                 )}
                             </div>
-
-                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas, digitar el valor</p>
-                                <input
-                                    type="number"
-                                    {...register('taxesUltraProcessedSugarSweetenedBeverages', { setValueAs: (value) => parseFloat(value) })}
-                                    className={`p-2 border `}
-                                    placeholder='Valor del impuesto a las bebidas azucaradas'
-                                    min={0}
-                                    onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                />
-                            </div> */}
-
-                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas ultrapocesadas, escoge el porcentaje</p>
-                                <div className={styles.containerInput}>
-                                    <select
-                                        defaultValue={0}
-                                        className={` p-2 border `}
-                                        {...register('valueTaxesUltraProcessedSugarSweetenedBeverages', { required: true, setValueAs: value => parseInt(value, 10) })}
-                                    >
-                                        <option value='No aplica'>No aplica</option>
-                                        <option value={0}>0 %</option>
-                                        <option value={18}>18 %</option>
-                                        <option value={28}>28 %</option>
-                                        <option value={35}>35 %</option>
-                                        <option value={38}>38 %</option>
-                                        <option value={55}>55 %</option>
-                                        <option value={65}>65 %</option>
-                                    </select>
-                                </div>
-                            </div> */}
-
-                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si tiene ¿Cuál es el impuesto a las bebidas azucaradas ultrapocesadas de la mercancía?</p>
-                                <div className={styles.containerInput}>
-                                    <select
-                                        defaultValue={0}
-                                        className={`${styles.input} p-2 border `}
-                                        {...register('taxesUltraProcessedFoodProducts', { required: true, setValueAs: value => parseInt(value, 10) })}
-                                    >
-                                        <option value='No aplica'>No aplica</option>
-                                        <option value={10}>10 %</option>
-                                        <option value={15}>15 %</option>
-                                        <option value={20}>20 %</option>
-                                    </select>
-                                </div>
-                            </div> */}
                             
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
