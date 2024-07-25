@@ -764,7 +764,7 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border">
-                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto al consumo, escoge el porcentaje</p>
+                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto al consumo, elige el porcentaje</p>
                                 <select
                                     defaultValue={0}
                                     className={` p-2 border `}
