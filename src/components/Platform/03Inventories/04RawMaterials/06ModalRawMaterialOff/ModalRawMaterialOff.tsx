@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchRawMaterial, getRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IRawMaterial, IInventoryOffItem } from '../../../../../types/User/rawMaterial.types';
+import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
+import { IInventoryOffItem } from '../../../../../types/User/InventoryOffItem/iInventoryOffItem.types';
 import styles from './styles.module.css';
 
 interface ModalRawMaterialOffProps {
