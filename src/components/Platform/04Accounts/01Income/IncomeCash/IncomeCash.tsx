@@ -143,14 +143,23 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
 
 
     // OTROS INGRESOS
-    //Setea el cliente cuando se busca o se crea
+    //Setea el poveedor cuando se busca o se crea
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
 
     const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
     const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^\d]/g, '');                         // Eliminar caracteres no numéricos
+        const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
         setTotalValueOtherIncome(value);
     };
+
+    // Muestra el CRM Supplier, el Gota Gota no necesita grabar el id de quien le presta
+    const [showOtherIncomes, setShowOtherIncomes] = useState('');
+    const handleOtherIncomesChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowOtherIncomes(event.target.value);
+    };
+
+
+
 
     const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
     const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -197,6 +206,9 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
             }
         }
     }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
+
+
+
 
     const onSubmit = async (values: IAccountsBook) => {
         const totalValueOtherIncomeNumber = Number(totalValueOtherIncome);
@@ -460,6 +472,7 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                                 <select
                                     {...register('otherIncomes', { required: true })}
                                     className={`${styles.input__Info_Purchase} p-2`}
+                                    onChange={handleOtherIncomesChange}
                                 >
                                     <option value=''>Selecciona una opción</option>
                                     <option value='Credito del Banco'>Credito del Banco</option>
@@ -474,18 +487,20 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Selected_Client} position-relative`}>
-                            <SearchSupplierCrm
-                                token={token}
-                                onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
-                            />
-                            {messageSelectedClient && (
-                                <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
-                                    <div className={`${styles.triangle} position-absolute`}></div>
-                                    <p className='m-0'>Selecciona el cliente acá</p>
-                                </div>
-                            )}
-                        </div>
+                        {showOtherIncomes !== 'Gota gota' && (
+                            <div className={`${styles.container__Selected_Client} position-relative`}>
+                                <SearchSupplierCrm
+                                    token={token}
+                                    onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
+                                />
+                                {messageSelectedClient && (
+                                    <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                        <div className={`${styles.triangle} position-absolute`}></div>
+                                        <p className='m-0'>Selecciona el cliente acá</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         <div className="mb-3 d-flex align-items-center justify-content-center">
                             <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Describe tu crédito</p>

@@ -533,7 +533,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                             {...register('primaryPackageType', { required: true })}
                                             className={`${styles.input} p-2 border `}
                                         >
-                                            <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>
                                             <option value='Carton'>Cartón</option>

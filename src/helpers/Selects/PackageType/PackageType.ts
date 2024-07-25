@@ -1,5 +1,4 @@
 const packageTypeSelects: { value: string; label: string }[] = [
-    { value: 'Ninguno', label: 'Ninguno' },
     { value: 'Papel', label: 'Papel' },
     { value: 'Papel de archivo', label: 'Papel de archivo' },
     { value: 'Carton', label: 'Carton' },

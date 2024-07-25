@@ -58,25 +58,28 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
     };
 
     return (
-        <div className="d-flex align-items-center justify-content-center">
-            <p className="mb-0 p-2">Nombre del artículo</p>
-            <div className={`${styles.container__Search_Result} position-relative`}>
-                <input
-                    type="text"
-                    className={`${styles.input__BarCode} p-2`}
-                    value={nameItem}
-                    onChange={handleChange}
-                    placeholder='Escribe el nombre del artículo'
-                />
-                {nameItem && searchResults.length > 0 && (
-                    <div className={`${styles.select__Container} position-absolute overflow-y-auto`}>
-                        {searchResults.map((item, index) => (
-                            <button key={index} onClick={() => handleItemClick(item)} className={`${styles.button__Selected_Item} text-start display-block p-2 border-0`}>
-                                {item.nameItem}
-                            </button>
-                        ))}
-                    </div>
-                )}
+        <div className="d-flex flex-column align-items-center justify-content-center">
+            <p className="mb-0 p-2">Busca el equipo, mercancía, materia prima, producto o servicio que deseas vender</p>
+            <div className='d-flex'>
+                <p className="mb-0 p-2">Nombre</p>
+                <div className={`${styles.container__Search_Result} position-relative`}>
+                    <input
+                        type="text"
+                        className={`${styles.input__BarCode} p-2`}
+                        value={nameItem}
+                        onChange={handleChange}
+                        placeholder='Escribe el nombre'
+                    />
+                    {nameItem && searchResults.length > 0 && (
+                        <div className={`${styles.select__Container} position-absolute overflow-y-auto`}>
+                            {searchResults.map((item, index) => (
+                                <button key={index} onClick={() => handleItemClick(item)} className={`${styles.button__Selected_Item} text-start display-block p-2 border-0`}>
+                                    {item.nameItem}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

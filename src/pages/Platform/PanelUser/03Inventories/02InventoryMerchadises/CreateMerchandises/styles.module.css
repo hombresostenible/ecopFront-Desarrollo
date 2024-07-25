@@ -139,7 +139,6 @@
 }
 .container__Append {
     width: 250px;
-    color: #fff;
     border: none;
     text-decoration: none;
     padding: 10px 20px;
@@ -148,6 +147,17 @@
 }
 .container__Append:hover {
     cursor: pointer;
+}
+.disabled {
+    width: 250px;
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #adb5bd;
+}
+.disabled:hover {
+    cursor: default;
 }
 /* ENVIAR */
 .button__Submit {
