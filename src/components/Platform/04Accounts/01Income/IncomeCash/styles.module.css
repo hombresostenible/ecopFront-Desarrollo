@@ -104,8 +104,7 @@
     min-height: 60px;
 }
 .container__Selected_Client {
-    width: 750px;
-    margin: auto;
+    width: 650px;
 }
 .error__Selected_Client {
     border-radius: 5px;
