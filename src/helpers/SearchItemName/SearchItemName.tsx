@@ -19,7 +19,7 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
     const [debouncedNameItem, setDebouncedNameItem] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
 
-    const debouncedSearch = useMemo(() => debounce((nextValue: string) => setDebouncedNameItem(nextValue), 500), []);
+    const debouncedSearch = useMemo(() => debounce((nextValue: string) => setDebouncedNameItem(nextValue), 1000), []);
 
     useEffect(() => {
         if (debouncedNameItem && token) {
@@ -59,7 +59,7 @@ function SearchItemName({ token, onItemSelect }: SearchItemNameProps) {
 
     return (
         <div className="d-flex flex-column align-items-center justify-content-center">
-            <p className="mb-0 p-2">Busca el equipo, mercancía, materia prima, producto o servicio que deseas vender</p>
+            <p className="m-0">Busca el equipo, mercancía, materia prima, producto o servicio que deseas vender</p>
             <div className='d-flex'>
                 <p className="mb-0 p-2">Nombre</p>
                 <div className={`${styles.container__Search_Result} position-relative`}>

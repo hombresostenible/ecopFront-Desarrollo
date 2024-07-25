@@ -27,12 +27,15 @@ export const getItemByBarCode = (barCode: string, token: string) => async (dispa
 //BUSCA UN ITEM POR NOMBRE EN TODAS LAS TABLAS
 export const getItemByName = (nameItem: string, token: string) => async (dispatch: AppDispatch) => {
     try {
+        console.log('nameItem: ', nameItem)
+        console.log('token: ', token)
         const response = await axiosInstance.get(`/all-items/name-item/query?nameItem=${nameItem}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
+        console.log('Artículos: ', response.data.result)
         dispatch(getItemByNameStart(response.data.result));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
