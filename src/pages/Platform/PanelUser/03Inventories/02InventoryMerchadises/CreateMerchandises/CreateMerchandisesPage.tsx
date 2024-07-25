@@ -55,6 +55,33 @@ function CreateMerchandisesPage() {
         setNameItem(event.target.value);
     };
 
+    //Setea la unidad de medida
+    const [showUnitMeasure, setShowUnitMeasure] = useState('');
+    const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowUnitMeasure(event.target.value);
+    };
+
+    //Setea si la mercancía está empacada
+    const [selectedpackaged, setSelectedpackaged] = useState('Si');
+    const handlePackagedChange = (value: 'Si' | 'No') => {
+        setSelectedpackaged(value);
+        setValue('packaged', value);
+    };
+
+    //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
+    const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
+    const handleIndividualPackagingChange = (value: 'Si' | 'No') => {
+        setSelectedIndividualPackaging(value);
+        setValue('individualPackaging', value);
+    };
+
+    //Setea el valor 'Si' o 'No' en la propiedad "returnablePackaging"
+    const [selectedReturnablePackaging, setSelectedReturnablePackaging] = useState('Si');
+    const handleReturnablePackagingChange = (value: 'Si' | 'No') => {
+        setSelectedReturnablePackaging(value);
+        setValue('returnablePackaging', value);
+    };
+
     //Setea si el artículo aumentará de forma periódica en el inventario
     const [inventoryIncrease, setInventoryIncrease] = useState('Si');
     const [periodicityAutomaticIncrease, setPeriodicityAutomaticInventoryIncrease] = useState<string | undefined>(undefined);
@@ -68,32 +95,11 @@ function CreateMerchandisesPage() {
     const handlePeriodicityAutomaticInventoryIncrease = (value: string) => {
         setPeriodicityAutomaticInventoryIncrease(value);
     };
-    
-    //Setea si la mercancía está empacada
-    const [selectedpackaged, setSelectedpackaged] = useState('Si');
-    const handlePackagedChange = (value: 'Si' | 'No') => {
-        setSelectedpackaged(value);
-        setValue('packaged', value);
-    };
 
-    //Setea el valor 'Si' o 'No' en la propiedad "returnablePackaging"
-    const [selectedReturnablePackaging, setSelectedReturnablePackaging] = useState('Si');
-    const handleReturnablePackagingChange = (value: 'Si' | 'No') => {
-        setSelectedReturnablePackaging(value);
-        setValue('returnablePackaging', value);
-    };
-
-    //Setea la unidad de medida
-    const [showUnitMeasure, setShowUnitMeasure] = useState('');
-    const handleUnitMeasureChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setShowUnitMeasure(event.target.value);
-    };
-
-    //Setea el valor 'Si' o 'No' en la propiedad "individualPackaging"
-    const [selectedIndividualPackaging, setSelectedIndividualPackaging] = useState('Si');
-    const handleIndividualPackagingChange = (value: 'Si' | 'No') => {
-        setSelectedIndividualPackaging(value);
-        setValue('individualPackaging', value);
+    //IVA AIU
+    const [showIvaAiu, setShowIvaAiu] = useState('No');
+    const handleIvaAiuChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowIvaAiu(event.target.value);
     };
 
     const onSubmit = async (values: IMerchandise) => {
@@ -111,14 +117,15 @@ function CreateMerchandisesPage() {
                 }))
             } as IMerchandise;
 
-            console.log('formData: ', formData);
             await dispatch(postMerchandise(formData, token));
             setFormSubmitted(true);
             reset();
             setTimeout(() => {
                 dispatch(getMerchandises(token));
                 setFormSubmitted(false);
-                setShouldNavigate(true);
+                if (!errorMerchandise) {
+                    setShouldNavigate(true);
+                }
             }, 1500);
         } catch (error) {
             console.error('Error en el envío del formulario', error);
@@ -328,7 +335,6 @@ function CreateMerchandisesPage() {
                                             {...register('primaryPackageType', { required: true })}
                                             className={`${styles.input} p-2 border `}
                                         >
-                                            <option value='Ninguno'>Ninguno</option>
                                             <option value='Papel'>Papel</option>
                                             <option value='Papel de archivo'>Papel de archivo</option>
                                             <option value='Carton'>Cartón</option>
@@ -411,29 +417,6 @@ function CreateMerchandisesPage() {
                                     </div>
                                 </div>
                             )}
-
-                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <div>
-                                    <p className={`${styles.text} `} >¿Cuánt{['Unidades', 'Onza', 'Pimpina', 'Libra', 'Arroba', 'Tonelada'].includes(showUnitMeasure) ? 'as' : 'os'} {showUnitMeasure}{['Unidades'].includes(showUnitMeasure) ? '' : 's'} de "{nameItem}" vienen por cada paquete o presentación?</p>
-                                </div>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('quantityPerPackage', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Ej: 10'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.quantityPerPackage && (
-                                        <p className='text-danger'>El valor en {showUnitMeasure} es requerido</p>
-                                    )}
-                                </div>
-                            </div> */}
 
                             {selectedpackaged === 'Si' && (
                                 <div>
@@ -566,7 +549,6 @@ function CreateMerchandisesPage() {
                             )}
 
 
-
                             {/* RETENCIONES */}
                             {fields.map((field, index) => (
                                 <div key={field.id} className={`${styles.container__Retetions} mb-3 p-2 d-flex flex-column align-items-center justify-content-start border rounded`}>
@@ -592,14 +574,15 @@ function CreateMerchandisesPage() {
                                             {watch(`retentions.${index}.retentionType`) === 'Rete IVA' && (
                                                 <div className='d-flex align-items-end justify-content-center'>
                                                     <select
-                                                        {...register(`retentions.${index}.retentionPercentageIVA`, { required: true })}
+                                                        {...register(`retentions.${index}.retentionPercentageIVA`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                         className={`${styles.input__Retention} p-2 border`}
                                                     >
-                                                        <option value='15'>15</option>
-                                                        <option value='100'>100</option>
+                                                        <option value='No aplica'>No aplica</option>
+                                                        <option value={15}>15 %</option>
+                                                        <option value={100}>100 %</option>
                                                     </select>
                                                     {errors.retentions?.[index]?.retentionPercentageIVA && (
-                                                        <p className='text-danger'>El tipo de Rete IVA es requerido</p>
+                                                        <p className='text-danger'>El porcentaje de Rete IVA es requerido</p>
                                                     )}
                                                 </div>
                                             )}
@@ -607,21 +590,22 @@ function CreateMerchandisesPage() {
                                             {watch(`retentions.${index}.retentionType`) === 'Rete ICA' && (
                                                 <div className='d-flex align-items-end justify-content-center'>
                                                     <select
-                                                        {...register(`retentions.${index}.retentionPercentageICA`, { required: true })}
+                                                        {...register(`retentions.${index}.retentionPercentageICA`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                         className={`${styles.input__Retention} p-2 border`}
                                                     >
-                                                        <option value='0.2'>0.2</option>
-                                                        <option value='0.5'>0.5</option>
-                                                        <option value='1'>1</option>
-                                                        <option value='1.5'>1.5</option>
-                                                        <option value='2'>2</option>
-                                                        <option value='2.5'>2.5</option>
-                                                        <option value='3'>3</option>
-                                                        <option value='4'>4</option>
-                                                        <option value='6'>6</option>
+                                                        <option value='No aplica'>No aplica</option>
+                                                        <option value={2}>2 %</option>
+                                                        <option value={3.4}>3.4 %</option>
+                                                        <option value={4.14}>4.14 %</option>
+                                                        <option value={5}>5 %</option>
+                                                        <option value={6.9}>6.9 %</option>
+                                                        <option value={8}>8 %</option>
+                                                        <option value={9.66}>9.66 %</option>
+                                                        <option value={11.04}>11.04 %</option>
+                                                        <option value={13.8}>13.8 %</option>
                                                     </select>
                                                     {errors.retentions?.[index]?.retentionPercentageICA && (
-                                                        <p className='text-danger'>El tipo de Rete ICA es requerido</p>
+                                                        <p className='text-danger'>El porcentaje de Rete ICA es requerido</p>
                                                     )}
                                                 </div>
                                             )}
@@ -648,14 +632,15 @@ function CreateMerchandisesPage() {
                                                     {watch(`retentions.${index}.retention`) === 'retentionFeesConsulting' && (
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <select
-                                                                {...register(`retentions.${index}.retentionPercentageFeesConsulting`, { required: true })}
+                                                                {...register(`retentions.${index}.retentionPercentageFeesConsulting`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                                 className="p-2 border"
                                                             >
-                                                                <option value='2'>2</option>
-                                                                <option value='4'>4</option>
-                                                                <option value='6'>6</option>
-                                                                <option value='10'>10</option>
-                                                                <option value='11'>11</option>
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={2}>2 %</option>
+                                                                <option value={4}>4 %</option>
+                                                                <option value={6}>6 %</option>
+                                                                <option value={10}>10 %</option>
+                                                                <option value={11}>11 %</option>
                                                             </select>
                                                             {errors.retentions?.[index]?.retentionPercentageFeesConsulting && (
                                                                 <p className='text-danger'>El porcentaje de retención de honorarios y consultoría es requerido</p>
@@ -666,14 +651,15 @@ function CreateMerchandisesPage() {
                                                     {watch(`retentions.${index}.retention`) === 'retentionServices' && (
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <select
-                                                                {...register(`retentions.${index}.retentionPercentageServices`, { required: true })}
+                                                                {...register(`retentions.${index}.retentionPercentageServices`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                                 className="p-2 border"
                                                             >
-                                                                <option value='1'>1</option>
-                                                                <option value='2'>2</option>
-                                                                <option value='3.5'>3.5</option>
-                                                                <option value='4'>4</option>
-                                                                <option value='6'>6</option>
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={1}>1 %</option>
+                                                                <option value={2}>2 %</option>
+                                                                <option value={3.5}>3.5 %</option>
+                                                                <option value={4}>4 %</option>
+                                                                <option value={6}>6 %</option>
                                                             </select>
                                                             {errors.retentions?.[index]?.retentionPercentageServices && (
                                                                 <p className='text-danger'>El porcentaje de retención de servicios es requerido</p>
@@ -684,16 +670,17 @@ function CreateMerchandisesPage() {
                                                     {watch(`retentions.${index}.retention`) === 'retentionPurchases' && (
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <select
-                                                                {...register(`retentions.${index}.retentionPercentagePurchases`, { required: true })}
+                                                                {...register(`retentions.${index}.retentionPercentagePurchases`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                                 className="p-2 border"
                                                             >
-                                                                <option value='0.1'>0.1</option>
-                                                                <option value='0.5'>0.5</option>
-                                                                <option value='1'>1</option>
-                                                                <option value='1.5'>1.5</option>
-                                                                <option value='2.5'>2.5</option>
-                                                                <option value='3'>3</option>
-                                                                <option value='3.5'>3.5</option>
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={0.1}>0.1 %</option>
+                                                                <option value={0.5}>0.5 %</option>
+                                                                <option value={1}>1 %</option>
+                                                                <option value={1.5}>1.5 %</option>
+                                                                <option value={2.5}>2.5 %</option>
+                                                                <option value={3}>3 %</option>
+                                                                <option value={3.5}>3.5 %</option>
                                                             </select>
                                                             {errors.retentions?.[index]?.retentionPercentagePurchases && (
                                                                 <p className='text-danger'>El porcentaje de retención de compras es requerido</p>
@@ -704,16 +691,17 @@ function CreateMerchandisesPage() {
                                                     {watch(`retentions.${index}.retention`) === 'retentionOthers' && (
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <select
-                                                                {...register(`retentions.${index}.retentionPercentageOthers`, { required: true })}
+                                                                {...register(`retentions.${index}.retentionPercentageOthers`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                                 className="p-2 border"
                                                             >
-                                                                <option value='2'>2</option>
-                                                                <option value='2.5'>2.5</option>
-                                                                <option value='3'>3</option>
-                                                                <option value='4'>4</option>
-                                                                <option value='7'>7</option>
-                                                                <option value='10'>10</option>
-                                                                <option value='20'>20</option>
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={2}>2 %</option>
+                                                                <option value={2.5}>2.5 %</option>
+                                                                <option value={3}>3 %</option>
+                                                                <option value={4}>4 %</option>
+                                                                <option value={7}>7 %</option>
+                                                                <option value={10}>10 %</option>
+                                                                <option value={20}>20 %</option>
                                                             </select>
                                                             {errors.retentions?.[index]?.retentionPercentageOthers && (
                                                                 <p className='text-danger'>El porcentaje de retención de otros es requerido</p>
@@ -724,16 +712,17 @@ function CreateMerchandisesPage() {
                                                     {watch(`retentions.${index}.retention`) === 'retentionForeignPaymentsDividends' && (
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <select
-                                                                {...register(`retentions.${index}.retentionPercentageForeignPaymentsDividends`, { required: true })}
+                                                                {...register(`retentions.${index}.retentionPercentageForeignPaymentsDividends`, { required: true, setValueAs: value => parseInt(value, 10) })}
                                                                 className="p-2 border"
                                                             >
-                                                                <option value='2'>2</option>
-                                                                <option value='2.5'>2.5</option>
-                                                                <option value='3'>3</option>
-                                                                <option value='4'>4</option>
-                                                                <option value='7'>7</option>
-                                                                <option value='10'>10</option>
-                                                                <option value='20'>20</option>
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={2}>2 %</option>
+                                                                <option value={2.5}>2.5 %</option>
+                                                                <option value={3}>3 %</option>
+                                                                <option value={4}>4 %</option>
+                                                                <option value={7}>7 %</option>
+                                                                <option value={10}>10 %</option>
+                                                                <option value={20}>20 %</option>
                                                             </select>
                                                             {errors.retentions?.[index]?.retentionPercentageForeignPaymentsDividends && (
                                                                 <p className='text-danger'>El porcentaje de retención por pagos al exterior y dividendos es requerido</p>
@@ -754,39 +743,19 @@ function CreateMerchandisesPage() {
                             ))}
 
                             <div className={`${styles.container__Append} mb-3 d-flex align-items-center justify-content-between`} onClick={() => append({})}>
-                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <FaPlus className={`${styles.icon__Plus}` }/>
                                 <span>Agregar Retención</span>
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
-                                <div>
-                                    <input
-                                        type="number"
-                                        {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                        className={`${styles.input} p-2 border `}
-                                        placeholder='Precio de compra de la mercancía'
-                                        min={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                e.preventDefault();
-                                            }
-                                        }}
-                                    />
-                                    {errors.purchasePriceBeforeTax && (
-                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el IVA de la mercancía?</p>
+                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el porcentaje de IVA de la mercancía?</p>
                                 <div className={styles.containerInput}>
                                     <select
                                         defaultValue={0}
                                         className={`${styles.input} p-2 border `}
                                         {...register('IVA', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
+                                        <option value='No aplica'>No aplica</option>
                                         <option value={0}>0 %</option>
                                         <option value={5}>5 %</option>
                                         <option value={19}>19 %</option>
@@ -794,42 +763,97 @@ function CreateMerchandisesPage() {
                                 </div>
                             </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el impuesto al consumo de la mercancía?</p>
-                                <div className={styles.containerInput}>
-                                    <select
-                                        defaultValue={0}
-                                        className={`${styles.input} p-2 border `}
-                                        {...register('consumptionTax', { required: true, setValueAs: value => parseInt(value, 10) })}
-                                    >
-                                        <option value={4}>4 %</option>
-                                        <option value={8}>8 %</option>
-                                        <option value={16}>16 %</option>
-                                    </select>
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border">
+                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto al consumo, escoge el porcentaje</p>
+                                <select
+                                    defaultValue={0}
+                                    className={` p-2 border `}
+                                    {...register('consumptionTax', { required: true, setValueAs: value => parseInt(value, 10) })}
+                                >
+                                    <option value='No aplica'>No aplica</option>
+                                    <option value={4}>4 %</option>
+                                    <option value={8}>8 %</option>
+                                    <option value={16}>16 %</option>
+                                </select>
+                            </div>
+
+                            <div className='mb-3 d-flex flex-column align-items-center justify-content-center border rounded gap-2'>
+                                <div className="mb-3 p-2 d-flex align-items-center justify-content-center">
+                                    <p className={`${styles.text} mb-0 p-2`} >¿La mercancía está grabado con IVA AIU?</p>
+                                    <div className={styles.containerInput}>
+                                        <select
+                                            className={`${styles.input} p-2 border `}
+                                            onChange={handleIvaAiuChange}
+                                        >
+                                            <option value={'No'}>No</option>
+                                            <option value={'Si'}>Si</option>
+                                        </select>
+                                    </div>
                                 </div>
+
+                                {showIvaAiu === 'Si' && (
+                                    <div>
+                                        <div className='d-flex'>
+                                            <p className={`${styles.text} mb-0 p-2`} >Define el porcentaje de Administración</p>
+                                            <input
+                                                type="number"
+                                                {...register('ivaAiu.administrativePercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                                className={` p-2 border `}
+                                                placeholder='Porcentaje de Administración'
+                                                min={0}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            />
+                                            <span>%</span>
+                                        </div>
+
+                                        <div className='d-flex'>
+                                            <p className={`${styles.text} mb-0 p-2`} >Define el porcentaje de Imprevistos</p>
+                                            <input
+                                                type="number"
+                                                {...register('ivaAiu.unforeseenPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                                className={` p-2 border `}
+                                                placeholder='Porcentaje de Imprevistos'
+                                                min={0}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            />
+                                            <span>%</span>
+                                        </div>
+
+                                        <div className='d-flex'>
+                                            <p className={`${styles.text} mb-0 p-2`} >Define el porcentaje de Utilidad</p>
+                                            <input
+                                                type="number"
+                                                {...register('ivaAiu.utilityPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                                className={` p-2 border `}
+                                                placeholder='Porcentaje de Utilidad'
+                                                min={0}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            />
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si tiene ¿Cuál es el IVA AIU de la mercancía?</p>
-                                <div className={styles.containerInput}>
-                                    <select
-                                        defaultValue={0}
-                                        className={`${styles.input} p-2 border `}
-                                        {...register('ivaAiu', { required: true, setValueAs: value => parseInt(value, 10) })}
-                                    >
-                                        <option value={0}>0 %</option>
-                                        <option value={1}>1 %</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si tiene ¿Cuál es valor del impuesto a las bebidas azucaradas de la mercancía?</p>
+                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas, digitar el valor</p>
                                 <input
                                     type="number"
-                                    {...register('taxesUltraProcessedSugarSweetenedBeverages', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                    className={`${styles.input} p-2 border `}
-                                    placeholder='Precio de venta de a mercancía'
+                                    {...register('taxesUltraProcessedSugarSweetenedBeverages', { setValueAs: (value) => parseFloat(value) })}
+                                    className={`p-2 border `}
+                                    placeholder='Valor del impuesto a las bebidas azucaradas'
                                     min={0}
                                     onKeyDown={(e) => {
                                         if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
@@ -840,13 +864,14 @@ function CreateMerchandisesPage() {
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                                <p className={`${styles.text} mb-0 p-2`} >Si tiene ¿Cuál es el impuesto a las bebidas azucaradas ultrapocesadas de la mercancía?</p>
+                                <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas ultrapocesadas, escoge el porcentaje</p>
                                 <div className={styles.containerInput}>
                                     <select
                                         defaultValue={0}
-                                        className={`${styles.input} p-2 border `}
+                                        className={` p-2 border `}
                                         {...register('valueTaxesUltraProcessedSugarSweetenedBeverages', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
+                                        <option value='No aplica'>No aplica</option>
                                         <option value={0}>0 %</option>
                                         <option value={18}>18 %</option>
                                         <option value={28}>28 %</option>
@@ -866,10 +891,32 @@ function CreateMerchandisesPage() {
                                         className={`${styles.input} p-2 border `}
                                         {...register('taxesUltraProcessedFoodProducts', { required: true, setValueAs: value => parseInt(value, 10) })}
                                     >
+                                        <option value='No aplica'>No aplica</option>
                                         <option value={10}>10 %</option>
                                         <option value={15}>15 %</option>
                                         <option value={20}>20 %</option>
                                     </select>
+                                </div>
+                            </div>
+                            
+                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                                <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
+                                <div>
+                                    <input
+                                        type="number"
+                                        {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='Precio de compra de la mercancía'
+                                        min={0}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                    {errors.purchasePriceBeforeTax && (
+                                        <p className='text-danger'>El el precio de compra antes de impuestos es requerido</p>
+                                    )}
                                 </div>
                             </div>
 

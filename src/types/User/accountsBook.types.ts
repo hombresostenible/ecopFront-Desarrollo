@@ -30,7 +30,7 @@ export interface IAccountsBook {
     paymentNumber?: number;
     accountsReceivable?: number;
     accountsPayable?: number;
-    transactionCounterpartId: number;
+    transactionCounterpartId?: number;
     transactionApproved: boolean;
     seller?: string;
     userRegister?: string;
