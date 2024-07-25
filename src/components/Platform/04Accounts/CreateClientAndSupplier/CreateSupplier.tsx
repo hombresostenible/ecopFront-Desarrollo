@@ -34,7 +34,7 @@ function CreateSupplier ({ token, onCreateComplete, onSupplierCreated }:CreateSu
 
     const userId = user?.id;
 
-    const [typeDocumentId, settypeDocumentId] = useState('Cedula de Ciudadania');
+    const [typeDocumentId, settypeDocumentId] = useState('NIT');
     const handletypeDocumentIdChange = (event: { target: { value: SetStateAction<string> }}) => {
         settypeDocumentId(event.target.value);
     };

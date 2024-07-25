@@ -34,7 +34,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
   
     const userId = user?.id;
 
-    const [typeDocumentId, settypeDocumentId] = useState('Cedula de Ciudadania');
+    const [typeDocumentId, settypeDocumentId] = useState('NIT');
     const handletypeDocumentIdChange = (event: { target: { value: SetStateAction<string> }}) => {
         settypeDocumentId(event.target.value);
     };
@@ -45,6 +45,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                 ...values,
                 entityUserId: userId,
             } as ICrmClient;
+
             dispatch(postCrmClient(formData, token));
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -68,45 +69,22 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                     <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                 ))}
 
-                <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
-                    <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                        <h6 className={styles.label}>Tipo de identificación</h6>
-                        <div className={styles.container__Input}>
-                            <select
-                                {...register('typeDocumentId', { required: true })}
-                                className={`${styles.input} p-2 border`}
-                                onChange={handletypeDocumentIdChange}
-                            >
-                                <option value='NIT'>NIT</option>
-                                <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
-                                <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
-                                <option value='Pasaporte'>Pasaporte</option>
-                            </select>
-                            {errors.typeDocumentId && (
-                                <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del usuario es requerido</p>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                        <h6 className={styles.label}>No. de identificación</h6>
-                        <div className={styles.container__Input}>
-                            <input
-                                type="number"
-                                {...register('documentId', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                className={`${styles.input} p-2 border `}
-                                placeholder='¿Cuál es el número de identificación?'
-                                min={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                        e.preventDefault();
-                                    }
-                                }}
-                            />
-                            {errors.lastName && (
-                                <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
-                            )}
-                        </div>
+                <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                    <h6 className={styles.label}>Tipo de identificación</h6>
+                    <div className={styles.container__Input}>
+                        <select
+                            {...register('typeDocumentId', { required: true })}
+                            className={`${styles.input} p-2 border`}
+                            onChange={handletypeDocumentIdChange}
+                        >
+                            <option value='NIT'>NIT</option>
+                            <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                            <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
+                            <option value='Pasaporte'>Pasaporte</option>
+                        </select>
+                        {errors.typeDocumentId && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del usuario es requerido</p>
+                        )}
                     </div>
                 </div>
 
@@ -135,7 +113,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                                     {...register('lastName')}
                                     className={`${styles.input} p-2`}
                                     placeholder='Apellidos de tu cliente'
-                                />
+                                    />
                                 {errors.lastName && (
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>los apllidos de tu cliente son requeridos</p>
                                 )}
@@ -143,6 +121,27 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                         </div>
                     </div>
                 )}
+
+                <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                    <h6 className={styles.label}>No. de identificación</h6>
+                    <div className={styles.container__Input}>
+                        <input
+                            type="number"
+                            {...register('documentId', { required: true, setValueAs: (value) => parseFloat(value) })}
+                            className={`${styles.input} p-2 border `}
+                            placeholder='¿Cuál es el número de identificación?'
+                            min={0}
+                            onKeyDown={(e) => {
+                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                    e.preventDefault();
+                                }
+                            }}
+                        />
+                        {errors.lastName && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                        )}
+                    </div>
+                </div>
 
                 {typeDocumentId === 'NIT' && (
                     <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start`}>
