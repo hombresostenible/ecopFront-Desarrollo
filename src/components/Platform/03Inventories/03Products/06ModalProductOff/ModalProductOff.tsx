@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchProduct, getProducts } from '../../../../../redux/User/productSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IProduct, IInventoryOffItem } from '../../../../../types/User/products.types';
+import { IProduct } from '../../../../../types/User/products.types';
+import { IInventoryOffItem } from '../../../../../types/User/InventoryOffItem/iInventoryOffItem.types';
 import styles from './styles.module.css';
 
 interface ModalProductOffProps {
