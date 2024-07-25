@@ -48,7 +48,7 @@ function CreateCrmClientPage() {
 
     const onSubmit = async (values: ICrmClient) => {
         try {
-            const branchData = {
+            const formData = {
                 ...values,
                 // entityUserId: userId,
                 department: selectedDepartment,
@@ -56,7 +56,8 @@ function CreateCrmClientPage() {
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as ICrmClient;
-            await dispatch(postCrmClient(branchData, token));
+            console.log('formData: ', formData)
+            await dispatch(postCrmClient(formData, token));
             setFormSubmitted(true);    
             reset();
             setTimeout(() => {
@@ -88,12 +89,11 @@ function CreateCrmClientPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Clientes</h1>
 
-                        <h2 className={`${styles.subtitle} text-center`}>Crea tus Clientes</h2>
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorCrmClient?.map((error, i) => (
+                            {Array.isArray(errorCrmClient)&& errorCrmClient?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
 
@@ -107,8 +107,8 @@ function CreateCrmClientPage() {
                                             onChange={handleTypeDocumentIdChange}
                                         >
                                             <option value='NIT'>NIT</option>
-                                            <option value='Cedula de Ciudadania'></option>
-                                            <option value='Cedula de Extranjeria'></option>
+                                            <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                                            <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
                                             <option value='Pasaporte'>Pasaporte</option>
                                         </select>
                                         {errors.typeDocumentId && (
@@ -120,10 +120,19 @@ function CreateCrmClientPage() {
                                     <h6 className={styles.label}>Número de identificación</h6>
                                     <div className={styles.container__Input}>
                                         <input
-                                            type="text"
-                                            {...register('documentId', { required: true })}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el número de identificación?'
+                                            type="number"
+                                            {...register('documentId', { 
+                                                required: true,
+                                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
+                                            })}
+                                            className={`${styles.input} p-2 border `}
+                                            placeholder='¿Cuál es tu número de identificación?'
+                                            min={0}
+                                            onKeyDown={(e) => {
+                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                    e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         {errors.documentId && (
                                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
@@ -233,7 +242,7 @@ function CreateCrmClientPage() {
                                 </div>
                             </div>
 
-                            <div className="d-flex">
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>
