@@ -847,7 +847,7 @@ function CreateMerchandisesPage() {
                                 )}
                             </div>
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas, digitar el valor</p>
                                 <input
                                     type="number"
@@ -861,9 +861,9 @@ function CreateMerchandisesPage() {
                                         }
                                     }}
                                 />
-                            </div>
+                            </div> */}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >Si la mercancía está grabada con el impuesto a las bebidas azucaradas ultrapocesadas, escoge el porcentaje</p>
                                 <div className={styles.containerInput}>
                                     <select
@@ -881,9 +881,9 @@ function CreateMerchandisesPage() {
                                         <option value={65}>65 %</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            {/* <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >Si tiene ¿Cuál es el impuesto a las bebidas azucaradas ultrapocesadas de la mercancía?</p>
                                 <div className={styles.containerInput}>
                                     <select
@@ -897,7 +897,7 @@ function CreateMerchandisesPage() {
                                         <option value={20}>20 %</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
                             
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                                 <p className={`${styles.text} mb-0 p-2`} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
