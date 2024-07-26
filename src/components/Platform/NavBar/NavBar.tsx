@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import jsCookie from 'js-cookie';
 //REDUX
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfileUser } from '../../../redux/User/userSlice/actions';
 import { logoutUser } from '../../../redux/User/userSlice/actions';
+import type { RootState, AppDispatch } from '../../../redux/store';
 //ELEMENTOS DEL COMPONENTE
 import Logo from '../../../assets/LogoEcopcion.svg';
 import { SlQuestion } from "react-icons/sl";
@@ -14,7 +16,18 @@ import { GoSignOut } from "react-icons/go";
 import styles from './styles.module.css';
 
 function NavBar() {
+    const token = jsCookie.get("token");
     const dispatch: AppDispatch = useDispatch();
+
+    // Estado de Redux
+    const user = useSelector((state: RootState) => state.user.user);
+
+    useEffect(() => {
+        if (token) {
+            dispatch(getProfileUser(token));
+        }
+    }, [token, dispatch]);
+
     const menuQuestionRef = useRef<HTMLDivElement | null>(null);
     const [menuQuestionVisible, setMenuQuestionVisible] = useState(false);
     const handleQuestionClick = () => {
@@ -73,18 +86,6 @@ function NavBar() {
                     {menuServiceVisible && (
                         <div ref={menuServiceRef} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
                             <Link to='/services/activate-new-plans' className={`${styles.link__NavBar} text-decoration-none ${location.pathname === '/services/activate-new-plans' ? styles.active : ''}`}>Activa nuevos planes</Link>
-                            {/* <Link to='/services/support-contact' className={`${styles.link__NavBar} text-decoration-none`}>Contacto con soporte para PQRF</Link> */}
-
-                            
-                            {/* <Link to='/services/platform-functionality' className={`${styles.link__NavBar} text-decoration-none`}>Funcionamiento de la plataforma</Link>
-                            <Link to='/services/inventories' className={`${styles.link__NavBar} text-decoration-none`}>Inventarios</Link>
-                            <Link to='/services/accounts' className={`${styles.link__NavBar} text-decoration-none`}>Cuentas</Link>
-                            <Link to='/services/billing-and-pos' className={`${styles.link__NavBar} text-decoration-none`}>Facturación y POS</Link>
-                            <Link to='/services/electronic-payroll' className={`${styles.link__NavBar} text-decoration-none`}>Nomina electrónica</Link>
-                            <Link to='/services/crm-client' className={`${styles.link__NavBar} text-decoration-none`}>CRM Clientes</Link>
-                            <Link to='/services/crm-supplier' className={`${styles.link__NavBar} text-decoration-none`}>CRM Proveedores</Link>
-                            <Link to='/services/sustainability' className={`${styles.link__NavBar} text-decoration-none`}>Sostenibilidad</Link>
-                            <Link to='/services/strategy-and-decision-making' className={`${styles.link__NavBar} text-decoration-none`}>Estrategia y toma de decisiones</Link> */}
                         </div>
                     )}
                 </div>
@@ -98,7 +99,7 @@ function NavBar() {
 
                 <div className={`${styles.container__Configuration} d-flex align-items-center justify-content-center`}>
                     <Link to="/configuration" className={styles.icon__Configuration}>
-                    
+                        <img src={user?.logo} alt="Logo" className={`${styles.logo__User} `}/>
                     </Link>
                 </div>
 

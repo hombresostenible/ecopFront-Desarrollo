@@ -158,6 +158,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         setShowOtherIncomes(event.target.value);
     };
 
+    //Setea el total del ingreso por la venta
     const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
     const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
@@ -427,38 +428,42 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
                             </div>
 
-                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Monto recibido</p>
-                                <input
-                                    type="text"
-                                    className={`${styles.input__Info_Purchase} p-2 text-end`}
-                                    value={formatCurrency(paymentAmount)}
-                                    onChange={handlePaymentAmountChange}
-                                />
-                            </div>
+                            {meanPayment === 'Efectivo' && (
+                                <div className='m-auto'>
+                                    <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                        <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Monto recibido</p>
+                                        <input
+                                            type="text"
+                                            className={`${styles.input__Info_Purchase} p-2 text-end`}
+                                            value={formatCurrency(paymentAmount)}
+                                            onChange={handlePaymentAmountChange}
+                                        />
+                                    </div>
 
-                            <div className={`${styles.container__Change_Amount} m-auto d-flex flex-column align-items-center justify-content-between`}>
-                                <button
-                                    type="button"
-                                    className={`${styles.button__Calculate} mb-3 border-0`}
-                                    onClick={handleCalculateChange}
-                                >
-                                    Calcular cambio
-                                </button>
-                                <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                                    <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Cambio</p>
-                                    <div className={`${styles.input__Change__Amount} m-0`}>
-                                        {changeAmount !== null && (
-                                            <input
-                                                type="text"
-                                                className={`${styles.input__Change} m-0 p-2 text-end border-0`}
-                                                value={`$ ${new Intl.NumberFormat('es-ES').format(changeAmount)}`} // Formatear cambio como moneda
-                                                readOnly
-                                            />
-                                        )}
+                                    <div className={`${styles.container__Change_Amount} m-auto d-flex flex-column align-items-center justify-content-between`}>
+                                        <button
+                                            type="button"
+                                            className={`${styles.button__Calculate} mb-3 border-0`}
+                                            onClick={handleCalculateChange}
+                                        >
+                                            Calcular cambio
+                                        </button>
+                                        <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
+                                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Cambio</p>
+                                            <div className={`${styles.input__Change__Amount} m-0`}>
+                                                {changeAmount !== null && (
+                                                    <input
+                                                        type="text"
+                                                        className={`${styles.input__Change} m-0 p-2 text-end border-0`}
+                                                        value={`$ ${new Intl.NumberFormat('es-ES').format(changeAmount)}`} // Formatear cambio como moneda
+                                                        readOnly
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 )}
