@@ -24,7 +24,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
 
     const [editedConditionAssets, setEditedConditionAssets] = useState(asset?.conditionAssets);
     const [editedStateAssets, setEditedStateAssets] = useState(asset?.stateAssets);
-    const [editedIVA, setEditedIVA] = useState<0 | 5 | 19>(asset?.IVA);
+    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(asset?.IVA);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
