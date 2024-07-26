@@ -22,14 +22,15 @@ function CreateIncomePage() {
 
     // Estados de Redux
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-    const [selectedBranch, setSelectedBranch] = useState('');
-
+    
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
         }
     }, [token]);
+
+    //Selección de la sede
+    const [selectedBranch, setSelectedBranch] = useState('');
 
     // Manejar cambio de la sede
     const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

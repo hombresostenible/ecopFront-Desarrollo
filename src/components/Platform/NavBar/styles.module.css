@@ -80,7 +80,12 @@
 }
 .icon__Configuration {
     border: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: hidden;
     border-radius: 50%;
+    height: 45px;
+    width: 45px;
+}
+.logo__User {
     height: 45px;
     width: 45px;
 }
