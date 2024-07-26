@@ -10,7 +10,6 @@ import type { RootState, AppDispatch } from '../../redux/store';
 import { ICrmClient } from '../../types/User/crmClient.types';
 import CreateClient from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateClient';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
-// import styles from './styles.module.css';
 
 interface SearchClientCrmProps {
     token: string;
@@ -109,7 +108,6 @@ function SearchClientCrm({ token, onClientSelect, onDataClientSelect }: SearchCl
 
     return (
         <div ref={selectRef} className="d-flex align-items-center justify-content-center">
-            {/* <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa a la que le vendiste?</p> */}
             <div>
                 <Select
                     value={selectedOption}

@@ -10,7 +10,7 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook, IItemsAccountsBook } from "../../../../../types/User/accountsBook.types";
+import { IAccountsBook, IAccountsBookItems } from "../../../../../types/User/accountsBook.types";
 import SearchItemName from '../../../../../helpers/SearchItemName/SearchItemName';
 import ModalChangeQuantityPerItem from '../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../../../../helpers/SearchClientCrm/SearchClientCrm';
@@ -20,7 +20,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-interface CashIncomesProps {
+interface IncomeCashProps {
     token: string;
     selectedBranch: string;
     defaultDates: boolean;
@@ -29,16 +29,36 @@ interface CashIncomesProps {
     typeIncome: string;
 }
 
-function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, transactionDate, typeIncome }: CashIncomesProps) {
+function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, transactionDate, typeIncome }: IncomeCashProps) {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
+    const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
     useEffect(() => {
         if (token) dispatch(getBranches(token));
     }, [token]);
+
+    useEffect(() => {
+        // Actualiza el estado `scannedItems` cuando `itemByBarCode` cambie
+        if (itemByBarCode && itemByBarCode.result) {
+            const item = itemByBarCode.result;
+            const selectedItem: IAccountsBookItems = {
+                nameItem: item.nameItem,
+                id: item.id,
+                type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
+                IVA: Number(item.IVA),
+                sellingPrice: item.sellingPrice,
+                quantity: 1,
+                subTotalValue: item.sellingPrice * 1,
+            };
+            // Añade el ítem al estado `scannedItems`
+            setScannedItems(prevItems => [...prevItems, selectedItem]);
+            setBarCode(''); // Limpia el campo de código de barras
+        }
+    }, [itemByBarCode]);
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -55,51 +75,38 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
     };
     
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
-    const [scannedItems, setScannedItems] = useState<IItemsAccountsBook[]>([]);
+    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
     const handleItemSelect = (item: any) => {
-        const selectedItems: IItemsAccountsBook = {
+        const selectedItems: IAccountsBookItems = {
             nameItem: item.nameItem,
             id: item.id,
-            type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service', // Asegúrate de que el tipo coincida con la enumeración permitida
+            type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
             IVA: item.IVA,
             sellingPrice: item.sellingPrice,
-            quantity: 1,                                // Puedes inicializar la cantidad según tu lógica de selección
-            subTotalValue: item.sellingPrice * 1,       // Calcula el subtotal según tu lógica
+            quantity: 1,
+            subTotalValue: item.sellingPrice * 1,
         };
     
         setScannedItems([...scannedItems, selectedItems]);
     };
 
-    useEffect(() => {
-        const inputElement = document.getElementById("barCodeInput") as HTMLInputElement;
-        if (inputElement) {
-            inputElement.value = '';
-        }
-    }, [scannedItems]);
-
-    // BORRA EL ARTÍCULO RELACIONADO EN LA TABLA PARA VENTA
+    //Aumenta la cantidad de artículos seleccionados para la venta
+    const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
+    const handleChangeQuantityPerItem = (index: number) => setChangeQuantityIndex(index);
+    
+    //Elimina de la tabla, el artículo seleccionados para la venta
     const handleDeleteItem = (index: number) => {
         setScannedItems(prevItems => {
             const updatedItems = [...prevItems];
-            updatedItems.splice(index, 1); // Elimina el artículo en la posición `index`
+            updatedItems.splice(index, 1);
             return updatedItems;
         });
     };
 
-    // Estado para controlar el índice del artículo en `scannedItems` que se está editando
-    const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
+    //Cierra el modal que cambia la cantidad del artículo seleccionado para la venta
+    const handleCloseModal = () => setChangeQuantityIndex(null);
 
-    // Función para abrir el modal de cambio de cantidad
-    const handleChangeQuantityPerItem = (index: number) => {
-        setChangeQuantityIndex(index);
-    };
-
-    // Función para cerrar el modal
-    const handleCloseModal = () => {
-        setChangeQuantityIndex(null);
-    };
-    
-    //Setea el cliente cuando se busca o se crea
+    //Selecciona el cliente al que se le vende
     const [selectedClient, setSelectedClient] = useState<number | null>(null);
 
     //Selección el medio de pago
@@ -113,9 +120,6 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
         return total + (scannedItem.quantity * scannedItem.sellingPrice);
     }, 0);
 
-    const [paymentAmount, setPaymentAmount] = useState<string>('');                 // Estado para almacenar el monto del pago recibido
-    const [changeAmount, setChangeAmount] = useState<number | null>(null);          // Estado para almacenar el cambio
-
     // Función para formatear el valor como moneda
     const formatCurrency = (value: string) => {
         if (!value) return '';
@@ -123,12 +127,15 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
         return `$ ${new Intl.NumberFormat('es-ES').format(numberValue)}`;
     };
 
+    const [paymentAmount, setPaymentAmount] = useState<string>('');                 // Estado para almacenar el monto del pago recibido
+    
     // Manejar el cambio en el monto recibido
     const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^\d]/g, '');                         // Eliminar caracteres no numéricos
         setPaymentAmount(value);
     };
 
+    const [changeAmount, setChangeAmount] = useState<number | null>(null);          // Estado para almacenar el cambio
     // Calcular el cambio y actualizar el estado
     const handleCalculateChange = () => {
         const numericValue = parseFloat(paymentAmount.replace(/[^\d]/g, ''));
@@ -140,17 +147,9 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
     };
 
 
-
-
     // OTROS INGRESOS
     //Setea el poveedor cuando se busca o se crea
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
-
-    const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
-    const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
-        setTotalValueOtherIncome(value);
-    };
 
     // Muestra el CRM Supplier, el Gota Gota no necesita grabar el id de quien le presta
     const [showOtherIncomes, setShowOtherIncomes] = useState('');
@@ -158,8 +157,11 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
         setShowOtherIncomes(event.target.value);
     };
 
-
-
+    const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
+    const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
+        setTotalValueOtherIncome(value);
+    };
 
     const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
     const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -181,8 +183,7 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
     };
 
     //Setea el valor de la cuota
-    const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
-
+    const [paymentValue, setPaymentValue] = useState<number>(0);
     //Calcula el valor de la cuota con o sin interés
     useEffect(() => {
         if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
@@ -206,9 +207,6 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
             }
         }
     }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
-
-
-
 
     const onSubmit = async (values: IAccountsBook) => {
         const totalValueOtherIncomeNumber = Number(totalValueOtherIncome);
@@ -279,7 +277,6 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                                     value={barCode}
                                     className={`${styles.input__BarCode} p-2`}
                                     onChange={handleBarCodeChange}
-                                    // readOnly={true}
                                     placeholder='Código de barras'
                                 />
                             </div>
@@ -424,6 +421,10 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                                 </select>
                             </div>
 
+
+
+
+
                             <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
                                 <p className={`${styles.text__Purchase} m-0 p-2`}>Total de la compra</p>
                                 <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
@@ -465,9 +466,14 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                     </div>
                 )}
 
+
+
+
+
+
                 {typeIncome === 'Otros ingresos' && (
-                    <div>
-                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center">
+                    <div className={`${styles.container__Info_Purchase} d-flex flex-column align-items-center justify-content-between`}>
+                        <div className="p-2 d-flex align-items-center justify-content-center">
                             <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona el concepto de otros ingresos</p>
                             <div>
                                 <select
@@ -489,7 +495,8 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                         </div>
 
                         {showOtherIncomes !== 'Gota gota' && (
-                            <div className={`${styles.container__Selected_Client} position-relative`}>
+                            <div className={`${styles.container__Selected_Client} mb-4 m-auto d-flex align-items-center justify-content-between position-relative`}>
+                                <p className='m-0'>Selecciona o crea a tu proveedor</p>
                                 <SearchSupplierCrm
                                     token={token}
                                     onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
@@ -509,7 +516,7 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                                 <input
                                     type="text"
                                     {...register('creditDescription', { required: true })}
-                                    className={`${styles.input__Info_Purchase} p-2 text-end`}
+                                    className={`${styles.input__Info_Purchase} p-2 text-start`}
                                     placeholder='Describe tu crédito: Venta de arroz a don Lucho'
                                 />
                                 {errors.creditDescription && (
@@ -608,20 +615,11 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
                     </div>
                 )}
 
-                <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                    <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Vendedor(a)</p>
-                    <div>
-                        <input
-                            type="text"
-                            {...register('seller', { required: 'El vendedor es requerido' })}
-                            className={`${styles.input__Info_Purchase} p-2 text-center`}
-                            placeholder='Nombre del vendedor'
-                        />
-                        {errors.seller && (
-                            <div className='invalid-feedback'>{errors.seller.message}</div>
-                        )}
-                    </div>
-                </div>
+
+
+
+
+
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
                     {formSubmitted && (
@@ -640,4 +638,4 @@ function CashIncomes({ token, selectedBranch, defaultDates, registrationDate, tr
     );
 }
 
-export default CashIncomes;
+export default IncomeCash;

@@ -10,7 +10,7 @@ import { getBranches } from '../../../../redux/User/branchSlice/actions';
 import { getItemByBarCode } from '../../../../redux/User/itemBybarCodeOrName/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook, IItemsAccountsBook } from "../../../../types/User/accountsBook.types";
+import { IAccountsBook, IAccountsBookItems } from "../../../../types/User/accountsBook.types";
 import SearchItemName from '../../../../helpers/SearchItemName/SearchItemName';
 import ModalChangeQuantityPerItem from '../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../../../helpers/SearchClientCrm/SearchClientCrm';
@@ -51,9 +51,9 @@ function POSComponent({ token, selectedBranch, defaultDates }: POSComponentProps
     };
     
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
-    const [scannedItems, setScannedItems] = useState<IItemsAccountsBook[]>([]);
+    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
     const handleItemSelect = (item: any) => {
-        const selectedItems: IItemsAccountsBook = {
+        const selectedItems: IAccountsBookItems = {
             nameItem: item.nameItem,
             id: item.id,
             type: item.type as 'Assets' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service', // Asegúrate de que el tipo coincida con la enumeración permitida
