@@ -22,14 +22,15 @@ function CreateExpensesPage() {
 
     // Estados de Redux
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-    const [selectedBranch, setSelectedBranch] = useState('');
-
+    
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
         }
     }, [token]);
+
+    //Selección de la sede
+    const [selectedBranch, setSelectedBranch] = useState('');
 
     // Cambio de la sede
     const handleBranchChange = (e: any) => {
@@ -143,7 +144,6 @@ function CreateExpensesPage() {
                                         />
                                     </div>
                                 </div>
-
                                 <div className="d-flex flex-column align-items-start justify-content-center">
                                     <p className="mb-1">Fecha de transacción</p>
                                     <div>
@@ -189,12 +189,15 @@ function CreateExpensesPage() {
                                     >
                                         Compra de artículos
                                     </div>
-                                    <div
-                                        className={`${styles.type__Income} ${typeExpense === 'Otros gastos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                        onClick={() => handleTypeExpenseChange('Otros gastos')}
-                                    >
-                                        Otros gastos
-                                    </div>
+
+                                    {creditCashOption === 'Contado' && (
+                                        <div
+                                            className={`${styles.type__Income} ${typeExpense === 'Otros gastos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                            onClick={() => handleTypeExpenseChange('Otros gastos')}
+                                        >
+                                            Otros gastos
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
