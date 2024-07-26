@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchAsset, getAssets } from '../../../../../redux/User/assetsSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
-import { IAssets, IInventoryOffItem } from '../../../../../types/User/assets.types';
+import { IAssets } from '../../../../../types/User/assets.types';
+import { IInventoryOffAssets } from '../../../../../types/User/InventoryOffItem/iInventoryOffItem.types';
 import styles from './styles.module.css';
 
 interface ModalAssetOffProps {
@@ -16,7 +17,7 @@ interface ModalAssetOffProps {
 }
 
 interface FormValues {
-    reason: IInventoryOffItem['reason'];
+    reason: IInventoryOffAssets['reason'];
     quantity: number;
     description: string;
 }
