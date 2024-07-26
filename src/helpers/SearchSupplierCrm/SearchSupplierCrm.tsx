@@ -9,7 +9,6 @@ import type { RootState, AppDispatch } from '../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import CreateSupplier from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateSupplier';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
-import styles from './styles.module.css';
 
 interface SearchSupplierCrmCrmProps {
     token: string;
@@ -94,8 +93,7 @@ function SearchSupplierCrm({ token, onSupplierSelect }: SearchSupplierCrmCrmProp
     };
 
     return (
-        <div ref={selectRef} className="mb-4 m-auto d-flex align-items-center justify-content-center">
-            <p className={`${styles.text} mb-0 p-2`}>¿Cuál es el número de identificación de la persona o empresa que te prestó?</p>
+        <div ref={selectRef} className="d-flex align-items-center justify-content-center">
             <div>
                 <Select
                     value={selectedOption}
