@@ -6,7 +6,6 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { postAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
@@ -37,10 +36,10 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
-    useEffect(() => {
-        if (token) dispatch(getBranches(token));
-    }, [token]);
+    //Setea todos los artículos que se registrarán
+    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
 
+    // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
     useEffect(() => {
         // Actualiza el estado `scannedItems` cuando `itemByBarCode` cambie
         if (itemByBarCode && itemByBarCode.result) {
@@ -75,7 +74,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
     };
     
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
-    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
     const handleItemSelect = (item: any) => {
         const selectedItems: IAccountsBookItems = {
             nameItem: item.nameItem,
@@ -86,7 +84,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
             quantity: 1,
             subTotalValue: item.sellingPrice * 1,
         };
-    
         setScannedItems([...scannedItems, selectedItems]);
     };
 
@@ -127,20 +124,24 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         return `$ ${new Intl.NumberFormat('es-ES').format(numberValue)}`;
     };
 
-    const [paymentAmount, setPaymentAmount] = useState<string>('');                 // Estado para almacenar el monto del pago recibido
+    // Estado para almacenar el monto del pago recibido
+    const [paymentAmount, setPaymentAmount] = useState<string>('');
     
     // Manejar el cambio en el monto recibido
     const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^\d]/g, '');                         // Eliminar caracteres no numéricos
+        // Eliminar caracteres no numéricos
+        const value = e.target.value.replace(/[^\d]/g, '');
         setPaymentAmount(value);
     };
 
-    const [changeAmount, setChangeAmount] = useState<number | null>(null);          // Estado para almacenar el cambio
+    // Estado para almacenar el cambio
+    const [changeAmount, setChangeAmount] = useState<number | null>(null);
     // Calcular el cambio y actualizar el estado
     const handleCalculateChange = () => {
         const numericValue = parseFloat(paymentAmount.replace(/[^\d]/g, ''));
         if (!isNaN(numericValue)) {
-            setChangeAmount(numericValue - totalPurchaseAmount);                    // totalPurchaseAmount debe estar definido y accesible aquí
+            // totalPurchaseAmount debe estar definido y accesible aquí
+            setChangeAmount(numericValue - totalPurchaseAmount);
         } else {
             setChangeAmount(null);
         }
@@ -213,13 +214,13 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         try {
             const formData = {
                 ...values,
+                branchId: selectedBranch,
                 transactionType: "Ingreso",
                 creditCash: "Contado",
+                transactionCounterpartId: selectedClient ? selectedClient : selectedSupplier,
                 meanPayment: meanPayment ? meanPayment : null,
                 itemsSold: scannedItems,
-                transactionCounterpartId: selectedClient ? selectedClient : selectedSupplier,
                 totalValue: totalPurchaseAmount || totalValueOtherIncomeNumber,
-                branchId: selectedBranch,
             } as IAccountsBook;
             if (defaultDates) {
                 formData.registrationDate = new Date().toLocaleDateString();
@@ -421,10 +422,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 </select>
                             </div>
 
-
-
-
-
                             <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
                                 <p className={`${styles.text__Purchase} m-0 p-2`}>Total de la compra</p>
                                 <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
@@ -465,11 +462,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                         </div>
                     </div>
                 )}
-
-
-
-
-
 
                 {typeIncome === 'Otros ingresos' && (
                     <div className={`${styles.container__Info_Purchase} d-flex flex-column align-items-center justify-content-between`}>
@@ -614,12 +606,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                         </div>
                     </div>
                 )}
-
-
-
-
-
-
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
                     {formSubmitted && (
