@@ -100,11 +100,14 @@ import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/In
 import SellPointOfSalePage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/01SellPointOfSale/SellPointOfSalePage';
 import ElectronicInvoicingPage from './pages/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/02ElectronicInvoicing/ElectronicInvoicingPage';
 import SeeElectronicInvoicingPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/02SeeElectronicInvoicingPosPage/SeeElectronicInvoicingPosPage';
-import CreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/02CreditNotes/CreditNotesPage';
-import DebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03DebitNotes/DebitNotesPage';
-import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04RecurringInvoices/RecurringInvoicesPage';
-import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/05ReceivedPayments/ReceivedPaymentsPage';
-import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/06Quotes/QuotesPage';
+import ConsultCreditNotes from './pages/Platform/PanelUser/05InvoicingAndPos/03CreditNotes/ConsultCreditNotes/ConsultCreditNotes';
+import CreateCreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/03CreditNotes/CreateCreditNotes/CreateCreditNotesPage';
+import ConsultDebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04DebitNotes/ConsultDebitNotes/ConsultDebitNotesPage';
+import CreateDebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04DebitNotes/CreateDebitNotes/CreateDebitNotesPage';
+
+import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/05RecurringInvoices/RecurringInvoicesPage';
+import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/06ReceivedPayments/ReceivedPaymentsPage';
+import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/07Quotes/QuotesPage';
 // SIDEBAR - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
 import PayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/01PayrollPayments/PayrollPaymentsPage';
@@ -257,11 +260,12 @@ function App() {
                             <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                             {/* SideBar Facturación y POS */}
                             <Route path='/invoicing-and-pos/pos' element={<SellPointOfSalePage />} />
-                            <Route path='/invoicing-and-pos/pos' element={<SellPointOfSalePage />} />
                             <Route path='/invoicing-and-pos/electronic-invoicing' element={<ElectronicInvoicingPage />} />
                             <Route path='/invoicing-and-pos/see-electronic-invoicing-pos' element={<SeeElectronicInvoicingPosPage />} />
-                            <Route path='/invoicing-and-pos/credit-notes' element={<CreditNotesPage />} />
-                            <Route path='/invoicing-and-pos/debit-notes' element={<DebitNotesPage />} />
+                            <Route path='/credit-notes/consult-credit-notes' element={<ConsultCreditNotes />} />
+                            <Route path='/credit-notes/create-credit-notes' element={<CreateCreditNotesPage />} />
+                            <Route path='/debit-notes/consult-debit-notes' element={<ConsultDebitNotesPage />} />
+                            <Route path='/debit-notes/create-debit-notes' element={<CreateDebitNotesPage />} />
                             <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
                             <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
                             <Route path='/invoicing-and-pos/quotes' element={<QuotesPage />} />

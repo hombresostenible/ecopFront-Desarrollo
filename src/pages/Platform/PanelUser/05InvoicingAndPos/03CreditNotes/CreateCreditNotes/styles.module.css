@@ -11,3 +11,10 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
+.link__Back {
+    border: none;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: white;
+    background: #718bd8;
+}
