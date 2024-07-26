@@ -188,12 +188,15 @@ function CreateIncomePage() {
                                     >
                                         Venta de artículos
                                     </div>
-                                    <div
-                                        className={`${styles.type__Income} ${typeIncome === 'Otros ingresos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                        onClick={() => handleTypeIncomeChange('Otros ingresos')}
-                                    >
-                                        Otros ingresos
-                                    </div>
+
+                                    {creditCashOption === 'Contado' && (
+                                        <div
+                                            className={`${styles.type__Income} ${typeIncome === 'Otros ingresos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                            onClick={() => handleTypeIncomeChange('Otros ingresos')}
+                                        >
+                                            Otros ingresos
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
