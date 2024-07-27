@@ -12,9 +12,112 @@
     letter-spacing: 1px;
 }
 .link__Back {
-    border: none;
-    text-decoration: none;
-    padding: 10px 20px;
     color: white;
     background: #718bd8;
+    padding: 10px 20px;
+}
+.container__Debit_Note {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* ENCABEZAO DE LA NOTA DEBITO */
+.container__Header_Debit_Note {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+.container__Logo {
+    height: 100px;
+    width: 150px;
+}
+.logo__User {
+    max-height: 100px;
+    max-width: 100px;
+}
+.container__Info_User {
+    opacity: 0.75;
+    width: 500px;
+}
+.name__User {
+    font-weight: 700;
+}
+.numerator {
+    margin: 0 5px 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    opacity: 0.85;
+}
+.invoice__Number {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 100px;
+}
+.container__Icon_setting {
+    margin: 0 0 0 5px;
+    height: 40px;
+}
+.icon__Setting {
+    font-size: 25px;
+    opacity: 0.75;
+}
+.icon__Setting:hover {
+    cursor: pointer;
+    color: #718bd8;
+}
+
+/* DATOS DEL CLIENTE Y DE LA FACTURA */
+.container__Dates_Client {
+    width: 100%;
+}
+.dates_Client {
+    width: 50%;
+}
+.container__Info {
+    height: 50px;
+    width: 100%;
+}
+.label {
+    font-size: 14px;
+    height: 50px;
+    min-width: 100px;
+}
+.data {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: calc(100% - 100px);
+    margin: 0 5px 0 0;
+}
+.container__Info_Reason {
+    height: 100px;
+}
+.label__Reason {
+    font-size: 14px;
+    height: 100px;
+    min-width: 100px;
+}
+.textarea {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin: 0 5px 0 0;
+    height: 100px;
+    max-height: 100px;
+    width: calc(100% - 100px);
+}
+.textarea:focus, .calendar:focus {
+    outline-color: #718bd8;
+}
+.calendar {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    height: 50px;
+    width: 490px;
+}
+.select {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin: 0 5px 0 0;
+    height: 50px;
+    width: 100%;
+}
+.dates__Debit_Note {
+    width: 50%;
 }

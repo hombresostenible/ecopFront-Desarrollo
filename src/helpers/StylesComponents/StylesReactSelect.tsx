@@ -11,6 +11,6 @@ export const StylesReactSelect = {
             borderColor: state.isFocused ? '#718bd8' : 'rgba(0, 0, 0, 0.2)'
         },
         padding: '5px',
-        borderRadius: '0px'
+        borderRadius: '5px'
     }),
 };

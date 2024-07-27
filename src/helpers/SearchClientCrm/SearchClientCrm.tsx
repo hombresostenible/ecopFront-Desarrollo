@@ -12,9 +12,9 @@ import CreateClient from '../../components/Platform/04Accounts/CreateClientAndSu
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
 interface SearchClientCrmProps {
-    token: string;
-    onClientSelect?: (value: number | null) => void;
-    onDataClientSelect?: (data: ICrmClient) => void; // Prop adicional
+    token: string;                                      //Token del cliente
+    onClientSelect?: (value: number | null) => void;    //Id del cliente seleccionado
+    onDataClientSelect?: (data: ICrmClient) => void;    // Prop adicional
 }
 
 interface OptionType {
