@@ -86,8 +86,8 @@
     width: 45px;
 }
 .logo__User {
-    height: 45px;
-    width: 45px;
+    max-height: 45px;
+    max-width: 45px;
 }
 .container__Logout {
     height: 70px;
