@@ -12,6 +12,7 @@ import userReducer from './User/userSlice/userSlice';
 import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
 import finantialIndicatorsReducer from './User/indicator/finantialIndicators/finantialIndicatorsSlice'; // Asegúrate de ajustar el path correctamente
 import itemByBarCodeOrNameReducer from './User/itemBybarCodeOrName/itemByBarCodeOrNameSlice';
+import searchItemsReducer from './User/searchItems/searchItemsSlice';
 
 // Define RootState
 export type RootState = ReturnType<typeof store.getState>;
@@ -30,6 +31,7 @@ const rootReducer = {
     userPlatform: userPlatformReducer,
     finantialIndicators: finantialIndicatorsReducer, // Engloba a todos los slices de indicadores
     itemByBarCodeOrName: itemByBarCodeOrNameReducer,
+    searchItems: searchItemsReducer,
 };
 
 export const store = configureStore({
