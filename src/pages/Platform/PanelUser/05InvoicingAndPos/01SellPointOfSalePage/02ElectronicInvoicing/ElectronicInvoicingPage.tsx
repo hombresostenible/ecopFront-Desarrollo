@@ -292,7 +292,7 @@ function ElectronicInvoicingPage() {
                                             <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
                                         </div>
                                     </div>
-                                    <div className={`${styles.totals} d-flex align-items-center justify-content-end`}>XXXXXXXXXX</div>
+                                    <div className={`${styles.totals} d-flex align-items-center justify-content-end`}><span>Total factura:</span> XXXXXXXXXX</div>
                                     <div className={`${styles.letter__Amount} d-flex align-items-center justify-content-center`}>
                                         MONTO EN LETRAS PERO NUESTRO CLIENTE LO DEBE DE ESCRIBIR
                                     </div>

@@ -68,6 +68,20 @@ function CreateDebitNotesPage() {
     console.log('idSelectedItem: ', idSelectedItem)
     console.log('selectedItem: ', selectedItem)
 
+    const [sellingPrice, setSellingPrice] = useState('');
+    useEffect(() => {
+        if (selectedItem?.sellingPrice) {
+            setSellingPrice(formatNumber(selectedItem.sellingPrice));
+        }
+    }, [selectedItem]);
+    const handleInputChange = (e: { target: { value: any; }; }) => {
+        const value = e.target.value;
+        // Validar que el valor sea un número válido
+        if (!isNaN(value) && value >= 0) {
+            setSellingPrice(value);
+        }
+    };
+
     // Setea la cantidad
     const [quantity, setQuantity] = useState<number | null>(null);
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,10 +163,10 @@ function CreateDebitNotesPage() {
                                         </div>
                                         <p className={`${styles.email} m-0`}>{user?.email}</p>
                                     </div>
-                                    <div className={`${styles.container__Number_Debit_Note} d-flex flex-column`}>
+                                    <div className={`${styles.container__Number_Debit_Note} d-flex`}>
                                         <span className={`${styles.numerator} d-flex align-items-center justify-content-center`}>No.</span>
                                         <div className={`${styles.invoice__Number} p-2 d-flex align-items-center justify-content-start`}>1</div>
-                                        <p>El número de la factura es el que la Dian le dió al cliente (CUDE)</p>
+                                        {/* <p>El número de la factura es el que la Dian le dió al cliente (CUDE)</p> */}
                                         <div className={`${styles.container__Icon_setting} d-flex align-items-center justify-content-center`}>
                                             <IoMdSettings className={`${styles.icon__Setting} `}/>
                                         </div>
@@ -228,13 +242,13 @@ function CreateDebitNotesPage() {
                                         <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                             <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Item</div>
-                                            <div className={`${styles.reference} d-flex align-items-center justify-content-center text-center`}>Referencia</div>
+                                            {/* <div className={`${styles.reference} d-flex align-items-center justify-content-center text-center`}>Referencia</div> */}
                                             <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio</div>
                                             <div className={`${styles.discount__Percentage} d-flex align-items-center justify-content-center text-center`}>Desc %</div>
                                             <div className={`${styles.tax} d-flex align-items-center justify-content-center text-center`}>Impuesto</div>
-                                            <div className={`${styles.description__Note} d-flex align-items-center justify-content-center text-center`}>Descripción</div>
+                                            {/* <div className={`${styles.description__Note} d-flex align-items-center justify-content-center text-center`}>Descripción</div> */}
                                             <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
-                                            <div className={`${styles.total} d-flex align-items-center justify-content-center text-center`}>Total</div>
+                                            <div className={`${styles.total} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                             <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
                                         </div>
                                     </div>
@@ -261,11 +275,22 @@ function CreateDebitNotesPage() {
                                                             onDataItemSelect={(item) => setSelectedItem(item)}
                                                         />
                                                     </div>
-                                                    <div className={`${styles.reference} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    {/* <div className={`${styles.reference} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>Refencia</span>
-                                                    </div>
+                                                    </div> */}
                                                     <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>$ {formatNumber(selectedItem?.sellingPrice)}</span>
+                                                        <input
+                                                            type="number"
+                                                            className={`${styles.input} p-2 border `}
+                                                            value={sellingPrice}
+                                                            min={0}
+                                                            onChange={handleInputChange}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                                    e.preventDefault();
+                                                                }
+                                                            }}
+                                                        />
                                                     </div>
                                                     <div className={`${styles.discount__Percentage} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{selectedItem?.discountPercentage ? selectedItem?.discountPercentage : 'N/A'}</span>
@@ -275,19 +300,26 @@ function CreateDebitNotesPage() {
                                                             defaultValue={0}
                                                             className={`${styles.input} p-2 border `}
                                                         >
-                                                            <option value='No aplica'>No aplica</option>
-                                                            <option value={0}>0 %</option>
-                                                            <option value={5}>5 %</option>
-                                                            <option value={19}>19 %</option>
+                                                            <optgroup label="IVA">
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={0}>IVA 0 %</option>
+                                                                <option value={5}>IVA 5 %</option>
+                                                                <option value={19}>IVA 19 %</option>
+                                                            </optgroup>
+                                                            <optgroup label="INC">
+                                                                <option value={4}>INC 4 %</option>
+                                                                <option value={8}>INC 8 %</option>
+                                                                <option value={16}>INC 16 %</option>
+                                                            </optgroup>
                                                         </select>
                                                     </div>
-                                                    <div className={`${styles.description__Note} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    {/* <div className={`${styles.description__Note} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="text"
                                                             className={`${styles.input} p-2 border `}
                                                             placeholder='Descripción'
                                                         />
-                                                    </div>
+                                                    </div> */}
                                                     <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="number"
@@ -331,16 +363,16 @@ function CreateDebitNotesPage() {
                                         <div className={`{} `}>
                                             <div className={`${styles.container__Section_Total} d-flex`}>
                                                 <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Subtotal</span>
-                                                <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>22121212</div>
+                                                <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>24.000</div>
                                             </div>
                                             <div className={`${styles.container__Section_Total} d-flex`}>
                                                 <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Descuentos</span>
-                                                <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>454545545</div>
+                                                <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>2.400</div>
                                             </div>
                                         </div>
                                         <div className={`${styles.container__Section_Total} d-flex`}>
                                             <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Total</span>
-                                            <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>99898989</div>
+                                            <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>21.600</div>
                                         </div>
                                     </div>
                                 </div>
