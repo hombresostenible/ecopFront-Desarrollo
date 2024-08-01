@@ -146,7 +146,7 @@ function ModalGraphicInventoryMerchandises ({ selectedMerchandise }: ModalInvent
             <h2 className="text-primary-emphasis text-start">Trazabilidad del inventario</h2>
             <div><canvas ref={chartContainer} /></div>
             <div className="mt-4">
-                <h2 className="text-primary-emphasis text-start mb-4">Saldos diarios de tu mrecancía</h2>
+                <h2 className="text-primary-emphasis text-start mb-4">Saldos diarios de tu mercancía</h2>
                 {selectedMerchandise ? (
                     <table className="table table-bordered table-striped">
                         <thead>

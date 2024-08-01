@@ -15,8 +15,8 @@ import ModalChangeQuantityPerItem from '../../../../../helpers/ModalChangeQuanti
 import SearchClientCrm from '../../../../../helpers/SearchClientCrm/SearchClientCrm';
 import SearchSupplierCrm from '../../../../../helpers/SearchSupplierCrm/SearchSupplierCrm';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import styles from './styles.module.css';
 
 interface IncomeCashProps {
