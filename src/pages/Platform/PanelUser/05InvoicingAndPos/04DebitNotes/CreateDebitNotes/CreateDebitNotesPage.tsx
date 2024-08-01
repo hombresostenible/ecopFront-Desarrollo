@@ -214,7 +214,7 @@ function CreateDebitNotesPage() {
                                     </div>
                                 </div>
 
-                                <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                                <div className={`${styles.container__Table} mt-2 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                                     <div className={styles.container__Head}>
                                         <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                             <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Item</div>
@@ -249,7 +249,7 @@ function CreateDebitNotesPage() {
                                                     <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="number"
-                                                            className={`${styles.input} p-2 border `}
+                                                            className={`${styles.input} p-2 border`}
                                                             value={row.item?.sellingPrice}
                                                             min={0}
                                                         />
@@ -258,7 +258,7 @@ function CreateDebitNotesPage() {
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{row.item?.discountPercentage || 'N/A'}</span>
                                                     </div>
                                                     <div className={`${styles.tax} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <select defaultValue={0} className={`${styles.input} p-2 border `}>
+                                                        <select defaultValue={0} className={`${styles.input} p-2 border`}>
                                                             <optgroup label="IVA">
                                                                 <option value='No aplica'>No aplica</option>
                                                                 <option value={0}>IVA 0 %</option>
@@ -275,7 +275,7 @@ function CreateDebitNotesPage() {
                                                     <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="number"
-                                                            className={`${styles.input} p-2 border `}
+                                                            className={`${styles.input} p-2 border`}
                                                             placeholder='Cantidad'
                                                             min={0}
                                                             value={row.quantity || ''}
