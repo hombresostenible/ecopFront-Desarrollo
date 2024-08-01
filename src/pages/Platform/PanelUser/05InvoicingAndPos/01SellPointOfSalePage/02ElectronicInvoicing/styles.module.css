@@ -30,29 +30,43 @@
     color: #fff;
     margin: 0;
 }
+.select__Branch {
+    border-radius: 5px;
+    width: 250px;
+}
+.select__Branch:focus{
+    outline-color: #718bd8;
+}
 
 /* CONTENEDOR DE LA FACTURA */
 .container__Invoice {
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
-.container__Header {
+/* .container__Header {
     height: 300px;
+    width: 100%;
+} */
+.container__Header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 .container__Logo {
-    height: 100%;
-    width: 50%;
+    border: 1px solid red;
+    height: 100px;
+    width: 150px;
 }
 .logo {
-    max-height: 60%;
-    max-width: 70%;
+    max-height: 100px;
+    max-width: 100px;
 }
 .container__General_Information_Invoincing {
+    border: 1px solid red;
     height: 100%;
     width: 50%;
 }
 .container_Dates_Invoicing{
+    border: 1px solid red;
     height: 100%;
     width: 50%;
 }
@@ -84,7 +98,7 @@
 .input:focus{
     outline-color: #718bd8;
 }
-.container_Qr_Invoicing{
+.container__Qr_Invoicing{
     height: 100%;
     width: 50%;
 }
@@ -187,7 +201,6 @@
 
 /* CONTENIDO DE LA TABLA */
 .container__Body{
-    height: 60px;
     width: 100%;
 }
 .container__Info{
@@ -198,8 +211,8 @@
 }
 .text__Ellipsis {
     opacity: 0.75;
-    white-space: nowrap;        /* Evita que el texto se divida en varias líneas */
-    text-overflow: ellipsis;    /* Agrega los tres puntos suspensivos */
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .container__Icons {
     height: 100%;
@@ -217,17 +230,19 @@
     cursor: pointer;
 }
 .message__Unrelated_Items {
-    height: 100%;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    height: 60px;
+    width: 100%;
 }
-.container__Button__Add {
-    color: #fff;
-    width: 120px;
+.container__Append {
     background: #718bd8;
+    color: white;
+    padding: 10px 20px;
+    width: 250px;
 }
-.container__Button__Add:hover {
+.container__Append:hover {
     cursor: pointer;
 }
 .icon__Plus {
@@ -307,4 +322,16 @@
 .letter__Amount {
     height: 45px;
     width: 100%;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
 }

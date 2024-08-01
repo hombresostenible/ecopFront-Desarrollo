@@ -86,7 +86,7 @@ function CreateDebitNotesPage() {
 
     useEffect(() => {
         if (shouldNavigate) {
-            navigate('/inventories/consult-merchandises');
+            navigate('/debit-notes/consult-debit-notes');
         }
     }, [shouldNavigate, navigate]);
 
@@ -107,7 +107,7 @@ function CreateDebitNotesPage() {
 
                         <div className="p-2 border">
                             <select
-                                className="p-1 text-center border-0"
+                                className={`${styles.select__Branch} p-1 text-center border-0`}
                                 value={selectedBranch}
                                 onChange={handleBranchChange}
                             >
@@ -121,10 +121,10 @@ function CreateDebitNotesPage() {
                         </div>
 
                         <form onSubmit={onSubmit} className={`${styles.form} position-relative`}>
-                            <div className={`${styles.container__Debit_Note} mt-4 mb-5 p-4 d-flex flex-column align-items-center justify-content-center`}>
-                                <div className={`${styles.container__Header_Debit_Note} mt-4 pb-4 d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Debit_Note} mt-4 mb-5 px-4 d-flex flex-column align-items-center justify-content-center`}>
+                                <div className={`${styles.container__Header} mt-4 pb-4 d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.container__Logo} d-flex align-items-center justify-content-center`}>
-                                        <img src={user?.logo} alt="Logo" className={`${styles.logo__User} `}/>
+                                        <img src={user?.logo} alt="Logo" className={`${styles.logo} `}/>
                                     </div>
                                     <div className={`${styles.container__Info_User} d-flex flex-column align-items-center justify-content-center`}>
                                         <h4 className={`${styles.name__User} m-0`}>
@@ -230,7 +230,7 @@ function CreateDebitNotesPage() {
                                     <div className={`${styles.container__Body}`}>
                                         {Array.isArray(rows) && rows.length > 0 ? (
                                             rows.map((row, index) => (
-                                                <div className={`${styles.container__Info} d-flex align-items-center justify-content-between`} key={index}>
+                                                <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>
                                                         <SearchItems
                                                             token={token}
@@ -336,6 +336,10 @@ function CreateDebitNotesPage() {
                                         <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>21.600</div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="mb-4 d-flex align-items-center justify-content-center">
+                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
                         </form>
                     </div>
