@@ -59,10 +59,10 @@ function SellPointOfSalePage() {
                             </div>
                         </div>
 
-                        <div className="mb-1 p-3 border d-flex align-items-center justify-content-between">
+                        <div className="p-3 d-flex align-items-center justify-content-between border">
                             <div className="d-flex justify-content-between">
                                 <select
-                                    className={`${styles.input} p-2 border `}
+                                    className={`${styles.input} p-2 border`}
                                     value={selectedBranch}
                                     onChange={handleBranchChange}
                                 >

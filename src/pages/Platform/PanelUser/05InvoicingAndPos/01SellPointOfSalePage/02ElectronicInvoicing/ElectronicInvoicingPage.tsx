@@ -61,8 +61,6 @@ function ElectronicInvoicingPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-
-
                         <div className="d-flex align-items-center justify-content-between">
                             <h1 className={`${styles.title} mb-4 mt-4`}>Facturación</h1>
                             <div className={styles.link__Head_Navigate}>
@@ -71,11 +69,10 @@ function ElectronicInvoicingPage() {
                             </div>
                         </div>
 
-                        
-                        <div className={`${styles.branch} mb-1 p-3 border`}>
+                        <div className={`${styles.branch} p-2 border`}>
                             <div className="d-flex justify-content-between ">
                                 <select
-                                    className="border-0 p-1 text-center"
+                                    className="p-1 text-center border-0"
                                     value={selectedBranch}
                                     onChange={handleBranchChange}
                                 >
