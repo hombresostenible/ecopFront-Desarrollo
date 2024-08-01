@@ -43,31 +43,25 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
-/* .container__Header {
-    height: 300px;
-    width: 100%;
-} */
 .container__Header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 .container__Logo {
-    border: 1px solid red;
-    height: 100px;
-    width: 150px;
+    height: 250px;
+    height: 200px;
+    width: 250px;
 }
 .logo {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 150px;
+    max-width: 300px;
 }
 .container__General_Information_Invoincing {
-    border: 1px solid red;
     height: 100%;
-    width: 50%;
+    width: 650px;
 }
 .container_Dates_Invoicing{
-    border: 1px solid red;
     height: 100%;
+    height: 200px;
     width: 50%;
 }
 
@@ -99,12 +93,12 @@
     outline-color: #718bd8;
 }
 .container__Qr_Invoicing{
-    height: 100%;
-    width: 50%;
+    height: 200px;
+    width: 200px;
 }
 .qr__Code {
-    max-height: 100%;
-    max-width: 60%;
+    max-height: 90%;
+    max-width: 90%;
 }
 
 /* CONTENEDOR DE DATOS DEL EMISOR Y DEL ADQUIRIENTE */
@@ -123,6 +117,7 @@
 }
 .subtitle__Section {
     font-size: 20px;
+    font-weight: 600;
     height: 50px;
     width: 250px;
 }
@@ -138,7 +133,6 @@
 
 /* TABLA */
 .container__Table{
-    border: 5px solid rgba(0, 0, 0, 0.8);
     width: 100%;
 }
 .container__Head{
@@ -154,46 +148,64 @@
     height: 60px;
 }
 .number {
+    /* border: 1px solid red; */
     height: 60px;
     width: 8%;
     min-width: 80px;
 }
 .code {
+    /* border: 1px solid red; */
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
 .product__Service {
+    /* border: 1px solid red; */
     height: 60px;
     width: 18%;
     min-width: 180px;
 }
 .unit__Value {
+    /* border: 1px solid red; */
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
 .quantity {
+    /* border: 1px solid red; */
     height: 60px;
     width: 9%;
     min-width: 90px;
 }
+.quantity__Quantity{
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+}
+.quantity__Quantity:focus {
+    outline-color: rgba(0, 0, 0, 0.2);
+}
+
 .discount {
+    /* border: 1px solid red; */
     height: 60px;
     width: 9%;
     min-width: 90px;
 }
 .discount__Value {
+    /* border: 1px solid red; */
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
 .total__Value {
+    /* border: 1px solid red; */
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
 .action {
+    /* border: 1px solid red; */
     height: 60px;
     width: 4%;
     min-width: 40px;
@@ -236,6 +248,9 @@
     height: 60px;
     width: 100%;
 }
+.container__Add {
+    width: 100%;
+}
 .container__Append {
     background: #718bd8;
     color: white;
@@ -247,16 +262,17 @@
 }
 .icon__Plus {
     color: #fff;
-    margin: 4px 5px 0 0;
 }
 
 /* TOTALES */
 .container__Taxes_And_Values {
-    height: 250px;
     width: 100%;
 }
 .container__Taxes {
     width: 450px;
+}
+.title__Mean_Payment {
+    font-weight: 600;
 }
 .input {
     border-radius: 5px;
@@ -274,34 +290,47 @@
 .continer__Retention_Titles {
     width: 450px;
 }
+.title__Column_Retention {
+    font-weight: 600;
+    width: 140px;
+}
+.title__Column_Percentage {
+    font-weight: 600;
+    width: 170px;
+}
+.title__Column_Amount {
+    font-weight: 600;
+    width: 140px;
+}
 .retention {
-    height: 60px;
+    font-weight: 600;
+    height: 40px;
     width: 140px;
 }
 .percentage__Value {
-    height: 60px;
+    height: 40px;
     width: 170px;
 }
 .retention__Value {
-    height: 60px;
     width: 140px;
 }
 .container__Retention_Values {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
-    font-size: 14px;
     width: 450px;
 }
 .retention__Values {
-    height: 30px;
+    height: 40px;
 }
 
 /* CONTENEDOR DE TOTALES */
 .container__Totales {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 550px;
 }
 .title__Container_Totales {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    font-size: 20px;
     width: 100%;
 }
 .ffffffffff {
@@ -312,7 +341,16 @@
     width: 300px;
 }
 .container__Values_Totals {
-    width: 200px;
+    width: 250px;
+}
+.title__Column_Totals {
+    height: 40px;
+    width: 100%;
+    font-weight: 600;
+}
+.column__Totals {
+    height: 40px;
+    width: 100%;
 }
 .totals {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -320,7 +358,7 @@
     width: 100%;
 }
 .letter__Amount {
-    height: 45px;
+    height: 90px;
     width: 100%;
 }
 .button__Submit {

@@ -57,8 +57,12 @@ function ElectronicInvoicingPage() {
     // Selecciona el cliente al que se le vende
     const [selectedClient, setSelectedClient] = useState<ICrmClient | null>(null);
 
-    // Estados para las fechas de registro y transacción
-    const [registrationDate, setRegistrationDate] = useState<Date>();
+    // useEffect para establecer la fecha actual
+    const [currentDate, setCurrentDate] = useState<Date>();
+    useEffect(() => {
+        const currentDate = new Date();
+        setCurrentDate(currentDate);
+    }, []);
 
     const [rows, setRows] = useState<Array<{ id: number | null; item: IAssets | IMerchandise | IProduct | IRawMaterial | IService | null; quantity: number | null }>>([]);
     const addRow = () => {
@@ -119,37 +123,35 @@ function ElectronicInvoicingPage() {
                         </div>
 
                         <form onSubmit={onSubmit} className={`${styles.form} position-relative`}>
-                            <div className={`${styles.container__Invoice} mt-4 mb-5 p-4 d-flex flex-column align-items-center justify-content-center`}>
-                                <div className={`${styles.container__Header} mt-4 pb-4 d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Invoice} mt-4 mb-5 px-4 d-flex flex-column align-items-center justify-content-center`}>
+                                <div className={`${styles.container__Header} mt-4 d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.container__Logo} d-flex align-items-center justify-content-center`}>
                                         <img src={user?.logo} alt="Logo" className={`${styles.logo} `}/>
                                     </div>
-                                    <div className={`${styles.container__General_Information_Invoincing} d-flex`}>
-                                        <div className={`${styles.container_Dates_Invoicing} d-flex flex-column align-items-center justify-content-center`}>
-                                            <h4 className='text-center m-0'>Factura de venta N°</h4>
-                                            <h4 className='text-center m-0'>9593122DFDF-1</h4>
-                                            <h4 className='text-center m-0'>FECHA: {registrationDate  && registrationDate.toLocaleDateString()}</h4>
-                                            <h4 className='text-center m-0'>FECHA DE VENCIMIENTO:</h4>
-                                            <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
-                                                <div className="d-flex flex-column align-items-start justify-content-center">
-                                                    <DatePicker
-                                                        selected={registrationDate || undefined}
-                                                        onChange={(date) => setRegistrationDate(date || undefined)}
-                                                        className={`${styles.input} p-2 border text-center`}
-                                                        calendarClassName={styles.custom__Calendar}
-                                                        dayClassName={(date) =>
-                                                            date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
-                                                        }
-                                                        showMonthDropdown
-                                                        showYearDropdown
-                                                        dropdownMode="select"
-                                                    />
-                                                </div>
+                                    <div className={`d-flex flex-column align-items-center justify-content-center`}>
+                                        <h4 className='text-center m-0'>Factura de venta N°</h4>
+                                        <h4 className='text-center m-0'>9593122DFDF-1</h4>
+                                        <h4 className='text-center m-0'>FECHA: {currentDate  && currentDate.toLocaleDateString()}</h4>
+                                        <h4 className='text-center m-0'>FECHA DE VENCIMIENTO:</h4>
+                                        <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
+                                            <div className="d-flex flex-column align-items-start justify-content-center">
+                                                <DatePicker
+                                                    selected={currentDate || undefined}
+                                                    onChange={(date) => setCurrentDate(date || undefined)}
+                                                    className={`${styles.input} p-2 border text-center`}
+                                                    calendarClassName={styles.custom__Calendar}
+                                                    dayClassName={(date) =>
+                                                        date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                                    }
+                                                    showMonthDropdown
+                                                    showYearDropdown
+                                                    dropdownMode="select"
+                                                />
                                             </div>
-                                        </div>                                    
-                                        <div className={`${styles.container__Qr_Invoicing} d-flex align-items-center justify-content-center`}>
-                                            <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Codigo_QR.svg/1200px-Codigo_QR.svg.png'} alt="Logo" className={`${styles.qr__Code} `}/>
                                         </div>
+                                    </div>
+                                    <div className={`${styles.container__Qr_Invoicing} d-flex align-items-center justify-content-center`}>
+                                        <img src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Codigo_QR.svg/1200px-Codigo_QR.svg.png'} alt="Logo" className={`${styles.qr__Code} `}/>
                                     </div>
                                 </div>
 
@@ -166,11 +168,11 @@ function ElectronicInvoicingPage() {
                                                 <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.verificationDigit ? `${user.documentId}-${user.verificationDigit}` : user?.documentId}</p>
                                             </div>
                                             <div className="d-flex align-items-center justify-content-start">
-                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección:</h4>
+                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección</h4>
                                                 <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.address}</p>
                                             </div>
                                             <div className="d-flex align-items-center justify-content-start">
-                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono:</h4>
+                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono</h4>
                                                 <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{user?.phone}</p>
                                             </div>
                                         </div>
@@ -195,18 +197,18 @@ function ElectronicInvoicingPage() {
                                                 </p>
                                             </div>
                                             <div className="d-flex align-items-center justify-content-start">
-                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección:</h4>
+                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Dirección</h4>
                                                 <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{selectedClient?.address ? selectedClient?.address : 'No asignada aún'}</p>
                                             </div>
                                             <div className="d-flex align-items-center justify-content-start">
-                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono:</h4>
+                                                <h4 className={`${styles.subtitle__Section} m-0 d-flex align-items-center justify-content-start`}>Teléfono</h4>
                                                 <p className={`${styles.data__Section} m-0 d-flex align-items-center justify-content-start`}>{selectedClient?.phone ? selectedClient?.phone : 'No asignado aún'}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                                <div className={`${styles.container__Table} mt-2 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                                     <div className={`${styles.container__Head} `}>
                                         <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                             <div className={`${styles.number} d-flex align-items-center justify-content-center text-center`}>#</div>
@@ -226,7 +228,7 @@ function ElectronicInvoicingPage() {
                                             rows.map((row, index) => (
                                                 <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
                                                     <div className={`${styles.number} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>9999</span>
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{index + 1}</span>
                                                     </div>
                                                     <div className={`${styles.code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center`}>
                                                         <SearchItems
@@ -249,15 +251,15 @@ function ElectronicInvoicingPage() {
                                                     <div className={`${styles.unit__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="number"
-                                                            className={`${styles.input} p-2 border `}
+                                                            className={`${styles.quantity__Quantity} p-2 border`}
                                                             value={row.item?.sellingPrice}
                                                             min={0}
                                                         />
                                                     </div>
-                                                    <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <div className={`${styles.quantity} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
                                                             type="number"
-                                                            className={`${styles.input} p-2 border `}
+                                                            className={`${styles.quantity__Quantity} p-2 border`}
                                                             placeholder='Cantidad'
                                                             min={0}
                                                             value={row.quantity || ''}
@@ -267,15 +269,20 @@ function ElectronicInvoicingPage() {
                                                                 updatedRows[index] = { ...updatedRows[index], quantity: value };
                                                                 setRows(updatedRows);
                                                             }}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                                    e.preventDefault();
+                                                                }
+                                                            }}
                                                         />
                                                     </div>
-                                                    <div className={`${styles.discount__Percentage} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <div className={`${styles.discount} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{row.item?.discountPercentage || 'N/A'}</span>
                                                     </div>
                                                     <div className={`${styles.discount__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} overflow-hidden`}>$200</span>
                                                     </div>
-                                                    <div className={`${styles.total} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <div className={`${styles.total__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>$ {formatNumber((row.quantity || 0) * (row.item?.sellingPrice || 0))}</span>
                                                     </div>
                                                     <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
@@ -297,89 +304,17 @@ function ElectronicInvoicingPage() {
                                     </div>
                                 </div>
 
-                                <div>CADA PRODUCTO SE DEBE DE AGREGAR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
-
-                                <div
-                                    className={`${styles.container__Append} mt-3 mb-3 d-flex align-items-center justify-content-between`}
-                                    onClick={addRow}
-                                >
-                                    <FaPlus className={`${styles.icon__Plus}`} />
-                                    <span>Agregar artículo</span>
+                                <div className={`${styles.container__Add} mb-4 d-flex flex-column align-items-start justify-content-between gap-2`}>
+                                    <div>CADA PRODUCTO SE DEBE DE AGREGAR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
+                                    <div
+                                        className={`${styles.container__Append} d-flex align-items-center justify-content-between`}
+                                        onClick={addRow}
+                                    >
+                                        <FaPlus className={`${styles.icon__Plus}`} />
+                                        <span>Agregar artículo</span>
+                                    </div>
                                 </div>
                                 
-                                <div className={`${styles.container__Taxes_And_Values} d-flex align-items-start justify-content-between`}>
-                                    <div className={`${styles.container__Taxes} d-flex flex-column gap-4`}>
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <p className="m-0">Medio de pago</p>
-                                            <div>
-                                                <select
-                                                    className={`${styles.input} p-2 border `}
-                                                >
-                                                    <option value="">CONTADO</option>
-                                                    <option value="">CREDITO</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className={`${styles.container__Retention} d-flex flex-column`}>
-                                            <div className={`${styles.continer__Retention_Titles} d-flex`}>
-                                                <div className={`${styles.retention} d-flex align-items-center justify-content-center`}>Retención</div>
-                                                <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>Valor Porcentual (%)</div>
-                                                <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>Importe</div>
-                                            </div>
-
-                                            <div className={`${styles.container__Retention_Values} d-flex flex-column`}>
-                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
-                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente</div>
-                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
-                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
-                                                </div>
-                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
-                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete IVA</div>
-                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
-                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
-                                                </div>
-                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
-                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete ICA</div>
-                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
-                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.container__Totales}>
-                                        <div className={`${styles.title__Container_Totales} text-center`}>Totales</div>
-                                        <div className={`${styles.ffffffffff} d-flex`}>
-                                            <div className={styles.container__Column_Totals}>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>Base antes de descuentos:</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>Descuentos:</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>Total Base Imponible:</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>IVA:</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>Total Impuestos:</p>
-                                            </div>
-                                            <div className={styles.container__Values_Totals}>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
-                                                <p className={`${styles.column__Totals} m-0 text-end`}>XXXXXXX</p>
-                                            </div>
-                                        </div>
-                                        <div className={`${styles.totals} d-flex align-items-center justify-content-end`}><span>Total factura:</span> XXXXXXXXXX</div>
-                                        <div className={`${styles.letter__Amount} d-flex align-items-center justify-content-center`}>
-                                            MONTO EN LETRAS PERO NUESTRO CLIENTE LO DEBE DE ESCRIBIR
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                className={`${styles.container__Append} mt-3 mb-3 d-flex align-items-center justify-content-between`}
-                                onClick={addRow}
-                            >
-                                <FaPlus className={`${styles.icon__Plus}`} />
-                                <span>Agregar artículo</span>
                             </div>
 
                             <div className="mb-4 d-flex align-items-center justify-content-center">
@@ -395,3 +330,68 @@ function ElectronicInvoicingPage() {
 }
 
 export default ElectronicInvoicingPage;
+                                // <div className={`${styles.container__Taxes_And_Values} pb-4 d-flex align-items-start justify-content-between`}>
+                                //     <div className={`${styles.container__Taxes} d-flex flex-column gap-4`}>
+                                //         <div className={`${styles.container__Mean_Payment} d-flex align-items-center justify-content-between`}>
+                                //             <p className={`${styles.title__Mean_Payment} m-0`}>Medio de pago</p>
+                                //             <div>
+                                //                 <select
+                                //                     className={`${styles.input} p-2 border `}
+                                //                 >
+                                //                     <option value="">CONTADO</option>
+                                //                     <option value="">CREDITO</option>
+                                //                 </select>
+                                //             </div>
+                                //         </div>
+
+                                //         <div className={`${styles.container__Retention} d-flex flex-column`}>
+                                //             <div className={`${styles.continer__Retention_Titles} p-2 d-flex`}>
+                                //                 <div className={`${styles.title__Column_Retention} d-flex align-items-center justify-content-center`}>Retención</div>
+                                //                 <div className={`${styles.title__Column_Percentage} d-flex align-items-center justify-content-center`}>Valor Porcentual (%)</div>
+                                //                 <div className={`${styles.title__Column_Amount} d-flex align-items-center justify-content-center`}>Importe</div>
+                                //             </div>
+
+                                //             <div className={`${styles.container__Retention_Values} d-flex flex-column`}>
+                                //                 <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                //                     <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente</div>
+                                //                     <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                //                     <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                //                 </div>
+                                //                 <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                //                     <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete IVA</div>
+                                //                     <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                //                     <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                //                 </div>
+                                //                 <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                //                     <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete ICA</div>
+                                //                     <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                //                     <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                //                 </div>
+                                //             </div>
+                                //         </div>
+                                //     </div>
+
+                                //     <div className={styles.container__Totales}>
+                                //         <div className={`${styles.title__Container_Totales} p-2 text-center`}>Totales</div>
+                                //         <div className={`${styles.ffffffffff} d-flex`}>
+                                //             <div className={styles.container__Column_Totals}>
+                                //                 <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Base antes de descuentos:</div>
+                                //                 <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Descuentos:</div>
+                                //                 <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Total Base Imponible:</div>
+                                //                 <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>IVA:</div>
+                                //                 <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Total Impuestos:</div>
+                                //             </div>
+                                //             <div className={styles.container__Values_Totals}>
+                                //                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                //                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                //                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                //                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                //                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                //             </div>
+                                //         </div>
+                                //         <div className={`${styles.totals} px-2 d-flex align-items-center justify-content-end`}><span>Total factura:</span> XXXXXXXXXX</div>
+                                //         <div className={`${styles.letter__Amount} p-2 d-flex align-items-start justify-content-center`}>
+                                //             MONTO EN LETRAS PERO NUESTRO CLIENTE LO DEBE DE ESCRIBIR
+                                //         </div>
+                                //     </div>
+                                // </div>
