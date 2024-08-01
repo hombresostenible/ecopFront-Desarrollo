@@ -31,11 +31,11 @@
     background: #718bd8;
     padding: 10px 20px;
 }
-.input__Branch {
+.select__Branch {
     border-radius: 5px;
     width: 250px;
 }
-.input__Branch:focus{
+.select__Branch:focus{
     outline-color: #718bd8;
 }
 
@@ -45,7 +45,7 @@
 }
 
 /* ENCABEZADO */
-.container__Header_Debit_Note {
+.container__Header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
 }
@@ -53,7 +53,7 @@
     height: 100px;
     width: 150px;
 }
-.logo__User {
+.logo {
     max-height: 100px;
     max-width: 100px;
 }
@@ -221,7 +221,6 @@
 
 /* CONTENIDO DE LA TABLA */
 .container__Body{
-    /* height: 60px; */
     width: 100%;
 }
 .container__Info{
@@ -297,4 +296,16 @@
 .total__Debit__Note {
     height: 60px;
     width: 300px;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
 }
