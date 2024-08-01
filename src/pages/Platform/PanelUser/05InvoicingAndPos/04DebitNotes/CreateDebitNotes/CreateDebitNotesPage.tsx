@@ -22,6 +22,7 @@ import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import { CgNotes } from "react-icons/cg";
 import { IoMdSettings } from "react-icons/io";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from 'react-icons/fa';
@@ -96,25 +97,27 @@ function CreateDebitNotesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus notas débito</h1>
-
-                        <Link to='/debit-notes/consult-debit-notes' className={`${styles.link__Back} border-0 text-decoration-none`}>Consulta tus notas débito</Link>
-
-                        <div className="mb-1 p-3 border">
-                            <div className="d-flex justify-content-between">
-                                <select
-                                    className={`${styles.input} p-2 border `}
-                                    value={selectedBranch}
-                                    onChange={handleBranchChange}
-                                >
-                                    <option value=''>Selecciona una Sede</option>
-                                    {Array.isArray(branches) && branches.map((branch, index) => (
-                                        <option key={index} value={branch.id}>
-                                            {branch.nameBranch}
-                                        </option>
-                                    ))}
-                                </select>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus notas débito</h1>
+                            <div className={styles.link__Head_Navigate}>
+                                <CgNotes className={`${styles.icon__Head_Navigate} `}/>
+                                <Link to='/debit-notes/consult-debit-notes' className={`${styles.link} text-decoration-none`}>Consulta tus notas débito</Link>
                             </div>
+                        </div>
+
+                        <div className="p-2 border">
+                            <select
+                                className="p-1 text-center border-0"
+                                value={selectedBranch}
+                                onChange={handleBranchChange}
+                            >
+                                <option value=''>Selecciona una Sede</option>
+                                {Array.isArray(branches) && branches.map((branch, index) => (
+                                    <option key={index} value={branch.id}>
+                                        {branch.nameBranch}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <form onSubmit={onSubmit} className={`${styles.form} position-relative`}>
@@ -225,85 +228,112 @@ function CreateDebitNotesPage() {
                                     </div>
 
                                     <div className={`${styles.container__Body}`}>
-                                        {rows.map((row, index) => (
-                                            <div className={`${styles.container__Info} d-flex align-items-center justify-content-between`} key={index}>
-                                                <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>
-                                                    <SearchItems
-                                                        token={token}
-                                                        onItemSelect={() => {
-                                                            const updatedRows = [...rows];
-                                                            updatedRows[index] = { ...updatedRows[index] };
-                                                            setRows(updatedRows);
-                                                        }}
-                                                        onDataItemSelect={(item) => {
-                                                            const updatedRows = [...rows];
-                                                            updatedRows[index] = { ...updatedRows[index], item };
-                                                            setRows(updatedRows);
-                                                        }}
-                                                    />
+                                        {Array.isArray(rows) && rows.length > 0 ? (
+                                            rows.map((row, index) => (
+                                                <div className={`${styles.container__Info} d-flex align-items-center justify-content-between`} key={index}>
+                                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>
+                                                        <SearchItems
+                                                            token={token}
+                                                            onItemSelect={() => {
+                                                                const updatedRows = [...rows];
+                                                                updatedRows[index] = { ...updatedRows[index] };
+                                                                setRows(updatedRows);
+                                                            }}
+                                                            onDataItemSelect={(item) => {
+                                                                const updatedRows = [...rows];
+                                                                updatedRows[index] = { ...updatedRows[index], item };
+                                                                setRows(updatedRows);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <input
+                                                            type="number"
+                                                            className={`${styles.input} p-2 border `}
+                                                            value={row.item?.sellingPrice}
+                                                            min={0}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.discount__Percentage} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{row.item?.discountPercentage || 'N/A'}</span>
+                                                    </div>
+                                                    <div className={`${styles.tax} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <select defaultValue={0} className={`${styles.input} p-2 border `}>
+                                                            <optgroup label="IVA">
+                                                                <option value='No aplica'>No aplica</option>
+                                                                <option value={0}>IVA 0 %</option>
+                                                                <option value={5}>IVA 5 %</option>
+                                                                <option value={19}>IVA 19 %</option>
+                                                            </optgroup>
+                                                            <optgroup label="INC">
+                                                                <option value={4}>INC 4 %</option>
+                                                                <option value={8}>INC 8 %</option>
+                                                                <option value={16}>INC 16 %</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <input
+                                                            type="number"
+                                                            className={`${styles.input} p-2 border `}
+                                                            placeholder='Cantidad'
+                                                            min={0}
+                                                            value={row.quantity || ''}
+                                                            onChange={(e) => {
+                                                                const value = parseFloat(e.target.value);
+                                                                const updatedRows = [...rows];
+                                                                updatedRows[index] = { ...updatedRows[index], quantity: value };
+                                                                setRows(updatedRows);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.total} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>$ {formatNumber((row.quantity || 0) * (row.item?.sellingPrice || 0))}</span>
+                                                    </div>
+                                                    <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <RiDeleteBin6Line
+                                                            className={`${styles.button__Delete}`}
+                                                            onClick={() => {
+                                                                const updatedRows = rows.filter((_, i) => i !== index);
+                                                                setRows(updatedRows);
+                                                            }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <input
-                                                        type="number"
-                                                        className={`${styles.input} p-2 border `}
-                                                        value={row.item?.sellingPrice}
-                                                        min={0}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.discount__Percentage} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{row.item?.discountPercentage || 'N/A'}</span>
-                                                </div>
-                                                <div className={`${styles.tax} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <select defaultValue={0} className={`${styles.input} p-2 border `}>
-                                                        <optgroup label="IVA">
-                                                            <option value='No aplica'>No aplica</option>
-                                                            <option value={0}>IVA 0 %</option>
-                                                            <option value={5}>IVA 5 %</option>
-                                                            <option value={19}>IVA 19 %</option>
-                                                        </optgroup>
-                                                        <optgroup label="INC">
-                                                            <option value={4}>INC 4 %</option>
-                                                            <option value={8}>INC 8 %</option>
-                                                            <option value={16}>INC 16 %</option>
-                                                        </optgroup>
-                                                    </select>
-                                                </div>
-                                                <div className={`${styles.quantity} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <input
-                                                        type="number"
-                                                        className={`${styles.input} p-2 border `}
-                                                        placeholder='Cantidad'
-                                                        min={0}
-                                                        value={row.quantity || ''}
-                                                        onChange={(e) => {
-                                                            const value = parseFloat(e.target.value);
-                                                            const updatedRows = [...rows];
-                                                            updatedRows[index] = { ...updatedRows[index], quantity: value };
-                                                            setRows(updatedRows);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.total} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>$ {formatNumber((row.quantity || 0) * (row.item?.sellingPrice || 0))}</span>
-                                                </div>
-                                                <div className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <RiDeleteBin6Line
-                                                        className={`${styles.button__Delete}`}
-                                                        onClick={() => {
-                                                            const updatedRows = rows.filter((_, i) => i !== index);
-                                                            setRows(updatedRows);
-                                                        }}
-                                                    />
-                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes artículos registrados
                                             </div>
-                                        ))}
+                                        )}
                                     </div>
-                                    <div
-                                        className={`${styles.container__Append} mt-3 mb-3 d-flex align-items-center justify-content-between`}
-                                        onClick={addRow}
-                                    >
-                                        <FaPlus className={`${styles.icon__Plus}`} />
-                                        <span>Agregar artículo</span>
+                                </div>
+                            </div>
+
+                            <div
+                                className={`${styles.container__Append} mt-3 mb-3 d-flex align-items-center justify-content-between`}
+                                onClick={addRow}
+                            >
+                                <FaPlus className={`${styles.icon__Plus}`} />
+                                <span>Agregar artículo</span>
+                            </div>
+
+                            <div className={`${styles.container__Totals} mb-5 d-flex align-items-center justify-content-between`}>
+                                <div className="d-flex"></div>
+                                <div className={`${styles.debit__Note_Total} `}>
+                                    <div className={`{} `}>
+                                        <div className={`${styles.container__Section_Total} d-flex`}>
+                                            <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Subtotal</span>
+                                            <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>24.000</div>
+                                        </div>
+                                        <div className={`${styles.container__Section_Total} d-flex`}>
+                                            <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Descuentos</span>
+                                            <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>2.400</div>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.container__Section_Total} d-flex`}>
+                                        <span className={`${styles.title__Total} px-2 d-flex align-items-center justify-content-end`}>Total</span>
+                                        <div className={`${styles.total__Debit__Note} d-flex align-items-center justify-content-center`}>21.600</div>
                                     </div>
                                 </div>
                             </div>
