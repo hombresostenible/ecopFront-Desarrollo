@@ -128,7 +128,7 @@ function CreateMerchandisesPage() {
                 }
             }, 1500);
         } catch (error) {
-            console.error('Error en el envío del formulario', error);
+            throw new Error('Error en el envío del formulario');
         }
     };
 
