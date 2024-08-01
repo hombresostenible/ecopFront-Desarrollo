@@ -11,6 +11,13 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
+.input {
+    border-radius: 5px;
+    width: 250px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
 
 /* CONTENEDOR DE LAS FECHAS */
 .container__Check {
@@ -41,13 +48,6 @@
 }
 .weekday {
     color: #212529;
-}
-.input {
-    border-radius: 5px;
-    width: 250px;
-}
-.input:focus{
-    outline-color: #718bd8;
 }
 .type__Income {
     border: 1px solid rgba(0, 0, 0, 0.2);
