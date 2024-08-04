@@ -13,29 +13,28 @@ import { IProduct } from "../../types/User/products.types";
 import { IRawMaterial } from "../../types/User/rawMaterial.types";
 import { IService } from "../../types/User/services.types";
 import CreateItem from '../CreateItem/CreateItem';
-import { StylesReactSelectItems } from '../StylesComponents/StylesReactSelect';
+import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
-interface SearchItemsProps {
-    token: string;                                                                                          //Token del cliente
-    onItemSelect?: (value: number | null) => void;                                                          //Id del item seleccionado
-    onDataItemSelect?: (data: IAssets | IMerchandise | IProduct | IRawMaterial | IService) => void;         //Prop adicional
+interface SearchItemsBynameProps {
+    token: string;
+    onItemSelect?: (item: any) => void;
+    onDataItemSelect?: (data: IAssets | IMerchandise | IProduct | IRawMaterial | IService) => void;
 }
 
 interface OptionType {
-    value: string;
     label: string;
-    data?: IAssets | IMerchandise | IProduct | IRawMaterial | IService;                                     // Propiedad opcional
+    data?: IAssets | IMerchandise | IProduct | IRawMaterial | IService;
 }
 
-function SearchItems({ token, onItemSelect, onDataItemSelect }: SearchItemsProps) {
+function SearchItemsByname({ token, onItemSelect, onDataItemSelect }: SearchItemsBynameProps) {
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
     const items = useSelector((state: RootState) => state.searchItems.items);
-
+    
     const [filterText, setFilterText] = useState<string>('');
     const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
-    const [showCancelModalCreateClient, setShowCancelModalCreateClient] = useState(false);
+    const [showCancelModalCreateItem, setshowCancelModalCreateItem] = useState(false);
     const selectRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -60,20 +59,17 @@ function SearchItems({ token, onItemSelect, onDataItemSelect }: SearchItemsProps
     }, [selectRef, selectedOption]);
 
     const createItemOption: OptionType = {
-        value: 'CreateItem',
         label: '¿No existe el artículo? Créalo acá',
     };
 
     const filteredOptions: OptionType[] = Array.isArray(items)
         ? items
-            .filter((item) => 
-                (item?.nameItem && item.nameItem.toLowerCase().includes(filterText.toLowerCase())) ||
-                (item?.barCode && item.barCode.toString().includes(filterText))
-            )
-            .map((item) => ({
-                value: item.barCode ? item.barCode.toString() : '',  // Manejar undefined barCode
-                label: `${item.nameItem} - ${item.barCode ? item.barCode : 'N/A'}`,  // Mostrar 'N/A' si barCode es undefined
-                data: item, // Incluimos los datos completos del artículo
+              .filter((item) =>
+                item?.nameItem && item.nameItem.toLowerCase().includes(filterText.toLowerCase())
+              )
+              .map((item) => ({
+                label: `${item.nameItem}`,
+                data: item,
             }))
         : [];
 
@@ -84,21 +80,22 @@ function SearchItems({ token, onItemSelect, onDataItemSelect }: SearchItemsProps
     };
 
     const handleSelectChange = (option: OptionType | null) => {
-        if (option?.value === 'CreateItem') {
-            setShowCancelModalCreateClient(true);
+        if (option?.label === '¿No existe el artículo? Créalo acá') {
+            setshowCancelModalCreateItem(true);
         } else {
-            if (onItemSelect) {
-                onItemSelect(option?.value ? parseInt(option.value) : null); // Llama la función `onItemSelect` si está definida
+            if (onItemSelect && option?.data) {
+                onItemSelect(option.data);
             }
             if (onDataItemSelect && option?.data) {
-                onDataItemSelect(option.data); // Llama la función `onDataItemSelect` con los datos completos del cliente
+                onDataItemSelect(option.data);
             }
-            setSelectedOption(option);
+            setSelectedOption(null);
+            setFilterText('');
         }
     };
 
-    const onCloseCreateItemtModal = () => {
-        setShowCancelModalCreateClient(false);
+    const onCloseCreateItemModal = () => {
+        setshowCancelModalCreateItem(false);
     };
 
     const onCreateItem = (token: string) => {
@@ -107,25 +104,27 @@ function SearchItems({ token, onItemSelect, onDataItemSelect }: SearchItemsProps
 
     return (
         <div ref={selectRef} className="d-flex align-items-center justify-content-center">
-            <Select
-                value={selectedOption}
-                inputValue={filterText}
-                onInputChange={handleInputChange}
-                onChange={handleSelectChange}
-                options={filteredOptions}
-                placeholder="Busca por nombre"
-                isSearchable
-                styles={StylesReactSelectItems}
-            />
+            <div>
+                <Select
+                    value={selectedOption}
+                    inputValue={filterText}
+                    onInputChange={handleInputChange}
+                    onChange={handleSelectChange}
+                    options={filteredOptions}
+                    placeholder="Busca por nombre"
+                    isSearchable
+                    styles={StylesReactSelect}
+                />
+            </div>
 
-            <Modal show={showCancelModalCreateClient} onHide={onCloseCreateItemtModal}>
+            <Modal show={showCancelModalCreateItem} onHide={onCloseCreateItemModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Crea tu artículo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <CreateItem
                         token={token}
-                        onCreateComplete={onCloseCreateItemtModal}
+                        onCreateComplete={onCloseCreateItemModal}
                         onItemCreated={onCreateItem}
                     />
                 </Modal.Body>
@@ -134,4 +133,4 @@ function SearchItems({ token, onItemSelect, onDataItemSelect }: SearchItemsProps
     );
 }
 
-export default SearchItems;
+export default SearchItemsByname;
