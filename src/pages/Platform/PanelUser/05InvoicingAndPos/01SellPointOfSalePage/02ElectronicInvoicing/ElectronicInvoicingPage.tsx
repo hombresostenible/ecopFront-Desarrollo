@@ -50,26 +50,39 @@ function ElectronicInvoicingPage() {
         const { value } = e.target;
         setSelectedBranch(value);
     };
-
+    
     const navigate = useNavigate();
     const [shouldNavigate, setShouldNavigate] = useState(false);
-
+    
     // Selecciona el cliente al que se le vende
     const [selectedClient, setSelectedClient] = useState<ICrmClient | null>(null);
-
+    
     // useEffect para establecer la fecha actual
     const [currentDate, setCurrentDate] = useState<Date>();
     useEffect(() => {
         const currentDate = new Date();
         setCurrentDate(currentDate);
     }, []);
-
+    
     const [rows, setRows] = useState<Array<{ id: number | null; item: IAssets | IMerchandise | IProduct | IRawMaterial | IService | null; quantity: number | null }>>([]);
     const addRow = () => {
         setRows(prevRows => [
             ...prevRows,
             { id: null, item: null, quantity: null }
         ]);
+    };
+
+    // Setea el porcentaje de descuento que deseo darle al cliente
+    const [discountPercentage, setDiscountPercentage] = useState<number | null>(null);
+    const handleDiscountPercentageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        const numericValue = Number(value);
+        setDiscountPercentage(numericValue >= 0 ? numericValue : null);
+    };
+
+    const calculateDiscount = (quantity: number | null | undefined, price: number | null | undefined, discountPercentage: number | null | undefined): number => {
+        if (quantity == null || price == null || discountPercentage == null) return 0;
+        return ((quantity * price) / 100) * discountPercentage;
     };
 
     const onSubmit = async (values: any) => {
@@ -277,10 +290,38 @@ function ElectronicInvoicingPage() {
                                                         />
                                                     </div>
                                                     <div className={`${styles.discount} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>{row.item?.discountPercentage || 'N/A'}</span>
+                                                        <input
+                                                            type="number"
+                                                            className={`${styles.quantity__Quantity} p-2 border`}
+                                                            placeholder='Descuento'
+                                                            min={0}
+                                                            value={discountPercentage ?? ''} // Usa el operador de fusión nula
+                                                            onChange={handleDiscountPercentageChange}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                                    e.preventDefault();
+                                                                }
+                                                            }}
+                                                        />
+
+
+                                                        {/* <input
+                                                            type="number"
+                                                            id="discountPercentage"
+                                                            value={discountPercentage ?? ''} // Usa nullish coalescing operator para asegurar un valor predeterminado
+                                                            onChange={handleDiscountPercentageChange}
+                                                            className="form-control"
+                                                            min="0"
+                                                            step="0.01"
+                                                        /> */}
                                                     </div>
                                                     <div className={`${styles.discount__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>$200</span>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                            {discountPercentage !== null
+                                                                ? `$ ${formatNumber(calculateDiscount(row.quantity, row.item?.sellingPrice, discountPercentage))}`
+                                                                : ''
+                                                            }
+                                                        </span>
                                                     </div>
                                                     <div className={`${styles.total__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} text-align-center overflow-hidden`}>$ {formatNumber((row.quantity || 0) * (row.item?.sellingPrice || 0))}</span>

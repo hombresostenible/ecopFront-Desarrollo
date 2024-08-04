@@ -93,3 +93,11 @@
     font-size: 20px;
     width: 980px;
 }
+
+
+
+@media screen and (max-width: 900px) {
+    .container {
+        border: 5px solid red;
+    }
+}

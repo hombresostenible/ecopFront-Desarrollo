@@ -12,7 +12,7 @@ export const getItems = (token: string) => async (dispatch: AppDispatch) => {
                 "Content-Type": "application/json",
             }
         });
-        console.log('response.data: ', response.data.result)
+        // console.log('response.data: ', response.data.result)
         dispatch(getItemsStart(response.data.result));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
