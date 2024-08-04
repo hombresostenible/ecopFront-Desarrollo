@@ -10,7 +10,7 @@ import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook, IAccountsBookItems } from "../../../../../types/User/accountsBook.types";
-import SearchItemName from '../../../../../helpers/SearchItemName/SearchItemName';
+import SearchItemsByname from '../../../../../helpers/SearchItemName/SearchItemsByname';
 import ModalChangeQuantityPerItem from '../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../../../../helpers/SearchClientCrm/SearchClientCrm';
 import SearchSupplierCrm from '../../../../../helpers/SearchSupplierCrm/SearchSupplierCrm';
@@ -283,7 +283,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 />
                             </div>
 
-                            <SearchItemName
+                            <SearchItemsByname
                                 token={token}
                                 onItemSelect={(item) => handleItemSelect(item)}
                             />
