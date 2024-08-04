@@ -24,6 +24,7 @@ interface OptionType {
 }
 
 function SearchClientCrm({ token, onClientSelect, onDataClientSelect }: SearchClientCrmProps) {
+    console.log('token: ', token)
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux

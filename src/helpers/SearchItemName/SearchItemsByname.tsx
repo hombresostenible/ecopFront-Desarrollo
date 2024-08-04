@@ -27,6 +27,7 @@ interface OptionType {
 }
 
 function SearchItemsByname({ token, onItemSelect, onDataItemSelect }: SearchItemsBynameProps) {
+    console.log('token: ', token)
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
