@@ -170,9 +170,9 @@ function App() {
                         <Route path='/reset-password/complete/:idParams/:passwordResetCode' element={<ResetPasswordPage />} />
                         <Route path='/unblocking-account/complete/:idParams' element={<UnblockingAccountPage />} />
                         {/* Sección de NavBar LandingPage */}
-                        <Route path='/paymentPlans' element={<PaymentPlansPage />} />
+                        <Route path='/payment-plans' element={<PaymentPlansPage />} />
                         <Route path='/contactUs' element={<ContactUsPage />} />
-                        <Route path='/fastSimulator' element={<FastSimulatorPage />} />
+                        <Route path='/fast-simulator' element={<FastSimulatorPage />} />
                         <Route path='/appointment' element={<AppointmentPage />} />
                         {/* Sección de Body LandingPage */}
                         <Route path='/register-your-transactions' element={<RegisterYourTransactions />} />

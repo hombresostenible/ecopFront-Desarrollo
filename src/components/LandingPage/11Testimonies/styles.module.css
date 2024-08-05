@@ -1,82 +1,50 @@
-.container {
-    padding: 30px;
-}
 .title {
     color: #718bd8;
 }
-.containerCard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+.container__Testimonies {
+    width: 90%;
 }
-.cardTestimony {
+.card__Testimony {
     border-radius: 20px;
-    height: 250px;
     width: 400px;
-    margin: 20px 0;
-    overflow: hidden;
 }
-/*-----Texto del testimonio-----*/
 .testimony {
     padding: 30px;
     background: #edf2f7;
-    height: 150px;
     width: 100%;
     color: #495057;
     font-size: 14px;
 }
-/*-----Información del usuario-----*/
 .user {
-    height: 100px;
-    padding: 0 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #cbd5e0;
 }
-/*Imagen del usuario*/
-.containerImageuser {
+.container__Image {
     width: 90px;
     height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
     object-fit: cover;
 }
-.imageUser {
+.image__User {
     border-radius: 50%;
     width: 75px;
     height: 75px;
     object-fit: cover;
 }
-
-
-/*Nombre y cargo del testimonio*/
-.infoIdentification {
+.info__Identification {
     width: 250px;
-    padding: 10px;
     color: #e9ecef;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
 }
-.nameUser {
+.name__User {
     color: #343a40;
-    margin: 0;
 }
-.positionCompany {
+.position__Company {
     color: #495057;
     font-size: 14px;
-    margin: 0;
 }
-.spanCompany {
+.span__Company {
     color: #3a86ff;
     font-weight: 500;
 }
-.spanCompany:hover {
+.span__Company:hover {
     color: #4361ee;
     cursor: pointer;
 }
