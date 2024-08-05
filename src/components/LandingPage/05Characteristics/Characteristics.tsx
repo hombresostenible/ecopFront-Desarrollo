@@ -10,13 +10,6 @@ import Reportes from '../../../assets/Mono/Reportes.png';
 import Inventario from '../../../assets/Mono/Inventario.png';
 import PagoNomina from '../../../assets/Mono/PagoNomina.png';
 import Asesorias from '../../../assets/Mono/Asesorias.png';
-
-
-// import ManageYourCustomers from '../../../assets/LandingPage/05Characteristics/ManageYourCustomers.png';
-// import CalculateIndicators from '../../../assets/LandingPage/05Characteristics/CalculateIndicators.png';
-// import ViewAndDownload from '../../../assets/LandingPage/05Characteristics/ViewAndDownload.png';
-// import ReceiveCounseling from '../../../assets/LandingPage/05Characteristics/ReceiveCounseling.png';
-// import MakingInformedDecisions from '../../../assets/LandingPage/05Characteristics/MakingInformedDecisions.png';
 import styles from './styles.module.css';
 
 interface AnimatedBlockProps {
@@ -44,31 +37,28 @@ function AnimatedBlockLeft({ title, content, callAction, image, route, textButto
         }
     }, [ inView ]);
 
-    const animateClass = animated ? styles.animateIn : '';
-
+    const animateClass = animated ? styles.animate__In : '';
 
     return (
-        <div className="m-5 d-flex align-items-center justify-content-center gap-4" ref={ref}>
-            <div className={`${styles.containerEffectTitle} d-flex flex-column align-items-center justify-content-center`}>
-                <div className={`${styles.effectTitle} p-0 w-100 overflow-hidden`}>                
-                    <div className={`${styles.titleCharacteristics} ${animateClass} d-flex flex-title align-items-start justify-content-center`}>
-                        <h2 className={`${styles.title} m-0 text-center`}>{title}</h2>
-                    </div>
+        <div className={`${styles.container__Animated_Block_Left} mb-5 d-flex align-items-center justify-content-center gap-4`} ref={ref}>
+            <div className={`${styles.container__Effect} d-flex flex-column align-items-center justify-content-center`}>
+                <div className={`${styles.title__Characteristic} ${animateClass} d-flex flex-title align-items-start justify-content-center`}>
+                    <h2 className={`${styles.title} m-0 text-center`}>{title}</h2>
                 </div>
-                <div><p className={`${styles.textContent} m-0 `}>{content}</p></div>
-                <div><p className={`${styles.textContent} m-2 `}>{callAction}</p></div>
-                <div className={`${styles.containerRoute}  d-flex align-items-center justify-content-center w-100`}>
-                    <Link to={`/${route}`} className={`${styles.buttonRoute} text-center text-decoration-none`} >{textButton}</Link>
+                <div><p className={`${styles.text__Content} text-center`}>{content}</p></div>
+                <div><p className={`${styles.text__Content} mt-3 text-center`}>{callAction}</p></div>
+                <div className="d-flex align-items-center justify-content-center">
+                    <Link to={`/${route}`} className={`${styles.link} text-center text-decoration-none`} >{textButton}</Link>
                 </div>
             </div>
-            <div className={`${styles.containerImage} position-relative d-flex align-items-center justify-content-center overflow-hidden`}>
-                <img src={image} alt="Ecopcion" className={styles.image} />
+            <div className={`${styles.container__Image} position-relative d-flex align-items-center justify-content-center overflow-hidden`}>
+                <img src={image} alt="Ecopcion" className={`${styles.image} m-auto`} />
             </div>
         </div>
     );
 }
 
-function AnimatedBlockRight ({ title, content, callAction, image, route, textButton }: AnimatedBlockProps) {
+function AnimatedBlockRight({ title, content, callAction, image, route, textButton }: AnimatedBlockProps) {
     const [ ref, inView ] = useInView({
         triggerOnce: false,
         rootMargin: '-100px 0px',
@@ -84,35 +74,31 @@ function AnimatedBlockRight ({ title, content, callAction, image, route, textBut
         }
     }, [ inView ]);
 
-    const animateClass = animated ? styles.animateIn : '';
-
+    const animateClass = animated ? styles.animate__In : '';
 
     return (
-        <div className="m-5 d-flex align-items-center justify-content-center gap-4" ref={ref}>
-            <div className={`${styles.containerImage} position-relative d-flex align-items-center justify-content-center overflow-hidden`}>
-                <img src={image} alt="Ecopcion" className={styles.image} />
+        <div className={`${styles.container__Animated_Block_Right} mb-5 d-flex align-items-center justify-content-center gap-4`} ref={ref}>
+            <div className={`${styles.container__Image} position-relative d-flex align-items-center justify-content-center overflow-hidden`}>
+                <img src={image} alt="Ecopcion" className={`${styles.image} m-auto`} />
             </div>
-            <div className={`${styles.containerEffectTitle} d-flex flex-column align-items-center justify-content-center`}>
-                <div className={`${styles.effectTitle} p-0 w-100 overflow-hidden`}>                
-                    <div className={`${styles.titleCharacteristics} ${animateClass} d-flex flex-title align-items-start justify-content-center`}>
-                        <h2 className={`${styles.title} mt-5 text-center`}>{title}</h2>
-                    </div>
+            <div className={`${styles.container__Effect} d-flex flex-column align-items-center justify-content-center`}>
+                <div className={`${styles.title__Characteristic} ${animateClass} d-flex flex-title align-items-start justify-content-center`}>
+                    <h2 className={`${styles.title} text-center`}>{title}</h2>
                 </div>
-                <div><p className={`${styles.textContent} m-0 `}>{content}</p></div>
-                <div><p className={`${styles.textContent} m-2 `}>{callAction}</p></div>
-                <div className={`${styles.containerRoute}  d-flex align-items-center justify-content-center w-100`}>
-                    <Link to={`/${route}`} className={`${styles.buttonRoute} text-center text-decoration-none`} >{textButton}</Link>
+                <div><p className={`${styles.text__Content} text-center`}>{content}</p></div>
+                <div><p className={`${styles.text__Content} mt-3 text-center`}>{callAction}</p></div>
+                <div className="d-flex align-items-center justify-content-center">
+                    <Link to={`/${route}`} className={`${styles.link} text-center text-decoration-none`} >{textButton}</Link>
                 </div>
             </div>
         </div>
     );
 }
 
-function Characteristics () {
-
+function Characteristics() {
     return (
         <div className={`${styles.container} mb-5 d-flex align-items-center justify-content-center`}> 
-            <div> 
+            <div className={`${styles.container__Animated_Block}`}> 
                 <AnimatedBlockLeft
                     title="Registrar tus transacciones diarias"
                     content="Cada vez que realices una venta, ingrese dinero al negocio o hagas una compra o pago, podrás registrar el movimiento en tu libro diario digital."
@@ -163,7 +149,7 @@ function Characteristics () {
                 />
                 <AnimatedBlockLeft
                     title="Notificaciones estratégicas"
-                    content="Ecopcion te enviará notificaciones y/o avisos importantes y estratégicos que te ayudarán a tomar mejores decisiones sobre tu negocio."
+                    content="Ecopcion te enviará notificaciones y/o avisos importantes y estratégicos que te ayudarán a tomar mejores decisiones sobre tu negocio."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
                     image={PagoNomina}
                     route="informed-decisions"

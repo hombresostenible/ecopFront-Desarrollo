@@ -1,72 +1,35 @@
 .container {
-    z-index: 2;
-    margin: 0 0 20px 0;
-    top: 0;
-    background: #f8f9fa;
+    width: 100%;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+    background: #f8f9fa;
+    z-index: 2;
 }
-.containerNavbar {
-    margin: 0 auto;
-    width: 1250px;
+.container__Navbar {
+    height: 70px;
+    width: 100%;
+    padding: 0 20px;
 }
 .logo{
     height: 50px;
 }
-.navBar {
-    height: 70px;
-}
-.navTitle {
+.nav__Link {
     color: #2d3748;
     font-weight: 600;
     margin: 10px 5px;
-    padding: 5px 15px;
+    padding: 5px 10px;
     height: 50px;
 }
-.navTitle:hover {
-    /* background: #2d3748; */
+.nav__Link:hover {
     color: #0a31bf;
     border-radius: 5px;
 }
-.activeLink {
-    /* background: #718bd8; */
-    color: #0a31bf;
-    border-radius: 5px;
+.active {
+    color: #2d3748;
+    margin: 5px 0 0 0;
+    font-weight: 600;
+    border-bottom: 5px solid #718bd8;
 }
-.playStore {
-    border-radius: 5px;
-    width: 180px;
-    height: 50px;
-    background: #212529;
-    margin: 10px;
-}
-.logoPlayStore{
-    height: 35px;
-}
-.playStoreText{
-    height: 50px;
-    margin: 10px 0;
-}
-.playStoreP {
-    color: #e9ecef;
-    font-size: 13px;
-    margin: 0 0 0 3px;
-}
-.playStoreH {
-    color: #e9ecef;
-    font-size: 17px;
-    letter-spacing: 1px;
-    margin: 0 0 0 3px;   
-    line-height: 0.7;
-}
-.e {
-    transform: rotate(-20deg);
-    display: inline-block;
-}
-.icons {
-    font-size: 20px;
-    margin: 0 5px 0 0;
-}
-.navSignIn {
+.nav__Platform {
     margin: 10px 5px;
     border-radius: 5px;
     width: 110px;
@@ -75,6 +38,50 @@
     color: #f8f9fa;
     transition: 300ms all ease;
 }
-.navSignIn:hover {
+.nav__Platform:hover {
     transform: scale(1.1);
+}
+.button__Hamburguer {
+    display: none;
+}
+
+
+/* ---------- RESPONSIVE (1000 PX) ---------- */
+@media screen and (max-width: 1000px) {
+    .container {
+        width: 100%;
+    }
+    .menu {
+        position: absolute;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        top: 70px;
+        left: 0;
+        flex-flow: column nowrap;
+        flex-direction: column;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.9);
+        overflow: hidden;
+        transition: all 500ms ease;
+    }
+    .nav__Link, .active {
+        color: white;
+    }
+    .active__Menu_Hamburguer {
+        padding: 30px 0;
+        opacity: 1;
+    }
+    .button__Hamburguer {
+        background: none;
+        display: block;
+        cursor: pointer;
+    }
+    .icon__Hamburguer {
+        font-size: 30px;
+        transition: 300ms all ease;
+    }
+    .icon__Hamburguer:hover {
+        transform: scale(1.1);
+    }
 }

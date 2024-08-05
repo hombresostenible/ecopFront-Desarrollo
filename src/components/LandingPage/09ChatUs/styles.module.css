@@ -1,45 +1,37 @@
-.containerComunication {
-    margin: 30px 0;
-    height: 250px;
-}
 .title {
     box-decoration-break: clone;
-    /* text-decoration: underline #95c11f 7px; */
 }
 .comunication {
-    height: 190px;
+    flex-wrap: wrap;
 }
-.boxMap, .boxCallUs, .boxChatUs, .boxCallYou {
+.box__Map, .box__Call_Us, .box__Chat_Us, .box__Call_You {
     border: 1px solid #dee2e6;
     border-radius: 10px;
     width: 180px;
     height: 140px;
 }
-.iconMap {
+.icon__Map {
     font-size: 60px;
     transition: transform 0.3s ease;
     height: 90px;
 }
-.iconChatUs, .iconCallUs, .iconCallYou {
+.icon__Chat_Us, .icon__Call_Us, .icon__Call_You {
     font-size: 80px;
     transition: transform 0.3s ease;
     height: 80px;
 }
-.iconMap { color: rgba(42, 157, 143, 0.9); }
-.iconChatUs { color: rgba(58, 134, 255, 0.9); }
-.iconCallUs { color: rgba(217, 4, 41, 0.9); }
-.iconCallYou { color: rgba(131, 56, 236, 1); }
-
-.iconMap:hover, .iconChatUs:hover,.iconCallUs:hover, .iconCallYou:hover {
+.icon__Map { color: rgba(42, 157, 143, 0.9); }
+.icon__Chat_Us { color: rgba(58, 134, 255, 0.9); }
+.icon__Call_Us { color: rgba(217, 4, 41, 0.9); }
+.icon__Call_You { color: rgba(131, 56, 236, 1); }
+.icon__Map:hover, .icon__Chat_Us:hover,.icon__Call_Us:hover, .icon__Call_You:hover {
     transform: rotate(10deg) scale(1.05);
 }
 .text {
     color: #718bd8;
     height: 30px;
-    padding: 0;
-    margin: 0;
 }
-.tooltipContentMap {
+.tooltip__Content_Map {
     bottom: 165px;
     left: 80px;
     transform: translateX(-50%);
@@ -50,16 +42,15 @@
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
     transition: 300ms all ease;
 }
-.tooltipContentMap:hover {
+.tooltip__Content_Map:hover {
     transition: .3s ease all;
 }
 .iframe {
     border: 1px solid black;
 }
 
-
 /*----------Llámanos----------*/
-.tooltipContentCallUs {
+.tooltip__Content_Call_Us {
     background: #f8f9fa;
     bottom: 190px;
     left: 90px;
@@ -71,13 +62,12 @@
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
     transition: 300ms all ease;
 }
-.tooltipContentCallUs:hover {
+.tooltip__Content_Call_Us:hover {
     transition: .3s ease all;
 }
 
-
 /*----------Chatea con nosotros----------*/
-.tooltipContentChatUs {
+.tooltip__Content_Chat_Us {
     background: #f8f9fa;
     bottom: 190px;
     left: 90px;
@@ -89,11 +79,12 @@
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
     transition: 300ms all ease;
 }
-.tooltipContentChatUs:hover {
+.tooltip__Content_Chat_Us:hover {
     transition: .3s ease all;
 }
+
 /*-WhatsApp-*/
-.whatsappLandgin {
+.whatsapp__Landgin {
     border-radius: 10px;
     bottom: 160px;
     right: 20px;
@@ -101,10 +92,10 @@
     height: 100px;
     transition: 300ms all ease;
 }
-.whatsappLandgin:hover {
+.whatsapp__Landgin:hover {
     cursor: pointer;
 }
-.whatsappContent {
+.whatsapp__Content {
     height: 70px;
     width: 60px;
 }
@@ -114,7 +105,7 @@
 }
 
 /*-Telegram-*/
-.telegramLanding {
+.telegram__Landing {
     border-radius: 10px;
     bottom: 100px;
     right: 20px;
@@ -122,10 +113,10 @@
     z-index: 2;
     transition: 300ms all ease;
 }
-.telegramLanding:hover {
+.telegram__Landing:hover {
     cursor: pointer;
 }
-.telegramContent {
+.telegram__Content {
     height: 70px;
     width: 60px;
 }
@@ -134,14 +125,8 @@
     width: 55px;
 }
 
-
-
-
-
-
-
 /*----------¿Quieres que te llamemos?----------*/
-.tooltipContentCallYou {
+.tooltip__Content_Call_You {
     background: #f8f9fa;
     bottom: 190px;
     left: 90px;
@@ -153,17 +138,17 @@
     box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.1);
     transition: 300ms all ease;
 }
-.tooltipContentCallYou:hover {
+.tooltip__Content_Call_You:hover {
     transition: .3s ease all;
 }
-.buttonSubmit {
+.button__Submit {
     padding: 5px 10px;
     border-radius: 4px;
     letter-spacing: 1px;
     background: #718bd8;
     color: #f8f9fa;
 }
-.buttonSubmit:hover {
+.button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;

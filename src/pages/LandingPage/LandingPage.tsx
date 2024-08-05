@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import NavBarLandingPage from '../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import Introduction from '../../components/LandingPage/02Introduction/Introduction';
 import OutstandingFeatures from '../../components/LandingPage/03OutstandingFeatures/OutstandingFeatures';

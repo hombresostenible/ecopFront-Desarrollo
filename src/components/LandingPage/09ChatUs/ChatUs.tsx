@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RiChatSmile2Fill } from "react-icons/ri";
@@ -95,16 +95,15 @@ function ChatUs () {
 
 
     return (
-        <div className={`${styles.containerComunication} w-100`}>
+        <div className={`${styles.container} mb-5`}>
             <p className={`${styles.title} text-center display-6`}>¿Aún tienes dudas?</p>
-            <div className={`${styles.comunication} d-flex align-items-center justify-content-center gap-4`}>
-                
-                <div className={`${styles.boxMap} p-2 d-flex flex-column align-items-center justify-content-center`} onMouseEnter={handleInteractionMap} onMouseLeave={handleMouseLeaveTooltipMap}>
+            <div className={`${styles.comunication} px-1 d-flex align-items-center justify-content-center gap-4`}>
+                <div className={`${styles.box__Map} p-2 d-flex flex-column align-items-center justify-content-center`} onMouseEnter={handleInteractionMap} onMouseLeave={handleMouseLeaveTooltipMap}>
                     <div className="d-flex flex-column align-items-center justify-content-center position-relative">
-                        <FaMapMarkerAlt className={`${styles.iconMap} `} onMouseEnter={handleTooltipMap} />
+                        <FaMapMarkerAlt className={`${styles.icon__Map} `} onMouseEnter={handleTooltipMap} />
                         <h6 className={`${styles.text} m-0 mt-1 text-center`}>Puntos de atención</h6>
                         {showTooltipMap && (
-                            <div className={`${styles.tooltipContentMap} position-absolute overflow-hidden`}>
+                            <div className={`${styles.tooltip__Content_Map} position-absolute overflow-hidden`}>
                                 <iframe
                                     className={`${styles.iframe}`}
                                     src={mapUrl}
@@ -119,31 +118,31 @@ function ChatUs () {
                     </div>
                 </div>
 
-                <div className={`${styles.boxCallUs} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionCallUs} onMouseLeave={handleMouseLeaveTooltipCallUs}>
-                    <HiOutlineDevicePhoneMobile className={styles.iconCallUs} onMouseEnter={handleTooltipCallUs}/>
+                <div className={`${styles.box__Call_Us} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionCallUs} onMouseLeave={handleMouseLeaveTooltipCallUs}>
+                    <HiOutlineDevicePhoneMobile className={styles.icon__Call_Us} onMouseEnter={handleTooltipCallUs}/>
                     <h6 className={`${styles.text} m-0 mt-1 text-center`}>Llámanos</h6>
                     {showTooltipCallUs && (
-                        <div className={`${styles.tooltipContentCallUs} p-2 position-absolute overflow-hidden w-100`}>
+                        <div className={`${styles.tooltip__Content_Call_Us} p-2 position-absolute overflow-hidden w-100`}>
                             <div className="text-center" ><h6>Línea 321 327 0365</h6></div>
                             <div className="text-center" ><h6>Línea 312 808 2002</h6></div>
                         </div>
                     )}
                 </div>
 
-                <div className={`${styles.boxChatUs} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionChatUs} onMouseLeave={handleMouseLeaveTooltipChatUs}>
-                    <RiChatSmile2Fill className={styles.iconChatUs} onMouseEnter={handleTooltipChatUs}/>
+                <div className={`${styles.box__Chat_Us} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionChatUs} onMouseLeave={handleMouseLeaveTooltipChatUs}>
+                    <RiChatSmile2Fill className={styles.icon__Chat_Us} onMouseEnter={handleTooltipChatUs}/>
                     <h6 className={`${styles.text} m-0 mt-1 text-center`}>Chatea con nosotros</h6>
                     {showTooltipChatUs && (
-                        <div className={`${styles.tooltipContentChatUs} p-3 d-flex align-items-center justify-content-center gap-3 position-absolute overflow-hidden`}>
-                            <div className={`${styles.whatsappLandgin} d-flex flex-column align-items-center justify-content-center`}>
-                                <div onClick={handleWhatsAppClick} className={`${styles.whatsappContent} d-flex align-items-center justify-content-center border rounded border-dark-subtle`} >
+                        <div className={`${styles.tooltip__Content_Chat_Us} p-3 d-flex align-items-center justify-content-center gap-3 position-absolute overflow-hidden`}>
+                            <div className={`${styles.whatsapp__Landgin} d-flex flex-column align-items-center justify-content-center`}>
+                                <div onClick={handleWhatsAppClick} className={`${styles.whatsapp__Content} d-flex align-items-center justify-content-center border rounded border-dark-subtle`} >
                                     <img className={`${styles.whatsapp}`} src={WhatsApp} alt="Logo WhatsApp" />
                                 </div>
                                 <h6>Whatsapp</h6>
                             </div>
 
-                            <div className={`${styles.telegramLanding} d-flex flex-column align-items-center justify-content-center`}>
-                                <div className={`${styles.telegramContent} d-flex flex-column align-items-center justify-content-center border rounded border-dark-subtle`}>
+                            <div className={`${styles.telegram__Landing} d-flex flex-column align-items-center justify-content-center`}>
+                                <div className={`${styles.telegram__Content} d-flex flex-column align-items-center justify-content-center border rounded border-dark-subtle`}>
                                     <a href={`https://t.me/${username}`} target="_blank" rel="noreferrer noopener" className="text-decoration-none" >
                                         <img className={`${styles.telegram}`} src={Telegram} alt="Logo Telegram" />
                                     </a>
@@ -154,11 +153,11 @@ function ChatUs () {
                     )}
                 </div>
 
-                <div className={`${styles.boxCallYou} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionCallYou} onMouseLeave={handleMouseLeaveTooltipCallYou}>
-                    <MdWifiCalling3 className={styles.iconCallYou} onMouseEnter={handleTooltipCallYou}/>
+                <div className={`${styles.box__Call_You} p-2 d-flex flex-column align-items-center justify-content-center position-relative`} onMouseEnter={handleInteractionCallYou} onMouseLeave={handleMouseLeaveTooltipCallYou}>
+                    <MdWifiCalling3 className={styles.icon__Call_You} onMouseEnter={handleTooltipCallYou}/>
                     <h6 className={`${styles.text} m-0 mt-1 text-center`}>¿Te llamemos?</h6>
                     {showTooltipCallYou && (
-                        <div className={`${styles.tooltipContentCallYou} p-3 position-absolute overflow-hidden`}>
+                        <div className={`${styles.tooltip__Content_Call_You} p-3 position-absolute overflow-hidden`}>
                             <p className="text-center">Deja tus datos y un asesor se comunicará contigo</p>
                             <div className={`${styles.formCallYou} d-flex flex-column align-items-center justify-content-center gap-2`}>
                                 <input
@@ -173,7 +172,7 @@ function ChatUs () {
                                 />
 
                                 <div className="d-flex">
-                                    <button className={`${styles.buttonSubmit} m-0 border-0 text-decoration-none`} type='submit' >Enviar</button>
+                                    <button className={`${styles.button__Submit} m-0 border-0 text-decoration-none`} type='submit' >Enviar</button>
                                 </div>
                             </div>
                         </div>

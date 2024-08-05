@@ -1,14 +1,13 @@
 .container {
-    /* border: 1px solid red; */
     padding: 30px;
     width: 100%;
     margin: 30px auto 0 auto;
     background: #718bd8;
 }
-.containerMetrics {
+.container__Metrics {
     margin: 0 auto;
     color: #f8f9fa;
-    width: 1100px;
+    max-width: 1100px;
 }
 .title {
     color: #f28705;
@@ -16,31 +15,39 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
-.containerTags {
+.container__Tags {
     margin: 20px 0 0 0;
 }
-.titleHashtags {
+.title__Hashtags {
     color: #f8f9fa;
     margin: 0;
     font-size: 50px;
     font-weight: 600;
 }
-.containerInfoHashtags {
-    margin: 15px 0 0 0;
-    gap: 15px;
+.container__Info_Hashtags {
+    flex-wrap: wrap;
+    gap: 20px;
 }
-.infoHashtags {
+.info__Hashtags {
     width: 270px;
-    height: 200px;
 }
-.countTags {
+.count__Tags {
     color: #f28705;
     font-size: 80px;
     font-weight: 600;
-    height: 100px;
 }
-.textTags {
+.text__Tags {
     border: 1px solid #f8f9fa;
     border-radius: 10px;
-    height: 100px;
+}
+
+
+/* ---------- RESPONSIVE (950 PX) ---------- */
+@media screen and (max-width: 950px) {
+    .title, .title__Hashtags {
+        font-size: 30px;
+    }
+    .count__Tags {
+        font-size: 50px;
+    }
 }
