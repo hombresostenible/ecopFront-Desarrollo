@@ -215,6 +215,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
 
     return (
         <div>
+            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta "A cuotas", por tanto estas creando una cuenta por cobrar</h3>
             {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
@@ -492,6 +493,21 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                             />
                         {errors.seller && (
                             <div className='invalid-feedback'>{errors.seller.message}</div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
+                    <div>
+                        <input
+                            type="text"
+                            {...register('userRegister', { required: 'El vendedor es requerido' })}
+                            className={`${styles.info} p-2 border rounded border-secundary`}
+                            placeholder='Nombre del vendedor'
+                            />
+                        {errors.userRegister && (
+                            <div className='invalid-feedback'>{errors.userRegister.message}</div>
                         )}
                     </div>
                 </div>
