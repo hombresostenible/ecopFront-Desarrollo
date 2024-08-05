@@ -631,17 +631,17 @@ function CashExpense({ token, selectedBranch, defaultDates, registrationDate, tr
                     </div>
                 )}
 
-                <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                    <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Vendedor(a)</p>
+                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
                     <div>
                         <input
                             type="text"
-                            {...register('seller', { required: 'El vendedor es requerido' })}
-                            className={`${styles.input__Info_Purchase} p-2 text-center`}
-                            placeholder='Nombre del vendedor'
-                        />
-                        {errors.seller && (
-                            <div className='invalid-feedback'>{errors.seller.message}</div>
+                            {...register('userRegister', { required: 'El usuario que registra es requerido' })}
+                            className={`${styles.info} p-2 border rounded border-secundary`}
+                            placeholder='Nombre del usuario registrador'
+                            />
+                        {errors.userRegister && (
+                            <div className='invalid-feedback'>{errors.userRegister.message}</div>
                         )}
                     </div>
                 </div>
