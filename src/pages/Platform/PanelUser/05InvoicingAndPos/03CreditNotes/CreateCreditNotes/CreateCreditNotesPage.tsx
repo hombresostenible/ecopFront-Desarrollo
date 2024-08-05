@@ -17,7 +17,7 @@ import { IProduct } from "../../../../../../types/User/products.types";
 import { IRawMaterial } from "../../../../../../types/User/rawMaterial.types";
 import { IService } from "../../../../../../types/User/services.types";
 import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';
-import SearchItems from '../../../../../../helpers/SearchItems/SearchItems';
+import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -232,7 +232,8 @@ function CreateCreditNotesPage() {
                                             rows.map((row, index) => (
                                                 <div className={`${styles.container__Info} d-flex align-items-center justify-content-between`} key={index}>
                                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>
-                                                        <SearchItems
+                                                        <SearchItemsByname
+                                                            branch={selectedBranch}
                                                             token={token}
                                                             onItemSelect={() => {
                                                                 const updatedRows = [...rows];

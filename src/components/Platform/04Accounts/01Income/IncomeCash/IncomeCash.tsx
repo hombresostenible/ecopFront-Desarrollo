@@ -284,6 +284,7 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                             </div>
 
                             <SearchItemsByname
+                                branch={selectedBranch}
                                 token={token}
                                 onItemSelect={(item) => handleItemSelect(item)}
                             />

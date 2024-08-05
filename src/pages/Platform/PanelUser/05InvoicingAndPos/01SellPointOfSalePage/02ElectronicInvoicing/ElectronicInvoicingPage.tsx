@@ -16,7 +16,7 @@ import { IMerchandise } from "../../../../../../types/User/merchandise.types";
 import { IProduct } from "../../../../../../types/User/products.types";
 import { IRawMaterial } from "../../../../../../types/User/rawMaterial.types";
 import { IService } from "../../../../../../types/User/services.types";
-import SearchItems from '../../../../../../helpers/SearchItems/SearchItems';
+import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -244,7 +244,8 @@ function ElectronicInvoicingPage() {
                                                         <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{index + 1}</span>
                                                     </div>
                                                     <div className={`${styles.code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center`}>
-                                                        <SearchItems
+                                                        <SearchItemsByname
+                                                            branch={selectedBranch}
                                                             token={token}
                                                             onItemSelect={() => {
                                                                 const updatedRows = [...rows];

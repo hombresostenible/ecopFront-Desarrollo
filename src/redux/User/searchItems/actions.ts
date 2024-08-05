@@ -4,9 +4,9 @@ import axiosInstance from '../../../api/axios';
 import { errorItems, getItemsStart } from './searchItemsSlice';
 
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
-export const getItems = (token: string) => async (dispatch: AppDispatch) => {
+export const getItems = (branch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/all-items`, {
+        const response = await axiosInstance.get(`/all-items/${branch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
