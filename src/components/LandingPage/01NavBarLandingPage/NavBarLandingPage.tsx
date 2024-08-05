@@ -19,13 +19,11 @@ function NavBarLandingPage() {
                 setMenu(false);
             }
         };
-
         if (menu) {
             document.addEventListener("mousedown", handleClickOutside);
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
