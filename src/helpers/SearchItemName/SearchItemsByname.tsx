@@ -16,6 +16,7 @@ import CreateItem from '../CreateItem/CreateItem';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
 interface SearchItemsBynameProps {
+    branch: string;
     token: string;
     onItemSelect?: (item: any) => void;
     onDataItemSelect?: (data: IAssets | IMerchandise | IProduct | IRawMaterial | IService) => void;
@@ -26,7 +27,7 @@ interface OptionType {
     data?: IAssets | IMerchandise | IProduct | IRawMaterial | IService;
 }
 
-function SearchItemsByname({ token, onItemSelect, onDataItemSelect }: SearchItemsBynameProps) {
+function SearchItemsByname({ branch, token, onItemSelect, onDataItemSelect }: SearchItemsBynameProps) {
     console.log('token: ', token)
     const dispatch: AppDispatch = useDispatch();
 
@@ -39,8 +40,8 @@ function SearchItemsByname({ token, onItemSelect, onDataItemSelect }: SearchItem
     const selectRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        dispatch(getItems(token));
-    }, [token]);
+        dispatch(getItems(branch, token));
+    }, [branch, token]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -100,7 +101,7 @@ function SearchItemsByname({ token, onItemSelect, onDataItemSelect }: SearchItem
     };
 
     const onCreateItem = (token: string) => {
-        dispatch(getItems(token));
+        dispatch(getItems(branch, token));
     };
 
     return (
