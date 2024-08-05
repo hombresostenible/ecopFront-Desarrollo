@@ -1,6 +1,6 @@
 .container {
     margin: 75px auto 0 auto;
-    width: 1250px;
+    max-width: 1200px;
     padding: 30px 0 0 0;
 }
 .title {
@@ -8,46 +8,36 @@
     font-size: 50px;
     font-weight: 600;
     letter-spacing: 1px;
-    text-align: center;
 }
-.infoLegal {
-    width: 900px;
+.info__Legal {
+    width: 90%;
     margin: 20px auto 20px auto;
 }
-
-
-
-/*---------------Tabla desde cero---------------*/
-.containerTable {
-    width: 980px;
+.container__Table {
+    max-width: 980px;
     margin: 50px auto;
 }
-/*-----Cabecera-----*/
 .thead {
     font-size: 20px;
 }
-.theadDescription {
+.thead__Description {
     font-weight: 600;
     letter-spacing: 1px;
     padding: 15px 20px;
     width: 380px;
 }
-.theadColumn {
+.thead__Column {
     font-weight: 600;
     letter-spacing: 1px;
     width: 200px;
     padding: 15px 20px;
 }
-/*-----Contenido-----*/
 .section {
     width: 100%;
 }
-.sectionTable {
-    margin: 10px 0;
+.section__Table {
     color: #f8f9fa;
-    font-size: 16px;
-    padding: 15px 20px;
-    background: #9dbf22;
+    background: #718bd8;
     border-radius: 10px;
 }
 .tbody {
@@ -58,46 +48,63 @@
     border-radius: 10px;
     color: #212529;
 }
-.theadDescriptionInfo {
+.thead__Description_Info {
     width: 380px;
-    padding: 10px 20px;
 }
-.theadColumnInfo {
+.thead__Column_Info {
     width: 200px;
-    padding: 10px 20px;
 }
-
-
 
 /*---------------Contenedor de preguntas y respuestas---------------*/
-.containerQuestions {
+.container__Questions {
     margin: 50px auto 0 auto;
-    width: 1250px;
+    max-width: 90%;
     padding: 0 0 50px 0;
 }
-.containerQuestion {
+.container__Question {
     border-bottom: 1px solid #495057;
-    width: 980px;
-    padding: 20px 0;
+    max-width: 980px;
 }
-.questionAndIcon {
-    width: 980px;
+.question__And_Icon {
+    max-width: 980px;
 }
-.iconAnswer {
+.question {
+    width: calc(100% - 30px);
+}
+.container__Icon_Plus {
+    height: 30px;
+    width: 30px;
+}
+.icon__Answer {
     font-size: 20px;
 }
-.iconAnswer:hover {
+.icon__Answer:hover {
     cursor: pointer;
 }
-.containerAnswers {
-    font-size: 20px;
-    width: 980px;
+.container__Answers {
+    max-width: 980px;
 }
 
-
-
-@media screen and (max-width: 900px) {
-    .container {
-        border: 5px solid red;
+/* ---------- RESPONSIVE (600 PX) ---------- */
+@media screen and (max-width: 600px) {
+    .thead__Description {
+        width: 200px;
+        overflow: hidden;
+    }
+    .thead__Column {
+        padding: 5px;
+    }
+    .thead__Description_Info {
+        padding: 0;
+        width: 200px;
+        overflow: hidden;
+    }
+    .thead__Column_Info {
+        width: 150px;
+        overflow: hidden;
+    }
+    .thead__Column_Info {
+        width: 150px;
+        overflow: hidden;
     }
 }

@@ -45,11 +45,14 @@ function CreateIncomePage() {
     const [registrationDate, setRegistrationDate] = useState<Date>();
     const [transactionDate, setTransactionDate] = useState<Date>();
     const [defaultDates, setDefaultDates] = useState<boolean>(true);
-
+    
     // Manejar cambio en el checkbox de fechas automáticas
     const handleCheckDatesRegisterTx = () => {
         setCheckDatesRegisterTx(prevCheckDatesRegisterTx => !prevCheckDatesRegisterTx);
     };
+
+    // Estado para seleccionar contado o crédito
+    const [creditCashOption, setCreditCashOption] = useState('Contado');
 
     // Manejar cambio en el tipo de pago (contado o crédito)
     const handleCreditCashChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -60,9 +63,6 @@ function CreateIncomePage() {
     const handleTypeIncomeChange = (incomeType: string) => {
         setTypeIncome(incomeType);
     };
-
-    // Estado para seleccionar contado o crédito
-    const [creditCashOption, setCreditCashOption] = useState('Contado');
 
     // Estado para seleccionar tipo de ingreso
     const [typeIncome, setTypeIncome] = useState<string>('Venta de articulos');
@@ -183,6 +183,7 @@ function CreateIncomePage() {
                             <div className="d-flex justify-content-start">
                                 <p className="mb-0 p-2">Tipo de ingreso</p>
                                 <div className="d-flex align-items-center justify-content-center gap-4">
+                                    {}
                                     <div
                                         className={`${styles.type__Income} ${typeIncome === 'Venta de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
                                         onClick={() => handleTypeIncomeChange('Venta de articulos')}

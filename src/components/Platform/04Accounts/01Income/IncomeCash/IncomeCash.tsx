@@ -465,6 +465,21 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                                 </div>
                             )}
                         </div>
+
+                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
+                            <div>
+                                <input
+                                    type="text"
+                                    {...register('seller', { required: 'El vendedor es requerido' })}
+                                    className={`${styles.info} p-2 border rounded border-secundary`}
+                                    placeholder='Nombre del vendedor'
+                                    />
+                                {errors.seller && (
+                                    <div className='invalid-feedback'>{errors.seller.message}</div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 )}
 
@@ -611,6 +626,21 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
                         </div>
                     </div>
                 )}
+
+                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
+                    <div>
+                        <input
+                            type="text"
+                            {...register('userRegister', { required: 'El usuario que registra es requerido' })}
+                            className={`${styles.info} p-2 border rounded border-secundary`}
+                            placeholder='Nombre del usuario registrador'
+                            />
+                        {errors.userRegister && (
+                            <div className='invalid-feedback'>{errors.userRegister.message}</div>
+                        )}
+                    </div>
+                </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
                     {formSubmitted && (

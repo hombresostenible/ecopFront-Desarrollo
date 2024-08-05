@@ -1,82 +1,107 @@
 .container {
     margin: 100px auto;
-    width: 1250px;
+    max-width: 1100px;
     min-height: calc(100vh - 570px);
 }
-.containerFormContact {
-    margin: 0 auto;
-    height: 600px;
-    width: 850px;
+.container__Form_Contact {
+    width: 900px;
 }
-
-
-
-/*---------------Contenedor del formulario---------------*/
-.containerForm {
-    height: 600px;
-    width: 500px;
+.form {
+    max-width: 500px;
 }
-
-/*---------------Formulario---------------*/
+.alert__Success {
+    border: 1px solid rgba(76, 149, 108, 0.7);
+    color: #4c956c;
+    background: rgba(76, 149, 108, 0.4);
+    border-radius: 5px;
+    top: 10px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
+.alert__Danger {
+    border: 1px solid rgba(230, 57, 70, 0.7);
+    color: #e63946;
+    background: rgba(230, 57, 70, 0.4);
+    border-radius: 5px;
+    top: 10px;
+    left: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    z-index: 1;
+}
 .title {
     color: #f28705;
     font-size: 50px;
     font-weight: 600;
     letter-spacing: 1px;
-    text-align: center;
 }
 .text {
     color: #495057;
 }
-.containerInfo {
-    width: 400px;
-}
-.containerInput {
-    margin: 5px 0;
-}
-.input {
-    width: 400px;
-    border-radius: 5px;
+.container__Inputs {
+    max-width: 500px;
 }
 .label {
-    color: #495057;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin: 15px 0 0 0;
+    margin-bottom: 2px;
 }
-.containerAcceptedPolicy {
-    margin: 20px 0;
-    width: 400px;
+.container__Input {
+    width: 100%;
+    border-radius: 5px;
+}
+.input {
+    width: 100%;
+}
+.input:focus, .textarea:focus{
+    outline-color: #e4002b;
+}
+.textarea {
+    max-height: 200px;
+    width: 100%;
+}
+.text__Danger {
+    top: 60px;
+}
+.chars__Remaining {
+    width: 100%;
+}
+.text__Danger_Textarea {
+    top: 185px;
+}
+.container__Accepted_Policy {
+    max-width: 500px;
+    padding: 0 0 20px 0;
+}
+.text__Danger_Accepted_Policy {
+    top: 42px;
 }
 .checkbox {
     height: 30px;
     width: 30px;
-    margin: 0 10px 0 0;
 }
-.buttonSubmit {
-    padding: 5px 10px;
-    border: none;
-    margin: auto;
-    border-radius: 4px;
+.text__Accepted_Policy {
+    width: 450px;
+}
+.button__Submit {
+    padding: 7px 25px;
     letter-spacing: 1px;
+    font-size: 18px;
     background: #718bd8;
     color: #f8f9fa;
-    text-decoration: none;
 }
-.buttonSubmit:hover {
+.button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;
 }
 
-
-/*---------------Informacoón de contacto---------------*/
-.containerContact {
+/*INFORMACION DE CONTACTO ECOPCION*/
+.container__Contact {
     height: 600px;
-    width: 350px;
+    width: 400px;
 }
-.infoTitle {
+.info__Title {
     color: #495057;
 }
 .infoP {
@@ -84,12 +109,12 @@
     margin: 30px 0 0 0;
 }
 .spanWhatsApp {
-    color: #25d366;
-    font-weight: 600;    
+    color: #718bd8;
+    font-weight: 700;    
 }
 .infoEmail {
-    color: #d90429;
-    font-weight: 600;
+    color: #718bd8;
+    font-weight: 700;
 }
 .email {
     color: #495057;

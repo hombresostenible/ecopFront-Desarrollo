@@ -484,18 +484,16 @@ function CreditExpense({ token, selectedBranch, defaultDates, registrationDate, 
                 /> */}
 
                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <div className="px-3">
-                        <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
-                    </div>
+                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
                     <div>
                         <input
                             type="text"
-                            {...register('seller', { required: 'El vendedor es requerido' })}
+                            {...register('userRegister', { required: 'El usuario que registra es requerido' })}
                             className={`${styles.info} p-2 border rounded border-secundary`}
-                            placeholder='Nombre del vendedor'
+                            placeholder='Nombre del usuario registrador'
                             />
-                        {errors.seller && (
-                            <div className='invalid-feedback'>{errors.seller.message}</div>
+                        {errors.userRegister && (
+                            <div className='invalid-feedback'>{errors.userRegister.message}</div>
                         )}
                     </div>
                 </div>
