@@ -1,4 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
 import { useState } from 'react';
 import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import Footer from '../../../../components/LandingPage/Footer/Footer';
@@ -90,13 +89,12 @@ function PaymentPlansPage() {
         }
     };
 
-
     return (
         <div>
             <NavBarLandingPage />
             <div className={`${styles.container} `}>
                 <h1 className={`${styles.title} text-center`}>Planes para cualquier nivel de crecimiento</h1>
-                <p className={`${styles.info__Legal} text-center`}>Para efectos fiscales, Ecopción, es posible que su factura final incluya impuestos en función de las normas establecidas en su país de residencia.</p>
+                <p className={`${styles.info__Legal} text-center`}>Para efectos fiscales, es posible que su factura final incluya impuestos en función de las normas establecidas en su país de residencia.</p>
 
                 <div className={`${styles.container__Table} `}>
                     <div className={`${styles.thead} d-flex align-items-center justify-content-center`}>
@@ -301,9 +299,9 @@ function PaymentPlansPage() {
 
                 <div className={`${styles.container__Questions} `}>
                     <h1 className={`${styles.title} text-center mb-4`}>Preguntas frecuentes</h1>
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Es seguro comprar suscripciones en Ecopción?</h4>                            
+                            <h6 className={`${styles.question} m-0`}>¿Es seguro comprar suscripciones en Ecopción?</h6>                            
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer1 === false && (
                                     <FiPlus className={`${styles.icon__Answer} m-0`} onClick={handleShowAnswer1}/>
@@ -320,9 +318,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Cómo puedo pagar una suscripción a Ecopción?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Cómo puedo pagar una suscripción a Ecopción?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer2 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer2}/>
@@ -339,9 +337,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Puedo cancelar en cualquier momento?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Puedo cancelar en cualquier momento?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer3 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer3}/>
@@ -358,9 +356,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Cuál es nuestra Política de reembolso?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Cuál es nuestra Política de reembolso?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer4 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer4}/>
@@ -377,9 +375,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Cómo funciona la mejora sin pago?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Cómo funciona la mejora sin pago?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer5 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer5}/>
@@ -396,9 +394,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Cómo se puede pasar a un plan con una versión inferior?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Cómo se puede pasar a un plan con una versión inferior?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer6 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer6}/>
@@ -415,9 +413,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Puedo obtener datos en tiempo real?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Puedo obtener datos en tiempo real?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer7 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer7}/>
@@ -434,9 +432,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Qué diferencia hay entre la suscripción gratuita y las versiones de pago?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Qué diferencia hay entre la suscripción gratuita y las versiones de pago?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer8 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer8}/>
@@ -453,9 +451,9 @@ function PaymentPlansPage() {
                         )}
                     </div>
 
-                    <div className={`${styles.container__Question} m-auto pt-4 pb-4`}>
+                    <div className={`${styles.container__Question} m-auto pt-3 pb-3`}>
                         <div className={`${styles.question__And_Icon} d-flex align-items-center justify-content-between`}>
-                            <h4 className={`${styles.question} m-0`}>¿Puedo contratar un plan aunque no sepa cómo analizar mi negocio de forma profesional?</h4>
+                            <h6 className={`${styles.question} m-0`}>¿Puedo contratar un plan aunque no sepa cómo analizar mi negocio de forma profesional?</h6>
                             <div className={`${styles.container__Icon_Plus} d-flex align-items-center justify-content-center`}>
                                 {showAnswer9 === false && (
                                     <FiPlus className={`${styles.icon__Answer} `} onClick={handleShowAnswer9}/>

@@ -101,14 +101,14 @@ function RegisterUserPagePage() {
                         </Link>
                     </div>
 
-                    <div className='position-relative'>
+                    <div className={`${styles.container__Form} position-relative`}>
                         {errorUser && (
                             <div className={`${styles.errors__Register} p-2 text-center position-absolute w-100`}>
                                 <p className='m-0'><PiWarningCircle /> {errorUser}</p>
                             </div>
                         )}
-                        <form onSubmit={handleSubmit(onSubmit)} >
-                        {currentStep === RegistrationStep.UserInformationPage && (
+                        <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} `}>
+                            {currentStep === RegistrationStep.UserInformationPage && (
                                 <UserInformationPage
                                     register={register} errors={errors}
                                 />
@@ -133,24 +133,22 @@ function RegisterUserPagePage() {
                                 />
                             )}
 
-                            <div className="d-flex align-items-center justify-content-center gap-4">
+                            <div className={`${styles.container__Buttons} m-auto d-flex align-items-center justify-content-center`}>
                                 {currentStep !== RegistrationStep.UserInformationPage && (
                                     <button
                                         type="button"
                                         onClick={handleBack}
-                                        className={`${styles.button__Back} mb-2 border-0 rounded text-decoration-none`}
+                                        className={`${styles.button__Back} border-0 rounded text-decoration-none`}
                                     >
                                         Atrás
                                     </button>
                                 )}
-                                <div className="d-flex mb-2">
-                                    <button
-                                        type='submit'
-                                        className={`${styles.button__Submit} border-0 rounded text-decoration-none`}
-                                    >
-                                        {currentStep === RegistrationStep.UserCredentialsPage ? 'Enviar' : 'Siguiente'}
-                                    </button>
-                                </div>
+                                <button
+                                    type='submit'
+                                    className={`${styles.button__Submit} border-0 rounded text-decoration-none`}
+                                >
+                                    {currentStep === RegistrationStep.UserCredentialsPage ? 'Enviar' : 'Siguiente'}
+                                </button>
                             </div>
                         </form>
 

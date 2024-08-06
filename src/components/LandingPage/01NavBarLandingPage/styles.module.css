@@ -10,7 +10,7 @@
     padding: 0 20px;
 }
 .logo{
-    height: 50px;
+    height: 40px;
 }
 .nav__Link {
     color: #2d3748;
@@ -83,5 +83,13 @@
     }
     .icon__Hamburguer:hover {
         transform: scale(1.1);
+    }
+}
+
+
+/* ---------- RESPONSIVE (400 PX) ---------- */
+@media screen and (max-width: 400px) {
+    .logo{
+        height: 30px;
     }
 }
