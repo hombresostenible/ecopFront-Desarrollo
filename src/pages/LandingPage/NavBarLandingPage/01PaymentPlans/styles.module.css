@@ -69,6 +69,7 @@
     max-width: 980px;
 }
 .question {
+    font-weight: 600;
     width: calc(100% - 30px);
 }
 .container__Icon_Plus {

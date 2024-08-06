@@ -23,7 +23,7 @@ import UnblockingAccountPage from './pages/LandingPage/NavBarLandingPage/06Login
 import RegisterYourTransactions from './components/LandingPage/05Characteristics/01RegisterYourTransactions/RegisterYourTransactions';
 import ManageYourElectronicInvoices from './components/LandingPage/05Characteristics/02ManageYourElectronicInvoices/ManageYourElectronicInvoices';
 import ManageYourCustomers from './components/LandingPage/05Characteristics/03ManageYourCustomers/ManageYourCustomers';
-import CalculateIndicatorsPlus from './components/LandingPage/05Characteristics/04CalculateIndicatorsPlus/CalculateIndicatorsPlus';
+import ManagingSustainabilityBusiness from './components/LandingPage/05Characteristics/04ManagingSustainabilityBusiness/ManagingSustainabilityBusiness';
 import ViewDownloadReports from './components/LandingPage/05Characteristics/05ViewDownloadReports/ViewDownloadReports';
 import PersonalizedAdvisories from './components/LandingPage/05Characteristics/06PersonalizedAdvisories/PersonalizedAdvisories';
 import InformedDecisions from './components/LandingPage/05Characteristics/07InformedDecisions/InformedDecisions';
@@ -33,18 +33,18 @@ import Segundo from './components/LandingPage/04Sustainability/02Segundo/Segundo
 import Tercer from './components/LandingPage/04Sustainability/03Tercer/Tercer';
 import Cuarto from './components/LandingPage/04Sustainability/04Cuarto/Cuarto';
 // FOOTER DE LA LANDINGPAGE
-import Blog from './components/LandingPage/Footer/AboutUs/Blog/Blog';
-import OurCompany from './components/LandingPage/Footer/AboutUs/OurCompany/OurCompany';
-import KnowUs from './components/LandingPage/Footer/AboutUs/KnowUs/KnowUs';
-import WorkWithUs from './components/LandingPage/Footer/AboutUs/WorkWithUs/WorkWithUs';
-import AlliancesAndPrograms from './components/LandingPage/Footer/AboutUs/AlliancesAndPrograms/AlliancesAndPrograms';
-import TermsAndConditions from './components/LandingPage/Footer/Legal/TermsAndConditions/TermsAndConditions';
-import DataProcessing from './components/LandingPage/Footer/Legal/DataProcessing/DataProcessing';
-import HabeasData from './components/LandingPage/Footer/Legal/HabeasData/HabeasData';
-import MembershipAgreement from './components/LandingPage/Footer/Legal/MembershipAgreement/MembershipAgreement';
-import Help from './components/LandingPage/Footer/Support/Help/Help';
-import Trainings from './components/LandingPage/Footer/Support/Trainings/Trainings';
-import APIDocumentation from './components/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
+import Blog from './pages/LandingPage/Footer/AboutUs/Blog/Blog';
+import OurCompany from './pages/LandingPage/Footer/AboutUs/OurCompany/OurCompany';
+import KnowUs from './pages/LandingPage/Footer/AboutUs/KnowUs/KnowUs';
+import WorkWithUs from './pages/LandingPage/Footer/AboutUs/WorkWithUs/WorkWithUs';
+import AlliancesAndPrograms from './pages/LandingPage/Footer/AboutUs/AlliancesAndPrograms/AlliancesAndPrograms';
+import TermsAndConditions from './pages/LandingPage/Footer/Legal/TermsAndConditions/TermsAndConditions';
+import DataProcessing from './pages/LandingPage/Footer/Legal/DataProcessing/DataProcessing';
+import HabeasData from './pages/LandingPage/Footer/Legal/HabeasData/HabeasData';
+import MembershipAgreement from './pages/LandingPage/Footer/Legal/MembershipAgreement/MembershipAgreement';
+import Help from './pages/LandingPage/Footer/Support/Help/Help';
+import Trainings from './pages/LandingPage/Footer/Support/Trainings/Trainings';
+import APIDocumentation from './pages/LandingPage/Footer/Support/APIDocumentation/APIDocumentation';
 // ERROR 404
 import Error404 from './pages/Error404/Error404';
 // PROTECCION DE RUTAS
@@ -178,7 +178,7 @@ function App() {
                         <Route path='/register-your-transactions' element={<RegisterYourTransactions />} />
                         <Route path='/manage-your-electronic-invoices' element={<ManageYourElectronicInvoices />} />
                         <Route path='/manage-your-customers' element={<ManageYourCustomers />} />
-                        <Route path='/calculate-indicators-plus' element={<CalculateIndicatorsPlus />} />
+                        <Route path='/managing-sustainability-business' element={<ManagingSustainabilityBusiness />} />
                         <Route path='/view-download-reports' element={<ViewDownloadReports />} />
                         <Route path='/personalized-advisories' element={<PersonalizedAdvisories />} />
                         <Route path='/informed-decisions' element={<InformedDecisions />} />
@@ -189,17 +189,17 @@ function App() {
                         <Route path='/cuarto' element={<Cuarto />} />
                         {/* Sección de Footer LandingPage */}
                         <Route path='/blog' element={<Blog />} />
-                        <Route path='/ourCompany' element={<OurCompany />} />
-                        <Route path='/knowUs' element={<KnowUs />} />
-                        <Route path='/workWithUs' element={<WorkWithUs />} />
-                        <Route path='/alliancesAndPrograms' element={<AlliancesAndPrograms />} />
-                        <Route path='/termsAndConditions' element={<TermsAndConditions />} />
-                        <Route path='/dataProcessing' element={<DataProcessing />} />
-                        <Route path='/habeasData' element={<HabeasData />} />
-                        <Route path='/membershipAgreement' element={<MembershipAgreement />} />
+                        <Route path='/our-company' element={<OurCompany />} />
+                        <Route path='/know-us' element={<KnowUs />} />
+                        <Route path='/work-with-us' element={<WorkWithUs />} />
+                        <Route path='/alliances-and-programs' element={<AlliancesAndPrograms />} />
+                        <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
+                        <Route path='/data-processing' element={<DataProcessing />} />
+                        <Route path='/habeas-data' element={<HabeasData />} />
+                        <Route path='/membership-agreement' element={<MembershipAgreement />} />
                         <Route path='/help' element={<Help />} />
                         <Route path='/trainings' element={<Trainings />} />
-                        <Route path='/apiDocumentation' element={<APIDocumentation />} />
+                        <Route path='/api-documentation' element={<APIDocumentation />} />
                         {/* Rutas Protegidas */}
                         <Route element={<ProtectedRoute />}>
                             {/* Sección NavBar - Questions */}

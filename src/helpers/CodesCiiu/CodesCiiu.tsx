@@ -524,10 +524,10 @@ const CodesCiiu: React.FC<CodesCiiuProps> = ({ onSelect }) => {
     };
 
     return (
-        <div className="d-flex align-items-center justify-content-center gap-3">
-            <div className={`${styles.containerInfo} d-flex flex-column align-items-start justify-content-start position-relative`}>
+        <div className={`${styles.container} mb-4 d-flex align-items-center justify-content-center gap-3 w-100`}>
+            <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Selecciona un código CIIU</h6>
-                <div className={styles.containerInput}>
+                <div className={styles.container__Input}>
                     <Select
                         className={`${styles.input} border-0`}
                         options={codesCiiu}
