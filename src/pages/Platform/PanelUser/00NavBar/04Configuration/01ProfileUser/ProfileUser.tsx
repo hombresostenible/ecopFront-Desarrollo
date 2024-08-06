@@ -246,7 +246,7 @@ function ProfileUser({ user }: UserCardProps) {
                                         onChange={(e) => handleEditField(e, 'verificationDigit', 'text')}
                                     />
                                 ) : (
-                                    <p className={`${styles.input} p-2 text-start border`}>{user.verificationDigit}</p>
+                                    <p className={`${styles.input} p-2 text-start border`}>{user.verificationDigit ? user.verificationDigit : 'No asignado aún'}</p>
                                 )}
                             </div>
                         </div>

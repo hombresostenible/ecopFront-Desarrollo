@@ -18,7 +18,6 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
         setShowPassword((prevState) => !prevState);
     };
 
-
     return (
         <div>
             <h4 className={`${styles.tertiary__Title } text-center`}>Tus datos de acceso</h4>

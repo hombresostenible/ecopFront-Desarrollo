@@ -1,5 +1,5 @@
 .container {
-    min-width: 100vw;
+    min-width: 100%;
     height: 100vh;
 }
 .container__Register {
@@ -31,4 +31,28 @@
     padding: 10px 20px;
     background: #0a31bf;
     transition: all 300ms ease;
+}
+
+
+/* ---------- RESPONSIVE (500 PX) ---------- */
+@media screen and (max-width: 500px) {
+    .container__Button_Submit {
+        border: 1px solid red;
+    }
+    .logo {
+        height: 50px;
+    }
+    .button__Submit {
+        font-size: 16px;
+    }
+    .program__Funder {
+        max-width: 100%;
+    }
+    .text__Program_Funder {
+        max-width: 100%;
+        font-size: 15px;
+    }
+    .button__Program_Funder {
+        font-size: 16px;
+    }
 }

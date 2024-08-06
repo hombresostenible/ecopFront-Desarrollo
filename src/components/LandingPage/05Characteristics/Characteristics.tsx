@@ -131,7 +131,7 @@ function Characteristics() {
                     content="Lograr que tu negocio sea sostenible es uno de los propósitos fundamentales en ecopción. Con nosotros podrás dar el salto hacia la sostenibilidad cumpliendo con las normas ambientales, compartiendo con tus clientes la historia de impacto de tu negocio y tomando decisiones que, aumenten el impacto de tu empresa en la sociedad, el planeta y la economía local."
                     callAction="Gestiona con nosotros tus cuentas e inventarios."
                     image={Sostenibilidad2}
-                    route="calculate-indicators-plus"
+                    route="managing-sustainability-business"
                     textButton="Conoce cómo"
                 />
                 <AnimatedBlockLeft

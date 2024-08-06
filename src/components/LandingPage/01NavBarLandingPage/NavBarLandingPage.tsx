@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from 'react-router-dom';
+// ELEMENTOS DEL COMPONENTE
 import Logo from '../../../assets/LogoEcopcion.svg';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import styles from './styles.module.css';

@@ -9,9 +9,9 @@ function FastSimulatorPage() {
         <div>
             <NavBarLandingPage />
             <div className={styles.container}>
-                <div className="d-flex flex-column align-items-center justify-content-center">
+                <div className={`${styles.container__Component} d-flex flex-column align-items-center justify-content-center`}>
                     <img src={Construction} alt="Ecopcion" className={styles.image} />   
-                    <h1>Simulación Rápida</h1>
+                    <h1 className='text-center'>Simulación Rápida</h1>
                 </div>
             </div>
             <Footer />

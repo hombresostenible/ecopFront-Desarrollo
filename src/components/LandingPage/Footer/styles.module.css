@@ -8,12 +8,16 @@
 .columns {
     width: 100%;
 }
-.column__Section h6 {
+.title__Section {
     letter-spacing: 1px;
-    color: #ced4da;
+    color: #f8f9fa;
 }
 .link {
     color: #f8f9fa;
+}
+.active {
+    color: #718bd8;
+    font-weight: 600;
 }
 .container_Social_Media {
     border-top: 1px solid #dee2e6;
