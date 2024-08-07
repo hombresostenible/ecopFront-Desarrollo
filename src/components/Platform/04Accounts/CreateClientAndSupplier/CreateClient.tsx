@@ -113,7 +113,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                                     {...register('lastName')}
                                     className={`${styles.input} p-2`}
                                     placeholder='Apellidos de tu cliente'
-                                    />
+                                />
                                 {errors.lastName && (
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>los apllidos de tu cliente son requeridos</p>
                                 )}
@@ -125,7 +125,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                 <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                     <h6 className={styles.label}>No. de identificación</h6>
                     <div className={styles.container__Input}>
-                        <input
+                        {/* <input
                             type="number"
                             {...register('documentId', { required: true, setValueAs: (value) => parseFloat(value) })}
                             className={`${styles.input} p-2 border `}
@@ -136,6 +136,13 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                                     e.preventDefault();
                                 }
                             }}
+                        /> */}
+
+                        <input
+                            type="text"
+                            {...register('lastName')}
+                            className={`${styles.input} p-2`}
+                            placeholder='Apellidos de tu cliente'
                         />
                         {errors.lastName && (
                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>

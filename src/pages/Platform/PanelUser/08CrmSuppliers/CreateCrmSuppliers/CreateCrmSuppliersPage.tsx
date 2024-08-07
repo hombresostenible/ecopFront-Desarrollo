@@ -56,7 +56,7 @@ function CreateCrmSupplierPage() {
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as ICrmSupplier;
-            console.log('formData: ', formData)
+            
             await dispatch(postCrmSupplier(formData, token));
             setFormSubmitted(true);    
             reset();
@@ -93,7 +93,7 @@ function CreateCrmSupplierPage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {errorCrmSupplier?.map((error, i) => (
+                            {Array.isArray(errorCrmSupplier) && errorCrmSupplier?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
 
@@ -121,19 +121,10 @@ function CreateCrmSupplierPage() {
                                     <h6 className={styles.label}>Número de identificación</h6>
                                     <div className={styles.container__Input}>
                                         <input
-                                            type="number"
-                                            {...register('documentId', { 
-                                                required: true,
-                                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
-                                            })}
-                                            className={`${styles.input} p-2 border `}
-                                            placeholder='¿Cuál es tu número de identificación?'
-                                            min={0}
-                                            onKeyDown={(e) => {
-                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                    e.preventDefault();
-                                                }
-                                            }}
+                                            type="text"
+                                            {...register('documentId')}
+                                            className={`${styles.input} p-2 border`}
+                                            placeholder='¿Cuál es el número de identificación de tu proveedor?'
                                         />
                                         {errors.documentId && (
                                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>

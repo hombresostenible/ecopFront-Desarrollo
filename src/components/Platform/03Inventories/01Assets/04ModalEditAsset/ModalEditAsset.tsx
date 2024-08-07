@@ -146,8 +146,8 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                         <input
                             type="text"
                             className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.referenceAssets}
-                            onChange={(e) => handleEditField(e, 'referenceAssets', 'text')}
+                            value={editedAsset.referenceItem}
+                            onChange={(e) => handleEditField(e, 'referenceItem', 'text')}
                         />
                     </div>
                 </div>

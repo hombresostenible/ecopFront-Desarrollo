@@ -59,11 +59,12 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                     "Inventario": "inventory",
                     "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
+                    "Rete Fuente": "withholdingTax",
+                    "Rete IVA": "withholdingIVA",
+                    "Rete ICA": "withholdingICA",
                     "Código de barras": "barCode",
                     "Marca": "brandItem",
-                    "Referencia": "referenceAssets",
-                    "Condición de compra": "conditionAssets",
-                    "Estado": "stateAssets",
+                    "Referencia": "referenceItem",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -102,11 +103,12 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         "inventory": "Inventario",
         "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
         "IVA": "IVA",
+        "withholdingTax": "Rete Fuente",
+        "withholdingIVA": "Rete IVA",
+        "withholdingICA": "Rete ICA",
         "barCode": "Código de barras",
         "brandItem": "Marca",
-        "referenceAssets": "Referencia",
-        "conditionAssets": "Condición de compra",
-        "stateAssets": "Estado",
+        "referenceItem": "Referencia",
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -120,6 +122,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
             branchId: branchId,
             userId: user?.id,
         }));
+        console.log('formData: ', formData)
         dispatch(postManyAssets(formData as unknown as IAssets[], token));
         // Restablecer estado y mensaje de éxito
         setExcelData(null);
