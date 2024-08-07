@@ -56,7 +56,7 @@ function CreateCrmClientPage() {
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as ICrmClient;
-            console.log('formData: ', formData)
+            
             await dispatch(postCrmClient(formData, token));
             setFormSubmitted(true);    
             reset();
@@ -93,49 +93,56 @@ function CreateCrmClientPage() {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
-                            {Array.isArray(errorCrmClient)&& errorCrmClient?.map((error, i) => (
+                            {Array.isArray(errorCrmClient) && errorCrmClient?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
 
-                            <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
-                                <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                    <h6 className={styles.label}>Tipo de identificación</h6>
-                                    <div className={styles.container__Input}>
-                                        <select
-                                            {...register('typeDocumentId', { required: true })}
-                                            className={`${styles.input} p-2 border`}
-                                            onChange={handleTypeDocumentIdChange}
-                                        >
-                                            <option value='NIT'>NIT</option>
-                                            <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
-                                            <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
-                                            <option value='Pasaporte'>Pasaporte</option>
-                                        </select>
-                                        {errors.typeDocumentId && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del cliente es requerido</p>
-                                        )}
-                                    </div>
+                            <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                                <h6 className={styles.label}>Tipo de identificación</h6>
+                                <div className={styles.container__Input}>
+                                    <select
+                                        {...register('typeDocumentId', { required: true })}
+                                        className={`${styles.input} p-2 border`}
+                                        onChange={handleTypeDocumentIdChange}
+                                    >
+                                        <option value='NIT'>NIT</option>
+                                        <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                                        <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
+                                        <option value='Pasaporte'>Pasaporte</option>
+                                    </select>
+                                    {errors.typeDocumentId && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del proveedor es requerido</p>
+                                    )}
                                 </div>
+                            </div>
+
+                            <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}>Número de identificación</h6>
                                     <div className={styles.container__Input}>
                                         <input
-                                            type="number"
-                                            {...register('documentId', { 
-                                                required: true,
-                                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
-                                            })}
-                                            className={`${styles.input} p-2 border `}
-                                            placeholder='¿Cuál es tu número de identificación?'
-                                            min={0}
-                                            onKeyDown={(e) => {
-                                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                                    e.preventDefault();
-                                                }
-                                            }}
+                                            type="text"
+                                            {...register('documentId')}
+                                            className={`${styles.input} p-2 border`}
+                                            placeholder='¿Cuál es el número de identificación de tu cliente?'
                                         />
                                         {errors.documentId && (
                                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                                    <h6 className={styles.label}>Dígito de verificación</h6>
+                                    <div className={styles.container__Input}>
+                                        <input
+                                            type="text"
+                                            {...register('verificationDigit', { required: true })}
+                                            className={`${styles.input} p-2 border`}
+                                            placeholder='¿Cuál es el número de identificación?'
+                                        />
+                                        {errors.verificationDigit && (
+                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El dígito de verificación es requerido</p>
                                         )}
                                     </div>
                                 </div>

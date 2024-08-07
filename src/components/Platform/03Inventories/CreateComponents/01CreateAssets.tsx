@@ -180,11 +180,11 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
                     <div>
                         <input
                             type="text"
-                            {...register('referenceAssets', { required: true })}
+                            {...register('referenceItem', { required: true })}
                             className={`${styles.input} p-2 border `}
                             placeholder='Referencia o N/A'
                         />
-                        {errors.referenceAssets && (
+                        {errors.referenceItem && (
                             <p className='text-danger'>La referencia del equipo, herramienta o máquina es requerido</p>
                         )}
                     </div>
