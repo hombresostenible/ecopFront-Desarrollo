@@ -65,7 +65,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
             const formData = {
                 ...values,
                 branchId: selectedBranchId || values.branchId, // Usa el branchId pasado como prop si está disponible
-                referenceAssets: String(values.referenceAssets),
+                referenceItem: String(values.referenceItem),
                 conditionAssets: selectedCondition,
             } as IAssets;
 
@@ -212,11 +212,11 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                 <div>
                                     <input
                                         type="text"
-                                        {...register('referenceAssets', { required: true })}
+                                        {...register('referenceItem', { required: true })}
                                         className={`${styles.input} p-2 border `}
                                         placeholder='Referencia o N/A'
                                     />
-                                    {errors.referenceAssets && (
+                                    {errors.referenceItem && (
                                         <p className='text-danger'>La referencia del equipo, herramienta o máquina es requerido</p>
                                     )}
                                 </div>

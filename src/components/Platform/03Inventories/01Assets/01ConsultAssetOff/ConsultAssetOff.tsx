@@ -85,7 +85,7 @@ function ConsultAssetOff({ token, branches, onCloseModal }: ConsultAssetOffProps
                                         <span>{asset.brandItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
-                                        <span>{asset.referenceAssets}</span>
+                                        <span>{asset.referenceItem}</span>
                                     </td>
                                     <td className='align-middle text-center'>
                                         <span>{calculateTotalInventoryOff(asset.inventoryOff)}</span>

@@ -66,7 +66,7 @@ function SeeItemAsset({ asset, branches }: SeeItemAssetProps) {
                 <div className="w-100">
                     <h6 className={styles.label}>Referencia del activo</h6>
                     <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{asset?.referenceAssets}</p>
+                        <p className={`${styles.input} p-2 text-start border`}>{asset?.referenceItem}</p>
                     </div>
                 </div>
                 <div className="w-100">

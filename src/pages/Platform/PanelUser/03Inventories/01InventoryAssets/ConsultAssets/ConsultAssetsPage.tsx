@@ -199,7 +199,7 @@ function ConsultAssetsPage() {
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandItem}</span>
                                             </div>
                                             <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceAssets}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceItem}</span>
                                             </div>
                                             <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
