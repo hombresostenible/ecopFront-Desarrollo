@@ -13,7 +13,6 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/CreateManyAssets';
-// import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/example/CreateManyAssets';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
@@ -106,7 +105,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
 
                         <Link to='/inventories/consult-assets' className={styles.link__Income_Create}>Consulta tu inventario</Link>
                         <div className="d-flex">
-                            <button className={`${styles.button__Detail} m-auto border-0 rounded text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
+                            <button className={`${styles.button__Detail} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus activos de forma masiva</button>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >

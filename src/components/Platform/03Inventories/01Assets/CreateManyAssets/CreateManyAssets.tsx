@@ -55,16 +55,18 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
+                    "Código de barras": "barCode",
                     "Nombre del artículo": "nameItem",
+                    "Marca": "brandItem",
+                    "Referencia": "referenceItem",
                     "Inventario": "inventory",
-                    "Precio de compra antes de inpuestos": "purchasePriceBeforeTax",
+                    "Precio de compra antes de impuestos": "purchasePriceBeforeTax",
                     "IVA": "IVA",
+                    "Impuesto al consumo": "consumptionTax",
+                    "Tipo de retención en la fuente": "retentionType",
                     "Porcentaje de Rete Fuente": "withholdingTax",
                     "Rete IVA": "withholdingIVA",
                     "Rete ICA": "withholdingICA",
-                    "Código de barras": "barCode",
-                    "Marca": "brandItem",
-                    "Referencia": "referenceItem",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -99,16 +101,18 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
+        "barCode": "Código de barras",
         "nameItem": "Nombre del artículo",
+        "brandItem": "Marca",
+        "referenceItem": "Referencia",
         "inventory": "Inventario",
-        "purchasePriceBeforeTax": "Precio de compra antes de inpuestos",
+        "purchasePriceBeforeTax": "Precio de compra antes de impuestos",
         "IVA": "IVA",
+        "consumptionTax": "Impuesto al consumo",
+        "retentionType": "Tipo de retención en la fuente",
         "withholdingTax": "Porcentaje de Rete Fuente",
         "withholdingIVA": "Rete IVA",
         "withholdingICA": "Rete ICA",
-        "barCode": "Código de barras",
-        "brandItem": "Marca",
-        "referenceItem": "Referencia",
         // Agregar más nombres de columnas según sea necesario
     };
 
