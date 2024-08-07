@@ -357,6 +357,91 @@ function ElectronicInvoicingPage() {
                                     </div>
                                 </div>
                                 
+                                <div className={`${styles.container__Taxes_And_Values} pb-4 d-flex align-items-start justify-content-between`}>
+                                    <div className={`${styles.container__Taxes} d-flex flex-column gap-4`}>
+                                        <div className={`${styles.container__Mean_Payment} d-flex align-items-center justify-content-between`}>
+                                            <p className={`${styles.title__Mean_Payment} m-0`}>Medio de pago</p>
+                                            <div>
+                                                <select
+                                                    className={`${styles.input} p-2 border `}
+                                                >
+                                                    <option value="">CONTADO</option>
+                                                    <option value="">CREDITO</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className={`${styles.container__Retention} d-flex flex-column`}>
+                                            <div className={`${styles.continer__Retention_Titles} d-flex`}>
+                                                <div className={`${styles.title__Column_Retention} d-flex align-items-center justify-content-center`}>Retención</div>
+                                                <div className={`${styles.title__Column_Percentage} d-flex align-items-center justify-content-center`}>Valor Porcentual (%)</div>
+                                                <div className={`${styles.title__Column_Amount} d-flex align-items-center justify-content-center`}>Importe</div>
+                                            </div>
+
+                                            <div className={`${styles.container__Retention_Values} d-flex flex-column`}>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente honorarios</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente Compras</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente Servicios</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente Otros</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Retefuente Pagos al exterior</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete IVA</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                                <div className={`${styles.retention__Values} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.retention} px-2 d-flex align-items-center justify-content-start`}>Rete ICA</div>
+                                                    <div className={`${styles.percentage__Value} d-flex align-items-center justify-content-center`}>10%</div>
+                                                    <div className={`${styles.retention__Value} d-flex align-items-center justify-content-center`}>$ 2.100</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.container__Totales}>
+                                        <div className={`${styles.title__Container_Totales} p-2 text-center`}>Totales</div>
+                                        <div className={`${styles.ffffffffff} d-flex`}>
+                                            <div className={styles.container__Column_Totals}>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Base antes de descuentos:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Descuentos:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Total Base Imponible:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>IVA:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Total Impuestos:</div>
+                                            </div>
+                                            <div className={styles.container__Values_Totals}>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>XXXXXXX</div>
+                                            </div>
+                                        </div>
+                                        <div className={`${styles.totals} px-2 d-flex align-items-center justify-content-end`}><span>Total factura:</span> XXXXXXXXXX</div>
+                                        <div className={`${styles.letter__Amount} p-2 d-flex align-items-start justify-content-center`}>
+                                            MONTO EN LETRAS PERO NUESTRO CLIENTE LO DEBE DE ESCRIBIR
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="mb-4 d-flex align-items-center justify-content-center">
