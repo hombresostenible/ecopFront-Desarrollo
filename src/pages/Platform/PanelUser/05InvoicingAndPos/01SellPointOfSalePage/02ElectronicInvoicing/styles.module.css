@@ -285,14 +285,17 @@
 /* CONTENEDOR DE RETENCIONES */
 .container__Retention {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    width: 450px;
+    border: 1px solid red;
+    width: 710px;
 }
 .continer__Retention_Titles {
-    width: 450px;
+    border: 1px solid red;
+    /* width: 710px; */
 }
 .title__Column_Retention {
+    border: 1px solid;
     font-weight: 600;
-    width: 140px;
+    width: 400px;
 }
 .title__Column_Percentage {
     font-weight: 600;
@@ -303,9 +306,10 @@
     width: 140px;
 }
 .retention {
+    border: 1px solid red;
     font-weight: 600;
     height: 40px;
-    width: 140px;
+    width: 400px;
 }
 .percentage__Value {
     height: 40px;
