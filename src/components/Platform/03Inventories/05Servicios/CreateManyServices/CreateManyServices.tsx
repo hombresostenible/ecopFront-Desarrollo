@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 //REDUX
-import { postManyServices } from '../../../../../redux/User/serviceSlice/actions';
-import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
+import { postManyServices } from '../../../../../redux/User/serviceSlice/actions';
+// ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import { IService } from '../../../../../types/User/services.types';
 import styles from './styles.module.css';
@@ -18,13 +19,10 @@ interface CreateManyRawMateralsProps {
 
 function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRawMateralsProps) {
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
-
     const [selectedBranch, setSelectedBranch] = useState('');
     const [message, setMessage] = useState('');
 
@@ -35,12 +33,11 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     }, [token]);
 
     //Selección de la sede
-    const handleBranchChange = (e: any) => {
-        const selectedId = e.target.value;
-        setSelectedBranch(selectedId);
+    const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedBranch(e.target.value);
     };
 
-        // Renderiza el Excel adjuntado en la tabla del modal
+    // Renderiza el Excel adjuntado en la tabla del modal
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
@@ -55,9 +52,15 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
+                    "Código de barras": "barCode",
                     "Nombre del servicio": "nameItem",
-                    "Precio de venta": "sellingPrice",
+                    "Precio unitario de venta": "sellingPrice",
                     "IVA": "IVA",
+                    "Impuesto al consumo": "consumptionTax",
+                    "Tipo de retención en la fuente": "retentionType",
+                    "Porcentaje de Rete Fuente": "withholdingTax",
+                    "Rete IVA": "withholdingIVA",
+                    "Rete ICA": "withholdingICA",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
@@ -67,12 +70,10 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     
                 // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
-                    // Obtener la traducción en inglés si está disponible, de lo contrario, mantener el nombre original
                     return spanishColumnNames[header] || header;
                 });
     
                 if (currentHeaders.length > 0) {
-                    // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
                         currentHeaders.slice(1).reduce((obj: { [key: string]: any }, header, index) => {
                             obj[header] = row[index + 1];
@@ -92,9 +93,15 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
+        "barCode": "Código de barras",
         "nameItem": "Nombre del servicio",
-        "sellingPrice": "Precio de venta",
+        "sellingPrice": "Precio unitario de venta",
         "IVA": "IVA",
+        "consumptionTax": "Impuesto al consumo",
+        "retentionType": "Tipo de retención en la fuente",
+        "withholdingTax": "Porcentaje de Rete Fuente",
+        "withholdingIVA": "Rete IVA",
+        "withholdingICA": "Rete ICA",
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -110,9 +117,8 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
             userId: user?.id,
         }));
         dispatch(postManyServices(serviceData as unknown as IService[], token));
-        // Restablecer estado y mensaje de éxito
         setExcelData(null);
-        setMessage('Se guardó masivamente tus servicios con éxito');
+        setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
             onCreateComplete();
         }, 1500);
@@ -171,7 +177,6 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
                         </thead>
                         <tbody>
                             {excelData.map((row, index) => (
-                                // Verificar si hay datos en la fila antes de renderizarla
                                 Object.values(row).some(value => !!value) && (
                                     <tr key={index}>
                                         {headers.map((header, columnIndex) => (
@@ -186,7 +191,7 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
             </div>
 
             <div className="d-flex">
-                <button className={`${styles.buttonSubmit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
+                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
             </div>
         </div>
     );

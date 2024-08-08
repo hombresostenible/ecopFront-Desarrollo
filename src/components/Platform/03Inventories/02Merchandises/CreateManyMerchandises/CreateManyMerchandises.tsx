@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
+//REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { IBranch } from '../../../../../types/User/branch.types';
-import { IMerchandise } from '../../../../../types/User/merchandise.types';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
 import { postManyMerchandises } from '../../../../../redux/User/merchandiseSlice/actions';
+// ELEMENTOS DEL COMPONENTE
+import { IBranch } from '../../../../../types/User/branch.types';
+import { IMerchandise } from '../../../../../types/User/merchandise.types';
 import styles from './styles.module.css';
 
 interface CreateManyMerchandisesProps {
@@ -30,6 +32,7 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
         }
     }, [token]);
 
+    //Selección de la sede
     const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedBranch(e.target.value);
     };
@@ -47,29 +50,32 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
                 const parsedData: any[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
                 const spanishColumnNames: { [key: string]: string } = {
+                    "Código de barras": "barCode",
                     "Nombre de la mercancía": "nameItem",
                     "Inventario": "inventory",
                     "Unidad de medida": "unitMeasure",
                     "Precio unitario de compra antes de impuestos": "purchasePriceBeforeTax",
-                    "IVA": "IVA",
                     "Precio unitario de venta": "sellingPrice",
                     "Fecha de vencimiento": "expirationDate",
-                    "¿Empacado?": "packaged",
-                    "Tipo de empaque principal": "primaryPackageType",
-                    "Código de barras": "barCode",
-                    "¿Autoincremento?": "inventoryIncrease",
-                    "Periodicidad del autoincremento": "periodicityAutomaticIncrease",
-                    "Cantidad de aumento automático": "automaticInventoryIncrease",
+                    "IVA": "IVA",
+                    "Impuesto al consumo": "consumptionTax",
+                    "Tipo de retención en la fuente": "retentionType",
+                    "Porcentaje de Rete Fuente": "withholdingTax",
+                    "Rete IVA": "withholdingIVA",
+                    "Rete ICA": "withholdingICA",
                 };
 
+                // Tomar las filas 4 y 6 como encabezados y datos respectivamente
                 const originalHeaders: string[] = parsedData[3] || [];
                 const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
 
+                // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
                     return spanishColumnNames[header] || header;
                 });
 
                 if (currentHeaders.length > 0) {
+                    // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
                         currentHeaders.slice(1).reduce((obj: { [key: string]: any }, header, index) => {
                             let value = row[index + 1];
@@ -81,6 +87,7 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
                         }, {})
                     );
 
+                    // Establecer los encabezados y los datos traducidos
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
                 } else {
@@ -93,19 +100,19 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
+        "barCode": "Código de barras",
         "nameItem": "Nombre de la mercancía",
         "inventory": "Inventario",
         "unitMeasure": "Unidad de medida",
         "purchasePriceBeforeTax": "Precio unitario de compra antes de impuestos",
-        "IVA": "IVA",
         "sellingPrice": "Precio unitario de venta",
         "expirationDate": "Fecha de vencimiento",
-        "packaged": "¿Empacado?",
-        "primaryPackageType": "Tipo de empaque principal",
-        "barCode": "Código de barras",
-        "inventoryIncrease": "¿Autoincremento?",
-        "periodicityAutomaticIncrease": "Periodicidad del autoincremento",
-        "automaticInventoryIncrease": "Cantidad de aumento automático",
+        "IVA": "IVA",
+        "consumptionTax": "Impuesto al consumo",
+        "retentionType": "Tipo de retención en la fuente",
+        "withholdingTax": "Porcentaje de Rete Fuente",
+        "withholdingIVA": "Rete IVA",
+        "withholdingICA": "Rete ICA",
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -121,29 +128,28 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
         const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
     
-        return nonEmptyRows.map(merchandise => {
-            const expirationDate = typeof merchandise.expirationDate === 'number' ? excelSerialToDate(merchandise.expirationDate) : undefined;
+        return nonEmptyRows.map(item => {
+            const expirationDate = typeof item.expirationDate === 'number' ? excelSerialToDate(item.expirationDate) : undefined;
     
-            const merchandisePrepare: IMerchandise = {
-                id: merchandise.id,
-                barCode: merchandise.barCode,
-                nameItem: merchandise.nameItem,
-                brandItem: merchandise.brandItem,
-                packaged: merchandise.packaged,
-                primaryPackageType: merchandise.primaryPackageType,
-                inventory: merchandise.inventory,
-                unitMeasure: merchandise.unitMeasure,
-                inventoryIncrease: merchandise.inventoryIncrease,
-                periodicityAutomaticIncrease: merchandise.periodicityAutomaticIncrease,
-                automaticInventoryIncrease: merchandise.automaticInventoryIncrease,
-                purchasePriceBeforeTax: merchandise.purchasePriceBeforeTax,
-                IVA: merchandise.IVA,
-                sellingPrice: merchandise.sellingPrice,
+            const dataPrepare: IMerchandise = {
+                id: item.id,
+                barCode: item.barCode,
+                nameItem: item.nameItem,
+                inventory: item.inventory,
+                unitMeasure: item.unitMeasure,
+                purchasePriceBeforeTax: item.purchasePriceBeforeTax,
+                sellingPrice: item.sellingPrice,
                 expirationDate: expirationDate,
+                IVA: item.IVA,
+                consumptionTax: item.consumptionTax,
+                retentionType: item.retentionType,
+                withholdingTax: item.withholdingTax,
+                withholdingIVA: item.withholdingIVA,
+                withholdingICA: item.withholdingICA,
                 branchId: branchId,
                 userId: user?.id,
             };
-            return merchandisePrepare;
+            return dataPrepare;
         });
     };
     
@@ -226,7 +232,7 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
             </div>
 
             <div className="d-flex">
-                <button className={`${styles.buttonSubmit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
+                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
             </div>
         </div>
     );
