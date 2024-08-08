@@ -63,7 +63,6 @@ import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notificatio
 import ConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/ConfigurationPage';
 // SIDEBAR - HOME
 import Home from './pages/Platform/PanelUser/01Home/HomePage';
-// import ProfilePage from './pages/Platform/PanelUser/00NavBar/04Configuration/Profile/ProfilePage';
 // SIDEBAR - TUS SEDES
 import ConsultBranchPage from './pages/Platform/PanelUser/02Branch/ConsultBranch/ConsultBranchPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
@@ -87,13 +86,9 @@ import ConsultServicesPage from './pages/Platform/PanelUser/03Inventories/05Inve
 import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05InventoryServices/CreateServices/CreateServicesPage';
 // SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
-// import ConsultIncomePage from './pages/Platform/PanelUser/04Accounts/01Income/ConsultIncome/ConsultIncomePage';
 import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/SeeRecordsAccountsBookPage';
 import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/02Income/CreateIncome/CreateIncomePage';
-// import ConsultExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
 import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
-// import AccountsReceivablePage from './pages/Platform/PanelUser/04Accounts/03AccountsReceivable/AccountsReceivablePage';
-// import AccountsPayablePage from './pages/Platform/PanelUser/04Accounts/04AccountsPayable/AccountsPayablePage';
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/04PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
 import InvoicingAndPosPage from './pages/Platform/PanelUser/05InvoicingAndPos/InvoicingAndPosPage';
