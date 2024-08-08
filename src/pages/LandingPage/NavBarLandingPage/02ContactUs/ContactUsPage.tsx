@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { postContactUs } from '../../../../redux/User/contactUs/actions';
 import type { RootState, AppDispatch } from '../../../../redux/store';
+import { postContactUs } from '../../../../redux/User/contactUs/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IContactUs } from '../../../../types/Ecopcion/contactUs.types';
 import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
@@ -14,8 +14,6 @@ import styles from './styles.module.css';
 
 function ContactUsPage() {
     const dispatch: AppDispatch = useDispatch();
-
-    // Estado de Redux
     const errorContactUs = useSelector((state: RootState) => state.contactUs.errorContactUs);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IContactUs>();

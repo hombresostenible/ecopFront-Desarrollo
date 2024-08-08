@@ -50,7 +50,7 @@ function LoginPage() {
                     
                     <div className='position-relative'>
                         {errorUser && (
-                            <div className={`${styles.errors__Login} p-2 text-center position-absolute w-100`}>
+                            <div className={`${styles.errors} p-2 text-center position-absolute w-100`}>
                                 <p className='m-0'><PiWarningCircle /> {errorUser}</p>
                             </div>
                         )}

@@ -41,6 +41,14 @@ const userSlice = createSlice({
             state.user = action.payload;
             state.isAuthenticated = true;
         },
+        sendEmailByResetPasswordStart: (state) => {
+            state.loading = false;
+            state.errorUser = null;
+        },
+        putResetPasswordStart: (state) => {
+            state.loading = false;
+            state.errorUser = null;
+        },
         profileStart: (state, action: PayloadAction<IUser>) => {
             state.loading = false;
             state.user = action.payload;
@@ -48,14 +56,6 @@ const userSlice = createSlice({
         },
         putProfileUserStart: (state) => {
             state.loading = true;
-            state.errorUser = null;
-        },
-        sendEmailPasswordChangeRequest: (state) => {
-            state.loading = false;
-            state.errorUser = null;
-        },
-        passwordChange: (state) => {
-            state.loading = false;
             state.errorUser = null;
         },
         accountUnlocking: (state) => {
@@ -77,5 +77,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, putProfileUserStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } = userSlice.actions;
+export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo } = userSlice.actions;
 export default userSlice.reducer;

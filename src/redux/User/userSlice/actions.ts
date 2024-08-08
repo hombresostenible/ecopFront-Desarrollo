@@ -3,9 +3,9 @@ import jsCookie from 'js-cookie';
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IUser } from '../../../types/User/user.types';
-import { IResetPassword } from '../../../types/User/resetPassword.types';
+import { IResetPassword } from '../../../types/Auth/resetPassword.types';
 import { IResetPasswordBlocked } from '../../../types/User/resetPasswordBlocked.types';
-import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, profileStart, putProfileUserStart, sendEmailPasswordChangeRequest, passwordChange, accountUnlocking, logoChange, deleteLogo } from './userSlice';
+import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo } from './userSlice';
 
 //REGISTRO DE USUARIOS
 export const postRegisterClient = (formData: IUser) => async (dispatch: AppDispatch) => {
@@ -44,6 +44,34 @@ export const verifyTokenRequest = (token: string) => {
     });
 };
 
+//ENVIO DE CORREO ELECTRONICO DE ECOPCION A USAURIO POR CAMBIO DE CONTRASEÑA
+export const sendEmailByResetPassword = (email: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(sendEmailByResetPasswordStart());
+        return await axiosInstance.get(`/user/email-user?email=${email}`);
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(userErrors(error.response?.data));
+        } else {
+            dispatch(userErrors(error.response?.data));
+        }
+    }
+};
+
+//CAMBIO DE CONTRASEÑA
+export const putResetPassword = (idUser: string, passwordResetCode: string, formData: IResetPassword) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(putResetPasswordStart());
+        return await axiosInstance.put(`/user/reset-password/${idUser}/${passwordResetCode}`, formData);
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(userErrors(error.response?.data));
+        } else {
+            dispatch(userErrors(error));
+        }
+    }
+};
+
 //PERFIL DE USUARIO
 export const getProfileUser = (token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -63,8 +91,6 @@ export const getProfileUser = (token: string) => async (dispatch: AppDispatch) =
     }
 };
 
-
-
 //ACTUALIZA UN USUARIO
 export const putPutProfileUser = (formData: IUser, token: string) => async (dispatch: AppDispatch) => {
     try {
@@ -81,36 +107,6 @@ export const putPutProfileUser = (formData: IUser, token: string) => async (disp
             dispatch(userErrors(error.response?.data.message));
         } else {
             dispatch(userErrors(error.message));
-        }
-    }
-};
-
-
-
-//ENVIA CORREO PARA SOLICITUD DE CAMBIO DE CONTRASEÑA
-export const sendEmailPasswordChangeUser = (email: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(sendEmailPasswordChangeRequest());
-        return await axiosInstance.get('/user/email', { params: { email } });
-    } catch (error: any) {
-        if (error.response && error.response.status === 500) {
-            dispatch(userErrors(error.response?.data));
-        } else {
-            dispatch(userErrors(error));
-        }
-    }
-};
-
-//CAMBIO DE CONTRASEÑA
-export const passwordChangeUser = (idUser: string, passwordResetCode: string, formData: IResetPassword) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(passwordChange());
-        return await axiosInstance.put(`/user/resetPassword/${idUser}/${passwordResetCode}`, formData);
-    } catch (error: any) {
-        if (error.response && error.response.status === 500) {
-            dispatch(userErrors(error.response?.data));
-        } else {
-            dispatch(userErrors(error));
         }
     }
 };
