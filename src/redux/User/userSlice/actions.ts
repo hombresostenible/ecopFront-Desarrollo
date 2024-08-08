@@ -129,7 +129,7 @@ export const accountUnlockingUser = (idUser: string, formData: IResetPasswordBlo
 export const logoChangeUser = (formData: Partial<IUser>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(logoChange(formData));
-        const response = await axiosInstance.patch('/user/logo', formData, {
+        const response = await axiosInstance.patch('/user/logo-user', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -149,7 +149,7 @@ export const logoChangeUser = (formData: Partial<IUser>, token: string) => async
 export const deleteLogoUser = (token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteLogo());
-        const response = await axiosInstance.patch('/user/deleteLogo', {
+        const response = await axiosInstance.patch('/user/delete-logo', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

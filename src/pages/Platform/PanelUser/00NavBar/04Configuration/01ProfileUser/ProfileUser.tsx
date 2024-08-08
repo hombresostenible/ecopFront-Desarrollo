@@ -118,17 +118,20 @@ function ProfileUser({ user }: UserCardProps) {
     }, [ menuRef ]);
 
     const handleUploadImage = async (image: File) => {
-        try {   
+        try {
             const formData = new FormData();
             formData.append("file", image);
-            formData.append("upload_preset", "images");
-            const response = await axios.post("https://api.cloudinary.com/v1_1/dqvdqhf4x/image/upload", formData);
+            //NOTA: Para guardar las imágenes en una carpeta en especial, debo de crearla en Cloudinary y actualizar esa carpeta en el preset:
+            //https://console.cloudinary.com/settings/c-bca001092476ab04ce992efda02d0c/upload_presets/1cac495dfbca9fc61f64efcd83acd244/edit
+            formData.append("upload_preset", "profiles"); // Asegúrate de que este preset esté configurado en Cloudinary
+            formData.append("folder", "profiles"); // Especifica la carpeta en la que quieres guardar la imagen
+            const response = await axios.post(import.meta.env.VITE_CLOUDINARY_LOGO_CLIENTS, formData);
             const imageUrl = response.data.secure_url;
             const userData: Partial<IUser> = {
                 logo: imageUrl,
             };
-            window.location.reload();
             dispatch(logoChangeUser(userData, token));
+            window.location.reload(); // Recargar la página después de subir la imagen
         } catch (error) {
             throw new Error('Error al cargar la imagen');
         }
