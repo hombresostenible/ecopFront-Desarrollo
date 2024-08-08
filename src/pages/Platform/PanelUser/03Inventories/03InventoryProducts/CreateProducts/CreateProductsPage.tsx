@@ -3,7 +3,7 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { postProduct, getProducts } from '../../../../../../redux/User/productSlice/actions';
@@ -20,8 +20,6 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
 import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';
-import { FaPlus } from "react-icons/fa6";
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import { GoPlus } from "react-icons/go";
 import styles from './styles.module.css';
 
@@ -42,11 +40,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     const assets = useSelector((state: RootState) => state.assets.assets);
     const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
 
-    const { register, handleSubmit, setValue, formState: { errors }, reset, control, watch } = useForm<IProduct>();
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'retentions',
-    });
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IProduct>();
     
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -101,6 +95,12 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setSelectedIndividualPackaging(value);
         setValue('individualPackaging', value);
     };
+//Setea el retentionType
+    const [showRetentionType, setShowRetentionType] = useState('No aplica');
+    const handleRetentionTypeChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowRetentionType(event.target.value);
+    };
+    
 
     //IVA AIU
     const [showIvaAiu, setShowIvaAiu] = useState('No');
@@ -297,6 +297,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                     packaged: selectedpackaged,
                     inventoryIncrease: inventoryIncrease,
                     periodicityAutomaticIncrease: periodicityAutomaticIncrease,
+                    retentionType: showRetentionType,
     
                     productAccesory: selectedProductAccesory,
                     productAccesories: accessoriesProduct.map((accessory) => ({
@@ -748,201 +749,54 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             )}
 
                             {/* RETENCIONES */}
-                            {fields.map((field, index) => (
-                                <div key={field.id} className={`${styles.container__Retetions} mb-3 p-2 d-flex flex-column align-items-center justify-content-start border rounded`}>
-                                    <div className={`${styles.container__Retetion} mb-2 mx-auto`}>
-                                        <div className={`${styles.retetion} d-flex gap-2`}>
-                                            <div className={`${styles.retention__Type} d-flex flex-column`}>
-                                                <label>Tipo de retención:</label>
-                                                <select
-                                                    {...register(`retentions.${index}.retentionType`, { required: true })}
-                                                    className={`${styles.input__Retention} p-2 border`}
-                                                >
-                                                    <option value=''>Selecciona un tipo de retención</option>
-                                                    <option value='No tiene'>No tiene</option>
-                                                    <option value='Retefuente'>Retefuente</option>
-                                                    <option value='Rete IVA'>Rete IVA</option>
-                                                    <option value='Rete ICA'>Rete ICA</option>
-                                                </select>
-                                                {errors.retentions?.[index]?.retentionType && (
-                                                    <p className='text-danger'>El tipo de retención es requerido</p>
-                                                )}
-                                            </div>
-
-                                            {watch(`retentions.${index}.retentionType`) === 'Rete IVA' && (
-                                                <div className='d-flex align-items-end justify-content-center'>
-                                                    <select
-                                                        {...register(`retentions.${index}.retentionPercentageIVA`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                        className={`${styles.input__Retention} p-2 border`}
-                                                    >
-                                                        <option value='No aplica'>No aplica</option>
-                                                        <option value={15}>15 %</option>
-                                                        <option value={100}>100 %</option>
-                                                    </select>
-                                                    {errors.retentions?.[index]?.retentionPercentageIVA && (
-                                                        <p className='text-danger'>El porcentaje de Rete IVA es requerido</p>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {watch(`retentions.${index}.retentionType`) === 'Rete ICA' && (
-                                                <div className='d-flex align-items-end justify-content-center'>
-                                                    <select
-                                                        {...register(`retentions.${index}.retentionPercentageICA`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                        className={`${styles.input__Retention} p-2 border`}
-                                                    >
-                                                        <option value='No aplica'>No aplica</option>
-                                                        <option value={2}>2 %</option>
-                                                        <option value={3.4}>3.4 %</option>
-                                                        <option value={4.14}>4.14 %</option>
-                                                        <option value={5}>5 %</option>
-                                                        <option value={6.9}>6.9 %</option>
-                                                        <option value={8}>8 %</option>
-                                                        <option value={9.66}>9.66 %</option>
-                                                        <option value={11.04}>11.04 %</option>
-                                                        <option value={13.8}>13.8 %</option>
-                                                    </select>
-                                                    {errors.retentions?.[index]?.retentionPercentageICA && (
-                                                        <p className='text-danger'>El porcentaje de Rete ICA es requerido</p>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {watch(`retentions.${index}.retentionType`) === 'Retefuente' && (
-                                                <div className='d-flex align-items-end justify-content-center gap-2'>
-                                                    <div>
-                                                        <select
-                                                            {...register(`retentions.${index}.retention`, { required: true })}
-                                                            className={`${styles.input__Retention} p-2 border`}
-                                                        >
-                                                            <option value=''>Selecciona una retención</option>
-                                                            <option value='retentionFeesConsulting'>Retención de honorarios y consultoría</option>
-                                                            <option value='retentionServices'>Retención de servicios</option>
-                                                            <option value='retentionPurchases'>Retención de compras</option>
-                                                            <option value='retentionOthers'>Otras retenciones</option>
-                                                            <option value='retentionForeignPaymentsDividends'>Retención de dividendos del exterior</option>
-                                                        </select>
-                                                        {errors.retentions?.[index]?.retention && (
-                                                            <p className='text-danger'>El tipo de Retefuente es requerido</p>
-                                                        )}
-                                                    </div>
-
-                                                    {watch(`retentions.${index}.retention`) === 'retentionFeesConsulting' && (
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <select
-                                                                {...register(`retentions.${index}.retentionPercentageFeesConsulting`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                                className="p-2 border"
-                                                            >
-                                                                <option value='No aplica'>No aplica</option>
-                                                                <option value={2}>2 %</option>
-                                                                <option value={4}>4 %</option>
-                                                                <option value={6}>6 %</option>
-                                                                <option value={10}>10 %</option>
-                                                                <option value={11}>11 %</option>
-                                                            </select>
-                                                            {errors.retentions?.[index]?.retentionPercentageFeesConsulting && (
-                                                                <p className='text-danger'>El porcentaje de retención de honorarios y consultoría es requerido</p>
-                                                            )}
-                                                        </div>
-                                                    )}
-
-                                                    {watch(`retentions.${index}.retention`) === 'retentionServices' && (
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <select
-                                                                {...register(`retentions.${index}.retentionPercentageServices`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                                className="p-2 border"
-                                                            >
-                                                                <option value='No aplica'>No aplica</option>
-                                                                <option value={1}>1 %</option>
-                                                                <option value={2}>2 %</option>
-                                                                <option value={3.5}>3.5 %</option>
-                                                                <option value={4}>4 %</option>
-                                                                <option value={6}>6 %</option>
-                                                            </select>
-                                                            {errors.retentions?.[index]?.retentionPercentageServices && (
-                                                                <p className='text-danger'>El porcentaje de retención de servicios es requerido</p>
-                                                            )}
-                                                        </div>
-                                                    )}
-
-                                                    {watch(`retentions.${index}.retention`) === 'retentionPurchases' && (
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <select
-                                                                {...register(`retentions.${index}.retentionPercentagePurchases`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                                className="p-2 border"
-                                                            >
-                                                                <option value='No aplica'>No aplica</option>
-                                                                <option value={0.1}>0.1 %</option>
-                                                                <option value={0.5}>0.5 %</option>
-                                                                <option value={1}>1 %</option>
-                                                                <option value={1.5}>1.5 %</option>
-                                                                <option value={2.5}>2.5 %</option>
-                                                                <option value={3}>3 %</option>
-                                                                <option value={3.5}>3.5 %</option>
-                                                            </select>
-                                                            {errors.retentions?.[index]?.retentionPercentagePurchases && (
-                                                                <p className='text-danger'>El porcentaje de retención de compras es requerido</p>
-                                                            )}
-                                                        </div>
-                                                    )}
-
-                                                    {watch(`retentions.${index}.retention`) === 'retentionOthers' && (
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <select
-                                                                {...register(`retentions.${index}.retentionPercentageOthers`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                                className="p-2 border"
-                                                            >
-                                                                <option value='No aplica'>No aplica</option>
-                                                                <option value={2}>2 %</option>
-                                                                <option value={2.5}>2.5 %</option>
-                                                                <option value={3}>3 %</option>
-                                                                <option value={4}>4 %</option>
-                                                                <option value={7}>7 %</option>
-                                                                <option value={10}>10 %</option>
-                                                                <option value={20}>20 %</option>
-                                                            </select>
-                                                            {errors.retentions?.[index]?.retentionPercentageOthers && (
-                                                                <p className='text-danger'>El porcentaje de retención de otros es requerido</p>
-                                                            )}
-                                                        </div>
-                                                    )}
-
-                                                    {watch(`retentions.${index}.retention`) === 'retentionForeignPaymentsDividends' && (
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <select
-                                                                {...register(`retentions.${index}.retentionPercentageForeignPaymentsDividends`, { required: true, setValueAs: value => parseInt(value, 10) })}
-                                                                className="p-2 border"
-                                                            >
-                                                                <option value='No aplica'>No aplica</option>
-                                                                <option value={2}>2 %</option>
-                                                                <option value={2.5}>2.5 %</option>
-                                                                <option value={3}>3 %</option>
-                                                                <option value={4}>4 %</option>
-                                                                <option value={7}>7 %</option>
-                                                                <option value={10}>10 %</option>
-                                                                <option value={20}>20 %</option>
-                                                            </select>
-                                                            {errors.retentions?.[index]?.retentionPercentageForeignPaymentsDividends && (
-                                                                <p className='text-danger'>El porcentaje de retención por pagos al exterior y dividendos es requerido</p>
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                            <div className={`${styles.container__Icons} pt-4 d-flex align-items-end justify-content-end`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Delete} `}
-                                                    onClick={() => remove(index)}
-                                                />
-                                            </div>
-                                        </div>
+                            <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
+                                <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                                    <p className={styles.label}>Tipo de retención</p>
+                                    <div className={styles.container__Input}>
+                                        <select
+                                            {...register(`retentionType`, { required: true })}
+                                            className={`${styles.input__Retention} p-2 border`}
+                                            onChange={handleRetentionTypeChange}
+                                        >
+                                            <option value='No aplica'>No aplica</option>
+                                            <option value='Honorarios y consultoria'>Honorarios y consultoria</option>
+                                            <option value='Servicios'>Servicios</option>
+                                            <option value='Compras'>Compras</option>
+                                            <option value='Pagos al exterior y dividendos'>Pagos al exterior y dividendos</option>
+                                            <option value='Otros'>Otros</option>
+                                        </select>
                                     </div>
                                 </div>
-                            ))}
-
-                            <div className={`${styles.container__Append} mb-3 d-flex align-items-center justify-content-between`} onClick={() => append({})}>
-                                <FaPlus className={`${styles.icon__Plus}` }/>
-                                <span>Agregar Retención</span>
+                                
+                                <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
+                                    <h6 className={styles.label}>Dígito de verificación</h6>
+                                    <div className={styles.container__Input}>
+                                    <select
+                                        {...register(`withholdingTax`, { setValueAs: value => parseInt(value, 10) })}
+                                            className={`${styles.input__Retention} p-2 border`}
+                                        >
+                                            <option value='No aplica'>No aplica</option>
+                                            <option value={0.1}>0.1 %</option>
+                                            <option value={0.5}>0.5 %</option>
+                                            <option value={1}>1 %</option>
+                                            <option value={1.5}>1.5 %</option>
+                                            <option value={2}>2 %</option>
+                                            <option value={2.5}>2.5 %</option>
+                                            <option value={3}>3 %</option>
+                                            <option value={3.5}>3.5 %</option>
+                                            <option value={4}>4 %</option>
+                                            <option value={6}>6 %</option>
+                                            <option value={7}>7 %</option>
+                                            <option value={8}>8 %</option>
+                                            <option value={10}>10 %</option>
+                                            <option value={11}>11 %</option>
+                                            <option value={15}>15 %</option>
+                                            <option value={20}>20 %</option>
+                                            <option value={33}>33 %</option>
+                                            <option value={35}>35 %</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
