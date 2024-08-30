@@ -1,0 +1,112 @@
+.container {
+    margin: 75px auto 0 auto;
+    min-height: calc(100vh - 440px);
+    max-width: 1200px;
+    padding: 30px 0 0 0;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.info__Legal {
+    width: 90%;
+    margin: 20px auto 20px auto;
+}
+.container__Table {
+    max-width: 980px;
+    margin: 50px auto;
+}
+.thead {
+    font-size: 20px;
+}
+.thead__Description {
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 15px 20px;
+    width: 380px;
+}
+.thead__Column {
+    font-weight: 600;
+    letter-spacing: 1px;
+    width: 200px;
+    padding: 15px 20px;
+}
+.section {
+    width: 100%;
+}
+.section__Table {
+    color: #f8f9fa;
+    background: #718bd8;
+    border-radius: 10px;
+}
+.tbody {
+    margin: 5px 0;
+}
+.tbody:hover {
+    background: rgba(113, 139, 216, 0.7);
+    border-radius: 10px;
+    color: #212529;
+}
+.thead__Description_Info {
+    width: 380px;
+}
+.thead__Column_Info {
+    width: 200px;
+}
+
+/*---------------Contenedor de preguntas y respuestas---------------*/
+.container__Questions {
+    margin: 50px auto 0 auto;
+    max-width: 90%;
+    padding: 0 0 50px 0;
+}
+.container__Question {
+    border-bottom: 1px solid #495057;
+    max-width: 980px;
+}
+.question__And_Icon {
+    max-width: 980px;
+}
+.question {
+    font-weight: 600;
+    width: calc(100% - 30px);
+}
+.container__Icon_Plus {
+    height: 30px;
+    width: 30px;
+}
+.icon__Answer {
+    font-size: 20px;
+}
+.icon__Answer:hover {
+    cursor: pointer;
+}
+.container__Answers {
+    max-width: 980px;
+}
+
+/* ---------- RESPONSIVE (600 PX) ---------- */
+@media screen and (max-width: 600px) {
+    .thead__Description {
+        width: 200px;
+        overflow: hidden;
+    }
+    .thead__Column {
+        padding: 5px;
+    }
+    .thead__Description_Info {
+        padding: 0;
+        width: 200px;
+        overflow: hidden;
+    }
+    .thead__Column_Info {
+        width: 150px;
+        overflow: hidden;
+    }
+    .thead__Column_Info {
+        width: 150px;
+        overflow: hidden;
+    }
+}

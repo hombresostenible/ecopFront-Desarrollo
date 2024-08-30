@@ -1,0 +1,97 @@
+.container {
+    background: #2b2d42;
+}
+.title {
+    width: 100%;
+    padding: 0 0 0 70px;
+    color: #e9ecef;
+    font-size: 40px;
+    letter-spacing: 2px;
+    box-decoration-break: clone;
+}
+.containerNews {
+    width: 1250px;
+    height: 850px;
+    margin: 0 auto;
+}
+.news {
+    border-radius: 5px;
+    width: 360px;
+    height: 700px;
+    transition: ease all ;
+    transition: 500ms all ease;
+}
+.news:hover {
+    cursor: pointer;
+    transform: translateY(-10px);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+.visualization {
+    width: 360px;
+    height: 597px;
+}
+.visualization:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+}
+.intermediateShadow {
+    z-index: 1;
+    background: rgba(0, 0, 0, 1);
+    height: 150px;
+}
+.intermediateShadow {
+    content: '';
+    bottom: 115px;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 1));
+}
+.imageNews1 {
+    height: 447px;
+    background-image: url('../../../assets/LandingPage/Noticia1.jpg');
+}
+.titleNews {
+    border: 1px solid rgba(255, 0, 110, 0.5);
+    z-index: 1;
+    bottom: 20px;
+    margin: 0 18px 0px 18px;
+    width: 90%;
+    color: #f8f9fa;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 15px;
+}
+.imageNews2 {
+    height: 447px;
+    background-image: url('../../../assets/LandingPage/Noticia2.jpg');
+}
+.imageNews3 {
+    width: 100%;
+    height: 447px;
+    background-image: url('../../../assets/LandingPage/Noticia3.jpg');
+}
+.lineBottom1, .lineBottom2, .lineBottom3 {
+    width: 100%;
+    height: 5px;
+}
+.lineBottom1 { background: #ff006e; }
+.lineBottom2 { background: #4cc9f0; }
+.lineBottom3 { background: #ffbe0b; }
+.descriptionNews {
+    margin: 20px 0 0 0;
+    height: 110px;
+}
+.textDescription1, .textDescription2, .textDescription3 {
+    width: 100%;
+    height: 110px;
+    color: #f8f9fa;
+    border-radius: 5px;
+       
+}
+.textDescription1 { border: 1px solid #ff006e; }
+.textDescription2 { border: 1px solid #4cc9f0; }
+.textDescription3 { border: 1px solid #ffbe0b; }

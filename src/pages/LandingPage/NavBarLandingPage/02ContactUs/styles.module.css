@@ -1,0 +1,130 @@
+.container {
+    margin: 100px auto;
+    max-width: 1100px;
+    min-height: calc(100vh - 570px);
+}
+.container__Form_Contact {
+    width: 900px;
+}
+.form {
+    max-width: 500px;
+}
+.alert__Success {
+    color: #4cb963;
+    font-weight: 700;
+    top: 5px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
+.alert__Danger {
+    color: #ff595e;
+    font-weight: 800;
+    top: 5px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
+.title {
+    color: #f28705;
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.text {
+    color: #495057;
+}
+.container__Inputs {
+    max-width: 500px;
+}
+.label {
+    margin-bottom: 2px;
+}
+.container__Input {
+    width: 100%;
+    border-radius: 5px;
+}
+.input {
+    width: 100%;
+}
+.input:focus, .textarea:focus{
+    outline-color: #e4002b;
+}
+.textarea {
+    max-height: 200px;
+    width: 100%;
+}
+.text__Danger {
+    top: 60px;
+}
+.chars__Remaining {
+    width: 100%;
+}
+.text__Danger_Textarea {
+    top: 185px;
+}
+.container__Accepted_Policy {
+    max-width: 500px;
+    padding: 0 0 20px 0;
+}
+.text__Danger_Accepted_Policy {
+    top: 42px;
+}
+.checkbox {
+    height: 30px;
+    width: 30px;
+}
+.text__Accepted_Policy {
+    width: 450px;
+}
+.button__Submit {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.button__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+
+/*INFORMACION DE CONTACTO ECOPCION*/
+.container__Contact {
+    height: 600px;
+    width: 400px;
+}
+.info__Title {
+    color: #495057;
+}
+.infoP {
+    color: #495057;
+    margin: 30px 0 0 0;
+}
+.spanWhatsApp {
+    color: #718bd8;
+    font-weight: 700;    
+}
+.infoEmail {
+    color: #718bd8;
+    font-weight: 700;
+}
+.email {
+    color: #495057;
+    text-decoration: none;
+}
+.email:hover {
+    cursor: pointer;
+    color: #3a86ff;
+    text-decoration: underline;
+}
+.containerOpeningHours {
+    margin: 20px 0 0 0;
+}
+.opening {
+    color: #495057;
+}
+.hours {
+    color: #495057;
+}

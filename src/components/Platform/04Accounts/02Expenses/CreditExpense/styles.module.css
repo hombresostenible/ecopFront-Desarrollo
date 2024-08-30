@@ -1,0 +1,20 @@
+.container {
+    height: calc(100vh - 70px);
+    width: 100%;
+}
+.container__Component {
+    height: calc(100vh - 70px);
+    width: 100%;
+}
+.buttonSubmit {
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.buttonSubmit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}

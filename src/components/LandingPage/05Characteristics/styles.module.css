@@ -1,0 +1,96 @@
+.container__Animated_Block {
+    width: 100%;
+}
+.container__Effect {
+    width: 550px;
+}
+.title__Characteristic {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 2s, transform 2s;
+}
+.title {
+    color: #f28705;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.text__Content {
+    color: #495057;
+    width: 90%;
+}
+.link {
+    padding: 5px 20px;
+    background: #718bd8;
+    color: #f8f9fa;
+    border-radius: 20px;
+}
+.link:hover {
+    transition: 300ms all ease;
+    padding: 5px 20px;
+    background: #0a31bf;
+    color: #f8f9fa;
+}
+.image {
+    height: 300px;
+}
+
+
+/* EFECTO */
+.animate__In {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 2s, transform 2s;
+}
+
+/* ---------- RESPONSIVE (950 PX) ---------- */
+@media screen and (max-width: 950px) {
+    .container__Animated_Block_Right,
+    .container__Animated_Block_Left {
+        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+    .container__Animated_Block_Left .image {
+        order: 2;
+    }
+    .container__Animated_Block_Left .container__Effect {
+        order: 1;
+    }
+    .container__Animated_Block_Right .image,
+    .container__Animated_Block_Right .container__Effect {
+        order: unset;
+    }
+}
+
+
+/* ---------- RESPONSIVE (650 PX) ---------- */
+@media screen and (max-width: 650px) {
+    .container {
+        width: 90%;
+        margin: auto;
+    }
+    .container__Animated_Block_Right, .container__Animated_Block_Left {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        margin: auto;
+        padding: 20px 0;
+        width: 100%;
+    }
+    .container__Effect {
+        width: 100%;
+    }
+    .title {
+        width: 100%;
+        font-size: 25px;
+    }
+    .text__Content {
+        margin: auto;
+    }
+    .container__Image {
+        width: 90%;
+    }
+    .image {
+        max-height: 200px;
+    }
+}

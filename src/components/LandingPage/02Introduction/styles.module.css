@@ -1,0 +1,45 @@
+.container {
+    margin: 70px auto 0 auto;
+    max-width: 1050px;
+}
+.image__Information {
+    max-width: 500px;
+}
+.image {
+    height: 280px;
+}
+.text__Information {
+    max-width: 700px;
+}
+.container__Title {
+    width: 100%;
+}
+.title {
+    text-align: right;
+    color: #f28705;
+    font-size: 45px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.text {
+    font-size: 20px;
+}
+
+
+/* ---------- RESPONSIVE (950 PX) ---------- */
+@media screen and (max-width: 950px) {
+    .container {
+        flex-direction: column;
+    }
+    .title {
+        text-align: center;
+    }
+}
+
+
+/* ---------- RESPONSIVE (550 PX) ---------- */
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 30px;
+    }
+}

@@ -1,0 +1,14 @@
+.container {
+    margin: 70px auto 0 auto;
+    min-height: calc(100vh - 440px);
+}
+.image {
+    width: 500px;
+}
+
+/* ---------- RESPONSIVE (600 PX) ---------- */
+@media screen and (max-width: 600px) {
+    .image {
+        width: 340px;
+    }
+}

@@ -1,0 +1,50 @@
+.title {
+    color: #718bd8;
+}
+.container__Testimonies {
+    width: 90%;
+}
+.card__Testimony {
+    border-radius: 20px;
+    width: 400px;
+}
+.testimony {
+    padding: 30px;
+    background: #edf2f7;
+    width: 100%;
+    color: #495057;
+    font-size: 14px;
+}
+.user {
+    background: #cbd5e0;
+}
+.container__Image {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+.image__User {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+}
+.info__Identification {
+    width: 250px;
+    color: #e9ecef;
+}
+.name__User {
+    color: #343a40;
+}
+.position__Company {
+    color: #495057;
+    font-size: 14px;
+}
+.span__Company {
+    color: #3a86ff;
+    font-weight: 500;
+}
+.span__Company:hover {
+    color: #4361ee;
+    cursor: pointer;
+}

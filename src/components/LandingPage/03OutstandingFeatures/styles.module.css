@@ -1,0 +1,62 @@
+.subtitle {
+    color: #f28705;
+    font-weight: 600;
+}
+.container__Functionalities {
+    padding: 10px 0;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.container__Section {
+    border-radius: 20px;
+    width: 360px;
+    height: 80px;
+    gap: 5px;
+    background: #718bd8;
+    transition: all 300ms ease;
+}
+.container__Section:hover {
+    cursor: pointer;
+    transform: translateY(-10px);
+}
+.container__Icon {
+    border-radius: 50%;
+    background: #f8f9fa;
+    width: 60px;
+    height: 60px; 
+}
+.iconItem {
+    font-size: 30px;
+    color: #718bd8;
+}
+.container__Description {
+    width: 280px;
+}
+.iconItemInvoiceSolid {
+    font-size: 35px;
+    color: #718bd8;
+}
+.textFunctionality {
+    margin: 0;
+    color: #f8f9fa;
+}
+
+
+/* ---------- RESPONSIVE (400 PX) ---------- */
+@media screen and (max-width: 400px) {
+    .container__Section {
+        max-width: 290px;
+        padding: 0 5px;
+    }
+    .container__Icon {
+        width: 50px;
+        height: 50px; 
+    }
+    .iconItem {
+        font-size: 25px;
+    }
+    .container__Description {
+        max-width: 250px;
+        padding: 0 5px;
+    }
+}
