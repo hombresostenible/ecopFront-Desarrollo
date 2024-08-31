@@ -45,6 +45,10 @@
 .label {
     margin-bottom: 5px;
 }
+.required__Information {
+    color: #d90429;
+    font-weight: 600;
+}
 .input {
     border-radius: 5px;
     width: 100%;
@@ -67,7 +71,9 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
-
+.container__Loading {
+    width: 100%;
+}
 
 /* ---------- RESPONSIVE (700 PX) ---------- */
 @media screen and (max-width: 700px) {

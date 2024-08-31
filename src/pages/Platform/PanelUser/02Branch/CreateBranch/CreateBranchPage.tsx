@@ -13,6 +13,7 @@ import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+// import Loading from '../../../../../components/Loading/Loading';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import CreateManyBranches from '../../../../../components/Platform/02Branch/CreateManyBranches/CreateManyBranches';
 import styles from './styles.module.css';
@@ -28,6 +29,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     
     // Estado de Redux
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
+    // const loading = useSelector((state: RootState) => state.branch.loading);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBranch>();
 
@@ -122,7 +124,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             ))}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Nombre de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Nombre de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('nameBranch', { required: true })}
@@ -140,7 +142,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             />
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Dirección de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Dirección de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('addressBranch', { required: true })}
@@ -153,7 +155,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Email de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Email de la Sede</p>
                                 <input
                                     type="email"
                                     {...register('contactEmailBranch', { required: true })}
@@ -166,7 +168,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Número telefónico de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Número telefónico de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('contactPhoneBranch', { required: true })}
@@ -179,7 +181,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Nombre del gerente de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Nombre del gerente de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('nameManagerBranch', { required: true })}
@@ -192,7 +194,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
                             
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Apellido del gerente de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Apellido del gerente de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('lastNameManagerBranch', { required: true })}
@@ -205,7 +207,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Tipo de identificación del Gerente de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Tipo de identificación del Gerente de la Sede</p>
                                 <select
                                     {...register('typeDocumentIdManager', { required: true })}
                                     className={`${styles.input} p-2 border`}
@@ -220,7 +222,7 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Número de identidad del Gerente de la Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Número de identidad del Gerente de la Sede</p>
                                 <input
                                     type="text"
                                     {...register('documentIdManager', { required: true })}
@@ -235,6 +237,12 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                             <div className="mb-4 d-flex align-items-center justify-content-center">
                                 <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
                             </div>
+
+                            {/* <div className={`${styles.container__Loading} d-flex align-items-center justify-content-center position-absolute`}>
+                                {loading && (
+                                    <Loading />
+                                )}
+                            </div> */}
                         </form>
                     </div>
                     <Footer />

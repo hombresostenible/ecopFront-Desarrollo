@@ -8,7 +8,7 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postRegisterClient } from '../../../../../redux/User/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IUser } from "../../../../../types/User/user.types";
-import Loading from '../../../../../components/Platform/Loading/Loading';
+import Loading from '../../../../../components/Loading/Loading';
 import UserInformationPage from './01UserInformationPage';
 import EconomicActivityPage from './02EconomicActivityPage';
 import LocalizarionPage from './03LocalizarionPage';
