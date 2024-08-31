@@ -412,9 +412,7 @@ function CreateRawMateral({ token, selectedBranchId, onCreateComplete, onRawMate
                                     placeholder='Ej: 10'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.quantityPerPackage && (
@@ -538,9 +536,7 @@ function CreateRawMateral({ token, selectedBranchId, onCreateComplete, onRawMate
                                     placeholder='Valor numérico de lo que quieres aumentar'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.automaticInventoryIncrease && (

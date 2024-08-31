@@ -130,7 +130,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             ))}
                             
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Selecciona una Sede</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Selecciona una Sede</p>
                                 <select
                                     {...register('branchId', { required: true })}
                                     className={`${styles.input} p-2 border`}
@@ -160,7 +160,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es el nombre del equipo, herramienta o maquinaría que vas a registrar? Ej: Computador, Guadaña, torno</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el nombre del equipo, herramienta o maquinaría que vas a registrar? Ej: Computador, Guadaña, torno</p>
                                 <input
                                     type="text"
                                     {...register('nameItem', { required: true })}
@@ -174,7 +174,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es la marca de la activo "{nameItem}"? Ej: Lenovo, Steel, Siemens</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es la marca de la activo "{nameItem}"? Ej: Lenovo, Steel, Siemens</p>
                                 <input
                                     type="text"
                                     {...register('brandItem', { required: true })}
@@ -187,7 +187,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es la referencia de tu activo "{nameItem}"? Escribe la referencia de tu máquina tal y como la vas a identificar en tu inventario. Ej: IdeaPad 1 Intel Core i5</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es la referencia de tu activo "{nameItem}"? Escribe la referencia de tu máquina tal y como la vas a identificar en tu inventario. Ej: IdeaPad 1 Intel Core i5</p>
                                 <input
                                     type="text"
                                     {...register('referenceItem', { required: true })}
@@ -200,7 +200,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es el estado del(de la) {nameItem}?</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el estado del(de la) {nameItem}?</p>
                                 <select
                                     {...register('stateAssets', { required: true })}
                                     className={`${styles.input} p-2 border`}
@@ -217,7 +217,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Tu activo "{nameItem}" lo(la) compraste nuevo(a) o usado(a)?</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Tu activo "{nameItem}" lo(la) compraste nuevo(a) o usado(a)?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${selectedCondition === 'Nuevo' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -238,7 +238,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>Hoy siendo la primer vez que registras información, ¿Cuántos activos de este tipo tienes en el inventario?</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Hoy siendo la primer vez que registras información, ¿Cuántos activos de este tipo tienes en el inventario?</p>
                                 <input
                                     type="number"
                                     {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -246,9 +246,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     placeholder='Tu inventario acá'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.inventory && (
@@ -257,7 +255,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es el precio de compra antes de impuestos?</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el precio de compra antes de impuestos?</p>
                                 <input
                                     type="number"
                                     {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -265,9 +263,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                                     placeholder='Precio de compra del equipo, herramienta o máquina'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.purchasePriceBeforeTax && (
@@ -276,7 +272,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}>¿Cuál es el IVA del equipo, herramienta o máquina?</p>
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el IVA del equipo, herramienta o máquina?</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border`}

@@ -387,7 +387,7 @@ function CreateServicesPage() {
                             ))}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Selecciona una Sede</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Selecciona una Sede</p>
                                 <select
                                     {...register('branchId', { required: true })}
                                     className={`${styles.input} p-2 border `}
@@ -406,7 +406,7 @@ function CreateServicesPage() {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el nombre del servicio que vas a registrar?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el nombre del servicio que vas a registrar?</p>
                                 <input
                                     type="text"
                                     {...register('nameItem', { required: true })}
@@ -428,9 +428,7 @@ function CreateServicesPage() {
                                     inputMode="numeric"
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.sellingPrice && (
@@ -441,7 +439,7 @@ function CreateServicesPage() {
                             {/* RETENCIONES */}
                             <div className="mb-4 d-flex w-100 position-relative gap-3">
                                 <div className="w-100 position-relative">
-                                    <p className={`${styles.label} `} >Tipo de retención</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Tipo de retención</p>
                                     <select
                                         {...register(`retentionType`, { required: true })}
                                         className={`${styles.input__Retention} p-2 border`}
@@ -457,7 +455,7 @@ function CreateServicesPage() {
                                 </div>
                                 
                                 <div className="w-100 position-relative">
-                                    <p className={`${styles.label} `} >Porcentaje de retención</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Porcentaje de retención</p>
                                     <select
                                         {...register(`withholdingTax`, { setValueAs: value => parseInt(value, 10) })}
                                         className={`${styles.input__Retention} p-2 border`}
@@ -486,7 +484,7 @@ function CreateServicesPage() {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el porcentaje de IVA del servicio?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el porcentaje de IVA del servicio?</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border `}
@@ -500,7 +498,7 @@ function CreateServicesPage() {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Si el servicio está grabada con el impuesto al consumo, elige el porcentaje</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si el servicio está grabada con el impuesto al consumo, elige el porcentaje</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border `}
@@ -514,7 +512,7 @@ function CreateServicesPage() {
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿El servicio está grabado con IVA AIU?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿El servicio está grabado con IVA AIU?</p>
                                 <select
                                     className={`${styles.input} p-2 border `}
                                     onChange={handleIvaAiuChange}
@@ -527,7 +525,7 @@ function CreateServicesPage() {
                             {showIvaAiu === 'Si' && (
                                 <div className='mb-3'>
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Administración</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Administración</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.administrativePercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -544,7 +542,7 @@ function CreateServicesPage() {
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Imprevistos</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Imprevistos</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.unforeseenPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -561,7 +559,7 @@ function CreateServicesPage() {
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Utilidad</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Utilidad</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.utilityPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}

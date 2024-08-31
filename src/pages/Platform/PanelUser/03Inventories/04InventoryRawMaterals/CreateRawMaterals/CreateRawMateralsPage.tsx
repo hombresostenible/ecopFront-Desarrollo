@@ -185,7 +185,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             ))}
                         
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Selecciona una Sede</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Selecciona una Sede</p>
                                 <select
                                     {...register('branchId', { required: true })}
                                     className={`${styles.input} p-2 border `}
@@ -213,7 +213,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el nombre de la materia prima que vas a registrar?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el nombre de la materia prima que vas a registrar?</p>
                                 <input
                                     type="text"
                                     {...register('nameItem', { required: true })}
@@ -236,7 +236,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿En qué unidad de medida desear registrar el inventario de tu materia prima?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿En qué unidad de medida desear registrar el inventario de tu materia prima?</p>
                                 <select
                                     {...register('unitMeasure', { required: true })}
                                     className={`${styles.input} p-2 border `}
@@ -285,7 +285,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Hoy siendo la primer vez que registras información, ¿Cuánta materia prima tienes en el inventario?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Hoy siendo la primer vez que registras información, ¿Cuánta materia prima tienes en el inventario?</p>
                                 <input
                                     type="number"
                                     {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -293,9 +293,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     placeholder='Tu inventario acá'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.inventory && (
@@ -304,7 +302,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿La materia prima/insumo viene empacada?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿La materia prima/insumo viene empacada?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -325,91 +323,93 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             {selectedpackaged === 'Si' && (
-                                <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >Si la materia prima viene empacada ¿Cuál es el tipo de empaque principal?</p>
-                                    <select
-                                        {...register('primaryPackageType')}
-                                        className={`${styles.input} p-2 border `}
-                                    >
-                                        <option value='Papel'>Papel</option>
-                                        <option value='Papel de archivo'>Papel de archivo</option>
-                                        <option value='Carton'>Cartón</option>
-                                        <option value='Aluminio'>Aluminio</option>
-                                        <option value='Plegadiza'>Plegadiza</option>
-                                        <option value='Vidrio'>Vidrio</option>
-                                        <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
-                                        <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                        <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                        <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                        <option value='PP Polipropileno'>PP Polipropileno</option>
-                                        <option value='PS Poliestireno'>PS Poliestireno</option>
-                                        <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                        <option value='Hierro'>Hierro</option>
-                                        <option value='Icopor'>Icopor</option>
-                                        <option value='Biodegradable'>Biodegradable</option>
-                                        <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                    </select>
-                                    {errors.primaryPackageType && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu materia prima es requerido</p>
-                                    )}
-                                </div>
-                            )}
-
-                            <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿La materia prima tiene empaques adicionales?</p>
-                                <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center border rounded`}>
-                                    <div
-                                        className={`${styles.condition__Option} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('Si')}
-                                    >
-                                        Si
+                                <div>
+                                    <div className="mb-4 w-100 position-relative">
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si la materia prima viene empacada ¿Cuál es el tipo de empaque principal?</p>
+                                        <select
+                                            {...register('primaryPackageType')}
+                                            className={`${styles.input} p-2 border `}
+                                        >
+                                            <option value='Papel'>Papel</option>
+                                            <option value='Papel de archivo'>Papel de archivo</option>
+                                            <option value='Carton'>Cartón</option>
+                                            <option value='Aluminio'>Aluminio</option>
+                                            <option value='Plegadiza'>Plegadiza</option>
+                                            <option value='Vidrio'>Vidrio</option>
+                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
+                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                            <option value='PP Polipropileno'>PP Polipropileno</option>
+                                            <option value='PS Poliestireno'>PS Poliestireno</option>
+                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                            <option value='Hierro'>Hierro</option>
+                                            <option value='Icopor'>Icopor</option>
+                                            <option value='Biodegradable'>Biodegradable</option>
+                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                        </select>
+                                        {errors.primaryPackageType && (
+                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu materia prima es requerido</p>
+                                        )}
                                     </div>
-                                    <div
-                                        className={`${styles.condition__Option} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.individualPackaging && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>Este dato es requerido</p>
-                                    )}
-                                </div>
-                            </div>
 
-                            {selectedIndividualPackaging === 'Si' && (
-                                <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >Si la materia prima tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
-                                    <select
-                                        {...register('secondaryPackageType', { required: true })}
-                                        className={`${styles.input} p-2 border `}                                    
-                                    >
-                                        <option value='Papel'>Papel</option>
-                                        <option value='Papel de archivo'>Papel de archivo</option>
-                                        <option value='Carton'>Cartón</option>                                                
-                                        <option value='Aluminio'>Aluminio</option>
-                                        <option value='Plegadiza'>Plegadiza</option>
-                                        <option value='Vidrio'>Vidrio</option>
-                                        <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
-                                        <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                        <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                        <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                        <option value='PP Polipropileno'>PP Polipropileno</option>
-                                        <option value='PS Poliestireno'>PS Poliestireno</option>
-                                        <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                        <option value='Hierro'>Hierro</option>
-                                        <option value='Icopor'>Icopor</option>
-                                        <option value='Biodegradable'>Biodegradable</option>
-                                        <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                    </select>
-                                    {errors.secondaryPackageType && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu materia prima es requerido</p>
+                                    <div className="mb-4 w-100 position-relative">
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿La materia prima tiene empaques adicionales?</p>
+                                        <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center border rounded`}>
+                                            <div
+                                                className={`${styles.condition__Option} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleIndividualPackagingChange('Si')}
+                                            >
+                                                Si
+                                            </div>
+                                            <div
+                                                className={`${styles.condition__Option} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleIndividualPackagingChange('No')}
+                                            >
+                                                No
+                                            </div>
+                                            {errors.individualPackaging && (
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Este dato es requerido</p>
+                                            )}
+                                        </div>
+                                    </div>
+        
+                                    {selectedIndividualPackaging === 'Si' && (
+                                        <div className="mb-4 w-100 position-relative">
+                                            <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si la materia prima tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                            <select
+                                                {...register('secondaryPackageType', { required: true })}
+                                                className={`${styles.input} p-2 border `}                                    
+                                            >
+                                                <option value='Papel'>Papel</option>
+                                                <option value='Papel de archivo'>Papel de archivo</option>
+                                                <option value='Carton'>Cartón</option>                                                
+                                                <option value='Aluminio'>Aluminio</option>
+                                                <option value='Plegadiza'>Plegadiza</option>
+                                                <option value='Vidrio'>Vidrio</option>
+                                                <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
+                                                <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                                <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                                <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                                <option value='PP Polipropileno'>PP Polipropileno</option>
+                                                <option value='PS Poliestireno'>PS Poliestireno</option>
+                                                <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                                <option value='Hierro'>Hierro</option>
+                                                <option value='Icopor'>Icopor</option>
+                                                <option value='Biodegradable'>Biodegradable</option>
+                                                <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                            </select>
+                                            {errors.secondaryPackageType && (
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu materia prima es requerido</p>
+                                            )}
+                                        </div>
                                     )}
                                 </div>
                             )}
 
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >¿El empaque, embalaje o envoltura de tu materia prima es retornable?</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿El empaque, embalaje o envoltura de tu materia prima es retornable?</p>
                                     <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                         <div
                                             className={`${styles.condition__Option} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -431,7 +431,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             )}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Deseas sumar existencias a tu inventario de manera periódica?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Deseas sumar existencias a tu inventario de manera periódica?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${inventoryIncrease === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -454,7 +454,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             {inventoryIncrease === 'Si' && (
                                 <div className="mb-4 w-100 position-relative">
                                     <div className="mb-4 w-100 position-relative">
-                                        <p className={`${styles.label} `} >¿Cada cuánto quieres sumar existencias a tu inventario?</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cada cuánto quieres sumar existencias a tu inventario?</p>
                                         <div className={`${styles.condition__Container} d-flex flex-wrap align-items-center justify-content-center w-100`}>
                                             <div
                                                 className={`${styles.condition__Option} ${periodicityAutomaticIncrease === 'Diario' ? styles.selected : ''} rounded m-1 p-2 text-center`}
@@ -505,7 +505,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     </div>
 
                                     <div className="w-100 position-relative">
-                                        <p className={`${styles.label} `} >Inventario: A futuro, ¿Qué cantidad deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Inventario: A futuro, ¿Qué cantidad deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
                                         <input
                                             type="number"
                                             {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -529,7 +529,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             {/* RETENCIONES */}
                             <div className="mb-4 d-flex w-100 position-relative gap-3">
                                 <div className="w-100 position-relative">
-                                    <p className={`${styles.label} `} >Tipo de retención</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Tipo de retención</p>
                                     <select
                                         {...register(`retentionType`, { required: true })}
                                         className={`${styles.input__Retention} p-2 border`}
@@ -574,7 +574,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el porcentaje de IVA de la mercancía?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el porcentaje de IVA de la mercancía?</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border `}
@@ -588,7 +588,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Si la materia prima  está grabada con el impuesto al consumo, elige el porcentaje</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si la materia prima  está grabada con el impuesto al consumo, elige el porcentaje</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border `}
@@ -602,7 +602,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿La materia prima está grabado con IVA AIU?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿La materia prima está grabado con IVA AIU?</p>
                                 <select
                                     className={`${styles.input} p-2 border `}
                                     onChange={handleIvaAiuChange}
@@ -615,7 +615,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             {showIvaAiu === 'Si' && (
                                 <div className='mb-3'>
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Administración</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Administración</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.administrativePercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -632,7 +632,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Imprevistos</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Imprevistos</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.unforeseenPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -649,7 +649,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Utilidad</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Utilidad</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.utilityPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -668,7 +668,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                             )}
                             
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el precio de compra antes de impuestos de cada "{showUnitMeasure}"?</p>
                                 <input
                                     type="number"
                                     {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -676,9 +676,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     placeholder='Precio de compra de la mercancía'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.purchasePriceBeforeTax && (
@@ -695,9 +693,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
                                     placeholder='Precio de venta de a mercancía'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                             </div>

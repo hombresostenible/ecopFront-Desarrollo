@@ -95,12 +95,18 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setSelectedIndividualPackaging(value);
         setValue('individualPackaging', value);
     };
-//Setea el retentionType
+    
+    //Setea el retentionType
     const [showRetentionType, setShowRetentionType] = useState('No aplica');
     const handleRetentionTypeChange = (event: { target: { value: SetStateAction<string> }}) => {
         setShowRetentionType(event.target.value);
     };
-    
+        
+    //Setea el retentionType
+    const [showWithHoldingTax, setShowWithHoldingTax] = useState('No aplica');
+    const handleWithHoldingTaxChange = (event: { target: { value: SetStateAction<string> }}) => {
+        setShowWithHoldingTax(event.target.value);
+    };
 
     //IVA AIU
     const [showIvaAiu, setShowIvaAiu] = useState('No');
@@ -298,6 +304,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                     inventoryIncrease: inventoryIncrease,
                     periodicityAutomaticIncrease: periodicityAutomaticIncrease,
                     retentionType: showRetentionType,
+                    withholdingTax: showWithHoldingTax ? showWithHoldingTax : null,
     
                     productAccesory: selectedProductAccesory,
                     productAccesories: accessoriesProduct.map((accessory) => ({
@@ -391,7 +398,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             ))}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Selecciona una Sede</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Selecciona una Sede</p>
                                 <select
                                     {...register('branchId', { required: true })}
                                     className={`${styles.input} p-2 border`}
@@ -419,7 +426,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el nombre del producto que vas a registrar?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el nombre del producto que vas a registrar?</p>
                                 <input
                                     type="text"
                                     {...register('nameItem', { required: true })}
@@ -442,7 +449,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿En qué unidad de medida desear registrar el inventario de tu producto?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿En qué unidad de medida desear registrar el inventario de tu producto?</p>
                                 <select
                                     {...register('unitMeasure', { required: true })}
                                     className={`${styles.input} p-2 border`}
@@ -491,7 +498,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Hoy siendo la primer vez que registras información, ¿Cuánto producto tienes en el inventario?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Hoy siendo la primer vez que registras información, ¿Cuánto producto tienes en el inventario?</p>
                                 <input
                                     type="number"
                                     {...register('inventory', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -499,9 +506,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     placeholder='Tu inventario acá'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.inventory && (
@@ -510,7 +515,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿El producto viene empacado en embalaje o envoltura?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿El producto viene empacado en embalaje o envoltura?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${selectedpackaged === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -531,91 +536,94 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             {selectedpackaged === 'Si' && (
-                                <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >Si el producto viene empacado ¿Cuál es el tipo de empaque principal?</p>
-                                    <select
-                                        {...register('primaryPackageType', { required: true })}
-                                        className={`${styles.input} p-2 border`}
-                                    >
-                                        <option value='Papel'>Papel</option>
-                                        <option value='Papel de archivo'>Papel de archivo</option>
-                                        <option value='Carton'>Cartón</option>
-                                        <option value='Aluminio'>Aluminio</option>
-                                        <option value='Plegadiza'>Plegadiza</option>
-                                        <option value='Vidrio'>Vidrio</option>
-                                        <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
-                                        <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                        <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                        <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                        <option value='PP Polipropileno'>PP Polipropileno</option>
-                                        <option value='PS Poliestireno'>PS Poliestireno</option>
-                                        <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                        <option value='Hierro'>Hierro</option>
-                                        <option value='Icopor'>Icopor</option>
-                                        <option value='Biodegradable'>Biodegradable</option>
-                                        <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                    </select>
-                                    {errors.primaryPackageType && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu producto es requerido</p>
+                                <div>
+                                    <div className="mb-4 w-100 position-relative">
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si el producto viene empacado ¿Cuál es el tipo de empaque principal?</p>
+                                        <select
+                                            {...register('primaryPackageType', { required: true })}
+                                            className={`${styles.input} p-2 border`}
+                                        >
+                                            <option value='Papel'>Papel</option>
+                                            <option value='Papel de archivo'>Papel de archivo</option>
+                                            <option value='Carton'>Cartón</option>
+                                            <option value='Aluminio'>Aluminio</option>
+                                            <option value='Plegadiza'>Plegadiza</option>
+                                            <option value='Vidrio'>Vidrio</option>
+                                            <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>
+                                            <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                            <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                            <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                            <option value='PP Polipropileno'>PP Polipropileno</option>
+                                            <option value='PS Poliestireno'>PS Poliestireno</option>
+                                            <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                            <option value='Hierro'>Hierro</option>
+                                            <option value='Icopor'>Icopor</option>
+                                            <option value='Biodegradable'>Biodegradable</option>
+                                            <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                        </select>
+                                        {errors.primaryPackageType && (
+                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu producto es requerido</p>
+                                        )}
+                                    </div>
+
+                                    <div className="mb-4 w-100 position-relative">
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿El producto tiene empaques adicionales?</p>
+                                        <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center border rounded`}>
+                                            <div
+                                                className={`${styles.condition__Option} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleIndividualPackagingChange('Si')}
+                                            >
+                                                Si
+                                            </div>
+                                            <div
+                                                className={`${styles.condition__Option} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
+                                                onClick={() => handleIndividualPackagingChange('No')}
+                                            >
+                                                No
+                                            </div>
+                                            {errors.individualPackaging && (
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Este dato es requerido</p>
+                                            )}
+                                        </div>
+                                    </div>
+        
+                                    {selectedIndividualPackaging === 'Si' && (
+                                        <div className="mb-4 w-100 position-relative">
+                                            <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si el producto tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
+                                            <select
+                                                {...register('secondaryPackageType', { required: true })}
+                                                className={`${styles.input} p-2 border`}                                    
+                                            >
+                                                <option value='Papel'>Papel</option>
+                                                <option value='Papel de archivo'>Papel de archivo</option>
+                                                <option value='Carton'>Cartón</option>                                                
+                                                <option value='Aluminio'>Aluminio</option>
+                                                <option value='Plegadiza'>Plegadiza</option>
+                                                <option value='Vidrio'>Vidrio</option>
+                                                <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
+                                                <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
+                                                <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
+                                                <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
+                                                <option value='PP Polipropileno'>PP Polipropileno</option>
+                                                <option value='PS Poliestireno'>PS Poliestireno</option>
+                                                <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
+                                                <option value='Hierro'>Hierro</option>
+                                                <option value='Icopor'>Icopor</option>
+                                                <option value='Biodegradable'>Biodegradable</option>
+                                                <option value='Plastico de burbujas'>Plástico de burbujas</option>
+                                            </select>
+                                            {errors.secondaryPackageType && (
+                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu producto es requerido</p>
+                                            )}
+                                        </div>
                                     )}
                                 </div>
                             )}
 
-                            <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿El producto tiene empaques adicionales?</p>
-                                <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center border rounded`}>
-                                    <div
-                                        className={`${styles.condition__Option} ${selectedIndividualPackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('Si')}
-                                    >
-                                        Si
-                                    </div>
-                                    <div
-                                        className={`${styles.condition__Option} ${selectedIndividualPackaging === 'No' ? styles.selected : ''} m-1 p-2 text-center`}
-                                        onClick={() => handleIndividualPackagingChange('No')}
-                                    >
-                                        No
-                                    </div>
-                                    {errors.individualPackaging && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>Este dato es requerido</p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {selectedIndividualPackaging === 'Si' && (
-                                <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >Si el producto tiene empaques adicionales ¿Cuál es el tipo de empaque?</p>
-                                    <select
-                                        {...register('secondaryPackageType', { required: true })}
-                                        className={`${styles.input} p-2 border`}                                    
-                                    >
-                                        <option value='Papel'>Papel</option>
-                                        <option value='Papel de archivo'>Papel de archivo</option>
-                                        <option value='Carton'>Cartón</option>                                                
-                                        <option value='Aluminio'>Aluminio</option>
-                                        <option value='Plegadiza'>Plegadiza</option>
-                                        <option value='Vidrio'>Vidrio</option>
-                                        <option value='PET / PETE Polietileno Tereftalato'>PET / PETE Polietileno Tereftalato</option>                                                
-                                        <option value='HDPE Polietileno de alta densidad'>HDPE Polietileno de alta densidad</option>
-                                        <option value='PVC Policloruro de Vinilo'>PVC Policloruro de Vinilo</option>
-                                        <option value='LDPE Polietileno de baja densidad'>LDPE Polietileno de baja densidad</option>
-                                        <option value='PP Polipropileno'>PP Polipropileno</option>
-                                        <option value='PS Poliestireno'>PS Poliestireno</option>
-                                        <option value='Otros plasticos (Policarbonato, estireno, nylon)'>Otros plásticos (Policarbonato, estireno, nylon)</option>
-                                        <option value='Hierro'>Hierro</option>
-                                        <option value='Icopor'>Icopor</option>
-                                        <option value='Biodegradable'>Biodegradable</option>
-                                        <option value='Plastico de burbujas'>Plástico de burbujas</option>
-                                    </select>
-                                    {errors.secondaryPackageType && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de empaque de tu producto es requerido</p>
-                                    )}
-                                </div>
-                            )}
 
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-4 w-100 position-relative">
-                                    <p className={`${styles.label} `} >¿El empaque, embalaje o envoltura de tu producto es retornable?</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿El empaque, embalaje o envoltura de tu producto es retornable?</p>
                                     <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                         <div
                                             className={`${styles.condition__Option} ${selectedReturnablePackaging === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -637,7 +645,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             )}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Deseas sumar existencias a tu inventario de manera periódica?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Deseas sumar existencias a tu inventario de manera periódica?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${inventoryIncrease === 'Si' ? styles.selected : ''} m-1 p-2 text-center`}
@@ -660,7 +668,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {inventoryIncrease === 'Si' && (
                                 <div className="mb-4 w-100 position-relative">
                                     <div className="mb-4 w-100 position-relative">
-                                        <p className={`${styles.label} `} >¿Cada cuánto quieres sumar existencias a tu inventario?</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cada cuánto quieres sumar existencias a tu inventario?</p>
                                         <div className={`${styles.condition__Container} d-flex flex-wrap align-items-center justify-content-center w-100`}>
                                             <div
                                                 className={`${styles.condition__Option} ${periodicityAutomaticIncrease === 'Diario' ? styles.selected : ''} rounded m-1 p-2 text-center`}
@@ -711,7 +719,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     </div>
 
                                     <div className="w-100 position-relative">
-                                        <p className={`${styles.label} `} >Inventario: A futuro, ¿Cuánto deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Inventario: A futuro, ¿Cuánto deseas que se sume "{periodicityAutomaticIncrease}" a tu inventario?</p>
                                         <input
                                             type="number"
                                             {...register('automaticInventoryIncrease', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -734,7 +742,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {/* RETENCIONES */}
                             <div className="mb-4 d-flex w-100 position-relative gap-3">
                                 <div className="w-100 position-relative">
-                                    <p className={`${styles.label} `} >Tipo de retención</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Tipo de retención</p>
                                     <select
                                         {...register(`retentionType`, { required: true })}
                                         className={`${styles.input__Retention} p-2 border`}
@@ -750,10 +758,11 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 </div>
                                 
                                 <div className="w-100 position-relative">
-                                    <p className={`${styles.label} `} >Porcentaje de retención</p>
+                                    <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Porcentaje de retención</p>
                                     <select
                                         {...register(`withholdingTax`, { setValueAs: value => parseInt(value, 10) })}
                                         className={`${styles.input__Retention} p-2 border`}
+                                        onChange={handleWithHoldingTaxChange}
                                     >
                                         <option value='No aplica'>No aplica</option>
                                         <option value={0.1}>0.1 %</option>
@@ -779,7 +788,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el porcentaje de IVA del producto?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el porcentaje de IVA del producto?</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border`}
@@ -793,7 +802,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >Si el producto está grabado con el impuesto al consumo, elige el porcentaje</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Si el producto está grabado con el impuesto al consumo, elige el porcentaje</p>
                                 <select
                                     defaultValue={0}
                                     className={`${styles.input} p-2 border`}
@@ -820,7 +829,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {showIvaAiu === 'Si' && (
                                 <div className='mb-3'>
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Administración</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Administración</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.administrativePercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -837,7 +846,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                        <p className={`${styles.label} `} >Define el porcentaje de Imprevistos</p>
+                                        <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Imprevistos</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.unforeseenPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -854,8 +863,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     </div>
 
                                     <div className='mb-3 d-flex gap-2'>
-                                    <p className={`${styles.label} `} >Selecciona una Sede</p>
-                                        <p className={`${styles.label} mb-0 p-2`} >Define el porcentaje de Utilidad</p>
+                                        <p className={`${styles.label} mb-0 p-2`} ><span className={`${styles.required__Information} `}>*</span> Define el porcentaje de Utilidad</p>
                                         <input
                                             type="number"
                                             {...register('ivaAiu.utilityPercentage', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -874,7 +882,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             )}
 
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Cuál es el precio de venta?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el precio de venta?</p>
                                 <input
                                     type="number"
                                     {...register('sellingPrice', { required: true, setValueAs: (value) => parseFloat(value) })}
@@ -882,9 +890,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     placeholder='Precio de venta del producto'
                                     min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                            e.preventDefault();
-                                        }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
                                     }}
                                 />
                                 {errors.sellingPrice && (
@@ -896,7 +902,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
 
                             {/* ACCESORIOS */}
                             <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} `} >¿Tu producto incluye accesorios?</p>
+                                <p className={`${styles.label} `} ><span className={`${styles.required__Information} `}>*</span> ¿Tu producto incluye accesorios?</p>
                                 <div className={`${styles.condition__Container} d-flex align-items-center justify-content-center  border rounded`}>
                                     <div
                                         className={`${styles.condition__Option} ${selectedProductAccesory === 'Si' ? styles.selected : ''} m-1 p-2 text-center`} 
@@ -927,12 +933,11 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                             value={newAccessory}
                                             onChange={(e) => setNewAccessory(e.target.value)}
                                         />
-                                        <div className={`${styles.containerIconAdd} d-flex align-items-center justify-content-center`}>
-                                            <GoPlus className={`${styles.iconAdd} m-0`} onClick={handleAddAccessory}/>
+                                        <div className={`${styles.container__Icon_Add} d-flex align-items-center justify-content-center`}>
+                                            <GoPlus className={`${styles.icon__Add} m-0`} onClick={handleAddAccessory}/>
                                         </div>
                                     </div>
                                     <div className={`${styles.containerAccesories} m-auto d-flex flex-column align-items-center justify-content-between`}>
-                                    <p className={`${styles.label} `} >Selecciona una Sede</p>
                                         <p>Si el accesorio contiene algún tipo de empaque, presiona el check y selecciona un tipo de las opciones</p>
                                         {accessoriesProduct.map((accessory, index) => (
                                             <div key={index} className={`${styles.accesories} d-flex flex-column`}>
