@@ -18,7 +18,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
         <div>
             <h4 className={`${styles.tertiary__Title } text-center`}>Información personal</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Tipo de identificación</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Tipo de identificación</h6>
                 <div className={styles.container__Input}>
                     <select
                         {...register('typeDocumentId', { required: true })}
@@ -38,25 +38,25 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
 
             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                 <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                    <h6 className={styles.label}>Número de identificación</h6>
+                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Número de identificación</h6>
                     <div className={styles.container__Input}>
                         <input
-                            type="number"
+                            type="text" // Cambié el tipo a "text" para manejar mejor la validación de longitud y evitar problemas con ciertos navegadores
                             {...register('documentId', { 
                                 required: true,
-                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 10 dígitos
+                                pattern: /^\d{1,9}$/ // Expresión regular para hasta 9 dígitos
                             })}
                             className={`${styles.input} p-2 border `}
                             placeholder='¿Cuál es tu número de identificación?'
-                            min={0}
+                            maxLength={9} // Limita el input a 9 caracteres
                             onKeyDown={(e) => {
-                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                    e.preventDefault();
+                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                    e.preventDefault(); // Evita caracteres no deseados
                                 }
                             }}
                         />
-                        {errors.documentId && (
-                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                            {errors.documentId && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido y debe ser de hasta 9 dígitos.</p>
                         )}
                     </div>
                 </div>
@@ -65,16 +65,16 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                     <h6 className={styles.label}>Dígito de verificación</h6>
                     <div className={styles.container__Input}>
                         <input
-                            type="number"
+                            type="text" // Cambié el tipo a "text" para mejor control sobre la longitud
                             {...register('verificationDigit', {
-                                pattern: /^\d{1}$/ // Expresión regular para 9 dígitos exactos
+                                pattern: /^\d{1}$/ // Expresión regular para un solo dígito
                             })}
                             className={`${styles.input} p-2 border `}
                             placeholder='Opcional ¿Cuál es el dígito de verificación de tu empresa?'
-                            min={0}
+                            maxLength={1} // Limita el input a 1 carácter
                             onKeyDown={(e) => {
-                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                    e.preventDefault();
+                                if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                    e.preventDefault(); // Evita caracteres no deseados
                                 }
                             }}
                         />
@@ -84,7 +84,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
 
             {typeDocument === 'NIT' && (
                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                    <h6 className={styles.label}>Razón Social</h6>
+                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Razón Social</h6>
                     <div className={styles.container__Input}>
                         <input
                             type="text"
@@ -102,7 +102,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
             {(typeDocument === 'Cedula de Ciudadania' || typeDocument === 'Cedula de Extranjeria' || typeDocument === 'Pasaporte')  && ( 
                 <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                     <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                        <h6 className={styles.label}>Nombres</h6>
+                        <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombres</h6>
                         <div className={styles.container__Input}>
                             <input
                                 type="text"
@@ -116,7 +116,7 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                         </div>
                     </div>
                     <div className={`${styles.info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                        <h6 className={styles.label}>Apellidos</h6>
+                        <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Apellidos</h6>
                         <div className={styles.container__Input}>
                             <input
                                 type="text"

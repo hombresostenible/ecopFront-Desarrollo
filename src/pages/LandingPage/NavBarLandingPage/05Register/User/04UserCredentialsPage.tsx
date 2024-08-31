@@ -22,7 +22,7 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
         <div>
             <h4 className={`${styles.tertiary__Title } text-center`}>Tus datos de acceso</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Email</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Email</h6>
                 <div className={styles.container__Input}>
                     <input
                         type="email"
@@ -37,7 +37,7 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
             </div>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Contraseña</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Contraseña</h6>
                 <div className={styles.container__Input}>
                     <input
                         type={showPassword ? "text" : "password"}

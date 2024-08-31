@@ -8,6 +8,7 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postRegisterClient } from '../../../../../redux/User/userSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IUser } from "../../../../../types/User/user.types";
+import Loading from '../../../../../components/Platform/Loading/Loading';
 import UserInformationPage from './01UserInformationPage';
 import EconomicActivityPage from './02EconomicActivityPage';
 import LocalizarionPage from './03LocalizarionPage';
@@ -28,6 +29,7 @@ function RegisterUserPagePage() {
     const dispatch: AppDispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
     const errorUser = useSelector((state: RootState) => state.user.errorUser);
+    const loading = useSelector((state: RootState) => state.user.loading);
 
     const [currentStep, setCurrentStep] = useState(RegistrationStep.UserInformationPage);
     const {register, formState: { errors }, handleSubmit} = useForm<IUser>();
@@ -152,9 +154,15 @@ function RegisterUserPagePage() {
                             </div>
                         </form>
 
-                        <p className='m-0 text-center'>
+                        <p className='mt-3 mb-3 text-center'>
                             ¿Ya tienes una cuenta? <Link to="/login" className={`${styles.link} text-decoration-none text-sky-500`}>Sign In</Link>
                         </p>
+
+                        <div className={`${styles.container__Loading} d-flex align-items-center justify-content-center position-absolute`}>
+                            {loading && (
+                                <Loading />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
