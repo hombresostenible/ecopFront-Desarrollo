@@ -15,7 +15,7 @@ function EconomicActivityPage({ register, errors, onSelect }: EconomicSectionPro
         <div>
             <h4 className={`${styles.tertiary__Title } text-center`}>Tu actividad económica</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Sector económico</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Sector económico</h6>
                 <div className={styles.container__Input}>
                     <select
                         {...register('economicSector', { required: true })}

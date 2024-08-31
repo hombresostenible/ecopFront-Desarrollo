@@ -1,6 +1,10 @@
 .container__Info {
     width: 100%;
 }
+.required__Information {
+    color: #d90429;
+    font-weight: 600;
+}
 .container__Input {
     width: 100%;
     border-radius: 3px;

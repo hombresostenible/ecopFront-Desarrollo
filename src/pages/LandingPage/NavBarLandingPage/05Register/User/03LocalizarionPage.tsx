@@ -21,7 +21,7 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
             />
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Dirección</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Dirección</h6>
                 <div className={styles.container__Input}>
                     <input
                         type="text"
@@ -39,17 +39,26 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
                 <h6 className={styles.label}>Código postal</h6>
                 <div className={styles.container__Input}>
                     <input
-                        type="postalCode"
-                        {...register('postalCode')}
+                        type="text" // Cambié el tipo a "text" para permitir caracteres alfanuméricos
+                        {...register('postalCode', {
+                            maxLength: 10, // Limita el input a 10 caracteres
+                            pattern: /^[A-Za-z0-9]{1,10}$/ // Expresión regular para hasta 10 caracteres alfanuméricos
+                        })}
                         className={`${styles.input} p-2 border `}
                         placeholder='Si tienes código postal ¿Cuál es el código?'
-                        min={0}
+                        maxLength={10} // Limita el input a 10 caracteres
+                        onKeyDown={(e) => {
+                            // Puedes personalizar la prevención de caracteres si es necesario
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                 </div>
             </div>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Celular o teléfono fijo</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono fijo</h6>
                 <div className={styles.container__Input}>
                     <input
                         type="phone"

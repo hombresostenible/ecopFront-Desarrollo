@@ -56,6 +56,10 @@
 .label {
     margin-bottom: 5px;
 }
+.required__Information {
+    color: #d90429;
+    font-weight: 600;
+}
 .container__Input {
     width: 100%;
     border-radius: 3px;
@@ -82,12 +86,18 @@
     max-width: 600px;
     padding: 0 0 20px 0;
 }
+.text__Accepted_Policy {
+    width: 500px;
+}
 .text__Danger_Accepted_Policy {
     top: 42px;
 }
 .checkbox {
     height: 30px;
     width: 30px;
+}
+.container__Loading {
+    width: 100%;
 }
 
 

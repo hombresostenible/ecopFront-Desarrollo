@@ -526,7 +526,7 @@ const CodesCiiu: React.FC<CodesCiiuProps> = ({ onSelect }) => {
     return (
         <div className={`${styles.container} mb-4 d-flex align-items-center justify-content-center gap-3 w-100`}>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                <h6 className={styles.label}>Selecciona un código CIIU</h6>
+                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Selecciona un código CIIU</h6>
                 <div className={styles.container__Input}>
                     <Select
                         className={`${styles.input} border-0`}

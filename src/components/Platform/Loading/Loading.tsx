@@ -1,5 +1,5 @@
 
-function LoadingPage() {
+function Loading() {
 
     return (
         <div className="d-flex align-items-center justify-content-center">
@@ -13,4 +13,4 @@ function LoadingPage() {
     );
 }
 
-export default LoadingPage;
+export default Loading;
