@@ -39,7 +39,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
-    //Setea todos los artículos que se registrarán
+    // Setea todos los artículos que se registrarán
     const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
 
     // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
@@ -58,7 +58,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
             };
             // Añade el ítem al estado scannedItems
             setScannedItems(prevItems => [...prevItems, selectedItem]);
-            setBarCode(''); // Limpia el campo de código de barras
+            setBarCode('');
         }
     }, [itemByBarCode]);
 
@@ -127,7 +127,8 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        return total + (scannedItem.quantity * scannedItem.sellingPrice);
+        const purchasePrice = scannedItem.purchasePrice ?? 0;
+        return total + (scannedItem.quantity * purchasePrice);
     }, 0);
 
 
@@ -137,18 +138,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
         setShowOtherExpenses(event.target.value);
     };
 
-    // // SELECCIONA LA PERIODICIDAD DE PAGO DE UN SERVICIO PUBLICO
-    // const [periodicityPayServiceChange, setPeriodicityPayService] = useState('Mensual');
-    // const handlePeriodicityPayServiceChange = (event: { target: { value: SetStateAction<string> }}) => {
-    //     setPeriodicityPayService(event.target.value);
-    // };
-
-    // // SELECCIONA EL PERIODO DE PAGO DE UN SERVICIO
-    // const [periodPayServiceChange, setPeriodPayServiceChange] = useState('Enero de 2024');
-    // const handlePeriodPayServiceChange = (event: { target: { value: SetStateAction<string> }}) => {
-    //     setPeriodPayServiceChange(event.target.value);
-    // };
-    
     // SELECCIONA LA CXP
     const [ selectedCXP, setSelectedCXP ] = useState<IAccountsPayable | null>(null);
     const [ transactionCounterpartId, setTransactionCounterpartId ] = useState('');
@@ -178,9 +167,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 meanPayment: meanPayment ? meanPayment : null,
                 itemsBuy: scannedItems,
                 creditDescription: creditDescription,
-
-                // periodicityPayService: periodicityPayServiceChange ? periodicityPayServiceChange : null,
-                // periodPayService: periodPayServiceChange ? periodPayServiceChange : null,
                 totalValue: totalPurchaseAmount || totalValueOtherExpensesNumber,
             } as IAccountsBook;
             if (defaultDates) {
@@ -202,7 +188,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 }
             }
             if (totalValueOtherExpenses) formData.pay = 'Si';
-
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
             setSelectedSupplier(null);
@@ -288,7 +273,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>
                                                 <input
                                                     type="text"
-                                                    value={item.purchasePrice || ''}
+                                                    value={item.purchasePrice || 0}
                                                     onChange={(e) => handlePriceChange(item.id, e.target.value)}
                                                     className={styles.priceInput}
                                                 />
@@ -337,20 +322,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                 )}
                             </Modal.Body>
                         </Modal>
-
-                        <div className={`${styles.container__Selected_Client} m-auto d-flex align-items-center justify-content-between position-relative`}>
-                            <p className='m-0'>Selecciona o crea a tu proveedor</p>
-                            <SearchSupplierCrm
-                                token={token}
-                                onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
-                            />
-                            {messageSelectedSupplier && (
-                                <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
-                                    <div className={`${styles.triangle} position-absolute`}></div>
-                                    <p className='m-0'>Selecciona el proveedor acá</p>
-                                </div>
-                            )}
-                        </div>
 
                         <div className={`${styles.container__Info_Purchase} m-5 d-flex flex-column align-items-start justify-content-between`}>
                             <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
@@ -472,70 +443,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                             )}
                         </div>
 
-                        {/* {['Acueducto', 'Energia', 'Gas', 'Internet', 'Celular/Plan de datos'].includes(showOtherExpenses) && (
-                            <div className={`${styles.container__Info_Purchase} d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona la periodicidad de pago del servicio público</p>
-                                <select
-                                    {...register('initialDate', { required: true })}
-                                    className={`${styles.input__Info_Purchase} p-2`}
-                                    onChange={handlePeriodicityPayServiceChange}
-                                >
-                                    <option value='Mensual'>Mensual</option>
-                                    <option value='Bimestral'>Bimestral</option>
-                                </select>
-                                {errors.periodicityPayService && (
-                                    <p className='text-danger'>El dato es requerido</p>
-                                )}
-                            </div>
-                        )} */}
-
-                        {/* {periodicityPayServiceChange === 'Mensual' && (
-                            <div className={`${styles.container__Info_Purchase} d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona el período de pago del servicio público</p>
-                                <select
-                                    {...register('periodPayService', { required: true })}
-                                    className={`${styles.input__Info_Purchase} p-2`}
-                                    onChange={handlePeriodPayServiceChange}
-                                >
-                                    <option value='Enero de 2024'>Enero de 2024</option>
-                                    <option value='Febrero de 2024'>Febrero de 2024</option>
-                                    <option value='Marzo de 2024'>Marzo de 2024</option>
-                                    <option value='Abril de 2024'>Abril de 2024</option>
-                                    <option value='Mayo de 2024'>Mayo de 2024</option>
-                                    <option value='Junio de 2024'>Junio de 2024</option>
-                                    <option value='Julio de 2024'>Julio de 2024</option>
-                                    <option value='Agosto de 2024'>Agosto de 2024</option>
-                                    <option value='Septiembre de 2024'>Septiembre de 2024</option>
-                                    <option value='Octubre de 2024'>Octubre de 2024</option>
-                                    <option value='Noviembre de 2024'>Noviembre de 2024</option>
-                                    <option value='Diciembre de 2024'>Diciembre de 2024</option>
-                                </select>
-                                {errors.periodicityPayService && (
-                                    <p className='text-danger'>El dato es requerido</p>
-                                )}
-                            </div>
-                        )} */}
-
-                        {/* {periodicityPayServiceChange === 'Bimestral' && (
-                            <div className={`${styles.container__Info_Purchase} d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona el período de pago del servicio público</p>
-                                <select
-                                    {...register('periodPayService', { required: true })}
-                                    className={`${styles.input__Info_Purchase} p-2`}
-                                    onChange={handlePeriodPayServiceChange}
-                                >
-                                    <option value='Mayo - Junio de 2024'>Mayo - Junio de 2024</option>
-                                    <option value='Marzo - Abril de 2024'>Marzo - Abril de 2024</option>
-                                    <option value='Julio - Agosto de 2024'>Julio - Agosto de 2024</option>
-                                    <option value='Septiembre - Octubre de 2024'>Septiembre - Octubre de 2024</option>
-                                    <option value='Noviembre - Diciembre de 2024'>Noviembre - Diciembre de 2024</option>
-                                </select>
-                                {errors.periodicityPayService && (
-                                    <p className='text-danger'>El dato es requerido</p>
-                                )}
-                            </div>
-                        )} */}
-
                         <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
                             <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Medio de pago</p>
                             <select
@@ -574,6 +481,26 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                     <option value='Cheque'>Cheque</option>
                                 </optgroup>
                             </select>
+                        </div>
+
+                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
+                            <p className={`${styles.text} mb-0 p-2`}>Valor del gasto</p>
+                            <input
+                                type="number"
+                                {...register('totalValue', { required: 'El valor total de la venta es requerido', setValueAs: (value) => parseFloat(value) })}
+                                className={`${styles.info} p-2 border rounded border-secundary text-end`}
+                                placeholder='Valor total'
+                                min={0}
+                                onChange={handleTotalValueOtherExpensesChange}
+                                onKeyDown={(e) => {
+                                    if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                        e.preventDefault();
+                                    }
+                                }}
+                            />
+                            {errors.totalValue && (
+                                <p className='invalid-feedback'>{errors.totalValue.message}</p>
+                            )}
                         </div>
                     </div>
                 )}
@@ -685,26 +612,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                         </div>
                     </div>
                 )}
-
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Valor del gasto</p>
-                    <input
-                        type="number"
-                        {...register('totalValue', { required: 'El valor total de la venta es requerido', setValueAs: (value) => parseFloat(value) })}
-                        className={`${styles.info} p-2 border rounded border-secundary text-end`}
-                        placeholder='Valor total'
-                        min={0}
-                        onChange={handleTotalValueOtherExpensesChange}
-                        onKeyDown={(e) => {
-                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
-                                e.preventDefault();
-                            }
-                        }}
-                    />
-                    {errors.totalValue && (
-                        <p className='invalid-feedback'>{errors.totalValue.message}</p>
-                    )}
-                </div>
 
                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
                     <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
