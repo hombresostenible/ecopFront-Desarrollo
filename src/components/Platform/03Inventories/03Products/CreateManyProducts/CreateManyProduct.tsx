@@ -65,8 +65,8 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                 };
 
                 // Tomar las filas 4 y 6 como encabezados y datos respectivamente
-                const originalHeaders: string[] = parsedData[3] || [];
-                const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
+                const originalHeaders: string[] = parsedData[1] || [];
+                const originalData: any[][] = parsedData[3] ? parsedData.slice(3) : [];
 
                 // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {

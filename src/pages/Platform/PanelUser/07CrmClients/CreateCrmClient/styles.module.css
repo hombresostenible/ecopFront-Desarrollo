@@ -11,13 +11,13 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
-.button__Detail {
+.button__Bulk_Create {
     padding: 5px 10px;
     letter-spacing: 1px;
     background: #718bd8;
     color: #f8f9fa;
 }
-.button__Detail:hover {
+.button__Bulk_Create:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;

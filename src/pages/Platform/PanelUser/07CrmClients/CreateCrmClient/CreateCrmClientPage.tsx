@@ -2,6 +2,7 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jsCookie from 'js-cookie';
+import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ import { ICrmClient } from '../../../../../types/User/crmClient.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+import CreateManyCrmClients from '../../../../../components/Platform/07CrmClients/CreateManyCrmClients/CreateManyCrmClients.tsx';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 
@@ -27,6 +29,11 @@ function CreateCrmClientPage() {
     
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
+
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const onCloseCrmClientModal = () => {
+        setShowCancelModal(false);
+    };
 
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
@@ -88,6 +95,24 @@ function CreateCrmClientPage() {
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Clientes</h1>
+
+                        <div className="mb-4 d-flex">
+                            <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus clientes de forma masiva</button>
+                        </div>
+
+                        <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
+                            <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus clientes de forma masiva</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <CreateManyCrmClients
+                                    token={token}
+                                    onCreateComplete={() => {
+                                        onCloseCrmClientModal();
+                                    }}
+                                />
+                            </Modal.Body>
+                        </Modal>
 
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
