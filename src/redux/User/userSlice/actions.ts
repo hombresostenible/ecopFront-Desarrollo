@@ -39,7 +39,7 @@ export const loginUser = (loginData: { email: string; password: string }) => asy
 
 //VERIFICA EL TOKEN CADA QUE ENTRE A UNA RUTA PROTEGIDA
 export const verifyTokenRequest = (token: string) => {
-    return axiosInstance.get(`/auth/verifyToken`, {
+    return axiosInstance.get(`/auth/verify-token`, {
         headers: { Authorization: `Bearer ${token}` },
     });
 };
