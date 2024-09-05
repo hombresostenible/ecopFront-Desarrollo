@@ -4,17 +4,17 @@ import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../redux/store';
-import { getBranches, postManyBranch } from '../../../../redux/User/branchSlice/actions';
+import { postManyCrmClients, getCrmClients } from '../../../../redux/User/crmClientSlice/actions';
 //ELEMENTOS DEL COMPONENTE
-import { IBranch } from '../../../../types/User/branch.types';
+import { ICrmClient } from '../../../../types/User/crmClient.types';
 import styles from './styles.module.css';
 
-interface CreateManyBranchesProps {
+interface CreateManyCrmClientsProps {
     token: string;
     onCreateComplete: () => void;
 }
 
-function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProps) {
+function CreateManyCrmClients({ token, onCreateComplete }: CreateManyCrmClientsProps) {
     const dispatch: AppDispatch = useDispatch();
 
     const [ excelData, setExcelData ] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -38,22 +38,23 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
     
                 // Obtener los nombres de las columnas en español desde el archivo de Excel
                 const spanishColumnNames: { [key: string]: string } = {
-                    "Nombre de la sede": "nameBranch",
-                    "Departamento de la sede": "department",
-                    "Ciudad de la sede": "city",
-                    "Dirección de la sede": "addressBranch",
-                    "Email de la sede": "contactEmailBranch",
-                    "Teléfono de la sede": "contactPhoneBranch",
-                    "Nombre del administrador de la sede": "nameManagerBranch",
-                    "Apellido del administrador de la sede": "lastNameManagerBranch",
-                    "Tipo de documento del administrador de la sede": "typeDocumentIdManager",
-                    "Número de documento del administrador de la sede": "documentIdManager",
+                    "Nombre del cliente": "name",
+                    "Apellido del cliente": "lastName",
+                    "Razon Social del cliente": "corporateName",
+                    "Tipo de documento de identidad": "typeDocumentId",
+                    "Numero de documento de identidad": "documentId",
+                    "Digito de verificacion": "verificationDigit",
+                    "Email del cliente": "email",
+                    "Numero de celular o telefono del cliente": "phone",
+                    "Departamento": "department",
+                    "Ciudad": "city",
+                    "Direccion": "address",
                     // Agregar más nombres de columnas según sea necesario
                 };
     
                 // Tomar las filas 4 y 6 como encabezados y datos respectivamente
-                const originalHeaders: string[] = parsedData[3] || [];
-                const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
+                const originalHeaders: string[] = parsedData[1] || [];
+                const originalData: any[][] = parsedData[3] ? parsedData.slice(3) : [];
     
                 // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
@@ -82,16 +83,17 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
 
     // Función para traducir los nombres de las columnas de inglés a español
     const englishToSpanishColumnNames: { [key: string]: string } = {
-        "nameBranch": "Nombre de la sede",
-        "department": "Departamento de la sede",
-        "city": "Ciudad de la sede",
-        "addressBranch": "Dirección de la sede",
-        "contactEmailBranch": "Email de la sede",
-        "contactPhoneBranch": "Teléfono de la sede",
-        "nameManagerBranch": "Nombre del administrador de la sede",
-        "lastNameManagerBranch": "Apellido del administrador de la sede",
-        "typeDocumentIdManager": "Tipo de documento del administrador de la sede",
-        "documentIdManager": "Número de documento del administrador de la sede",
+        "name": "Nombre del cliente",
+        "lastName": "Apellido del cliente",
+        "corporateName": "Razon Social del cliente",
+        "typeDocumentId": "Tipo de documento de identidad",
+        "documentId": "Numero de documento de identidad",
+        "verificationDigit": "Digito de verificacion",
+        "email": "Email del cliente",
+        "phone": "Numero de celular o telefono del cliente",
+        "department": "Departamento",
+        "city": "Ciudad",
+        "address": "Direccion",
         // Agregar más nombres de columnas según sea necesario
     };
 
@@ -100,16 +102,16 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
         const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
     
         // Mapear solo las filas no vacías
-        const formData = nonEmptyRows?.map(branch => ({
-            ...branch,
-            contactPhoneBranch: branch.contactPhoneBranch.toString(),
-            documentIdManager: branch.documentIdManager.toString(),
+        const formData = nonEmptyRows?.map(crmClients => ({
+            ...crmClients,
+            documentId: crmClients.documentId.toString(),
+            phone: crmClients.phone.toString(),
         }));
-        await dispatch(postManyBranch(formData as IBranch[], token));
+        await dispatch(postManyCrmClients(formData as ICrmClient[], token));
         setExcelData(null);
-        setMessage('Se guardó masivamente tus sedes con exito');
+        setMessage('Se guardó masivamente tus clientes con éxito');
         setTimeout(() => {
-            dispatch(getBranches(token));
+            dispatch(getCrmClients(token));
             onCreateComplete();
         }, 1500);
     };
@@ -120,9 +122,9 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
             <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
                 <div className={`${styles.container__Download_File} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
-                    <a className={`${styles.download__File} text-center text-decoration-none`} href="/DownloadExcels/Sedes.xlsx" download="Sedes.xlsx">Descargar Excel</a>
+                    <a className={`${styles.download__File} text-center text-decoration-none`} href="/DownloadExcels/Clientes.xlsx" download="Clientes.xlsx">Descargar Excel</a>
                 </div>
-                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada una de tus sedes y facilitar la creación masiva.</p>
+                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada cliente y facilitar la creación masiva.</p>
             </div>
 
             <div className="d-flex">
@@ -170,4 +172,4 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
     );
 }
 
-export default CreateManyBranches;
+export default CreateManyCrmClients;

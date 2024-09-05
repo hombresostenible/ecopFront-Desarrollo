@@ -13,9 +13,9 @@ import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+import CreateManyBranches from '../../../../../components/Platform/02Branch/CreateManyBranches/CreateManyBranches';
 // import Loading from '../../../../../components/Loading/Loading';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
-import CreateManyBranches from '../../../../../components/Platform/02Branch/CreateManyBranches/CreateManyBranches';
 import styles from './styles.module.css';
 
 interface CreateBranchProps {
@@ -35,8 +35,8 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
+    
     const [showCancelModal, setShowCancelModal] = useState(false);
-
     const onCloseBranchModal = () => {
         setShowCancelModal(false);
     };
@@ -56,14 +56,14 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     
     const onSubmit = async (values: IBranch) => {
         try {
-            const branchData = {
+            const formData = {
                 ...values,
                 department: selectedDepartment,
                 city: selectedCity,
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as IBranch;
-            await dispatch(postBranch(branchData, token));
+            await dispatch(postBranch(formData, token));
             setFormSubmitted(true);    
             reset();
             setTimeout(() => {
