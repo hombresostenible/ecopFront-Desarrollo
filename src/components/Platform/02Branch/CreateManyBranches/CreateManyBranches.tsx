@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,9 @@ interface CreateManyBranchesProps {
 }
 
 function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
 
     const [ excelData, setExcelData ] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -52,8 +56,8 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                 };
     
                 // Tomar las filas 4 y 6 como encabezados y datos respectivamente
-                const originalHeaders: string[] = parsedData[3] || [];
-                const originalData: any[][] = parsedData[5] ? parsedData.slice(5) : [];
+                const originalHeaders: string[] = parsedData[1] || [];
+                const originalData: any[][] = parsedData[3] ? parsedData.slice(3) : [];
     
                 // Traducir los encabezados originales al inglés
                 const currentHeaders: string[] = originalHeaders.map((header: string) => {
@@ -109,11 +113,17 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
         setExcelData(null);
         setMessage('Se guardó masivamente tus sedes con exito');
         setTimeout(() => {
+            setShouldNavigate(true);
             dispatch(getBranches(token));
             onCreateComplete();
         }, 1500);
     };
 
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/branches/consult-branches');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>
@@ -135,7 +145,7 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                 )}
             </div> 
 
-            <div className="mt-4 table-responsive">
+            <div className="mt-4 mb-4 table-responsive">
                 {excelData && (
                     <table className="table table-bordered table-striped">
                         <thead>

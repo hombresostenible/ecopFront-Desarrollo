@@ -24,17 +24,16 @@ interface CreateBranchProps {
 
 function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
-    
-    // Estado de Redux
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
+    const dispatch: AppDispatch = useDispatch();
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
     // const loading = useSelector((state: RootState) => state.branch.loading);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBranch>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [shouldNavigate, setShouldNavigate] = useState(false);
     
     const [showCancelModal, setShowCancelModal] = useState(false);
     const onCloseBranchModal = () => {

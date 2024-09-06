@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
-import { postManyProducts } from '../../../../../redux/User/productSlice/actions';
+import { postManyProducts, getProducts } from '../../../../../redux/User/productSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import { IProduct } from "../../../../../types/User/products.types";
@@ -18,6 +19,9 @@ interface CreateManyProductsProps {
 }
 
 function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyProductsProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
 
@@ -158,9 +162,17 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
         setExcelData(null);
         setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
+            setShouldNavigate(true);
+            dispatch(getProducts(token));
             onCreateComplete();
         }, 1500);
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/inventories/consult-products');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>

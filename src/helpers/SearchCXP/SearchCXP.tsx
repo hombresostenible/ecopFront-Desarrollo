@@ -15,7 +15,6 @@ interface SearchCXPProps {
 }
 
 function SearchCXP({ token, selectedBranch, onCXPSelect }: SearchCXPProps) {
-    console.log('Hola sd')
     const dispatch: AppDispatch = useDispatch();
     const accountsPayable = useSelector((state: RootState) => state.finantialIndicators.accountsPayable);
 

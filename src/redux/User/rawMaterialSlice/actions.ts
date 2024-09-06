@@ -8,7 +8,7 @@ import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMat
 export const postRawMaterial = (formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postRawMaterialStart(formData));
-        const response = await axiosInstance.post('/rawMaterial', formData, {
+        const response = await axiosInstance.post('/raw-material', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const postRawMaterial = (formData: IRawMaterial, token: string) => async 
 export const postManyRawMaterials = (formData: IRawMaterial[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyRawMaterialsStart(formData));
-        const response = await axiosInstance.post('/rawMaterial/create-many', formData, {
+        const response = await axiosInstance.post('/raw-material/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const postManyRawMaterials = (formData: IRawMaterial[], token: string) =>
 //OBTIENE TODAS LOS MATERIAS PRIMAS DEL USER
 export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/rawMaterial', {
+        const response = await axiosInstance.get('/raw-material', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) 
 //OBTIENE UNA MATERIAS PRIMAS POR ID
 export const getRawMaterialById = (idRawMaterial: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/rawMaterial/${idRawMaterial}`, {
+        const response = await axiosInstance.get(`/raw-material/${idRawMaterial}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export const getRawMaterialById = (idRawMaterial: string, token: string) => asyn
 //OBTIENE TODAS LAS MATERIAS PRIMAS DEL USER POR SEDE
 export const getRawMaterialsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/rawMaterial/rawMaterials-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/raw-material/rawMaterials-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const getRawMaterialsByBranch = (idBranch: string, token: string) => asyn
 //OBTENER TODAS LAS MATERIAS PRIMAS DEL USER QUE TENGAN UNIDADES DADAS DE BAJA
 export const getRawMaterialsOffS = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/rawMaterial/rawMaterials-off', {
+        const response = await axiosInstance.get('/raw-material/rawMaterials-off', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export const getRawMaterialsOffS = (token: string) => async (dispatch: AppDispat
 export const putRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putRawMaterialStart());
-        const response = await axiosInstance.put(`/rawMaterial/${idRawMaterial}`, formData, {
+        const response = await axiosInstance.put(`/raw-material/${idRawMaterial}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -144,7 +144,7 @@ export const putRawMaterial = (idRawMaterial: string, formData: IRawMaterial, to
 export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyRawMaterialsStart(formData));
-        const response = await axiosInstance.put('/rawMaterial/updateMany', formData, {
+        const response = await axiosInstance.put('/raw-material/updateMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -164,7 +164,7 @@ export const putManyRawMaterials = (formData: IRawMaterial[], token: string) => 
 export const patchRawMaterial = (idRawMaterial: string, formData: Partial<IRawMaterial>, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchRawMaterialStart());
-        const response = await axiosInstance.patch(`/rawMaterial/${idRawMaterial}`, formData, {
+        const response = await axiosInstance.patch(`/raw-material/${idRawMaterial}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -184,7 +184,7 @@ export const patchRawMaterial = (idRawMaterial: string, formData: Partial<IRawMa
 export const patchAddInventoryRawMaterial = (idRawMaterial: string, formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchAddInventoryRawMaterialStart());
-        const response = await axiosInstance.patch(`/rawMaterial/add-inventory/${idRawMaterial}`, formData, {
+        const response = await axiosInstance.patch(`/raw-material/add-inventory/${idRawMaterial}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -204,7 +204,7 @@ export const patchAddInventoryRawMaterial = (idRawMaterial: string, formData: IR
 export const deleteRawMaterial = (idRawMaterial: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteRawMaterialStart());
-        const response = await axiosInstance.delete(`/rawMaterial/${idRawMaterial}`, {
+        const response = await axiosInstance.delete(`/raw-material/${idRawMaterial}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

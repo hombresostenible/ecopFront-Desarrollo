@@ -52,7 +52,6 @@ function IncomeCash({ token, selectedBranch, defaultDates, registrationDate, tra
         // Actualiza el estado `scannedItems` cuando `itemByBarCode` cambie
         if (itemByBarCode && itemByBarCode.result) {
             const item = itemByBarCode.result;
-            console.log('item: ', item)
             const selectedItem: IAccountsBookItems = {
                 nameItem: item.nameItem,
                 id: item.id,

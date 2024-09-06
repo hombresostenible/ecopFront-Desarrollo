@@ -7,7 +7,7 @@ interface DownloadSalesPerPeriodProps {
 }
 
 function DownloadSalesPerPeriod({ data }: DownloadSalesPerPeriodProps) {
-    console.log('data: ', data);
+    
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
-import { postManyRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
+import { postManyRawMaterials, getRawMaterials } from '../../../../../redux/User/rawMaterialSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
@@ -18,6 +19,9 @@ interface CreateManyRawMateralsProps {
 }
 
 function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateManyRawMateralsProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
     
@@ -156,9 +160,17 @@ function CreateManyRawMaterals({ branches, token, onCreateComplete }: CreateMany
         setExcelData(null);
         setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
+            setShouldNavigate(true);
+            dispatch(getRawMaterials(token));
             onCreateComplete();
         }, 1500);
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/inventories/consult-raw-materals');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>
