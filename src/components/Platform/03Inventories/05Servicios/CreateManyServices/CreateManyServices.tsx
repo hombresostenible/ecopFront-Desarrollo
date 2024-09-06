@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
-import { postManyServices } from '../../../../../redux/User/serviceSlice/actions';
+import { postManyServices, getServices } from '../../../../../redux/User/serviceSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import { IService } from '../../../../../types/User/services.types';
@@ -18,6 +19,9 @@ interface CreateManyRawMateralsProps {
 }
 
 function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRawMateralsProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
 
@@ -111,18 +115,26 @@ function CreateManyServices({ branches, token, onCreateComplete }: CreateManyRaw
     
         // Filtrar las filas no vacías del excelData
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const serviceData = nonEmptyRows.map(service => ({
+        const formData = nonEmptyRows.map(service => ({
             ...service,
             branchId: branchId,
             userId: user?.id,
         }));
-        dispatch(postManyServices(serviceData as unknown as IService[], token));
+        dispatch(postManyServices(formData as unknown as IService[], token));
         setExcelData(null);
         setMessage('Se guardaron exitosamente los registros');
         setTimeout(() => {
+            setShouldNavigate(true);
+            dispatch(getServices(token));
             onCreateComplete();
         }, 1500);
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/inventories/consult-services');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>

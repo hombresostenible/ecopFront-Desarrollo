@@ -203,7 +203,6 @@ export const getAccountsPayable = (token: string) => async (dispatch: AppDispatc
 //
 export const getAccountsPayableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        console.log('Hola')
         const response = await axiosInstance.get(`/financial-indicator/accounts-payable/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,

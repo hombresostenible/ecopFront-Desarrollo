@@ -211,7 +211,6 @@ function SalesPerPeriod() {
             URL.revokeObjectURL(url);
         }
     }, [originalData, getBranchName]);
-    console.log('originalData: ', originalData)
 
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >

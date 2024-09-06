@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
+//REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-//REDUX
-import { postManyAssets } from '../../../../../redux/User/assetsSlice/actions';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
+import { postManyAssets, getAssets } from '../../../../../redux/User/assetsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import { IAssets } from "../../../../../types/User/assets.types";
@@ -18,6 +19,9 @@ interface CreateManyMerchandisesProps {
 }
 
 function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerchandisesProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
 
     // Estados de Redux
@@ -132,9 +136,17 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
         setExcelData(null);
         setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
         setTimeout(() => {
+            setShouldNavigate(true);
+            dispatch(getAssets(token));
             onCreateComplete();
         }, 1500);
     };
+
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/inventories/consult-assets');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>
