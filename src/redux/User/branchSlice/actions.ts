@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IBranch } from '../../../types/User/branch.types';
-import { formData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
+import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
 
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
@@ -14,7 +14,7 @@ export const postBranch = (formData: IBranch, token: string) => async (dispatch:
                 "Content-Type": "application/json",
             }
         });
-        dispatch(formData(response.data));
+        dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(errorBranch(error.response?.data.message));
@@ -34,7 +34,7 @@ export const postManyBranch = (formData: IBranch[], token: string) => async (dis
                 "Content-Type": "application/json",
             }
         });
-        dispatch(formData(response.data));
+        dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(errorBranch(error.response?.data.message));
@@ -92,7 +92,7 @@ export const putBranch = (idBranch: string, formData: IBranch, token: string) =>
                 "Content-Type": "application/json",
             }
         });
-        dispatch(formData(response.data));
+        dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(errorBranch(error.response?.data.message));
@@ -112,7 +112,7 @@ export const deleteBranch = (idBranch: string, token: string) => async (dispatch
                 "Content-Type": "application/json",
             }
         });
-        dispatch(formData(response.data));
+        dispatch(branchData(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(errorBranch(error.response?.data.message));
