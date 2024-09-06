@@ -2,13 +2,33 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { ICrmSupplier } from '../../../types/User/crmSupplier.types';
-import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } from './crmSupplierSlice';
+import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } from './crmSupplierSlice';
 
 //CREAR DE UN PROVEEDOR
 export const postCrmSupplier = (formData: ICrmSupplier, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postCrmSupplierStart(formData));
-        const response = await axiosInstance.post('/crmSupplier', formData, {
+        const response = await axiosInstance.post('/crm-supplier', formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(crmSupplierData(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorCrmSupplier(error.response?.data.message));
+        } else {
+            dispatch(errorCrmSupplier(error.message));
+        }
+    }
+};
+
+//CREAR MUCHOS PROVEEDORES
+export const postManyCrmSuppliers = (formData: ICrmSupplier[], token: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(postManyCrmSuppliersStart(formData));
+        const response = await axiosInstance.post('/crm-supplier/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -27,7 +47,7 @@ export const postCrmSupplier = (formData: ICrmSupplier, token: string) => async 
 //OBTIENE TODOS LOS PROVEEDORES DEL USER
 export const getCrmSuppliers = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/crmSupplier', {
+        const response = await axiosInstance.get('/crm-supplier', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -46,7 +66,7 @@ export const getCrmSuppliers = (token: string) => async (dispatch: AppDispatch) 
 //OBTIENE UN PROVEEDOR POR ID DEL USER
 export const getCrmSupplierById = (idCrmSupplier: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/crmSupplier/${idCrmSupplier}`, {
+        const response = await axiosInstance.get(`/crm-supplier/${idCrmSupplier}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -65,7 +85,7 @@ export const getCrmSupplierById = (idCrmSupplier: string, token: string) => asyn
 //OBTIENE TODOS LOS PROVEEDORES POR SEDE DEL USER
 export const getCrmSuppliersByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/crmSupplier/${idBranch}`, {
+        const response = await axiosInstance.get(`/crm-supplier/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -85,7 +105,7 @@ export const getCrmSuppliersByBranch = (idBranch: string, token: string) => asyn
 export const putCrmSupplier = (idCrmSupplier: string, formData: ICrmSupplier, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putCrmSupplierStart());
-        const response = await axiosInstance.put(`/crmSupplier/${idCrmSupplier}`, formData, {
+        const response = await axiosInstance.put(`/crm-supplier/${idCrmSupplier}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -105,7 +125,7 @@ export const putCrmSupplier = (idCrmSupplier: string, formData: ICrmSupplier, to
 export const deleteCrmSupplier = (idCrmSupplier: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteCrmSupplierStart());
-        const response = await axiosInstance.delete(`/crmSupplier/${idCrmSupplier}`, {
+        const response = await axiosInstance.delete(`/crm-supplier/${idCrmSupplier}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

@@ -2,6 +2,7 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jsCookie from 'js-cookie';
+import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
+import CreateManySuppliers from '../../../../../components/Platform/08CrmSuppliers/CreateManySuppliers/CreateManySuppliers.tsx';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 
@@ -27,6 +29,11 @@ function CreateCrmSupplierPage() {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
+
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const onCloseCrmSupplierModal = () => {
+        setShowCancelModal(false);
+    };
     
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
@@ -87,7 +94,25 @@ function CreateCrmSupplierPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Proveedores</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus proveedores</h1>
+
+                        <div className="mb-4 d-flex">
+                            <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus proveedores de forma masiva</button>
+                        </div>
+
+                        <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
+                            <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
+                                <Modal.Title className='text-primary-emphasis text-start'>Crea tus proveedores de forma masiva</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <CreateManySuppliers
+                                    token={token}
+                                    onCreateComplete={() => {
+                                        onCloseCrmSupplierModal();
+                                    }}
+                                />
+                            </Modal.Body>
+                        </Modal>
 
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} position-relative`}>
                             {formSubmitted && (
