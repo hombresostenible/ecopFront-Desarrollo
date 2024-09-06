@@ -30,6 +30,11 @@ const crmSupplierSlice = createSlice({
             state.crmSupplier = action.payload;
             state.errorCrmSupplier = null;
         },
+        postManyCrmSuppliersStart: (state, action: PayloadAction<ICrmSupplier[]>) => {
+            state.loading = true;
+            state.crmSupplier = action.payload;
+            state.errorCrmSupplier = null;
+        },
         getCrmSuppliersStart: (state, action: PayloadAction<ICrmSupplier>) => {
             state.loading = true;
             state.crmSupplier = action.payload;
@@ -56,5 +61,5 @@ const crmSupplierSlice = createSlice({
     },
 });
 
-export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } = crmSupplierSlice.actions;
+export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } = crmSupplierSlice.actions;
 export default crmSupplierSlice.reducer;

@@ -63,7 +63,6 @@ function CreateCrmClientPage() {
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as ICrmClient;
-            
             await dispatch(postCrmClient(formData, token));
             setFormSubmitted(true);    
             reset();
@@ -94,7 +93,7 @@ function CreateCrmClientPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Clientes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus clientes</h1>
 
                         <div className="mb-4 d-flex">
                             <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus clientes de forma masiva</button>
