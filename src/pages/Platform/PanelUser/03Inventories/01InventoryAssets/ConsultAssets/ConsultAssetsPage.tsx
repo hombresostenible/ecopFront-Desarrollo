@@ -166,8 +166,8 @@ function ConsultAssetsPage() {
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
                                     <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
                                     <div className={`${styles.brand__Assets} d-flex align-items-center justify-content-center text-center`}>Marca</div>
-                                    <div className={`${styles.reference__Asset} d-flex align-items-center justify-content-center text-center`}>Referencia</div>
-                                    <div className={`${styles.state__Asset} d-flex align-items-center justify-content-center text-center`}>Estado</div>
+                                    {/* <div className={`${styles.reference__Asset} d-flex align-items-center justify-content-center text-center`}>Referencia</div> */}
+                                    {/* <div className={`${styles.state__Asset} d-flex align-items-center justify-content-center text-center`}>Estado</div> */}
                                     <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
                                     <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>Precio de compra</div>
                                     <div className={`${styles.condition__Asset} d-flex align-items-center justify-content-center text-center`}>IVA</div>
@@ -198,12 +198,12 @@ function ConsultAssetsPage() {
                                             <div className={`${styles.brand__Assets} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.brandItem}</span>
                                             </div>
-                                            <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            {/* <div className={`${styles.reference__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.referenceItem}</span>
-                                            </div>
-                                            <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            </div> */}
+                                            {/* <div className={`${styles.state__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.stateAssets}</span>
-                                            </div>
+                                            </div> */}
                                             <div className={`${styles.condition__Asset} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.inventory}</span>
                                             </div>
