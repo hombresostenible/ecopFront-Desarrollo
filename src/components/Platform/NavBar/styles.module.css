@@ -38,6 +38,7 @@
     right: 0;
     background: white;
     width: 400px;
+    z-index: 100;
 }
 .link__NavBar {
     color: #343a40;
@@ -67,7 +68,7 @@
     top: 5px;
     right: 0px;
     border-radius: 50%;
-    background: #d90429;
+    background: #f28705;
     border: 3px solid white;
     color: white;
     font-weight: 600;
@@ -103,19 +104,13 @@
     .logo{
         height: 25px;
     }
-    /* .container__Navigation{
-        border: 1px solid teal;
-    } */
     .container__Services{
-        /* border: 1px solid red; */
         width: 45px;
     }
     .container__Notification{
-        /* border: 1px solid red; */
         width: 45px;
     }
     .container__Configuration{
-        /* border: 1px solid red; */
         width: 45px;
     }
     .icon__Configuration {
@@ -127,7 +122,6 @@
         max-width: 30px;
     }
     .container__Logout{
-        /* border: 1px solid red; */
         width: 45px;
     }
 }

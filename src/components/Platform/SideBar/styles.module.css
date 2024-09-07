@@ -40,6 +40,9 @@
     height: 35px;
     color: hsl(210, 17%, 98%);
 }
+.section:hover {
+    cursor: pointer;
+}
 .container__Icon {
     height: 35px;
     width: 20px;
@@ -66,32 +69,42 @@
     display: block;
 }
 .link__Sub_Menu:hover {
-    color: #e4002b;
+    color: #f28705;
 }
 .active__Sub_Menu {
     color: hsl(210, 17%, 98%);
     font-weight: 600;
 }
 .container__Sub_Menu_Compact {
-    background: #718bd8;
+    z-index: 1;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+    background: #dee2e6;
     border-radius: 10px;
-    width: 200px;
+    width: 265px;
     top: 0;
     left: 60px;
 }
 .indicator {
     clip-path: polygon(100% 0, 0 50%, 100% 100%);
-    background: #718bd8;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+    background: #dee2e6;
     height: 15px;
     width: 15px;
     top: 10px;
-    left: -15px;
+    left: -14px;
+}
+.title__Sub_Menu_Compact {
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #000;
+    opacity: 0.75;
 }
 .link__Sub_Menu_Compact {
-    color: inherit;
+    color: #000;
+    opacity: 0.75;
     font-size: 14px;
     min-width: 100%;
 }
 .link__Sub_Menu_Compact:hover {
-    color: #f28705;
+    color: #718bd8;
 }
