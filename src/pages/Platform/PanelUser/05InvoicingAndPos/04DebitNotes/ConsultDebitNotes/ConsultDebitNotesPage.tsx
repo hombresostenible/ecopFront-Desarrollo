@@ -10,9 +10,9 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../../types/User/branch.types';
 // import { ICreditNote } from '../../../../../../types/User/creditNote.types';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 // import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";

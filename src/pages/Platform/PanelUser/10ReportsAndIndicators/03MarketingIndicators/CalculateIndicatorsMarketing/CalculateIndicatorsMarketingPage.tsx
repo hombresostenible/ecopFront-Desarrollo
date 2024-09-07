@@ -1,20 +1,20 @@
 import { useLocation, Link } from 'react-router-dom';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import AcquisitionClients from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/01AcquisitionClients/AcquisitionClients';
-import RetentionClients from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/02RetentionClients/RetentionClients';
-import CustomerDigital from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/03CustomerDigital/CustomerDigital';
-import VisualisationImpressions from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/04VisualisationImpressions/VisualisationImpressions';
-import ComparativeVisualisationImpressions from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/05ComparativeVisualisationImpressions/ComparativeVisualisationImpressions';
-import ProspectsGenerated from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/06ProspectsGenerated/ProspectsGenerated';
-import ComparativeProspectsGenerated from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/07ComparativeProspectsGenerated/ComparativeProspectsGenerated';
-import NumberSalesDigitalCampaign from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/08NumberSalesDigitalCampaign/NumberSalesDigitalCampaign';
-import ComparativeNumberSalesDigitalCampaign from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/09ComparativeNumberSalesDigitalCampaign/ComparativeNumberSalesDigitalCampaign';
-import NumberInterestedCustomers from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/10NumberInterestedCustomers/NumberInterestedCustomers';
-import ComparativeNumberInterestedCustomers from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/11ComparativeNumberInterestedCustomers/ComparativeNumberInterestedCustomers';
-import ConversionRate from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/12ConversionRate/ConversionRate';
-import ComparativeConversionRate from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/13ComparativeConversionRate/ComparativeConversionRate';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import AcquisitionClients from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/01AcquisitionClients/AcquisitionClients';
+import RetentionClients from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/02RetentionClients/RetentionClients';
+import CustomerDigital from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/03CustomerDigital/CustomerDigital';
+import VisualisationImpressions from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/04VisualisationImpressions/VisualisationImpressions';
+import ComparativeVisualisationImpressions from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/05ComparativeVisualisationImpressions/ComparativeVisualisationImpressions';
+import ProspectsGenerated from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/06ProspectsGenerated/ProspectsGenerated';
+import ComparativeProspectsGenerated from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/07ComparativeProspectsGenerated/ComparativeProspectsGenerated';
+import NumberSalesDigitalCampaign from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/08NumberSalesDigitalCampaign/NumberSalesDigitalCampaign';
+import ComparativeNumberSalesDigitalCampaign from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/09ComparativeNumberSalesDigitalCampaign/ComparativeNumberSalesDigitalCampaign';
+import NumberInterestedCustomers from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/10NumberInterestedCustomers/NumberInterestedCustomers';
+import ComparativeNumberInterestedCustomers from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/11ComparativeNumberInterestedCustomers/ComparativeNumberInterestedCustomers';
+import ConversionRate from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/12ConversionRate/ConversionRate';
+import ComparativeConversionRate from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/13ComparativeConversionRate/ComparativeConversionRate';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function CalculateIndicatorsMarketingPage() {

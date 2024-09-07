@@ -10,10 +10,10 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postBranch, getBranches } from '../../../../../redux/User/branchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/Footer/Footer';
-import CreateManyBranches from '../../../../../components/Platform/02Branch/CreateManyBranches/CreateManyBranches';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import CreateManyBranches from '../../../../../components/Platform/PanelUser/02Branch/CreateManyBranches/CreateManyBranches';
 // import Loading from '../../../../../components/Loading/Loading';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';

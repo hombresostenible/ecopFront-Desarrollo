@@ -8,7 +8,7 @@ import type { RootState, AppDispatch } from '../../redux/store';
 import { getCrmClients } from '../../redux/User/crmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../types/User/crmClient.types';
-import CreateClient from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateClient';
+import CreateClient from '../../components/Platform/PanelUser/04Accounts/CreateClientAndSupplier/CreateClient';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
 interface SearchClientCrmProps {

@@ -11,12 +11,12 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
-import SeeItemService from '../../../../../../components/Platform/03Inventories/05Servicios/01SeeItemService/SeeItemService';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';
-import ModalEditService from '../../../../../../components/Platform/03Inventories/05Servicios/03ModalEditService/ModalEditService';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
+import SeeItemService from '../../../../../../components/Platform/PanelUser/03Inventories/05Servicios/01SeeItemService/SeeItemService';
+import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUser/ConfirmDeleteRegister/ConfirmDeleteRegister';
+import ModalEditService from '../../../../../../components/Platform/PanelUser/03Inventories/05Servicios/03ModalEditService/ModalEditService';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";

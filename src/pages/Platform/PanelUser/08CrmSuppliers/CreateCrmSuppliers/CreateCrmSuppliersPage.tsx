@@ -10,10 +10,10 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/Footer/Footer';
-import CreateManySuppliers from '../../../../../components/Platform/08CrmSuppliers/CreateManySuppliers/CreateManySuppliers.tsx';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import CreateManySuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/CreateManySuppliers/CreateManySuppliers.tsx';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 

@@ -12,10 +12,10 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyAssets from '../../../../../../components/Platform/03Inventories/01Assets/CreateManyAssets/CreateManyAssets';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import CreateManyAssets from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/CreateManyAssets/CreateManyAssets';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 interface CreateAssetPageProps {

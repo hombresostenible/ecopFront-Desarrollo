@@ -8,11 +8,11 @@ import { getBranches } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/Footer/Footer';
-import ConfirmDeleteBranch from '../../../../../components/Platform/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
-import ModalBranch from '../../../../../components/Platform/02Branch/ModalBranch/ModalBranchPage';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import ConfirmDeleteBranch from '../../../../../components/Platform/PanelUser/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
+import ModalBranch from '../../../../../components/Platform/PanelUser/02Branch/ModalBranch/ModalBranchPage';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaUserEdit } from "react-icons/fa";
 import styles from './styles.module.css';

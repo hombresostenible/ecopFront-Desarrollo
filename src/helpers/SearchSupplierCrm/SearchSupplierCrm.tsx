@@ -8,7 +8,7 @@ import type { RootState, AppDispatch } from '../../redux/store';
 import { getCrmSuppliers } from '../../redux/User/crmSupplierSlice/actions';
 
 
-import CreateSupplier from '../../components/Platform/04Accounts/CreateClientAndSupplier/CreateSupplier';
+import CreateSupplier from '../../components/Platform/PanelUser/04Accounts/CreateClientAndSupplier/CreateSupplier';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
 interface SearchSupplierCrmCrmProps {

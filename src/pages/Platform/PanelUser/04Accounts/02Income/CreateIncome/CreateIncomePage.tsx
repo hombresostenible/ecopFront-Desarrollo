@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
-import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import IncomeCash from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCash/IncomeCash';
+import IncomeCredit from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCredit/IncomeCredit';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function CreateIncomePage() {

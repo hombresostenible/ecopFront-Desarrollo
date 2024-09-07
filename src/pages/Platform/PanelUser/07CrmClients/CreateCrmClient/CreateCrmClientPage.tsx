@@ -10,10 +10,10 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postCrmClient, getCrmClients } from '../../../../../redux/User/crmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/Footer/Footer';
-import CreateManyCrmClients from '../../../../../components/Platform/07CrmClients/CreateManyCrmClients/CreateManyCrmClients.tsx';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import CreateManyCrmClients from '../../../../../components/Platform/PanelUser/07CrmClients/CreateManyCrmClients/CreateManyCrmClients.tsx';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import styles from './styles.module.css';
 

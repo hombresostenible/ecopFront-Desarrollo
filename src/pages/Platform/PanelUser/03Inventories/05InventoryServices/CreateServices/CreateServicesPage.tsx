@@ -15,13 +15,13 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyServices from '../../../../../../components/Platform/03Inventories/05Servicios/CreateManyServices/CreateManyServices';
-import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
-import CreateProduct from '../../../../../../components/Platform/03Inventories/CreateComponents/02CreateProduct';
-import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import CreateManyServices from '../../../../../../components/Platform/PanelUser/03Inventories/05Servicios/CreateManyServices/CreateManyServices';
+import CreateAsset from '../../../../../../components/Platform/PanelUser/03Inventories/CreateComponents/01CreateAssets';
+import CreateProduct from '../../../../../../components/Platform/PanelUser/03Inventories/CreateComponents/02CreateProduct';
+import CreateRawMateral from '../../../../../../components/Platform/PanelUser/03Inventories/CreateComponents/03CreateRawMaterial';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function CreateServicesPage() {

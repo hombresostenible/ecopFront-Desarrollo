@@ -14,12 +14,12 @@ import { getRawMaterialsByBranch } from '../../../../../../redux/User/rawMateria
 //ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
-import CreateManyProduct from '../../../../../../components/Platform/03Inventories/03Products/CreateManyProducts/CreateManyProduct';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import CreateManyProduct from '../../../../../../components/Platform/PanelUser/03Inventories/03Products/CreateManyProducts/CreateManyProduct';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
-import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
-import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
+import CreateAsset from '../../../../../../components/Platform/PanelUser/03Inventories/CreateComponents/01CreateAssets';
+import CreateRawMateral from '../../../../../../components/Platform/PanelUser/03Inventories/CreateComponents/03CreateRawMaterial';
 import { GoPlus } from "react-icons/go";
 import styles from './styles.module.css';
 

@@ -9,12 +9,12 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
-import NavBar from '../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/Footer/Footer';
-import SeeSupplier from '../../../../../components/Platform/08CrmSuppliers/01CrmSuppliers/CrmSuppliers';
-import ModalCrmSuppliers from '../../../../../components/Platform/08CrmSuppliers/ModalCrmSuppliers/ModalCrmSuppliers';
-import ConfirmDeleteCrmSuppliers from '../../../../../components/Platform/08CrmSuppliers/ConfirmDeleteCrmSuppliers/ConfirmDeleteCrmSuppliers';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import SeeSupplier from '../../../../../components/Platform/PanelUser/08CrmSuppliers/01CrmSuppliers/CrmSuppliers';
+import ModalCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ModalCrmSuppliers/ModalCrmSuppliers';
+import ConfirmDeleteCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ConfirmDeleteCrmSuppliers/ConfirmDeleteCrmSuppliers';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';

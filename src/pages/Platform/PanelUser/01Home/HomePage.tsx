@@ -1,7 +1,7 @@
-import NavBar from '../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../components/Platform/Footer/Footer';
-import Panel from '../../../../components/Platform/01Home/Panel';
+import Footer from '../../../../components/Platform/PanelUser/Footer/Footer';
+import Panel from '../../../../components/Platform/PanelUser/01Home/Panel';
 import styles from './styles.module.css';
 
 function HomePage() {

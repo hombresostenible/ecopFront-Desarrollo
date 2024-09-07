@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 // ELEMENTOS DEL COMPONENTE
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function BillingConfigurationPage() {

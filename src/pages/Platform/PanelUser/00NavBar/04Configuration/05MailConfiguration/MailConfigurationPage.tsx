@@ -9,9 +9,9 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getProfileUser, patchUpdateApplicationPassword } from '../../../../../../redux/User/userSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IUser } from '../../../../../../types/User/user.types';
-import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function MailConfigurationPage() {

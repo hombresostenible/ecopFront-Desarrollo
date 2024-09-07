@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Footer from '../../../../components/Platform/Footer/Footer';
+import Footer from '../../../../components/Platform/PanelUser/Footer/Footer';
 import NavBarLandingPage from '../../../../components/LandingPage/01NavBarLandingPage/NavBarLandingPage';
 import styles from './styles.module.css';
 
