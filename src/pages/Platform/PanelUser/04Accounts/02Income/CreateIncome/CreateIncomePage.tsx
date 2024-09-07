@@ -12,7 +12,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import IncomeCash from '../../../../../../components/Platform/04Accounts/01Income/IncomeCash/IncomeCash';
 import IncomeCredit from '../../../../../../components/Platform/04Accounts/01Income/IncomeCredit/IncomeCredit';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 

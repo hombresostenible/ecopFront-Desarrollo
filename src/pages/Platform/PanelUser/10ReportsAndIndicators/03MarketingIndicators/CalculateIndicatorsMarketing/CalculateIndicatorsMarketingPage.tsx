@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import AcquisitionClients from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/01AcquisitionClients/AcquisitionClients';
 import RetentionClients from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/02RetentionClients/RetentionClients';
 import CustomerDigital from '../../../../../../components/Platform/10ReportsAndIndicators/03MarketingIndicators/03CustomerDigital/CustomerDigital';

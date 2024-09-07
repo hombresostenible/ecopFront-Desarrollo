@@ -14,7 +14,7 @@ import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import CreateManyRawMaterals from '../../../../../../components/Platform/03Inventories/04RawMaterials/CreateManyRawMaterials/CreateManyRawMaterals';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 

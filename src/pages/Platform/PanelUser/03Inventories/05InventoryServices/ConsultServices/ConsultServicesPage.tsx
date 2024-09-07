@@ -12,7 +12,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import SeeItemService from '../../../../../../components/Platform/03Inventories/05Servicios/01SeeItemService/SeeItemService';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/ConfirmDeleteRegister/ConfirmDeleteRegister';

@@ -12,7 +12,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import ConsultAssetOff from '../../../../../../components/Platform/03Inventories/01Assets/01ConsultAssetOff/ConsultAssetOff';
 import SeeItemAsset from '../../../../../../components/Platform/03Inventories/01Assets/02SeeItemAsset/SeeItemAsset';

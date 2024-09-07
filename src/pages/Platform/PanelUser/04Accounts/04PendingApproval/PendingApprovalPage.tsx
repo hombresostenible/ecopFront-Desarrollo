@@ -13,7 +13,7 @@ import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
 import { formatNumber } from '../../../../../helpers/FormatNumber/FormatNumber';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import SeeRegisterAccountsBook from '../../../../../components/Platform/04Accounts/05PendingApproval/01SeeRegisterAccountsBook/SeeRegisterAccountsBook';
 import ApprovalRegister from '../../../../../components/Platform/04Accounts/05PendingApproval/04ApprovalRegister/ApprovalRegister';

@@ -18,7 +18,7 @@ import { IRawMaterial } from "../../../../../../types/User/rawMaterial.types";
 import { IService } from "../../../../../../types/User/services.types";
 import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';

@@ -16,7 +16,7 @@ import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
 import CreateManyProduct from '../../../../../../components/Platform/03Inventories/03Products/CreateManyProducts/CreateManyProduct';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import CreateAsset from '../../../../../../components/Platform/03Inventories/CreateComponents/01CreateAssets';
 import CreateRawMateral from '../../../../../../components/Platform/03Inventories/CreateComponents/03CreateRawMaterial';

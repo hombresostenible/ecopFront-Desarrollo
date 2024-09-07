@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import SalesPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/01SalesPerPeriod/SalesPerPeriod';
 import ExpensesPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/02ExpensesPerPeriod/ExpensesPerPeriod';
 import UtilityPerPeriod from '../../../../../../components/Platform/10ReportsAndIndicators/02AccountsAndInventoryIndicators/03UtilityPerPeriod/UtilityPerPeriod';

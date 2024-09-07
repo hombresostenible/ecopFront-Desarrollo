@@ -10,7 +10,7 @@ import { getCrmClients } from '../../../../../redux/User/crmClientSlice/actions'
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import SeeCrmClient from '../../../../../components/Platform/07CrmClients/01SeeCrmClient/SeeCrmClient';
 import ModalCrmClient from '../../../../../components/Platform/07CrmClients/ModalCrmClient/ModalCrmClient';

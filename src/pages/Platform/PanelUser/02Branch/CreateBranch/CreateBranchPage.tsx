@@ -11,7 +11,7 @@ import { postBranch, getBranches } from '../../../../../redux/User/branchSlice/a
 //ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import CreateManyBranches from '../../../../../components/Platform/02Branch/CreateManyBranches/CreateManyBranches';
 // import Loading from '../../../../../components/Loading/Loading';

@@ -10,7 +10,7 @@ import { getProfileUser, putPutProfileUser, logoChangeUser, deleteLogoUser } fro
 // ELEMENTOS DEL COMPONENTE
 import { IUser } from '../../../../../../types/User/user.types';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import DepartmenAndCity from '../../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
 import { BsPencil } from 'react-icons/bs';

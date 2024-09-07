@@ -11,7 +11,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import POSComponent from '../../../../../../components/Platform/05InvoicingAndPos/01SellPointOfSalePage/POSComponent';
 import NavBar from '../../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/Footer/Footer';
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import styles from './styles.module.css';

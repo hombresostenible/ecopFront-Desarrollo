@@ -174,7 +174,7 @@ function SideBar() {
                             <MdAppRegistration className={`${styles.icon__Section} `}/>
                         </div>
                         {menuVisible &&
-                            <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInventorySubMenuOpen} >InventariosXXX {isInventorySubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
+                            <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInventorySubMenuOpen} >Inventarios {isInventorySubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
                         }
                     </div>
                 </div>

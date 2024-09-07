@@ -10,7 +10,6 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-// import SideBarCompact from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import ConfirmDeleteBranch from '../../../../../components/Platform/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
 import ModalBranch from '../../../../../components/Platform/02Branch/ModalBranch/ModalBranchPage';

@@ -10,7 +10,7 @@ import { getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/acti
 // ELEMENTOS DEL COMPONENTE
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBar from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import SeeSupplier from '../../../../../components/Platform/08CrmSuppliers/01CrmSuppliers/CrmSuppliers';
 import ModalCrmSuppliers from '../../../../../components/Platform/08CrmSuppliers/ModalCrmSuppliers/ModalCrmSuppliers';
