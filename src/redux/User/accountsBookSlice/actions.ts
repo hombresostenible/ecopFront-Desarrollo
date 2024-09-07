@@ -8,7 +8,7 @@ import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccounts
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postAccountsBookStart(formData));
-        const response = await axiosInstance.post('/accountsBook', formData, {
+        const response = await axiosInstance.post('/accounts-book', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export const postAccountsBook = (formData: IAccountsBook, token: string) => asyn
 //OBTENER TODOS LOS REGISTRO DEL LIBRO DIARIO
 export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook', {
+        const response = await axiosInstance.get('/accounts-book', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch)
 //OBTENER TODOS LOS REGISTROS CONTABLES APROBADOS TANTO DE INGRESOS COMO DE GASTOS DEL USER
 export const getAccountsBooksApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/approved', {
+        const response = await axiosInstance.get('/accounts-book/approved', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const getAccountsBooksApproved = (token: string) => async (dispatch: AppD
 //OBTENER TODOS LOS REGISTROS CONTABLES APROBADOS POR SEDE, TANTO DE INGRESOS COMO DE GASTOS DEL USER
 export const getAccountsBooksApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/approved/${idBranch}`, {
+        const response = await axiosInstance.get(`/accounts-book/approved/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export const getAccountsBooksApprovedByBranch = (idBranch: string, token: string
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
 export const getAccountsBooksIncomesApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/incomes', {
+        const response = await axiosInstance.get('/accounts-book/incomes', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const getAccountsBooksIncomesApproved = (token: string) => async (dispatc
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
 export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/incomes-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/accounts-book/incomes-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token:
 //OBTENER TODOS LOS REGISTRO DE GASTO DEL LIBRO DIARIO
 export const getAccountsBooksExpenses = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/expenses', {
+        const response = await axiosInstance.get('/accounts-book/expenses', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -141,7 +141,7 @@ export const getAccountsBooksExpenses = (token: string) => async (dispatch: AppD
 //OBTENER UN REGISTRO DEL LIBRO DIARIO POR ID
 export const getAccountsBookById = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/${idAccountsBook}`, {
+        const response = await axiosInstance.get(`/accounts-book/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export const getAccountsBookById = (idAccountsBook: string, token: string) => as
 //OBTENER TODOS LOS REGISTROS DEL LIBRO DIARIO POR SEDE
 export const getAccountsBookByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/accountsBook-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/accounts-book/accounts-book-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -179,7 +179,7 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
 //OBTENER TODOS LOS INGRESOS NO APROBADOS
 export const getIncomesNotApproved = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accountsBook/incomes-not-approved', {
+        const response = await axiosInstance.get('/accounts-book/incomes-not-approved', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -198,7 +198,7 @@ export const getIncomesNotApproved = (token: string) => async (dispatch: AppDisp
 //OBTENER TODOS LOS INGRESOS NO APROBADOS POR SEDE
 export const getIncomesNotApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accountsBook/incomes-not-approved/${idBranch}`, {
+        const response = await axiosInstance.get(`/accounts-book/incomes-not-approved/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -218,7 +218,7 @@ export const getIncomesNotApprovedByBranch = (idBranch: string, token: string) =
 export const patchIncomesNotApproved = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchIncomesNotApprovedStart());
-        const response = await axiosInstance.patch(`/accountsBook/incomes-not-approved/${idAccountsBook}`, {
+        const response = await axiosInstance.patch(`/accounts-book/incomes-not-approved/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -238,7 +238,7 @@ export const patchIncomesNotApproved = (idAccountsBook: string, token: string) =
 export const putAccountsBook = (idAccountsBook: string, formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putAccountsBookStart());
-        const response = await axiosInstance.put(`/accountsBook/${idAccountsBook}`, formData, {
+        const response = await axiosInstance.put(`/accounts-book/${idAccountsBook}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -258,7 +258,7 @@ export const putAccountsBook = (idAccountsBook: string, formData: IAccountsBook,
 export const deleteAccountsBook = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteAccountsBookStart());
-        const response = await axiosInstance.delete(`/accountsBook/${idAccountsBook}`, {
+        const response = await axiosInstance.delete(`/accounts-book/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

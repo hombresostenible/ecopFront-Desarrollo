@@ -188,6 +188,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 }
             }
             if (totalValueOtherExpenses) formData.pay = 'Si';
+            console.log('formData: ', formData)
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
             setSelectedSupplier(null);
