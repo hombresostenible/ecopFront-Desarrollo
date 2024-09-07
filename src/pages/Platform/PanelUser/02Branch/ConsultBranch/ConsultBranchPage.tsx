@@ -9,7 +9,8 @@ import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import NavBar from '../../../../../components/Platform/NavBar/NavBar';
-import SideBarCompact from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
+import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
+// import SideBarCompact from '../../../../../components/Platform/SideBar/SideBarCompact.tsx';
 import Footer from '../../../../../components/Platform/Footer/Footer';
 import ConfirmDeleteBranch from '../../../../../components/Platform/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
 import ModalBranch from '../../../../../components/Platform/02Branch/ModalBranch/ModalBranchPage';
@@ -68,7 +69,7 @@ function ConsultBranchPage() {
         <div className='d-flex flex-column'>
             <NavBar />
             <div className='d-flex'>
-                <SideBarCompact />
+                <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>

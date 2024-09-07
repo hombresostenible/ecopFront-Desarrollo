@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,9 @@ interface CreateManySuppliersProps {
 }
 
 function CreateManySuppliers({ token, onCreateComplete }: CreateManySuppliersProps) {
+    const navigate = useNavigate();
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
     const dispatch: AppDispatch = useDispatch();
 
     const [ excelData, setExcelData ] = useState<Array<{ [key: string]: any }> | null>(null);
@@ -111,11 +115,17 @@ function CreateManySuppliers({ token, onCreateComplete }: CreateManySuppliersPro
         setExcelData(null);
         setMessage('Se guardó masivamente tus Proveedores con éxito');
         setTimeout(() => {
+            setShouldNavigate(true);
             dispatch(getCrmSuppliers(token));
             onCreateComplete();
         }, 1500);
     };
 
+    useEffect(() => {
+        if (shouldNavigate) {
+            navigate('/crm-suppliers/consult-crm-suppliers');
+        }
+    }, [ shouldNavigate, navigate ]);
 
     return (
         <div>
@@ -137,7 +147,7 @@ function CreateManySuppliers({ token, onCreateComplete }: CreateManySuppliersPro
                 )}
             </div> 
 
-            <div className="mt-4 table-responsive">
+            <div className="mt-4 mb-4 table-responsive">
                 {excelData && (
                     <table className="table table-bordered table-striped">
                         <thead>

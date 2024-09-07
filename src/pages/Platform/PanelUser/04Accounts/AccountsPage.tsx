@@ -5,6 +5,7 @@ import Footer from '../../../../components/Platform/Footer/Footer';
 import styles from './styles.module.css';
 
 function AccountsPage() {
+    
     return (
         <div className='d-flex flex-column'>
             <NavBar />
