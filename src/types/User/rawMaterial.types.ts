@@ -21,8 +21,8 @@ export interface IRawMaterial {
     sellingPrice?: number;
     isDiscounted?: 'Si' | 'No';
     discountPercentage?: number;
-    salesCount?: number;
     expirationDate?: Date;
+    salesCount?: number;
     inventoryChanges?: { date: string; quantity: number, type: 'Ingreso' | 'Salida' }[];
     inventoryOff?: IInventoryOffItem[];
     reasonManualDiscountingInventory?: 'Donado' | 'Desechado' | 'Caducado' | 'Perdido' | 'Hurtado';    

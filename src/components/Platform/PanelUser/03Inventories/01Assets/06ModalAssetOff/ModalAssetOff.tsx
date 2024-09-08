@@ -29,7 +29,7 @@ function ModalAssetOff({ token, asset, onCloseModal }: ModalAssetOffProps) {
     // Estados de Redux
     const errorAssets = useSelector((state: RootState) => state.assets.errorAssets);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -48,6 +48,7 @@ function ModalAssetOff({ token, asset, onCloseModal }: ModalAssetOffProps) {
             };
             dispatch(patchAsset(asset.id, formData, token));
             setFormSubmitted(true);
+            reset();
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
@@ -98,25 +99,6 @@ function ModalAssetOff({ token, asset, onCloseModal }: ModalAssetOffProps) {
                         </div>
 
                         <div className="d-flex flex-column align-items-start justify-content-center">
-                            <h6 className={styles.label}>Selecciona la cantidad</h6>
-                            <select
-                                {...register('quantity', { required: true, valueAsNumber: true })}
-                                className={`${styles.input} p-2 border `}
-                            >
-                                <option value=''>Seleccione una cantidad</option>
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
-                                <option value={6}>6</option>
-                            </select>
-                            {errors.quantity && (
-                                <p className='text-danger'>La cantidad es requerida</p>
-                            )}
-                        </div>
-
-                        <div className="d-flex flex-column align-items-start justify-content-center">
                             <h6 className={styles.label}>Descripción</h6>
                             <input
                                 type="text"
@@ -125,6 +107,30 @@ function ModalAssetOff({ token, asset, onCloseModal }: ModalAssetOffProps) {
                             />
                             {errors.description && (
                                 <p className='text-danger'>La descripción es requerida</p>
+                            )}
+                        </div>
+
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Selecciona la cantidad - Existen {asset.inventory}</h6>
+                            <input
+                                type="number"
+                                {...register('quantity', {
+                                    required: true,
+                                    valueAsNumber: true,
+                                    min: 1,
+                                    max: asset.inventory,
+                                })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder="Ingrese una cantidad"
+                            />
+                            {errors.quantity && errors.quantity.type === "required" && (
+                                <p className='text-danger'>La cantidad es requerida</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "max" && (
+                                <p className='text-danger'>La cantidad no puede exceder el inventario disponible ({asset.inventory})</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "min" && (
+                                <p className='text-danger'>La cantidad debe ser al menos 1</p>
                             )}
                         </div>
                     </div>

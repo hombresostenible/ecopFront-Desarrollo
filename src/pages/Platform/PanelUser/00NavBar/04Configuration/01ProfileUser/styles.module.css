@@ -73,6 +73,9 @@
     bottom: 0;
     right: -170px;
 }
+.text__Menu {
+    width: 100%;
+}
 .text__Menu:hover {
     margin: 0;
     background: #dee2e6;

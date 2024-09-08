@@ -58,8 +58,12 @@ const crmSupplierSlice = createSlice({
             state.loading = true;
             state.errorCrmSupplier = null;
         },
+        sendEmailCRMSupplierStart: (state) => {
+            state.loading = false;
+            state.errorCrmSupplier = null;
+        },
     },
 });
 
-export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } = crmSupplierSlice.actions;
+export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } = crmSupplierSlice.actions;
 export default crmSupplierSlice.reducer;

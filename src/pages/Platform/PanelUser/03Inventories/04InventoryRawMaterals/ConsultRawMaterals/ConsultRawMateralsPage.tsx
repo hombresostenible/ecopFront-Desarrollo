@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
@@ -11,6 +11,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
+import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
@@ -30,10 +31,10 @@ import styles from './styles.module.css';
 
 function ConsultRawMateralsPage() {
     const token = jsCookie.get('token') || '';
+    
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    ///ESTADOS DE REDUX
-    const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
+    const rawMaterials = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
@@ -51,15 +52,14 @@ function ConsultRawMateralsPage() {
             if (selectedBranch) {
                 dispatch(getRawMaterialsByBranch(selectedBranch, token));
             } else {
-                // Si no se selecciona ninguna sede, obtén todos los activos
                 dispatch(getRawMaterials(token));
             }
         }
     }, [selectedBranch, token, dispatch]);
 
     const [idRawMaterial, setIdRawMaterial] = useState('');
-    const [idBranch, setIdBranch] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
+    const [idBranch, setIdBranch] = useState('');
     const [selectedItem, setSelectedItem] = useState<IRawMaterial>();
     const [showSeeItem, setShowSeeItem] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -107,6 +107,41 @@ function ConsultRawMateralsPage() {
 
     const branchesArray = Array.isArray(branches) ? branches : [];
 
+    const menuColumnSelector = useRef<HTMLDivElement | null>(null);
+    const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);
+    const handleColumnSelector = () => {
+        setMenuColumnSelectorVisible(!menuColumnSelectorVisible);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuColumnSelector.current && !menuColumnSelector.current.contains(event.target as Node)) {
+                setMenuColumnSelectorVisible(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [ menuColumnSelector ]);
+
+    const [selectedColumns, setSelectedColumns] = useState<string[]>([
+        'Código de barras',
+        'Nombre del item',
+        'Marca',
+        'Inventario',
+        'Unidad de medida',
+        'IVA',
+        'Precio de venta',
+    ]);
+
+    const handleColumnChange = (column: string) => {
+        const updatedColumns = selectedColumns.includes(column)
+            ? selectedColumns.filter((col) => col !== column)
+            : [...selectedColumns, column];
+        setSelectedColumns(updatedColumns);
+    };
+
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -116,12 +151,8 @@ function ConsultRawMateralsPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Materias primas</h1>
 
-                        <div className='mb-4 d-flex align-items-center justify-content-between'>
-                            <div className="d-flex">
-                                <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >
-                                    Ver dados de baja
-                                </div>
-                            </div>
+                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                            <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
                                 <Link to='/inventories/create-raw-materals' className={`${styles.link} text-decoration-none`}>Registro de materias primas</Link>
@@ -141,42 +172,81 @@ function ConsultRawMateralsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
-                            <h3 className='m-0'>Filtra tus materias primas por sede</h3>
-                            <select
-                                value={selectedBranch || ''}
-                                className="mx-2 p-2 border rounded"
-                                onChange={(e) => setSelectedBranch(e.target.value)}
-                            >
-                                <option value=''>Todas</option>
-                                {branchesArray.map((branch: IBranch, index: number) => (
-                                    <option key={index} value={branch.id}>
-                                        {branch.nameBranch}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                            <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
-                                    <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
-                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
-                                    <div className={`${styles.brand} d-flex align-items-center justify-content-center text-center`}>Marca</div>
-                                    <div className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</div>
-                                    <div className={`${styles.purchase__Price_Before_Tax} d-flex align-items-center justify-content-center text-center`}>Precio de compra</div>
-                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
-                                    <div className={`${styles.packaged} d-flex align-items-center justify-content-center text-center`}>Empacado</div>
-                                    <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
-                                </div>
+                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                                <h3 className={`${styles.title__Branch} m-0`}>Filtra tus materias primas por sede</h3>
+                                <select
+                                    value={selectedBranch || ''}
+                                    className="mx-2 p-2 border rounded"
+                                    onChange={(e) => setSelectedBranch(e.target.value)}
+                                >
+                                    <option value=''>Todas</option>
+                                    {branchesArray.map((branch: IBranch, index: number) => (
+                                        <option key={index} value={branch.id}>
+                                            {branch.nameBranch}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
-                            <div className={`${styles.container__Body} d-flex flex-column`}>
-                                {Array.isArray(rawMaterial) && rawMaterial.length > 0 ? (
-                                    rawMaterial.map((rawMaterial) => (
-                                        <div key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                                <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
+                                {menuColumnSelectorVisible && (
+                                    <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                                        <ColumnSelector
+                                            selectedColumns={selectedColumns}
+                                            onChange={handleColumnChange}
+                                            minSelectedColumns={3}
+                                            availableColumns={[
+                                                'Código de barras',
+                                                'Nombre del item',
+                                                'Marca',
+                                                'Inventario',
+                                                'Unidad de medida',
+                                                'IVA',
+                                                'Precio de venta',
+                                            ]}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
+                            <table className="table table-striped">
+                                <thead className={`${styles.container__Head}`}>
+                                    <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
+                                        {selectedColumns.includes('Código de barras') && (
+                                            <th className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</th>
+                                        )}
+                                        {selectedColumns.includes('Nombre del item') && (
+                                            <th className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</th>
+                                        )}
+                                        {selectedColumns.includes('Marca') && (
+                                            <th className={`${styles.brand} d-flex align-items-center justify-content-center text-center`}>Marca</th>
+                                        )}
+                                        {selectedColumns.includes('Inventario') && (
+                                            <th className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</th>
+                                        )}
+                                        {selectedColumns.includes('Unidad de medida') && (
+                                            <th className={`${styles.purchase__Price_Before_Tax} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</th>
+                                        )}
+                                        {selectedColumns.includes('IVA') && (
+                                            <th className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</th>
+                                        )}
+                                        {selectedColumns.includes('Precio de venta') && (
+                                            <th className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</th>
+                                        )}
+                                        <th className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody className={`${styles.container__Body}`}>
+                                    {Array.isArray(rawMaterials) && rawMaterials.length > 0 ? (
+                                        rawMaterials.map((rawMaterial) => (
+                                        <tr key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
                                                     {Array.isArray(branches) && branches.map((branch, index) => (
                                                         rawMaterial.branchId === branch.id && (
@@ -184,88 +254,109 @@ function ConsultRawMateralsPage() {
                                                         )
                                                     ))}
                                                 </span>
-                                            </div>
-                                            <div className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.barCode ? rawMaterial.barCode : 'No definido'}</span>
-                                            </div>
-                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
-                                            </div>
-                                            <div className={`${styles.brand} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.brandItem}</span>
-                                            </div>
-                                            <div className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory} {rawMaterial.unitMeasure}</span>
-                                            </div>
-                                            <div className={`${styles.purchase__Price_Before_Tax} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(rawMaterial.purchasePriceBeforeTax)}</span>
-                                            </div>
-                                            <div className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.IVA} %</span>
-                                            </div>
-                                            <div className={`${styles.packaged} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.packaged}</span>
-                                            </div>
-                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            </td>
+
+                                            {selectedColumns.includes('Código de barras') && (
+                                                <td className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.barCode ? rawMaterial.barCode : 'No definido'}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Nombre del item') && (
+                                                <td className={`${styles.name__Item} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.nameItem}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Marca') && (
+                                                <td className={`${styles.brand} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.brandItem ? rawMaterial.brandItem : 'No definida'}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Inventario') && (
+                                                <td className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.inventory}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Unidad de medida') && (
+                                                <td className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.unitMeasure}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('IVA') && (
+                                                <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.IVA}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Precio de venta') && (
+                                                <td className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{rawMaterial.sellingPrice ? `$ ${formatNumber(rawMaterial.sellingPrice)}` : 'No definido'}</span>
+                                                </td>
+                                            )}
+
+                                            <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <MdOutlineRemoveRedEye
-                                                        className={`${styles.button__Edit} `}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(rawMaterial.id);
-                                                            setNameRawMaterial(rawMaterial.nameItem || '');
-                                                            handleSeeItem(rawMaterial);
-                                                        }}
-                                                    />
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <MdOutlineRemoveRedEye
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(rawMaterial.id);
+                                                                setNameRawMaterial(rawMaterial.nameItem || '');
+                                                                handleSeeItem(rawMaterial);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <RiDeleteBin6Line
+                                                            className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(rawMaterial.id);
+                                                                setNameRawMaterial(rawMaterial.nameItem || '');
+                                                                handleDelete(rawMaterial);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <BsPencil
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(rawMaterial.id);
+                                                                handleEdit(rawMaterial)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <FaPlus
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(rawMaterial.id);
+                                                                setNameRawMaterial(rawMaterial.nameItem || '');
+                                                                setIdBranch(rawMaterial.branchId);
+                                                                handleAddInventory(rawMaterial)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <IoIosCloseCircleOutline
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(rawMaterial.id);
+                                                                setNameRawMaterial(rawMaterial.nameItem || '');
+                                                                handleOff(rawMaterial)
+                                                            }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <RiDeleteBin6Line
-                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(rawMaterial.id);
-                                                            setNameRawMaterial(rawMaterial.nameItem || '');
-                                                            handleDelete(rawMaterial);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <BsPencil
-                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(rawMaterial.id);
-                                                            handleEdit(rawMaterial)
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <FaPlus
-                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(rawMaterial.id);
-                                                            setNameRawMaterial(rawMaterial.nameItem || '');
-                                                            setIdBranch(rawMaterial.branchId);
-                                                            handleAddInventory(rawMaterial)
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <IoIosCloseCircleOutline
-                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(rawMaterial.id);
-                                                            setNameRawMaterial(rawMaterial.nameItem || '');
-                                                            handleOff(rawMaterial)
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                        No tienes materias primas registradas
-                                    </div>
-                                )}
-                            </div>
+                                            </td>
+                                        </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes materias primas registradas
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
 
                         <Modal show={showSeeItem} onHide={onCloseModal} size="xl">

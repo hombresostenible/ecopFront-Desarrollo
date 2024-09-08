@@ -246,10 +246,10 @@ function SideBar() {
                             <div className={`${styles.indicator} position-absolute`}></div>
                             <h6 className={`${styles.title__Sub_Menu_Compact} m-0`}>Inventarios</h6>
                             <Link to='/inventories/consult-assets' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Activos</Link>
-                            <Link to='/inventories/create-merchandises' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Mercancías</Link>
-                            <Link to='/inventories/create-products' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Productos</Link>
-                            <Link to='/inventories/create-raw-materals' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Materia prima</Link>
-                            <Link to='/inventories/create-services' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Servicios</Link>
+                            <Link to='/inventories/consult-merchandises' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Mercancías</Link>
+                            <Link to='/inventories/consult-products' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Productos</Link>
+                            <Link to='/inventories/consult-raw-materals' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Materia prima</Link>
+                            <Link to='/inventories/consult-services' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Servicios</Link>
                         </div>
                     )}
                 </div>
@@ -258,16 +258,16 @@ function SideBar() {
                         <Link to='/inventories/consult-assets' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-assets' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Activos
                         </Link>
-                        <Link to='/inventories/create-merchandises' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/create-merchandises' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-merchandises' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-merchandises' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Mercancías
                         </Link>
-                        <Link to='/inventories/create-products' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/create-products' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-products' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-products' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Productos
                         </Link>
-                        <Link to='/inventories/create-raw-materals' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/create-raw-materals' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-raw-materals' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-raw-materals' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Materia prima
                         </Link>
-                        <Link to='/inventories/create-services' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/create-services' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-services' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-services' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Servicios
                         </Link>
                     </div>

@@ -77,13 +77,8 @@ const userSlice = createSlice({
             state.loading = true;
             state.errorUser = null;
         },
-        sendEmailCRMClientStart: (state) => {
-            state.loading = false;
-            state.errorUser = null;
-        },
-
     },
 });
 
-export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart, sendEmailCRMClientStart } = userSlice.actions;
+export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart } = userSlice.actions;
 export default userSlice.reducer;

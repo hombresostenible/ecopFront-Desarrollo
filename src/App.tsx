@@ -113,10 +113,10 @@ import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/0
 import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/03PayrollSettlement/PayrollSettlementPage';
 import EmployeesPage from './pages/Platform/PanelUser/06ElectronicPayroll/04Employees/EmployeesPage';
 // SIDEBAR - CRM-CLIENT
-import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsCard/CrmClientsCardPage';
+import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/ConsultCrmClients/ConsultCrmClientsPage';
 import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
 // SIDEBAR - CRM-SUPPLIER
-import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliers/CrmSuppliersCardPage';
+import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/ConsultCrmSuppliers/ConsultCrmSuppliersPage';
 import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
 import TrackingYourPurchases from './pages/Platform/PanelUser/08CrmSuppliers/TrackingYourPurchases/TrackingYourPurchases';
 import CustomerTracking from './pages/Platform/PanelUser/07CrmClients/CustomerTracking/CustomerTracking';

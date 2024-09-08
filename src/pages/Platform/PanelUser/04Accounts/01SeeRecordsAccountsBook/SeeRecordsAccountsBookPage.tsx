@@ -25,9 +25,8 @@ import styles from './styles.module.css';
 
 function SeeRecordsAccountsBookPage() {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
 
-    // Estados de Redux
+    const dispatch: AppDispatch = useDispatch();
     const accountsBook = useSelector((state: RootState) => state.accountsBook.accountsBook);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
@@ -190,7 +189,7 @@ function SeeRecordsAccountsBookPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Services} mb-3 d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} mb-3 d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
@@ -22,9 +21,10 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
 
     const [editedAsset, setEditedAsset] = useState<IAssets>({ ...asset });
 
-    const [editedConditionAssets, setEditedConditionAssets] = useState(asset?.conditionAssets);
+    const [editedCondition, setEditedCondition] = useState(asset?.conditionAssets);
     const [editedStateAssets, setEditedStateAssets] = useState(asset?.stateAssets);
     const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(asset?.IVA);
+    const [editedIsDiscounted, setEditedIsDiscounted] = useState(asset?.isDiscounted);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -50,14 +50,15 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
 
     const handleSaveChanges = async (editedAsset: IAssets) => {
         try {
-            editedAsset.conditionAssets = editedConditionAssets;
+            editedAsset.conditionAssets = editedCondition;
             editedAsset.stateAssets = editedStateAssets;
+            editedAsset.isDiscounted = editedIsDiscounted;
             editedAsset.IVA = editedIVA;
             await dispatch(putAsset(idItem, editedAsset, token));
             dispatch(getAssets(token));
             onCloseModal();
         } catch (error) {
-            console.error('Error al guardar cambios:', error);
+            throw new Error('Error al guardar cambios');
         }
     };
 
@@ -68,116 +69,70 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
 
     return (
         <div>
-            <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Edita la información del equipo, herramienta o máquina</h1>
-            </div>
+            <h1 className={`${styles.title} text-center`}>Edita la información del equipo, herramienta o máquina</h1>
 
             <div className="w-100">
                 <h6 className={styles.label}>Nombre de la sede asignada al activo</h6>
-                <div className={styles.containerInput}>
-                    <select
-                        value={editedAsset.branchId || ''}
-                        className={`${styles.inputEdit} p-2 border w-100`}
-                        onChange={(e) => handleEditField(e, 'branchId')}
-                    >
-                        {branches && branches.map((branch, index) => (
-                            <option key={index} value={branch.id}>
-                                {branch.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <select
+                    value={editedAsset.branchId || ''}
+                    className={`${styles.input} mb-3 p-2 border`}
+                    onChange={(e) => handleEditField(e, 'branchId')}
+                >
+                    {branches && branches.map((branch, index) => (
+                        <option key={index} value={branch.id}>
+                            {branch.nameBranch}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Nombre del activo</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.nameItem}
-                            onChange={(e) => handleEditField(e, 'nameItem', 'text')}
-                        />
-                    </div>
-                </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Código de barras</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.barCode || ''}
-                            onChange={(e) => handleEditField(e, 'barCode', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.barCode || ''}
+                        onChange={(e) => handleEditField(e, 'barCode', 'text')}
+                    />
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Nombre del activo</h6>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.nameItem}
+                        onChange={(e) => handleEditField(e, 'nameItem', 'text')}
+                    />
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Inventario</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="number"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.inventory}
-                            onChange={(e) => handleEditField(e, 'inventory', 'number')}
-                        />
-                    </div>
-                </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Marca del activo</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.brandItem}
-                            onChange={(e) => handleEditField(e, 'brandItem', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.brandItem}
+                        onChange={(e) => handleEditField(e, 'brandItem', 'text')}
+                    />
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Referencia del activo</h6>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.referenceItem}
+                        onChange={(e) => handleEditField(e, 'referenceItem', 'text')}
+                    />
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Referencia del activo</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.referenceItem}
-                            onChange={(e) => handleEditField(e, 'referenceItem', 'text')}
-                        />
-                    </div>
-                </div>
-                <div className="w-100">
-                    <h6 className={styles.label}>Condición del activo</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.conditionAssets || ''}
-                            onChange={(e) => {
-                                const value = e.target.value as 'Nuevo' | 'Usado';
-                                setEditedConditionAssets(value);
-                                setEditedAsset((prevEdited) => ({
-                                    ...prevEdited,
-                                    conditionAssets: value,
-                                }));
-                            }}
-                        >
-                            <option value='Nuevo'>Nuevo</option>
-                            <option value='Usado'>Usado</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div className="w-100">
-                <h6 className={styles.label}>Estado del activo</h6>
-                <div className={styles.containerInput}>
+                    <h6 className={styles.label}>Estado del activo</h6>
                     <select
-                        className={`${styles.inputEdit} p-2 border w-100`}
+                        className={`${styles.input} mb-3 p-2 border`}
                         value={editedAsset.stateAssets || ''}
                         onChange={(e) => {
                             const value = e.target.value as 'Funciona correctamente' | 'Funciona requiere mantenimiento' | 'Dañada requiere cambio' | 'Dañada requiere reparacion';
@@ -188,61 +143,113 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                             }));
                         }}
                     >
+                        <option value=''>Selecciona una opción</option>
                         <option value='Funciona correctamente'>Funciona correctamente</option>
                         <option value='Funciona requiere mantenimiento'>Funciona requiere mantenimiento</option>
                         <option value='Dañada requiere cambio'>Dañada requiere cambio</option>
                         <option value='Dañada requiere reparacion'>Dañada requiere reparacion</option>
                     </select>
                 </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Condición del activo</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.conditionAssets || ''}
+                        onChange={(e) => {
+                            const value = e.target.value as 'Nuevo' | 'Usado';
+                            setEditedCondition(value);
+                            setEditedAsset((prevEdited) => ({
+                                ...prevEdited,
+                                conditionAssets: value,
+                            }));
+                        }}
+                    >
+                        <option value='Nuevo'>Nuevo</option>
+                        <option value='Usado'>Usado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className="w-100">
+                <h6 className={styles.label}>Inventario</h6>
+                <input
+                    type="number"
+                    className={`${styles.input} mb-3 p-2 border`}
+                    value={editedAsset.inventory}
+                    onChange={(e) => handleEditField(e, 'inventory', 'number')}
+                />
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Precio de compra</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.purchasePriceBeforeTax}
-                            onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.purchasePriceBeforeTax}
+                        onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
+                    />
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>IVA del activo</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedAsset.IVA}
-                            onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
-                            >
-                                <option value={0}>0 %</option>
-                                <option value={5}>5 %</option>
-                                <option value={19}>19 %</option>
-                        </select>
-                    </div>
+                    <h6 className={styles.label}>Precio de venta</h6>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.sellingPrice}
+                        onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
+                    />
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Precio de venta</h6>
-                    <div className={styles.containerInput}>
+                    <h6 className={styles.label}>¿Equipo con descuento?</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedAsset.isDiscounted || ''}
+                        onChange={(e) => {
+                            const value = e.target.value as 'Si' | 'No';
+                            setEditedIsDiscounted(value);
+                            setEditedAsset((prevEdited) => ({
+                                ...prevEdited,
+                                isDiscounted: value,
+                            }));
+                        }}
+                    >
+                        <option value='Si'>Si</option>
+                        <option value='No'>No</option>
+                    </select>
+                </div>
+                {editedIsDiscounted && (
+                    <div className="w-100">
+                        <h6 className={styles.label}>Porcentaje de descuento</h6>
                         <input
                             type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
+                            className={`${styles.input} mb-3 p-2 border`}
                             value={editedAsset.sellingPrice}
                             onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
                         />
                     </div>
-                </div>
+                )}
             </div>
 
             <div className="w-100">
-                <div className="d-flex align-items-center justify-content-center">
-                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
-                    <button className={`${styles.buttonCancel} border-0`} onClick={cancelEditing}>Cancelar</button>
-                </div>
+                <h6 className={styles.label}>IVA del activo</h6>
+                <select
+                    className={`${styles.input} mb-3 p-2 border`}
+                    value={editedAsset.IVA}
+                    onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={0}>0 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={19}>19 %</option>
+                </select>
+            </div>
+
+            <div className="d-flex align-items-center justify-content-center">
+                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={cancelEditing}>Cancelar</button>
             </div>
         </div>
     );

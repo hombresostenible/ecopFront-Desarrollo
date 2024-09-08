@@ -3,11 +3,11 @@
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
 import styles from './styles.module.css';
 
-interface SeeSupplierProps {
+interface SeeCrmSuppliersProps {
     selectedCrmSupplier: ICrmSupplier;
 }
 
-function SeeSupplier({ selectedCrmSupplier }: SeeSupplierProps) {
+function SeeCrmSuppliers({ selectedCrmSupplier }: SeeCrmSuppliersProps) {
 
     return (
         <div>
@@ -97,4 +97,4 @@ function SeeSupplier({ selectedCrmSupplier }: SeeSupplierProps) {
     );
 }
 
-export default SeeSupplier;
+export default SeeCrmSuppliers;

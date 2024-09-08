@@ -101,7 +101,7 @@ function ProfileUserPage() {
         setMenuVisible(!menuVisible);
     };
 
-    const handleMenuOptionClick = (option: string) => {
+    const handleMenuOptionClick = async (option: string) => {
         if (option === 'CargarImagen') {
             setSelectedImage(null);
             setMenuVisible(false);
@@ -118,14 +118,19 @@ function ProfileUserPage() {
             fileInput.click();
         } else if (option === 'EliminarImagen') {
             try {
-                dispatch(deleteLogoUser(token));
-                window.location.reload();
+                await dispatch(deleteLogoUser(token));
+               // Simulamos un delay de la API
+                await new Promise(resolve => setTimeout(resolve, 500));
+                await dispatch(getProfileUser(token));
+                setUserLogo(null);
             } catch (error) {
-                throw new Error('Error al eliminar la imagen');
+                console.error('Error al eliminar la imagen', error);
+                // Aquí puedes mostrar algún mensaje de error si lo deseas
             }
             setMenuVisible(false);
         }
     };
+    
 
     const menuRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -154,7 +159,10 @@ function ProfileUserPage() {
                 logo: imageUrl,
             };
             dispatch(logoChangeUser(userData, token));
-            window.location.reload(); // Recargar la página después de subir la imagen
+            // Simulamos un delay de la API
+            await new Promise(resolve => setTimeout(resolve, 500));
+            dispatch(getProfileUser(token));
+            // window.location.reload(); // Recargar la página después de subir la imagen
         } catch (error) {
             throw new Error('Error al cargar la imagen');
         }
@@ -184,7 +192,7 @@ function ProfileUserPage() {
                                     )}
                                     {!userLogo && (
                                         <div className={styles.container__Text_Logo}>
-                                            <p className="text-center">No tienes un logo para mostrar</p>
+                                            <p className="m-0 text-center">No tienes un logo para mostrar</p>
                                         </div>
                                     )}
                                 </div>
@@ -195,11 +203,13 @@ function ProfileUserPage() {
                                     {menuVisible && (
                                         <div ref={menuRef} className={`${styles.menu} d-flex align-items-center justify-content-center position-absolute`}>
                                             {selectedImage ? (
-                                                <button onClick={() => handleUploadImage(selectedImage)}>Cargar imagen</button>
+                                                <div>       {/* Si hay una imagen seleccionada, mostrar "Cambiar imagen" y "Eliminar imagen" */}
+                                                    <button className={`${styles.text__Menu} border-0`} onClick={() => handleUploadImage(selectedImage)}>Cambiar imagen</button>
+                                                    <button className={`${styles.text__Menu} border-0`} onClick={() => handleMenuOptionClick('EliminarImagen')}>Eliminar imagen</button>
+                                                </div>
                                             ) : (
-                                                <div>
+                                                <div>       {/* Si no hay imagen, mostrar solo "Cargar imagen" */}
                                                     <div className={styles.text__Menu} onClick={() => handleMenuOptionClick('CargarImagen')}>Cargar imagen</div>
-                                                    <div className={styles.text__Menu} onClick={() => handleMenuOptionClick('EliminarImagen')}>Eliminar imagen</div>
                                                 </div>
                                             )}
                                         </div>

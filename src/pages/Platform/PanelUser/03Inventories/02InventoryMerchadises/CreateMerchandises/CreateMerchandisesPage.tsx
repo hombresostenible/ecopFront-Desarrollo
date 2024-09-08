@@ -16,6 +16,7 @@ import CreateManyMerchandises from '../../../../../../components/Platform/PanelU
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
+import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 function CreateMerchandisesPage() {
@@ -152,11 +153,10 @@ function CreateMerchandisesPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus mercancías</h1>
 
                         <div className={`${styles.container__Navigate_Inventories} mb-4 d-flex align-items-center justify-content-between`}>
-                            <div className="d-flex">
-                                <Link to='/inventories/consult-merchandises' className={`${styles.link__Consult_Inventory} text-decoration-none`}>Consulta tu inventario</Link>
-                              </div>
-                            <div className={styles.link__Head_Navigate}>
-                                <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</button>
+                            <Link to='/inventories/consult-merchandises' className={`${styles.link__Consult_Inventory} text-decoration-none`}>Consulta tu inventario</Link>
+                            <div className={`${styles.link__Head_Navigate} d-flex align-items-center justify-content-between`}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <div className={`${styles.button__Bulk_Create} `} onClick={() => { setShowCancelModal(true) }} >Crea tus mercancías de forma masiva</div>
                             </div>
                         </div>
 

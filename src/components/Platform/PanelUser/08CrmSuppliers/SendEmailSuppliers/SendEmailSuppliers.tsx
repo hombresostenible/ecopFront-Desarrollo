@@ -5,18 +5,18 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
-import { sendEmailCRMClient } from '../../../../../redux/User/crmClientSlice/actions';
+import { sendEmailCRMSupplier } from '../../../../../redux/User/crmSupplierSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { ICrmClient } from "../../../../../types/User/crmClient.types";
+import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
 import styles from './styles.module.css';
 
-interface SendEmailClientsProps {
+interface SendEmailSuppliersProps {
     token: string;
-    selectedCrmClient: ICrmClient | undefined;      //Cliente al que se le quiere enviar un correo
+    selectedCrmSupplier: ICrmSupplier | undefined;      //Cliente al que se le quiere enviar un correo
     onCloseModal: () => void;                       //Cierra el modal luego de enviarle el correo al cliente
 }
 
-function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailClientsProps) {
+function SendEmailSuppliers({ token, selectedCrmSupplier, onCloseModal }: SendEmailSuppliersProps) {
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
 
@@ -33,7 +33,7 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
     const [ emailUserClient, setEmailUserClient ] = useState('');
 
     useEffect(() => {
-        if (selectedCrmClient) setEmailUserClient(selectedCrmClient?.email);
+        if (selectedCrmSupplier) setEmailUserClient(selectedCrmSupplier?.email);
         if (token && user) {
             setEmailUser(user?.email);
             if (user?.emailProvider) setEmailProvider(user.emailProvider);
@@ -43,7 +43,7 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
     
     const sendEmail = async (values: FormData) => {
         try {
-            dispatch(sendEmailCRMClient(values));
+            dispatch(sendEmailCRMSupplier(values));
             setFormSubmitted(true);
             onCloseModal();
         } catch (error) {
@@ -53,11 +53,11 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
 
     return (
         <div className={`${styles.container} m-auto`}>
-            <h2 className={styles.subtitle}>Información de tu cliente</h2>
+            <h2 className={styles.subtitle}>Información de tu proveedor</h2>
 
             <div className={`${styles.container__Input} mb-2 d-flex align-items-center justify-content-start`}>
-                <label className={`${styles.label} `} htmlFor="email">Cliente</label>
-                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmClient?.name} {selectedCrmClient?.lastName}</p>
+                <label className={`${styles.label} `} htmlFor="email">Provedor</label>
+                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmSupplier?.name} {selectedCrmSupplier?.lastName}</p>
             </div>
     
             <form onSubmit={handleSubmit((data) => {
@@ -65,7 +65,7 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
                 formData.append('emailProvider', emailProvider);
                 formData.append('from', emailUser);
                 formData.append('applicationPassword', applicationPasswordUser);
-                formData.append('to', selectedCrmClient?.email || '');
+                formData.append('to', selectedCrmSupplier?.email || '');
                 formData.append('subject', data.subject || '');
                 formData.append('text', data.text || '');
                 if (data.attachments) {
@@ -139,4 +139,4 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
     );
 }
 
-export default SendEmailClients;
+export default SendEmailSuppliers;

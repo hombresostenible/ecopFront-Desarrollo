@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { ICrmClient } from '../../../types/User/crmClient.types';
-import { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart } from './crmClientSlice';
+import { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } from './crmClientSlice';
 
 //CREAR DE UN CLIENTE
 export const postCrmClient = (formData: ICrmClient, token: string) => async (dispatch: AppDispatch) => {
@@ -137,6 +137,20 @@ export const deleteCrmClient = (idCrmClient: string, token: string) => async (di
             dispatch(errorCrmClient(error.response?.data.message));
         } else {
             dispatch(errorCrmClient(error.message));
+        }
+    }
+};
+
+//ENVIA CORREO ELECTRONICO A UN CLIENTE REGISTRADO EN CRM CLIENTS
+export const sendEmailCRMClient = (sendEmailData: any) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(sendEmailCRMClientStart());
+        return await axiosInstance.post(`/crm-client/send-email`, sendEmailData);
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorCrmClient(error.response?.data));
+        } else {
+            dispatch(errorCrmClient(error));
         }
     }
 };

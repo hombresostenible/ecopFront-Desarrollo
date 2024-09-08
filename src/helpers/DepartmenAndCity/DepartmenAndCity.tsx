@@ -58,7 +58,7 @@ function DepartmenAndCity({ onSelect, reset, initialDepartment, initialCity }: D
     }, [reset]);
 
     return (
-        <div className={`${styles.container} mb-4 d-flex align-items-center justify-content-center gap-3 w-100`}>
+        <div className={`${styles.container} mb-3 d-flex align-items-center justify-content-center gap-3 w-100`}>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Departamento</h6>
                 <div className={styles.container__Input}>

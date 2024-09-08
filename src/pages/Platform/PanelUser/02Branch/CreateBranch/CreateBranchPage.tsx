@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
 import CreateManyBranches from '../../../../../components/Platform/PanelUser/02Branch/CreateManyBranches/CreateManyBranches';
 // import Loading from '../../../../../components/Loading/Loading';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
+import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 interface CreateBranchProps {
@@ -92,14 +93,19 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div className={`${styles.container__Component} overflow-hidden overflow-y-auto`}>
+                    <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Sedes</h1>
-                        <p>Acá podrás crear tus sedes, que son las unidades de negocio que tienes abiertas, cada colaborador, activo, mercancía, producto, etc, estará ligado a cada sede, de esta forma se te facilitará el entendimiento de tu negocio en aspectos como ingresos, inventarios y demás</p>
-                        
-                        <div className="mb-4 d-flex">
-                            <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus sedes de forma masiva</button>
+
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <Link to='/branches/consult-branches' className={`${styles.link__Head_Navigate} text-decoration-none`}>Consultar tus sedes</Link>
+                            <div className={`${styles.container__Bulk_Create} d-flex align-items-center justify-content-between`}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <div className={`${styles.button__Bulk_Create} `} onClick={() => { setShowCancelModal(true) }} >Crea tus sedes de forma masiva</div>
+                            </div>
                         </div>
 
+                        <p>Acá podrás crear tus sedes, que son las unidades de negocio que tienes abiertas, cada colaborador, activo, mercancía, producto, etc, estará ligado a cada sede, de esta forma se te facilitará el entendimiento de tu negocio en aspectos como ingresos, inventarios y demás</p>
+                        
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton onClick={() => setShowCancelModal(false)}>
                                 <Modal.Title className='text-primary-emphasis text-start'>Crea tus sedes de forma masiva</Modal.Title>

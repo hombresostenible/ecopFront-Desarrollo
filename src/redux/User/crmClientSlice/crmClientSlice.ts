@@ -58,8 +58,12 @@ const crmClientSlice = createSlice({
             state.loading = true;
             state.errorCrmClient = null;
         },
+        sendEmailCRMClientStart: (state) => {
+            state.loading = false;
+            state.errorCrmClient = null;
+        },
     },
 });
 
-export const { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart } = crmClientSlice.actions;
+export const { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } = crmClientSlice.actions;
 export default crmClientSlice.reducer;

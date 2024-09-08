@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
@@ -11,6 +11,7 @@ import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
+import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
@@ -26,10 +27,10 @@ import styles from './styles.module.css';
 
 function ConsultServicesPage() {
     const token = jsCookie.get('token') || '';
+    
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    ///ESTADOS DE REDUX
-    const service = useSelector((state: RootState) => state.service.service);
+    const services = useSelector((state: RootState) => state.service.service);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
@@ -82,6 +83,38 @@ function ConsultServicesPage() {
 
     const branchesArray = Array.isArray(branches) ? branches : [];
 
+    const menuColumnSelector = useRef<HTMLDivElement | null>(null);
+    const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);
+    const handleColumnSelector = () => {
+        setMenuColumnSelectorVisible(!menuColumnSelectorVisible);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuColumnSelector.current && !menuColumnSelector.current.contains(event.target as Node)) {
+                setMenuColumnSelectorVisible(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [ menuColumnSelector ]);
+
+    const [selectedColumns, setSelectedColumns] = useState<string[]>([
+        'Código de barras',
+        'Nombre del item',
+        'IVA',
+        'Precio de venta',
+    ]);
+
+    const handleColumnChange = (column: string) => {
+        const updatedColumns = selectedColumns.includes(column)
+            ? selectedColumns.filter((col) => col !== column)
+            : [...selectedColumns, column];
+        setSelectedColumns(updatedColumns);
+    };
+
     return (
         <div className='d-flex flex-column'>
             <NavBar />
@@ -91,7 +124,7 @@ function ConsultServicesPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Servicios</h1>
 
-                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -99,39 +132,69 @@ function ConsultServicesPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Filter_Branch} mt-4 mb-4 d-flex align-items-center`}>
-                            <h3 className='m-0'>Filtra tus servicios por sede</h3>
-                            <select
-                                value={selectedBranch || ''}
-                                className="mx-2 p-2 border rounded"
-                                onChange={(e) => setSelectedBranch(e.target.value)}
-                            >
-                                <option value=''>Todas</option>
-                                {branchesArray.map((branch: IBranch, index: number) => (
-                                    <option key={index} value={branch.id}>
-                                        {branch.nameBranch}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                            <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</div>
-                                    <div className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</div>
-                                    <div className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</div>
-                                    <div className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</div>
-                                    <div className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</div>
-                                    <div className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</div>
-                                </div>
+                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                                <h3 className={`${styles.title__Branch} m-0`}>Filtra tus servicios por sede</h3>
+                                <select
+                                    value={selectedBranch || ''}
+                                    className="mx-2 p-2 border rounded"
+                                    onChange={(e) => setSelectedBranch(e.target.value)}
+                                >
+                                    <option value=''>Todas</option>
+                                    {branchesArray.map((branch: IBranch, index: number) => (
+                                        <option key={index} value={branch.id}>
+                                            {branch.nameBranch}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
-                            <div className={`${styles.container__Body} d-flex flex-column `}>
-                                {Array.isArray(service) && service.length > 0 ? (
-                                    service.map((service) => (
-                                        <div key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`} >
-                                            <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                                <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
+                                {menuColumnSelectorVisible && (
+                                    <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                                        <ColumnSelector
+                                            selectedColumns={selectedColumns}
+                                            onChange={handleColumnChange}
+                                            minSelectedColumns={3}
+                                            availableColumns={[
+                                                'Código de barras',
+                                                'Nombre del item',
+                                                'IVA',
+                                                'Precio de venta',
+                                            ]}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
+                            <table className="table table-striped">
+                                <thead className={`${styles.container__Head}`}>
+                                    <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
+                                        {selectedColumns.includes('Código de barras') && (
+                                            <th className={`${styles.bar__Code} d-flex align-items-center justify-content-center text-center`}>Código de barras</th>
+                                        )}
+                                        {selectedColumns.includes('Nombre del item') && (
+                                            <th className={`${styles.name__Item} d-flex align-items-center justify-content-center text-center`}>Nombre del item</th>
+                                        )}
+                                        {selectedColumns.includes('IVA') && (
+                                            <th className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</th>
+                                        )}
+                                        {selectedColumns.includes('Precio de venta') && (
+                                            <th className={`${styles.selling__Price} d-flex align-items-center justify-content-center text-center`}>Precio de venta</th>
+                                        )}
+                                        <th className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody className={`${styles.container__Body}`}>
+                                    {Array.isArray(services) && services.length > 0 ? (
+                                        services.map((service) => (
+                                        <tr key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
                                                     {Array.isArray(branches) && branches.map((branch, index) => (
                                                         service.branchId === branch.id && (
@@ -139,58 +202,72 @@ function ConsultServicesPage() {
                                                         )
                                                     ))}
                                                 </span>
-                                            </div>
-                                            <div className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.barCode ? service.barCode : 'No definido'}</span>
-                                            </div>
-                                            <div className={`${styles.name__Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
-                                            </div>
-                                            <div className={`${styles.IVA} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA} %</span>
-                                            </div>
-                                            <div className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(service.sellingPrice)}</span>
-                                            </div>
-                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                            </td>
+                                            {selectedColumns.includes('Código de barras') && (
+                                                <td className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.barCode ? service.barCode : 'No definido'}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Nombre del item') && (
+                                                <td className={`${styles.name__Item} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.nameItem}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('IVA') && (
+                                                <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Precio de venta') && (
+                                                <td className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.sellingPrice ? `$ ${formatNumber(service.sellingPrice)}` : 'No definido'}</span>
+                                                </td>
+                                            )}
+
+                                            <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <MdOutlineRemoveRedEye
-                                                        className={`${styles.button__Edit} `}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(service.id);
-                                                            setNameRawMaterial(service.nameItem || '');
-                                                            handleSeeItem(service);
-                                                        }}
-                                                    />
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <MdOutlineRemoveRedEye
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(service.id);
+                                                                setNameRawMaterial(service.nameItem || '');
+                                                                handleSeeItem(service);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <RiDeleteBin6Line
+                                                            className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(service.id);
+                                                                setNameRawMaterial(service.nameItem || '');
+                                                                handleDelete(service);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <BsPencil
+                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                            onClick={() => {
+                                                                setIdRawMaterial(service.id);
+                                                                handleEdit(service)
+                                                            }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <RiDeleteBin6Line
-                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(service.id);
-                                                            setNameRawMaterial(service.nameItem || '');
-                                                            handleDelete(service);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <BsPencil
-                                                        className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRawMaterial(service.id);
-                                                            handleEdit(service)
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                        No tienes servicios registrados
-                                    </div>
-                                )}
-                            </div>
+                                            </td>
+                                        </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes servicios registrados
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
 
                         <Modal show={showSeeItem} onHide={onCloseModal} size="xl">

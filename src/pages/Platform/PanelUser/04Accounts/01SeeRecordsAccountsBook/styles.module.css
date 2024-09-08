@@ -38,7 +38,10 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
-.container__Services {
+
+
+
+.container__Column_Selector {
     height: 50px;
     width: 100%;
 }

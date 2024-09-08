@@ -13,8 +13,6 @@
 }
 .link__Head_Navigate {
     color: #fff;
-    border: none;
-    text-decoration: none;
     padding: 10px 20px;
     color: white;
     background: #718bd8;
@@ -30,12 +28,40 @@
     color: #fff;
     margin: 0;
 }
-
-/* TABLA */
-.container__Table{
+.container__Column_Selector {
+    height: 50px;
     width: 100%;
 }
-.container__Head{
+.span__Menu {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+.span__Menu:hover {
+    border: 1px solid #718bd8;
+    cursor: pointer;
+}
+.menu {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+    top: 5px;
+    z-index: 1;
+    right: 310px;
+    background: white;
+    height: 295px;
+    width: 300px;
+    border-radius: 10px;
+}
+.menu:hover {
+    cursor: pointer;
+}
+
+/* TABLA */
+.container__Table {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    overflow-x: auto;
+}
+.container__Head {
     background: #e9ecef;
     height: 60px;
     width: 100%;
@@ -44,20 +70,25 @@
 
 /* TITULOS DE LAS COLUMNAS */
 .container__Tr{
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
-.branch{
+.container__Tr, .container__Info {
+    display: flex;
+    flex-wrap: nowrap; /* Evita que las columnas se apilen */
+    justify-content: space-between;
+}
+.branch {
     height: 60px;
     width: 14%;
     min-width: 140px;
 }
-.bar__Code{
+.bar__Code {
     height: 60px;
     width: 12%;
     min-width: 120px;
 }
-.name__Item{
+.name__Item {
     height: 60px;
     width: 14%;
     min-width: 140px;
@@ -67,40 +98,38 @@
     width: 10%;
     min-width: 100px;
 }
-.inventory{
+.inventory {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.IVA{
+.unit__Measure {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+.IVA {
     height: 60px;
     width: 9%;
     min-width: 90px;
 }
-.purchase__Price_Before_Tax{
+.selling__Price {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.packaged{
-    height: 60px;
-    width: 11%;
-    width: 110px;
-}
-.action{
+.action {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
 
 /* CONTENIDO DE LA TABLA */
-.container__Body{
+.container__Body {
     height: 60px;
     width: 100%;
 }
-.container__Info{
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+.container__Info {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
@@ -111,13 +140,13 @@
 }
 .container__Icons {
     height: 100%;
-    width: 25px;
+    width: 125px;
     padding: 0 4px;
 }
 .button__Delete {
     color: #6c757d;
     height: 35px;
-    width: 50px;
+    width: 25px;
     font-size: 14px;
 }
 .button__Delete:hover {
@@ -129,7 +158,7 @@
     color: #6c757d;
     font-size: 14px;
     height: 35px;
-    width: 50px;
+    width: 25px;
 }
 .button__Edit:hover {
     transition: 300ms all ease;
@@ -141,4 +170,41 @@
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- RESPONSIVE (800 PX) ---------- */
+@media screen and (max-width: 800px) {
+    .title {
+        text-align: center;
+    }
+    .container__link_Head_Navigate {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .link__Head_Navigate {
+        text-align: center;
+    }
+    .container__Filters {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .container__Filter_Branch {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .title__Branch {
+        text-align: center;
+    }
+    .container__Column_Selector {
+        margin: 0 0 10px 0;
+    }
+    .span__Menu {
+        margin: auto;
+    }
 }

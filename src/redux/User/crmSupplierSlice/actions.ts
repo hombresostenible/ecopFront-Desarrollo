@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { ICrmSupplier } from '../../../types/User/crmSupplier.types';
-import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart } from './crmSupplierSlice';
+import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } from './crmSupplierSlice';
 
 //CREAR DE UN PROVEEDOR
 export const postCrmSupplier = (formData: ICrmSupplier, token: string) => async (dispatch: AppDispatch) => {
@@ -137,6 +137,20 @@ export const deleteCrmSupplier = (idCrmSupplier: string, token: string) => async
             dispatch(errorCrmSupplier(error.response?.data.message));
         } else {
             dispatch(errorCrmSupplier(error.message));
+        }
+    }
+};
+
+//ENVIA CORREO ELECTRONICO A UN PROVEEDOR REGISTRADO EN CRM SUPPLIERS
+export const sendEmailCRMSupplier = (sendEmailData: any) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(sendEmailCRMSupplierStart());
+        return await axiosInstance.post(`/crm-supplier/send-email`, sendEmailData);
+    } catch (error: any) {
+        if (error.response && error.response.status === 500) {
+            dispatch(errorCrmSupplier(error.response?.data));
+        } else {
+            dispatch(errorCrmSupplier(error));
         }
     }
 };

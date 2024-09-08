@@ -29,7 +29,7 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
     // Estados de Redux
     const errorMerchandise = useSelector((state: RootState) => state.merchandise.errorMerchandise);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -49,6 +49,7 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
             };
             dispatch(patchMerchandise(merchandise.id, formData, token));
             setFormSubmitted(true);
+            reset();
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
@@ -100,26 +101,7 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
                         </div>
 
                         <div className="d-flex flex-column align-items-start justify-content-center">
-                            <h6 className={styles.label}>Selecciona la cantidad</h6>
-                            <select
-                                {...register('quantity', { required: true, valueAsNumber: true })}
-                                className={`${styles.input} p-2 border `}
-                            >
-                                <option value=''>Seleccione una cantidad</option>
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
-                                <option value={6}>6</option>
-                            </select>
-                            {errors.quantity && (
-                                <p className='text-danger'>La cantidad es requerida</p>
-                            )}
-                        </div>
-
-                        <div className="d-flex flex-column align-items-start justify-content-center">
-                            <h6 className={styles.label}>Descripción</h6>
+                            <h6 className={styles.label}>Descripción del descuento</h6>
                             <input
                                 type="text"
                                 className={`${styles.input} p-2 border `}
@@ -127,6 +109,30 @@ function ModalMerchadiseOff({ token, merchandise, onCloseModal }: ModalMerchadis
                             />
                             {errors.description && (
                                 <p className='text-danger'>La descripción es requerida</p>
+                            )}
+                        </div>
+
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Selecciona la cantidad - Existen {merchandise.inventory} - {merchandise.unitMeasure}</h6>
+                            <input
+                                type="number"
+                                {...register('quantity', {
+                                    required: true,
+                                    valueAsNumber: true,
+                                    min: 1,                         // Establece el valor mínimo a 1
+                                    max: merchandise.inventory,     // Establece el valor máximo en función del inventario disponible
+                                })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder="Ingrese una cantidad"
+                            />
+                            {errors.quantity && errors.quantity.type === "required" && (
+                                <p className='text-danger'>La cantidad es requerida</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "max" && (
+                                <p className='text-danger'>La cantidad no puede exceder el inventario disponible ({merchandise.inventory} - {merchandise.unitMeasure})</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "min" && (
+                                <p className='text-danger'>La cantidad debe ser al menos 1</p>
                             )}
                         </div>
                     </div>

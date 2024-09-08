@@ -17,16 +17,22 @@
     color: white;
     background: #718bd8;
 }
-.button__Bulk_Create {
+.link__Head_Navigate {
+    color: #fff;
     padding: 10px 20px;
+    background: #718bd8;
+}
+.link__Head_Navigate:hover {
+    cursor: pointer;
+}
+.icon__Plus {
+    color: #fff;
+    margin: -2px 5px 0 0;
+}
+.button__Bulk_Create {
     letter-spacing: 1px;
     background: #718bd8;
     color: #f8f9fa;
-}
-.button__Bulk_Create:hover {
-    background: #0a31bf;
-    transition: 300ms all ease;
-    cursor: pointer;
 }
 .form {
     width: 550px;

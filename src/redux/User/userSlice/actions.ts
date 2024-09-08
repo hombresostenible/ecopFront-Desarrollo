@@ -5,7 +5,7 @@ import axiosInstance from '../../../api/axios';
 import { IUser } from '../../../types/User/user.types';
 import { IResetPassword } from '../../../types/Auth/resetPassword.types';
 import { IResetPasswordBlocked } from '../../../types/User/resetPasswordBlocked.types';
-import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart, sendEmailCRMClientStart } from './userSlice';
+import { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart } from './userSlice';
 
 //REGISTRO DE USUARIOS
 export const postRegisterClient = (formData: IUser) => async (dispatch: AppDispatch) => {
@@ -184,21 +184,6 @@ export const patchUpdateApplicationPassword = (formData: Partial<IUser>, token: 
         }
     }
 };
-
-//ENVIA CORREO ELECTRONICO A UN CLIENTE REGISTRADO EN EL crM
-export const sendEmailCRMClient = (sendEmailData: any) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(sendEmailCRMClientStart());
-        return await axiosInstance.post(`/user/send-email`, sendEmailData);
-    } catch (error: any) {
-        if (error.response && error.response.status === 500) {
-            dispatch(userErrors(error.response?.data));
-        } else {
-            dispatch(userErrors(error));
-        }
-    }
-};
-
 
 //LOGOUT DE USUARIOS                        
 export const logoutUser = () => (dispatch: AppDispatch) => {

@@ -29,7 +29,7 @@ function ModalRawMaterialOff({ token, rawMaterial, onCloseModal }: ModalRawMater
     // Estados de Redux
     const errorRawMaterial = useSelector((state: RootState) => state.rawMaterial.errorRawMaterial);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -49,6 +49,7 @@ function ModalRawMaterialOff({ token, rawMaterial, onCloseModal }: ModalRawMater
             };
             dispatch(patchRawMaterial(rawMaterial.id, formData, token));
             setFormSubmitted(true);
+            reset();
             setTimeout(() => {
                 setFormSubmitted(false);
                 setShouldNavigate(true);
@@ -98,25 +99,6 @@ function ModalRawMaterialOff({ token, rawMaterial, onCloseModal }: ModalRawMater
                         </div>
 
                         <div className="d-flex flex-column align-items-start justify-content-center">
-                            <h6 className={styles.label}>Selecciona la cantidad</h6>
-                            <select
-                                {...register('quantity', { required: true, valueAsNumber: true })}
-                                className={`${styles.input} p-2 border `}
-                            >
-                                <option value=''>Seleccione una cantidad</option>
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
-                                <option value={6}>6</option>
-                            </select>
-                            {errors.quantity && (
-                                <p className='text-danger'>La cantidad es requerida</p>
-                            )}
-                        </div>
-
-                        <div className="d-flex flex-column align-items-start justify-content-center">
                             <h6 className={styles.label}>Descripción</h6>
                             <input
                                 type="text"
@@ -125,6 +107,30 @@ function ModalRawMaterialOff({ token, rawMaterial, onCloseModal }: ModalRawMater
                             />
                             {errors.description && (
                                 <p className='text-danger'>La descripción es requerida</p>
+                            )}
+                        </div>
+
+                        <div className="d-flex flex-column align-items-start justify-content-center">
+                            <h6 className={styles.label}>Selecciona la cantidad - Existen {rawMaterial.inventory} - {rawMaterial.unitMeasure}</h6>
+                            <input
+                                type="number"
+                                {...register('quantity', {
+                                    required: true,
+                                    valueAsNumber: true,
+                                    min: 1,
+                                    max: rawMaterial.inventory,
+                                })}
+                                className={`${styles.input} p-2 border `}
+                                placeholder="Ingrese una cantidad"
+                            />
+                            {errors.quantity && errors.quantity.type === "required" && (
+                                <p className='text-danger'>La cantidad es requerida</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "max" && (
+                                <p className='text-danger'>La cantidad no puede exceder el inventario disponible ({rawMaterial.inventory} - {rawMaterial.unitMeasure})</p>
+                            )}
+                            {errors.quantity && errors.quantity.type === "min" && (
+                                <p className='text-danger'>La cantidad debe ser al menos 1</p>
                             )}
                         </div>
                     </div>
