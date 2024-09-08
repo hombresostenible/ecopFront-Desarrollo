@@ -14,7 +14,7 @@ import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import SeeCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/01SeeCrmClient/SeeCrmClient.tsx';
-import ModalCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/ModalCrmClient/ModalCrmClient.tsx';
+import ModalCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/ModalEditCrmClient/ModalEditCrmClient.tsx';
 import ConfirmDeleteCRMClient from '../../../../../components/Platform/PanelUser/07CrmClients/ConfirmDeleteCRMClient/ConfirmDeleteCRMClient.tsx';
 import SendEmailClients from '../../../../../components/Platform/PanelUser/07CrmClients/SendEmailClients/SendEmailClients.tsx';
 import { FaPlus } from "react-icons/fa6";
@@ -97,6 +97,7 @@ function ConsultCrmClientsPage() {
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
         'Tipo de Doc. Id',
         'Documento identidad',
+        'Cliente',
         'Email',
         'Teléfono',
         'Departamento',
@@ -138,6 +139,7 @@ function ConsultCrmClientsPage() {
                                         availableColumns={[
                                             'Tipo de Doc. Id',
                                             'Documento identidad',
+                                            'Cliente',
                                             'Email',
                                             'Teléfono',
                                             'Departamento',
@@ -157,6 +159,9 @@ function ConsultCrmClientsPage() {
                                         )}
                                         {selectedColumns.includes('Documento identidad') && (
                                             <th className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento identidad</th>
+                                        )}
+                                        {selectedColumns.includes('Cliente') && (
+                                            <th className={`${styles.client} d-flex align-items-center justify-content-center text-center`}>Cliente</th>
                                         )}
                                         {selectedColumns.includes('Email') && (
                                             <th className={`${styles.email} d-flex align-items-center justify-content-center text-center`}>Email</th>
@@ -186,6 +191,11 @@ function ConsultCrmClientsPage() {
                                             {selectedColumns.includes('Documento identidad') && (
                                                 <td className={`${styles.document__Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.documentId}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Cliente') && (
+                                                <td className={`${styles.client} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.name ? crmClient.name + ' ' + crmClient.lastName : crmClient.corporateName}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Email') && (

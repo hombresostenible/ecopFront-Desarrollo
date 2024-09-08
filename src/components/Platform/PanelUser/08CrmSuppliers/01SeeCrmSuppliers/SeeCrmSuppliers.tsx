@@ -11,31 +11,23 @@ function SeeCrmSuppliers({ selectedCrmSupplier }: SeeCrmSuppliersProps) {
 
     return (
         <div>
-            <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Información del proveedor</h1>
-            </div>
-
+            <h1 className={`${styles.title} text-center`}>Información del proveedor</h1>
+            
             <div className='d-flex gap-3'>
                 {selectedCrmSupplier?.name ? (
                     <div className='d-flex gap-3 w-100'>
                         <div className="w-100">
                             <h6 className={styles.label}>Nombre del proveedor</h6>
-                            <div className={styles.containerInput}>
-                                <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.name}</p>
-                            </div>
+                            <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.name}</p>
                         </div>
                         <div className="w-100">
                             <h6 className={styles.label}>Tipo de identidad</h6>
-                            <div className={styles.containerInput}>
-                                <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.lastName}</p>
-                            </div>
+                            <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.lastName}</p>
                         </div>
                     </div>
                 ): (
                     <div className='d-flex gap-3'>
-                        <div className={styles.containerInput}>
-                            <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.corporateName}</p>
-                        </div>
+                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.corporateName}</p>
                     </div>
                 )}
             </div>
@@ -43,55 +35,39 @@ function SeeCrmSuppliers({ selectedCrmSupplier }: SeeCrmSuppliersProps) {
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Tipo de identidad</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.typeDocumentId}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.typeDocumentId}</p>
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Número de identidad</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.documentId}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.documentId}</p>
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Email</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.email}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.email}</p>
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Teléfono</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.phone}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.phone}</p>
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Departamento</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.department ? selectedCrmSupplier?.department : 'No definido'}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.department ? selectedCrmSupplier?.department : 'No definido'}</p>
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Ciudad</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.city ? selectedCrmSupplier?.city : 'No definido'}</p>
-                    </div>
+                    <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.city ? selectedCrmSupplier?.city : 'No definido'}</p>
                 </div>
             </div>
 
-            <div className='d-flex gap-3'>
-                <div className="w-100">
-                    <h6 className={styles.label}>Dirección</h6>
-                    <div className={styles.containerInput}>
-                        <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.address ? selectedCrmSupplier?.address : 'No definido'}</p>
-                    </div>
-                </div>
+            <div className="w-100">
+                <h6 className={styles.label}>Dirección</h6>
+                <p className={`${styles.input} p-2 text-start border`}>{selectedCrmSupplier?.address ? selectedCrmSupplier?.address : 'No definido'}</p>
             </div>
         </div>
     );

@@ -19,14 +19,12 @@
     justify-content: center;
 }
 .container__Titles_Columns {
-    border: 1px solid teal;
     display: flex;
     align-items: center;
     justify-content: center;
     display: flex;
 }
 .name__Plain {
-    border: 1px solid gold;
     height: 60px;
     width: 170px;
     font-weight: 600;
@@ -35,7 +33,6 @@
     justify-content: center;
 }
 .primera {
-    border: 1px solid teal;
     width: 170px;
     height: 60px;
     font-weight: 600;
@@ -46,11 +43,9 @@
 
 
 .container__Data_Columns {
-    border: 1px solid teal;
     display: flex;
 }
 .title__Plaint {
-    border: 1px solid gold;
     height: 60px;
     width: 170px;
     font-weight: 600;
@@ -59,7 +54,6 @@
     justify-content: center;
 }
 .segunda {
-    border: 1px solid teal;
     width: 170px;
     height: 60px;
 }

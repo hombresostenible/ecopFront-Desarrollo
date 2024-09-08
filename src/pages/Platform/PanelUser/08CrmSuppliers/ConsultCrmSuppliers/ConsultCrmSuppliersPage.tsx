@@ -14,7 +14,7 @@ import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import SeeCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/01SeeCrmSuppliers/SeeCrmSuppliers.tsx';
-import ModalCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ModalCrmSuppliers/ModalCrmSuppliers.tsx';
+import ModalEditCrmSupplier from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ModalEditCrmSupplier/ModalEditCrmSupplier.tsx';
 import ConfirmDeleteCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ConfirmDeleteCrmSuppliers/ConfirmDeleteCrmSuppliers.tsx';
 import SendEmailSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/SendEmailSuppliers/SendEmailSuppliers.tsx';
 import { FaPlus } from "react-icons/fa6";
@@ -97,6 +97,7 @@ function ConsultCrmSuppliersPage() {
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
         'Tipo de Doc. Id',
         'Documento identidad',
+        'Proveedor',
         'Email',
         'Teléfono',
         'Departamento',
@@ -138,6 +139,7 @@ function ConsultCrmSuppliersPage() {
                                         availableColumns={[
                                             'Tipo de Doc. Id',
                                             'Documento identidad',
+                                            'Proveedor',
                                             'Email',
                                             'Teléfono',
                                             'Departamento',
@@ -157,6 +159,9 @@ function ConsultCrmSuppliersPage() {
                                         )}
                                         {selectedColumns.includes('Documento identidad') && (
                                             <th className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento identidad</th>
+                                        )}
+                                        {selectedColumns.includes('Proveedor') && (
+                                            <th className={`${styles.supplier} d-flex align-items-center justify-content-center text-center`}>Proveedor</th>
                                         )}
                                         {selectedColumns.includes('Email') && (
                                             <th className={`${styles.email} d-flex align-items-center justify-content-center text-center`}>Email</th>
@@ -186,6 +191,11 @@ function ConsultCrmSuppliersPage() {
                                             {selectedColumns.includes('Documento identidad') && (
                                                 <td className={`${styles.document__Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmSupplier.documentId}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Proveedor') && (
+                                                <td className={`${styles.supplier} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmSupplier.name ? crmSupplier.name + ' ' + crmSupplier.lastName : crmSupplier.corporateName}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Email') && (
@@ -296,7 +306,7 @@ function ConsultCrmSuppliersPage() {
                             </Modal.Header>
                             <Modal.Body>
                                 {selectedCrmSupplier &&
-                                    <ModalCrmSuppliers
+                                    <ModalEditCrmSupplier
                                         token={token}
                                         idCrmSupplier={idCrmSupplier}
                                         crmSupplier={selectedCrmSupplier}

@@ -1,9 +1,7 @@
 .container {
-    /* border: 1px solid red; */
     margin: 10px 0;
 }
 .infoRegister {
-    /* border: 1px solid red; */
     margin: 30px 0;
     width: 500px;
     display: flex;
@@ -14,7 +12,6 @@
     width: 350px;
 }
 .barCodettext {
-    /* border: 1px solid red; */
     width: 140px;
     padding: 5px 0;
     font-weight: 600;
@@ -29,7 +26,6 @@
     min-height: 300px;
 }
 .thead {
-    /* border: 1px solid teal; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,9 +39,6 @@
     justify-content: center;
     font-weight: 600;
     border: 1px solid rgba(113, 139, 216, 0.1);
-    /* border-top: 1px solid rgba(113, 139, 216, 0.1);
-    border-left: 1px solid rgba(113, 139, 216, 0.1);
-    border-right: 1px solid rgba(113, 139, 216, 0.1); */
 }
 .theadDescriptionItem {
     padding: 5px 10px;
@@ -59,7 +52,6 @@
 }
 .theadPriceUnit {
     padding: 5px 10px;
-    /* border: 1px solid violet; */
     height: 60px;
     width: 150px;
     display: flex;
@@ -70,7 +62,6 @@
 }
 .theadIva {
     padding: 5px 10px;
-    /* border: 1px solid goldenrod; */
     height: 60px;
     width: 150px;
     display: flex;
@@ -81,7 +72,6 @@
 }
 .theadValue {
     padding: 5px 10px;
-    /* border: 1px solid goldenrod; */
     height: 60px;
     width: 150px;
     display: flex;
@@ -134,8 +124,7 @@
 
 
 /*---------TABLA DE LA COMPRA----------*/
-.totalPurchase {    
-    /* border: 1px solid teal; */
+.totalPurchase {
     margin: 10px auto;
     padding: 5px 10px;
     width: 500px;
@@ -144,20 +133,17 @@
     justify-content: space-between;
 }
 .infoPurchaseText {
-    /* border: 1px solid red; */
     font-weight: 700;
     font-size: 20px;
     width: 240px;    
 }
 .infoPurchaseValue {
-    /* border: 1px solid red; */
     font-size: 20px;
     width: 240px;
 }
 
 /*---------TABLA IMPUESTO DE LA BOLSA----------*/
 .plasticBagTax {
-    /* border: 1px solid gold; */
     margin: 10px auto;
     padding: 5px 10px;
     width: 500px;
@@ -167,18 +153,12 @@
 }
 .infoPlasticBagText {
     font-weight: 700;
-    /* border: 1px solid red; */
     width: 180px;    
 }
 .infoPlasticBagQuantity {
-    /* border: 1px solid red; */
     width: 100px;   
-    /* display: flex;
-    align-items: center;
-    justify-content: space-between;  */
 }
 .infoPlasticBagTax {
-    /* border: 1px solid red; */
     width: 190px;
     display: flex;
     align-items: center;
@@ -189,21 +169,18 @@
 .totalPayable {
     margin: 10px auto;
     width: 650px;
-    /* padding: 5px 10px; */
     padding: 5px 7px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .infoPayable {
-    /* border: 1px solid red; */
     width: 310px;
     font-size: 50px;
     font-weight: 700;
     text-align: start;
 }
 .infoPayableValue {
-    /* border: 1px solid red; */
     font-weight: 700;
     font-size: 50px;
     text-align: end;
@@ -216,7 +193,6 @@
 .detailSell{
     margin: auto;
     width: 500px;
-    /* border: 1px solid red; */
     width: 300px;
 }
 

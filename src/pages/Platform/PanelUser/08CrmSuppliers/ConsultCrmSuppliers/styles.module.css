@@ -78,40 +78,45 @@
     flex-wrap: nowrap; /* Evita que las columnas se apilen */
     justify-content: space-between;
 }
-.type__Document_Id{
+.type__Document_Id {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.document__Id{
+.document__Id {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.email{
+.supplier {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 16%;
+    min-width: 160px;
 }
-.phone{
+.email {
+    height: 60px;
+    width: 16%;
+    min-width: 160px;
+}
+.phone {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.department{
+.department {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 10%;
+    min-width: 100px;
 }
-.city{
+.city {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.action{
+.action {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
 
 

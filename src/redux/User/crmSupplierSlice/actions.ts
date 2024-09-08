@@ -145,7 +145,7 @@ export const deleteCrmSupplier = (idCrmSupplier: string, token: string) => async
 export const sendEmailCRMSupplier = (sendEmailData: any) => async (dispatch: AppDispatch) => {
     try {
         dispatch(sendEmailCRMSupplierStart());
-        return await axiosInstance.post(`/crm-supplier/send-email`, sendEmailData);
+        return await axiosInstance.post(`/user/send-email`, sendEmailData);
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(errorCrmSupplier(error.response?.data));

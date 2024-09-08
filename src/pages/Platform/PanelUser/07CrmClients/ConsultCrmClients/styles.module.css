@@ -69,7 +69,7 @@
 }
 
 /* TITULOS DE LAS COLUMNAS */
-.container__Tr{
+.container__Tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
@@ -78,49 +78,54 @@
     flex-wrap: nowrap; /* Evita que las columnas se apilen */
     justify-content: space-between;
 }
-.type__Document_Id{
+.type__Document_Id {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.document__Id{
+.document__Id {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.email{
+.client {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 16%;
+    min-width: 160px;
 }
-.phone{
+.email {
+    height: 60px;
+    width: 16%;
+    min-width: 160px;
+}
+.phone {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.department{
+.department {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 10%;
+    min-width: 100px;
 }
-.city{
+.city {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
-.action{
+.action {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 12%;
+    min-width: 120px;
 }
 
 
 /* CONTENIDO DE LA TABLA */
-.container__Body{
+.container__Body {
     height: 60px;
     width: 100%;
 }
-.container__Info{
+.container__Info {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }

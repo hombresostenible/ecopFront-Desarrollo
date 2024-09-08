@@ -177,7 +177,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                             <option value='Plastico de burbujas'>Plástico de burbujas</option>
                         </select>
                     </div>
-                )}                
+                )}
             </div>
 
             <div className='d-flex gap-3'>

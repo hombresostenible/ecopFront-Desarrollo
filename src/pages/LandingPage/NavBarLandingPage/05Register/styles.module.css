@@ -38,9 +38,6 @@
 
 /* ---------- RESPONSIVE (500 PX) ---------- */
 @media screen and (max-width: 500px) {
-    .container__Button_Submit {
-        border: 1px solid red;
-    }
     .logo {
         height: 50px;
     }
