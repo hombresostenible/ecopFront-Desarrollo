@@ -138,40 +138,40 @@ function SideBar() {
     // SUBMENU LATERAL DE CUENTAS
     const [showAccountsClick, setShowAccountsClick] = useState<boolean>(false);
     const handleAccountsClick = () => {
-        if (!menuVisible && !isAccountsSubMenuOpen) {       // Solo si la SideBar está compacta
-            setShowAccountsClick(prev => !prev);            // Alternar la visibilidad del div
+        if (!menuVisible && !isAccountsSubMenuOpen) {
+            setShowAccountsClick(prev => !prev);
         }
     };
 
     // SUBMENU LATERAL DE NOMINA ELECTRONICA
     const [showElectronicPayrollClick, setShowElectronicPayrollClick] = useState<boolean>(false);
     const handleElectronicPayrollClick = () => {
-        if (!menuVisible && !isElectronicPayrollSubMenuOpen) {       // Solo si la SideBar está compacta
-            setShowElectronicPayrollClick(prev => !prev);            // Alternar la visibilidad del div
+        if (!menuVisible && !isElectronicPayrollSubMenuOpen) {
+            setShowElectronicPayrollClick(prev => !prev);
         }
     };
     
     // SUBMENU LATERAL DE CRM CLIENTS
     const [showCrmClientsClick, setShowCrmClientsClick] = useState<boolean>(false);
     const handleCrmClientsClick = () => {
-        if (!menuVisible && !isCrmClientsSubMenuOpen) {       // Solo si la SideBar está compacta
-            setShowCrmClientsClick(prev => !prev);          // Alternar la visibilidad del div
+        if (!menuVisible && !isCrmClientsSubMenuOpen) {
+            setShowCrmClientsClick(prev => !prev);
         }
     };
 
     // SUBMENU LATERAL DE CRM SUPPLIERS
     const [showCrmSuppliersClick, setShowCrmSuppliersClick] = useState<boolean>(false);
     const handleCrmSuppliersClick = () => {
-        if (!menuVisible && !isCrmSuppliersSubMenuOpen) {       // Solo si la SideBar está compacta
-            setShowCrmSuppliersClick(prev => !prev);        // Alternar la visibilidad del div
+        if (!menuVisible && !isCrmSuppliersSubMenuOpen) {
+            setShowCrmSuppliersClick(prev => !prev);
         }
     };
 
     // SUBMENU LATERAL DE INDICATORS
     const [showReportsIndicatorsClick, setShowReportsIndicatorsClick] = useState<boolean>(false);
     const handleReportsIndicatorsClick = () => {
-        if (!menuVisible && !isReportsAndIndicatorsSubMenuOpen) {       // Solo si la SideBar está compacta
-            setShowReportsIndicatorsClick(prev => !prev);   // Alternar la visibilidad del div
+        if (!menuVisible && !isReportsAndIndicatorsSubMenuOpen) {
+            setShowReportsIndicatorsClick(prev => !prev)
         }
     };
 
@@ -360,10 +360,10 @@ function SideBar() {
                             <h6 className={`${styles.title__Sub_Menu_Compact} m-0`}>Nomina electrónica</h6>
                             <Link to='/electronic-payroll/consult-collaborators' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta tus colaboradores</Link>
                             <Link to='/electronic-payroll/create-collaborators' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea tus colaboradores</Link>
-                            <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta tus pagos de nómina</Link>
+                            {/* <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta tus pagos de nómina</Link>
                             <Link to='/electronic-payroll/create-payroll-payments' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea tus pagos de nómina</Link>
                             <Link to='/electronic-payroll/certifications' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Certificados</Link>
-                            <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Liquidación de nómina</Link>
+                            <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Liquidación de nómina</Link> */}
                         </div>
                     )}
                 </div>
@@ -375,7 +375,7 @@ function SideBar() {
                         <Link to='/electronic-payroll/create-collaborators' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/create-collaborators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Crea tus colaboradores
                         </Link>
-                        <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/consult-payroll-payments' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        {/* <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/consult-payroll-payments' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Consulta tus pagos de nómina
                         </Link>
                         <Link to='/electronic-payroll/create-payroll-payments' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/create-payroll-payments' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
@@ -386,7 +386,7 @@ function SideBar() {
                         </Link>
                         <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/payroll-settlement' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Liquidación de nómina
-                        </Link>
+                        </Link> */}
                     </div>
                 )}
 
