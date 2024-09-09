@@ -1,9 +1,9 @@
 import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import styles from './styles.module.css';
 
-function PayrollSettlementPage() {
+function CertificationsPage() {
 
     return (
         <div className='d-flex flex-column'>
@@ -12,7 +12,7 @@ function PayrollSettlementPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Liquidación de nómina</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Certificaciones de colaboradores</h1>
                     </div>
                     <Footer />
                 </div>
@@ -21,4 +21,4 @@ function PayrollSettlementPage() {
     );
 }
 
-export default PayrollSettlementPage;
+export default CertificationsPage;

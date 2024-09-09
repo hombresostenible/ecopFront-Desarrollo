@@ -83,7 +83,7 @@ function MailConfigurationPage() {
                             {Array.isArray(errorUser) && errorUser?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
-                            <p>Defie la contraseña de aplicaciones para tu correo: {user?.email}</p>
+                            <p>Define la contraseña de aplicaciones para tu correo: {user?.email}</p>
                             <div className="mb-2 w-100">
                                 <h6 className={`${styles.label} mb-1`}>¿Cuál es el proveedor de tu correo electrónico?</h6>
                                 <select

@@ -59,10 +59,6 @@ const userPlatformSlice = createSlice({
             state.userPlatform = action.payload;
             state.errorUserPlatform = null;
         },
-        patchUserPlatformStart: (state) => {
-            state.loading = true;
-            state.errorUserPlatform = null;
-        },
         deleteUserPlatformStart: (state) => {
             state.loading = true;
             state.errorUserPlatform = null;
@@ -70,5 +66,5 @@ const userPlatformSlice = createSlice({
     },
 });
 
-export const { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, patchUserPlatformStart, deleteUserPlatformStart } = userPlatformSlice.actions;
+export const { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, deleteUserPlatformStart } = userPlatformSlice.actions;
 export default userPlatformSlice.reducer;

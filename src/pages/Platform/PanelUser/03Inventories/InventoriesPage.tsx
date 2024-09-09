@@ -5,6 +5,7 @@ import Footer from '../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
 function InventoriesPage() {
+
     return (
         <div className='d-flex flex-column'>
             <NavBar />

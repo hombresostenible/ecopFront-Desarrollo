@@ -5,75 +5,70 @@ import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../../../../redux/store.ts';
-import { getCrmClients } from '../../../../../redux/User/crmClientSlice/actions.ts';
+import type { RootState, AppDispatch } from '../../../../../../redux/store.ts';
+import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
+import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { ICrmClient } from '../../../../../types/User/crmClient.types.ts';
-import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
-import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
-import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
-import SeeCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/01SeeCrmClient/SeeCrmClient.tsx';
-import ModalEditCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/ModalEditCrmClient/ModalEditCrmClient.tsx';
-import ConfirmDeleteCRMClient from '../../../../../components/Platform/PanelUser/07CrmClients/ConfirmDeleteCRMClient/ConfirmDeleteCRMClient.tsx';
-import SendEmailClients from '../../../../../components/Platform/PanelUser/07CrmClients/SendEmailClients/SendEmailClients.tsx';
+import { IUserPlatform } from '../../../../../../types/User/userPlatform.types';
+import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
+import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
+import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
+import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
+import SeeCollaborator from '../../../../../../components/Platform/PanelUser/06ElectronicPayroll/01Collaborator/01SeeCollaborator/SeeCollaborator.tsx';
+import ConfirmDeleteCollaborator from '../../../../../../components/Platform/PanelUser/06ElectronicPayroll/01Collaborator/ConfirmDeleteCollaborator/ConfirmDeleteCollaborator.tsx';
+import ModalEditCollaborator from '../../../../../../components/Platform/PanelUser/06ElectronicPayroll/01Collaborator/02ModalEditCollaborator/ModalEditCollaborator.tsx';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
-import { MdOutgoingMail } from "react-icons/md";
 import styles from './styles.module.css';
 
-function ConsultCrmClientsPage() {
+function ConsultCollaboratorPage() {
     const token = jsCookie.get('token') || '';
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const crmClients = useSelector((state: RootState) => state.crmClient.crmClient);
+    const userPlatforms = useSelector((state: RootState) => state.userPlatform.userPlatform);
+    const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
         if (token) {
-            dispatch(getCrmClients(token));
+            dispatch(getUsersPlatform(token));
+            dispatch(getBranches(token));
         }
     }, [token]);
 
-    const [idCrmClient, setIdCrmClient] = useState('');
-    const [nameCrmClient, setNameCrmClient] = useState('');
-    const [selectedCrmClient, setSelectedCrmClient] = useState<ICrmClient>();
-    const [showSeeCrmClient, setShowSeeCrmClient] = useState(false);
+    const branchesArray = Array.isArray(branches) ? branches : [];
+
+    const [idUserPlatform, setIdUserPlatform] = useState('');
+    const [nameUserPlatform, setNameUserPlatform] = useState('');
+    const [selectedUserPlatform, setSelectedUserPlatform] = useState<IUserPlatform>();
+    const [showSeeUserPlatform, setShowSeeUserPlatform] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showCrmClientModal, setShowCrmClientModal] = useState(false);
-    const [showSendEmailCrmClientModal, setShowSendEmailCrmClientModal] = useState(false);
-    
-    //MODAL PARA VISUALIZAR INFORMACION DEL CLIENTE
-    const handleSeeCrmClient = useCallback((crmClient: ICrmClient) => {
-        setSelectedCrmClient(crmClient);
-        setShowSeeCrmClient(true);
+    const [showUserPlatformModal, setShowUserPlatformModal] = useState(false);
+
+    //MODAL PARA VISUALIZAR INFORMACION DEL COLABORADOR
+    const handleSeeUserPlatform = useCallback((userPlatform: IUserPlatform) => {
+        setSelectedUserPlatform(userPlatform);
+        setShowSeeUserPlatform(true);
     }, []);
 
-    //MODAL PARA ELIMINAR UN CLIENTE
-    const handleDelete = useCallback((crmClient: ICrmClient) => {
-        setSelectedCrmClient(crmClient);
+    //MODAL PARA ELIMINAR UN COLABORADOR
+    const handleDelete = useCallback((userPlatform: IUserPlatform) => {
+        setSelectedUserPlatform(userPlatform);
         setShowDeleteConfirmation(true);
     }, []);
     
-    //MODAL PARA EDITAR INFORMACION DEL CLIENTE
-    const handleEdit = useCallback((crmClient: ICrmClient) => {
-        setSelectedCrmClient(crmClient);
-        setShowCrmClientModal(true);
-    }, []);
-    
-    //MODAL PARA ENVIAR EMIAL AL CLIENTE
-    const handleSendEmailClient = useCallback((crmClient: ICrmClient) => {
-        setSelectedCrmClient(crmClient);
-        setShowSendEmailCrmClientModal(true);
+    //MODAL PARA EDITAR INFORMACION DEL COLABORADOR
+    const handleEdit = useCallback((userPlatform: IUserPlatform) => {
+        setSelectedUserPlatform(userPlatform);
+        setShowUserPlatformModal(true);
     }, []);
 
     const onCloseModal = useCallback(() => {
-        setShowSeeCrmClient(false);
+        setShowSeeUserPlatform(false);
         setShowDeleteConfirmation(false);
-        setShowCrmClientModal(false);
-        setShowSendEmailCrmClientModal(false);
+        setShowUserPlatformModal(false);
     }, []);
 
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
@@ -95,13 +90,16 @@ function ConsultCrmClientsPage() {
     }, [ menuColumnSelector ]);
 
     const [selectedColumns, setSelectedColumns] = useState<string[]>([
+        'Nombres',
+        'Apellidos',
         'Tipo de Doc. Id',
         'Documento identidad',
-        'Cliente',
-        'Email',
-        'Teléfono',
+        'Tipo de rol',
         'Departamento',
         'Ciudad',
+        'Dirección',
+        'Teléfono',
+        'Email',
     ]);
 
     const handleColumnChange = (column: string) => {
@@ -112,19 +110,19 @@ function ConsultCrmClientsPage() {
     };
 
     return (
-        <div className='d-flex flex-column'>
+<div className='d-flex flex-column'>
             <NavBar />
             <div className='d-flex'>
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>CRM Clientes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Colaboradores</h1>
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/crm-clients/create-crm-clients' className={`${styles.link} text-decoration-none`}>Crea tus clientes</Link>
+                                <Link to='/electronic-payroll/create-collaborators' className={`${styles.link} text-decoration-none`}>Crea tus colaboradores</Link>
                             </div>
                         </div>
 
@@ -137,13 +135,16 @@ function ConsultCrmClientsPage() {
                                         onChange={handleColumnChange}
                                         minSelectedColumns={3}
                                         availableColumns={[
+                                            'Nombres',
+                                            'Apellidos',
                                             'Tipo de Doc. Id',
                                             'Documento identidad',
-                                            'Cliente',
-                                            'Email',
-                                            'Teléfono',
+                                            'Tipo de rol',
                                             'Departamento',
                                             'Ciudad',
+                                            'Dirección',
+                                            'Teléfono',
+                                            'Email',
                                         ]}
                                     />
                                 </div>
@@ -154,20 +155,20 @@ function ConsultCrmClientsPage() {
                             <table className="table table-striped">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        {selectedColumns.includes('Nombres') && (
+                                            <th className={`${styles.name} d-flex align-items-center justify-content-center text-center`}>Nombres</th>
+                                        )}
+                                        {selectedColumns.includes('Apellidos') && (
+                                            <th className={`${styles.last__Name} d-flex align-items-center justify-content-center text-center`}>Apellidos</th>
+                                        )}
                                         {selectedColumns.includes('Tipo de Doc. Id') && (
                                             <th className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center text-center`}>Tipo de Doc. Id</th>
                                         )}
                                         {selectedColumns.includes('Documento identidad') && (
                                             <th className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento identidad</th>
                                         )}
-                                        {selectedColumns.includes('Cliente') && (
-                                            <th className={`${styles.client} d-flex align-items-center justify-content-center text-center`}>Cliente</th>
-                                        )}
-                                        {selectedColumns.includes('Email') && (
-                                            <th className={`${styles.email} d-flex align-items-center justify-content-center text-center`}>Email</th>
-                                        )}
-                                        {selectedColumns.includes('Teléfono') && (
-                                            <th className={`${styles.phone} d-flex align-items-center justify-content-center text-center`}>Teléfono</th>
+                                        {selectedColumns.includes('Tipo de rol') && (
+                                            <th className={`${styles.type__Role} d-flex align-items-center justify-content-center text-center`}>Tipo de rol</th>
                                         )}
                                         {selectedColumns.includes('Departamento') && (
                                             <th className={`${styles.department} d-flex align-items-center justify-content-center text-center`}>Departamento</th>
@@ -175,47 +176,71 @@ function ConsultCrmClientsPage() {
                                         {selectedColumns.includes('Ciudad') && (
                                             <th className={`${styles.city} d-flex align-items-center justify-content-center text-center`}>Ciudad</th>
                                         )}
+                                        {selectedColumns.includes('Dirección') && (
+                                            <th className={`${styles.address} d-flex align-items-center justify-content-center text-center`}>Dirección</th>
+                                        )}
+                                        {selectedColumns.includes('Teléfono') && (
+                                            <th className={`${styles.phone} d-flex align-items-center justify-content-center text-center`}>Teléfono</th>
+                                        )}
+                                        {selectedColumns.includes('Email') && (
+                                            <th className={`${styles.email} d-flex align-items-center justify-content-center text-center`}>Email</th>
+                                        )}
                                         <th className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</th>
                                     </tr>
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(crmClients) && crmClients.length > 0 ? (
-                                        crmClients.map((crmClient) => (
-                                        <tr key={crmClient.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                    {Array.isArray(userPlatforms) && userPlatforms.length > 0 ? (
+                                        userPlatforms.map((userPlatform) => (
+                                        <tr key={userPlatform.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            {selectedColumns.includes('Nombres') && (
+                                                <td className={`${styles.name} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.name}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Apellidos') && (
+                                                <td className={`${styles.last__Name} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.lastName}</span>
+                                                </td>
+                                            )}
                                             {selectedColumns.includes('Tipo de Doc. Id') && (
                                                 <td className={`${styles.type__Document_Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.typeDocumentId}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.typeDocumentId}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Documento identidad') && (
                                                 <td className={`${styles.document__Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.documentId}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.documentId}</span>
                                                 </td>
                                             )}
-                                            {selectedColumns.includes('Cliente') && (
-                                                <td className={`${styles.client} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.name ? crmClient.name + ' ' + crmClient.lastName : crmClient.corporateName}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Email') && (
-                                                <td className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.email}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Teléfono') && (
-                                                <td className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.phone ? crmClient.phone : 'No registrado'}</span>
+                                            {selectedColumns.includes('Tipo de rol') && (
+                                                <td className={`${styles.type__Role} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.typeRole}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Departamento') && (
                                                 <td className={`${styles.department} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.department ? crmClient.department : 'No definido'}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.department ? userPlatform.department : 'No definido'}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Ciudad') && (
                                                 <td className={`${styles.city} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{crmClient.city ? crmClient.city : 'No definido'}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.city ? userPlatform.city : 'No definido'}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Dirección') && (
+                                                <td className={`${styles.address} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.address}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Teléfono') && (
+                                                <td className={`${styles.phone} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.phone ? userPlatform.phone : 'No registrado'}</span>
+                                                </td>
+                                            )}
+                                            {selectedColumns.includes('Email') && (
+                                                <td className={`${styles.email} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{userPlatform.email}</span>
                                                 </td>
                                             )}
                                             <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
@@ -224,9 +249,9 @@ function ConsultCrmClientsPage() {
                                                         <MdOutlineRemoveRedEye
                                                             className={`${styles.button__Edit} `}
                                                             onClick={() => {
-                                                                setIdCrmClient(crmClient.id);
-                                                                setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
-                                                                handleSeeCrmClient(crmClient);
+                                                                setIdUserPlatform(userPlatform.id);
+                                                                setNameUserPlatform(userPlatform.name);
+                                                                handleSeeUserPlatform(userPlatform);
                                                             }}
                                                         />
                                                     </div>
@@ -234,9 +259,9 @@ function ConsultCrmClientsPage() {
                                                         <RiDeleteBin6Line
                                                             className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
                                                             onClick={() => {
-                                                                setIdCrmClient(crmClient.id);
-                                                                setNameCrmClient(crmClient.name ?? crmClient.corporateName ?? '');
-                                                                handleDelete(crmClient);
+                                                                setIdUserPlatform(userPlatform.id);
+                                                                setNameUserPlatform(userPlatform.name);
+                                                                handleDelete(userPlatform);
                                                             }}
                                                         />
                                                     </div>
@@ -244,17 +269,8 @@ function ConsultCrmClientsPage() {
                                                         <BsPencil
                                                             className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                             onClick={() => {
-                                                                setIdCrmClient(crmClient.id);
-                                                                handleEdit(crmClient)
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <MdOutgoingMail
-                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdCrmClient(crmClient.id);
-                                                                handleSendEmailClient(crmClient)
+                                                                setIdUserPlatform(userPlatform.id);
+                                                                handleEdit(userPlatform)
                                                             }}
                                                         />
                                                     </div>
@@ -265,7 +281,7 @@ function ConsultCrmClientsPage() {
                                     ) : (
                                         <tr>
                                             <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                                No tienes clientes registrados
+                                                No tienes colaboradores registrados
                                             </td>
                                         </tr>
                                     )}
@@ -273,14 +289,15 @@ function ConsultCrmClientsPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeCrmClient} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeUserPlatform} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu cliente</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu colaborador</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {selectedCrmClient &&
-                                    <SeeCrmClient
-                                        selectedCrmClient={selectedCrmClient}
+                                {selectedUserPlatform &&
+                                    <SeeCollaborator
+                                        selectedUserPlatform={selectedUserPlatform}
+                                        branches={branchesArray}
                                     />
                                 }
                             </Modal.Body>
@@ -288,44 +305,32 @@ function ConsultCrmClientsPage() {
 
                         <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el cliente "{nameCrmClient}"</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el colaborador "{nameUserPlatform}"</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <ConfirmDeleteCRMClient
+                                <ConfirmDeleteCollaborator
                                     token={token}
-                                    idCrmClient={idCrmClient}
-                                    nameClient={nameCrmClient}
+                                    idUserPlatform={idUserPlatform}
+                                    nameUserPlatform={nameUserPlatform}
                                     onCloseModal={onCloseModal}
                                 />
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showCrmClientModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showUserPlatformModal} onHide={onCloseModal} size="xl">
                             <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Cliente</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del colaborador</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {selectedCrmClient &&
-                                    <ModalEditCrmClient
+                                {selectedUserPlatform &&
+                                    <ModalEditCollaborator
                                         token={token}
-                                        idCrmClient={idCrmClient}
-                                        crmClient={selectedCrmClient}
+                                        idUserPlatform={idUserPlatform}
+                                        userPlatform={selectedUserPlatform}
+                                        branches={branchesArray}
                                         onCloseModal={onCloseModal}
                                     />
                                 }
-                            </Modal.Body>
-                        </Modal>
-
-                        <Modal show={showSendEmailCrmClientModal} onHide={onCloseModal} size="lg">
-                            <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Envía un email a tu cliente</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <SendEmailClients
-                                    token={token}
-                                    selectedCrmClient={selectedCrmClient}
-                                    onCloseModal={onCloseModal}
-                                />
                             </Modal.Body>
                         </Modal>
                     </div>
@@ -336,4 +341,4 @@ function ConsultCrmClientsPage() {
     );
 }
 
-export default ConsultCrmClientsPage;
+export default ConsultCollaboratorPage;

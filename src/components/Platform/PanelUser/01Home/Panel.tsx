@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 //ELEMENTOS DEL COMPONENTE
+//IMAGEN DE SEDES
 import Inventario from '../../../../assets/Plataforma/Home/Inventario.png';
-import LibroDiario from '../../../../assets/Plataforma/Home/LibroDiario.png';
+import Cuentas from '../../../../assets/Plataforma/Home/LibroDiario.png';
 // import FacturaElectronica from '../../../../assets/Plataforma/Home/FacturaElectronica.png';
-import Informes from '../../../../assets/Plataforma/Home/Informe.png';
-import CRM from '../../../../assets/Plataforma/Home/CRM.png';
-// import Asesoria from '../../../../assets/Plataforma/Home/Asesoria.png';
-// import NominaElectronica from '../../../../assets/Plataforma/Home/NominaElectronica.png';
+import NominaElectronica from '../../../../assets/Plataforma/Home/NominaElectronica.png';
+//IMAGEN DE CLIENTES
+import CRM from '../../../../assets/Plataforma/Home/CRM.png'; //LA MISMA IMAGEN SIRE PARA CLIENTES Y PROVEEDORES
 // import Sostenibilidad from '../../../../assets/Plataforma/Home/Sostenibilidad.png';
+import Informes from '../../../../assets/Plataforma/Home/Informe.png';
 // import Notificacion from '../../../../assets/Plataforma/Home/Notificacion.png';
+// import Asesoria from '../../../../assets/Plataforma/Home/Asesoria.png';
 import styles from './styles.module.css';
 
 function Panel() {
@@ -18,6 +20,17 @@ function Panel() {
             <h1 className={`${styles.title} text-center text-2xl font-bold`}>Bienvenido a Ecopción</h1 >
             <h3 className={`${styles.question} text-center`}>¿Qué quieres hacer hoy?</h3>
             <div className={`${styles.container__Panel} m-auto p-2 d-flex flex-wrap gap-3`} >
+                <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
+                    <Link to="/branches" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
+                        <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
+                            <img src={Inventario} alt="Registra o carga inventarios" className={`${styles.image}`} />
+                        </div>
+                        <div className={`${styles.card__Title} p-2 d-flex align-items-center justify-content-center`} >
+                            <h4 className={`${styles.subTitle} m-0 text-center`}>Sedes</h4>
+                        </div>
+                    </Link>
+                </div>
+
                 <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
                     <Link to="/inventories" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
@@ -32,7 +45,7 @@ function Panel() {
                 <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
                     <Link to="/accounts" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
-                            <img src={LibroDiario} alt="Registra tus transacciones diarias" className={`${styles.image}`} />
+                            <img src={Cuentas} alt="Registra tus transacciones diarias" className={`${styles.image}`} />
                         </div>
                         <div className={`${styles.card__Title} p-2 d-flex align-items-center justify-content-center`} >
                             <h4 className={`${styles.subTitle} m-0 text-center`}>Cuentas</h4>
@@ -51,7 +64,7 @@ function Panel() {
                     </Link>
                 </div> */}
 
-                {/* <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
+                <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
                     <Link to="/electronic-payroll" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
                             <img src={NominaElectronica} alt="Nomina electrónica" className={`${styles.image}`} />
@@ -60,7 +73,7 @@ function Panel() {
                             <h4 className={`${styles.subTitle} m-0 text-center`}>Nomina electrónica</h4>
                         </div>
                     </Link>
-                </div> */}
+                </div>
 
                 <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
                     <Link to="/crm-clients/consult-crm-clients" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >

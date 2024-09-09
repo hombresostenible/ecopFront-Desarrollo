@@ -69,7 +69,7 @@
 }
 
 /* TITULOS DE LAS COLUMNAS */
-.container__Tr{
+.container__Tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
@@ -78,43 +78,69 @@
     flex-wrap: nowrap; /* Evita que las columnas se apilen */
     justify-content: space-between;
 }
-.branch{
+.name {
     height: 60px;
-    width: 20%;
-    min-width: 200px;
-}
-.bar__Code{
-    height: 60px;
-    width: 12%;
-    min-width: 120px;
-}
-.name__Item{
-    height: 60px;
-    width: 30%;
-    min-width: 180px;
-}
-.IVA{
-    height: 60px;
-    width: 15%;
-    min-width: 150px;
-}
-.selling__Price{
-    height: 60px;
-    width: 20%;
-    min-width: 150px;
-}
-.action{
-    height: 60px;
-    width: 15%;
+    width: 10%;
     min-width: 100px;
 }
+.last__Name {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+.type__Document_Id {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+.document__Id {
+    height: 60px;
+    width: 8%;
+    min-width: 80px;
+}
+.type__Role {
+    height: 60px;
+    width: 8%;
+    min-width: 80px;
+}
+.department {
+    height: 60px;
+    width: 9%;
+    min-width: 90px;
+}
+.city {
+    height: 60px;
+    width: 9%;
+    min-width: 90px;
+}
+.address {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+.email {
+    height: 60px;
+    width: 10%;
+    min-width: 100px;
+}
+.phone {
+    height: 60px;
+    width: 8%;
+    min-width: 80px;
+}
+.action {
+    height: 60px;
+    width: 8%;
+    min-width: 80px;
+}
+
 
 /* CONTENIDO DE LA TABLA */
-.container__Body{
+.container__Body {
     height: 60px;
     width: 100%;
 }
-.container__Info{
+.container__Info {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
@@ -125,8 +151,8 @@
 }
 .container__Icons {
     height: 100%;
-    width: 35px;
-    padding: 0 5px;
+    width: 125px;
+    padding: 0 4px;
 }
 .button__Delete {
     color: #6c757d;

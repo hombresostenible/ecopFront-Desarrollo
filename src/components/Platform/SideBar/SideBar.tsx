@@ -11,6 +11,7 @@ import { IoHome } from "react-icons/io5";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { MdAppRegistration } from "react-icons/md";
 import { FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
+import { BsCashCoin } from "react-icons/bs";
 import { TbCoin } from "react-icons/tb";
 import { PiChartLineUp } from "react-icons/pi";
 import { GoSignOut } from "react-icons/go";
@@ -37,7 +38,20 @@ function SideBar() {
         });
         setBranchesSubMenuOpen(false);
         setInventorySubMenuOpen(false);
-        setShowBranchClick(false);
+        setAccountsSubMenuOpen(false);
+        setElectronicPayrollSubMenuOpen(false);
+        setCrmClientsSubMenuOpen(false);
+        setCrmSuppliersSubMenuOpen(false);
+        setReportsAndIndicatorsSubMenuOpen(false);
+
+        //Se eliminan todos los localStorage para evitar que en la SideBar, queden desplegados algunos submenús
+        localStorage.removeItem('branches');
+        localStorage.removeItem('inventory');
+        localStorage.removeItem('accounts');
+        localStorage.removeItem('electronicPayroll');
+        localStorage.removeItem('crmClients');
+        localStorage.removeItem('crmSuppliers');
+        localStorage.removeItem('reportsAndIndicators');
     };
 
     // Leer el estado inicial de los submenús desde localStorage
@@ -49,6 +63,7 @@ function SideBar() {
     const [isBranchesSubMenuOpen, setBranchesSubMenuOpen] = useState(() => getInitialState('branches', false));
     const [isInventorySubMenuOpen, setInventorySubMenuOpen] = useState(() => getInitialState('inventory', false));
     const [isAccountsSubMenuOpen, setAccountsSubMenuOpen] = useState(() => getInitialState('accounts', false));
+    const [isElectronicPayrollSubMenuOpen, setElectronicPayrollSubMenuOpen] = useState(() => getInitialState('electronicPayroll', false));
     const [isCrmClientsSubMenuOpen, setCrmClientsSubMenuOpen] = useState(() => getInitialState('crmClients', false));
     const [isCrmSuppliersSubMenuOpen, setCrmSuppliersSubMenuOpen] = useState(() => getInitialState('crmSuppliers', false));
     const [isReportsAndIndicatorsSubMenuOpen, setReportsAndIndicatorsSubMenuOpen] = useState(() => getInitialState('reportsAndIndicators', false));
@@ -72,6 +87,13 @@ function SideBar() {
         const newState = !isAccountsSubMenuOpen;
         setAccountsSubMenuOpen(newState);
         localStorage.setItem('accounts', JSON.stringify(newState));
+    };
+
+    // SUBMENU DE NOMINA ELECTRONICA
+    const toggleElectronicPayrollSubMenuOpen = () => {
+        const newState = !isElectronicPayrollSubMenuOpen;
+        setElectronicPayrollSubMenuOpen(newState);
+        localStorage.setItem('electronicPayroll', JSON.stringify(newState));
     };
 
     // SUBMENU DE CRM CLIENTES
@@ -112,19 +134,27 @@ function SideBar() {
             setShowInventoriesClick(prev => !prev);
         }
     };
-
+    
     // SUBMENU LATERAL DE CUENTAS
     const [showAccountsClick, setShowAccountsClick] = useState<boolean>(false);
     const handleAccountsClick = () => {
-        if (!menuVisible && !isBranchesSubMenuOpen) {       // Solo si la SideBar está compacta
+        if (!menuVisible && !isAccountsSubMenuOpen) {       // Solo si la SideBar está compacta
             setShowAccountsClick(prev => !prev);            // Alternar la visibilidad del div
+        }
+    };
+
+    // SUBMENU LATERAL DE NOMINA ELECTRONICA
+    const [showElectronicPayrollClick, setShowElectronicPayrollClick] = useState<boolean>(false);
+    const handleElectronicPayrollClick = () => {
+        if (!menuVisible && !isElectronicPayrollSubMenuOpen) {       // Solo si la SideBar está compacta
+            setShowElectronicPayrollClick(prev => !prev);            // Alternar la visibilidad del div
         }
     };
     
     // SUBMENU LATERAL DE CRM CLIENTS
     const [showCrmClientsClick, setShowCrmClientsClick] = useState<boolean>(false);
     const handleCrmClientsClick = () => {
-        if (!menuVisible && !isBranchesSubMenuOpen) {       // Solo si la SideBar está compacta
+        if (!menuVisible && !isCrmClientsSubMenuOpen) {       // Solo si la SideBar está compacta
             setShowCrmClientsClick(prev => !prev);          // Alternar la visibilidad del div
         }
     };
@@ -132,7 +162,7 @@ function SideBar() {
     // SUBMENU LATERAL DE CRM SUPPLIERS
     const [showCrmSuppliersClick, setShowCrmSuppliersClick] = useState<boolean>(false);
     const handleCrmSuppliersClick = () => {
-        if (!menuVisible && !isBranchesSubMenuOpen) {       // Solo si la SideBar está compacta
+        if (!menuVisible && !isCrmSuppliersSubMenuOpen) {       // Solo si la SideBar está compacta
             setShowCrmSuppliersClick(prev => !prev);        // Alternar la visibilidad del div
         }
     };
@@ -140,7 +170,7 @@ function SideBar() {
     // SUBMENU LATERAL DE INDICATORS
     const [showReportsIndicatorsClick, setShowReportsIndicatorsClick] = useState<boolean>(false);
     const handleReportsIndicatorsClick = () => {
-        if (!menuVisible && !isBranchesSubMenuOpen) {       // Solo si la SideBar está compacta
+        if (!menuVisible && !isReportsAndIndicatorsSubMenuOpen) {       // Solo si la SideBar está compacta
             setShowReportsIndicatorsClick(prev => !prev);   // Alternar la visibilidad del div
         }
     };
@@ -150,6 +180,7 @@ function SideBar() {
     const branchesMenuRef = useRef<HTMLDivElement>(null);
     const inventoriesMenuRef = useRef<HTMLDivElement>(null);
     const accountsMenuRef = useRef<HTMLDivElement>(null);
+    const electronicPayrollMenuRef = useRef<HTMLDivElement>(null);
     const crmClientsMenuRef = useRef<HTMLDivElement>(null);
     const crmSuppliersMenuRef = useRef<HTMLDivElement>(null);
     const reportsAndIndicatorsMenuRef = useRef<HTMLDivElement>(null);
@@ -159,6 +190,7 @@ function SideBar() {
             if (branchesMenuRef.current && !branchesMenuRef.current.contains(event.target as Node)) setShowBranchClick(false);
             if (inventoriesMenuRef.current && !inventoriesMenuRef.current.contains(event.target as Node)) setShowInventoriesClick(false);
             if (accountsMenuRef.current && !accountsMenuRef.current.contains(event.target as Node)) setShowAccountsClick(false);
+            if (electronicPayrollMenuRef.current && !electronicPayrollMenuRef.current.contains(event.target as Node)) setShowElectronicPayrollClick(false);
             if (crmClientsMenuRef.current && !crmClientsMenuRef.current.contains(event.target as Node)) setShowCrmClientsClick(false);
             if (crmSuppliersMenuRef.current && !crmSuppliersMenuRef.current.contains(event.target as Node)) setShowCrmSuppliersClick(false);
             if (reportsAndIndicatorsMenuRef.current && !reportsAndIndicatorsMenuRef.current.contains(event.target as Node)) setShowReportsIndicatorsClick(false);
@@ -296,29 +328,64 @@ function SideBar() {
                 </div>
                 {isAccountsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link
-                            to='/accounts/see-records'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/see-records' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/accounts/see-records' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/see-records' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Ver registros
                         </Link>
-                        <Link
-                            to='/accounts/create-incomes'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-incomes' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/accounts/create-incomes' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-incomes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Crea Ingresos y CXC
                         </Link>
-                        <Link
-                            to='/accounts/create-expenses'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-expenses' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/accounts/create-expenses' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-expenses' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Crea Gastos y CXP
                         </Link>
-                        <Link
-                            to='/accounts/consult-pending-approval'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/consult-pending-approval' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/accounts/consult-pending-approval' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/consult-pending-approval' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Transacciones pendientes de aprobación
+                        </Link>
+                    </div>
+                )}
+
+                {/* NOMINA ELECTRONICA */}
+                <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={electronicPayrollMenuRef}>
+                    <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
+                        <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
+                            <BsCashCoin className={`${showElectronicPayrollClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleElectronicPayrollClick}/>
+                        </div>
+                        {menuVisible &&
+                            <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleElectronicPayrollSubMenuOpen} >Nomina electrónica {isElectronicPayrollSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
+                        }
+                    </div>
+
+                    {showElectronicPayrollClick && (
+                        <div className={`${styles.container__Sub_Menu_Compact} pt-2 pb-2 px-3 d-flex flex-column position-absolute`}>
+                            <div className={`${styles.indicator} position-absolute`}></div>
+                            <h6 className={`${styles.title__Sub_Menu_Compact} m-0`}>Nomina electrónica</h6>
+                            <Link to='/electronic-payroll/consult-collaborators' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta tus colaboradores</Link>
+                            <Link to='/electronic-payroll/create-collaborators' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea tus colaboradores</Link>
+                            <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta tus pagos de nómina</Link>
+                            <Link to='/electronic-payroll/create-payroll-payments' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea tus pagos de nómina</Link>
+                            <Link to='/electronic-payroll/certifications' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Certificados</Link>
+                            <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Liquidación de nómina</Link>
+                        </div>
+                    )}
+                </div>
+                {isElectronicPayrollSubMenuOpen && (
+                    <div className={styles.sub__Menu}>
+                        <Link to='/electronic-payroll/consult-collaborators' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/consult-collaborators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Consulta tus colaboradores
+                        </Link>
+                        <Link to='/electronic-payroll/create-collaborators' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/create-collaborators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Crea tus colaboradores
+                        </Link>
+                        <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/consult-payroll-payments' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Consulta tus pagos de nómina
+                        </Link>
+                        <Link to='/electronic-payroll/create-payroll-payments' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/create-payroll-payments' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Crea tus pagos de nómina
+                        </Link>
+                        <Link to='/electronic-payroll/certifications' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/certifications' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Certificados
+                        </Link>
+                        <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Sub_Menu} ${location.pathname === '/electronic-payroll/payroll-settlement' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Liquidación de nómina
                         </Link>
                     </div>
                 )}
@@ -345,16 +412,10 @@ function SideBar() {
                 </div>
                 {isCrmClientsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link
-                            to='/crm-clients/consult-crm-clients'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/consult-crm-clients' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/crm-clients/consult-crm-clients' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/consult-crm-clients' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Clientes
                         </Link>
-                        <Link
-                            to='/crm-clients/customer-tracking'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/customer-tracking' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/crm-clients/customer-tracking' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/customer-tracking' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Seguimiento
                         </Link>
                     </div>
@@ -382,16 +443,10 @@ function SideBar() {
                 </div>
                 {isCrmSuppliersSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link
-                            to='/crm-suppliers/consult-crm-suppliers'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/consult-crm-suppliers' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/consult-crm-suppliers' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Proveedores
                         </Link>
-                        <Link
-                            to='/crm-suppliers/tracking-your-purchases'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/tracking-your-purchases' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/crm-suppliers/tracking-your-purchases' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/tracking-your-purchases' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Seguimiento de tus compras
                         </Link>
                     </div>
@@ -419,16 +474,10 @@ function SideBar() {
                 </div>
                 {isReportsAndIndicatorsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link
-                            to='/reports-and-indicators/accounts-and-inventory-indicators'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/reports-and-indicators/accounts-and-inventory-indicators' className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Indicadores cuentas e inventarios
                         </Link>
-                        <Link
-                            to='/reports-and-indicators/marketing-indicators'
-                            className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`}
-                        >
+                        <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Indicadores de mercadeo
                         </Link>
                     </div>

@@ -46,6 +46,8 @@ function ConsultMerchandisesPage() {
         }
     }, [token]);
 
+    const branchesArray = Array.isArray(branches) ? branches : [];
+
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
@@ -103,8 +105,6 @@ function ConsultMerchandisesPage() {
         setShowAddInventory(false);
         setShowOff(false);
     }, []);
-
-    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
     const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);

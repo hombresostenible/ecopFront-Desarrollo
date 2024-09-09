@@ -2,13 +2,13 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IUserPlatform } from '../../../types/User/userPlatform.types';
-import { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, patchUserPlatformStart, deleteUserPlatformStart } from './userPlatformSlice';
+import { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, deleteUserPlatformStart } from './userPlatformSlice';
 
-//CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
+//CREAR DE UN USUARIO DE PLATAFORMA
 export const postUserPlatform = (formData: IUserPlatform, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postUserPlatformStart(formData));
-        const response = await axiosInstance.post('/userPlatform', formData, {
+        const response = await axiosInstance.post('/user-platform', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -24,11 +24,11 @@ export const postUserPlatform = (formData: IUserPlatform, token: string) => asyn
     }
 };
 
-//CREAR MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS
+//CREAR MUCHOS USUARIOS DE PLATAFORMA
 export const postManyUsersPlatform = (formData: IUserPlatform[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postManyUsersPlatformStart(formData));
-        const response = await axiosInstance.post('/userPlatform/createMany', formData, {
+        const response = await axiosInstance.post('/user-platform/create-many', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -44,10 +44,10 @@ export const postManyUsersPlatform = (formData: IUserPlatform[], token: string) 
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//OBTIENE TODOS LOS USUARIOS DE PLATAFORMA
 export const getUsersPlatform = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/userPlatform', {
+        const response = await axiosInstance.get('/user-platform', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -63,10 +63,10 @@ export const getUsersPlatform = (token: string) => async (dispatch: AppDispatch)
     }
 };
 
-//OBTIENE UN EQUIPO, HERRAMIENTA O MAQUINA POR ID
-export const getUserPlatformById = (idService: string, token: string) => async (dispatch: AppDispatch) => {
+//OBTIENE UN USUARIO DE PLATAFORMA POR ID
+export const getUserPlatformById = (idUserPlatform: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/userPlatform/${idService}`, {
+        const response = await axiosInstance.get(`/user-platform/${idUserPlatform}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -82,10 +82,10 @@ export const getUserPlatformById = (idService: string, token: string) => async (
     }
 };
 
-//OBTIENE TODOS LOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER POR SEDE
+//OBTIENE TODOS LOS USUARIOS DE PLATAFORMA DEL USER POR SEDE
 export const getUserPlatformsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/userPlatform/usersPlatform-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/user-platform/users-platform-branch/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -101,11 +101,11 @@ export const getUserPlatformsByBranch = (idBranch: string, token: string) => asy
     }
 };
 
-//ACTUALIZA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const putUserPlatform = (idService: string, formData: IUserPlatform, token: string) => async (dispatch: AppDispatch) => {
+//ACTUALIZA UN USUARIO DE PLATAFORMA
+export const putUserPlatform = (token: string, formData: IUserPlatform) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putUserPlatformStart());
-        const response = await axiosInstance.put(`/userPlatform/${idService}`, formData, {
+        const response = await axiosInstance.put(`/user-platform`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -121,11 +121,11 @@ export const putUserPlatform = (idService: string, formData: IUserPlatform, toke
     }
 };
 
-//ACTUALIZA MUCHOS EQUIPOS, HERRAMIENTAS O MAQUINAS DEL USER
+//ACTUALIZA MUCHOS USUARIOS DE PLATAFORMA DEL USER
 export const putManyUserPlatform = (formData: IUserPlatform[], token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(putManyUsersPlatformStart(formData));
-        const response = await axiosInstance.put('/userPlatform/updateMany', formData, {
+        const response = await axiosInstance.put('/user-platform/updateMany', formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -141,31 +141,11 @@ export const putManyUserPlatform = (formData: IUserPlatform[], token: string) =>
     }
 };
 
-//DA DE BAJA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const patchUserPlatform = (idService: string, formData: IUserPlatform, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        dispatch(patchUserPlatformStart());
-        const response = await axiosInstance.patch(`/userPlatform/${idService}`, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(userPlatformData(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 500) {
-            dispatch(errorUserPlatform(error.response?.data.message));
-        } else {
-            dispatch(errorUserPlatform(error.message));
-        }
-    }
-}
-
-//ELIMINA UN EQUIPO, HERRAMIENTA O MAQUINA DEL USER
-export const deleteUserPlatform = (idService: string, token: string) => async (dispatch: AppDispatch) => {
+//ELIMINA UN USUARIO DE PLATAFORMA DEL USER
+export const deleteUserPlatform = (idUserPlatform: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(deleteUserPlatformStart());
-        const response = await axiosInstance.delete(`/userPlatform/${idService}`, {
+        const response = await axiosInstance.delete(`/user-platform/${idUserPlatform}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",

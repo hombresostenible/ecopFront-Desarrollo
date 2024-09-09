@@ -71,6 +71,7 @@ import HomePage from './pages/Platform/PanelUser/01Home/HomePage';
 import ConsultBranchPage from './pages/Platform/PanelUser/02Branch/ConsultBranch/ConsultBranchPage';
 import CreateBranchPage from './pages/Platform/PanelUser/02Branch/CreateBranch/CreateBranchPage';
 // SIDEBAR - INVENTARIOS
+import BranchPage from './pages/Platform/PanelUser/02Branch/BranchPage';
 import InventoriesPage from './pages/Platform/PanelUser/03Inventories/InventoriesPage';
 // SIDEBAR - INVENTARIOS - ASSETS
 import ConsultAssetsPage from './pages/Platform/PanelUser/03Inventories/01InventoryAssets/ConsultAssets/ConsultAssetsPage';
@@ -108,10 +109,12 @@ import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/0
 import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/07Quotes/QuotesPage';
 // SIDEBAR - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
-import PayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/01PayrollPayments/PayrollPaymentsPage';
-import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02Certifications/CertificationsPage';
-import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/03PayrollSettlement/PayrollSettlementPage';
-import EmployeesPage from './pages/Platform/PanelUser/06ElectronicPayroll/04Employees/EmployeesPage';
+import ConsultCollaboratorPage from './pages/Platform/PanelUser/06ElectronicPayroll/01Collaborator/01ConsultCollaborator/ConsultCollaboratorPage';
+import CreateCollaboratorPage from './pages/Platform/PanelUser/06ElectronicPayroll/01Collaborator/02CreateCollaborator/CreateCollaboratorPage';
+import ConsultPayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/01ConsultPayrollPayments/ConsultPayrollPaymentsPage';
+import CreatePayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/02CreatePayrollPayments/CreatePayrollPaymentsPage';
+import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/03Certifications/CertificationsPage';
+import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/04PayrollSettlement/PayrollSettlementPage';
 // SIDEBAR - CRM-CLIENT
 import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/ConsultCrmClients/ConsultCrmClientsPage';
 import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
@@ -217,12 +220,11 @@ function App() {
                         <Route path='/configuration/mail-configuration' element={<MailConfigurationPage />} />
                         <Route path='/configuration/billing-configuration' element={<BillingConfigurationPage />} />
                         <Route path='/configuration/role-information' element={<RoleInformationPage />} />
-
                         {/* SideBar Home */}
                         {/* SideBar Tus Sedes */}
+                        <Route path='/branches' element={<BranchPage />} />
                         <Route path='/branches/consult-branches' element={<ConsultBranchPage />} />
                         <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
-                        
                         {/* SideBar Inventarios */}
                         <Route path='/inventories' element={<InventoriesPage />} />
                         {/* SideBar Inventarios - Assets */}
@@ -241,7 +243,6 @@ function App() {
                         {/* SideBar Inventarios - Services */}
                         <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                         <Route path='/inventories/create-services' element={<CreateServicesPage />} />
-
                         {/* SideBar Cuentas */}
                         <Route path='/accounts' element={<AccountsPage />} />
                         {/* SideBar Cuentas - Ver registros */}
@@ -252,17 +253,14 @@ function App() {
                         <Route path='/accounts/create-expenses' element={<CreateExpensesPage />} />
                         {/* SideBar Cuentas - TX Pendientes de Aprobar */}
                         <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
-
                         {/* SideBar CRM Clientes */}
                         <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
                         <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
                         <Route path='/crm-clients/customer-tracking' element={<CustomerTracking />} />
-
                         {/* SideBar CRM Proveedores */}
                         <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />
                         <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
                         <Route path='/crm-suppliers/tracking-your-purchases' element={<TrackingYourPurchases />} />
-
                         {/* SideBar Facturación y POS */}
                         <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
                         <Route path='/invoicing-and-pos/pos' element={<SellPointOfSalePage />} />
@@ -271,18 +269,18 @@ function App() {
                         <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />} />
                         <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
                         <Route path='/invoicing-and-pos/quotes' element={<QuotesPage />} />
-
                         <Route path='/credit-notes/consult-credit-notes' element={<ConsultCreditNotes />} />
                         <Route path='/credit-notes/create-credit-notes' element={<CreateCreditNotesPage />} />
                         <Route path='/debit-notes/consult-debit-notes' element={<ConsultDebitNotesPage />} />
                         <Route path='/debit-notes/create-debit-notes' element={<CreateDebitNotesPage />} />
                         {/* SideBar Nomina electrónica */}
                         <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
-                        <Route path='/electronic-payroll/payroll-payments' element={<PayrollPaymentsPage />} />
+                        <Route path='/electronic-payroll/consult-collaborators' element={<ConsultCollaboratorPage />} />
+                        <Route path='/electronic-payroll/create-collaborators' element={<CreateCollaboratorPage />} />
+                        <Route path='/electronic-payroll/consult-payroll-payments' element={<ConsultPayrollPaymentsPage />} />
+                        <Route path='/electronic-payroll/create-payroll-payments' element={<CreatePayrollPaymentsPage />} />
                         <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />
                         <Route path='/electronic-payroll/payroll-settlement' element={<PayrollSettlementPage />} />
-                        <Route path='/electronic-payroll/employees' element={<EmployeesPage />} />
-
                         {/* SideBar Sostenibilidad */}
                         <Route path='/sustainability' element={<SustainabilityPage />} />
                         <Route path='/sustainability/environmental-standards-consultation' element={<EnvironmentalStandardsConsultationPage />} />
