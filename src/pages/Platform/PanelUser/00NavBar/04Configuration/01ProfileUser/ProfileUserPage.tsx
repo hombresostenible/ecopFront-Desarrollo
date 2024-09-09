@@ -124,8 +124,7 @@ function ProfileUserPage() {
                 await dispatch(getProfileUser(token));
                 setUserLogo(null);
             } catch (error) {
-                console.error('Error al eliminar la imagen', error);
-                // Aquí puedes mostrar algún mensaje de error si lo deseas
+                throw new Error('Error al eliminar la imagen');
             }
             setMenuVisible(false);
         }
@@ -162,7 +161,6 @@ function ProfileUserPage() {
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getProfileUser(token));
-            // window.location.reload(); // Recargar la página después de subir la imagen
         } catch (error) {
             throw new Error('Error al cargar la imagen');
         }
@@ -177,10 +175,10 @@ function ProfileUserPage() {
                     <div className={`${styles.container__Component} p-4 overflow-y-auto`}>
                         <div className={`${styles.container__Navigation} mb-4 d-flex flex-wrap gap-2`}>
                             <Link to={'/configuration/profile'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/profile' ? styles.active : ''} `}>Perfil</Link>
-                            <Link to={'/configuration/your-current-plan'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/your-current-plan' ? styles.active : ''} `}>Tu plan actual</Link>
+                            {/* <Link to={'/configuration/your-current-plan'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/your-current-plan' ? styles.active : ''} `}>Tu plan actual</Link> */}
                             <Link to={'/configuration/mail-configuration'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/mail-configuration' ? styles.active : ''} `}>Configuración de correo</Link>
-                            <Link to={'/configuration/billing-configuration'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/billing-configuration/' ? styles.active : ''} `}>Configuración de facturación</Link>
-                            <Link to={'/configuration/role-information'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/role-information' ? styles.active : ''} `}>Información de roles</Link>
+                            {/* <Link to={'/configuration/billing-configuration'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/billing-configuration/' ? styles.active : ''} `}>Configuración de facturación</Link> */}
+                            {/* <Link to={'/configuration/role-information'} className={` ${styles.component} d-flex align-items-center justify-content-center text-decoration-none ${location.pathname === '/configuration/role-information' ? styles.active : ''} `}>Información de roles</Link> */}
                         </div>
 
                         <h1 className={`${styles.title} mb-4`}>Tu información de perfil</h1>
@@ -300,6 +298,7 @@ function ProfileUserPage() {
                                         className={`${styles.input} mb-2 p-2 border`}
                                         value={editedUser.corporateName || ''}
                                         onChange={(e) => handleEditField(e, 'corporateName', 'text')}
+                                        placeholder='Nombre comercial de tu empresa'
                                     />
                                 ) : (
                                     <p className={`${styles.input} p-2 text-start border`}>{user?.corporateName ? user?.corporateName : 'No asignado aún'}</p>

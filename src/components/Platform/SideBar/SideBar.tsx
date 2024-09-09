@@ -483,13 +483,13 @@ function SideBar() {
                     </div>
                 )}
 
-                <div className={`${styles.container__Section} d-flex align-items-center`}>
+                <div className={`${styles.container__Section_Logout} d-flex align-items-center`}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <GoSignOut className={`${styles.icon__Section}`} onClick={signout} />
+                            <GoSignOut className={`${styles.icon__Section_Logout} `} onClick={signout} />
                         </div>
                         {menuVisible &&
-                            <div className={`${styles.link__Side_Bar} p-1 text-decoration-none`} onClick={signout}>Cerrar sesión</div>
+                            <div className={`${styles.link__Logout} p-1 text-decoration-none`} onClick={signout}>Cerrar sesión</div>
                         }
                     </div>
                 </div>

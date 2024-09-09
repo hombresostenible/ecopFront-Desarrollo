@@ -61,10 +61,10 @@ import ServiceActivateNewPlansPage from './pages/Platform/PanelUser/00NavBar/02S
 import NotificationsPage from './pages/Platform/PanelUser/00NavBar/03Notifications/NotificationsPage';
 // NAVBAR PLATAFORMA - CONFIGURATION
 import ProfileUserPage from './pages/Platform/PanelUser/00NavBar/04Configuration/01ProfileUser/ProfileUserPage';
-import YourCurrentPlanPage from './pages/Platform/PanelUser/00NavBar/04Configuration/02YourCurrentPlan/YourCurrentPlanPage';
+// import YourCurrentPlanPage from './pages/Platform/PanelUser/00NavBar/04Configuration/02YourCurrentPlan/YourCurrentPlanPage';
 import MailConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/05MailConfiguration/MailConfigurationPage';
-import BillingConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/03BillingConfiguration/BillingConfigurationPage';
-import RoleInformationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/04RoleInformation/RoleInformationPage';
+// import BillingConfigurationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/03BillingConfiguration/BillingConfigurationPage';
+// import RoleInformationPage from './pages/Platform/PanelUser/00NavBar/04Configuration/04RoleInformation/RoleInformationPage';
 // SIDEBAR - HOME
 import HomePage from './pages/Platform/PanelUser/01Home/HomePage';
 // SIDEBAR - TUS SEDES
@@ -216,10 +216,10 @@ function App() {
                         <Route path='/notifications' element={<NotificationsPage />} />
                         {/* Sección NavBar - Configuration */}
                         <Route path='/configuration/profile' element={<ProfileUserPage />} />
-                        <Route path='/configuration/your-current-plan' element={<YourCurrentPlanPage />} />
+                        {/* <Route path='/configuration/your-current-plan' element={<YourCurrentPlanPage />} /> */}
                         <Route path='/configuration/mail-configuration' element={<MailConfigurationPage />} />
-                        <Route path='/configuration/billing-configuration' element={<BillingConfigurationPage />} />
-                        <Route path='/configuration/role-information' element={<RoleInformationPage />} />
+                        {/* <Route path='/configuration/billing-configuration' element={<BillingConfigurationPage />} /> */}
+                        {/* <Route path='/configuration/role-information' element={<RoleInformationPage />} /> */}
                         {/* SideBar Home */}
                         {/* SideBar Tus Sedes */}
                         <Route path='/branches' element={<BranchPage />} />

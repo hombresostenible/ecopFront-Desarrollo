@@ -28,6 +28,9 @@
     height: 35px;
     width: 100%;
 }
+.container__Section:hover {
+    border-left: 3px solid hsl(210, 17%, 98%);
+}
 .active {
     color: #4361ee;
     width: 270px;
@@ -107,4 +110,22 @@
 }
 .link__Sub_Menu_Compact:hover {
     color: #718bd8;
+}
+.container__Section_Logout {
+    height: 35px;
+    width: 100%;
+}
+.container__Section_Logout:hover {
+    .icon__Section_Logout, .link__Logout {
+        color: #fff;
+        opacity: 0.75;
+    }
+}
+.icon__Section_Logout {
+    color: hsl(210, 17%, 98%);
+    font-size: 20px;
+}
+.link__Logout {
+    color: hsl(210, 17%, 98%);
+    width: 100%;
 }
