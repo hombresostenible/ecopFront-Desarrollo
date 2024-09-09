@@ -84,6 +84,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
     };
 
     const cancelEditing = (id: string) => {
+        onCloseModal();
         setEditedRawMaterial({ ...editedRawMaterial, [id]: { ...rawMaterial } });
     };
 

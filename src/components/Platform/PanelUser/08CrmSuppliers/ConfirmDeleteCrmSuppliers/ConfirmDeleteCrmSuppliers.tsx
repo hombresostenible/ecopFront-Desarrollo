@@ -2,6 +2,7 @@
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
 import { deleteCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/actions';
+import styles from './styles.module.css';
 
 interface ConfirmDeleteCRMClientProps {
     token: string;
@@ -26,9 +27,11 @@ function ConfirmDeleteCrmSuppliers({ token, idCrmSupplier, nameClient, onCloseMo
     };
 
     return (
-        <div className='d-flex flex-column align-items-center justify-content-center'>
+        <div className="p-3">
             <p>¿Estas seguro de que quieres eliminar tu proveedor "{nameClient}"?</p>
-            <button className='btn btn-primary' onClick={onDelete}>Aceptar</button>     
+            <div className={` d-flex mt-3`}>
+                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onDelete} >Enviar</button>
+            </div>  
         </div>
     );
 }

@@ -57,7 +57,7 @@ function SendEmailClients({ token, selectedCrmClient, onCloseModal }: SendEmailC
 
             <div className={`${styles.container__Input} mb-2 d-flex align-items-center justify-content-start`}>
                 <label className={`${styles.label} `} htmlFor="email">Cliente</label>
-                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmClient?.name} {selectedCrmClient?.lastName}</p>
+                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmClient?.name ? selectedCrmClient?.name + ' ' + selectedCrmClient?.lastName : selectedCrmClient?.corporateName}</p>
             </div>
     
             <form onSubmit={handleSubmit((data) => {

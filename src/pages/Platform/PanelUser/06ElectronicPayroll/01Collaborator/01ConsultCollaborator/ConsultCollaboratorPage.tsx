@@ -289,7 +289,7 @@ function ConsultCollaboratorPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeUserPlatform} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeUserPlatform} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu colaborador</Modal.Title>
                             </Modal.Header>
@@ -303,7 +303,7 @@ function ConsultCollaboratorPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el colaborador "{nameUserPlatform}"</Modal.Title>
                             </Modal.Header>
@@ -317,7 +317,7 @@ function ConsultCollaboratorPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showUserPlatformModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showUserPlatformModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del colaborador</Modal.Title>
                             </Modal.Header>

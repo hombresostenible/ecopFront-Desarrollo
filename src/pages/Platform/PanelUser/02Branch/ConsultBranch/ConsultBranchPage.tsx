@@ -240,7 +240,7 @@ function ConsultBranchPage() {
                             </table>
                         </div>
 
-                        <Modal show={showBranchModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showBranchModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title>Detalles de la sede</Modal.Title>
                             </Modal.Header>
@@ -254,7 +254,7 @@ function ConsultBranchPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title>Confirmación para eliminar la sede</Modal.Title>
                             </Modal.Header>

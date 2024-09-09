@@ -161,7 +161,7 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalle de los equipos dados de baja</Modal.Title>
                             </Modal.Header>
@@ -388,7 +388,7 @@ function ConsultAssetsPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Activo</Modal.Title>
                             </Modal.Header>
@@ -402,7 +402,7 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el activo "{nameAsset}"</Modal.Title>
                             </Modal.Header>
@@ -416,7 +416,7 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showModalEditAsset} onHide={onCloseModal} size="xl">
+                        <Modal show={showModalEditAsset} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Activo</Modal.Title>
                             </Modal.Header>
@@ -433,7 +433,7 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
                             </Modal.Header>
@@ -448,7 +448,7 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showOff} onHide={() => setShowOff(false)} >
+                        <Modal show={showOff} onHide={() => setShowOff(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para dar de baja a tu activo "{nameAsset}"</Modal.Title>
                             </Modal.Header>

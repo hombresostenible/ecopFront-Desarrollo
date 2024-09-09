@@ -1,103 +1,11 @@
-/*---------------CRMClientsCard---------------*/
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-}
-.button__Delete {
-    font-size: 16px;
-    color: #da2c38;
-    height: 100%;
-    width: 50px;
-    padding: 5px 10px;
-}
-.button__Delete:hover {
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-.button__Edit {
-    font-size: 16px;
-    color: #718bd8;
-    height: 100%;
-    width: 50px;
-    padding: 5px 10px;
-}
-.button__Edit:hover {
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-
-
-/*---------------CreateUsers---------------*/
-.subtitle {
-    color: #f28705;
-    font-size: 40px;
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-.form {
-    padding: 60px 0 0 0;
-}
-.alertSuccess {
-    border: 1px solid rgba(76, 149, 108, 0.7);
-    color: #4c956c;
-    background: rgba(76, 149, 108, 0.4);
-    border-radius: 5px;
-    top: 10px;
-    left: 50px;
-    right: 50px;
-    padding: 5px 10px;
-    z-index: 1;
-}
-.alertDanger {
-    border: 1px solid rgba(230, 57, 70, 0.7);
-    color: #e63946;
-    background: rgba(230, 57, 70, 0.4);
-    border-radius: 5px;
-    top: 10px;
-    left: 50px;
-    right: 50px;
-    padding: 5px 10px;
-    z-index: 1;
-}
-.containerInfoDual {
-    width: 600px;
-}
-.containerInfoA {
-    width: 290px;
-}
-.label {
-    margin-bottom: 5px;
-}
-.containerInputA {
-    width: 290px;
-    border-radius: 3px;
-}
-.inputA {
-    margin: 0 0 16px 0;
-    border-radius: 3px;
-    width: 100%;
-}
-.containerInput {
-    width: 600px;
-    border-radius: 3px;
-}
-.input {
-    margin: 0 0 16px 0;
-    border-radius: 3px;
-    width: 100%;
-}
-.containerInfo {
-    width: 600px;
-}
-.buttonSubmit {
+.button__Submit {
     padding: 7px 25px;
-    border-radius: 4px;
     letter-spacing: 1px;
     font-size: 18px;
     background: #718bd8;
     color: #f8f9fa;
 }
-.buttonSubmit:hover {
+.button__Submit:hover {
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;

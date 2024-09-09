@@ -158,7 +158,7 @@ function ConsultMerchandisesPage() {
                             </div>
                         </div>
 
-                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl">
+                        <Modal show={showConsultOff} onHide={() => setShowConsultOff(false)} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalle de las mercancías dadas de baja</Modal.Title>
                             </Modal.Header>
@@ -229,7 +229,7 @@ function ConsultMerchandisesPage() {
                                             <th className={`${styles.inventory} d-flex align-items-center justify-content-center text-center`}>Inventario</th>
                                         )}
                                         {selectedColumns.includes('Unidad de medida') && (
-                                            <th className={`${styles.purchase__Price_Before_Tax} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</th>
+                                            <th className={`${styles.unit__Measure} d-flex align-items-center justify-content-center text-center`}>Unidad de medida</th>
                                         )}
                                         {selectedColumns.includes('IVA') && (
                                             <th className={`${styles.IVA} d-flex align-items-center justify-content-center text-center`}>IVA</th>
@@ -276,7 +276,7 @@ function ConsultMerchandisesPage() {
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Unidad de medida') && (
-                                                <td className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <td className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.unitMeasure}</span>
                                                 </td>
                                             )}
@@ -358,7 +358,7 @@ function ConsultMerchandisesPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
                             </Modal.Header>
@@ -372,7 +372,7 @@ function ConsultMerchandisesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar la mercancía "{nameMerchadise}"</Modal.Title>
                             </Modal.Header>
@@ -386,7 +386,7 @@ function ConsultMerchandisesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showEditMerchandiseModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showEditMerchandiseModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
                             </Modal.Header>
@@ -403,7 +403,7 @@ function ConsultMerchandisesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg">
+                        <Modal show={showAddInventory} onHide={() => setShowAddInventory(false)} size="lg" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Aumenta tu inventario</Modal.Title>
                             </Modal.Header>
@@ -418,7 +418,7 @@ function ConsultMerchandisesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showOff} onHide={() => setShowOff(false)} >
+                        <Modal show={showOff} onHide={() => setShowOff(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para dar de baja a tu mercancía "{nameMerchadise}"</Modal.Title>
                             </Modal.Header>

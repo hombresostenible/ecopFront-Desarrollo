@@ -65,120 +65,103 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
     };
 
     const cancelEditing = (id: string) => {
+        onCloseModal();
         setEditedService({ ...editedService, [id]: { ...service } });
     };
 
     return (
         <div>
-            <div className={`${styles.containerCard} m-auto d-flex flex-column align-items-center justify-content-center`}>
-                <h1 className={`${styles.title} text-center`}>Edita la información del servicio</h1>
-            </div>
+            <h1 className={`${styles.title} text-center`}>Edita la información del servicio</h1>
 
             <div className="w-100">
                 <h6 className={styles.label}>Nombre de la sede asignada al servicio</h6>
-                <div className={styles.containerInput}>
-                    <select
-                        value={editedService.branchId}
-                        className={`${styles.inputEdit} p-2 border w-100`}
-                        onChange={(e) => handleEditField(e, 'branchId')}
-                        
-                    >
-                        {branches && branches.map((service, index) => (
-                            <option key={index} value={service.id}>
-                                {service.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <select
+                    value={editedService.branchId}
+                    className={`${styles.input} mb-3 p-2 border`}
+                    onChange={(e) => handleEditField(e, 'branchId')}
+                    
+                >
+                    {branches && branches.map((service, index) => (
+                        <option key={index} value={service.id}>
+                            {service.nameBranch}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Nombre del servicio</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedService.nameItem}
-                            onChange={(e) => handleEditField(e, 'nameItem', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedService.nameItem}
+                        onChange={(e) => handleEditField(e, 'nameItem', 'text')}
+                    />
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>Código de barras</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedService.barCode || ''}
-                            onChange={(e) => handleEditField(e, 'barCode', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedService.barCode || ''}
+                        onChange={(e) => handleEditField(e, 'barCode', 'text')}
+                    />
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>Precio de venta</h6>
-                    <div className={styles.containerInput}>
-                        <input
-                            type="text"
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedService.sellingPrice || ''}
-                            onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedService.sellingPrice || ''}
+                        onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
+                    />
                 </div>
                 <div className="w-100">
                     <h6 className={styles.label}>IVA del servicio</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedIVA}
-                            onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
-                        >
-                            <option value={0}>0 %</option>
-                            <option value={5}>5 %</option>
-                            <option value={19}>19 %</option>
-                        </select>
-                    </div>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedIVA}
+                        onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                    >
+                        <option value={0}>0 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={19}>19 %</option>
+                    </select>
                 </div>
             </div>
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
                     <h6 className={styles.label}>¿Tiene descuento?</h6>
-                    <div className={styles.containerInput}>
-                        <select
-                            className={`${styles.inputEdit} p-2 border w-100`}
-                            value={editedIsDiscounted}
-                            onChange={(e) => setEditedIsDiscounted(e.target.value as 'Si' | 'No')}
-                        >
-                            <option value='Si'>Si</option>
-                            <option value='No'>No</option>
-                        </select>
-                    </div>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedIsDiscounted}
+                        onChange={(e) => setEditedIsDiscounted(e.target.value as 'Si' | 'No')}
+                    >
+                        <option value='Si'>Si</option>
+                        <option value='No'>No</option>
+                    </select>
                 </div>
                 {editedIsDiscounted === 'Si' && (
                     <div className="w-100">
                         <h6 className={styles.label}>Porcentage de descuento</h6>
-                        <div className={styles.containerInput}>
-                            <input
-                                type="text"
-                                className={`${styles.inputEdit} p-2 border w-100`}
-                                value={editedService.discountPercentage || ''}
-                                onChange={(e) => handleEditField(e, 'discountPercentage', 'text')}
-                            />
-                        </div>
+                        <input
+                            type="text"
+                            className={`${styles.input} mb-3 p-2 border`}
+                            value={editedService.discountPercentage || ''}
+                            onChange={(e) => handleEditField(e, 'discountPercentage', 'text')}
+                        />
                     </div>
                 )}
-            </div>      
+            </div>
 
-            <div className="w-100">
-                <div className="d-flex align-items-center justify-content-center">
-                    <button className={`${styles.buttonSave} border-0`} onClick={() => handleSaveChanges(editedService)}>Guardar</button>
-                    <button className={`${styles.buttonCancel} border-0`} onClick={() => cancelEditing(service.id)}>Cancelar</button>
-                </div>
+            <div className="d-flex align-items-center justify-content-center">
+                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedService)}>Guardar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(service.id)}>Cancelar</button>
             </div>
         </div>
     );

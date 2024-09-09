@@ -85,6 +85,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     };
 
     const cancelEditing = (id: string) => {
+        onCloseModal();
         setEditedProduct({ ...editedProduct, [id]: { ...product } });
     };
 

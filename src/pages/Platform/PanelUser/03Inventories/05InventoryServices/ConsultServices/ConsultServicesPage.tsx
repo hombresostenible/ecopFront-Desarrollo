@@ -270,7 +270,7 @@ function ConsultServicesPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeItem} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu mercancía</Modal.Title>
                             </Modal.Header>
@@ -284,7 +284,7 @@ function ConsultServicesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el servicio "{nameRawMaterial}"</Modal.Title>
                             </Modal.Header>
@@ -298,7 +298,7 @@ function ConsultServicesPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showEditServiceModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showEditServiceModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu materia prima</Modal.Title>
                             </Modal.Header>

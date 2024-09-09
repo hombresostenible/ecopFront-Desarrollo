@@ -273,7 +273,7 @@ function ConsultCrmSuppliersPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeCrmSupplier} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeCrmSupplier} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu proveedor</Modal.Title>
                             </Modal.Header>
@@ -286,7 +286,7 @@ function ConsultCrmSuppliersPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el proveedor "{nameCrmSupplier}"</Modal.Title>
                             </Modal.Header>
@@ -300,7 +300,7 @@ function ConsultCrmSuppliersPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showCrmSupplierModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showCrmSupplierModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Proveedor</Modal.Title>
                             </Modal.Header>
@@ -316,7 +316,7 @@ function ConsultCrmSuppliersPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showSendEmailCrmSupplierModal} onHide={onCloseModal} size="lg">
+                        <Modal show={showSendEmailCrmSupplierModal} onHide={onCloseModal} size="lg" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Envía un emails a tu proveedor</Modal.Title>
                             </Modal.Header>

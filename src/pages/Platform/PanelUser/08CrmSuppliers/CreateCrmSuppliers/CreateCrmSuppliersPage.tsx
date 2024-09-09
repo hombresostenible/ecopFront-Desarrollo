@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect, SetStateAction } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
 import CreateManySuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/CreateManySuppliers/CreateManySuppliers.tsx';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
+import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 function CreateCrmSupplierPage() {
@@ -96,8 +97,12 @@ function CreateCrmSupplierPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus proveedores</h1>
 
-                        <div className="mb-4 d-flex">
-                            <button className={`${styles.button__Bulk_Create} m-auto border-0 text-decoration-none`} onClick={() => { setShowCancelModal(true) }} >Crea tus proveedores de forma masiva</button>
+                        <div className={`${styles.container__Navigate_Inventories} mb-4 d-flex align-items-center justify-content-between`}>
+                            <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Consult_Inventory} text-decoration-none`}>Consulta tus proveedores</Link>
+                            <div className={`${styles.link__Head_Navigate} d-flex align-items-center justify-content-between`}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <div className={`${styles.button__Bulk_Create} `} onClick={() => { setShowCancelModal(true) }} >Crea tus proveedores de forma masiva</div>
+                            </div>
                         </div>
 
                         <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} size="xl" backdrop="static" keyboard={false} >
@@ -123,7 +128,7 @@ function CreateCrmSupplierPage() {
                             ))}
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                <h6 className={styles.label}>Tipo de identificación</h6>
+                                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Tipo de identificación</h6>
                                 <div className={styles.container__Input}>
                                     <select
                                         {...register('typeDocumentId', { required: true })}
@@ -143,7 +148,7 @@ function CreateCrmSupplierPage() {
 
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                    <h6 className={styles.label}>Número de identificación</h6>
+                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Número de identificación</h6>
                                     <div className={styles.container__Input}>
                                         <input
                                             type="text"
@@ -161,13 +166,10 @@ function CreateCrmSupplierPage() {
                                     <div className={styles.container__Input}>
                                         <input
                                             type="text"
-                                            {...register('verificationDigit', { required: true })}
+                                            {...register('verificationDigit')}
                                             className={`${styles.input} p-2 border`}
                                             placeholder='¿Cuál es el número de identificación?'
                                         />
-                                        {errors.verificationDigit && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El dígito de verificación es requerido</p>
-                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +177,7 @@ function CreateCrmSupplierPage() {
                             {(typeDocumentId === 'Cedula de Ciudadania' || typeDocumentId === 'Cedula de Extranjeria' || typeDocumentId === 'Pasaporte') && (
                                 <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                     <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                        <h6 className={styles.label}>Nombres de tu proveedor</h6>
+                                        <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombres de tu proveedor</h6>
                                         <div className={styles.container__Input}>
                                             <input
                                                 type="text"
@@ -189,7 +191,7 @@ function CreateCrmSupplierPage() {
                                         </div>
                                     </div>
                                     <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                        <h6 className={styles.label}>Apellidos de tu proveedor</h6>
+                                        <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Apellidos de tu proveedor</h6>
                                         <div className={styles.container__Input}>
                                             <input
                                                 type="text"
@@ -207,7 +209,7 @@ function CreateCrmSupplierPage() {
 
                             {typeDocumentId === 'NIT' && (
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                    <h6 className={styles.label}>Nombre de la empresa</h6>
+                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombre de la empresa</h6>
                                     <div className={styles.container__Input}>
                                         <input
                                             type="text"
@@ -223,7 +225,7 @@ function CreateCrmSupplierPage() {
                             )}
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                <h6 className={styles.label}>Email</h6>
+                                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Email</h6>
                                 <div className={styles.container__Input}>
                                     <input
                                         type="email"
@@ -238,7 +240,7 @@ function CreateCrmSupplierPage() {
                             </div>
                     
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                <h6 className={styles.label}>Celular o teléfono fijo</h6>
+                                <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono fijo</h6>
                                 <div className={styles.container__Input}>
                                     <input
                                         type="phone"
@@ -263,13 +265,10 @@ function CreateCrmSupplierPage() {
                                 <div className={styles.container__Input}>
                                     <input
                                         type="text"
-                                        {...register('address', { required: true })}
+                                        {...register('address')}
                                         className={`${styles.input} p-2 border`}
                                         placeholder='¿Cuál es la dirección?'
                                     />
-                                    {errors.address && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección de tu proveedor es requerida</p>
-                                    )}
                                 </div>
                             </div>
 

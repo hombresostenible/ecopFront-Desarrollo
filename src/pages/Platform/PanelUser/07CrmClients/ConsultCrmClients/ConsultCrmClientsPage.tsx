@@ -273,7 +273,7 @@ function ConsultCrmClientsPage() {
                             </table>
                         </div>
 
-                        <Modal show={showSeeCrmClient} onHide={onCloseModal} size="xl">
+                        <Modal show={showSeeCrmClient} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu cliente</Modal.Title>
                             </Modal.Header>
@@ -286,7 +286,7 @@ function ConsultCrmClientsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
+                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el cliente "{nameCrmClient}"</Modal.Title>
                             </Modal.Header>
@@ -300,7 +300,7 @@ function ConsultCrmClientsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showCrmClientModal} onHide={onCloseModal} size="xl">
+                        <Modal show={showCrmClientModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Detalles del Cliente</Modal.Title>
                             </Modal.Header>
@@ -316,7 +316,7 @@ function ConsultCrmClientsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <Modal show={showSendEmailCrmClientModal} onHide={onCloseModal} size="lg">
+                        <Modal show={showSendEmailCrmClientModal} onHide={onCloseModal} size="lg" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
                                 <Modal.Title className='text-primary-emphasis text-start'>Envía un email a tu cliente</Modal.Title>
                             </Modal.Header>

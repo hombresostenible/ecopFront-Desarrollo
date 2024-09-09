@@ -57,7 +57,7 @@ function SendEmailSuppliers({ token, selectedCrmSupplier, onCloseModal }: SendEm
 
             <div className={`${styles.container__Input} mb-2 d-flex align-items-center justify-content-start`}>
                 <label className={`${styles.label} `} htmlFor="email">Provedor</label>
-                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmSupplier?.name} {selectedCrmSupplier?.lastName}</p>
+                <p className={`${styles.input__Client} m-0 p-2`}>{selectedCrmSupplier?.name ? selectedCrmSupplier?.name + ' ' + selectedCrmSupplier?.lastName : selectedCrmSupplier?.corporateName}</p>
             </div>
     
             <form onSubmit={handleSubmit((data) => {
