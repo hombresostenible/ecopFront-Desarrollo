@@ -13,9 +13,11 @@ import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector
 import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import SeeBranch from '../../../../../components/Platform/PanelUser/02Branch/01SeeBranch/SeeBranch.tsx';
 import ConfirmDeleteBranch from '../../../../../components/Platform/PanelUser/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
 import ModalEditBranch from '../../../../../components/Platform/PanelUser/02Branch/ModalEditBranch/ModalEditBranch.tsx';
 import { FaPlus } from "react-icons/fa6";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
@@ -23,47 +25,45 @@ import styles from './styles.module.css';
 function ConsultBranchPage() {
     const token = jsCookie.get('token') || '';
     
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-    const [selectedBranchModal, setSelectedBranchModal] = useState<IBranch | null>(null);
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
         }
     }, [token]);
-
-    const [selectedBranch, setSelectedBranch] = useState<string | undefined>(undefined);
+    
     const [idBranch, setIdBranch] = useState('');
     const [nameBranch, setNameBranch] = useState('');
+    const [selectedBranch, setSelectedBranch] = useState<IBranch>();
+    const [showSeeBranch, setShowSeeBranch] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showBranchModal, setShowBranchModal] = useState(false);
 
-    const branchesToDisplay = Array.isArray(branches) ? branches : [];
+    //MODAL PARA VISUALIZAR INFORMACION DE LA SEDE
+    const handleSeeBranch = useCallback((branch: IBranch) => {
+        setSelectedBranch(branch);
+        setShowSeeBranch(true);
+    }, []);
 
-    const filteredBranches = selectedBranch
-        ? branchesToDisplay.filter(branch => branch.id === selectedBranch)
-        : branchesToDisplay;
-
-    const handleDelete = (branch: IBranch) => {
-        setIdBranch(branch.id);
-        setNameBranch(branch.nameBranch || '');
+    //MODAL PARA ELIMINAR UNA SEDE
+    const handleDelete = useCallback((branch: IBranch) => {
+        setSelectedBranch(branch);
         setShowDeleteConfirmation(true);
-    };
+    }, []);
 
-    const handleEdit = (branch: IBranch) => {
-        setIdBranch(branch.id);
-        setSelectedBranch(branch.id);
-        setSelectedBranchModal(branch);
+    //MODAL PARA EDITAR INFORMACION DEL CLIENTE
+    const handleEdit = useCallback((branch: IBranch) => {
+        setSelectedBranch(branch);
         setShowBranchModal(true);
-    };
+    }, []);
 
     const onCloseModal = useCallback(() => {
+        setShowSeeBranch(false);
         setShowDeleteConfirmation(false);
         setShowBranchModal(false);
-        setSelectedBranch(undefined);
-        setSelectedBranchModal(null);
     }, []);
 
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
@@ -104,51 +104,37 @@ function ConsultBranchPage() {
             <NavBar />
             <div className='d-flex'>
                 <SideBar />
+
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>
 
-                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
-                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
-                                <h3 className={`${styles.title__Branch} m-0`}>Filtra tu sede</h3>
-                                <select
-                                    value={selectedBranch || ''}
-                                    className="mx-2 p-1 border rounded"
-                                    onChange={(e) => setSelectedBranch(e.target.value || undefined)}
-                                >
-                                    <option value=''>Todas</option>
-                                    {branchesToDisplay.map((branch) => (
-                                        <option key={branch.id} value={branch.id}>
-                                            {branch.nameBranch}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
-                                <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
-                                {menuColumnSelectorVisible && (
-                                    <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
-                                        <ColumnSelector
-                                            selectedColumns={selectedColumns}
-                                            onChange={handleColumnChange}
-                                            minSelectedColumns={3}
-                                            availableColumns={[
-                                                'Departamento',
-                                                'Ciudad',
-                                                'Dirección',
-                                                'Email',
-                                                'Teléfono',
-                                            ]}
-                                        />
-                                    </div>
-                                )}
+                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                            <div className="d-flex"></div>
+                            <div className={styles.link__Head_Navigate}>
+                                <FaPlus className={`${styles.icon__Plus} `}/>
+                                <Link to='/branches/create-branches' className={`${styles.link} text-decoration-none`}>Crea tus sedes</Link>
                             </div>
                         </div>
 
-                        <div className={styles.link__Head_Navigate}>
-                            <FaPlus className={`${styles.icon__Plus} `}/>
-                            <Link to='/branches/create-branches' className={`${styles.link} text-decoration-none`}>Registro de sedes</Link>
+                        <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                            <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
+                            {menuColumnSelectorVisible && (
+                                <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                                    <ColumnSelector
+                                        selectedColumns={selectedColumns}
+                                        onChange={handleColumnChange}
+                                        minSelectedColumns={3}
+                                        availableColumns={[
+                                            'Departamento',
+                                            'Ciudad',
+                                            'Dirección',
+                                            'Email',
+                                            'Teléfono',
+                                        ]}
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
@@ -176,8 +162,8 @@ function ConsultBranchPage() {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(filteredBranches) && filteredBranches.length > 0 ? (
-                                        filteredBranches.map((branch) => (
+                                    {Array.isArray(branches) && branches.length > 0 ? (
+                                        branches.map((branch) => (
                                         <tr key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <td className={`${styles.branch} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
@@ -210,9 +196,21 @@ function ConsultBranchPage() {
                                             <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <MdOutlineRemoveRedEye
+                                                            className={`${styles.button__Edit} `}
+                                                            onClick={() => {
+                                                                setIdBranch(branch.id);
+                                                                setNameBranch(branch.nameBranch);
+                                                                handleSeeBranch(branch);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <RiDeleteBin6Line
                                                             className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
                                                             onClick={() => {
+                                                                setIdBranch(branch.id);
+                                                                setNameBranch(branch.nameBranch);
                                                                 handleDelete(branch);
                                                             }}
                                                         />
@@ -221,6 +219,7 @@ function ConsultBranchPage() {
                                                         <BsPencil
                                                             className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
                                                             onClick={() => {
+                                                                setIdBranch(branch.id);
                                                                 handleEdit(branch)
                                                             }}
                                                         />
@@ -240,17 +239,16 @@ function ConsultBranchPage() {
                             </table>
                         </div>
 
-                        <Modal show={showBranchModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
+                        <Modal show={showSeeBranch} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
                             <Modal.Header closeButton>
-                                <Modal.Title>Detalles de la sede</Modal.Title>
+                                <Modal.Title className='text-primary-emphasis text-start'>Detalles de tu sede</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {selectedBranchModal && <ModalEditBranch
-                                    idBranch={idBranch}
-                                    branch={selectedBranchModal}
-                                    token={token}
-                                    onCloseModal={onCloseModal}
-                                />}
+                                {selectedBranch &&
+                                    <SeeBranch
+                                        selectedBranch={selectedBranch}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
 
@@ -264,6 +262,22 @@ function ConsultBranchPage() {
                                     nameBranch={nameBranch}
                                     onCloseModal={onCloseModal}
                                 />
+                            </Modal.Body>
+                        </Modal>
+
+                        <Modal show={showBranchModal} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Detalles de la sede</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {selectedBranch &&
+                                    <ModalEditBranch
+                                        token={token}
+                                        idBranch={idBranch}
+                                        branch={selectedBranch}
+                                        onCloseModal={onCloseModal}
+                                    />
+                                }
                             </Modal.Body>
                         </Modal>
                     </div>

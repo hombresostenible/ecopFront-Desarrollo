@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
@@ -10,38 +9,33 @@ import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenA
 import styles from './styles.module.css';
 
 interface ModalEditBranchProps {
-    idBranch: string;
-    branch: IBranch | undefined;
     token: string;
+    idBranch: string;
+    branch: IBranch;
     onCloseModal: () => void;
 }
 
 function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBranchProps) {
     const dispatch: AppDispatch = useDispatch();
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedBranch, setEditedBranch] = useState<IBranch | null>(null);
-    const [editedTypeDocumentIdManager, setEditedTypeDocumentIdManager] = useState<string>(branch?.typeDocumentIdManager || 'Cedula de Ciudadania');
-    const [selectedDepartment, setSelectedDepartment] = useState('');
-    const [selectedCity, setSelectedCity] = useState(''); 
-    const [selectedCodeDane, setSelectedCodeDane] = useState('');
-    const [selectedSubregionCodeDane, setSelectedSubregionCodeDane] = useState('');
+    const [editedBranch, setEditedBranch] = useState<IBranch>({ ...branch });
+    const [editedTypeDocumentIdManager, setEditedTypeDocumentIdManager] = useState<string>(branch.typeDocumentIdManager || 'Cedula de Ciudadania');
+
+    const [selectedDepartment, setSelectedDepartment] = useState(branch.department);
+    const [selectedCity, setSelectedCity] = useState(branch.city); 
+    const [selectedCodeDane, setSelectedCodeDane] = useState(branch.codeDane);
+    const [selectedSubregionCodeDane, setSelectedSubregionCodeDane] = useState(branch.subregionCodeDane);
     const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);
+
     const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
-        setSelectedDepartment(department);
+        // Asegurar que el valor de department es un valor válido de la lista o undefined
+        const validDepartment = department as 'Bogota D.C.' | 'Amazonas' | 'Antioquia' | 'Arauca' | 'Atlantico' | 'Bolivar' | 'Boyaca' | 'Caldas' | 'Caqueta' | 'Casanare' | 'Cauca' | 'Cesar' | 'Choco' | 'Cordoba' | 'Cundinamarca' | 'Guainia' | 'Guaviare' | 'Huila' | 'La Guajira' | 'Magdalena' | 'Meta' | 'Nariño' | 'Norte de Santander' | 'Putumayo' | 'Quindio' | 'Risaralda' | 'San Andres y Providencia' | 'Santander' | 'Sucre' | 'Tolima' | 'Valle del Cauca' | 'Vaupes' | 'Vichada';
+    
+        setSelectedDepartment(validDepartment);
         setSelectedCity(city);
         setSelectedCodeDane(codeDane);
         setSelectedSubregionCodeDane(subregionCodeDane);
     };
-
-    useEffect(() => {
-        if (branch) {
-            setEditedBranch({ ...branch });
-            setEditedTypeDocumentIdManager(branch.typeDocumentIdManager || 'Cedula de Ciudadania');
-            setSelectedDepartment(branch.department);
-            setSelectedCity(branch.city);
-        }
-    }, [branch]);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -54,33 +48,34 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
                 ...prevEdited!,
                 [field]: dataType === 'number' ? parseFloat(newValue) : newValue,
             }));
+        } else {
+            setEditedBranch((prevEdited) => ({
+                ...prevEdited,
+                [field]: newValue,
+            }));
         }
     };
 
-    const handleSaveChanges = async () => {
-        if (editedBranch) {
-            try {
-                editedBranch.typeDocumentIdManager = editedTypeDocumentIdManager as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte';
-                editedBranch.department = selectedDepartment as IBranch['department'];
-                editedBranch.city = selectedCity;
-                editedBranch.codeDane = selectedCodeDane;
-                editedBranch.subregionCodeDane = selectedSubregionCodeDane;
-                dispatch(putBranch(idBranch, editedBranch, token));
-                // Simulamos un delay de la API
-                await new Promise(resolve => setTimeout(resolve, 500));
-                setResetDepartmenAndCity(true);
-                dispatch(getBranches(token));
-                setIsEditing(false);
-                onCloseModal();
-            } catch (error) {
-                throw new Error('Error al guardar cambios');
-            }
+    const handleSaveChanges = async (formData: IBranch) => {
+        try {
+            formData.typeDocumentIdManager = editedTypeDocumentIdManager as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte';
+            formData.department = selectedDepartment;
+            formData.city = selectedCity;
+            formData.codeDane = selectedCodeDane;
+            formData.subregionCodeDane = selectedSubregionCodeDane;
+
+            await dispatch(putBranch(idBranch, formData, token));
+            dispatch(getBranches(token));
+            setResetDepartmenAndCity(true);
+            onCloseModal();
+        } catch (error) {
+            throw new Error('Error al guardar cambios');
         }
     };
 
-    const cancelEditing = () => {
-        setIsEditing(false);
-        setEditedBranch(branch ? { ...branch } : null);
+    const cancelEditing = (id: string) => {
+        onCloseModal();
+        setEditedBranch({ ...editedBranch, [id]: { ...branch } });
     };
 
     return (
@@ -91,160 +86,100 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
                 <div>
                     <div className="w-100">
                         <h6 className={styles.label}>Nombre de la sede</h6>
-                        {isEditing ? (
-                            <input
-                                type="text"
-                                className={`${styles.input} mb-3 p-2 border`}
-                                value={editedBranch.nameBranch}
-                                onChange={(e) => handleEditField(e, 'nameBranch', 'text')}
-                            />
-                        ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{branch?.nameBranch}</p>
-                        )}
+                        <input
+                            type="text"
+                            className={`${styles.input} mb-3 p-2 border`}
+                            value={editedBranch.nameBranch}
+                            onChange={(e) => handleEditField(e, 'nameBranch', 'text')}
+                        />
                     </div>
 
-                    <div className='d-flex gap-3'>
-                        {isEditing ? (
-                            <DepartmenAndCity
-                                onSelect={handleSelectDepartmentAndCity}
-                                reset={resetDepartmenAndCity}
-                                initialDepartment={selectedDepartment}
-                                initialCity={selectedCity}
-                            />
-                        ) : (
-                            <div className='d-flex gap-3 w-100'>
-                                <div className="w-100">
-                                    <h6 className={styles.label}>Departamento</h6>
-                                    <p className={`${styles.input} p-2 text-start border`}>{branch?.department}</p>
-                                </div>
-                                <div className="w-100">
-                                    <h6 className={styles.label}>Ciudad</h6>
-                                    <p className={`${styles.input} p-2 text-start border`}>{branch?.city}</p>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    <DepartmenAndCity
+                        onSelect={handleSelectDepartmentAndCity}
+                        reset={resetDepartmenAndCity}
+                        initialDepartment={selectedDepartment}
+                        initialCity={selectedCity}
+                    />
 
                     <div className="w-100">
                         <h6 className={styles.label}>Dirección de la sede</h6>
-                        {isEditing ? (
-                            <input
-                                type="text"
-                                className={`${styles.input} mb-3 p-2 border`}
-                                value={editedBranch.addressBranch}
-                                onChange={(e) => handleEditField(e, 'addressBranch', 'text')}
-                            />
-                        ) : (
-                            <p className={`${styles.input} p-2 text-start border`}>{branch?.addressBranch}</p>
-                        )}
+                        <input
+                            type="text"
+                            className={`${styles.input} mb-3 p-2 border`}
+                            value={editedBranch.addressBranch}
+                            onChange={(e) => handleEditField(e, 'addressBranch', 'text')}
+                        />
                     </div>
 
                     <div className='d-flex gap-3'>
                         <div className="w-100">
                             <h6 className={styles.label}>Email de la sede</h6>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    value={editedBranch.contactEmailBranch}
-                                    onChange={(e) => handleEditField(e, 'contactEmailBranch', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.contactEmailBranch}</p>
-                            )}
+                            <input
+                                type="text"
+                                className={`${styles.input} mb-3 p-2 border`}
+                                value={editedBranch.contactEmailBranch}
+                                onChange={(e) => handleEditField(e, 'contactEmailBranch', 'text')}
+                            />
                         </div>
                         <div className="w-100">
                             <h6 className={styles.label}>Teléfono de la sede</h6>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    value={editedBranch.contactPhoneBranch}
-                                    onChange={(e) => handleEditField(e, 'contactPhoneBranch', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.contactPhoneBranch}</p>
-                            )}
+                            <input
+                                type="text"
+                                className={`${styles.input} mb-3 p-2 border`}
+                                value={editedBranch.contactPhoneBranch}
+                                onChange={(e) => handleEditField(e, 'contactPhoneBranch', 'text')}
+                            />
                         </div>
                     </div>
 
                     <div className='d-flex gap-3'>
                         <div className="w-100">
                             <h6 className={styles.label}>Nombres del líder de la sede</h6>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    value={editedBranch.nameManagerBranch}
-                                    onChange={(e) => handleEditField(e, 'nameManagerBranch', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.nameManagerBranch}</p>
-                            )}
+                            <input
+                                type="text"
+                                className={`${styles.input} mb-3 p-2 border`}
+                                value={editedBranch.nameManagerBranch}
+                                onChange={(e) => handleEditField(e, 'nameManagerBranch', 'text')}
+                            />
                         </div>
                         <div className="w-100">
                             <h6 className={styles.label}>Apellidos del líder de la sede</h6>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    value={editedBranch.lastNameManagerBranch}
-                                    onChange={(e) => handleEditField(e, 'lastNameManagerBranch', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.lastNameManagerBranch}</p>
-                            )}
+                            <input
+                                type="text"
+                                className={`${styles.input} mb-3 p-2 border`}
+                                value={editedBranch.lastNameManagerBranch}
+                                onChange={(e) => handleEditField(e, 'lastNameManagerBranch', 'text')}
+                            />
                         </div>
                     </div>
 
                     <div className='d-flex gap-3'>
                         <div className="w-100">
                             <h6 className={styles.label}>Tipo de identificación</h6>
-                            {isEditing ? (
-                                <select
-                                    value={editedTypeDocumentIdManager}
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    onChange={(e) => setEditedTypeDocumentIdManager(e.target.value as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte')}
-                                >
-                                    <option value='Cedula de Ciudadania'>Cédula de Ciudadanía</option>
-                                    <option value='Cedula de Extranjeria'>Cédula de Extranjería</option>
-                                    <option value='Pasaporte'>Pasaporte</option>
-                                </select>
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.typeDocumentIdManager}</p>
-                            )}
+                            <select
+                                value={editedTypeDocumentIdManager}
+                                className={`${styles.input} mb-3 p-2 border`}
+                                onChange={(e) => setEditedTypeDocumentIdManager(e.target.value as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte')}
+                            >
+                                <option value='Cedula de Ciudadania'>Cédula de Ciudadanía</option>
+                                <option value='Cedula de Extranjeria'>Cédula de Extranjería</option>
+                                <option value='Pasaporte'>Pasaporte</option>
+                            </select>
                         </div>
                         <div className="w-100">
                             <h6 className={styles.label}>Número de identificación del líder de la sede</h6>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.input} mb-3 p-2 border`}
-                                    value={editedBranch.documentIdManager}
-                                    onChange={(e) => handleEditField(e, 'documentIdManager', 'text')}
-                                />
-                            ) : (
-                                <p className={`${styles.input} p-2 text-start border`}>{branch?.documentIdManager}</p>
-                            )}
+                            <input
+                                type="text"
+                                className={`${styles.input} mb-3 p-2 border`}
+                                value={editedBranch.documentIdManager}
+                                onChange={(e) => handleEditField(e, 'documentIdManager', 'text')}
+                            />
                         </div>
                     </div>
 
-                    <div className="w-100">
-                        {isEditing ? (
-                            <div className="d-flex align-items-center justify-content-center">
-                                <button className={`${styles.button__Submit} border-0`} onClick={handleSaveChanges}>Guardar</button>
-                                <button className={`${styles.button__Cancel} border-0`} onClick={cancelEditing}>Cancelar</button>
-                            </div>
-                        ) : (
-                            <div className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                onClick={() => {
-                                    setEditedBranch(branch ? { ...branch } : null);
-                                    setIsEditing(true);
-                                }}
-                            >
-                                <h6 className="m-0">Edita la información de la sede</h6>
-                            </div>
-                        )}
+                    <div className="d-flex align-items-center justify-content-center">
+                        <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
+                        <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
                     </div>
                 </div>
             )}

@@ -11,9 +11,6 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
-.title__Branch {
-    width: 160px;
-}
 .link__Head_Navigate {
     color: #fff;
     padding: 10px 20px;
@@ -30,6 +27,9 @@
 .link {
     color: #fff;
     margin: 0;
+}
+.title__Branch {
+    width: 160px;
 }
 .container__Column_Selector {
     height: 50px;
