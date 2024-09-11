@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
 import jsCookie from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -8,6 +9,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions.ts';
+import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
 import IncomeCash from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCash/IncomeCash';
 import IncomeCredit from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCredit/IncomeCredit';
@@ -16,16 +19,25 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
+interface DecodedToken {
+    userId: string;
+    typeRole: string;
+}
+
 function CreateIncomePage() {
     const token = jsCookie.get("token") || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const user = useSelector((state: RootState) => state.user.user);
+    const usersPlatform = useSelector((state: RootState) => state.usersPlatform.usersPlatform);
     
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
+            dispatch(getProfileUser(token));
+            dispatch(getUsersPlatform(token));
         }
     }, [token]);
 
@@ -37,6 +49,24 @@ function CreateIncomePage() {
         const selectedId = e.target.value;
         setSelectedBranch(selectedId);
     };
+
+    
+    //Decodificar el token para saber quién hace la transacción
+    const [decodeUserIdRegister, setDecodeUserIdRegister] = useState<string>('');
+    const [decodeTypeRoleRegister, setDecodeTypeRoleRegister] = useState<string>('');
+
+    useEffect(() => {
+        if (token) {
+            try {
+                const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
+                setDecodeUserIdRegister(decodedToken.userId);
+                setDecodeTypeRoleRegister(decodedToken.typeRole);
+                console.log('decodeTypeRoleRegister: ', decodeTypeRoleRegister)
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+    }, [token]);
 
     // Estado para manejar el checkbox de fechas automáticas
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
@@ -94,10 +124,10 @@ function CreateIncomePage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Ingresos</h1>
 
-                        <div className="mb-1 p-3 border">
-                            <div className="d-flex justify-content-between">
+                        <div className={`${styles.container__Head} mb-4 d-flex align-items-start justify-content-between`}>
+                            <div className='d-flex flex-column gap-3'>
                                 <select
-                                    className={`${styles.input} p-2 border `}
+                                    className={`${styles.input__Branch} p-2 border `}
                                     value={selectedBranch}
                                     onChange={handleBranchChange}
                                 >
@@ -108,13 +138,15 @@ function CreateIncomePage() {
                                         </option>
                                     ))}
                                 </select>
+                                <div className="p-2 d-flex flex-column border rounded">
+                                    <p className={`${styles.text} mb-0`}>Usuario(a) que registra</p>
+                                    <p className={`${styles.text} mb-0`}>{user?.name} {user?.lastName}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="mb-4 mt-4 d-flex align-items-center justify-content-between position-relative">
-                            <div className="d-flex justify-content-start">
-                                <p className="mb-0 p-2">Selecciona el check si la fecha de registro es la fecha de la transacción</p>
-                                <div className={`${styles.container__Check} `}>
+                            <div className={`${styles.container__Date} d-flex flex-column position-relative gap-2`}>
+                                <div className={`${styles.check__Date} d-flex align-items-center justify-content-between`}>
+                                    <p className="m-0">Selecciona el check si la fecha de registro es la fecha de la transacción</p>
                                     <input
                                         type="checkbox"
                                         onChange={handleCheckDatesRegisterTx}
@@ -122,17 +154,14 @@ function CreateIncomePage() {
                                         defaultChecked={true}
                                     />
                                 </div>
-                            </div>
 
-                            <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
-                                <div className="d-flex flex-column align-items-start justify-content-center">
-                                    <p className="mb-1">Fecha de registro</p>
-                                    <div>
+                                <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-center gap-3`}>
+                                    <div className="d-flex flex-column align-items-start justify-content-center">
+                                        <p className="mb-1">Fecha de registro</p>
                                         <DatePicker
                                             selected={registrationDate || undefined}
                                             onChange={(date) => setRegistrationDate(date || undefined)}
-                                            className={`${styles.input} p-2 border `}
-                                            calendarClassName={styles.custom__Calendar}
+                                            className={`${styles.calendar} p-2 border `}
                                             dayClassName={(date) =>
                                                 date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
                                             }
@@ -143,15 +172,12 @@ function CreateIncomePage() {
                                             disabled={checkDatesRegisterTx}
                                         />
                                     </div>
-                                </div>
-                                <div className="d-flex flex-column align-items-start justify-content-center">
-                                    <p className="mb-1">Fecha de transacción</p>
-                                    <div>
+                                    <div className="d-flex flex-column align-items-start justify-content-center">
+                                        <p className="mb-1">Fecha de transacción</p>
                                         <DatePicker
                                             selected={transactionDate || undefined}
                                             onChange={(date) => setTransactionDate(date || undefined)}
-                                            className={`${styles.input} p-2 border `}
-                                            calendarClassName={styles.custom__Calendar}
+                                            className={`${styles.calendar} p-2 border `}
                                             dayClassName={(date) =>
                                                 date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
                                             }
@@ -166,24 +192,21 @@ function CreateIncomePage() {
                             </div>
                         </div>
 
-                        <div className="mb-4 p-3 d-flex align-items-center justify-content-between border position-relative">
-                            <div className="">
-                                <p className="mb-0 p-2">La venta ¿Es de contado o a crédito?</p>
-                                <div>
-                                    <select
-                                        className={`${styles.input} p-2 border `}
-                                        onChange={handleCreditCashChange}
-                                    >
-                                        <option value='Contado'>Contado</option>
-                                        <option value='Credito'>A cuotas</option>
-                                    </select>
-                                </div>
+                        <div className="mb-4 d-flex align-items-center justify-content-between">
+                            <div>
+                                <p className="m-0">La venta ¿Es de contado o a crédito?</p>
+                                <select
+                                    className={`${styles.input} p-2 border `}
+                                    onChange={handleCreditCashChange}
+                                >
+                                    <option value='Contado'>Contado</option>
+                                    <option value='Credito'>A cuotas</option>
+                                </select>
                             </div>
 
-                            <div className="">
-                                <p className="mb-0 p-2">Tipo de ingreso</p>
-                                <div className="d-flex align-items-center justify-content-center gap-4">
-                                    {}
+                            <div>
+                                <p className="m-0">Tipo de ingreso</p>
+                                <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
                                         className={`${styles.type__Income} ${typeIncome === 'Venta de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
                                         onClick={() => handleTypeIncomeChange('Venta de articulos')}
@@ -206,6 +229,8 @@ function CreateIncomePage() {
                         {creditCashOption === 'Contado' && (
                             <IncomeCash
                                 token={token}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                usersPlatform={usersPlatform}
                                 selectedBranch={selectedBranch}
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}

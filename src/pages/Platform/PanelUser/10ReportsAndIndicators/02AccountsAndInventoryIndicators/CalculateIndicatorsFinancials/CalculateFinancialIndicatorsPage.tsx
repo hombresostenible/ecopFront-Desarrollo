@@ -14,7 +14,7 @@ import InventoryMerchandises from '../../../../../../components/Platform/PanelUs
 import InventoryProduct from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/11InventoryProduct/InventoryProduct';
 import InventoryRawMaterials from '../../../../../../components/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/12InventoryRawMaterials/InventoryRawMaterials';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
-import styles from '../styles.module.css';
+import styles from './styles.module.css';
 
 function CalculateIndicatorsFinancialsPage() {
     const location = useLocation();
@@ -25,61 +25,53 @@ function CalculateIndicatorsFinancialsPage() {
             <NavBar />                
             <div className='d-flex'>
                 <SideBar />
-                <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
-                    <div>
-                        <div className={styles.containerButtonBackTo}>
-                            <Link to="/reports-and-indicators/accounts-and-inventory-indicators" className={styles.buttonBackTo}>
-                                Volver
-                            </Link>
-                        </div>
-                        <div>
-                            <div>
-                                <h1 className={styles.title}>Indicadores Financieros</h1>
-                            </div>
-                            <div className={styles.containerDiv}>
-                                {selectedItems.map((item: string) => {
-                                    let key;
-                                    if (item === 'Ventas') {
-                                        key = 'Ventas';
-                                        return <div key={key} className={styles.divRender}><SalesPerPeriod key={key} /></div>;
-                                    } else if (item === 'Gastos') {
-                                        key = 'Gastos';
-                                        return <div key={key} className={styles.divRender}><ExpensesPerPeriod key={key} /></div>;
-                                    } else if (item === 'Utilidad') {
-                                        key = 'Utilidad';
-                                        return <div key={key} className={styles.divRender}><UtilityPerPeriod key={key} /></div>;
-                                    } else if (item === 'ClienteQueMasCompra') {
-                                        key = 'ClienteQueMasCompra';
-                                        return <div key={key} className={styles.divRender}><BestClientValue key={key} /></div>;
-                                    } else if (item === 'ClienteFrecuente') {
-                                        key = 'ClienteFrecuente';
-                                        return <div key={key} className={styles.divRender}><BestClientQuantity key={key} /></div>;
-                                    } else if (item === 'TicketPromedio') {
-                                        key = 'TicketPromedio';
-                                        return <div key={key} className={styles.divRender}><AverageTicket key={key} /></div>;
-                                    } else if (item === 'CuentasXCobrar') {
-                                        key = 'CuentasXCobrar';
-                                        return <div key={key} className={styles.divRender}><AccountsReceivable key={key} /></div>;
-                                    } else if (item === 'CuentasXPagar') {
-                                        key = 'CuentasXPagar';
-                                        return <div key={key} className={styles.divRender}><AccountsPayable key={key} /></div>;
-                                    } else if (item === 'InventarioProducto') {
-                                        key = 'InventarioProducto';
-                                        return <div key={key} className={styles.divRender}><InventoryProduct key={key} /></div>;
-                                    } else if (item === 'InventarioMateriasPrimas') {
-                                        key = 'InventarioMateriasPrimas';
-                                        return <div key={key} className={styles.divRender}><InventoryRawMaterials key={key} /></div>;
-                                    } else if (item === 'InventarioMercancias') {
-                                        key = 'InventarioMercancias';
-                                        return <div key={key} className={styles.divRender}><InventoryMerchandises key={key} /></div>;
-                                    } else if (item === 'InventarioActivos') {
-                                        key = 'InventarioActivos';
-                                        return <div key={key} className={styles.divRender}><InventoryAssets key={key} /></div>;
-                                    }
-                                    return null;
-                                })}
-                            </div>
-                        </div>
+                <div className={`${styles.container} d-flex flex-column align-items-start justify-content-between`}>
+                    <Link to="/reports-and-indicators/accounts-and-inventory-indicators" className={`${styles.button__Back} m-4 text-decoration-none`}>
+                        Volver
+                    </Link>
+                    <h1 className={`${styles.title} mx-4`}>Indicadores Financieros</h1>
+                    <div className={`${styles.indicator__Calculate} d-flex flex-wrap align-items-start justify-content-center gap-4 overflow-y-auto`}>
+                        {selectedItems.map((item: string) => {
+                            let key;
+                            if (item === 'Ventas') {
+                                key = 'Ventas';
+                                return <div key={key} ><SalesPerPeriod key={key} /></div>;
+                            } else if (item === 'Gastos') {
+                                key = 'Gastos';
+                                return <div key={key} ><ExpensesPerPeriod key={key} /></div>;
+                            } else if (item === 'Utilidad') {
+                                key = 'Utilidad';
+                                return <div key={key} ><UtilityPerPeriod key={key} /></div>;
+                            } else if (item === 'ClienteQueMasCompra') {
+                                key = 'ClienteQueMasCompra';
+                                return <div key={key} ><BestClientValue key={key} /></div>;
+                            } else if (item === 'ClienteFrecuente') {
+                                key = 'ClienteFrecuente';
+                                return <div key={key} ><BestClientQuantity key={key} /></div>;
+                            } else if (item === 'TicketPromedio') {
+                                key = 'TicketPromedio';
+                                return <div key={key} ><AverageTicket key={key} /></div>;
+                            } else if (item === 'CuentasXCobrar') {
+                                key = 'CuentasXCobrar';
+                                return <div key={key} ><AccountsReceivable key={key} /></div>;
+                            } else if (item === 'CuentasXPagar') {
+                                key = 'CuentasXPagar';
+                                return <div key={key} ><AccountsPayable key={key} /></div>;
+                            } else if (item === 'InventarioProducto') {
+                                key = 'InventarioProducto';
+                                return <div key={key} ><InventoryProduct key={key} /></div>;
+                            } else if (item === 'InventarioMateriasPrimas') {
+                                key = 'InventarioMateriasPrimas';
+                                return <div key={key} ><InventoryRawMaterials key={key} /></div>;
+                            } else if (item === 'InventarioMercancias') {
+                                key = 'InventarioMercancias';
+                                return <div key={key} ><InventoryMerchandises key={key} /></div>;
+                            } else if (item === 'InventarioActivos') {
+                                key = 'InventarioActivos';
+                                return <div key={key} ><InventoryAssets key={key} /></div>;
+                            }
+                            return null;
+                        })}
                     </div>
                     <Footer />
                 </div>

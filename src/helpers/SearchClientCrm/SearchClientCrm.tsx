@@ -123,7 +123,7 @@ function SearchClientCrm({ token, onClientSelect, onDataClientSelect }: SearchCl
 
             <Modal show={showCancelModalCreateClient} onHide={onCloseCreateClientModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Crea tu cliente</Modal.Title>
+                    <Modal.Title className='text-primary-emphasis text-start'>Crea tu cliente</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <CreateClient

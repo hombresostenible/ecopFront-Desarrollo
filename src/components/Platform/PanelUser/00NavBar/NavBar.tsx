@@ -17,9 +17,9 @@ import styles from './styles.module.css';
 
 function NavBar() {
     const token = jsCookie.get("token");
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    // Estado de Redux
     const user = useSelector((state: RootState) => state.user.user);
 
     useEffect(() => {

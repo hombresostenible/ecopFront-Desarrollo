@@ -52,7 +52,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 nameItem: item.nameItem,
                 id: item.id,
                 type: item.type as 'Asset' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
-                IVA: Number(item.IVA),
+                IVA: item.IVA,
                 sellingPrice: item.sellingPrice,
                 quantity: 1,
                 subTotalValue: item.sellingPrice * 1,
@@ -243,7 +243,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                     <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
-                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
                                     <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
                                     <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                     <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
@@ -269,7 +269,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                             </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA} %</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
                                             </div>
                                             <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>

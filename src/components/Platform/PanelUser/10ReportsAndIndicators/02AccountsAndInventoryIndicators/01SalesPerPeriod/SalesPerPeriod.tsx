@@ -213,7 +213,7 @@ function SalesPerPeriod() {
     }, [originalData, getBranchName]);
 
     return (
-        <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
+        <div className={`${styles.container} chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} p-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Ventas del período</h2>

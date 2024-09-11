@@ -2,7 +2,7 @@ export interface IAccountsBookItems {
     nameItem: string;
     id: string;
     type: 'Asset' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service';
-    IVA: number;
+    IVA: string;
     sellingPrice: number;
     purchasePrice?: number;
     quantity: number;

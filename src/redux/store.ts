@@ -9,7 +9,7 @@ import productReducer from './User/productSlice/productSlice';
 import rawMaterialReducer from './User/rawMaterialSlice/rawMaterialSlice';
 import serviceReducer from './User/serviceSlice/serviceSlice';
 import userReducer from './User/userSlice/userSlice';
-import userPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
+import usersPlatformReducer from './User/userPlatformSlice/userPlatformSlice';
 import finantialIndicatorsReducer from './User/indicator/finantialIndicators/finantialIndicatorsSlice';
 import itemByBarCodeOrNameReducer from './User/itemBybarCodeOrName/itemByBarCodeOrNameSlice';
 import searchItemsReducer from './User/searchItems/searchItemsSlice';
@@ -29,7 +29,7 @@ const rootReducer = {
     rawMaterial: rawMaterialReducer,
     service: serviceReducer,
     user: userReducer,
-    userPlatform: userPlatformReducer,
+    usersPlatform: usersPlatformReducer,
     finantialIndicators: finantialIndicatorsReducer, // Engloba a todos los slices de indicadores
     itemByBarCodeOrName: itemByBarCodeOrNameReducer,
     searchItems: searchItemsReducer,

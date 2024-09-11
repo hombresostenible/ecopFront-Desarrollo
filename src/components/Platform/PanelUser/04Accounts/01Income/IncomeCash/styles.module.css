@@ -1,57 +1,59 @@
-.barCode {
-    width: 150px;
-    padding: 5px 0;
-}
-.input__BarCode {
+.input__Bar_Code {
     border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
     width: 350px;
 }
-
+.input__Bar_Code:focus {
+    outline-color: #718bd8;
+}
 /* TABLA */
-.container__Table{
+.container__Table {
     width: 100%;
 }
-.container__Head{
+.container__Head {
     background: #e9ecef;
     height: 60px;
     width: 100%;
     font-weight: 600;
 }
+
 /* TITULOS DE LAS COLUMNAS */
-.container__Tr{
+.container__Tr {
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 60px;
 }
-.quantity{
+.quantity {
     height: 60px;
     width: 15%;
     min-width: 150px;
 }
-.description__Item{
+.description__Item {
     height: 60px;
     width: 35%;
     min-width: 350px;
 }
-.iva{
+.iva {
     height: 60px;
     width: 10%;
     min-width: 100px;
 }
-.price__Unit{
+.price__Unit {
     height: 60px;
     width: 20%;
     min-width: 200px;
 }
-.value{
+.value {
     height: 60px;
     width: 15%;
     min-width: 150px;
 }
-.delete{
+.delete {
     height: 60px;
     width: 5%;
     min-width: 50px;
 }
+
 /* CONTENIDO DE LA TABLA */
 .container__Body {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -60,7 +62,7 @@
     min-height: 60px;
     width: 100%;
 }
-.container__Info{
+.container__Info {
     min-height: 60px;
 }
 .container__Quantity {
@@ -104,49 +106,42 @@
     min-height: 60px;
 }
 .container__Selected_Client {
-    width: 650px;
+    width: 400px;
 }
 .error__Selected_Client {
+    z-index: 1;
     border-radius: 5px;
     top: 10px;
     right: -230px;
-    z-index: 1;
     color: white;
     background: #718bd8;
 }
 .triangle {
-    clip-path: polygon(100% 0, 0 50%, 100% 100%);
     z-index: 2;
-    width: 15px;
-    height: 15px;
-    top: 14px;
-    left: -15px;
     color: white;
     background: #718bd8;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    height: 15px;
+    width: 15px;
+    top: 14px;
+    left: -15px;
 }
-
-
-
-
-.input {
+.container__Info_Purchase {
+    width: 470px;
+}
+.text__Purchase {
+    width: 170px;
+}
+.input__Info_Purchase {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    width: 350px;
+    border-radius: 5px;
+    width: 300px;
 }
-.input:focus, .input__Info_Purchase:focus, .input__Change__Amount:focus {
+.input__Info_Purchase:focus, .input__Change__Amount:focus {
     outline-color: #718bd8;
 }
 
 /* RELACION DE PAGO */
-.container__Info_Purchase {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 20px;
-}
-.container__Section_Info_Purchase {
-    width: 500px;
-}
-.text__Purchase {
-    width: 200px;
-}
 .button__Calculate {
     border: 1px solid rgba(0, 0, 0, 0.2);
     width: 200px;
@@ -156,10 +151,6 @@
 }
 .button__Calculate:hover {
     background: #0a31bf;
-}
-.input__Info_Purchase {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    width: 300px;
 }
 .input__Change__Amount {
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -193,6 +184,25 @@
     top: -30px;
     z-index: 1
 }
+.input {
+    border-radius: 5px;
+    width: 350px;
+}
+.input:focus{
+    outline-color: #718bd8;
+}
+.input__Other_Incomes {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 400px;
+}
+.input__Other_Incomes:focus {
+    outline-color: #718bd8;
+}
+.text__Danger {
+    bottom: -40px;
+}
+
 .button__Submit {
     padding: 7px 25px;
     letter-spacing: 1px;

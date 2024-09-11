@@ -1,25 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserPlatform } from '../../../types/User/userPlatform.types';
 
-interface UserPlatformState {
-    userPlatform: IUserPlatform | IUserPlatform[] | null;
+interface UsersPlatformState {
+    usersPlatform: IUserPlatform | IUserPlatform[] | null;
     loading: boolean;
     errorUserPlatform: string[] | null;
 }
 
-const initialState: UserPlatformState = {
-    userPlatform: null,
+const initialState: UsersPlatformState = {
+    usersPlatform: null,
     loading: false,
     errorUserPlatform: null,
 };
 
-const userPlatformSlice = createSlice({
-    name: 'userPlatform',
+const usersPlatformSlice = createSlice({
+    name: 'usersPlatform',
     initialState,
     reducers: {
         userPlatformData: (state, action: PayloadAction<IUserPlatform | null>) => {
             state.loading = false;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
         },
         errorUserPlatform: (state, action: PayloadAction<string[]>) => {
             state.loading = false;
@@ -27,27 +27,27 @@ const userPlatformSlice = createSlice({
         },
         postUserPlatformStart: (state, action: PayloadAction<IUserPlatform  | null>) => {
             state.loading = true;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         postManyUsersPlatformStart: (state, action: PayloadAction<IUserPlatform[]>) => {
             state.loading = true;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         getUsersPlatformStart: (state, action: PayloadAction<IUserPlatform>) => {
             state.loading = true;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         getUserPlatformByIdStart: (state, action: PayloadAction<IUserPlatform>) => {
             state.loading = false;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         getUserPlatformsByBranchStart: (state, action: PayloadAction<IUserPlatform[]>) => {
             state.loading = true;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         putUserPlatformStart: (state) => {
@@ -56,7 +56,7 @@ const userPlatformSlice = createSlice({
         },
         putManyUsersPlatformStart: (state, action: PayloadAction<IUserPlatform[]>) => {
             state.loading = true;
-            state.userPlatform = action.payload;
+            state.usersPlatform = action.payload;
             state.errorUserPlatform = null;
         },
         deleteUserPlatformStart: (state) => {
@@ -66,5 +66,5 @@ const userPlatformSlice = createSlice({
     },
 });
 
-export const { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, deleteUserPlatformStart } = userPlatformSlice.actions;
-export default userPlatformSlice.reducer;
+export const { userPlatformData, errorUserPlatform, postUserPlatformStart, postManyUsersPlatformStart, getUsersPlatformStart, getUserPlatformByIdStart, getUserPlatformsByBranchStart, putUserPlatformStart, putManyUsersPlatformStart, deleteUserPlatformStart } = usersPlatformSlice.actions;
+export default usersPlatformSlice.reducer;
