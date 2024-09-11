@@ -70,7 +70,8 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         }
     }, [itemByBarCode]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
+    const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
+    // const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
@@ -177,20 +178,21 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         setTotalValueOtherIncome(value);
     };
 
-    const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
-    const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newCreditWithInterest = event.target.value as 'No' | 'Si';
-        setCreditWithInterest(newCreditWithInterest);
-        setValue('creditWithInterest', newCreditWithInterest);
-    };
+    // const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
+    // const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const newCreditWithInterest = event.target.value as 'No' | 'Si';
+    //     setCreditWithInterest(newCreditWithInterest);
+    //     setValue('creditWithInterest', newCreditWithInterest);
+    // };
 
-    const [interestRateChange, setInterestRateChange] = useState<number>(0);                    //Setea la tasa de interés de la venta a cuotas
-    const handleInterestRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const interestRate = parseFloat(event.target.value);
-        setInterestRateChange(interestRate);
-    };
+    // const [interestRateChange, setInterestRateChange] = useState<number>(0);                    //Setea la tasa de interés de la venta a cuotas
+    // const handleInterestRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const interestRate = parseFloat(event.target.value);
+    //     setInterestRateChange(interestRate);
+    // };
 
     const [numberOfPayments, setNumberOfPayments] = useState<number>(0);                        //Setea la cantidad de cuotas
+    // console.log('numberOfPayments: ', numberOfPayments)
     const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newUnitValue = parseFloat(event.target.value);
         setNumberOfPayments(newUnitValue);
@@ -201,26 +203,26 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     //Calcula el valor de la cuota con o sin interés
     useEffect(() => {
         if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
-            if (interestRateChange !== 0) {
-                const totalValue = Number(totalValueOtherIncome);
-                const cuotaSinInteres = totalValue / numberOfPayments;                          // Calcula la cuota con interés
-                const tasaInteresMensual = interestRateChange / 100 / 12;                       // Calcula la tasa de interés mensual
-                let saldoRestante = totalValue;                                                 // Calcula el interés acumulado sobre el monto total adeudado
-                let cuotaConInteres = 0;
+            // if (interestRateChange !== 0) {
+            //     const totalValue = Number(totalValueOtherIncome);
+            //     const cuotaSinInteres = totalValue / numberOfPayments;                          // Calcula la cuota con interés
+            //     const tasaInteresMensual = interestRateChange / 100 / 12;                       // Calcula la tasa de interés mensual
+            //     let saldoRestante = totalValue;                                                 // Calcula el interés acumulado sobre el monto total adeudado
+            //     let cuotaConInteres = 0;
         
-                for (let i = 0; i < numberOfPayments; i++) {
-                    const interesMensual = saldoRestante * tasaInteresMensual;
-                    cuotaConInteres = cuotaSinInteres + interesMensual;                         // Calcula la cuota con interés y amortización
-                    saldoRestante -= cuotaSinInteres;                                           // Resta la parte que corresponde a la amortización
-                }
-                setPaymentValue(cuotaConInteres);
-            } else {
+            //     for (let i = 0; i < numberOfPayments; i++) {
+            //         const interesMensual = saldoRestante * tasaInteresMensual;
+            //         cuotaConInteres = cuotaSinInteres + interesMensual;                         // Calcula la cuota con interés y amortización
+            //         saldoRestante -= cuotaSinInteres;                                           // Resta la parte que corresponde a la amortización
+            //     }
+            //     setPaymentValue(cuotaConInteres);
+            // } else {
                 const totalValue = Number(totalValueOtherIncome);
                 const cuotaSinInteres = totalValue / numberOfPayments;                          // Lógica cuando no hay interés (puedes personalizar esto según tus necesidades)
                 setPaymentValue(cuotaSinInteres);
-            }
+            // }
         }
-    }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
+    }, [totalValueOtherIncome, numberOfPayments]);
 
     const onSubmit = async (values: IAccountsBook) => {
         const totalValueOtherIncomeNumber = Number(totalValueOtherIncome);
@@ -562,7 +564,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                             )}
                         </div>
 
-                        <div className="mb-4 position-relative">
+                        {/* <div className="mb-4 position-relative">
                             <p className={`${styles.label} m-0`}>¿Es con interés?</p>
                             <select
                                 {...register('creditWithInterest', { required: true })}
@@ -575,9 +577,9 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                             {errors.creditWithInterest && (
                                 <p className={`${styles.text__Danger} text-danger position-absolute`}>El dato es requerido</p>
                             )}
-                        </div>
+                        </div> */}
 
-                        {creditWithInterest === 'Si' && (
+                        {/* {creditWithInterest === 'Si' && (
                             <div className="mb-4 position-relative">
                                 <p className={`${styles.label} m-0`}>Tasa de interés</p>
                                 <input
@@ -593,7 +595,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>La tasa de interés es requerida</p>
                                 )}
                             </div>
-                        )}
+                        )} */}
 
                         <div className="mb-4 position-relative">
                             <p className={`${styles.label} m-0`}>¿A cuántas cuotas te van a pagar?</p>
