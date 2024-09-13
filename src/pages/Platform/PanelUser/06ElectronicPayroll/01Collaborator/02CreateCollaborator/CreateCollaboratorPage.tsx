@@ -29,7 +29,7 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
     
     // REDUX
     const dispatch: AppDispatch = useDispatch();
-    const errorUserPlatform = useSelector((state: RootState) => state.userPlatform.errorUserPlatform);
+    const errorUserPlatform = useSelector((state: RootState) => state.usersPlatform.errorUserPlatform);
 
     const branches = useSelector((state: RootState) => state.branch.branch);
 

@@ -28,7 +28,7 @@ function ConsultCollaboratorPage() {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const userPlatforms = useSelector((state: RootState) => state.userPlatform.userPlatform);
+    const userPlatforms = useSelector((state: RootState) => state.usersPlatform.usersPlatform);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
