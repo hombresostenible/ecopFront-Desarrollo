@@ -20,12 +20,17 @@ import DepartmenAndCity from '../../../../../../helpers/DepartmenAndCity/Departm
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-function CreateCollaboratorPage() {
+interface CreateCollaboratorPageProps {
+    addNotification: (type: 'success' | 'error', message: string) => void;
+}
+
+function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps) {
     const token = jsCookie.get('token') || '';
     
     // REDUX
     const dispatch: AppDispatch = useDispatch();
     const errorUserPlatform = useSelector((state: RootState) => state.userPlatform.errorUserPlatform);
+
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const navigate = useNavigate();
@@ -74,6 +79,7 @@ function CreateCollaboratorPage() {
             setTimeout(() => {
                 dispatch(getUsersPlatform(token));
                 setFormSubmitted(false);
+                addNotification('success', 'Colaborador creado exitosamente!');
                 setShouldNavigate(true);
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {

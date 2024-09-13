@@ -9,3 +9,12 @@
 ::-webkit-scrollbar-thumb {
     background: #718bd8;
 }
+
+
+/* NOTIFICACIONES */
+.notification__Container {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+    z-index: 1000;
+}

@@ -19,7 +19,11 @@ import Footer from '../../../../../../components/Platform/PanelUser/Footer/Foote
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-function CreateMerchandisesPage() {
+interface CreateMerchandisesPage {
+    addNotification: (type: 'success' | 'error', message: string) => void;
+}
+
+function CreateMerchandisesPage({ addNotification }: CreateMerchandisesPage) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -128,6 +132,7 @@ function CreateMerchandisesPage() {
             setTimeout(() => {
                 dispatch(getMerchandises(token));
                 setFormSubmitted(false);
+                addNotification('success', 'Mercancía creada exitosamente!');
                 if (!errorMerchandise) {
                     setShouldNavigate(true);
                 }

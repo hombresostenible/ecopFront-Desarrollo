@@ -18,7 +18,11 @@ import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenA
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-function CreateCrmSupplierPage() {
+interface CreateCrmSupplierPageProps {
+    addNotification: (type: 'success' | 'error', message: string) => void;
+}
+
+function CreateCrmSupplierPage({ addNotification }: CreateCrmSupplierPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -72,6 +76,7 @@ function CreateCrmSupplierPage() {
                 dispatch(getCrmSuppliers(token));
                 setFormSubmitted(false);
                 setShouldNavigate(true);
+                addNotification('success', 'Proveedor creado exitosamente!');
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);

@@ -23,9 +23,10 @@ interface CreateRawMateralPageProps {
     selectedBranchId?: string;
     onCreateComplete?: () => void;
     onRawMaterialCreated?: (idBranch: string, token: string) => void;
+    addNotification: (type: 'success' | 'error', message: string) => void;
 }
 
-function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMaterialCreated }: CreateRawMateralPageProps) {
+function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMaterialCreated, addNotification }: CreateRawMateralPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
@@ -124,6 +125,7 @@ function CreateRawMateralsPage({ selectedBranchId, onCreateComplete, onRawMateri
             setTimeout(() => {
                 dispatch(getRawMaterials(token));
                 setFormSubmitted(false);
+                addNotification('success', 'Materia prima creada exitosamente!');
                 if (onCreateComplete) {
                     onCreateComplete();
                 } else {

@@ -16,33 +16,35 @@ function AccountsPage() {
                         <h1 className={`${styles.title} mb-4 mt-4`}>Cuentas</h1>
                         <p>Bienvendo al espacio del Libro Diario de cuentas, aquí podrás registrar tus ingresos, gastos, cuentas por cobrar y cuentas por pagar.</p>
                         <div className='m-4 d-flex flex-column'>
-                            <h4 className={`${styles.subtitle} `}>Ingresos</h4>
+                            <h4 className={`${styles.subtitle} `}>Ver todos los registros</h4>
                             <div className={`${styles.container__Link_Section} `}>
-                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus ingresos</Link>
-                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus ingresos</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Ingresos</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >CXC</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Gastos</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >CXP</Link>
                             </div>
                         </div>
                         <div className='m-4 d-flex flex-column'>
-                            <h4 className={`${styles.subtitle} `}>Gastos</h4>
+                            <h4 className={`${styles.subtitle} `}>Crea ingresos y cuentas por cobrar</h4>
                             <div className={`${styles.container__Link_Section} `}>
-                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus gastos</Link>
-                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus gastos</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus gastos y cuentas por cobrar</Link>
+                                {/* <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus gastos</Link> */}
                             </div>
                         </div>
                         <div className='m-4 d-flex flex-column'>
-                            <h4 className={`${styles.subtitle} `}>Cuentas por cobrar</h4>
+                            <h4 className={`${styles.subtitle} `}>Crea gastos y cuentas por pagar</h4>
                             <div className={`${styles.container__Link_Section} `}>
-                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus cuentas por cobrar</Link>
-                                <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus cuentas por cobrar</Link>
+                                <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus cuentas por pagar</Link>
+                                {/* <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus cuentas por cobrar</Link> */}
                             </div>
                         </div>
-                        <div className='m-4 d-flex flex-column'>
+                        {/* <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Cuentas por pagar</h4>
                             <div className={`${styles.container__Link_Section} `}>
                                 <Link to='/inventories/consult-assets' className={`${styles.link__Section} `} >Consulta tus cuentas por pagar</Link>
                                 <Link to='/inventories/create-assets' className={`${styles.link__Section} `} >Crea tus cuentas por pagar</Link>
                             </div>
-                        </div>
+                        </div> */}
                         <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Transacciones pendientes de aprobar</h4>
                             <div className={`${styles.container__Link_Section} `}>

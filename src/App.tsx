@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles.css';
 // GENERALES
 import WhatsApp from './components/WhatsApp/WhatsApp';
 import Telegram from './components/WhatsApp/Telegram';
 import Scroll from "./components/Scroll/Scroll";
+import Notification from './components/Platform/PanelUser/Notifications/Notification';
 // LANDINGPAGE
 import LandingPage from './pages/LandingPage/LandingPage';
 // NAVBAR DE LA LANDINGPAGE
@@ -151,6 +153,16 @@ import ConsultanciesPage from './pages/Platform/PanelUser/12Consultancies/Consul
 import ContactAnAdvisorPage from './pages/Platform/PanelUser/12Consultancies/01ContactAnAdvisor/ContactAnAdvisorPage';
 
 function App() {
+    const [notifications, setNotifications] = useState<{ id: number; type: 'success' | 'delete' | 'error'; message: string }[]>([]);
+
+    const addNotification = (type: 'success' | 'delete' | 'error', message: string) => {
+      const id = Date.now();
+      setNotifications([...notifications, { id, type, message }]);
+  
+      setTimeout(() => {
+        setNotifications((notifications) => notifications.filter(notification => notification.id !== id));
+      }, 5000);
+    };
 
     return (
         <div className="container__General">
@@ -158,6 +170,11 @@ function App() {
                 <WhatsApp />
                 <Telegram />
                 <Scroll />
+                <div className="notification__Container">
+                    {notifications.map(({ id, type, message }) => (
+                        <Notification key={id} type={type} message={message} onClose={() => setNotifications(notifications.filter(notification => notification.id !== id))} />
+                    ))}
+                </div>
                 <Routes>
                     {/* LandingPage */}
                     <Route path='/' element={<LandingPage />} />
@@ -223,26 +240,26 @@ function App() {
                         {/* SideBar Home */}
                         {/* SideBar Tus Sedes */}
                         <Route path='/branches' element={<BranchPage />} />
-                        <Route path='/branches/consult-branches' element={<ConsultBranchPage />} />
-                        <Route path='/branches/create-branches' element={<CreateBranchPage onCreateBranch={function (): void { throw new Error('Function not implemented.'); } } />} />
+                        <Route path='/branches/consult-branches' element={<ConsultBranchPage addNotification={addNotification} />} />
+                        <Route path='/branches/create-branches' element={<CreateBranchPage addNotification={addNotification} />} />
                         {/* SideBar Inventarios */}
                         <Route path='/inventories' element={<InventoriesPage />} />
                         {/* SideBar Inventarios - Assets */}
                         <Route path='/inventories/consult-assets' element={<ConsultAssetsPage />} />
-                        <Route path='/inventories/create-assets' element={<CreateAssetsPage />} />
+                        <Route path='/inventories/create-assets' element={<CreateAssetsPage addNotification={addNotification} />} />
                         {/* SideBar Inventarios - Merchadises */}
                         <Route path='/inventories/consult-merchandises' element={<ConsultMerchandisesPage />} />
-                        <Route path='/inventories/create-merchandises' element={<CreateMerchandisesPage />} />
+                        <Route path='/inventories/create-merchandises' element={<CreateMerchandisesPage addNotification={addNotification}/>} />
                         {/* SideBar Inventarios - Products */}
                         <Route path='/inventories/consult-products' element={<ConsultProductsPage />} />
-                        <Route path='/inventories/create-products' element={<CreateProductsPage selectedBranchId={''} />} />
+                        <Route path='/inventories/create-products' element={<CreateProductsPage selectedBranchId={''} addNotification={addNotification}/>} />
                         <Route path='/inventories/quote-products' element={<QuoteProductsPage />} />
                         {/* SideBar Inventarios - Rawmaterals */}
                         <Route path='/inventories/consult-raw-materals' element={<ConsultRawMateralsPage />} />
-                        <Route path='/inventories/create-raw-materals' element={<CreateRawMateralsPage />} />
+                        <Route path='/inventories/create-raw-materals' element={<CreateRawMateralsPage addNotification={addNotification}/>} />
                         {/* SideBar Inventarios - Services */}
                         <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
-                        <Route path='/inventories/create-services' element={<CreateServicesPage />} />
+                        <Route path='/inventories/create-services' element={<CreateServicesPage addNotification={addNotification}/>} />
                         {/* SideBar Cuentas */}
                         <Route path='/accounts' element={<AccountsPage />} />
                         {/* SideBar Cuentas - Ver registros */}
@@ -255,11 +272,11 @@ function App() {
                         <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                         {/* SideBar CRM Clientes */}
                         <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
-                        <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage />} />
+                        <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage addNotification={addNotification} />} />
                         <Route path='/crm-clients/customer-tracking' element={<CustomerTracking />} />
                         {/* SideBar CRM Proveedores */}
                         <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />
-                        <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage />} />
+                        <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage addNotification={addNotification}/>} />
                         <Route path='/crm-suppliers/tracking-your-purchases' element={<TrackingYourPurchases />} />
                         {/* SideBar Facturación y POS */}
                         <Route path='/invoicing-and-pos' element={<InvoicingAndPosPage />} />
@@ -276,7 +293,7 @@ function App() {
                         {/* SideBar Nomina electrónica */}
                         <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
                         <Route path='/electronic-payroll/consult-collaborators' element={<ConsultCollaboratorPage />} />
-                        <Route path='/electronic-payroll/create-collaborators' element={<CreateCollaboratorPage />} />
+                        <Route path='/electronic-payroll/create-collaborators' element={<CreateCollaboratorPage addNotification={addNotification}/>} />
                         <Route path='/electronic-payroll/consult-payroll-payments' element={<ConsultPayrollPaymentsPage />} />
                         <Route path='/electronic-payroll/create-payroll-payments' element={<CreatePayrollPaymentsPage />} />
                         <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />

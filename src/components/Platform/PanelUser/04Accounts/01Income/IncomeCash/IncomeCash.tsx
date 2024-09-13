@@ -33,11 +33,17 @@ interface IncomeCashProps {
 
 function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch, defaultDates, registrationDate, transactionDate, typeIncome }: IncomeCashProps) {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
 
-    // Estados de Redux
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
+
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+    const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
+    const [messageSelectedClient, setMessageSelectedClient] = useState<string | null>(null);
 
     // BUSCAR Y SETEAR EL ARTICULO POR CODIGO DE BARRAS
     const [barCode, setBarCode] = useState<string>('');
@@ -70,12 +76,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         }
     }, [itemByBarCode]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
-    const [formSubmitted, setFormSubmitted] = useState(false);
-    const [shouldNavigate, setShouldNavigate] = useState(false);
-    const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
-    const [messageSelectedClient, setMessageSelectedClient] = useState<string | null>(null);
-    
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
     const handleItemSelect = (item: any) => {
         const selectedItems: IAccountsBookItems = {
@@ -135,17 +135,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         setPaymentAmount(value);
     };
     
-    // SETEA EL USUARIO VENDEDOR
-    const [userPlatform, setUserPlatform] = useState<IUserPlatform>();
-    const handleUserPlatformChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = event.target.value;
-        const selectedUser = Array.isArray(usersPlatform)
-            ? usersPlatform.find((user) => user.id === selectedId)
-            : null;
-    
-        setUserPlatform(selectedUser || undefined);
-    };
-
     // Estado para almacenar el cambio
     const [changeAmount, setChangeAmount] = useState<number | null>(null);
     // Calcular el cambio y actualizar el estado
@@ -158,7 +147,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
             setChangeAmount(null);
         }
     };
-
 
     // OTROS INGRESOS
     //Setea el poveedor cuando se busca o se crea
@@ -176,7 +164,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
         setTotalValueOtherIncome(value);
     };
-
+    
     const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
     const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newCreditWithInterest = event.target.value as 'No' | 'Si';
@@ -195,7 +183,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
         const newUnitValue = parseFloat(event.target.value);
         setNumberOfPayments(newUnitValue);
     };
-
+    
     //Setea el valor de la cuota
     const [paymentValue, setPaymentValue] = useState<number>(0);
     //Calcula el valor de la cuota con o sin interés
@@ -221,6 +209,17 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
             }
         }
     }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
+
+    // SETEA EL USUARIO VENDEDOR
+    const [userPlatform, setUserPlatform] = useState<IUserPlatform>();
+    const handleUserPlatformChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId = event.target.value;
+        const selectedUser = Array.isArray(usersPlatform)
+            ? usersPlatform.find((user) => user.id === selectedId)
+            : null;
+    
+        setUserPlatform(selectedUser || undefined);
+    };
 
     const onSubmit = async (values: IAccountsBook) => {
         const totalValueOtherIncomeNumber = Number(totalValueOtherIncome);

@@ -10,9 +10,10 @@ interface ConfirmDeleteBranchProps {
     idBranch: string;
     nameBranch: string;
     onCloseModal: () => void;
+    addNotification: (type: 'delete' | 'error', message: string) => void;
 }
 
-function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal }: ConfirmDeleteBranchProps) {
+function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal, addNotification }: ConfirmDeleteBranchProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
 
@@ -22,6 +23,7 @@ function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal }: ConfirmDel
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getBranches(token));
+            addNotification('delete', 'Sede eliminada exitosamente!');
             onCloseModal();
         } catch (error) {
             throw new Error('Error al eliminar la sede');

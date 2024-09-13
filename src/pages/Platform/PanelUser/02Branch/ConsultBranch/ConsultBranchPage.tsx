@@ -22,7 +22,11 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
 
-function ConsultBranchPage() {
+interface ConsultBranchPageProps {
+    addNotification: (type: 'delete' | 'error', message: string) => void;
+}
+
+function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
     const token = jsCookie.get('token') || '';
     
     //REDUX
@@ -104,7 +108,6 @@ function ConsultBranchPage() {
             <NavBar />
             <div className='d-flex'>
                 <SideBar />
-
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>
@@ -261,6 +264,7 @@ function ConsultBranchPage() {
                                     idBranch={idBranch}
                                     nameBranch={nameBranch}
                                     onCloseModal={onCloseModal}
+                                    addNotification={addNotification} 
                                 />
                             </Modal.Body>
                         </Modal>
