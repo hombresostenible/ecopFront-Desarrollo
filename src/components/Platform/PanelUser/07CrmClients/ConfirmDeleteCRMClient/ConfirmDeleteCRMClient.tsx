@@ -1,5 +1,6 @@
 // REDUX
 import { useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 import type { AppDispatch } from '../../../../../redux/store';
 import { deleteCrmClient, getCrmClients } from '../../../../../redux/User/crmClientSlice/actions';
 import styles from './styles.module.css';
@@ -31,7 +32,7 @@ function ConfirmDeleteCRMClient ({ token, idCrmClient, nameClient, onCloseModal 
             <p>¿Estas seguro de que quieres eliminar tu cliente "{nameClient}"?</p>
             <div className={` d-flex mt-3`}>
                 <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onDelete} >Enviar</button>
-            </div>    
+            </div>
         </div>
     );
 }

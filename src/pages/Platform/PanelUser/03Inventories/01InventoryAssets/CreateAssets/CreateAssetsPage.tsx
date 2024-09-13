@@ -23,9 +23,10 @@ interface CreateAssetPageProps {
     selectedBranchId?: string;
     onCreateComplete?: () => void;
     onAssetCreated?: (idBranch: string, token: string) => void;
+    addNotification: (type: 'success' | 'error', message: string) => void;
 }
 
-function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }: CreateAssetPageProps) {
+function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, addNotification }: CreateAssetPageProps) {
     const navigate = useNavigate();
     const token = jsCookie.get('token') || '';
     
@@ -72,6 +73,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated }
             setTimeout(() => {
                 dispatch(getAssets(token));
                 setFormSubmitted(false);
+                addNotification('success', 'Equipo, herramienta o máquina creada exitosamente!');
                 if (onCreateComplete) {
                     onCreateComplete();
                 } else {

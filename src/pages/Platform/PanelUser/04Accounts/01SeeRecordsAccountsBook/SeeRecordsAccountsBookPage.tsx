@@ -152,7 +152,7 @@ function SeeRecordsAccountsBookPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Transacciones aprobadas</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Ver todos los registros</h1>
 
                         <div className='d-flex align-items-center justify-content-between'>
                             <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
@@ -190,6 +190,12 @@ function SeeRecordsAccountsBookPage() {
                         </div>
 
                         <div className={`${styles.container__Column_Selector} mb-3 d-flex align-items-center justify-content-end position-relative`} >
+                            <div>
+                                <div>Ingresos</div>
+                                <div>CXC</div>
+                                <div>Gastos</div>
+                                <div>CXP</div>
+                            </div>
                             <span className={`${styles.span__Menu} p-2`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>

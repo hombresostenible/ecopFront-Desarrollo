@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import 'react-toastify/dist/ReactToastify.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
@@ -18,7 +19,11 @@ import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenA
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-function CreateCrmClientPage() {
+interface CreateClientPageProps {
+    addNotification: (type: 'success' | 'error', message: string) => void;
+}
+
+function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
     const token = jsCookie.get('token') || '';
     
     // REDUX
@@ -71,6 +76,7 @@ function CreateCrmClientPage() {
                 dispatch(getCrmClients(token));
                 setFormSubmitted(false);
                 setShouldNavigate(true);
+                addNotification('success', 'Cliente creado exitosamente!');
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);

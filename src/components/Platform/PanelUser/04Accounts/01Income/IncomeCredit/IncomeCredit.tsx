@@ -45,7 +45,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                 nameItem: item.nameItem,
                 id: item.id,
                 type: item.type as 'Asset' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
-                IVA: Number(item.IVA),
+                IVA: item.IVA,
                 sellingPrice: item.sellingPrice,
                 quantity: 1,
                 subTotalValue: item.sellingPrice * 1,

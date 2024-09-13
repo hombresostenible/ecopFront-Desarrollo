@@ -12,7 +12,6 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 // import { getServicesByBranch } from '../../../../../redux/User/serviceSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
-import { IBranch } from '../../../../../../types/User/branch.types';
 // import { IAssets } from '../../../../../types/User/assets.types';
 // import { IMerchandise } from '../../../../../types/User/merchandise.types';
 // import { IRawMaterial } from '../../../../../types/User/rawMaterial.types';
@@ -22,20 +21,21 @@ import styles from './styles.module.css';
 
 interface IncomeCreditProps {
     token: string;
-    branch: IBranch | null;
+    decodeUserIdRegister: string;
+    selectedBranch: string;
     defaultDates: boolean;
     registrationDate: string | undefined;
     transactionDate: string | undefined;
 }
 
-function CreditExpense({ token, branch, defaultDates, registrationDate, transactionDate }: IncomeCreditProps) {
+function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate }: IncomeCreditProps) {
+    console.log('decodeUserIdRegister: ', decodeUserIdRegister)
     console.log('defaultDates: ', defaultDates)
     console.log('registrationDate: ', registrationDate)
     console.log('transactionDate: ', transactionDate)
+
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-    const selectedBranch = branch?.id;
-    
-    // Estados de Redux
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
 
     // const assets = useSelector((state: RootState) => state.assets.assets);

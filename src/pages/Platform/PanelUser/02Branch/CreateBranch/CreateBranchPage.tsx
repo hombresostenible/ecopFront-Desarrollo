@@ -20,10 +20,10 @@ import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
 interface CreateBranchProps {
-    onCreateBranch : () => void;
+    addNotification: (type: 'success' | 'error', message: string) => void;
 }
 
-function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
+function CreateBranchPage({ addNotification }: CreateBranchProps) {
     const token = jsCookie.get('token') || '';
     const navigate = useNavigate();
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -70,8 +70,8 @@ function CreateBranchPage({ onCreateBranch }: CreateBranchProps) {
                 dispatch(getBranches(token));
                 setFormSubmitted(false);
                 setShouldNavigate(true);
+                addNotification('success', 'Sede creada exitosamente!');
                 setResetDepartmenAndCity(true);
-                onCreateBranch();
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);
                 }, 10); // Se reinicia después de un corto período para asegurarse de que el reset haya tenido efecto

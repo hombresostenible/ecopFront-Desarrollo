@@ -28,9 +28,10 @@ interface CreateProductPageProps {
     selectedBranchId: string;
     onCreateComplete?: () => void;
     onProductCreated?: (idBranch: string, token: string) => void;
+    addNotification: (type: 'success' | 'error', message: string) => void;
 }
 
-function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreated }: CreateProductPageProps) {
+function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreated, addNotification }: CreateProductPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
@@ -336,6 +337,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                 setTimeout(() => {
                     dispatch(getProducts(token));
                     setFormSubmitted(false);
+                    addNotification('success', 'Producto creado exitosamente!');
                     if (onCreateComplete) {
                         onCreateComplete();
                     } else {

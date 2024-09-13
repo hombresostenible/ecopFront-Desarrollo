@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
 import jsCookie from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -8,8 +9,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
-import { IBranch } from '../../../../../../types/User/branch.types';
 import CashExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CashExpense/CashExpense';
 import CreditExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CreditExpense/CreditExpense';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
@@ -17,29 +18,51 @@ import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
 import styles from './styles.module.css';
 
+interface DecodedToken {
+    userId: string;
+    typeRole: string;
+}
+
 function CreateExpensesPage() {
     const token = jsCookie.get("token") || '';
-    const dispatch: AppDispatch = useDispatch();
 
-    // Estados de Redux
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
     const branches = useSelector((state: RootState) => state.branch.branch);
-    
+    const user = useSelector((state: RootState) => state.user.user);
+
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
+            dispatch(getProfileUser(token));
         }
     }, [token]);
+    
+    //Selección de la sede
+    const [selectedBranch, setSelectedBranch] = useState('');
 
-    //Setea la sede seleccionada
-    const [selectedBranch, setSelectedBranch] = useState<IBranch | null>(null);
-
+    // Manejar cambio de la sede
     const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedBranchId = e.target.value;
-        if (Array.isArray(branches)) {
-            const branch = branches.find(branch => branch.id === selectedBranchId) || null;
-            setSelectedBranch(branch);
-        } else setSelectedBranch(null);
+        const selectedId = e.target.value;
+        setSelectedBranch(selectedId);
     };
+
+    //Decodificar el token para saber quién hace la transacción
+    const [decodeUserIdRegister, setDecodeUserIdRegister] = useState<string>('');
+    const [decodeTypeRoleRegister, setDecodeTypeRoleRegister] = useState<string>('');
+
+    useEffect(() => {
+        if (token) {
+            try {
+                const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
+                setDecodeUserIdRegister(decodedToken.userId);
+                setDecodeTypeRoleRegister(decodedToken.typeRole);
+                console.log('decodeTypeRoleRegister: ', decodeTypeRoleRegister)
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+    }, [token]);
 
     // Estado para manejar el checkbox de fechas automáticas
     const [checkDatesRegisterTx, setCheckDatesRegisterTx] = useState(true);
@@ -95,13 +118,13 @@ function CreateExpensesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Gastos</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus gastos y cuentas por pagar</h1>
 
-                        <div className="mb-1 p-3 border">
-                            <div className="d-flex justify-content-between">
+                        <div className={`${styles.container__Head} mb-4 d-flex align-items-start justify-content-between`}>
+                            <div className='d-flex flex-column gap-3'>
                                 <select
-                                    className={`${styles.input} p-2 border `}
-                                    value={selectedBranch ? selectedBranch.id : ''}
+                                    className={`${styles.input__Branch} p-2 border `}
+                                    value={selectedBranch}
                                     onChange={handleBranchChange}
                                 >
                                     <option value=''>Selecciona una Sede</option>
@@ -111,13 +134,15 @@ function CreateExpensesPage() {
                                         </option>
                                     ))}
                                 </select>
+                                <div className="p-2 d-flex flex-column border rounded">
+                                    <p className={`${styles.text} mb-0`}>Usuario(a) que registra</p>
+                                    <p className={`${styles.text} mb-0`}>{user?.name} {user?.lastName}</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="mb-4 mt-4 d-flex align-items-center justify-content-between position-relative">
-                            <div className="d-flex justify-content-start">
-                                <p className="mb-0 p-2">Selecciona el check si la fecha de registro es la fecha de la transacción</p>
-                                <div className={`${styles.container__Check} `}>
+                            <div className={`${styles.container__Date} d-flex flex-column position-relative gap-2`}>
+                                <div className={`${styles.check__Date} d-flex align-items-center justify-content-between`}>
+                                    <p className="m-0">Selecciona el check si la fecha de registro es la fecha de la transacción</p>
                                     <input
                                         type="checkbox"
                                         onChange={handleCheckDatesRegisterTx}
@@ -125,49 +150,47 @@ function CreateExpensesPage() {
                                         defaultChecked={true}
                                     />
                                 </div>
-                            </div>
 
-                            <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-between gap-4`}>
-                                <div className="d-flex flex-column align-items-start justify-content-center">
-                                    <p className="mb-1">Fecha de registro</p>
-                                    <DatePicker
-                                        selected={registrationDate || undefined}
-                                        onChange={(date) => setRegistrationDate(date || undefined)}
-                                        className={`${styles.input} p-2 border `}
-                                        calendarClassName={styles.custom__Calendar}
-                                        dayClassName={(date) =>
-                                            date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
-                                        }
-                                        placeholderText='Fecha de registro'
-                                        showMonthDropdown
-                                        showYearDropdown
-                                        dropdownMode="select"
-                                        disabled={checkDatesRegisterTx}
-                                    />
-                                </div>
-                                <div className="d-flex flex-column align-items-start justify-content-center">
-                                    <p className="mb-1">Fecha de transacción</p>
-                                    <DatePicker
-                                        selected={transactionDate || undefined}
-                                        onChange={(date) => setTransactionDate(date || undefined)}
-                                        className={`${styles.input} p-2 border `}
-                                        calendarClassName={styles.custom__Calendar}
-                                        dayClassName={(date) =>
-                                            date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
-                                        }
-                                        placeholderText='Fecha de transacción'
-                                        showMonthDropdown
-                                        showYearDropdown
-                                        dropdownMode="select"
-                                        disabled={checkDatesRegisterTx}
-                                    />
+                                <div className={`${styles.container__Calendars} d-flex align-items-center justify-content-center gap-3`}>
+                                    <div className="d-flex flex-column align-items-start justify-content-center">
+                                        <p className="mb-1">Fecha de registro</p>
+                                        <DatePicker
+                                            selected={registrationDate || undefined}
+                                            onChange={(date) => setRegistrationDate(date || undefined)}
+                                            className={`${styles.calendar} p-2 border `}
+                                            dayClassName={(date) =>
+                                                date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                            }
+                                            placeholderText='Fecha de registro'
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
+                                            disabled={checkDatesRegisterTx}
+                                        />
+                                    </div>
+                                    <div className="d-flex flex-column align-items-start justify-content-center">
+                                        <p className="mb-1">Fecha de transacción</p>
+                                        <DatePicker
+                                            selected={transactionDate || undefined}
+                                            onChange={(date) => setTransactionDate(date || undefined)}
+                                            className={`${styles.calendar} p-2 border `}
+                                            dayClassName={(date) =>
+                                                date.getDay() === 6 || date.getDay() === 0 ? styles.weekend__Day : styles.weekday
+                                            }
+                                            placeholderText='Fecha de transacción'
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
+                                            disabled={checkDatesRegisterTx}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mb-4 p-3 d-flex align-items-center justify-content-between border position-relative">
-                            <div className="d-flex justify-content-start">
-                                <p className="mb-0 p-2">El gasto ¿Es de contado o a crédito?</p>
+                        <div className="mb-4 d-flex align-items-center justify-content-between">
+                            <div>
+                                <p className="mb-0">El gasto ¿Es de contado o a crédito?</p>
                                 <select
                                     className={`${styles.input} p-2 border `}
                                     onChange={handleCreditCashChange}
@@ -177,9 +200,9 @@ function CreateExpensesPage() {
                                 </select>
                             </div>
 
-                            <div className="d-flex justify-content-start">
-                                <p className="mb-0 p-2">Tipo de gasto</p>
-                                <div className="d-flex align-items-center justify-content-center gap-4">
+                            <div>
+                                <p className="mb-0">Tipo de gasto</p>
+                                <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
                                         className={`${styles.type__Income} ${typeExpense === 'Compra de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
                                         onClick={() => handleTypeExpenseChange('Compra de articulos')}
@@ -200,7 +223,8 @@ function CreateExpensesPage() {
                         {creditCashOption === 'Contado' && (
                             <CashExpense
                                 token={token}
-                                branch={selectedBranch}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                selectedBranch={selectedBranch}
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}
                                 transactionDate={formattedTransactionDate}
@@ -211,7 +235,8 @@ function CreateExpensesPage() {
                         {creditCashOption === 'Credito' && (
                             <CreditExpense
                                 token={token}
-                                branch={selectedBranch}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                selectedBranch={selectedBranch}
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}
                                 transactionDate={formattedTransactionDate}

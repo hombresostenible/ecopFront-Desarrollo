@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Modal } from 'react-bootstrap';
 // REDUX
-
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { postAccountsBook } from '../../../../../../redux/User/accountsBookSlice/actions';
@@ -12,7 +11,6 @@ import { getItemByBarCode } from '../../../../../../redux/User/itemBybarCodeOrNa
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook, IAccountsBookItems } from "../../../../../../types/User/accountsBook.types";
 import { IAccountsPayable } from '../../../../../../types/User/accountsPayable.types';
-import { IBranch } from '../../../../../../types/User/branch.types';
 import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import ModalChangeQuantityPerItem from '../../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
 import SearchCXP from '../../../../../../helpers/SearchCXP/SearchCXP';
@@ -24,21 +22,35 @@ import styles from './styles.module.css';
 
 interface CashExpenseProps {
     token: string;
-    branch: IBranch | null;
+    decodeUserIdRegister: string;
+    selectedBranch: string;
     defaultDates: boolean;
     registrationDate: string | undefined;
     transactionDate: string | undefined;
     typeExpense: string;
 }
 
-function CashExpense({ token, branch, defaultDates, registrationDate, transactionDate, typeExpense }: CashExpenseProps) {
+function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate, typeExpense }: CashExpenseProps) {
     const navigate = useNavigate();
-    const dispatch: AppDispatch = useDispatch();
-    const selectedBranch = branch?.id;
 
-    // Estados de Redux
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
+
+    const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+    const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
+    const [messageSelectedSupplier, setMessageSelectedSupplier] = useState<string | null>(null);
+
+    // BUSCAR Y SETEAR EL ARTICULO POR CODIGO DE BARRAS
+    const [barCode, setBarCode] = useState<string>('');
+    const handleBarCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setBarCode(value);
+        if (value) dispatch(getItemByBarCode(value, token));
+    };
 
     // Setea todos los artículos que se registrarán
     const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
@@ -62,20 +74,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
             setBarCode('');
         }
     }, [itemByBarCode]);
-
-    const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
-    const [formSubmitted, setFormSubmitted] = useState(false);
-    const [shouldNavigate, setShouldNavigate] = useState(false);
-    const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
-    const [messageSelectedSupplier, setMessageSelectedSupplier] = useState<string | null>(null);
-
-    // BUSCAR Y SETEAR EL ARTICULO POR CODIGO DE BARRAS
-    const [barCode, setBarCode] = useState<string>('');
-    const handleBarCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setBarCode(value);
-        if (value) dispatch(getItemByBarCode(value, token));
-    };
 
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
     const handleItemSelect = (item: any) => {
@@ -169,6 +167,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 itemsBuy: scannedItems,
                 creditDescription: creditDescription,
                 totalValue: totalPurchaseAmount || totalValueOtherExpensesNumber,
+                serRegister: decodeUserIdRegister,
             } as IAccountsBook;
             if (defaultDates) {
                 formData.registrationDate = new Date().toLocaleDateString();
@@ -189,7 +188,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 }
             }
             if (totalValueOtherExpenses) formData.pay = 'Si';
-            console.log('formData: ', formData)
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
             setSelectedSupplier(null);
@@ -218,26 +216,29 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                 {typeExpense === 'Compra de articulos' && (
                     <div className='mt-4 mb-4'>
                         <div className="d-flex align-items-start justify-content-between">
-                            <div className="d-flex align-items-center justify-content-between">
-                                <p className={`${styles.barCode} m-0 text-center`}>Código de barras</p>
+                            <div>
+                                <p className="m-0">Busca el item por código de barras</p>
                                 <input
                                     id="barCodeInput"
                                     type="text"
                                     value={barCode}
-                                    className={`${styles.input__BarCode} p-2`}
+                                    className={`${styles.input__Bar_Code} `}
                                     onChange={handleBarCodeChange}
                                     placeholder='Código de barras'
                                 />
                             </div>
 
-                            <SearchItemsByname
-                                selectedBranch={selectedBranch}
-                                token={token}
-                                onItemSelect={(item) => handleItemSelect(item)}
-                            />
+                            <div>
+                                <p className="m-0">Busca el item por nombre</p>
+                                <SearchItemsByname
+                                    selectedBranch={selectedBranch}
+                                    token={token}
+                                    onItemSelect={(item) => handleItemSelect(item)}
+                                />
+                            </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-5 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
+                        <div className={`${styles.container__Table} mt-4 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                             <h3 className="mb-3 text-primary-emphasis text-start">Relación de artículos</h3>
                             <div className={styles.container__Head}>
                                 <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
@@ -325,78 +326,76 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Info_Purchase} m-5 d-flex flex-column align-items-start justify-content-between`}>
-                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Medio de pago</p>
-                                <select
-                                    className={`${styles.input__Info_Purchase} p-2`}
-                                    value={meanPayment}
-                                    onChange={handleMeanPaymentChange}
-                                    required
-                                >
-                                    <option value="">Seleccione el medio de pago</option>
-                                    <optgroup label="Tradicionales">
-                                        <option value='Efectivo'>Efectivo</option>
-                                        <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
-                                        <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
-                                    </optgroup>
-                                    <optgroup label="Billeteras digitales">
-                                        <option value='Daviplata'>Daviplata</option>
-                                        <option value='Nequi'>Nequi</option>
-                                        <option value='Movii'>Movii</option>
-                                        <option value='Tuya Pay'>Tuya Pay</option>
-                                        <option value='Dale'>Dale</option>
-                                        <option value='Nubank'>Nubank</option>
-                                        <option value='Uala'>Uala</option>
-                                        <option value='Lulo Bank'>Lulo Bank</option>
-                                        <option value='Tpaga'>Tpaga</option>
-                                        <option value='Powwi'>Powwi</option>
-                                        <option value='BBVA Wallet'>BBVA Wallet</option>
-                                        <option value='Ahorro a la mano'>Ahorro a la mano</option>
-                                        <option value='Apple Pay'>Apple Pay</option>
-                                        <option value='Rappipay'>Rappipay</option>
-                                        <option value='Claro Pay'>Claro Pay</option>
-                                        <option value='Powwi'>Powwi</option>
-                                    </optgroup>
-                                    <optgroup label="Otros">
-                                        <option value='Baloto'>Baloto</option>
-                                        <option value='Giro'>Giro</option>
-                                        <option value='Cheque'>Cheque</option>
-                                    </optgroup>
-                                </select>
+                        <div className={`${styles.container__Pay} d-flex align-items-start justify-content-between`}>
+                            <div className={`${styles.container__Selected_Client} d-flex flex-column position-relative`}>
+                                <p className='m-0'>Selecciona o crea a tu proveedor</p>
+                                <SearchSupplierCrm
+                                    token={token}
+                                    onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
+                                />
+                                {messageSelectedSupplier && (
+                                    <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                        <div className={`${styles.triangle} position-absolute`}></div>
+                                        <p className='m-0'>Selecciona el proveedor acá</p>
+                                    </div>
+                                )}
                             </div>
-
-                            <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                                <p className={`${styles.text__Purchase} m-0 p-2`}>Total de la compra</p>
-                                <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
+                            <div className={`${styles.container__Info_Purchase} d-flex flex-column align-items-start justify-content-between`}>
+                                <div className="mb-3 m-auto d-flex align-items-center justify-content-between">
+                                    <p className={`${styles.text__Purchase} m-0 text-start`}>Medio de pago</p>
+                                    <select
+                                        className={`${styles.input__Info_Purchase} p-2`}
+                                        value={meanPayment}
+                                        onChange={handleMeanPaymentChange}
+                                        required
+                                    >
+                                        <option value="">Seleccione el medio de pago</option>
+                                        <optgroup label="Tradicionales">
+                                            <option value='Efectivo'>Efectivo</option>
+                                            <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
+                                            <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
+                                        </optgroup>
+                                        <optgroup label="Billeteras digitales">
+                                            <option value='Daviplata'>Daviplata</option>
+                                            <option value='Nequi'>Nequi</option>
+                                            <option value='Movii'>Movii</option>
+                                            <option value='Tuya Pay'>Tuya Pay</option>
+                                            <option value='Dale'>Dale</option>
+                                            <option value='Nubank'>Nubank</option>
+                                            <option value='Uala'>Uala</option>
+                                            <option value='Lulo Bank'>Lulo Bank</option>
+                                            <option value='Tpaga'>Tpaga</option>
+                                            <option value='Powwi'>Powwi</option>
+                                            <option value='BBVA Wallet'>BBVA Wallet</option>
+                                            <option value='Ahorro a la mano'>Ahorro a la mano</option>
+                                            <option value='Apple Pay'>Apple Pay</option>
+                                            <option value='Rappipay'>Rappipay</option>
+                                            <option value='Claro Pay'>Claro Pay</option>
+                                            <option value='Powwi'>Powwi</option>
+                                        </optgroup>
+                                        <optgroup label="Otros">
+                                            <option value='Baloto'>Baloto</option>
+                                            <option value='Giro'>Giro</option>
+                                            <option value='Cheque'>Cheque</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div className="mb-3 mx-auto d-flex align-items-center justify-content-between">
+                                    <p className={`${styles.text__Purchase} m-0`}>Total de la compra</p>
+                                    <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 )}
 
-                {!['Credito del Banco', 'Credito en Cooperativa', 'Gota gota', 'Credito de almacen', 'Credito de servicios publicos'].includes(showOtherExpenses) && (
-                    <div className={`${styles.container__Selected_Client} mb-4 m-auto d-flex align-items-center justify-content-between position-relative`}>
-                        <p className='m-0'>Selecciona o crea un proveedor</p>
-                        <SearchSupplierCrm
-                            token={token}
-                            onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
-                        />
-                        {messageSelectedSupplier && (
-                            <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
-                                <div className={`${styles.triangle} position-absolute`}></div>
-                                <p className='m-0'>Selecciona el cliente acá</p>
-                            </div>
-                        )}
-                    </div>
-                )}
-
                 {typeExpense === 'Otros gastos' && (
-                    <div className={`${styles.container__Info_Purchase} d-flex flex-column align-items-center justify-content-between`}>
-                        <div className="p-2 d-flex align-items-center justify-content-center">
-                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Selecciona el concepto de otros gastos</p>
+                    <div className={`${styles.container__Other_Incomes} d-flex flex-column align-items-center justify-content-center`}>
+                        <div className="mb-4 position-relative">
+                            <p className={`${styles.label} m-0`}>Selecciona el concepto de otros gastos</p>
                             <select
                                 {...register('otherExpenses', { required: true })}
-                                className={`${styles.input__Info_Purchase} p-2`}
+                                className={`${styles.input__Other_Incomes} p-2`}
                                 onChange={handleOtherExpensesChange}
                             >
                             <optgroup label="Servicios Públicos">
@@ -441,14 +440,30 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                             </optgroup>
                             </select>
                             {errors.otherExpenses && (
-                                <p className='text-danger'>El dato es requerido</p>
+                                <p className={`${styles.text__Danger} text-danger position-absolute`}>El dato es requerido</p>
                             )}
                         </div>
 
-                        <div className={`${styles.container__Section_Info_Purchase} mb-3 m-auto d-flex align-items-center justify-content-between`}>
-                            <p className={`${styles.text__Purchase} m-0 p-2 text-start`}>Medio de pago</p>
+                        {!['Credito del Banco', 'Credito en Cooperativa', 'Gota gota', 'Credito de almacen', 'Credito de servicios publicos'].includes(showOtherExpenses) && (
+                            <div className="mb-4 position-relative">
+                                <p className={`${styles.label} m-0`}>Selecciona o crea a tu proveedor</p>
+                                <SearchSupplierCrm
+                                    token={token}
+                                    onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
+                                />
+                                {messageSelectedSupplier && (
+                                    <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                        <div className={`${styles.triangle} position-absolute`}></div>
+                                        <p className='m-0'>Selecciona el proveedor acá</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="mb-4 position-relative">
+                            <p className={`${styles.label} m-0`}>Medio de pago</p>
                             <select
-                                className={`${styles.input__Info_Purchase} p-2`}
+                                className={`${styles.input__Other_Incomes} p-2`}
                                 value={meanPayment}
                                 onChange={handleMeanPaymentChange}
                                 required
@@ -485,12 +500,12 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                             </select>
                         </div>
 
-                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                            <p className={`${styles.text} mb-0 p-2`}>Valor del gasto</p>
+                        <div className="mb-4 position-relative">
+                            <p className={`${styles.label} m-0`}>Valor del gasto</p>
                             <input
                                 type="number"
                                 {...register('totalValue', { required: 'El valor total de la venta es requerido', setValueAs: (value) => parseFloat(value) })}
-                                className={`${styles.info} p-2 border rounded border-secundary text-end`}
+                                className={`${styles.input__Other_Incomes} p-2`}
                                 placeholder='Valor total'
                                 min={0}
                                 onChange={handleTotalValueOtherExpensesChange}
@@ -501,7 +516,7 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                                 }}
                             />
                             {errors.totalValue && (
-                                <p className='invalid-feedback'>{errors.totalValue.message}</p>
+                                <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.totalValue.message}</p>
                             )}
                         </div>
                     </div>
@@ -614,19 +629,6 @@ function CashExpense({ token, branch, defaultDates, registrationDate, transactio
                         </div>
                     </div>
                 )}
-
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
-                    <input
-                        type="text"
-                        {...register('userRegister', { required: 'El usuario que registra es requerido' })}
-                        className={`${styles.info} p-2 border rounded border-secundary`}
-                        placeholder='Nombre del usuario registrador'
-                    />
-                    {errors.userRegister && (
-                        <div className='invalid-feedback'>{errors.userRegister.message}</div>
-                    )}
-                </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
                     {formSubmitted && (

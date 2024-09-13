@@ -25,7 +25,11 @@ import Footer from '../../../../../../components/Platform/PanelUser/Footer/Foote
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-function CreateServicesPage() {
+interface CreateServicesPageProps {
+    addNotification: (type: 'success' | 'error', message: string) => void;
+}
+
+function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
     const token = jsCookie.get('token') || '';
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
@@ -332,6 +336,7 @@ function CreateServicesPage() {
                 reset();
                 setTimeout(() => {
                     setFormSubmitted(false);
+                    addNotification('success', 'Servicio creado exitosamente!');
                     setShouldNavigate(true);
                 }, 1500);
             }
