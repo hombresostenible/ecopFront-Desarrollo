@@ -113,15 +113,17 @@ import QuotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/07Quotes/Qu
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
 import ConsultCollaboratorPage from './pages/Platform/PanelUser/06ElectronicPayroll/01Collaborator/01ConsultCollaborator/ConsultCollaboratorPage';
 import CreateCollaboratorPage from './pages/Platform/PanelUser/06ElectronicPayroll/01Collaborator/02CreateCollaborator/CreateCollaboratorPage';
-import ConsultPayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/01ConsultPayrollPayments/ConsultPayrollPaymentsPage';
-import CreatePayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/02CreatePayrollPayments/CreatePayrollPaymentsPage';
-import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/03Certifications/CertificationsPage';
-import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/04PayrollSettlement/PayrollSettlementPage';
+// import ConsultPayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/01ConsultPayrollPayments/ConsultPayrollPaymentsPage';
+// import CreatePayrollPaymentsPage from './pages/Platform/PanelUser/06ElectronicPayroll/02PayrollPayments/02CreatePayrollPayments/CreatePayrollPaymentsPage';
+// import CertificationsPage from './pages/Platform/PanelUser/06ElectronicPayroll/03Certifications/CertificationsPage';
+// import PayrollSettlementPage from './pages/Platform/PanelUser/06ElectronicPayroll/04PayrollSettlement/PayrollSettlementPage';
 // SIDEBAR - CRM-CLIENT
-import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/ConsultCrmClients/ConsultCrmClientsPage';
+import CrmClientsPage from './pages/Platform/PanelUser/07CrmClients/CrmClientsPage';
+import ConsultCrmClientsPage from './pages/Platform/PanelUser/07CrmClients/ConsultCrmClients/ConsultCrmClientsPage';
 import CreateCrmClientPage from './pages/Platform/PanelUser/07CrmClients/CreateCrmClient/CreateCrmClientPage';
 // SIDEBAR - CRM-SUPPLIER
-import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/ConsultCrmSuppliers/ConsultCrmSuppliersPage';
+import CrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/CrmSuppliersPage';
+import ConsultCrmSuppliersPage from './pages/Platform/PanelUser/08CrmSuppliers/ConsultCrmSuppliers/ConsultCrmSuppliersPage';
 import CreateCrmSupplierPage from './pages/Platform/PanelUser/08CrmSuppliers/CreateCrmSuppliers/CreateCrmSuppliersPage';
 import TrackingYourPurchases from './pages/Platform/PanelUser/08CrmSuppliers/TrackingYourPurchases/TrackingYourPurchases';
 import CustomerTracking from './pages/Platform/PanelUser/07CrmClients/CustomerTracking/CustomerTracking';
@@ -139,7 +141,7 @@ import AccountsAndInventoryIndicatorsPage from './pages/Platform/PanelUser/10Rep
 import CalculateIndicatorsFinancialsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/02AccountsAndInventoryIndicators/CalculateIndicatorsFinancials/CalculateFinancialIndicatorsPage';
 import MarketingIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/MarketingIndicatorsPage';
 import CalculateIndicatorsMarketingPage from './pages/Platform/PanelUser/10ReportsAndIndicators/03MarketingIndicators/CalculateIndicatorsMarketing/CalculateIndicatorsMarketingPage';
-import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/04SustainabilityIndicators/SustainabilityIndicatorsPage';
+// import SustainabilityIndicatorsPage from './pages/Platform/PanelUser/10ReportsAndIndicators/04SustainabilityIndicators/SustainabilityIndicatorsPage';
 import CustomReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/05CustomReport/CustomReportPage';
 import DailyReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/06DailyReport/DailyReportPage';
 import EndOfMonthReportPage from './pages/Platform/PanelUser/10ReportsAndIndicators/07EndOfMonthReport/EndOfMonthReportPage';
@@ -271,11 +273,13 @@ function App() {
                         {/* SideBar Cuentas - TX Pendientes de Aprobar */}
                         <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                         {/* SideBar CRM Clientes */}
-                        <Route path='/crm-clients/consult-crm-clients' element={<CrmClientsPage />} />
+                        <Route path='/crm-clients' element={<CrmClientsPage />} />
+                        <Route path='/crm-clients/consult-crm-clients' element={<ConsultCrmClientsPage />} />
                         <Route path='/crm-clients/create-crm-clients' element={<CreateCrmClientPage addNotification={addNotification} />} />
                         <Route path='/crm-clients/customer-tracking' element={<CustomerTracking />} />
                         {/* SideBar CRM Proveedores */}
-                        <Route path='/crm-suppliers/consult-crm-suppliers' element={<CrmSuppliersPage />} />
+                        <Route path='/crm-suppliers' element={<CrmSuppliersPage />} />
+                        <Route path='/crm-suppliers/consult-crm-suppliers' element={<ConsultCrmSuppliersPage />} />
                         <Route path='/crm-suppliers/create-crm-suppliers' element={<CreateCrmSupplierPage addNotification={addNotification}/>} />
                         <Route path='/crm-suppliers/tracking-your-purchases' element={<TrackingYourPurchases />} />
                         {/* SideBar Facturación y POS */}
@@ -294,10 +298,10 @@ function App() {
                         <Route path='/electronic-payroll' element={<ElectronicPayrollPage />} />
                         <Route path='/electronic-payroll/consult-collaborators' element={<ConsultCollaboratorPage />} />
                         <Route path='/electronic-payroll/create-collaborators' element={<CreateCollaboratorPage addNotification={addNotification}/>} />
-                        <Route path='/electronic-payroll/consult-payroll-payments' element={<ConsultPayrollPaymentsPage />} />
+                        {/* <Route path='/electronic-payroll/consult-payroll-payments' element={<ConsultPayrollPaymentsPage />} />
                         <Route path='/electronic-payroll/create-payroll-payments' element={<CreatePayrollPaymentsPage />} />
                         <Route path='/electronic-payroll/certifications' element={<CertificationsPage />} />
-                        <Route path='/electronic-payroll/payroll-settlement' element={<PayrollSettlementPage />} />
+                        <Route path='/electronic-payroll/payroll-settlement' element={<PayrollSettlementPage />} /> */}
                         {/* SideBar Sostenibilidad */}
                         <Route path='/sustainability' element={<SustainabilityPage />} />
                         <Route path='/sustainability/environmental-standards-consultation' element={<EnvironmentalStandardsConsultationPage />} />
@@ -312,7 +316,7 @@ function App() {
                         <Route path='/reports-and-indicators/accounts-and-inventory-indicators/calculate-financial-items' element={<CalculateIndicatorsFinancialsPage />} />
                         <Route path='/reports-and-indicators/marketing-indicators' element={<MarketingIndicatorsPage />} />
                         <Route path='/reports-and-indicators/marketing-indicators/calculate-marketing-items' element={<CalculateIndicatorsMarketingPage />} />
-                        <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} />
+                        {/* <Route path='/reports-and-indicators/sustainability-indicators' element={<SustainabilityIndicatorsPage />} /> */}
                         <Route path='/reports-and-indicators/custom-report' element={<CustomReportPage />} />
                         <Route path='/reports-and-indicators/daily-report' element={<DailyReportPage />} />
                         <Route path='/reports-and-indicators/end-of-month-report' element={<EndOfMonthReportPage />} />

@@ -76,7 +76,7 @@ function Panel() {
                 </div>
 
                 <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
-                    <Link to="/crm-clients/consult-crm-clients" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
+                    <Link to="/crm-clients" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
                             <img src={CRM} alt="CRM" className={`${styles.image}`} />
                         </div>
@@ -87,7 +87,7 @@ function Panel() {
                 </div>
 
                 <div className={`${styles.card__Section} m-auto d-flex align-items-center justify-content-between`} >
-                    <Link to="/crm-suppliers/consult-crm-suppliers" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
+                    <Link to="/crm-suppliers" className="border-0 text-decoration-none d-flex align-items-center justify-content-center" >
                         <div className={`${styles.container__Image} d-flex align-items-center justify-content-center`} >
                             <img src={CRM} alt="CRM" className={`${styles.image}`} />
                         </div>

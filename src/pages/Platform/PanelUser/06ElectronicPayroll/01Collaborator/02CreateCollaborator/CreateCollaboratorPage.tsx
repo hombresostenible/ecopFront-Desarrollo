@@ -6,17 +6,17 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '../../../../../../redux/store';
+import type { RootState, AppDispatch } from '../../../../../../redux/store.ts';
 import { postUserPlatform, getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/branchSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
 import { IUserPlatform } from '../../../../../../types/User/userPlatform.types.ts';
-import { IBranch } from '../../../../../../types/User/branch.types';
+import { IBranch } from '../../../../../../types/User/branch.types.ts';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import CreateManyCollaborators from '../../../../../../components/Platform/PanelUser/06ElectronicPayroll/01Collaborator/CreateManyCollaborator/CreateManyCollaborator.tsx';
-import DepartmenAndCity from '../../../../../../helpers/DepartmenAndCity/DepartmenAndCity';
+import DepartmenAndCity from '../../../../../../helpers/DepartmenAndCity/DepartmenAndCity.tsx';
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 

@@ -7,10 +7,10 @@ import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store.ts';
 import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/branchSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
-import { IUserPlatform } from '../../../../../../types/User/userPlatform.types';
-import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
+import { IUserPlatform } from '../../../../../../types/User/userPlatform.types.ts';
+import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector.tsx';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
