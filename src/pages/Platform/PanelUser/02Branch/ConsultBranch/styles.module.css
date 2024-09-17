@@ -10,6 +10,10 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
+    max-width: 1202px;
+}
+.container__Link_Head_Navigate {
+    max-width: 1202px;
 }
 .link__Head_Navigate {
     color: #fff;
@@ -33,7 +37,7 @@
 }
 .container__Column_Selector {
     height: 50px;
-    width: 100%;
+    max-width: 1202px;
 }
 .span__Menu {
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -50,7 +54,7 @@
     z-index: 1;
     right: 310px;
     background: white;
-    height: 295px;
+    /* height: 295px; */
     width: 300px;
     border-radius: 10px;
 }
@@ -61,7 +65,7 @@
 /* TABLA */
 .container__Table {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
+    max-width: 1202px;
     overflow-x: auto;
 }
 .container__Head {
@@ -77,44 +81,35 @@
     height: 60px;
 }
 .container__Tr, .container__Info {
-    display: flex;
-    flex-wrap: nowrap; /* Evita que las columnas se apilen */
-    justify-content: space-between;
+    flex-wrap: nowrap;
 }
 .branch {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 200px;
 }
 .department {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 150px;
 }
 .city {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 150px;
 }
 .address {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 150px;
 }
 .email {
     height: 60px;
-    width: 20%;
-    min-width: 200px;
+    width: 250px;
 }
 .phone {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 150px;
 }
 .action {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 
 /* CONTENIDO DE LA TABLA */
@@ -181,6 +176,17 @@
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+.container__Paginated {
+    max-width: 1202px;
+}
+
+
+
+
+
+
+
+
 
 /* ---------- RESPONSIVE (800 PX) ---------- */
 @media screen and (max-width: 800px) {

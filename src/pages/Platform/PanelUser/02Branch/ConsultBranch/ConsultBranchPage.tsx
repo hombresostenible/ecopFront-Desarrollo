@@ -5,7 +5,7 @@ import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import { getBranchesPaginated } from '../../../../../redux/User/branchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
@@ -16,6 +16,7 @@ import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
 import SeeBranch from '../../../../../components/Platform/PanelUser/02Branch/01SeeBranch/SeeBranch.tsx';
 import ConfirmDeleteBranch from '../../../../../components/Platform/PanelUser/02Branch/ConfirmDeleteBranch/ConfirmDeleteBranch';
 import ModalEditBranch from '../../../../../components/Platform/PanelUser/02Branch/ModalEditBranch/ModalEditBranch.tsx';
+import ComponentPaginated from '../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -31,13 +32,29 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const branches = useSelector((state: RootState) => state.branch.branch);
+    const { branch, totalBranches } = useSelector((state: RootState) => state.branch);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        if (token) {
-            dispatch(getBranches(token));
-        }
-    }, [token]);
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getBranchesPaginated(token, page, limit));
+            } catch (error) {
+                console.error('Error al traer los productos', error);
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
     
     const [idBranch, setIdBranch] = useState('');
     const [nameBranch, setNameBranch] = useState('');
@@ -110,9 +127,9 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Tu lista de Sedes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Tu lista de Sedes</h1>
 
-                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -120,7 +137,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} m-auto d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -165,8 +182,8 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(branches) && branches.length > 0 ? (
-                                        branches.map((branch) => (
+                                    {Array.isArray(branch) && branch.length > 0 ? (
+                                        branch.map((branch) => (
                                         <tr key={branch.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <td className={`${styles.branch} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{branch.nameBranch}</span>
@@ -240,6 +257,30 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div className={`${styles.container__Paginated} mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                            <ComponentPaginated
+                                totalRegisters={totalBranches}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <div className={`${styles.select__Items_By_page} mx-2`}>
+                                    <select
+                                        className={`${styles.select} p-1 border-0`}
+                                        value={itemsByPage}
+                                        onChange={handleItemsByPage}
+                                    >
+                                        <option value={20}>20</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                    </select>
+                                </div>
+                                <span>por página</span>
+                            </div>
                         </div>
 
                         <Modal show={showSeeBranch} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >

@@ -2,13 +2,13 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IBranch } from '../../../types/User/branch.types';
-import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
+import { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchesPaginatedStart, getBranchByIdStart, putBranchStart, deleteBranchStart } from './branchSlice';
 
 //CREAR DE UNA SEDE
 export const postBranch = (formData: IBranch, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(postBranchStart());
-        const response = await axiosInstance.post('/branch', formData, {
+        const response = await axiosInstance.post(`/branch`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -44,16 +44,40 @@ export const postManyBranch = (formData: IBranch[], token: string) => async (dis
     }
 };
 
-//OBTENER TODAS LAS SEDES
+//OBTENER TODAS LAS SEDES PAGINADAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
 export const getBranches = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/branch', {
+        const response = await axiosInstance.get(`/branch`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
         dispatch(getBranchesStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorBranch(error.response?.data.message));
+        } else {
+            dispatch(errorBranch(error.message));
+        }
+    }
+};
+
+//OBTENER TODAS LAS SEDES PAGINADAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
+export const getBranchesPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/branch/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getBranchesPaginatedStart({
+            branch: response.data.result,
+            totalBranches: response.data.totalBranches,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorBranch(error.response?.data.message));
