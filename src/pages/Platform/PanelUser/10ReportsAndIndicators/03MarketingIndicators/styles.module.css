@@ -2,17 +2,11 @@
     height: calc(100vh - 70px);
     width: 100%;
 }
-.container__Component {
-    height: calc(100vh - 70px);
-    width: 100%;
-}
 .title {
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
 }
-
-/*---------------Indicators---------------*/
 .container__Cards_Indicators {
     max-width: 1000px;
 }
@@ -21,6 +15,9 @@
     border-radius: 20px;
     min-height: 250px;
     width: 310px;
+}
+.indicator:hover {
+    cursor: pointer;
 }
 .title__Indicator {
     font-weight: 600;
@@ -49,11 +46,4 @@
     cursor: pointer;
     background: #0a31bf;
     transition: 300ms all ease;
-}
-
-/* ---------- RESPONSIVE (900 PX) ---------- */
-@media screen and (max-width: 900px) {
-    .title {
-        text-align: center;
-    }
 }
