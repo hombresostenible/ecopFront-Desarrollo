@@ -17,14 +17,12 @@ interface CreateClientProps {
 }
 
 function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const errorCrmClient = useSelector((state: RootState) => state.crmClient.errorCrmClient);
     const user = useSelector((state: RootState) => state.user.user);
 
     const { register, handleSubmit, formState: { errors } } = useForm<ICrmClient>();
-
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     useEffect(() => {
