@@ -38,12 +38,20 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
-
-
-
 .container__Column_Selector {
     height: 50px;
     width: 100%;
+}
+.Link__Consult {
+    color: #718bd8;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    transition: 300ms ease all;
+}
+.Link__Consult:hover {
+    color: #f8f9fa;
+    border: none;
+    background: #0a31bf;
 }
 .span__Menu {
     border: 1px solid rgba(0, 0, 0, 0.1);
