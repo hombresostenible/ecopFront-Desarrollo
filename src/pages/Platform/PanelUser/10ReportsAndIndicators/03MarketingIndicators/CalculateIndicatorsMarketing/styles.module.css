@@ -2,7 +2,19 @@
     height: calc(100vh - 70px);
     width: 100%;
 }
-.container__Component {
-    height: calc(100vh - 70px);
+.button__Back {
+    padding: 10px 20px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.title {
+    color: #f28705;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.indicator__Calculate {
+    height: calc(100vh - 220px);
     width: 100%;
 }
