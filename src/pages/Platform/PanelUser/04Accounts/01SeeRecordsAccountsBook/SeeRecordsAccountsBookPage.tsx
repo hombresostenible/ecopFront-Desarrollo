@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback, useRef } from 'react';
+// import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
@@ -190,12 +191,12 @@ function SeeRecordsAccountsBookPage() {
                         </div>
 
                         <div className={`${styles.container__Column_Selector} mb-3 d-flex align-items-center justify-content-end position-relative`} >
-                            <div>
-                                <div>Ingresos</div>
-                                <div>CXC</div>
-                                <div>Gastos</div>
-                                <div>CXP</div>
-                            </div>
+                            {/* <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
+                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
+                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
+                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
+                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
+                            </div> */}
                             <span className={`${styles.span__Menu} p-2`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
