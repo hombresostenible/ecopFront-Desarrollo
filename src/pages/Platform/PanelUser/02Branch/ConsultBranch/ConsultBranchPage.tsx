@@ -264,7 +264,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                                     idBranch={idBranch}
                                     nameBranch={nameBranch}
                                     onCloseModal={onCloseModal}
-                                    addNotification={addNotification} 
+                                    addNotification={addNotification}
                                 />
                             </Modal.Body>
                         </Modal>

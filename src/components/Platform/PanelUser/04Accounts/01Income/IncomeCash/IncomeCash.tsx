@@ -178,7 +178,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     
     //Setea el valor de la cuota
     const [paymentValue, setPaymentValue] = useState<number>(0);
-    //Calcula el valor de la cuota con o sin interés
     useEffect(() => {
         if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
             if (interestRateChange !== 0) {

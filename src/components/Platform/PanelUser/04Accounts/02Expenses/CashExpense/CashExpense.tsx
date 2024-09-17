@@ -94,12 +94,19 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
     const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
     const handleChangeQuantityPerItem = (index: number) => setChangeQuantityIndex(index);
 
-    const handlePriceChange = (id: string, value: string) => {
+    // ESTADO PARA CONTROLAR EL INDICE DEL ARTICULO EN scannedItems QUE SE ESTA AÑADIENDO
+    const handlePriceChange = (index: number, value: string) => {
         const newPrice = parseFloat(value);
-        setScannedItems(prevItems => 
-            prevItems.map(item =>
-                item.id === id ? { ...item, purchasePrice: newPrice, subTotalValue: item.quantity * newPrice } : item
-            )
+        if (isNaN(newPrice) || newPrice < 0) return;
+            setScannedItems((prevItems) => {
+                const updatedItems = [...prevItems];
+                updatedItems[index] = {
+                    ...updatedItems[index],
+                    purchasePrice: newPrice,
+                    subTotalValue: updatedItems[index].quantity * newPrice
+                };
+                return updatedItems;
+            }
         );
     };
 
@@ -277,7 +284,7 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                                 <input
                                                     type="text"
                                                     value={item.purchasePrice || 0}
-                                                    onChange={(e) => handlePriceChange(item.id, e.target.value)}
+                                                    onChange={(e) => handlePriceChange(index, e.target.value)}
                                                     className={styles.priceInput}
                                                 />
                                             </div>
