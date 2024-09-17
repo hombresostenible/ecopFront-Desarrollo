@@ -49,21 +49,16 @@ function CreateIncomePage() {
         const selectedId = e.target.value;
         setSelectedBranch(selectedId);
     };
-
     
     //Decodificar el token para saber quién hace la transacción
     const [decodeUserIdRegister, setDecodeUserIdRegister] = useState<string>('');
-    const [decodeTypeRoleRegister, setDecodeTypeRoleRegister] = useState<string>('');
-
     useEffect(() => {
         if (token) {
             try {
                 const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
                 setDecodeUserIdRegister(decodedToken.userId);
-                setDecodeTypeRoleRegister(decodedToken.typeRole);
-                console.log('decodeTypeRoleRegister: ', decodeTypeRoleRegister)
             } catch (error) {
-                console.error('Error decoding token:', error);
+                throw new Error(`Error al decodificar el token: ${error}`);
             }
         }
     }, [token]);
@@ -242,6 +237,8 @@ function CreateIncomePage() {
                         {creditCashOption === 'Credito' && (
                             <IncomeCredit
                                 token={token}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                usersPlatform={usersPlatform}
                                 selectedBranch={selectedBranch}
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}

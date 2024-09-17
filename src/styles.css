@@ -11,6 +11,16 @@
 }
 
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: white;
+    }
+}
+
+
+
+
 /* NOTIFICACIONES */
 .notification__Container {
     position: fixed;
