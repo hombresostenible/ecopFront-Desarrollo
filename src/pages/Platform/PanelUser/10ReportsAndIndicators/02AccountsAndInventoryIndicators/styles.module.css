@@ -16,6 +16,9 @@
     min-height: 250px;
     width: 310px;
 }
+.indicator:hover {
+    cursor: pointer;
+}
 .title__Indicator {
     font-weight: 600;
     color: #718bd8;
