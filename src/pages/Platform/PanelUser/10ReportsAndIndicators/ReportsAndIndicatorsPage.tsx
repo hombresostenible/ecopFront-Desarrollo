@@ -27,12 +27,12 @@ function ReportsAndIndicatorsPage() {
                                 <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Section} `} >Calcula tus indicadores de Mercadeo</Link>
                             </div>
                         </div>
-                        <div className='m-4 d-flex flex-column'>
+                        {/* <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Indicadores de Sostenibilidad</h4>
                             <div className={`${styles.container__Link_Section} `}>
                                 <Link to='/reports-and-indicators/sustainability-indicators' className={`${styles.link__Section} `} >Calcula tus indicadores de Sostenibilidad</Link>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <Footer />
                 </div>

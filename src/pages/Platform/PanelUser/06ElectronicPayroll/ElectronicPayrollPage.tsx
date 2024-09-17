@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import NavBar from '../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../components/Platform/PanelUser/Footer/Footer';
+import Footer from '../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import styles from './styles.module.css';
 
 function ElectronicPayrollPage() {
@@ -23,25 +23,25 @@ function ElectronicPayrollPage() {
                                 <Link to='/electronic-payroll/create-collaborators' className={`${styles.link__Section} d-flex align-items-center justify-content-center text-center text-decoration-none overflow-hidden`} >Crea tus colaboradores</Link>
                             </div>
                         </div>
-                        <div className='m-4 d-flex flex-column'>
+                        {/* <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Pagos de nómina</h4>
                             <div className={`${styles.container__Link_Section} `}>
                                 <Link to='/electronic-payroll/consult-payroll-payments' className={`${styles.link__Section} `} >Pagos de nómina</Link>
                                 <Link to='/electronic-payroll/create-payroll-payments' className={`${styles.link__Section} `} >Crea tus pagos de nómina</Link>
                             </div>
-                        </div>
-                        <div className='m-4 d-flex flex-column'>
+                        </div> */}
+                        {/* <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Certificaciones</h4>
                             <div className={`${styles.container__Link_Section} `}>
                                 <Link to='/electronic-payroll/certifications' className={`${styles.link__Section} `} >Crea certificaciones para tus colaboradores</Link>
                             </div>
-                        </div>
-                        <div className='m-4 d-flex flex-column'>
+                        </div> */}
+                        {/* <div className='m-4 d-flex flex-column'>
                             <h4 className={`${styles.subtitle} `}>Liquidación de nómina</h4>
                             <div className={`${styles.container__Link_Section} `}>
                                 <Link to='/electronic-payroll/payroll-settlement' className={`${styles.link__Section} `} >Liquida la nómina de tus colaboradores</Link>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <Footer />
                 </div>
