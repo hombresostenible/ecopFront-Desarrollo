@@ -103,7 +103,7 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
         );
     };
 
-    // ELIMINA EL ARTICULO AGREGADO A LA TABLA PARA COPRA
+    // ELIMINA EL ARTICULO AGREGADO A LA TABLA PARA COMPRA
     const handleDeleteItem = (index: number) => {
         setScannedItems(prevItems => {
             const updatedItems = [...prevItems];
@@ -115,7 +115,7 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
     // CIERRA EL MODAL QUE CAMBIA LA CANTIDAD DEL ARTICULO SELECCIONADO PARA LA COMPRA
     const handleCloseModal = () => setChangeQuantityIndex(null);
 
-    // SETEA EL CLIENTE CUANDO SE BUSCA O SE CREA
+    // SETEA EL PROVEEDOR CUANDO SE BUSCA O SE CREA
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
 
     // SELECCIONA EL MEDIO DE PAGO
@@ -167,7 +167,7 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
                 itemsBuy: scannedItems,
                 creditDescription: creditDescription,
                 totalValue: totalPurchaseAmount || totalValueOtherExpensesNumber,
-                serRegister: decodeUserIdRegister,
+                userRegister: decodeUserIdRegister,
             } as IAccountsBook;
             if (defaultDates) {
                 formData.registrationDate = new Date().toLocaleDateString();

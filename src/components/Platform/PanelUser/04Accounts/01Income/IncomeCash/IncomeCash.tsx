@@ -13,6 +13,7 @@ import { IAccountsBook, IAccountsBookItems } from "../../../../../../types/User/
 import { IUserPlatform } from '../../../../../../types/User/userPlatform.types';
 import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import ModalChangeQuantityPerItem from '../../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
+import { formatCurrency } from '../../../../../../helpers/FormatCurrency/FormatCurrency';
 import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';
 import SearchSupplierCrm from '../../../../../../helpers/SearchSupplierCrm/SearchSupplierCrm';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
@@ -58,7 +59,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
     // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
     useEffect(() => {
-        // Actualiza el estado `scannedItems` cuando `itemByBarCode` cambie
         if (itemByBarCode && itemByBarCode.result) {
             const item = itemByBarCode.result;
             const selectedItem: IAccountsBookItems = {
@@ -70,9 +70,8 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                 quantity: 1,
                 subTotalValue: item.sellingPrice * 1,
             };
-            // Añade el ítem al estado `scannedItems`
             setScannedItems(prevItems => [...prevItems, selectedItem]);
-            setBarCode(''); // Limpia el campo de código de barras
+            setBarCode('');
         }
     }, [itemByBarCode]);
 
@@ -119,13 +118,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
         return total + (scannedItem.quantity * scannedItem.sellingPrice);
     }, 0);
-
-    // Función para formatear el valor como moneda
-    const formatCurrency = (value: string) => {
-        if (!value) return '';
-        const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
-        return `$ ${new Intl.NumberFormat('es-ES').format(numberValue)}`;
-    };
 
     // Manejar el cambio en el monto recibido
     const [paymentAmount, setPaymentAmount] = useState<string>('');
@@ -195,7 +187,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                 const tasaInteresMensual = interestRateChange / 100 / 12;                       // Calcula la tasa de interés mensual
                 let saldoRestante = totalValue;                                                 // Calcula el interés acumulado sobre el monto total adeudado
                 let cuotaConInteres = 0;
-        
                 for (let i = 0; i < numberOfPayments; i++) {
                     const interesMensual = saldoRestante * tasaInteresMensual;
                     cuotaConInteres = cuotaSinInteres + interesMensual;                         // Calcula la cuota con interés y amortización

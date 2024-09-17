@@ -10,6 +10,7 @@ import { postAccountsBook } from '../../../../../../redux/User/accountsBookSlice
 import { getItemByBarCode } from '../../../../../../redux/User/itemBybarCodeOrName/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook, IAccountsBookItems } from "../../../../../../types/User/accountsBook.types";
+import { IUserPlatform } from '../../../../../../types/User/userPlatform.types';
 import SearchItemsByname from '../../../../../../helpers/SearchItemName/SearchItemsByname';
 import ModalChangeQuantityPerItem from '../../../../../../helpers/ModalChangeQuantityPerItem/ModalChangeQuantityPerItem';
 import SearchClientCrm from '../../../../../../helpers/SearchClientCrm/SearchClientCrm';
@@ -20,42 +21,22 @@ import styles from './styles.module.css';
 
 interface IncomeCreditProps {
     token: string;
+    decodeUserIdRegister: string;
+    usersPlatform: IUserPlatform | IUserPlatform[] | null;
     selectedBranch: string;
     defaultDates: boolean;
     registrationDate: string | undefined;
     transactionDate: string | undefined;
 }
 
-function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, transactionDate }: IncomeCreditProps) {
+function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBranch, defaultDates, registrationDate, transactionDate }: IncomeCreditProps) {
     const navigate = useNavigate();
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const errorAccountsBook = useSelector((state: RootState) => state.accountsBook.errorAccountsBook);
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
-    //Setea todos los artículos que se registrarán
-    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
-    
-    useEffect(() => {
-        // Actualiza el estado `scannedItems` cuando `itemByBarCode` cambie
-        if (itemByBarCode && itemByBarCode.result) {
-            const item = itemByBarCode.result;
-            const selectedItem: IAccountsBookItems = {
-                nameItem: item.nameItem,
-                id: item.id,
-                type: item.type as 'Asset' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
-                IVA: item.IVA,
-                sellingPrice: item.sellingPrice,
-                quantity: 1,
-                subTotalValue: item.sellingPrice * 1,
-            };
-            // Añade el ítem al estado `scannedItems`
-            setScannedItems(prevItems => [...prevItems, selectedItem]);
-            setBarCode(''); // Limpia el campo de código de barras
-        }
-    }, [itemByBarCode]);
-    
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -69,7 +50,28 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
         setBarCode(value);
         if (value) dispatch(getItemByBarCode(value, token));
     };
-    
+
+    //Setea todos los artículos que se registrarán
+    const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
+
+        // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
+    useEffect(() => {
+        if (itemByBarCode && itemByBarCode.result) {
+            const item = itemByBarCode.result;
+            const selectedItem: IAccountsBookItems = {
+                nameItem: item.nameItem,
+                id: item.id,
+                type: item.type as 'Asset' | 'Merchandise' | 'Product' | 'RawMaterial' | 'Service',
+                IVA: item.IVA,
+                sellingPrice: item.sellingPrice,
+                quantity: 1,
+                subTotalValue: item.sellingPrice * 1,
+            };
+            setScannedItems(prevItems => [...prevItems, selectedItem]);
+            setBarCode('');
+        }
+    }, [itemByBarCode]);
+
     // SETEA EL ARTICULO BUSCADO POR NOMBRE
     const handleItemSelect = (item: any) => {
         const selectedItems: IAccountsBookItems = {
@@ -108,13 +110,14 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
         return total + (scannedItem.quantity * scannedItem.sellingPrice);
     }, 0);
 
+    
     //Setea la cantidad de cuotas
     const [numberOfPayments, setNumberOfPayments] = useState<number>(0);
     const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newUnitValue = parseFloat(event.target.value);
         setNumberOfPayments(newUnitValue);
     };
-
+    
     //Setea si es con interés o no
     const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('No');
     const [interestRateChange, setInterestRateChange] = useState<number>(0);
@@ -133,33 +136,38 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
 
     //Setea el valor de la cuota
     const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
-
-    //Calcula el valor de la cuota con o sin interés
     useEffect(() => {
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
             if (interestRateChange !== 0) {
-                // Calcula la cuota con interés
-                const cuotaSinInteres = totalPurchaseAmount / numberOfPayments;
-                // Calcula la tasa de interés mensual
+                const totalValue = Number(totalPurchaseAmount);
+                const cuotaSinInteres = totalValue / numberOfPayments;
                 const tasaInteresMensual = interestRateChange / 100 / 12;
-                // Calcula el interés acumulado sobre el monto total adeudado
                 let saldoRestante = totalPurchaseAmount;
                 let cuotaConInteres = 0;
                 for (let i = 0; i < numberOfPayments; i++) {
                     const interesMensual = saldoRestante * tasaInteresMensual;
-            
-                    // Calcula la cuota con interés y amortización
                     cuotaConInteres = cuotaSinInteres + interesMensual;
-                    saldoRestante -= cuotaSinInteres; // Resta la parte que corresponde a la amortización
+                    saldoRestante -= cuotaSinInteres;
                 }
                 setPaymentValue(cuotaConInteres);
             } else {
-                // Lógica cuando no hay interés (puedes personalizar esto según tus necesidades)
-                const cuotaSinInteres = totalPurchaseAmount / numberOfPayments;
+                const totalValue = Number(totalPurchaseAmount);
+                const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
         }
     }, [totalPurchaseAmount, numberOfPayments, interestRateChange]);
+
+    // SETEA EL USUARIO VENDEDOR
+    const [userPlatform, setUserPlatform] = useState<IUserPlatform>();
+    const handleUserPlatformChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId = event.target.value;
+        const selectedUser = Array.isArray(usersPlatform)
+            ? usersPlatform.find((user) => user.id === selectedId)
+            : null;
+    
+        setUserPlatform(selectedUser || undefined);
+    };
 
     const onSubmit = async (values: IAccountsBook) => {
         try {
@@ -174,6 +182,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                 paymentValue,
                 accountsReceivable: totalPurchaseAmount,
                 totalValue: totalPurchaseAmount,
+                userRegister: decodeUserIdRegister,
             } as IAccountsBook;
 
             if (defaultDates) {
@@ -194,7 +203,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                 setTimeout(() => setMessageSelectedClient(null), 5000);
                 return;
             }
-
+            if(userPlatform?.id) formData.seller = userPlatform.id;
             dispatch(postAccountsBook(formData, token));
             setFormSubmitted(true);
             setSelectedClient(null);
@@ -223,32 +232,35 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
             <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} `}>
                 <div className='mt-4 mb-4'>
                     <div className="d-flex align-items-start justify-content-between">
-                        <div className="d-flex align-items-center justify-content-between">
-                            <p className={`${styles.barCode} m-0 text-center`}>Código de barras</p>
+                        <div>
+                            <p className="m-0">Código de barras</p>
                             <input
                                 id="barCodeInput"
                                 type="text"
                                 value={barCode}
-                                className={`${styles.input__BarCode} p-2`}
+                                className={`${styles.input__Bar_Code} `}
                                 onChange={handleBarCodeChange}
                                 placeholder='Código de barras'
                             />
                         </div>
 
-                        <SearchItemsByname
-                            selectedBranch={selectedBranch}
-                            token={token}
-                            onItemSelect={(item) => handleItemSelect(item)}
-                        />
+                        <div>
+                            <p className="m-0">Busca el item por nombre</p>
+                            <SearchItemsByname
+                                selectedBranch={selectedBranch}
+                                token={token}
+                                onItemSelect={(item) => handleItemSelect(item)}
+                            />
+                        </div>
                     </div>
-
+            
                     <div className={`${styles.container__Table} mt-5 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
                         <h3 className="mb-3 text-primary-emphasis text-start">Relación de artículos</h3>
                         <div className={styles.container__Head}>
                             <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                 <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                 <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
-                                <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>IVA</div>
+                                <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
                                 <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
                                 <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                 <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
@@ -274,7 +286,7 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                         </div>
                                         <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA} %</span>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
                                         </div>
                                         <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
@@ -321,134 +333,120 @@ function IncomeCredit({ token, selectedBranch, defaultDates, registrationDate, t
                         </Modal.Body>
                     </Modal>
 
-                    <div className={`${styles.container__Selected_Client} m-auto d-flex align-items-center justify-content-between position-relative`}>
-                        <p className='m-0'>Selecciona o crea a tu cliente</p>
-                        <SearchClientCrm
-                            token={token}
-                            onClientSelect={(client) => setSelectedClient(client)}
-                        />
-                        {messageSelectedClient && (
-                            <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
-                                <div className={`${styles.triangle} position-absolute`}></div>
-                                <p className='m-0'>Selecciona el cliente acá</p>
-                            </div>
-                        )}
+                    <div className={`${styles.container__Pay} d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Selected_Client} d-flex flex-column position-relative`}>
+                            <p className='m-0'>Selecciona o crea a tu cliente</p>
+                            <SearchClientCrm
+                                token={token}
+                                onClientSelect={(client) => setSelectedClient(client)}
+                            />
+                            {messageSelectedClient && (
+                                <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
+                                    <div className={`${styles.triangle} position-absolute`}></div>
+                                    <p className='m-0'>Selecciona el cliente acá</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mb-3 d-flex align-items-center justify-content-between">
+                            <p className={`${styles.text__Purchase} m-0`}>Total de la compra</p>
+                            <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
+                        </div>
                     </div>
                 </div>
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text__Purchase} m-0 p-2`}>Total de la compra</p>
-                    <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
-                </div>
+                <div className={`${styles.container__Other_Incomes} d-flex flex-column align-items-center justify-content-center`}>
+                    <div className="mb-4 position-relative">
+                        <p className={`${styles.label} m-0`}>Describe tu crédito</p>
+                        <input
+                            type="text"
+                            {...register('creditDescription', { required: true })}
+                            className={`${styles.input__Other_Incomes} p-2`}
+                            placeholder='Describe tu crédito: Venta de arroz a don Lucho'
+                        />
+                        {errors.seller && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>La descripión es requerida</p>
+                        )}
+                    </div>
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Describe tu crédito</p>
-                    <input
-                        type="text"
-                        {...register('creditDescription', { required: 'La descripción del crédito es requerida' })}
-                        className={`${styles.info} p-2 border rounded border-secundary`}
-                        placeholder='Describe tu crédito: Venta de arroz a don Lucho'
-                    />
-                    {errors.seller && (
-                        <div className='invalid-feedback'>{errors.seller.message}</div>
-                    )}
-                </div>
+                    <div className="mb-4 position-relative">
+                        <p className={`${styles.label} m-0`}>¿A cuántas cuotas te van a pagar?</p>
+                        <input
+                            type="number"
+                            {...register('numberOfPayments', { setValueAs: (value) => parseFloat(value) })}
+                            className={`${styles.input__Other_Incomes} p-2`}
+                            placeholder='Número de cuotas'
+                            inputMode="numeric"
+                            onChange={handleNumberOfPaymentsChange}
+                            min={0}
+                        />
+                        {errors.numberOfPayments && (
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de cuotas es requerido</p>
+                        )}
+                    </div>
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>¿A cuántas cuotas te van a pagar?</p>
-                    <input
-                        type="number"
-                        {...register('numberOfPayments', { setValueAs: (value) => parseFloat(value) })}
-                        className={`${styles.info} p-2 border rounded border-secundary text-end`}
-                        placeholder='Número de cuotas'
-                        inputMode="numeric"
-                        onChange={handleNumberOfPaymentsChange}
-                        min={0}
-                    />
-                    {errors.numberOfPayments && (
-                        <div className='invalid-feedback'>{errors.numberOfPayments.message}</div>
-                    )}
-                </div>
-
-                <div className='d-flex'>
-                    <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded" style={{ width: "430px", marginRight: "40px"}}>
-                        <p className={`${styles.text} mb-0 p-2`} style={{ width: "160px" }}>¿Es con interés?</p>
+                    <div className="mb-4 position-relative">
+                        <p className={`${styles.label} m-0`}>¿Es con interés?</p>
                         <select
                             {...register('creditWithInterest', { required: true })}
-                            className={`${styles.info} p-2 border rounded border-secundary`}
+                            className={`${styles.input__Other_Incomes} p-2`}
                             value={creditWithInterest}
                             onChange={handleCreditWithInterest}
-                            style={{ width: "230px" }}
                         >
                             <option value='Si'>Si</option>
                             <option value='No'>No</option>
                         </select>
                         {errors.creditWithInterest && (
-                            <p className='text-danger'>El dato es requerido</p>
+                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El dato es requerido</p>
                         )}
                     </div>
 
                     {creditWithInterest === 'Si' && (
-                        <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded" style={{ width: "430px" }}>
-                            <p className={`${styles.text} mb-0 p-2`} style={{ width: "160px" }}>Tasa de interés</p>
+                        <div className="mb-4 position-relative">
+                            <p className={`${styles.label} m-0`}>Tasa de interés</p>
                             <input
                                 type="number"
                                 {...register('creditInterestRate', { setValueAs: (value) => parseFloat(value) })}
-                                className={`${styles.info} p-2 border rounded border-secundary text-end`}
+                                className={`${styles.input__Other_Incomes} p-2`}
                                 placeholder='5'
                                 inputMode="numeric"
-                                style={{ width: "230px" }}
                                 onChange={handleInterestRateChange}
                                 min={0}
                             />
                             {errors.creditInterestRate && (
-                                <div className='invalid-feedback'>{errors.creditInterestRate.message}</div>
+                                <p className={`${styles.text__Danger} text-danger position-absolute`}>La tasa de interés es requerida</p>
                             )}
                         </div>
                     )}
-                </div>
-      
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Valor aproximado de cada una de las cuotas</p>
-                    <input
-                        type="number"
-                        {...register('paymentValue', { setValueAs: (value) => parseFloat(value) })}
-                        className={`${styles.info} p-2 border rounded border-secundary text-end`}
-                        placeholder='Valor de cada cuota'
-                        inputMode="numeric"
-                        readOnly
-                        value={formatNumber(paymentValue)}
-                        min={0}
-                    />
-                    {errors.paymentValue && (
-                        <div className='invalid-feedback'>{errors.paymentValue.message}</div>
-                    )}
-                </div>
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Vendedor(a)</p>
-                    <input
-                        type="text"
-                        {...register('seller', { required: 'El vendedor es requerido' })}
-                        className={`${styles.info} p-2 border rounded border-secundary`}
-                        placeholder='Nombre del vendedor'
-                    />
-                    {errors.seller && (
-                        <div className='invalid-feedback'>{errors.seller.message}</div>
-                    )}
-                </div>
+                    <div className="mb-4 position-relative">
+                        <p className={`${styles.label} m-0`}>Valor aproximado de cada una de las cuotas</p>
+                        <input
+                            type="number"
+                            {...register('paymentValue', { setValueAs: (value) => parseFloat(value) })}
+                            className={`${styles.input__Other_Incomes} p-2`}
+                            placeholder='Valor de cada cuota'
+                            inputMode="numeric"
+                            readOnly
+                            value={formatNumber(paymentValue)}
+                            min={0}
+                        />
+                    </div>
 
-                <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <p className={`${styles.text} mb-0 p-2`}>Usuario(a) que registra</p>
-                    <input
-                        type="text"
-                        {...register('userRegister', { required: 'El vendedor es requerido' })}
-                        className={`${styles.info} p-2 border rounded border-secundary`}
-                        placeholder='Nombre del vendedor'
-                    />
-                    {errors.userRegister && (
-                        <div className='invalid-feedback'>{errors.userRegister.message}</div>
-                    )}
+                    <div className="mb-4 position-relative">
+                        <select
+                            className={`${styles.input__Other_Incomes} p-2`}
+                            value={selectedBranch}
+                            onChange={handleUserPlatformChange}
+                        >
+                            <option value=''>Selecciona el vendedor</option>
+                            {Array.isArray(usersPlatform) && usersPlatform.map((userPlatform, index) => (
+                                <option key={index} value={userPlatform.id}>
+                                    {userPlatform.name} {userPlatform.lastName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">

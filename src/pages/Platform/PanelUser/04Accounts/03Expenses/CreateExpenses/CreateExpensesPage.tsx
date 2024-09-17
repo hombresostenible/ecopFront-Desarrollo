@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions.ts';
+import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
 import CashExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CashExpense/CashExpense';
 import CreditExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CreditExpense/CreditExpense';
@@ -35,6 +36,7 @@ function CreateExpensesPage() {
         if (token) {
             dispatch(getBranches(token));
             dispatch(getProfileUser(token));
+            dispatch(getUsersPlatform(token));
         }
     }, [token]);
     
@@ -49,17 +51,13 @@ function CreateExpensesPage() {
 
     //Decodificar el token para saber quién hace la transacción
     const [decodeUserIdRegister, setDecodeUserIdRegister] = useState<string>('');
-    const [decodeTypeRoleRegister, setDecodeTypeRoleRegister] = useState<string>('');
-
     useEffect(() => {
         if (token) {
             try {
                 const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
                 setDecodeUserIdRegister(decodedToken.userId);
-                setDecodeTypeRoleRegister(decodedToken.typeRole);
-                console.log('decodeTypeRoleRegister: ', decodeTypeRoleRegister)
             } catch (error) {
-                console.error('Error decoding token:', error);
+                throw new Error(`Error al decodificar el token: ${error}`);
             }
         }
     }, [token]);
