@@ -238,6 +238,7 @@ function CreateExpensesPage() {
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}
                                 transactionDate={formattedTransactionDate}
+                                typeExpense={typeExpense}
                             />
                         )}
                     </div>

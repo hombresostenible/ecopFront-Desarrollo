@@ -226,8 +226,8 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                         <input
                             type="text"
                             className={`${styles.input} mb-3 p-2 border`}
-                            value={editedAsset.sellingPrice}
-                            onChange={(e) => handleEditField(e, 'sellingPrice', 'text')}
+                            value={editedAsset.discountPercentage}
+                            onChange={(e) => handleEditField(e, 'discountPercentage', 'text')}
                         />
                     </div>
                 )}
