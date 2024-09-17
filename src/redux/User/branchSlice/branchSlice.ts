@@ -4,12 +4,18 @@ import { IBranch } from '../../../types/User/branch.types';
 interface BranchState {
     branch: IBranch | IBranch[] | null;
     loading: boolean;
+    totalBranches: number;
+    totalPages: number;
+    currentPage: number;
     errorBranch: string[] | null;
 }
 
 const initialState: BranchState = {
     branch: null,
     loading: false,
+    totalBranches: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorBranch: null,
 };
 
@@ -39,6 +45,14 @@ const branchSlice = createSlice({
             state.branch = action.payload;
             state.errorBranch = null;
         },
+        getBranchesPaginatedStart: (state, action: PayloadAction<{ branch: IBranch[], totalBranches: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.branch = action.payload.branch;
+            state.totalBranches = action.payload.totalBranches;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorBranch = null;
+        },
         getBranchByIdStart: (state, action: PayloadAction<IBranch>) => {
             state.loading = false;
             state.branch = action.payload;
@@ -55,5 +69,5 @@ const branchSlice = createSlice({
     },
 });
 
-export const { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchByIdStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
+export const { branchData, errorBranch, postBranchStart, postManyBranchesStart, getBranchesStart, getBranchesPaginatedStart, getBranchByIdStart, putBranchStart, deleteBranchStart } = branchSlice.actions;
 export default branchSlice.reducer;
