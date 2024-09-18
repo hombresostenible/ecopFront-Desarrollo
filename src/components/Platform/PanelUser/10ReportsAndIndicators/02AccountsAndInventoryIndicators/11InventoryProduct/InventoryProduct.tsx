@@ -80,7 +80,7 @@ function InventoryProduct() {
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
-                    <h2 className="text-primary-emphasis text-start">Inventario de Productos</h2>
+                    <h2 className="text-primary-emphasis text-start">Inventario de productos</h2>
                     <div className={styles.containerButtonExportT}>
                         {originalData && (
                             <PDFDownloadLink

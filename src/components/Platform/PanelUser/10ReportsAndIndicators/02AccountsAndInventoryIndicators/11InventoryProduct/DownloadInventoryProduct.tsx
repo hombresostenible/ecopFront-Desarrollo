@@ -10,7 +10,7 @@ function DownloadInventoryProduct({ data }: DownloadInventoryProductProps) {
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Inventario de Productos</Text>
+                <Text style={stylesPDF.title}>Inventario de productos</Text>
                 {data.map((item, index) => (
                     <Text key={index} style={stylesPDF.text}>
                         Sede: {item.branchId}

@@ -10,7 +10,7 @@ function DownloadAccountsReceivable({ data }: DownloadAccountsReceivableProps) {
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Cuentas por Cobrar</Text>
+                <Text style={stylesPDF.title}>Cuentas por cobrar</Text>
                 {data.map((item, index) => (
                     <Text key={index} style={stylesPDF.text}>
                         Sede: {item.branchId}

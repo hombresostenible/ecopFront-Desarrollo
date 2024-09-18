@@ -29,13 +29,13 @@ function AccountsAndInventoryIndicatorsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className="px-5 overflow-hidden overflow-y-auto">
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Elige el Indicador de Cuentas e Inventarios que quieres calcular</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Elige el indicador de cuentas e inventarios que quieres calcular</h1>
 
                         <div className={`${styles.container__Cards_Indicators} m-auto d-flex flex-wrap align-items-center justify-content-center gap-4`}>
                             <div className={`${styles.indicator} ${selectedItems.includes('Ventas') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('Ventas')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('Ventas')}>
                                     <div className={`${selectedItems.includes('Ventas') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Ventas del Período</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Ventas del período</h5>
                                         <p className='m-0 text-center'>Este indicador te calcula las ventas del negocio por períodos</p>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('TicketPromedio') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('TicketPromedio')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('TicketPromedio')}>
                                     <div className={`${selectedItems.includes('TicketPromedio') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Ticket Promedio</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Ticket promedio</h5>
                                         <p className='m-0 text-center'>Este indicador te permite calcular el valor promedio de cada compra</p>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('CuentasXPagar') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('CuentasXPagar')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('CuentasXPagar')}>
                                     <div className={`${selectedItems.includes('CuentasXPagar') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Cuentas por Pagar</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Cuentas por pagar</h5>
                                         <p className='m-0 text-center'>Este indicador te permite calcular las cuentas por pagar por períodos</p>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('CuentasXCobrar') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('CuentasXCobrar')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('CuentasXCobrar')}>
                                     <div className={`${selectedItems.includes('CuentasXCobrar') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Cuentas por Cobrar</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Cuentas por cobrar</h5>
                                         <p className='m-0 text-center'>Este indicador te permite calcular las cuentas por cobrar por períodos</p>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('InventarioProducto') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('InventarioProducto')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('InventarioProducto')}>
                                     <div className={`${selectedItems.includes('InventarioProducto') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de Productos</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de productos</h5>
                                         <p className='m-0 text-center'>Este indicador te calcula el inventario de tu negocio por períodos</p>
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('InventarioMateriasPrimas') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('InventarioMateriasPrimas')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('InventarioMateriasPrimas')}>
                                     <div className={`${selectedItems.includes('InventarioMateriasPrimas') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de Materias Primas</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de materias primas</h5>
                                         <p className='m-0 text-center'>Este indicador te calcula el inventario de tu negocio por períodos</p>
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('InventarioMercancias') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('InventarioMercancias')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('InventarioMercancias')}>
                                     <div className={`${selectedItems.includes('InventarioMercancias') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de Mercancía</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de mercancía</h5>
                                         <p className='m-0 text-center'>Este indicador te calcula el inventario de tu negocio por períodos</p>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@ function AccountsAndInventoryIndicatorsPage() {
                             <div className={`${styles.indicator} ${selectedItems.includes('InventarioActivos') ? 'border-primary' : ''} d-flex flex-column align-items-center justify-content-between`} onClick={() => toggleSelect('InventarioActivos')} >
                                 <div className={`${styles.indicator__Description} pt-4 px-4`} onClick={() => toggleSelect('InventarioActivos')}>
                                     <div className={`${selectedItems.includes('InventarioActivos') ? 'text-primary' : ''}`}>
-                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de Activos</h5>
+                                        <h5 className={`${styles.title__Indicator} mb-3 text-center`}>Inventario de activos</h5>
                                         <p className='m-0 text-center'>Este indicador te calcula el inventario de tu negocio por períodos</p>
                                     </div>
                                 </div>
