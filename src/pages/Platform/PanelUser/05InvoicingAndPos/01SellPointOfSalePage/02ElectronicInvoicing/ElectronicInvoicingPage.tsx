@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../../types/User/crmClient.types';
 import { IAssets } from "../../../../../../types/User/assets.types";

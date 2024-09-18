@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { postCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/actions';
+import { postCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/08CrmSupplierSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types';
 import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';

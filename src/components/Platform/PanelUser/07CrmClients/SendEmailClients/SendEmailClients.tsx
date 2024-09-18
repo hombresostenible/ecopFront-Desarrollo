@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { getProfileUser } from '../../../../../redux/User/userSlice/actions';
-import { sendEmailCRMClient } from '../../../../../redux/User/crmClientSlice/actions';
+import { sendEmailCRMClient } from '../../../../../redux/User/07CrmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from "../../../../../types/User/crmClient.types";
 import styles from './styles.module.css';

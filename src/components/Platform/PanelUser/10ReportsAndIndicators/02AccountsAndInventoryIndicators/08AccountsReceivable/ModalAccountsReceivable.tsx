@@ -5,7 +5,7 @@ import jsCookie from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getAccountsReceivable, getAccountsReceivableByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 

@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { patchRawMaterial, getRawMaterials } from '../../../../../../redux/User/rawMaterialSlice/actions';
+import { patchRawMaterial, getRawMaterials } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IInventoryOffItem } from '../../../../../../types/User/InventoryOffItem/iInventoryOffItem.types';

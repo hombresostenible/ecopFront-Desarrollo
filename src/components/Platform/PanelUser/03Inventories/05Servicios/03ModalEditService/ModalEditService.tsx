@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../../redux/store';
-import { getServices, putService } from '../../../../../../redux/User/serviceSlice/actions';
+import { getServices, putService } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

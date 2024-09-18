@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import POSComponent from '../../../../../../components/Platform/PanelUser/05InvoicingAndPos/01SellPointOfSalePage/POSComponent';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';

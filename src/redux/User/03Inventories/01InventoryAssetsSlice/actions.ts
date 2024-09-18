@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../../store';
-import axiosInstance from '../../../api/axios';
-import { IAssets } from '../../../types/User/assets.types';
+import { AppDispatch } from '../../../store';
+import axiosInstance from '../../../../api/axios';
+import { IAssets } from '../../../../types/User/assets.types';
 import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA

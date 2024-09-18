@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getAssets, getAssetsByBranch } from '../../../../../../redux/User/assetsSlice/actions';
-import { getProducts, getProductsByBranch } from '../../../../../../redux/User/productSlice/actions';
-import { getRawMaterials, getRawMaterialsByBranch } from '../../../../../../redux/User/rawMaterialSlice/actions';
-import { postService, getServices } from '../../../../../../redux/User/serviceSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getAssets, getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
+import { getProducts, getProductsByBranch } from '../../../../../../redux/User/03Inventories/03InventoryProductsSlice/actions';
+import { getRawMaterials, getRawMaterialsByBranch } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
+import { postService, getServices } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

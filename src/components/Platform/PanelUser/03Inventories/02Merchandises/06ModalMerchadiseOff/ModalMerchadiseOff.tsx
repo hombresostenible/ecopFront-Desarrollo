@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { patchMerchandise, getMerchandises } from '../../../../../../redux/User/merchandiseSlice/actions';
+import { patchMerchandise, getMerchandises } from '../../../../../../redux/User/03Inventories/02InventoryMerchadisesSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../../types/User/merchandise.types';
 import { IInventoryOffItem } from '../../../../../../types/User/InventoryOffItem/iInventoryOffItem.types';

@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getSalesPerPeriod, getSalesPerPeriodByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
 import DownloadSalesPerPeriod from './DownloadSalesPerPeriod';

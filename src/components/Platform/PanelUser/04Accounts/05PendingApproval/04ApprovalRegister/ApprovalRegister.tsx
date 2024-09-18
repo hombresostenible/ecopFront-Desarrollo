@@ -2,7 +2,7 @@
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../../redux/store';
-import { patchIncomesNotApproved, getIncomesNotApproved } from '../../../../../../redux/User/accountsBookSlice/actions';
+import { patchIncomesNotApproved, getIncomesNotApproved } from '../../../../../../redux/User/04AccountsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import styles from './styles.module.css';
 

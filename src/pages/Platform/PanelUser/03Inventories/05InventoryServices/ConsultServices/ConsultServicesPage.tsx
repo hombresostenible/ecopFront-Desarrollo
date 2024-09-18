@@ -6,8 +6,8 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getServices, getServicesByBranch } from '../../../../../../redux/User/serviceSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getServices, getServicesByBranch } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

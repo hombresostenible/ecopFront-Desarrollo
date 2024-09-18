@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 //REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
-import { postManyCrmClients, getCrmClients } from '../../../../../redux/User/crmClientSlice/actions';
+import { postManyCrmClients, getCrmClients } from '../../../../../redux/User/07CrmClientSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types';
 import styles from './styles.module.css';

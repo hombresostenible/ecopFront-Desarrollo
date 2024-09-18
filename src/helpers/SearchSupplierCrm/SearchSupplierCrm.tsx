@@ -5,7 +5,7 @@ import Select from 'react-select';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../redux/store';
-import { getCrmSuppliers } from '../../redux/User/crmSupplierSlice/actions';
+import { getCrmSuppliers } from '../../redux/User/08CrmSupplierSlice/actions';
 
 
 import CreateSupplier from '../../components/Platform/PanelUser/04Accounts/CreateClientAndSupplier/CreateSupplier';
