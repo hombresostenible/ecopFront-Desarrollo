@@ -11,7 +11,7 @@ function DownloadSalesPerPeriod({ data }: DownloadSalesPerPeriodProps) {
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Ventas del Período</Text>
+                <Text style={stylesPDF.title}>Ventas del período</Text>
                 {data.map((item, index) => (
                     <View key={index}>
                         <Text style={stylesPDF.text}>

@@ -10,7 +10,7 @@ function DownloadAccountsPayable({ data }: DownloadAccountsPayableProps) {
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Cuentas por Pagar</Text>
+                <Text style={stylesPDF.title}>Cuentas por pagar</Text>
                 {data.map((item, index) => (
                     <Text key={index} style={stylesPDF.text}>
                         Sede: {item.branchId}

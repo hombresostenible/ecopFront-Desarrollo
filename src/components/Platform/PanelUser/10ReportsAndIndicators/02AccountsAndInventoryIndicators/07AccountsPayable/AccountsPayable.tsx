@@ -162,7 +162,7 @@ function AccountsPayable() {
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
-                    <h2 className="text-primary-emphasis text-start">Cuentas por Pagar</h2>
+                    <h2 className="text-primary-emphasis text-start">Cuentas por pagar</h2>
                     <div className={styles.containerButtonExportT}>
                         {originalData && (
                             <PDFDownloadLink
@@ -176,7 +176,7 @@ function AccountsPayable() {
                     </div>
                 </div>
 
-                <p className='text-center'>El calculo de las cuentas por pagar no incluyen los pagos o compras a crédito relacionados con el Costos de Adquisición de Clientes y Costo de Retención de Clientes. En específico, no incluye el transporte o participación en eventos pagados a crédito.</p>
+                <p className='text-center'>El calculo de las cuentas por pagar no incluyen los pagos o compras a crédito relacionados con el Costos de Adquisición de Clientes y Costo de retención de clientes. En específico, no incluye el transporte o participación en eventos pagados a crédito.</p>
                 
                 <div className="m-auto text-center border">
                     <div className="d-flex justify-content-between">

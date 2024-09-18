@@ -36,7 +36,7 @@ function ModaAccountsPayable() {
     return (
         <div className="p-3 text-center m-auto border">
             <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
-                <h2 className="m-0 text-primary-emphasis text-start">Cuentas por Cobrar</h2>
+                <h2 className="m-0 text-primary-emphasis text-start">Cuentas por cobrar</h2>
             </div>
 
             <div className="text-center border m-auto">

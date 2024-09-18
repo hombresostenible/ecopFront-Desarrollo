@@ -54,12 +54,17 @@
     z-index: 1;
     right: 310px;
     background: white;
-    /* height: 295px; */
     width: 300px;
     border-radius: 10px;
 }
 .menu:hover {
     cursor: pointer;
+}
+.container__Paginated {
+    max-width: 1202px;
+}
+.select:focus {
+    outline-color: #718bd8;
 }
 
 /* TABLA */
@@ -176,16 +181,6 @@
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.container__Paginated {
-    max-width: 1202px;
-}
-
-
-
-
-
-
-
 
 
 /* ---------- RESPONSIVE (800 PX) ---------- */
