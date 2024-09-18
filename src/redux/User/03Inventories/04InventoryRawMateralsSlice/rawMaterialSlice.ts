@@ -5,6 +5,9 @@ interface RawMaterialState {
     rawMaterial: IRawMaterial | IRawMaterial[] | null;
     rawMaterialOff: IRawMaterial | IRawMaterial[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorRawMaterial: string[] | null;
 }
 
@@ -12,6 +15,9 @@ const initialState: RawMaterialState = {
     rawMaterial: null,
     rawMaterialOff: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorRawMaterial: null,
 };
 
@@ -40,6 +46,14 @@ const rawMaterialSlice = createSlice({
         getRawMaterialsStart: (state, action: PayloadAction<IRawMaterial>) => {
             state.loading = true;
             state.rawMaterial = action.payload;
+            state.errorRawMaterial = null;
+        },
+        getRawMaterialsPaginatedStart: (state, action: PayloadAction<{ registers: IRawMaterial[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.rawMaterial = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorRawMaterial = null;
         },
         getRawMaterialByIdStart: (state, action: PayloadAction<IRawMaterial>) => {
@@ -81,5 +95,5 @@ const rawMaterialSlice = createSlice({
     },
 });
 
-export const { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } = rawMaterialSlice.actions;
+export const { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialsPaginatedStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } = rawMaterialSlice.actions;
 export default rawMaterialSlice.reducer;

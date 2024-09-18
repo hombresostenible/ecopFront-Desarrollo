@@ -5,6 +5,9 @@ interface AssetState {
     assets: IAssets | IAssets[] | null;
     assetsOff: IAssets | IAssets[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorAssets: string[] | null;
 }
 
@@ -12,6 +15,9 @@ const initialState: AssetState = {
     assets: null,
     assetsOff: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorAssets: null,
 };
 
@@ -40,6 +46,14 @@ const assetsSlice = createSlice({
         getAssetsStart: (state, action: PayloadAction<IAssets>) => {
             state.loading = true;
             state.assets = action.payload;
+            state.errorAssets = null;
+        },
+        getAssetsPaginatedStart: (state, action: PayloadAction<{ registers: IAssets[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.assets = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAssets = null;
         },
         getAssetByIdStart: (state, action: PayloadAction<IAssets>) => {
@@ -86,5 +100,5 @@ const assetsSlice = createSlice({
     },
 });
 
-export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } = assetsSlice.actions;
+export const { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetsPaginatedStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } = assetsSlice.actions;
 export default assetsSlice.reducer;
