@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
-import { getAccountsBooksIncomesApproved, putAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
+import { getAccountsBooksIncomesApproved, putAccountsBook } from '../../../../../redux/User/04AccountsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
 import { IBranch } from '../../../../../types/User/branch.types';

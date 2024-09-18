@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IMerchandise } from '../../../types/User/merchandise.types';
+import { IMerchandise } from '../../../../types/User/merchandise.types';
 
 interface MerchandiseState {
     merchandise: IMerchandise | IMerchandise[] | null;

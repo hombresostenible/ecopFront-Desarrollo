@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { patchAsset, getAssetsOff, getAssets } from '../../../../../../redux/User/assetsSlice/actions';
+import { patchAsset, getAssetsOff, getAssets } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

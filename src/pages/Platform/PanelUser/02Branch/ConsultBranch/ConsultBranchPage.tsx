@@ -5,7 +5,7 @@ import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getBranchesPaginated } from '../../../../../redux/User/branchSlice/actions';
+import { getBranchesPaginated } from '../../../../../redux/User/02BranchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';

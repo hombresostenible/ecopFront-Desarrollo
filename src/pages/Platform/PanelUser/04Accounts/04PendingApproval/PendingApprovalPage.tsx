@@ -6,8 +6,8 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { getIncomesNotApproved, getIncomesNotApprovedByBranch } from '../../../../../redux/User/accountsBookSlice/actions';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import { getIncomesNotApproved, getIncomesNotApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';

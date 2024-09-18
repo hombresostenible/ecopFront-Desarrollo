@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { patchAddInventoryAsset, getAssets } from '../../../../../../redux/User/assetsSlice/actions';
+import { patchAddInventoryAsset, getAssets } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import styles from './styles.module.css';

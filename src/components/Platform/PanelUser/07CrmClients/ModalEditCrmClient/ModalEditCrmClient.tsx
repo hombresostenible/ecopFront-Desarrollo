@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
-import { putCrmClient, getCrmClients } from '../../../../../redux/User/crmClientSlice/actions';
+import { putCrmClient, getCrmClients } from '../../../../../redux/User/07CrmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types';
 import DepartmenAndCity from '../../../../../helpers/DepartmenAndCity/DepartmenAndCity';

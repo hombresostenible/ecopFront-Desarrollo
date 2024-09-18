@@ -1,7 +1,7 @@
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../redux/store';
-import { deleteCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/crmSupplierSlice/actions';
+import { deleteCrmSupplier, getCrmSuppliers } from '../../../../../redux/User/08CrmSupplierSlice/actions';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteCRMClientProps {

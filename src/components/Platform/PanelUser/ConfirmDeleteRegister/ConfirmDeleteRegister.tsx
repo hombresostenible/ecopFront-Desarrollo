@@ -4,12 +4,12 @@ import Cookies from 'js-cookie';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../redux/store';
-import { deleteAsset, getAssets } from '../../../../redux/User/assetsSlice/actions';
-import { deleteMerchandise, getMerchandises } from '../../../../redux/User/merchandiseSlice/actions';
-import { deleteProduct, getProducts } from '../../../../redux/User/productSlice/actions';
-import { deleteRawMaterial, getRawMaterials } from '../../../../redux/User/rawMaterialSlice/actions';
-import { deleteService, getServices } from '../../../../redux/User/serviceSlice/actions';
-import { deleteAccountsBook, getAccountsBooksApproved } from '../../../../redux/User/accountsBookSlice/actions';
+import { deleteAsset, getAssets } from '../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions';
+import { deleteMerchandise, getMerchandises } from '../../../../redux/User/03Inventories/02InventoryMerchadisesSlice/actions';
+import { deleteProduct, getProducts } from '../../../../redux/User/03Inventories/03InventoryProductsSlice/actions';
+import { deleteRawMaterial, getRawMaterials } from '../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
+import { deleteService, getServices } from '../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
+import { deleteAccountsBook, getAccountsBooksApproved } from '../../../../redux/User/04AccountsSlice/actions';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteRegisterProps {

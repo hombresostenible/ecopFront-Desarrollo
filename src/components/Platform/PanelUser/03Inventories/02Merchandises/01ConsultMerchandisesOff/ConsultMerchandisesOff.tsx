@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { patchMerchandise, getMerchandisesOff, getMerchandises } from '../../../../../../redux/User/merchandiseSlice/actions';
+import { patchMerchandise, getMerchandisesOff, getMerchandises } from '../../../../../../redux/User/03Inventories/02InventoryMerchadisesSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../../types/User/merchandise.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
