@@ -5,6 +5,9 @@ interface ProductState {
     product: IProduct | IProduct[] | null;
     productOff: IProduct | IProduct[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorProduct: string[] | null;
 }
 
@@ -12,6 +15,9 @@ const initialState: ProductState = {
     product: null,
     productOff: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorProduct: null,
 };
 
@@ -40,6 +46,14 @@ const productSlice = createSlice({
         getProductsStart: (state, action: PayloadAction<IProduct>) => {
             state.loading = true;
             state.product = action.payload;
+            state.errorProduct = null;
+        },
+        getProductsPaginatedStart: (state, action: PayloadAction<{ registers: IProduct[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.product = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorProduct = null;
         },
         getProductByIdStart: (state, action: PayloadAction<IProduct>) => {
@@ -81,5 +95,5 @@ const productSlice = createSlice({
     },
 });
 
-export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } = productSlice.actions;
+export const { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductsPaginatedStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } = productSlice.actions;
 export default productSlice.reducer;
