@@ -7,7 +7,7 @@ import jsCookie from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../../types/User/branch.types';
 // import { ICreditNote } from '../../../../../../types/User/creditNote.types';

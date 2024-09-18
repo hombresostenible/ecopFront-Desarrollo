@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store.ts';
 import { postUserPlatform, getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions.ts';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
 import { IUserPlatform } from '../../../../../../types/User/userPlatform.types.ts';
 import { IBranch } from '../../../../../../types/User/branch.types.ts';

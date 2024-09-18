@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { postRawMaterial, getRawMaterials } from '../../../../../../redux/User/rawMaterialSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
+import { postRawMaterial, getRawMaterials } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

@@ -6,8 +6,8 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { postAccountsBook } from '../../../../../redux/User/accountsBookSlice/actions';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import { postAccountsBook } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 import { getItemByBarCode } from '../../../../../redux/User/itemBybarCodeOrName/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook, IAccountsBookItems } from "../../../../../types/User/accountsBook.types";

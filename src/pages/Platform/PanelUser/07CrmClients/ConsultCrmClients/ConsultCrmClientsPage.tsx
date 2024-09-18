@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store.ts';
-import { getCrmClients } from '../../../../../redux/User/crmClientSlice/actions.ts';
+import { getCrmClients } from '../../../../../redux/User/07CrmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types.ts';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';

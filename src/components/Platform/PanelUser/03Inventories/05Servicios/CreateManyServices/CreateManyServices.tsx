@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
-import { postManyServices, getServices } from '../../../../../../redux/User/serviceSlice/actions';
+import { postManyServices, getServices } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../../types/User/branch.types';
 import { IService } from '../../../../../../types/User/services.types';

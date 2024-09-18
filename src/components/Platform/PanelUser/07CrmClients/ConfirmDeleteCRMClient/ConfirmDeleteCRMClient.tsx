@@ -2,7 +2,7 @@
 import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppDispatch } from '../../../../../redux/store';
-import { deleteCrmClient, getCrmClients } from '../../../../../redux/User/crmClientSlice/actions';
+import { deleteCrmClient, getCrmClients } from '../../../../../redux/User/07CrmClientSlice/actions';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteCRMClientProps {

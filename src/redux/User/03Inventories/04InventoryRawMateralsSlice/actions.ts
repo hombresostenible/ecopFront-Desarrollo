@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../../store';
-import axiosInstance from '../../../api/axios';
-import { IRawMaterial } from '../../../types/User/rawMaterial.types';
+import { AppDispatch } from '../../../store';
+import axiosInstance from '../../../../api/axios';
+import { IRawMaterial } from '../../../../types/User/rawMaterial.types';
 import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA

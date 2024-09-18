@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store.ts';
 import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions.ts';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
 import { IUserPlatform } from '../../../../../../types/User/userPlatform.types.ts';
 import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector.tsx';

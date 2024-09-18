@@ -7,10 +7,10 @@ import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { postProduct, getProducts } from '../../../../../../redux/User/productSlice/actions';
-import { getBranches } from '../../../../../../redux/User/branchSlice/actions';
-import { getAssetsByBranch } from '../../../../../../redux/User/assetsSlice/actions';
-import { getRawMaterialsByBranch } from '../../../../../../redux/User/rawMaterialSlice/actions';
+import { postProduct, getProducts } from '../../../../../../redux/User/03Inventories/03InventoryProductsSlice/actions';
+import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
+import { getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
+import { getRawMaterialsByBranch } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IProduct } from '../../../../../../types/User/products.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

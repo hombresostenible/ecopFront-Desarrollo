@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../../redux/store';
-import { getRawMaterials, putRawMaterial } from '../../../../../../redux/User/rawMaterialSlice/actions';
+import { getRawMaterials, putRawMaterial } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { IBranch } from '../../../../../../types/User/branch.types';

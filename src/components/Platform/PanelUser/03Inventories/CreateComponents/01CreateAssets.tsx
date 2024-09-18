@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { postAsset, getAssets } from '../../../../../redux/User/assetsSlice/actions';
-import { getBranches } from '../../../../../redux/User/branchSlice/actions';
+import { postAsset, getAssets } from '../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions';
+import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../types/User/branch.types';

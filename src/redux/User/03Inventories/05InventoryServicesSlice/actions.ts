@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from '../../store';
-import axiosInstance from '../../../api/axios';
-import { IService } from '../../../types/User/services.types';
+import { AppDispatch } from '../../../store';
+import axiosInstance from '../../../../api/axios';
+import { IService } from '../../../../types/User/services.types';
 import { serviceData, errorService, postServiceStart, postManyServicesStart, getServicesStart, getServiceByIdStart, getServicesByBranchStart, putServiceStart, putManyServicesStart, patchServiceStart, deleteServiceStart } from './serviceSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA

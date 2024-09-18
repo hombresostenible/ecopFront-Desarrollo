@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../../redux/store';
-import { getAssets, putAsset } from '../../../../../../redux/User/assetsSlice/actions';
+import { getAssets, putAsset } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
 import { IBranch } from '../../../../../../types/User/branch.types';
