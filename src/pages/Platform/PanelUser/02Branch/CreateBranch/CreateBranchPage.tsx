@@ -94,7 +94,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus Sedes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4`}>Crea tus sedes</h1>
 
                         <div className='mb-4 d-flex align-items-center justify-content-between'>
                             <Link to='/branches/consult-branches' className={`${styles.link__Head_Navigate} text-decoration-none`}>Consultar tus sedes</Link>

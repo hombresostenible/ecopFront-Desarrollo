@@ -10,7 +10,7 @@ function DownloadInventoryRawMaterials({ data }: DownloadInventoryAssetsProps) {
     return (
         <Document>
             <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Inventario de Materias Primas</Text>
+                <Text style={stylesPDF.title}>Inventario de materias primas</Text>
                 {data.map((item, index) => (
                     <Text key={index} style={stylesPDF.text}>
                         Sede: {item.branchId}

@@ -127,7 +127,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Tu lista de Sedes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Tu lista de sedes</h1>
 
                         <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
@@ -137,7 +137,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} m-auto d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} mb-4 m-auto d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -155,6 +155,28 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                                     />
                                 </div>
                             )}
+                        </div>
+
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                            <ComponentPaginated
+                                totalRegisters={totalBranches}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} mx-2 p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
                         </div>
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
@@ -257,30 +279,6 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                                     )}
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div className={`${styles.container__Paginated} mx-auto d-flex align-items-center justify-content-end gap-2`}>
-                            <ComponentPaginated
-                                totalRegisters={totalBranches}
-                                limit={itemsByPage}
-                                onPageChange={handlePageChange}
-                                currentPage={currentPage}
-                            />
-                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
-                                <span>Ver:</span>
-                                <div className={`${styles.select__Items_By_page} mx-2`}>
-                                    <select
-                                        className={`${styles.select} p-1 border-0`}
-                                        value={itemsByPage}
-                                        onChange={handleItemsByPage}
-                                    >
-                                        <option value={20}>20</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                    </select>
-                                </div>
-                                <span>por página</span>
-                            </div>
                         </div>
 
                         <Modal show={showSeeBranch} onHide={onCloseModal} size="xl" backdrop="static" keyboard={false} >
