@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../../store';
 import axiosInstance from '../../../../api/axios';
 import { IRawMaterial } from '../../../../types/User/rawMaterial.types';
-import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
+import { rawMaterialData, errorRawMaterial, postRawMaterialStart, postManyRawMaterialsStart, getRawMaterialsStart, getRawMaterialsPaginatedStart, getRawMaterialByIdStart, getRawMaterialsByBranchStart, getRawMaterialsOffStart, putRawMaterialStart, putManyRawMaterialsStart, patchRawMaterialStart, patchAddInventoryRawMaterialStart, deleteRawMaterialStart } from './rawMaterialSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postRawMaterial = (formData: IRawMaterial, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getRawMaterials = (token: string) => async (dispatch: AppDispatch) 
             }
         });
         dispatch(getRawMaterialsStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorRawMaterial(error.response?.data.message));
+        } else {
+            dispatch(errorRawMaterial(error.message));
+        }
+    }
+};
+
+//OBTENER TODAS LAS MATERIAS PRIMAS PAGINADAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
+export const getRawMaterialsPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/raw-material/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getRawMaterialsPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorRawMaterial(error.response?.data.message));

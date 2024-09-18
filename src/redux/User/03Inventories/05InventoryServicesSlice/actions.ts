@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../../store';
 import axiosInstance from '../../../../api/axios';
 import { IService } from '../../../../types/User/services.types';
-import { serviceData, errorService, postServiceStart, postManyServicesStart, getServicesStart, getServiceByIdStart, getServicesByBranchStart, putServiceStart, putManyServicesStart, patchServiceStart, deleteServiceStart } from './serviceSlice';
+import { serviceData, errorService, postServiceStart, postManyServicesStart, getServicesStart, getServicesPaginatedStart, getServiceByIdStart, getServicesByBranchStart, putServiceStart, putManyServicesStart, patchServiceStart, deleteServiceStart } from './serviceSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postService = (formData: IService, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getServices = (token: string) => async (dispatch: AppDispatch) => {
             }
         });
         dispatch(getServicesStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorService(error.response?.data.message));
+        } else {
+            dispatch(errorService(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS SERVICIOS PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+export const getServicesPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/service/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getServicesPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorService(error.response?.data.message));

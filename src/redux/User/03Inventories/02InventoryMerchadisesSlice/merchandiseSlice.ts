@@ -5,6 +5,9 @@ interface MerchandiseState {
     merchandise: IMerchandise | IMerchandise[] | null;
     merchandiseOff: IMerchandise | IMerchandise[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorMerchandise: string[] | null;
 }
 
@@ -12,6 +15,9 @@ const initialState: MerchandiseState = {
     merchandise: null,
     merchandiseOff: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorMerchandise: null,
 };
 
@@ -40,6 +46,14 @@ const merchandiseSlice = createSlice({
         getMerchandisesStart: (state, action: PayloadAction<IMerchandise>) => {
             state.loading = true;
             state.merchandise = action.payload;
+            state.errorMerchandise = null;
+        },
+        getMerchandisesPaginatedStart: (state, action: PayloadAction<{ registers: IMerchandise[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.merchandise = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorMerchandise = null;
         },
         getMerchandiseByIdStart: (state, action: PayloadAction<IMerchandise>) => {
@@ -81,5 +95,5 @@ const merchandiseSlice = createSlice({
     },
 });
 
-export const { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } = merchandiseSlice.actions;
+export const { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandisesPaginatedStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } = merchandiseSlice.actions;
 export default merchandiseSlice.reducer;

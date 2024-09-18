@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../../store';
 import axiosInstance from '../../../../api/axios';
 import { IAssets } from '../../../../types/User/assets.types';
-import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } from './assetsSlice';
+import { assetsData, errorAssets, postAssetStart, postManyAssetsStart, getAssetsStart, getAssetsPaginatedStart, getAssetByIdStart, getAssetsByBranchStart, getAssetsOffStart, getAssetsOffByBranchStart, putAssetStart, putManyAssetsStart, patchAssetStart, patchAddInventoryAssetStart, deleteAssetStart } from './assetsSlice';
 
 //CREAR DE UN EQUIPO, HERRAMIENTA O MAQUINA
 export const postAsset = (formData: IAssets, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getAssets = (token: string) => async (dispatch: AppDispatch) => {
             }
         });
         dispatch(getAssetsStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAssets(error.response?.data.message));
+        } else {
+            dispatch(errorAssets(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS ACTIVOS PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+export const getAssetsPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/asset/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAssetsPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAssets(error.response?.data.message));

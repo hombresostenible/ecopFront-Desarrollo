@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../../store';
 import axiosInstance from '../../../../api/axios';
 import { IProduct } from '../../../../types/User/products.types';
-import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } from './productSlice';
+import { productData, errorProduct, postProductStart, postManyProductsStart, getProductsStart, getProductsPaginatedStart, getProductByIdStart, getProductsByBranchStart, getProductsOffStart, putProductStart, putManyProductsStart, patchProductStart, patchAddInventoryProductStart, deleteProductStart } from './productSlice';
 
 //CREAR DE UN PRODUCTO
 export const postProduct = (formData: IProduct, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getProducts = (token: string) => async (dispatch: AppDispatch) => {
             }
         });
         dispatch(getProductsStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorProduct(error.response?.data.message));
+        } else {
+            dispatch(errorProduct(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS PRODUCTOS PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+export const getProductsPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/product/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getProductsPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorProduct(error.response?.data.message));
