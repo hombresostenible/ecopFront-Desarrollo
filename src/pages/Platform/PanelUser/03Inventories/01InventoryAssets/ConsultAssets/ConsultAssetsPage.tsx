@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getAssets, getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
+import { getAssetsPaginated, getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
@@ -21,6 +21,7 @@ import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUs
 import ModalEditAsset from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/04ModalEditAsset/ModalEditAsset';
 import AddInventoryAsset from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/05AddInventoryAsset/AddInventoryAsset';
 import ModalAssetOff from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/06ModalAssetOff/ModalAssetOff';
+import ComponentPaginated from '../../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -34,15 +35,36 @@ function ConsultAssetsPage() {
 
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const assets = useSelector((state: RootState) => state.assets.assets);
+    const { assets, totalRegisters} = useSelector((state: RootState) => state.assets);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAssets(token));
         }
     }, [token]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+    useEffect(() => {
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getAssetsPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los activos');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
     
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
 
@@ -51,7 +73,14 @@ function ConsultAssetsPage() {
             if (selectedBranch) {
                 dispatch(getAssetsByBranch(selectedBranch, token));
             } else {
-                dispatch(getAssets(token));
+                const fetchProductsByDescription = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getAssetsPaginated(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer los activos');
+                    }
+                };
+                fetchProductsByDescription(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
@@ -214,6 +243,28 @@ function ConsultAssetsPage() {
                                         />
                                     </div>
                                 )}
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} mx-2 p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
                             </div>
                         </div>
 

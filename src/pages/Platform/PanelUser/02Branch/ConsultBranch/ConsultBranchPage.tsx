@@ -41,7 +41,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
             try {
                 await dispatch(getBranchesPaginated(token, page, limit));
             } catch (error) {
-                console.error('Error al traer las sedes', error);
+                throw new Error('Error al traer las sedes');
             }
         };
         fetchProductsByDescription(currentPage, itemsByPage);
