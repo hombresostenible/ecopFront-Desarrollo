@@ -54,6 +54,12 @@
 .menu:hover {
     cursor: pointer;
 }
+.container__Paginated {
+    max-width: 1202px;
+}
+.select:focus {
+    outline-color: #718bd8;
+}
 
 /* TABLA */
 .container__Table {
