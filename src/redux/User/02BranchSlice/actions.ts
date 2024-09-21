@@ -72,10 +72,9 @@ export const getBranchesPaginated = (token: string, page: number, limit: number)
                 "Content-Type": "application/json",
             }
         });
-        console.log('response: ', response)
         dispatch(getBranchesPaginatedStart({
-            branch: response.data.result,
-            totalBranches: response.data.totalBranches,
+            registers: response.data.result,
+            totalRegisters: response.data.totalBranches,
             totalPages: response.data.result.totalPages,
             currentPage: response.data.result.currentPage,
         }));

@@ -32,7 +32,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const { branch, totalBranches } = useSelector((state: RootState) => state.branch);
+    const { branch, totalRegisters } = useSelector((state: RootState) => state.branch);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
@@ -41,7 +41,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
             try {
                 await dispatch(getBranchesPaginated(token, page, limit));
             } catch (error) {
-                console.error('Error al traer las sedes', error);
+                throw new Error('Error al traer las sedes');
             }
         };
         fetchProductsByDescription(currentPage, itemsByPage);
@@ -159,7 +159,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
 
                         <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
                             <ComponentPaginated
-                                totalRegisters={totalBranches}
+                                totalRegisters={totalRegisters}
                                 limit={itemsByPage}
                                 onPageChange={handlePageChange}
                                 currentPage={currentPage}
