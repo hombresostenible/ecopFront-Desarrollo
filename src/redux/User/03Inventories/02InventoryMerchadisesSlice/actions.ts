@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../../store';
 import axiosInstance from '../../../../api/axios';
 import { IMerchandise } from '../../../../types/User/merchandise.types';
-import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
+import { merchandiseData, errorMerchandise, postMerchandisetart, postManyMerchandisesStart, getMerchandisesStart, getMerchandisesPaginatedStart, getMerchandiseByIdStart, getMerchandisesByBranchStart, getMerchandisesOffStart, putMerchandiseStart, putManyMerchandisesStart, patchMerchandiseStart, patchAddInventoryMerchandiseStart, deleteMerchandiseStart } from './merchandiseSlice';
 
 //CREAR UNA MERCANCIA
 export const postMerchandise = (formData: IMerchandise, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getMerchandises = (token: string) => async (dispatch: AppDispatch) 
             }
         });
         dispatch(getMerchandisesStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorMerchandise(error.response?.data.message));
+        } else {
+            dispatch(errorMerchandise(error.message));
+        }
+    }
+};
+
+//OBTENER TODAS LAS MERCANCIAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
+export const getMerchandisesPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/merchandise/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getMerchandisesPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorMerchandise(error.response?.data.message));

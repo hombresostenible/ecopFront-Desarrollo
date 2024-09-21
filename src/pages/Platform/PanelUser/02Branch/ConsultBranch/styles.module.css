@@ -91,30 +91,37 @@
 .branch {
     height: 60px;
     width: 200px;
+    width: 100%;
 }
 .department {
     height: 60px;
     width: 150px;
+    width: 100%;
 }
 .city {
     height: 60px;
     width: 150px;
+    width: 100%;
 }
 .address {
     height: 60px;
     width: 150px;
+    width: 100%;
 }
 .email {
     height: 60px;
     width: 250px;
+    width: 100%;
 }
 .phone {
     height: 60px;
     width: 150px;
+    width: 100%;
 }
 .action {
     height: 60px;
     width: 150px;
+    width: 100%;
 }
 
 /* CONTENIDO DE LA TABLA */
@@ -188,7 +195,7 @@
     .title {
         text-align: center;
     }
-    .container__link_Head_Navigate {
+    .container__Link_Head_Navigate {
         display: flex;
         flex-direction: column;
         gap: 10px;

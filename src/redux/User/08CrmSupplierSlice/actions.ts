@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { ICrmSupplier } from '../../../types/User/crmSupplier.types';
-import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } from './crmSupplierSlice';
+import { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSuppliersPaginatedStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } from './crmSupplierSlice';
 
 //CREAR DE UN PROVEEDOR
 export const postCrmSupplier = (formData: ICrmSupplier, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getCrmSuppliers = (token: string) => async (dispatch: AppDispatch) 
             }
         });
         dispatch(getCrmSuppliersStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorCrmSupplier(error.response?.data.message));
+        } else {
+            dispatch(errorCrmSupplier(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS PROVEEDORES PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+export const getCrmSuppliersPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/crm-supplier/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getCrmSuppliersPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorCrmSupplier(error.response?.data.message));

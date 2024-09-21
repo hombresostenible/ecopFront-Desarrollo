@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getAssets, getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
+import { getAssetsPaginated, getAssetsByBranch } from '../../../../../../redux/User/03Inventories/01InventoryAssetsSlice/actions.ts';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAssets } from '../../../../../../types/User/assets.types';
@@ -21,6 +21,7 @@ import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUs
 import ModalEditAsset from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/04ModalEditAsset/ModalEditAsset';
 import AddInventoryAsset from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/05AddInventoryAsset/AddInventoryAsset';
 import ModalAssetOff from '../../../../../../components/Platform/PanelUser/03Inventories/01Assets/06ModalAssetOff/ModalAssetOff';
+import ComponentPaginated from '../../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -34,24 +35,51 @@ function ConsultAssetsPage() {
 
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const assets = useSelector((state: RootState) => state.assets.assets);
+    const { assets, totalRegisters } = useSelector((state: RootState) => state.assets);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAssets(token));
         }
     }, [token]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+    useEffect(() => {
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getAssetsPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los activos');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
     
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
-
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
                 dispatch(getAssetsByBranch(selectedBranch, token));
             } else {
-                dispatch(getAssets(token));
+                const fetchProductsByDescription = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getAssetsPaginated(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer los activos');
+                    }
+                };
+                fetchProductsByDescription(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
@@ -151,9 +179,9 @@ function ConsultAssetsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Equipos, herramientas y máquinas</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Equipos, herramientas y máquinas</h1>
 
-                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -174,12 +202,12 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
-                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                        <div className={`${styles.container__Filters} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus equipos, herramientas y máquinas por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="mx-2 p-2 border rounded"
+                                    className="p-2 border rounded"
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -191,7 +219,7 @@ function ConsultAssetsPage() {
                                 </select>
                             </div>
 
-                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-center position-relative`} >
                                 <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                                 {menuColumnSelectorVisible && (
                                     <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -217,8 +245,30 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
+                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>

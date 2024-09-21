@@ -137,7 +137,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} mb-4 m-auto d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} mb-4 mx-auto d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>

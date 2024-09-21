@@ -10,6 +10,10 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
+    max-width: 1802px;
+}
+.container__Link_Head_Navigate {
+    max-width: 1802px;
 }
 .link__Head_Navigate {
     color: #fff;
@@ -28,9 +32,11 @@
     color: #fff;
     margin: 0;
 }
+.container__Filters {
+    max-width: 1802px;
+}
 .container__Column_Selector {
     height: 50px;
-    width: 100%;
 }
 .span__Menu {
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -54,15 +60,20 @@
 .menu:hover {
     cursor: pointer;
 }
+.container__Paginated {
+    max-width: 1802px;
+}
+.select {
+    margin: 0 15px 0 10px;
+}
 
 /* TABLA */
 .container__Table {
     border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
+    max-width: 1802px;
     overflow-x: auto;
 }
 .container__Head {
-    background: #e9ecef;
     height: 60px;
     width: 100%;
     font-weight: 600;
@@ -71,72 +82,59 @@
 /* TITULOS DE LAS COLUMNAS */
 .container__Tr{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    flex-wrap: nowrap;
     height: 60px;
 }
-.container__Tr, .container__Info {
-    display: flex;
-    flex-wrap: nowrap; /* Evita que las columnas se apilen */
-    justify-content: space-between;
+.container__Info {
+    flex-wrap: nowrap;
 }
 .branch {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 200px;
 }
 .bar__Code {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 200px;
 }
 .name__Item {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 200px;
 }
 .brand {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 100px;
 }
 .reference {  
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 .state__Asset {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 .condition__Asset {
     height: 60px;
-    width: 7%;
-    min-width: 70px;
+    width: 150px;
 }
 .inventory {
     height: 60px;
-    width: 7%;
-    min-width: 70px;
+    width: 100px;
 }
 .purchase__Price_Before_Tax {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 .selling__Price {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 .IVA {
     height: 60px;
-    width: 6%;
-    min-width: 60px;
+    width: 100px;
 }
 .action {
     height: 60px;
-    min-width: 125px;
-    max-width: 125px;
+    width: 150px;
 }
 
 /* CONTENIDO DE LA TABLA */
@@ -192,7 +190,7 @@
     .title {
         text-align: center;
     }
-    .container__link_Head_Navigate {
+    .container__Link_Head_Navigate {
         display: flex;
         flex-direction: column;
         gap: 10px;
