@@ -45,10 +45,10 @@ const branchSlice = createSlice({
             state.branch = action.payload;
             state.errorBranch = null;
         },
-        getBranchesPaginatedStart: (state, action: PayloadAction<{ branch: IBranch[], totalBranches: number, totalPages: number, currentPage: number }>) => {
+        getBranchesPaginatedStart: (state, action: PayloadAction<{ registers: IBranch[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.branch = action.payload.branch;
-            state.totalBranches = action.payload.totalBranches;
+            state.branch = action.payload.registers;
+            state.totalBranches = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
             state.errorBranch = null;
