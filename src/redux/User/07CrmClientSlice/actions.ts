@@ -2,7 +2,7 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { ICrmClient } from '../../../types/User/crmClient.types';
-import { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } from './crmClientSlice';
+import { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientsPaginatedStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } from './crmClientSlice';
 
 //CREAR DE UN CLIENTE
 export const postCrmClient = (formData: ICrmClient, token: string) => async (dispatch: AppDispatch) => {
@@ -54,6 +54,30 @@ export const getCrmClients = (token: string) => async (dispatch: AppDispatch) =>
             }
         });
         dispatch(getCrmClientsStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorCrmClient(error.response?.data.message));
+        } else {
+            dispatch(errorCrmClient(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS CLIENTES PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+export const getCrmClientsPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/crm-client/paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getCrmClientsPaginatedStart({
+            registers: response.data.result,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.result.totalPages,
+            currentPage: response.data.result.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorCrmClient(error.response?.data.message));

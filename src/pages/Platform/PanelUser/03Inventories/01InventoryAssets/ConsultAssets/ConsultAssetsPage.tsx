@@ -35,7 +35,7 @@ function ConsultAssetsPage() {
 
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const { assets, totalRegisters} = useSelector((state: RootState) => state.assets);
+    const { assets, totalRegisters } = useSelector((state: RootState) => state.assets);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
@@ -67,7 +67,6 @@ function ConsultAssetsPage() {
     };
     
     const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
-
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
@@ -180,9 +179,9 @@ function ConsultAssetsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Equipos, herramientas y máquinas</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Equipos, herramientas y máquinas</h1>
 
-                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -203,12 +202,12 @@ function ConsultAssetsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
-                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                        <div className={`${styles.container__Filters} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus equipos, herramientas y máquinas por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="mx-2 p-2 border rounded"
+                                    className="p-2 border rounded"
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -220,7 +219,7 @@ function ConsultAssetsPage() {
                                 </select>
                             </div>
 
-                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-center position-relative`} >
                                 <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                                 {menuColumnSelectorVisible && (
                                     <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -246,7 +245,7 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
                             <ComponentPaginated
                                 totalRegisters={totalRegisters}
                                 limit={itemsByPage}
@@ -256,7 +255,7 @@ function ConsultAssetsPage() {
                             <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
                                 <span>Ver:</span>
                                 <select
-                                    className={`${styles.select} mx-2 p-1 border`}
+                                    className={`${styles.select} p-1 border`}
                                     value={itemsByPage}
                                     onChange={handleItemsByPage}
                                 >
@@ -268,8 +267,8 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
