@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getServices, getServicesByBranch } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
+import { getServicesPaginated, getServicesByBranch } from '../../../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IService } from '../../../../../../types/User/services.types';
@@ -18,6 +18,7 @@ import Footer from '../../../../../../components/Platform/PanelUser/Footer/Foote
 import SeeItemService from '../../../../../../components/Platform/PanelUser/03Inventories/05Servicios/01SeeItemService/SeeItemService';
 import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUser/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditService from '../../../../../../components/Platform/PanelUser/03Inventories/05Servicios/03ModalEditService/ModalEditService';
+import ComponentPaginated from '../../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -30,28 +31,58 @@ function ConsultServicesPage() {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const services = useSelector((state: RootState) => state.service.service);
+    const { service, totalRegisters } = useSelector((state: RootState) => state.service);
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getServices(token));
         }
     }, [token]);
 
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+    useEffect(() => {
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getServicesPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los servicios');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+    
     //PARA FILTRAR POR SEDE O POR TODAS
+    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
                 dispatch(getServicesByBranch(selectedBranch, token));
             } else {
-                dispatch(getServices(token));
+                const fetchProductsByDescription = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getServicesPaginated(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer los servicios');
+                    }
+                };
+                fetchProductsByDescription(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
+
+    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const [idRawMaterial, setIdRawMaterial] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
@@ -81,7 +112,6 @@ function ConsultServicesPage() {
         setShowEditServiceModal(false);
     }, []);
 
-    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
     const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);
@@ -122,9 +152,9 @@ function ConsultServicesPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Servicios</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Servicios</h1>
 
-                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -132,12 +162,12 @@ function ConsultServicesPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
-                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                        <div className={`${styles.container__Filters} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus servicios por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="mx-2 p-2 border rounded"
+                                    className="p-2 border rounded"
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -149,7 +179,7 @@ function ConsultServicesPage() {
                                 </select>
                             </div>
 
-                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-center position-relative`} >
                                 <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                                 {menuColumnSelectorVisible && (
                                     <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -169,8 +199,30 @@ function ConsultServicesPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
+                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
@@ -191,8 +243,8 @@ function ConsultServicesPage() {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(services) && services.length > 0 ? (
-                                        services.map((service) => (
+                                    {Array.isArray(service) && service.length > 0 ? (
+                                        service.map((service) => (
                                         <tr key={service.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>

@@ -10,7 +10,13 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
+    max-width: 1802px;
+
 }
+.container__Link_Head_Navigate {
+    max-width: 1802px;
+}
+
 .link__Head_Navigate {
     color: #fff;
     padding: 10px 20px;
@@ -53,6 +59,13 @@
 }
 .menu:hover {
     cursor: pointer;
+}
+
+.container__Paginated {
+    max-width: 1802px;
+}
+.select {
+    margin: 0 15px 0 10px;
 }
 
 /* TABLA */

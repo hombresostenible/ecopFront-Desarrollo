@@ -72,11 +72,12 @@ export const getAssetsPaginated = (token: string, page: number, limit: number) =
                 "Content-Type": "application/json",
             }
         });
+        console.log('response: ', response)
         dispatch(getAssetsPaginatedStart({
-            registers: response.data.result,
+            registers: response.data.registers,
             totalRegisters: response.data.totalRegisters,
-            totalPages: response.data.result.totalPages,
-            currentPage: response.data.result.currentPage,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
         }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
