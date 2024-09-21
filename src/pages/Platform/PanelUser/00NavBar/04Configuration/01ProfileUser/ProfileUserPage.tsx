@@ -119,7 +119,7 @@ function ProfileUserPage() {
         } else if (option === 'EliminarImagen') {
             try {
                 await dispatch(deleteLogoUser(token));
-               // Simulamos un delay de la API
+                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 await dispatch(getProfileUser(token));
                 setUserLogo(null);
@@ -129,7 +129,7 @@ function ProfileUserPage() {
             setMenuVisible(false);
         }
     };
-    
+
 
     const menuRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
