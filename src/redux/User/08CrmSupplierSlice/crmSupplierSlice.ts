@@ -4,12 +4,18 @@ import { ICrmSupplier } from '../../../types/User/crmSupplier.types';
 interface CrmSupplierState {
     crmSupplier: ICrmSupplier | ICrmSupplier[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorCrmSupplier: string[] | null;
 }
 
 const initialState: CrmSupplierState = {
     crmSupplier: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorCrmSupplier: null,
 };
 
@@ -40,6 +46,14 @@ const crmSupplierSlice = createSlice({
             state.crmSupplier = action.payload;
             state.errorCrmSupplier = null;
         },
+        getCrmSuppliersPaginatedStart: (state, action: PayloadAction<{ registers: ICrmSupplier[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.crmSupplier = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorCrmSupplier = null;
+        },
         getCrmSupplierByIdStart: (state, action: PayloadAction<ICrmSupplier>) => {
             state.loading = false;
             state.crmSupplier = action.payload;
@@ -65,5 +79,5 @@ const crmSupplierSlice = createSlice({
     },
 });
 
-export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } = crmSupplierSlice.actions;
+export const { crmSupplierData, errorCrmSupplier, postCrmSupplierStart, postManyCrmSuppliersStart, getCrmSuppliersStart, getCrmSuppliersPaginatedStart, getCrmSupplierByIdStart, getCrmSuppliersByBranchStart, putCrmSupplierStart, deleteCrmSupplierStart, sendEmailCRMSupplierStart } = crmSupplierSlice.actions;
 export default crmSupplierSlice.reducer;

@@ -4,12 +4,18 @@ import { ICrmClient } from '../../../types/User/crmClient.types';
 interface CrmClientState {
     crmClient: ICrmClient | ICrmClient[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorCrmClient: string[] | null;
 }
 
 const initialState: CrmClientState = {
     crmClient: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorCrmClient: null,
 };
 
@@ -40,6 +46,14 @@ const crmClientSlice = createSlice({
             state.crmClient = action.payload;
             state.errorCrmClient = null;
         },
+        getCrmClientsPaginatedStart: (state, action: PayloadAction<{ registers: ICrmClient[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.crmClient = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorCrmClient = null;
+        },
         getCrmClientByIdStart: (state, action: PayloadAction<ICrmClient>) => {
             state.loading = false;
             state.crmClient = action.payload;
@@ -65,5 +79,5 @@ const crmClientSlice = createSlice({
     },
 });
 
-export const { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } = crmClientSlice.actions;
+export const { crmClientData, errorCrmClient, postCrmClientStart, postManyCrmClientsStart, getCrmClientsStart, getCrmClientsPaginatedStart, getCrmClientByIdStart, getCrmClientsByBranchStart, putCrmClientStart, deleteCrmClientStart, sendEmailCRMClientStart } = crmClientSlice.actions;
 export default crmClientSlice.reducer;

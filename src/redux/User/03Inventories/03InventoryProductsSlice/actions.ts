@@ -63,7 +63,7 @@ export const getProducts = (token: string) => async (dispatch: AppDispatch) => {
     }
 };
 
-//OBTENER TODOS LOS PRODUCTOS PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+//OBTENER TODOS LOS PRODUCTOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
 export const getProductsPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/product/paginated?page=${page}&limit=${limit}`, {

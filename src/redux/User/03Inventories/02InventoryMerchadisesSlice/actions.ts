@@ -63,7 +63,7 @@ export const getMerchandises = (token: string) => async (dispatch: AppDispatch) 
     }
 };
 
-//OBTENER TODAS LAS MERCANCIAS PAGINADAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
+//OBTENER TODAS LAS MERCANCIAS PARA RENDERIZARLAS EN LA TABLA DE CONSULTA
 export const getMerchandisesPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/merchandise/paginated?page=${page}&limit=${limit}`, {

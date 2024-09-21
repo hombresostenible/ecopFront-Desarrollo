@@ -63,7 +63,7 @@ export const getServices = (token: string) => async (dispatch: AppDispatch) => {
     }
 };
 
-//OBTENER TODOS LOS SERVICIOS PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
+//OBTENER TODOS LOS SERVICIOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
 export const getServicesPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/service/paginated?page=${page}&limit=${limit}`, {
