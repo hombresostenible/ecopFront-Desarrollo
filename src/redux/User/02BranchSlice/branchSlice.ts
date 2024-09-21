@@ -4,7 +4,7 @@ import { IBranch } from '../../../types/User/branch.types';
 interface BranchState {
     branch: IBranch | IBranch[] | null;
     loading: boolean;
-    totalBranches: number;
+    totalRegisters: number;
     totalPages: number;
     currentPage: number;
     errorBranch: string[] | null;
@@ -13,7 +13,7 @@ interface BranchState {
 const initialState: BranchState = {
     branch: null,
     loading: false,
-    totalBranches: 0,
+    totalRegisters: 0,
     totalPages: 0,
     currentPage: 0,
     errorBranch: null,
@@ -48,7 +48,7 @@ const branchSlice = createSlice({
         getBranchesPaginatedStart: (state, action: PayloadAction<{ registers: IBranch[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.branch = action.payload.registers;
-            state.totalBranches = action.payload.totalRegisters;
+            state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
             state.errorBranch = null;
