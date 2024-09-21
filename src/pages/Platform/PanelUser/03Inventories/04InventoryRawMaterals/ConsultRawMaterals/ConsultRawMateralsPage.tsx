@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getRawMaterials, getRawMaterialsByBranch } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
+import { getRawMaterialsPaginated, getRawMaterialsByBranch } from '../../../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
@@ -21,6 +21,7 @@ import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUs
 import ModalEditRawMaterial from '../../../../../../components/Platform/PanelUser/03Inventories/04RawMaterials/04ModalEditRawMaterial/ModalEditRawMaterial';
 import AddInventoryRawMaterial from '../../../../../../components/Platform/PanelUser/03Inventories/04RawMaterials/05AddInventoryRawMaterial/AddInventoryRawMaterial';
 import ModalRawMaterialOff from '../../../../../../components/Platform/PanelUser/03Inventories/04RawMaterials/06ModalRawMaterialOff/ModalRawMaterialOff';
+import ComponentPaginated from '../../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
@@ -34,28 +35,56 @@ function ConsultRawMateralsPage() {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const rawMaterials = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
+    const { rawMaterial, totalRegisters} = useSelector((state: RootState) => state.rawMaterial);
     const branches = useSelector((state: RootState) => state.branch.branch);
-
-    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getRawMaterials(token));
         }
     }, [token]);
 
-    //PARA FILTRAR POR SEDE O POR TODAS
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+    useEffect(() => {
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getRawMaterialsPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer las materias primas');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+    
+    const [selectedBranch, setSelectedBranch] = useState<string | undefined>('');
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
                 dispatch(getRawMaterialsByBranch(selectedBranch, token));
             } else {
-                dispatch(getRawMaterials(token));
+                const fetchProductsByDescription = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getRawMaterialsPaginated(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer las materias primas');
+                    }
+                };
+                fetchProductsByDescription(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
+
+    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const [idRawMaterial, setIdRawMaterial] = useState('');
     const [nameRawMaterial, setNameRawMaterial] = useState('');
@@ -105,8 +134,6 @@ function ConsultRawMateralsPage() {
         setShowOff(false);
     }, []);
 
-    const branchesArray = Array.isArray(branches) ? branches : [];
-
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
     const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);
     const handleColumnSelector = () => {
@@ -149,9 +176,9 @@ function ConsultRawMateralsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Materias primas</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Materias primas</h1>
 
-                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
@@ -172,8 +199,8 @@ function ConsultRawMateralsPage() {
                             </Modal.Body>
                         </Modal>
 
-                        <div className={`${styles.container__Filters} mb-3 d-flex align-items-center justify-content-between`}>
-                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center`}>
+                        <div className={`${styles.container__Filters} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus materias primas por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
@@ -189,7 +216,7 @@ function ConsultRawMateralsPage() {
                                 </select>
                             </div>
 
-                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-center position-relative`} >
                                 <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                                 {menuColumnSelectorVisible && (
                                     <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -212,8 +239,30 @@ function ConsultRawMateralsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
+                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
@@ -243,8 +292,8 @@ function ConsultRawMateralsPage() {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(rawMaterials) && rawMaterials.length > 0 ? (
-                                        rawMaterials.map((rawMaterial) => (
+                                    {Array.isArray(rawMaterial) && rawMaterial.length > 0 ? (
+                                        rawMaterial.map((rawMaterial) => (
                                         <tr key={rawMaterial.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>

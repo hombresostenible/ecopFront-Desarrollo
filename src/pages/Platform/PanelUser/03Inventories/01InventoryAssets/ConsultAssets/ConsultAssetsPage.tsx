@@ -84,6 +84,8 @@ function ConsultAssetsPage() {
         }
     }, [selectedBranch, token, dispatch]);
 
+    const branchesArray = Array.isArray(branches) ? branches : [];
+
     const [idAsset, setIdAsset] = useState('');
     const [nameAsset, setNameAsset] = useState('');
     const [idBranch, setIdBranch] = useState('');
@@ -132,7 +134,6 @@ function ConsultAssetsPage() {
         setShowOff(false);
     }, []);
 
-    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const menuColumnSelector = useRef<HTMLDivElement | null>(null);
     const [menuColumnSelectorVisible, setMenuColumnSelectorVisible] = useState(false);
