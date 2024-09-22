@@ -182,7 +182,7 @@ function ConsultProductsPage() {
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-products' className={`${styles.link} text-decoration-none`}>Registro de productos</Link>
+                                <Link to='/inventories/create-products' className={`${styles.link} m-0 text-decoration-none`}>Registro de productos</Link>
                             </div>
                         </div>
 
@@ -204,7 +204,7 @@ function ConsultProductsPage() {
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus productos por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="p-2 border rounded"
+                                    className={`${styles.select__Branch} p-2 border rounded`}
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -239,7 +239,7 @@ function ConsultProductsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-3`}>
                             <ComponentPaginated
                                 totalRegisters={totalRegisters}
                                 limit={itemsByPage}

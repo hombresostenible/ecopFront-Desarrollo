@@ -186,7 +186,7 @@ function ConsultAssetsPage() {
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-assets' className={`${styles.link} text-decoration-none`}>Registro de equipos, herramientas y máquinas</Link>
+                                <Link to='/inventories/create-assets' className={`${styles.link} m-0 text-decoration-none`}>Registro de equipos, herramientas y máquinas</Link>
                             </div>
                         </div>
 
@@ -208,7 +208,7 @@ function ConsultAssetsPage() {
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus equipos, herramientas y máquinas por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="p-2 border rounded"
+                                    className={`${styles.select__Branch} p-2 border rounded`}
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -246,7 +246,7 @@ function ConsultAssetsPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-3`}>
                             <ComponentPaginated
                                 totalRegisters={totalRegisters}
                                 limit={itemsByPage}
@@ -270,7 +270,7 @@ function ConsultAssetsPage() {
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
                             <table className="table">
-                                <thead className={`${styles.container__Head}`}>
+                                <thead className={`${styles.container__Head} `}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
                                         {selectedColumns.includes('Código de barras') && (
