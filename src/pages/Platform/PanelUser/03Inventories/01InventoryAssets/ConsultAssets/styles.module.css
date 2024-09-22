@@ -10,13 +10,12 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
-    max-width: 1802px;
+    max-width: 1853px;
 }
 .container__Link_Head_Navigate {
-    max-width: 1802px;
+    max-width: 1853px;
 }
 .link__Head_Navigate {
-    color: #fff;
     padding: 10px 20px;
     color: white;
     background: #718bd8;
@@ -30,16 +29,18 @@
 }
 .link {
     color: #fff;
-    margin: 0;
 }
 .container__Filters {
-    max-width: 1802px;
+    max-width: 1853px;
+}
+.select__Branch {
+    outline-color: #718bd8;
 }
 .container__Column_Selector {
     height: 50px;
 }
 .span__Menu {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 .span__Menu:hover {
@@ -47,7 +48,7 @@
     cursor: pointer;
 }
 .menu {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
     top: 5px;
     z-index: 1;
@@ -61,16 +62,17 @@
     cursor: pointer;
 }
 .container__Paginated {
-    max-width: 1802px;
+    max-width: 1853px;
 }
 .select {
     margin: 0 15px 0 10px;
+    outline-color: #718bd8;
 }
 
 /* TABLA */
 .container__Table {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    max-width: 1802px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    max-width: 1853px;
     overflow-x: auto;
 }
 .container__Head {
@@ -81,7 +83,7 @@
 
 /* TITULOS DE LAS COLUMNAS */
 .container__Tr{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     flex-wrap: nowrap;
     height: 60px;
 }
@@ -102,7 +104,7 @@
 }
 .brand {
     height: 60px;
-    width: 100px;
+    width: 150px;
 }
 .reference {  
     height: 60px;
@@ -143,7 +145,7 @@
     width: 100%;
 }
 .container__Info {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 60px;
 }
 .text__Ellipsis {
@@ -182,7 +184,7 @@
     height: 60px;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* ---------- RESPONSIVE (800 PX) ---------- */

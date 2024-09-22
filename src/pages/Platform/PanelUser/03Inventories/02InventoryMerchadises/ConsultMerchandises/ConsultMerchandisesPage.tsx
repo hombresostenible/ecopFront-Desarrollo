@@ -178,11 +178,11 @@ function ConsultMerchandisesPage() {
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
                         <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Mercancías</h1>
 
-                        <div className={`${styles.container__link_Head_Navigate} mb-3 d-flex align-items-center justify-content-between`}>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={styles.link__Head_Navigate} onClick={handleConsultOff} >Ver dados de baja</div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/inventories/create-merchandises' className={`${styles.link} text-decoration-none`}>Registro de mercancías</Link>
+                                <Link to='/inventories/create-merchandises' className={`${styles.link} m-0 text-decoration-none`}>Registro de mercancías</Link>
                             </div>
                         </div>
 
@@ -204,7 +204,7 @@ function ConsultMerchandisesPage() {
                                 <h3 className={`${styles.title__Branch} m-0`}>Filtra tus mercancías por sede</h3>
                                 <select
                                     value={selectedBranch || ''}
-                                    className="p-2 border rounded"
+                                    className={`${styles.select__Branch} p-2 border rounded`}
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
                                     <option value=''>Todas</option>
@@ -239,7 +239,7 @@ function ConsultMerchandisesPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Paginated} mb-4 d-flex align-items-center justify-content-end gap-3`}>
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-3`}>
                             <ComponentPaginated
                                 totalRegisters={totalRegisters}
                                 limit={itemsByPage}
