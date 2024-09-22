@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store.ts';
-import { getCrmClients } from '../../../../../redux/User/07CrmClientSlice/actions';
+import { getCrmClientsPaginated } from '../../../../../redux/User/07CrmClientSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmClient } from '../../../../../types/User/crmClient.types.ts';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
@@ -17,6 +17,7 @@ import SeeCrmClient from '../../../../../components/Platform/PanelUser/07CrmClie
 import ModalEditCrmClient from '../../../../../components/Platform/PanelUser/07CrmClients/ModalEditCrmClient/ModalEditCrmClient.tsx';
 import ConfirmDeleteCRMClient from '../../../../../components/Platform/PanelUser/07CrmClients/ConfirmDeleteCRMClient/ConfirmDeleteCRMClient.tsx';
 import SendEmailClients from '../../../../../components/Platform/PanelUser/07CrmClients/SendEmailClients/SendEmailClients.tsx';
+import ComponentPaginated from '../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -29,13 +30,29 @@ function ConsultCrmClientsPage() {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const crmClients = useSelector((state: RootState) => state.crmClient.crmClient);
+    const { crmClient, totalRegisters } = useSelector((state: RootState) => state.crmClient);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        if (token) {
-            dispatch(getCrmClients(token));
-        }
-    }, [token]);
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getCrmClientsPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los clientes');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     const [idCrmClient, setIdCrmClient] = useState('');
     const [nameCrmClient, setNameCrmClient] = useState('');
@@ -118,17 +135,17 @@ function ConsultCrmClientsPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>CRM Clientes</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>CRM Clientes</h1>
 
-                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/crm-clients/create-crm-clients' className={`${styles.link} text-decoration-none`}>Crea tus clientes</Link>
+                                <Link to='/crm-clients/create-crm-clients' className={`${styles.link} m-0 text-decoration-none`}>Crea tus clientes</Link>
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} mb-4 mx-auto d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -150,15 +167,37 @@ function ConsultCrmClientsPage() {
                             )}
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} mx-2 p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
                                 <thead className={`${styles.container__Head}`}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         {selectedColumns.includes('Tipo de Doc. Id') && (
                                             <th className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center text-center`}>Tipo de Doc. Id</th>
                                         )}
                                         {selectedColumns.includes('Documento identidad') && (
-                                            <th className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento identidad</th>
+                                            <th className={`${styles.document__Id} d-flex align-items-center justify-content-center text-center`}>Documento de identidad</th>
                                         )}
                                         {selectedColumns.includes('Cliente') && (
                                             <th className={`${styles.client} d-flex align-items-center justify-content-center text-center`}>Cliente</th>
@@ -180,8 +219,8 @@ function ConsultCrmClientsPage() {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(crmClients) && crmClients.length > 0 ? (
-                                        crmClients.map((crmClient) => (
+                                    {Array.isArray(crmClient) && crmClient.length > 0 ? (
+                                        crmClient.map((crmClient) => (
                                         <tr key={crmClient.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             {selectedColumns.includes('Tipo de Doc. Id') && (
                                                 <td className={`${styles.type__Document_Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>

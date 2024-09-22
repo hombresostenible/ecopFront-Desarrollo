@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store.ts';
-import { getCrmSuppliers } from '../../../../../redux/User/08CrmSupplierSlice/actions';
+import { getCrmSuppliersPaginated } from '../../../../../redux/User/08CrmSupplierSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { ICrmSupplier } from '../../../../../types/User/crmSupplier.types.ts';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
@@ -17,6 +17,7 @@ import SeeCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmS
 import ModalEditCrmSupplier from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ModalEditCrmSupplier/ModalEditCrmSupplier.tsx';
 import ConfirmDeleteCrmSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/ConfirmDeleteCrmSuppliers/ConfirmDeleteCrmSuppliers.tsx';
 import SendEmailSuppliers from '../../../../../components/Platform/PanelUser/08CrmSuppliers/SendEmailSuppliers/SendEmailSuppliers.tsx';
+import ComponentPaginated from '../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { FaPlus } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -29,13 +30,29 @@ function ConsultCrmSuppliersPage() {
     
     //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const crmSuppliers = useSelector((state: RootState) => state.crmSupplier.crmSupplier);
+    const {crmSupplier, totalRegisters } = useSelector((state: RootState) => state.crmSupplier);
     
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        if (token) {
-            dispatch(getCrmSuppliers(token));
-        }
-    }, [token]);
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getCrmSuppliersPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los proveedores');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
+
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     const [idCrmSupplier, setIdCrmSupplier] = useState('');
     const [nameCrmSupplier, setNameCrmSupplier] = useState('');
@@ -118,17 +135,17 @@ function ConsultCrmSuppliersPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>CRM Proveedores</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>CRM Proveedores</h1>
 
-                        <div className='mb-4 d-flex align-items-center justify-content-between'>
+                        <div className={`${styles.container__Link_Head_Navigate} mb-4 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/crm-suppliers/create-crm-suppliers' className={`${styles.link} text-decoration-none`}>Crea tus proveedores</Link>
+                                <Link to='/crm-suppliers/create-crm-suppliers' className={`${styles.link} m-0 text-decoration-none`}>Crea tus proveedores</Link>
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                        <div className={`${styles.container__Column_Selector} mb-4 mx-auto d-flex align-items-center justify-content-end position-relative`} >
                             <span className={`${styles.span__Menu} p-2 text-center`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
                             {menuColumnSelectorVisible && (
                                 <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
@@ -148,6 +165,28 @@ function ConsultCrmSuppliersPage() {
                                     />
                                 </div>
                             )}
+                        </div>
+
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-2`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} mx-2 p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
                         </div>
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
@@ -180,8 +219,8 @@ function ConsultCrmSuppliersPage() {
                                 </thead>
                                 
                                 <tbody className={`${styles.container__Body}`}>
-                                    {Array.isArray(crmSuppliers) && crmSuppliers.length > 0 ? (
-                                        crmSuppliers.map((crmSupplier) => (
+                                    {Array.isArray(crmSupplier) && crmSupplier.length > 0 ? (
+                                        crmSupplier.map((crmSupplier) => (
                                         <tr key={crmSupplier.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
                                             {selectedColumns.includes('Tipo de Doc. Id') && (
                                                 <td className={`${styles.type__Document_Id} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>

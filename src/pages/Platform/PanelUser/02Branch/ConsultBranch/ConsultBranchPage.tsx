@@ -5,8 +5,8 @@ import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 //REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { getBranchesPaginated } from '../../../../../redux/User/02BranchSlice/actions';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
+import { getBranchesPaginated } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBranch } from '../../../../../types/User/branch.types';
 import ColumnSelector from '../../../../../helpers/ColumnSelector/ColumnSelector';
@@ -133,7 +133,7 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                             <div className="d-flex"></div>
                             <div className={styles.link__Head_Navigate}>
                                 <FaPlus className={`${styles.icon__Plus} `}/>
-                                <Link to='/branches/create-branches' className={`${styles.link} text-decoration-none`}>Crea tus sedes</Link>
+                                <Link to='/branches/create-branches' className={`${styles.link} m-0 text-decoration-none`}>Crea tus sedes</Link>
                             </div>
                         </div>
 
@@ -179,9 +179,9 @@ function ConsultBranchPage({ addNotification }: ConsultBranchPageProps) {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
-                                <thead className={`${styles.container__Head}`}>
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
+                                <thead className={`${styles.container__Head} `}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
                                         {selectedColumns.includes('Departamento') && (
