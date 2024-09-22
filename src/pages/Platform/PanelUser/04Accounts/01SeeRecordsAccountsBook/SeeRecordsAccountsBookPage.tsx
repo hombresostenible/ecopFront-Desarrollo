@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback, useRef } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { getAccountsBooksApproved, getAccountsBooksApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getAccountsBooksPaginated, getAccountsBooksApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
 import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
@@ -19,6 +19,7 @@ import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
 import SeeRegisterAccountsBook from '../../../../../components/Platform/PanelUser/04Accounts/05PendingApproval/01SeeRegisterAccountsBook/SeeRegisterAccountsBook';
 import ConfirmDeleteRegister from '../../../../../components/Platform/PanelUser/ConfirmDeleteRegister/ConfirmDeleteRegister';
 import ModalEditAccountsBook from '../../../../../components/Platform/PanelUser/04Accounts/03ModalEditAccountsBook/ModalEditAccountsBook';
+import ComponentPaginated from '../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencil } from 'react-icons/bs';
@@ -27,28 +28,58 @@ import styles from './styles.module.css';
 function SeeRecordsAccountsBookPage() {
     const token = jsCookie.get('token') || '';
 
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
-    const accountsBook = useSelector((state: RootState) => state.accountsBook.accountsBook);
+    const { accountsBook, totalRegisters } = useSelector((state: RootState) => state.accountsBook);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     useEffect(() => {
         if (token) {
             dispatch(getBranches(token));
-            dispatch(getAccountsBooksApproved(token));
         }
     }, [token]);
 
-    const [selectedBranch, setSelectedBranch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+    useEffect(() => {
+        const fetchProductsByDescription = async (page: number, limit: number) => {
+            try {
+                await dispatch(getAccountsBooksPaginated(token, page, limit));
+            } catch (error) {
+                throw new Error('Error al traer los registros');
+            }
+        };
+        fetchProductsByDescription(currentPage, itemsByPage);
+    }, [currentPage, itemsByPage]);
 
+    const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsByPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+    
+    const [selectedBranch, setSelectedBranch] = useState('');
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
                 dispatch(getAccountsBooksApprovedByBranch(selectedBranch, token));
             } else {
-                dispatch(getAccountsBooksApproved(token));
+                const fetchProductsByDescription = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getAccountsBooksPaginated(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer los registros');
+                    }
+                };
+                fetchProductsByDescription(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
+    
+    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
@@ -143,7 +174,6 @@ function SeeRecordsAccountsBookPage() {
         setShowModalEditAsset(false);
     }, []);
 
-    const branchesArray = Array.isArray(branches) ? branches : [];
     const transactionsToShow = filteredTransactions && filteredTransactions.length > 0 ? filteredTransactions : accountsBook;
 
     return (
@@ -153,13 +183,13 @@ function SeeRecordsAccountsBookPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4`}>Ver todos los registros</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Ver todos los registros</h1>
 
-                        <div className='d-flex align-items-center justify-content-between'>
-                            <div className={`${styles.container__Filter_Branch} mb-4 d-flex align-items-center`}>
-                                <h3 className='m-0'>Filtra por sede</h3>
+                        <div className={`${styles.container__Filters} mb-3 mx-auto d-flex align-items-center justify-content-between`}>
+                            <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
+                                <h3 className={`${styles.title__Branch} m-0`}>Filtra los registros por sede</h3>
                                 <select
-                                    className="mx-2 p-2 border rounded"
+                                    className={`${styles.select__Branch} p-2 border rounded`}
                                     value={selectedBranch}
                                     onChange={(e) => setSelectedBranch(e.target.value)}
                                 >
@@ -172,158 +202,190 @@ function SeeRecordsAccountsBookPage() {
                                 </select>
                             </div>
 
-                            <div>
-                                <input
-                                    type="date"
-                                    className={`${styles.input__Date} border p-1 text-secondary`}
-                                    value={startDate || ''}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                />
-                                <input
-                                    type="date"
-                                    className={`${styles.input__Date} border p-1 text-secondary`}
-                                    value={endDate || ''}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                />
-                                <button className={`${styles.handle__Filter} border-0 text-decoration-none`} onClick={handleFilter}>Filtrar</button>
+                            <div className={`${styles.container__Column_Selector} d-flex align-items-center justify-content-end position-relative`} >
+                                <span className={`${styles.span__Menu} p-2`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
+                                {menuColumnSelectorVisible && (
+                                    <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
+                                        <ColumnSelector
+                                            selectedColumns={selectedColumns}
+                                            onChange={handleColumnChange}
+                                            minSelectedColumns={3}
+                                            availableColumns={[
+                                                'Fecha de transacción',
+                                                'Sede',
+                                                'Tipo de transacción',
+                                                'Medio de pago',
+                                                'Valor total',
+                                                'Comprador',
+                                            ]}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-start justify-content-between`}>
+                            <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
+                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
+                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
+                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
+                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
+                            </div>
+                            <div className={`${styles.container__Filter_Dates} flex-column d-flex align-items-end justify-content-end gap-2`}>
+                                <div className={`${styles.filter__Dates} d-flex gap-2`}>
+                                    <input
+                                        type="date"
+                                        className={`${styles.input__Date} border p-1 text-secondary`}
+                                        value={startDate || ''}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                    />
+                                    <input
+                                        type="date"
+                                        className={`${styles.input__Date} border p-1 text-secondary`}
+                                        value={endDate || ''}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                    <button className={`${styles.handle__Filter} border-0 text-decoration-none`} onClick={handleFilter}>Filtrar</button>
+                                </div>
+                                
                                 <button className={`${styles.clear__Filter} border-0 text-decoration-none`} onClick={clearFilterDate}>Borrar filtro de fechas</button>
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Column_Selector} mb-3 d-flex align-items-center justify-content-end position-relative`} >
-                            {/* <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
-                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
-                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
-                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
-                                <Link to='/accounts/' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
-                            </div> */}
-                            <span className={`${styles.span__Menu} p-2`} onClick={handleColumnSelector}>Escoge las columnas que deseas ver</span>
-                            {menuColumnSelectorVisible && (
-                                <div ref={menuColumnSelector} className={`${styles.menu} p-3 d-flex flex-column align-items-start position-absolute`}>
-                                    <ColumnSelector
-                                        selectedColumns={selectedColumns}
-                                        onChange={handleColumnChange}
-                                        minSelectedColumns={3}
-                                        availableColumns={[
-                                            'Fecha de transacción',
-                                            'Sede',
-                                            'Tipo de transacción',
-                                            'Medio de pago',
-                                            'Valor total',
-                                            'Comprador',
-                                        ]}
-                                    />
-                                </div>
-                            )}
+                        <div className={`${styles.container__Paginated} mb-4 mx-auto d-flex align-items-center justify-content-end gap-3`}>
+                            <ComponentPaginated
+                                totalRegisters={totalRegisters}
+                                limit={itemsByPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                            <div className={`${styles.container__Items_By_page} d-flex align-items-center justify-content-center`}>
+                                <span>Ver:</span>
+                                <select
+                                    className={`${styles.select} p-1 border`}
+                                    value={itemsByPage}
+                                    onChange={handleItemsByPage}
+                                >
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                                <span>por página</span>
+                            </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                            <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    {selectedColumns.includes('Fecha de transacción') && (
-                                        <div className={`${styles.transaction__Date} text-center d-flex align-items-center justify-content-center`}>Fecha de TX</div>
-                                    )}
-                                    {selectedColumns.includes('Sede') && (
-                                        <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</div>
-                                    )}
-                                    {selectedColumns.includes('Tipo de transacción') && (
-                                        <div className={`${styles.transaction__Type} text-center d-flex align-items-center justify-content-center`}>Tipo de TX</div>
-                                    )}
-                                    {selectedColumns.includes('Medio de pago') && (
-                                        <div className={`${styles.mean__Payment} text-center d-flex align-items-center justify-content-center`}>Medio de pago</div>
-                                    )}
-                                    {selectedColumns.includes('Valor total') && (
-                                        <div className={`${styles.total__Value} text-center d-flex align-items-center justify-content-center`}>Total</div>
-                                    )}
-                                    {selectedColumns.includes('Comprador') && (
-                                        <div className={`${styles.transaction__Counterpart} text-center d-flex align-items-center justify-content-center`}>Comprador</div>
-                                    )}
-                                    <div className={`${styles.transaction__Approved} text-center d-flex align-items-center justify-content-center`}>Aprobada</div>
-                                    <div className={`${styles.action} text-center d-flex align-items-center justify-content-center`}>Acciones</div>
-                                </div>
-                            </div>
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
+                                <thead className={`${styles.container__Head} `}>
+                                    <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        {selectedColumns.includes('Fecha de transacción') && (
+                                            <th className={`${styles.transaction__Date} d-flex align-items-center justify-content-center text-center`}>Fecha de TX</th>
+                                        )}
+                                        {selectedColumns.includes('Sede') && (
+                                            <th className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</th>
+                                        )}
+                                        {selectedColumns.includes('Tipo de transacción') && (
+                                            <th className={`${styles.transaction__Type} d-flex align-items-center justify-content-center text-center`}>Tipo de TX</th>
+                                        )}
+                                        {selectedColumns.includes('Medio de pago') && (
+                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Definir columna</th>
+                                        )}
+                                        {selectedColumns.includes('Valor total') && (
+                                            <th className={`${styles.total__Value} d-flex align-items-center justify-content-center text-center`}>Total</th>
+                                        )}
+                                        {selectedColumns.includes('Comprador') && (
+                                            <th className={`${styles.transaction__Counterpart} d-flex align-items-center justify-content-center text-center`}>Comprador</th>
+                                        )}
+                                        <th className={`${styles.transaction__Approved} d-flex align-items-center justify-content-center text-center`}>Aprobada</th>
+                                        <th className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</th>
+                                    </tr>
+                                </thead>
 
-                            <div className={styles.container__Body}>
-                                {Array.isArray(transactionsToShow) && transactionsToShow.length > 0 ? (
-                                    transactionsToShow.map((accountsBook) => (
-                                        <div key={accountsBook.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                            {selectedColumns.includes('Fecha de transacción') && (
-                                                <div className={`${styles.transaction__Date} d-flex align-items-center justify-content-center`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{new Date(accountsBook.transactionDate).toLocaleDateString('en-GB')}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Sede') && (
-                                                <div className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                                    <span>
-                                                        {Array.isArray(branches) && branches.map((branch, index) => (
-                                                            accountsBook.branchId === branch.id && (
-                                                                <span className={`${styles.text__Ellipsis} overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                            )
-                                                        ))}
-                                                    </span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Tipo de transacción') && (
-                                                <div className={`${styles.transaction__Type} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionType}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Medio de pago') && (
-                                                <div className={`${styles.mean__Payment} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.creditCash}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Valor total') && (
-                                                <div className={`${styles.total__Value} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.totalValue? `$ ${formatNumber(accountsBook.totalValue)}` : 'N/A'}</span>
-                                                </div>
-                                            )}
-                                            {selectedColumns.includes('Comprador') && (
-                                                <div className={`${styles.transaction__Counterpart} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionCounterpartId}</span>
-                                                </div>
-                                            )}
-                                            <div className={`${styles.transaction__Approved} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionApproved === true ? 'Si' : 'No'}</span>
-                                            </div>
-
-                                            <div className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <MdOutlineRemoveRedEye
-                                                        className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRegisterAccount(accountsBook.id);
-                                                            handleSeeItem(accountsBook);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <RiDeleteBin6Line
-                                                        className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRegisterAccount(accountsBook.id);
-                                                            handleDelete(accountsBook);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <BsPencil
-                                                        className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
-                                                        onClick={() => {
-                                                            setIdRegisterAccount(accountsBook.id);
-                                                            handleEdit(accountsBook)
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                        No tienes transacciones registradas
-                                    </div>
-                                )}
-                            </div>
+                                <tbody className={`${styles.container__Body} `}>
+                                    {Array.isArray(transactionsToShow) && transactionsToShow.length > 0 ? (
+                                        transactionsToShow.map((accountsBook) => (
+                                            <tr key={accountsBook.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                                {selectedColumns.includes('Fecha de transacción') && (
+                                                    <td className={`${styles.transaction__Date} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{new Date(accountsBook.transactionDate).toLocaleDateString('en-GB')}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Sede') && (
+                                                    <td className={`${styles.branch} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span>
+                                                            {Array.isArray(branches) && branches.map((branch, index) => (
+                                                                accountsBook.branchId === branch.id && (
+                                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                                )
+                                                            ))}
+                                                        </span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Tipo de transacción') && (
+                                                    <td className={`${styles.transaction__Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionType}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Medio de pago') && (
+                                                    <td className={`${styles.mean__Payment} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.creditCash}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Valor total') && (
+                                                    <td className={`${styles.total__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.totalValue? `$ ${formatNumber(accountsBook.totalValue)}` : 'N/A'}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Comprador') && (
+                                                    <td className={`${styles.transaction__Counterpart} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionCounterpartId}</span>
+                                                    </td>
+                                                )}
+                                                <td className={`${styles.transaction__Approved} pt-0 pb-0 px-2 pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsBook.transactionApproved === true ? 'Si' : 'No'}</span>
+                                                </td>
+                                                <td className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                         <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <MdOutlineRemoveRedEye
+                                                                className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdRegisterAccount(accountsBook.id);
+                                                                    handleSeeItem(accountsBook);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <RiDeleteBin6Line
+                                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdRegisterAccount(accountsBook.id);
+                                                                    handleDelete(accountsBook);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <BsPencil
+                                                                className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdRegisterAccount(accountsBook.id);
+                                                                    handleEdit(accountsBook)
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes transacciones registradas
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                         
                         <Modal show={showSeeRegisterAccount} onHide={onCloseModal} size="xl">

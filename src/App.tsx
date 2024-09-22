@@ -94,6 +94,10 @@ import CreateServicesPage from './pages/Platform/PanelUser/03Inventories/05Inven
 // SIDEBAR - ACCOUNTS
 import AccountsPage from './pages/Platform/PanelUser/04Accounts/AccountsPage';
 import SeeRecordsPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/SeeRecordsAccountsBookPage';
+import ConsultIncomesPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/01ConsultIncomes/ConsultIncomesPage';
+import ConsultCxcPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/02ConsultCXC/ConsultCxcPage';
+import ConsultExpencesPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/03ConsultExpences/ConsultExpencesPage';
+import ConsultCxpPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/04ConsultCXP/ConsultCxpPage';
 import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/02Income/CreateIncome/CreateIncomePage';
 import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/04PendingApproval/PendingApprovalPage';
@@ -246,31 +250,27 @@ function App() {
                         <Route path='/branches/create-branches' element={<CreateBranchPage addNotification={addNotification} />} />
                         {/* SideBar Inventarios */}
                         <Route path='/inventories' element={<InventoriesPage />} />
-                        {/* SideBar Inventarios - Assets */}
                         <Route path='/inventories/consult-assets' element={<ConsultAssetsPage />} />
                         <Route path='/inventories/create-assets' element={<CreateAssetsPage addNotification={addNotification} />} />
-                        {/* SideBar Inventarios - Merchadises */}
                         <Route path='/inventories/consult-merchandises' element={<ConsultMerchandisesPage />} />
                         <Route path='/inventories/create-merchandises' element={<CreateMerchandisesPage addNotification={addNotification}/>} />
-                        {/* SideBar Inventarios - Products */}
                         <Route path='/inventories/consult-products' element={<ConsultProductsPage />} />
                         <Route path='/inventories/create-products' element={<CreateProductsPage selectedBranchId={''} addNotification={addNotification}/>} />
                         <Route path='/inventories/quote-products' element={<QuoteProductsPage />} />
-                        {/* SideBar Inventarios - Rawmaterals */}
                         <Route path='/inventories/consult-raw-materals' element={<ConsultRawMateralsPage />} />
                         <Route path='/inventories/create-raw-materals' element={<CreateRawMateralsPage addNotification={addNotification}/>} />
-                        {/* SideBar Inventarios - Services */}
                         <Route path='/inventories/consult-services' element={<ConsultServicesPage />} />
                         <Route path='/inventories/create-services' element={<CreateServicesPage addNotification={addNotification}/>} />
                         {/* SideBar Cuentas */}
                         <Route path='/accounts' element={<AccountsPage />} />
-                        {/* SideBar Cuentas - Ver registros */}
                         <Route path='/accounts/see-records' element={<SeeRecordsPage />} />
-                        {/* SideBar Cuentas - Crear Ingresos */}
+                        <Route path='/accounts/consult-incomes' element={<ConsultIncomesPage />} />
+                        <Route path='/accounts/consult-cxc' element={<ConsultCxcPage />} />
+                        <Route path='/accounts/consult-expences' element={<ConsultExpencesPage />} />
+                        <Route path='/accounts/consult-cxp' element={<ConsultCxpPage />} />
+                        
                         <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
-                        {/* SideBar Cuentas - Crear Gastos */}
                         <Route path='/accounts/create-expenses' element={<CreateExpensesPage />} />
-                        {/* SideBar Cuentas - TX Pendientes de Aprobar */}
                         <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                         {/* SideBar CRM Clientes */}
                         <Route path='/crm-clients' element={<CrmClientsPage />} />

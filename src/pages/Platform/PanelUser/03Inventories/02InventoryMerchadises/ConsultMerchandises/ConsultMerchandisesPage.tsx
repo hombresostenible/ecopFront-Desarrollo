@@ -263,7 +263,7 @@ function ConsultMerchandisesPage() {
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
                             <table className="table">
-                                <thead className={`${styles.container__Head}`}>
+                                <thead className={`${styles.container__Head} `}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.branch} d-flex align-items-center justify-content-center text-center`}>Sede</th>
                                         {selectedColumns.includes('Código de barras') && (
@@ -291,111 +291,111 @@ function ConsultMerchandisesPage() {
                                     </tr>
                                 </thead>
                                 
-                                <tbody className={`${styles.container__Body}`}>
+                                <tbody className={`${styles.container__Body} `}>
                                     {Array.isArray(merchandise) && merchandise.length > 0 ? (
                                         merchandise.map((merchandise) => (
-                                        <tr key={merchandise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                            <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                    {Array.isArray(branches) && branches.map((branch, index) => (
-                                                        merchandise.branchId === branch.id && (
-                                                            <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
-                                                        )
-                                                    ))}
-                                                </span>
-                                            </td>
+                                            <tr key={merchandise.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                                <td className={`${styles.branch} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                        {Array.isArray(branches) && branches.map((branch, index) => (
+                                                            merchandise.branchId === branch.id && (
+                                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`} key={index}>{branch.nameBranch}</span>
+                                                            )
+                                                        ))}
+                                                    </span>
+                                                </td>
 
-                                            {selectedColumns.includes('Código de barras') && (
-                                                <td className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.barCode ? merchandise.barCode : 'No definido'}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Nombre del item') && (
-                                                <td className={`${styles.name__Item} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.nameItem}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Marca') && (
-                                                <td className={`${styles.brand} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.brandItem ? merchandise.brandItem : 'No definida'}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Inventario') && (
-                                                <td className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.inventory}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Unidad de medida') && (
-                                                <td className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.unitMeasure}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('IVA') && (
-                                                <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.IVA}</span>
-                                                </td>
-                                            )}
-                                            {selectedColumns.includes('Precio de venta') && (
-                                                <td className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.sellingPrice ? `$ ${formatNumber(merchandise.sellingPrice)}` : 'No definido'}</span>
-                                                </td>
-                                            )}
+                                                {selectedColumns.includes('Código de barras') && (
+                                                    <td className={`${styles.bar__Code} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.barCode ? merchandise.barCode : 'No definido'}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Nombre del item') && (
+                                                    <td className={`${styles.name__Item} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.nameItem}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Marca') && (
+                                                    <td className={`${styles.brand} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.brandItem ? merchandise.brandItem : 'No definida'}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Inventario') && (
+                                                    <td className={`${styles.inventory} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.inventory}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Unidad de medida') && (
+                                                    <td className={`${styles.unit__Measure} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.unitMeasure}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('IVA') && (
+                                                    <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.IVA}</span>
+                                                    </td>
+                                                )}
+                                                {selectedColumns.includes('Precio de venta') && (
+                                                    <td className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.sellingPrice ? `$ ${formatNumber(merchandise.sellingPrice)}` : 'No definido'}</span>
+                                                    </td>
+                                                )}
 
-                                            <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                <td className={`${styles.action} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <MdOutlineRemoveRedEye
-                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdMerchadise(merchandise.id);
-                                                                setNameMerchadise(merchandise.nameItem || '');
-                                                                handleSeeItem(merchandise);
-                                                            }}
-                                                        />
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <MdOutlineRemoveRedEye
+                                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdMerchadise(merchandise.id);
+                                                                    setNameMerchadise(merchandise.nameItem || '');
+                                                                    handleSeeItem(merchandise);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <RiDeleteBin6Line
+                                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdMerchadise(merchandise.id);
+                                                                    setNameMerchadise(merchandise.nameItem || '');
+                                                                    handleDelete(merchandise);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <BsPencil
+                                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdMerchadise(merchandise.id);
+                                                                    handleEdit(merchandise)
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <FaPlus
+                                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdMerchadise(merchandise.id);
+                                                                    setNameMerchadise(merchandise.nameItem || '');
+                                                                    setIdBranch(merchandise.branchId);
+                                                                    handleAddInventory(merchandise)
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                            <IoIosCloseCircleOutline
+                                                                className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
+                                                                onClick={() => {
+                                                                    setIdMerchadise(merchandise.id);
+                                                                    setNameMerchadise(merchandise.nameItem || '');
+                                                                    handleOff(merchandise)
+                                                                }}
+                                                            />
+                                                        </div>
                                                     </div>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <RiDeleteBin6Line
-                                                            className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdMerchadise(merchandise.id);
-                                                                setNameMerchadise(merchandise.nameItem || '');
-                                                                handleDelete(merchandise);
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <BsPencil
-                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdMerchadise(merchandise.id);
-                                                                handleEdit(merchandise)
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <FaPlus
-                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdMerchadise(merchandise.id);
-                                                                setNameMerchadise(merchandise.nameItem || '');
-                                                                setIdBranch(merchandise.branchId);
-                                                                handleAddInventory(merchandise)
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <IoIosCloseCircleOutline
-                                                            className={`${styles.button__Edit} d-flex align-items-center justify-content-center`}
-                                                            onClick={() => {
-                                                                setIdMerchadise(merchandise.id);
-                                                                setNameMerchadise(merchandise.nameItem || '');
-                                                                handleOff(merchandise)
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                         ))
                                     ) : (
                                         <tr>
