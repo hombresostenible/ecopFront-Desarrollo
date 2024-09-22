@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 function Introduction() {
 
     return (
-        <div className={`${styles.container} mb-5 p-3 d-flex align-items-center justify-content-between`}>
+        <div className={`${styles.container} p-5 d-flex align-items-center justify-content-between`}>
             <div className={`${styles.image__Information} d-flex align-items-center justify-content-center`}>
                 <img src={Mono} alt="Ecopcion" className={styles.image} />
             </div>

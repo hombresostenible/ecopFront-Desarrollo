@@ -4,12 +4,18 @@ import { IAccountsBook } from '../../../types/User/accountsBook.types';
 interface UserState {
     accountsBook: IAccountsBook | IAccountsBook[] | null;
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorAccountsBook: string[] | null;
 }
 
 const initialState: UserState = {
     accountsBook: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorAccountsBook: null,
 };
 
@@ -33,6 +39,14 @@ const accountsBookSlice = createSlice({
         getAccountsBooksStart: (state, action: PayloadAction<IAccountsBook>) => {
             state.loading = true;
             state.accountsBook = action.payload;
+            state.errorAccountsBook = null;
+        },
+        getAccountsBooksPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
         getAccountsBooksApprovedStart: (state, action: PayloadAction<IAccountsBook>) => {
@@ -90,5 +104,5 @@ const accountsBookSlice = createSlice({
     },
 });
 
-export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksApprovedStart, getAccountsBooksIncomesStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
+export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksPaginatedStart, getAccountsBooksApprovedStart, getAccountsBooksIncomesStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
 export default accountsBookSlice.reducer;
