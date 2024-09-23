@@ -44,11 +44,11 @@ function UserInformationPage({ register, errors }: UserInfoSectionProps) {
                             type="text" // Cambié el tipo a "text" para manejar mejor la validación de longitud y evitar problemas con ciertos navegadores
                             {...register('documentId', { 
                                 required: true,
-                                pattern: /^\d{1,9}$/ // Expresión regular para hasta 9 dígitos
+                                pattern: /^\d{1,10}$/ // Expresión regular para hasta 9 dígitos
                             })}
                             className={`${styles.input} p-2 border `}
                             placeholder='¿Cuál es tu número de identificación?'
-                            maxLength={9} // Limita el input a 9 caracteres
+                            maxLength={10} // Limita el input a 9 caracteres
                             onKeyDown={(e) => {
                                 if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
                                     e.preventDefault(); // Evita caracteres no deseados

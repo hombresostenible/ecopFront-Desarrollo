@@ -10,14 +10,12 @@
     background: #718bd8;
 }
 
-
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #333;
         color: white;
     }
 }
-
 
 
 
