@@ -142,7 +142,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
             
             if (interestRateChange !== 0) {
                 // Si hay una tasa de interés, usar la fórmula de Amortización Francesa
-                const monthlyInterestRate = interestRateChange / 100 / 12; // Convert annual interest rate to monthly
+                const monthlyInterestRate = interestRateChange / 100 / 12; 
                 const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
                                         (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
     
