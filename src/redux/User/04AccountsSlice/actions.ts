@@ -201,7 +201,7 @@ export const getAccountsBookByBranch = (idBranch: string, token: string) => asyn
 };                    
 
 //OBTENER TODOS LOS INGRESOS NO APROBADOS
-export const getIncomesNotApproved = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+export const getUnapprovedRecords = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/accounts-book/unapproved-records?page=${page}&limit=${limit}`, {
             headers: {
@@ -247,7 +247,7 @@ export const getIncomesNotApprovedByBranch = (idBranch: string, token: string) =
 export const patchIncomesNotApproved = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         dispatch(patchIncomesNotApprovedStart());
-        const response = await axiosInstance.patch(`/accounts-book/incomes-not-approved/${idAccountsBook}`, {
+        const response = await axiosInstance.patch(`/accounts-book/approve-record/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
