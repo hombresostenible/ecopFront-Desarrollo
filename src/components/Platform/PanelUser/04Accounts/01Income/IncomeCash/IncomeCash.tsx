@@ -181,24 +181,25 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     useEffect(() => {
         if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
             if (interestRateChange !== 0) {
+                // Convertir la tasa de interés anual a tasa mensual
+                const tasaInteresMensual = interestRateChange / 100 / 12;
+                
+                // Fórmula de Amortización Francesa para calcular la cuota fija con interés
                 const totalValue = Number(totalValueOtherIncome);
-                const cuotaSinInteres = totalValue / numberOfPayments;                          // Calcula la cuota con interés
-                const tasaInteresMensual = interestRateChange / 100 / 12;                       // Calcula la tasa de interés mensual
-                let saldoRestante = totalValue;                                                 // Calcula el interés acumulado sobre el monto total adeudado
-                let cuotaConInteres = 0;
-                for (let i = 0; i < numberOfPayments; i++) {
-                    const interesMensual = saldoRestante * tasaInteresMensual;
-                    cuotaConInteres = cuotaSinInteres + interesMensual;                         // Calcula la cuota con interés y amortización
-                    saldoRestante -= cuotaSinInteres;                                           // Resta la parte que corresponde a la amortización
-                }
-                setPaymentValue(cuotaConInteres);
+                const cuotaWithInterest = totalValue * (tasaInteresMensual * Math.pow(1 + tasaInteresMensual, numberOfPayments)) / 
+                                        (Math.pow(1 + tasaInteresMensual, numberOfPayments) - 1);
+                
+                // Setear el valor de la cuota
+                setPaymentValue(cuotaWithInterest);
             } else {
+                // Si no hay interés, dividimos el monto total entre el número de pagos
                 const totalValue = Number(totalValueOtherIncome);
-                const cuotaSinInteres = totalValue / numberOfPayments;                          // Lógica cuando no hay interés (puedes personalizar esto según tus necesidades)
+                const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
         }
     }, [totalValueOtherIncome, numberOfPayments, interestRateChange]);
+    
 
     // SETEA EL USUARIO VENDEDOR
     const [userPlatform, setUserPlatform] = useState<IUserPlatform>();
