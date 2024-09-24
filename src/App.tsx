@@ -99,6 +99,7 @@ import ConsultCxcPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAc
 import ConsultExpencesPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/03ConsultExpences/ConsultExpencesPage';
 import ConsultCxpPage from './pages/Platform/PanelUser/04Accounts/01SeeRecordsAccountsBook/04ConsultCXP/ConsultCxpPage';
 import CreateIncomePage from './pages/Platform/PanelUser/04Accounts/02Income/CreateIncome/CreateIncomePage';
+import FastIncomesPage from './pages/Platform/PanelUser/04Accounts/FastIncomes/FastIncomesPage';
 import CreateExpensesPage from './pages/Platform/PanelUser/04Accounts/03Expenses/CreateExpenses/CreateExpensesPage';
 import PendingApprovalPage from './pages/Platform/PanelUser/04Accounts/04PendingApproval/PendingApprovalPage';
 // SIDEBAR - INVOICING-AND-POS
@@ -268,8 +269,9 @@ function App() {
                         <Route path='/accounts/consult-cxc' element={<ConsultCxcPage />} />
                         <Route path='/accounts/consult-expences' element={<ConsultExpencesPage />} />
                         <Route path='/accounts/consult-cxp' element={<ConsultCxpPage />} />
-                        
                         <Route path='/accounts/create-incomes' element={<CreateIncomePage />} />
+                        <Route path='/accounts/fast-incomes' element={<FastIncomesPage />} />
+                        
                         <Route path='/accounts/create-expenses' element={<CreateExpensesPage />} />
                         <Route path='/accounts/consult-pending-approval' element={<PendingApprovalPage />} />
                         {/* SideBar CRM Clientes */}
