@@ -321,6 +321,7 @@ function SideBar() {
                             <h6 className={`${styles.title__Sub_Menu_Compact} m-0`}>Cuentas</h6>
                             <Link to='/accounts/see-records' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Ver todos los registros</Link>
                             <Link to='/accounts/create-incomes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea ingresos y cuentas por cobrar</Link>
+                            <Link to='/accounts/fast-incomes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Venta rápida</Link>
                             <Link to='/accounts/create-expenses' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crea gastos y cuentas por pagar</Link>
                             <Link to='/accounts/consult-pending-approval' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Transacciones pendientes de aprobación</Link>
                         </div>
@@ -333,6 +334,9 @@ function SideBar() {
                         </Link>
                         <Link to='/accounts/create-incomes' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-incomes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Crea ingresos y cuentas por cobrar
+                        </Link>
+                        <Link to='/accounts/fast-incomes' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/fast-incomes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Venta rápida
                         </Link>
                         <Link to='/accounts/create-expenses' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-expenses' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Crea gastos y cuentas por pagar
