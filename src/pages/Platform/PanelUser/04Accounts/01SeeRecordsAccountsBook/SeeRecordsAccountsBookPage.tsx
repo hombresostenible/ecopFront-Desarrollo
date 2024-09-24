@@ -183,7 +183,7 @@ function SeeRecordsAccountsBookPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Ver todos los registros</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Ver todos los registros aprobados</h1>
 
                         <div className={`${styles.container__Filters} mb-3 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
@@ -247,7 +247,6 @@ function SeeRecordsAccountsBookPage() {
                                     />
                                     <button className={`${styles.handle__Filter} border-0 text-decoration-none`} onClick={handleFilter}>Filtrar</button>
                                 </div>
-                                
                                 <button className={`${styles.clear__Filter} border-0 text-decoration-none`} onClick={clearFilterDate}>Borrar filtro de fechas</button>
                             </div>
                         </div>
