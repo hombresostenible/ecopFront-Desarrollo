@@ -138,20 +138,16 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
     useEffect(() => {
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
+            const totalValue = Number(totalPurchaseAmount);
+            
             if (interestRateChange !== 0) {
-                const totalValue = Number(totalPurchaseAmount);
-                const cuotaSinInteres = totalValue / numberOfPayments;
-                const tasaInteresMensual = interestRateChange / 100 / 12;
-                let saldoRestante = totalPurchaseAmount;
-                let cuotaConInteres = 0;
-                for (let i = 0; i < numberOfPayments; i++) {
-                    const interesMensual = saldoRestante * tasaInteresMensual;
-                    cuotaConInteres = cuotaSinInteres + interesMensual;
-                    saldoRestante -= cuotaSinInteres;
-                }
+                // Si hay una tasa de interés, usar la fórmula de Amortización Francesa
+                const monthlyInterestRate = interestRateChange / 100 / 12; 
+                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+                                        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+    
                 setPaymentValue(cuotaConInteres);
             } else {
-                const totalValue = Number(totalPurchaseAmount);
                 const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
