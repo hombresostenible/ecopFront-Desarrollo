@@ -79,9 +79,12 @@ const accountsBookSlice = createSlice({
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
         },
-        getIncomesNotApprovedStart: (state, action: PayloadAction<IAccountsBook>) => {
+        getIncomesNotApprovedStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsBook = action.payload;
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
         getIncomesNotApprovedByBranchStart: (state, action: PayloadAction<IAccountsBook[]>) => {
