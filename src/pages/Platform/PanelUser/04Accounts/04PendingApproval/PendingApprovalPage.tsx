@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { getIncomesNotApproved, getIncomesNotApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getUnapprovedRecords, getIncomesNotApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
 import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
@@ -42,7 +42,7 @@ function PendingApprovalPage() {
     useEffect(() => {
         const fetchProductsByDescription = async (page: number, limit: number) => {
             try {
-                await dispatch(getIncomesNotApproved(token, page, limit));
+                await dispatch(getUnapprovedRecords(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los registros');
             }
@@ -67,7 +67,7 @@ function PendingApprovalPage() {
             } else {
                 const fetchProductsByDescription = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getIncomesNotApproved(token, page, limit));
+                        await dispatch(getUnapprovedRecords(token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
@@ -358,13 +358,14 @@ function PendingApprovalPage() {
                                             </tr>
                                         ))
                                     ) : (
-                                        <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                            No tienes transacciones pendientes de aprobar
-                                        </td>
+                                        <tr>
+                                            <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes transacciones pendientes de aprobar
+                                            </td>
+                                        </tr>
                                     )}
                                 </tbody>
                             </table>
-
                         </div>
                         
                         <Modal show={showSeeRegisterAccount} onHide={onCloseModal} size="xl">
