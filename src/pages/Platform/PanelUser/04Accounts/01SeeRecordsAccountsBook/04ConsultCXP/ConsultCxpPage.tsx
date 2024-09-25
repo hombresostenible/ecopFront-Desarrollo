@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getAccountsPayable, getAccountsPayableByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions.ts';
+import { getAccountsPayablePaginated, getAccountsPayableByBranchPaginated } from '../../../../../../redux/User/indicator/finantialIndicators/actions.ts';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../../types/User/accountsBook.types.ts';
@@ -43,7 +43,7 @@ function ConsultCxpPage() {
     useEffect(() => {
         const fetchData = async (page: number, limit: number) => {
             try {
-                await dispatch(getAccountsPayable(token, page, limit));
+                await dispatch(getAccountsPayablePaginated(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los registros');
             }
@@ -66,7 +66,7 @@ function ConsultCxpPage() {
             if (selectedBranch) {
                 const fetchData = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getAccountsPayableByBranch(selectedBranch, token, page, limit));
+                        await dispatch(getAccountsPayableByBranchPaginated(selectedBranch, token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
@@ -75,7 +75,7 @@ function ConsultCxpPage() {
             } else {
                 const fetchData = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getAccountsPayable(token, page, limit));
+                        await dispatch(getAccountsPayablePaginated(token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
@@ -189,7 +189,7 @@ function ConsultCxpPage() {
                 <SideBar />
                 <div className={`${styles.container} d-flex flex-column align-items-center justify-content-between overflow-hidden overflow-y-auto`}>
                     <div className={`${styles.container__Component} px-5 overflow-hidden overflow-y-auto`}>
-                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Ver todas cuentas por pagar</h1>
+                        <h1 className={`${styles.title} mb-4 mt-4 mx-auto`}>Ver todas las cuentas por pagar</h1>
 
                         <div className={`${styles.container__Filters} mb-3 mx-auto d-flex align-items-center justify-content-between`}>
                             <div className={`${styles.container__Filter_Branch} d-flex align-items-center justify-content-center gap-2`}>
