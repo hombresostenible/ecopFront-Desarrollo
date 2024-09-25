@@ -9,7 +9,7 @@ import { deleteMerchandise, getMerchandises } from '../../../../redux/User/03Inv
 import { deleteProduct, getProducts } from '../../../../redux/User/03Inventories/03InventoryProductsSlice/actions';
 import { deleteRawMaterial, getRawMaterials } from '../../../../redux/User/03Inventories/04InventoryRawMateralsSlice/actions';
 import { deleteService, getServices } from '../../../../redux/User/03Inventories/05InventoryServicesSlice/actions';
-import { deleteAccountsBook, getAccountsBooksApproved } from '../../../../redux/User/04AccountsSlice/actions';
+import { deleteAccountsBook, getAccountsBooks } from '../../../../redux/User/04AccountsSlice/actions';
 import styles from './styles.module.css';
 
 interface ConfirmDeleteRegisterProps {
@@ -46,8 +46,13 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
         }
     }, [ typeRegisterDelete ]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+
     const onDelete = async () => {
         try {
+            setCurrentPage(1);
+            setItemsByPage(20);
             if (typeRegisterDelete === 'Asset') {
                 dispatch(deleteAsset(idItem, token));
                 // Simulamos un delay de la API
@@ -82,7 +87,7 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
                 dispatch(deleteAccountsBook(idItem, token));
                 // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
-                dispatch(getAccountsBooksApproved(token));
+                dispatch(getAccountsBooks(token, currentPage, itemsByPage));
             }
             onCloseModal();
         } catch (error) {
