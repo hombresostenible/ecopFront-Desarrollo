@@ -47,14 +47,14 @@ function ConsultRawMateralsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        const fetchProductsByDescription = async (page: number, limit: number) => {
+        const fetchData = async (page: number, limit: number) => {
             try {
                 await dispatch(getRawMaterialsPaginated(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer las materias primas');
             }
         };
-        fetchProductsByDescription(currentPage, itemsByPage);
+        fetchData(currentPage, itemsByPage);
     }, [currentPage, itemsByPage]);
 
     const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -72,14 +72,14 @@ function ConsultRawMateralsPage() {
             if (selectedBranch) {
                 dispatch(getRawMaterialsByBranch(selectedBranch, token));
             } else {
-                const fetchProductsByDescription = async (page: number, limit: number) => {
+                const fetchData = async (page: number, limit: number) => {
                     try {
                         await dispatch(getRawMaterialsPaginated(token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer las materias primas');
                     }
                 };
-                fetchProductsByDescription(currentPage, itemsByPage);
+                fetchData(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);

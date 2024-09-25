@@ -35,14 +35,14 @@ function ConsultCrmSuppliersPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        const fetchProductsByDescription = async (page: number, limit: number) => {
+        const fetchData = async (page: number, limit: number) => {
             try {
                 await dispatch(getCrmSuppliersPaginated(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los proveedores');
             }
         };
-        fetchProductsByDescription(currentPage, itemsByPage);
+        fetchData(currentPage, itemsByPage);
     }, [currentPage, itemsByPage]);
 
     const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {

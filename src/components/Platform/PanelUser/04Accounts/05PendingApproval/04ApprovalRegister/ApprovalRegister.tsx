@@ -3,7 +3,7 @@ import { useState } from 'react';
 // REDUX
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../../../../redux/store';
-import { patchIncomesNotApproved, getUnapprovedRecords } from '../../../../../../redux/User/04AccountsSlice/actions';
+import { patchApproveRecord, getUnapprovedRecords } from '../../../../../../redux/User/04AccountsSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import styles from './styles.module.css';
 
@@ -20,7 +20,7 @@ function ApprovalRegister({ token, idItem, onCloseModal }: ApprovalRegisterProps
 
     const onSubmit = async () => {
         try {
-            dispatch(patchIncomesNotApproved(idItem, token));
+            dispatch(patchApproveRecord(idItem, token));
             setCurrentPage(1);
             setItemsByPage(20);
             // Simulamos un delay de la API

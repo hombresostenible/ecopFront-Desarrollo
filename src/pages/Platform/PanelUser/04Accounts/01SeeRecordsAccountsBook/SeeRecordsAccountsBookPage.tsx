@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { getAccountsBooksPaginated, getAccountsBooksApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getAccountsBooks, getAccountsBookByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
 import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
@@ -42,14 +42,14 @@ function SeeRecordsAccountsBookPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        const fetchProductsByDescription = async (page: number, limit: number) => {
+        const fetchData = async (page: number, limit: number) => {
             try {
-                await dispatch(getAccountsBooksPaginated(token, page, limit));
+                await dispatch(getAccountsBooks(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los registros');
             }
         };
-        fetchProductsByDescription(currentPage, itemsByPage);
+        fetchData(currentPage, itemsByPage);
     }, [currentPage, itemsByPage]);
 
     const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,16 +65,23 @@ function SeeRecordsAccountsBookPage() {
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
-                dispatch(getAccountsBooksApprovedByBranch(selectedBranch, token));
-            } else {
-                const fetchProductsByDescription = async (page: number, limit: number) => {
+                const fetchData = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getAccountsBooksPaginated(token, page, limit));
+                        await dispatch(getAccountsBookByBranch(selectedBranch, token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
                 };
-                fetchProductsByDescription(currentPage, itemsByPage);
+                fetchData(currentPage, itemsByPage);
+            } else {
+                const fetchData = async (page: number, limit: number) => {
+                    try {
+                        await dispatch(getAccountsBooks(token, page, limit));
+                    } catch (error) {
+                        throw new Error('Error al traer los registros');
+                    }
+                };
+                fetchData(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
@@ -345,7 +352,7 @@ function SeeRecordsAccountsBookPage() {
                                                 </td>
                                                 <td className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                     <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                         <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
                                                             <MdOutlineRemoveRedEye
                                                                 className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
                                                                 onClick={() => {

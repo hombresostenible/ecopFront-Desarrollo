@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
-import { getUnapprovedRecords, getIncomesNotApprovedByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
+import { getUnapprovedRecords, getUnapprovedRecordsByBranch } from '../../../../../redux/User/04AccountsSlice/actions';
 import { getBranches } from '../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../types/User/accountsBook.types';
@@ -40,14 +40,14 @@ function PendingApprovalPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
     useEffect(() => {
-        const fetchProductsByDescription = async (page: number, limit: number) => {
+        const fetchData = async (page: number, limit: number) => {
             try {
                 await dispatch(getUnapprovedRecords(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los registros');
             }
         };
-        fetchProductsByDescription(currentPage, itemsByPage);
+        fetchData(currentPage, itemsByPage);
     }, [currentPage, itemsByPage]);
 
     const handleItemsByPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -63,16 +63,16 @@ function PendingApprovalPage() {
     useEffect(() => {
         if (token) {
             if (selectedBranch) {
-                dispatch(getIncomesNotApprovedByBranch(selectedBranch, token));
+                dispatch(getUnapprovedRecordsByBranch(selectedBranch, token));
             } else {
-                const fetchProductsByDescription = async (page: number, limit: number) => {
+                const fetchData = async (page: number, limit: number) => {
                     try {
                         await dispatch(getUnapprovedRecords(token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
                 };
-                fetchProductsByDescription(currentPage, itemsByPage);
+                fetchData(currentPage, itemsByPage);
             }
         }
     }, [selectedBranch, token, dispatch]);
