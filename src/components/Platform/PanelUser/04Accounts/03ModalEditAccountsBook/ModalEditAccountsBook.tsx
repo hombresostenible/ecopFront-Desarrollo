@@ -47,15 +47,20 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
         }
     };
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsByPage, setItemsByPage] = useState<number>(20);
+
     const handleSaveChanges = async (editedAccountsBook: IAccountsBook) => {
         try {
             editedAccountsBook.transactionType = editedTransactionType;
             editedAccountsBook.creditCash = editedCreditCash;
             editedAccountsBook.meanPayment = editedMeanPayment;
             dispatch(putAccountsBook(idItem, editedAccountsBook, token));
+            setCurrentPage(1);
+            setItemsByPage(20);
             // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
-            dispatch(getAccountsBooksIncomes(token));
+            dispatch(getAccountsBooksIncomes(token, currentPage, itemsByPage));
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
