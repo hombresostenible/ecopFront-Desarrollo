@@ -20,7 +20,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-interface CashExpenseProps {
+interface ExpenseCasProps {
     token: string;
     decodeUserIdRegister: string;
     selectedBranch: string;
@@ -30,7 +30,7 @@ interface CashExpenseProps {
     typeExpense: string;
 }
 
-function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate, typeExpense }: CashExpenseProps) {
+function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate, typeExpense }: ExpenseCasProps) {
     const navigate = useNavigate();
 
     // REDUX
@@ -654,4 +654,4 @@ function CashExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates
     );
 }
 
-export default CashExpense;
+export default ExpenseCash;

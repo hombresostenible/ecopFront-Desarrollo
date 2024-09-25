@@ -144,15 +144,20 @@ export const getAllTransactionsPerPeriodByBranch = (idBranch: string, token: str
 };
     
 //
-export const getAccountsReceivable = (token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsReceivable = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financial-indicator/accounts-receivable', {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsReceivableStart(response.data));
+        dispatch(getAccountsReceivableStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorFinantialIndicator(error.response?.data.message));
@@ -163,15 +168,21 @@ export const getAccountsReceivable = (token: string) => async (dispatch: AppDisp
 };
 
 //
-export const getAccountsReceivableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsReceivableByBranch = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable/${idBranch}?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsReceivableByBranchStart(response.data));
+        console.log('response: ', response)
+        dispatch(getAccountsReceivableByBranchStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorFinantialIndicator(error.response?.data.message));
@@ -182,15 +193,20 @@ export const getAccountsReceivableByBranch = (idBranch: string, token: string) =
 };
 
 //
-export const getAccountsPayable = (token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsPayable = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financial-indicator/accounts-payable', {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-payable?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsPayableStart(response.data));
+        dispatch(getAccountsPayableStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorFinantialIndicator(error.response?.data.message));
@@ -201,15 +217,20 @@ export const getAccountsPayable = (token: string) => async (dispatch: AppDispatc
 };
 
 //
-export const getAccountsPayableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsPayableByBranch = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financial-indicator/accounts-payable/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-payable/${idBranch}?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsPayableByBranchStart(response.data));
+        dispatch(getAccountsPayableByBranchStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorFinantialIndicator(error.response?.data.message));

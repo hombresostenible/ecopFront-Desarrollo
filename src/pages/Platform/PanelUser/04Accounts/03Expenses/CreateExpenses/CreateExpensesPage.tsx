@@ -12,8 +12,8 @@ import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions'
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions.ts';
 import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
-import CashExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CashExpense/CashExpense';
-import CreditExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/CreditExpense/CreditExpense';
+import CashExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/ExpenseCash/ExpenseCash.tsx';
+import CreditExpense from '../../../../../../components/Platform/PanelUser/04Accounts/02Expenses/ExpenseCredit/ExpenseCredit.tsx';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';

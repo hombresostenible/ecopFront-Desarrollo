@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
@@ -216,10 +216,10 @@ function PendingApprovalPage() {
 
                         <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
-                                <Link to='/accounts/income-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>Ingresos por aprobar</Link>
+                                {/* <Link to='/accounts/income-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>Ingresos por aprobar</Link>
                                 <Link to='/accounts/cxc-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>CXC por aprobar</Link>
                                 <Link to='/accounts/expences-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>Gastos por aprobar</Link>
-                                <Link to='/accounts/cxp-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>CXP por aprobar</Link>
+                                <Link to='/accounts/cxp-pending-approval' className={`${styles.Link__Consult} text-decoration-none` }>CXP por aprobar</Link> */}
                             </div>
                             <div className={`${styles.container__Filter_Dates} flex-column d-flex align-items-end justify-content-end gap-2`}>
                                 <div className={`${styles.filter__Dates} d-flex gap-2`}>
