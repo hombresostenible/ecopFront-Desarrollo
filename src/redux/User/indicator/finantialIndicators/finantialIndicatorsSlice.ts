@@ -15,6 +15,9 @@ interface FinantialIndicatorState {
     productsInventory: any;                     //
     rawmaterialsInventory: any;                 //
     loading: boolean;
+    totalRegisters: number;
+    totalPages: number;
+    currentPage: number;
     errorFinantialIndicator: string[] | null;
 }
 
@@ -32,6 +35,9 @@ const initialState: FinantialIndicatorState = {
     productsInventory: null,
     rawmaterialsInventory: null,
     loading: false,
+    totalRegisters: 0,
+    totalPages: 0,
+    currentPage: 0,
     errorFinantialIndicator: null,
 };
 
@@ -73,19 +79,28 @@ const finantialIndicatorsSlice = createSlice({
             state.allTransactionsPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
-        getAccountsReceivableStart: (state, action: PayloadAction<any  | null>) => {
+        getAccountsReceivableStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsReceivable = action.payload;
+            state.accountsReceivable = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
-        getAccountsReceivableByBranchStart: (state, action: PayloadAction<any  | null>) => {
+        getAccountsReceivableByBranchStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsReceivable = action.payload;
+            state.accountsReceivable = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
-        getAccountsPayableStart: (state, action: PayloadAction<any  | null>) => {
+        getAccountsPayableStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsPayable = action.payload;
+            state.accountsPayable = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
         getAccountsPayableByBranchStart: (state, action: PayloadAction<any  | null>) => {
