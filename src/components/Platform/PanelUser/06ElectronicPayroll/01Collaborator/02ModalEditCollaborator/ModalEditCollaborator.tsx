@@ -133,7 +133,7 @@ function ModalEditCollaborator({ token, idUserPlatform, userPlatform, branches, 
                         className={`${styles.input} mb-3 p-2 border`}
                         onChange={(e) => setEditedTypeDocumentId(e.target.value as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte')}
                     >
-                        <option value='NIT'>NIT</option>
+                        <option value='NIT' translate="no">NIT</option>
                         <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
                         <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
                         <option value='Pasaporte'>Pasaporte</option>

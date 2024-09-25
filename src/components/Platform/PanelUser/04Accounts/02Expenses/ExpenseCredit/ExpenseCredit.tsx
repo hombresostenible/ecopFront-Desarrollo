@@ -18,7 +18,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaPlus } from "react-icons/fa6";
 import styles from './styles.module.css';
 
-interface IncomeCreditProps {
+interface ExpenseCreditProps {
     token: string;
     decodeUserIdRegister: string;
     selectedBranch: string;
@@ -28,7 +28,7 @@ interface IncomeCreditProps {
     typeExpense: string;
 }
 
-function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate, typeExpense }: IncomeCreditProps) {
+function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDates, registrationDate, transactionDate, typeExpense }: ExpenseCreditProps) {
     const navigate = useNavigate();
     
     // REDUX
@@ -121,12 +121,6 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
     // SETEA EL PROVEEDOR CUANDO SE BUSCA O SE CREA
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
 
-    // SELECCIONA EL MEDIO DE PAGO
-    const [meanPayment, setMeansPayment] = useState('');
-    const handleMeanPaymentChange = (event: { target: { value: SetStateAction<string> }}) => {
-        setMeansPayment(event.target.value);
-    };
-
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
         const purchasePrice = scannedItem.purchasePrice ?? 0;
@@ -161,25 +155,19 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
         const interestRate = parseFloat(event.target.value);
         setInterestRateChange(interestRate);
     };
-
+   
     //Setea el valor de la cuota
     const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
     useEffect(() => {
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
+            const totalValue = Number(totalPurchaseAmount);
             if (interestRateChange !== 0) {
-                const totalValue = Number(totalPurchaseAmount);
-                const cuotaSinInteres = totalValue / numberOfPayments;
-                const tasaInteresMensual = interestRateChange / 100 / 12;
-                let saldoRestante = totalPurchaseAmount;
-                let cuotaConInteres = 0;
-                for (let i = 0; i < numberOfPayments; i++) {
-                    const interesMensual = saldoRestante * tasaInteresMensual;
-                    cuotaConInteres = cuotaSinInteres + interesMensual;
-                    saldoRestante -= cuotaSinInteres;
-                }
+                // Fórmula de Amortización Francesa
+                const monthlyInterestRate = interestRateChange / 100 / 12; 
+                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+                                        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
                 setPaymentValue(cuotaConInteres);
             } else {
-                const totalValue = Number(totalPurchaseAmount);
                 const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
@@ -193,6 +181,7 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
                 branchId: selectedBranch,
                 transactionType: "Gasto",
                 creditCash: "Credito",
+                transactionCounterpartId: selectedSupplier,
                 pay: "No",
                 paymentValue,
                 accountsReceivable: totalPurchaseAmount,
@@ -236,6 +225,7 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
 
     return (
         <div>
+            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta "A cuotas", por tanto estas creando una cuenta por pagar</h3>
             {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
@@ -369,45 +359,6 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                 )}
                             </div>
                             <div className={`${styles.container__Info_Purchase} d-flex flex-column align-items-start justify-content-between`}>
-                                <div className="mb-3 m-auto d-flex align-items-center justify-content-between">
-                                    <p className={`${styles.text__Purchase} m-0 text-start`}>Medio de pago</p>
-                                    <select
-                                        className={`${styles.input__Info_Purchase} p-2`}
-                                        value={meanPayment}
-                                        onChange={handleMeanPaymentChange}
-                                        required
-                                    >
-                                        <option value="">Seleccione el medio de pago</option>
-                                        <optgroup label="Tradicionales">
-                                            <option value='Efectivo'>Efectivo</option>
-                                            <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
-                                            <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
-                                        </optgroup>
-                                        <optgroup label="Billeteras digitales">
-                                            <option value='Daviplata'>Daviplata</option>
-                                            <option value='Nequi'>Nequi</option>
-                                            <option value='Movii'>Movii</option>
-                                            <option value='Tuya Pay'>Tuya Pay</option>
-                                            <option value='Dale'>Dale</option>
-                                            <option value='Nubank'>Nubank</option>
-                                            <option value='Uala'>Uala</option>
-                                            <option value='Lulo Bank'>Lulo Bank</option>
-                                            <option value='Tpaga'>Tpaga</option>
-                                            <option value='Powwi'>Powwi</option>
-                                            <option value='BBVA Wallet'>BBVA Wallet</option>
-                                            <option value='Ahorro a la mano'>Ahorro a la mano</option>
-                                            <option value='Apple Pay'>Apple Pay</option>
-                                            <option value='Rappipay'>Rappipay</option>
-                                            <option value='Claro Pay'>Claro Pay</option>
-                                            <option value='Powwi'>Powwi</option>
-                                        </optgroup>
-                                        <optgroup label="Otros">
-                                            <option value='Baloto'>Baloto</option>
-                                            <option value='Giro'>Giro</option>
-                                            <option value='Cheque'>Cheque</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
                                 <div className="mb-3 mx-auto d-flex align-items-center justify-content-between">
                                     <p className={`${styles.text__Purchase} m-0`}>Total de la compra</p>
                                     <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
@@ -487,46 +438,6 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                 )}
                             </div>
                         )}
-
-                        <div className="mb-4 position-relative">
-                            <p className={`${styles.label} m-0`}>Medio de pago</p>
-                            <select
-                                className={`${styles.input__Other_Incomes} p-2`}
-                                value={meanPayment}
-                                onChange={handleMeanPaymentChange}
-                                required
-                            >
-                                <option value="">Seleccione el medio de pago</option>
-                                <optgroup label="Tradicionales">
-                                    <option value='Efectivo'>Efectivo</option>
-                                    <option value='Tarjeta de Credito/Debito'>Tarjeta de Credito/Debito</option>
-                                    <option value='Transferencia bancaria (PSE)'>Transferencia bancaria (PSE)</option>
-                                </optgroup>
-                                <optgroup label="Billeteras digitales">
-                                    <option value='Daviplata'>Daviplata</option>
-                                    <option value='Nequi'>Nequi</option>
-                                    <option value='Movii'>Movii</option>
-                                    <option value='Tuya Pay'>Tuya Pay</option>
-                                    <option value='Dale'>Dale</option>
-                                    <option value='Nubank'>Nubank</option>
-                                    <option value='Uala'>Uala</option>
-                                    <option value='Lulo Bank'>Lulo Bank</option>
-                                    <option value='Tpaga'>Tpaga</option>
-                                    <option value='Powwi'>Powwi</option>
-                                    <option value='BBVA Wallet'>BBVA Wallet</option>
-                                    <option value='Ahorro a la mano'>Ahorro a la mano</option>
-                                    <option value='Apple Pay'>Apple Pay</option>
-                                    <option value='Rappipay'>Rappipay</option>
-                                    <option value='Claro Pay'>Claro Pay</option>
-                                    <option value='Powwi'>Powwi</option>
-                                </optgroup>
-                                <optgroup label="Otros">
-                                    <option value='Baloto'>Baloto</option>
-                                    <option value='Giro'>Giro</option>
-                                    <option value='Cheque'>Cheque</option>
-                                </optgroup>
-                            </select>
-                        </div>
                     </div>
                 )}
 
@@ -599,7 +510,7 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             placeholder='Valor de cada cuota'
                             inputMode="numeric"
                             readOnly
-                            value={formatNumber(paymentValue)}
+                            value={paymentValue || 0}
                             min={0}
                         />
                     </div>
@@ -622,4 +533,4 @@ function CreditExpense({ token, decodeUserIdRegister, selectedBranch, defaultDat
     );
 }
 
-export default CreditExpense;
+export default ExpenseCredit;

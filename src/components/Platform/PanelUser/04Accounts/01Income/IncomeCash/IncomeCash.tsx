@@ -474,7 +474,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
                         <select
                             className={`${styles.input} p-2 border`}
-                            value={selectedBranch}
+                            value={userPlatform?.id || ''}
                             onChange={handleUserPlatformChange}
                         >
                             <option value=''>Selecciona el vendedor</option>

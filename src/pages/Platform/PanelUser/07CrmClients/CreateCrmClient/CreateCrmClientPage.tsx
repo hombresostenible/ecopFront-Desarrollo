@@ -140,7 +140,7 @@ function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
                                         className={`${styles.input} p-2 border`}
                                         onChange={handleTypeDocumentIdChange}
                                     >
-                                        <option value='NIT'>NIT</option>
+                                        <option value='NIT' translate="no">NIT</option>
                                         <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
                                         <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
                                         <option value='Pasaporte'>Pasaporte</option>

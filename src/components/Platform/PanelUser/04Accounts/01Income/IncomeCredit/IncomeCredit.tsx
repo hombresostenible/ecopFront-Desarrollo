@@ -139,20 +139,18 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     useEffect(() => {
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
             const totalValue = Number(totalPurchaseAmount);
-            
             if (interestRateChange !== 0) {
-                // Si hay una tasa de interés, usar la fórmula de Amortización Francesa
+                // Fórmula de Amortización Francesa
                 const monthlyInterestRate = interestRateChange / 100 / 12; 
                 const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
                                         (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-    
                 setPaymentValue(cuotaConInteres);
             } else {
                 const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
         }
-    }, [totalPurchaseAmount, numberOfPayments, interestRateChange]);
+    }, [totalPurchaseAmount, numberOfPayments, interestRateChange]);    
 
     // SETEA EL USUARIO VENDEDOR
     const [userPlatform, setUserPlatform] = useState<IUserPlatform>();
@@ -161,7 +159,6 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
         const selectedUser = Array.isArray(usersPlatform)
             ? usersPlatform.find((user) => user.id === selectedId)
             : null;
-    
         setUserPlatform(selectedUser || undefined);
     };
 
@@ -229,7 +226,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 <div className='mt-4 mb-4'>
                     <div className="d-flex align-items-start justify-content-between">
                         <div>
-                            <p className="m-0">Código de barras</p>
+                            <p className="m-0">Busca el item por código de barras</p>
                             <input
                                 id="barCodeInput"
                                 type="text"
@@ -424,7 +421,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                             placeholder='Valor de cada cuota'
                             inputMode="numeric"
                             readOnly
-                            value={formatNumber(paymentValue)}
+                            value={paymentValue || 0}
                             min={0}
                         />
                     </div>
@@ -432,7 +429,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                     <div className="mb-4 position-relative">
                         <select
                             className={`${styles.input__Other_Incomes} p-2`}
-                            value={selectedBranch}
+                            value={userPlatform?.id || ''}
                             onChange={handleUserPlatformChange}
                         >
                             <option value=''>Selecciona el vendedor</option>
