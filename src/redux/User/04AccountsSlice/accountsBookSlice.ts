@@ -45,7 +45,7 @@ const accountsBookSlice = createSlice({
             state.errorAccountsBook = null;
         },
         getAccountsBookByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
-            state.loading = false;
+            state.loading = true;
             state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
@@ -53,6 +53,7 @@ const accountsBookSlice = createSlice({
             state.errorAccountsBook = null;
         },
         getAccountsBooksIncomesStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
             state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
@@ -61,6 +62,7 @@ const accountsBookSlice = createSlice({
         },
         getAccountsBooksIncomesByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
+            state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
@@ -68,6 +70,7 @@ const accountsBookSlice = createSlice({
         },
         getAccountsBooksExpensesStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
+            state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
@@ -75,6 +78,7 @@ const accountsBookSlice = createSlice({
         },
         getAccountsBooksExpensesByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
+            state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
             state.totalPages = action.payload.totalPages;
             state.currentPage = action.payload.currentPage;
