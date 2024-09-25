@@ -2,7 +2,27 @@
 import { AppDispatch } from '../../store';
 import axiosInstance from '../../../api/axios';
 import { IAccountsBook } from '../../../types/User/accountsBook.types';
-import { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksPaginatedStart, getAccountsBooksApprovedStart, getAccountsBooksIncomesStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } from './accountsBookSlice';
+import {
+    accountsBookData,
+    errorAccountsBook,
+    postAccountsBookStart,
+    getAccountsBooksStart,
+    getAccountsBookByBranchStart,
+    getAccountsBooksIncomesStart,
+    getAccountsBooksIncomesByBranchStart,
+    getAccountsBooksExpensesStart,
+    getAccountsBooksExpensesByBranchStart,
+    
+
+    
+
+    getUnapprovedRecordsStart,
+    
+    getUnapprovedRecordsByBranchStart,
+    getAccountsBookByIdStart,
+    patchApproveRecordStart,
+    putAccountsBookStart,
+    deleteAccountsBookStart } from './accountsBookSlice';
 
 //CREAR DE UN REGISTRO EN EL LIBRO DIARIO
 export const postAccountsBook = (formData: IAccountsBook, token: string) => async (dispatch: AppDispatch) => {
@@ -24,27 +44,8 @@ export const postAccountsBook = (formData: IAccountsBook, token: string) => asyn
     }
 };
 
-//OBTENER TODOS LOS REGISTRO DEL LIBRO DIARIO
-export const getAccountsBooks = (token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get('/accounts-book', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsBooksStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAccountsBook(error.response?.data.message));
-        } else {
-            dispatch(errorAccountsBook(error.message));
-        }
-    }
-};
-
 //OBTENER TODOS LOS REGISTRO DEL LIBRO DIARIO PAGINADOS PARA RENDERIZARLOS EN LA TABLA DE CONSULTA
-export const getAccountsBooksPaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+export const getAccountsBooks = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/accounts-book/paginated?page=${page}&limit=${limit}`, {
             headers: {
@@ -52,7 +53,7 @@ export const getAccountsBooksPaginated = (token: string, page: number, limit: nu
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksPaginatedStart({
+        dispatch(getAccountsBooksStart({
             registers: response.data.registers,
             totalRegisters: response.data.totalRegisters,
             totalPages: response.data.registers.totalPages,
@@ -67,16 +68,21 @@ export const getAccountsBooksPaginated = (token: string, page: number, limit: nu
     }
 };
 
-//OBTENER TODOS LOS REGISTROS CONTABLES APROBADOS TANTO DE INGRESOS COMO DE GASTOS DEL USER
-export const getAccountsBooksApproved = (token: string) => async (dispatch: AppDispatch) => {
+//OBTENER TODOS LOS REGISTROS DEL LIBRO DIARIO POR SEDE
+export const getAccountsBookByBranch = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accounts-book/approved', {
+        const response = await axiosInstance.get(`/accounts-book/paginated-branch/${idBranch}?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksApprovedStart(response.data));
+        dispatch(getAccountsBookByBranchStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -84,37 +90,23 @@ export const getAccountsBooksApproved = (token: string) => async (dispatch: AppD
             dispatch(errorAccountsBook(error.message));
         }
     }
-}
-
-//OBTENER TODOS LOS REGISTROS CONTABLES APROBADOS POR SEDE, TANTO DE INGRESOS COMO DE GASTOS DEL USER
-export const getAccountsBooksApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/accounts-book/approved/${idBranch}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsBooksIncomesApprovedByBranchStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAccountsBook(error.response?.data.message));
-        } else {
-            dispatch(errorAccountsBook(error.message));
-        }
-    }
-}
+};                    
 
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
-export const getAccountsBooksIncomesApproved = (token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBooksIncomes = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accounts-book/incomes', {
+        const response = await axiosInstance.get(`/accounts-book/incomes?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksIncomesStart(response.data));
+        dispatch(getAccountsBooksIncomesStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -122,18 +114,23 @@ export const getAccountsBooksIncomesApproved = (token: string) => async (dispatc
             dispatch(errorAccountsBook(error.message));
         }
     }
-}
+};
 
 //OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
-export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBooksIncomesByBranch = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/accounts-book/incomes-branch/${idBranch}`, {
+        const response = await axiosInstance.get(`/accounts-book/incomes-branch/${idBranch}?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksIncomesApprovedByBranchStart(response.data));
+        dispatch(getAccountsBooksIncomesByBranchStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -141,18 +138,90 @@ export const getAccountsBooksIncomesApprovedByBranch = (idBranch: string, token:
             dispatch(errorAccountsBook(error.message));
         }
     }
-}
+};
 
 //OBTENER TODOS LOS REGISTRO DE GASTO DEL LIBRO DIARIO
-export const getAccountsBooksExpenses = (token: string) => async (dispatch: AppDispatch) => {
+export const getAccountsBooksExpenses = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/accounts-book/expenses', {
+        const response = await axiosInstance.get(`/accounts-book/expenses?page=${page}&limit=${limit}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
         });
-        dispatch(getAccountsBooksExpensesStart(response.data));
+        dispatch(getAccountsBooksExpensesStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS REGISTROS DE INGRESOS APROBADOS DEL USER
+export const getAccountsBooksExpensesByBranch = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/accounts-book/expenses-branch/${idBranch}?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsBooksExpensesByBranchStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS INGRESOS NO APROBADOS
+export const getUnapprovedRecords = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/accounts-book/unapproved-records?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getUnapprovedRecordsStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorAccountsBook(error.response?.data.message));
+        } else {
+            dispatch(errorAccountsBook(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS INGRESOS NO APROBADOS POR SEDE
+export const getUnapprovedRecordsByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/accounts-book/incomes-not-approved/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getUnapprovedRecordsByBranchStart(response.data));
     } catch (error: any) {
         if (error.response && error.response.status === 401) {
             dispatch(errorAccountsBook(error.response?.data.message));
@@ -181,72 +250,10 @@ export const getAccountsBookById = (idAccountsBook: string, token: string) => as
     }
 };
 
-//OBTENER TODOS LOS REGISTROS DEL LIBRO DIARIO POR SEDE
-export const getAccountsBookByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/accounts-book/paginated-branch/${idBranch}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsBookByBranchStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAccountsBook(error.response?.data.message));
-        } else {
-            dispatch(errorAccountsBook(error.message));
-        }
-    }
-};                    
-
-//OBTENER TODOS LOS INGRESOS NO APROBADOS
-export const getUnapprovedRecords = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/accounts-book/unapproved-records?page=${page}&limit=${limit}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getIncomesNotApprovedStart({
-            registers: response.data.registers,
-            totalRegisters: response.data.totalRegisters,
-            totalPages: response.data.registers.totalPages,
-            currentPage: response.data.registers.currentPage,
-        }));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAccountsBook(error.response?.data.message));
-        } else {
-            dispatch(errorAccountsBook(error.message));
-        }
-    }
-};
-
-//OBTENER TODOS LOS INGRESOS NO APROBADOS POR SEDE
-export const getIncomesNotApprovedByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/accounts-book/incomes-not-approved/${idBranch}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getIncomesNotApprovedByBranchStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorAccountsBook(error.response?.data.message));
-        } else {
-            dispatch(errorAccountsBook(error.message));
-        }
-    }
-};
-
 //APROBAR UN INGRESO PENDIENTE DE APROBAR
-export const patchIncomesNotApproved = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
+export const patchApproveRecord = (idAccountsBook: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(patchIncomesNotApprovedStart());
+        dispatch(patchApproveRecordStart());
         const response = await axiosInstance.patch(`/accounts-book/approve-record/${idAccountsBook}`, {
             headers: {
                 Authorization: `Bearer ${token}`,

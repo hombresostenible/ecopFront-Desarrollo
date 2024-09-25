@@ -10,37 +10,16 @@
     color: #f28705;
     font-weight: 600;
     letter-spacing: 1px;
+    max-width: 1053px;
 }
-.input__Date {
-    margin: 0 5px;
+.container__Filters {
+    max-width: 1053px;
 }
-.handle__Filter {
-    padding: 5px 10px;
-    margin: 0 10px 0 5px;
-    border-radius: 2px;
-    letter-spacing: 1px;
-    background: #718bd8;
-    color: #f8f9fa;
+.select__Branch {
+    outline-color: #718bd8;
 }
-.handle__Filter:hover {
-    background: #0a31bf;
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-.clear__Filter {
-    padding: 5px 10px;
-    border-radius: 2px;
-    letter-spacing: 1px;
-    background: #dc3545;
-    color: #f8f9fa;
-}
-.clear__Filter:hover {
-    transition: 300ms all ease;
-    cursor: pointer;
-}
-.container__Services {
+.container__Column_Selector {
     height: 50px;
-    width: 100%;
 }
 .span__Menu {
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -64,6 +43,53 @@
 .menu:hover {
     cursor: pointer;
 }
+.container__Link_Head_Navigate {
+    max-width: 1053px;
+}
+.Link__Consult {
+    color: #718bd8;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    transition: 300ms ease all;
+}
+.Link__Consult:hover {
+    color: #f8f9fa;
+    border: none;
+    background: #0a31bf;
+}
+.input__Date {
+    outline-color: #718bd8;
+}
+.handle__Filter {
+    padding: 5px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    background: #718bd8;
+    color: #f8f9fa;
+}
+.handle__Filter:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.clear__Filter {
+    padding: 5px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    background: #dc3545;
+    color: #f8f9fa;
+}
+.clear__Filter:hover {
+    transition: 300ms all ease;
+    cursor: pointer;
+}
+.container__Paginated {
+    max-width: 1053px;
+}
+.select {
+    margin: 0 15px 0 10px;
+    outline-color: #718bd8;
+}
 
 /* TABLA */
 .container__Table {
@@ -83,43 +109,35 @@
 /* TITULOS DE LAS COLUMNAS */
 .issue__Date {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 100px;
 }
 .expiration__Date {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 100px;
 }
 .branch {
     height: 60px;
-    width: 14%;
-    min-width: 140px;
+    width: 200px;
 }
 .transaction__Counterpart {
     height: 60px;
-    width: 26%;
-    min-width: 260px;
+    width: 150px;
 }
 .total__Value {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 .dian__State {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 100px;
 }
 .state {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 100px;
 }
 .action {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 150px;
 }
 
 /* CONTENIDO DE LA TABLA */

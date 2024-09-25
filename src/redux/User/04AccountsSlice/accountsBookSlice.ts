@@ -36,12 +36,7 @@ const accountsBookSlice = createSlice({
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
         },
-        getAccountsBooksStart: (state, action: PayloadAction<IAccountsBook>) => {
-            state.loading = true;
-            state.accountsBook = action.payload;
-            state.errorAccountsBook = null;
-        },
-        getAccountsBooksPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+        getAccountsBooksStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsBook = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
@@ -49,24 +44,56 @@ const accountsBookSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
-        getAccountsBooksApprovedStart: (state, action: PayloadAction<IAccountsBook>) => {
-            state.loading = true;
-            state.accountsBook = action.payload;
+        getAccountsBookByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = false;
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
-        getAccountsBooksIncomesStart: (state, action: PayloadAction<IAccountsBook>) => {
-            state.loading = true;
-            state.accountsBook = action.payload;
+        getAccountsBooksIncomesStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
-        getAccountsBooksIncomesApprovedByBranchStart: (state, action: PayloadAction<IAccountsBook[]>) => {
+        getAccountsBooksIncomesByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsBook = action.payload;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
-        getAccountsBooksExpensesStart: (state, action: PayloadAction<IAccountsBook>) => {
+        getAccountsBooksExpensesStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
-            state.accountsBook = action.payload;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorAccountsBook = null;
+        },
+        getAccountsBooksExpensesByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorAccountsBook = null;
+        },
+        getUnapprovedRecordsStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorAccountsBook = null;
+        },
+        getUnapprovedRecordsByBranchStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.accountsBook = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
             state.errorAccountsBook = null;
         },
         getAccountsBookByIdStart: (state, action: PayloadAction<IAccountsBook>) => {
@@ -74,25 +101,7 @@ const accountsBookSlice = createSlice({
             state.accountsBook = action.payload;
             state.errorAccountsBook = null;
         },
-        getAccountsBookByBranchStart: (state, action: PayloadAction<IAccountsBook>) => {
-            state.loading = false;
-            state.accountsBook = action.payload;
-            state.errorAccountsBook = null;
-        },
-        getIncomesNotApprovedStart: (state, action: PayloadAction<{ registers: IAccountsBook[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
-            state.loading = true;
-            state.accountsBook = action.payload.registers;
-            state.totalRegisters = action.payload.totalRegisters;
-            state.totalPages = action.payload.totalPages;
-            state.currentPage = action.payload.currentPage;
-            state.errorAccountsBook = null;
-        },
-        getIncomesNotApprovedByBranchStart: (state, action: PayloadAction<IAccountsBook[]>) => {
-            state.loading = true;
-            state.accountsBook = action.payload;
-            state.errorAccountsBook = null;
-        },
-        patchIncomesNotApprovedStart: (state) => {
+        patchApproveRecordStart: (state) => {
             state.loading = true;
             state.errorAccountsBook = null;
         },
@@ -107,5 +116,21 @@ const accountsBookSlice = createSlice({
     },
 });
 
-export const { accountsBookData, errorAccountsBook, postAccountsBookStart, getAccountsBooksStart, getAccountsBooksPaginatedStart, getAccountsBooksApprovedStart, getAccountsBooksIncomesStart, getAccountsBooksIncomesApprovedByBranchStart, getAccountsBooksExpensesStart, getAccountsBookByIdStart, getAccountsBookByBranchStart, getIncomesNotApprovedStart, getIncomesNotApprovedByBranchStart, patchIncomesNotApprovedStart, putAccountsBookStart, deleteAccountsBookStart } = accountsBookSlice.actions;
+export const {
+    accountsBookData,
+    errorAccountsBook,
+    postAccountsBookStart,
+    getAccountsBooksStart,
+    getAccountsBookByBranchStart,
+    getAccountsBooksIncomesStart,
+    getAccountsBooksIncomesByBranchStart,
+    getAccountsBooksExpensesStart,
+    getAccountsBooksExpensesByBranchStart,
+    getUnapprovedRecordsStart,
+    getUnapprovedRecordsByBranchStart,
+    getAccountsBookByIdStart,
+    patchApproveRecordStart,
+    putAccountsBookStart,
+    deleteAccountsBookStart
+} = accountsBookSlice.actions;
 export default accountsBookSlice.reducer;
