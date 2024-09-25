@@ -6,10 +6,22 @@
     overflow-y: auto;
 }
 .container__Small {
-    width: 50px;
+    width: 75px;
     height: calc(100vh - 70px);
     background: #718bd8;
     color: hsl(210, 17%, 98%);
+
+    .icon__Hamburger {
+        font-size: 35px;
+        margin: auto;
+    }
+    .container__Icon {
+        height: 45px;
+        width: 55px;
+    }
+    .icon__Section, .icon__Section_Logout {
+        font-size: 35px;
+    }
 }
 .container__Component {
     max-width: 340px;
@@ -25,7 +37,7 @@
     cursor: pointer;
 }
 .container__Section {
-    height: 35px;
+    height: 45px;
     width: 100%;
 }
 .container__Section:hover {
@@ -40,19 +52,20 @@
 }
 .section {
     width: 100%;
-    height: 35px;
+    height: 45px;
     color: hsl(210, 17%, 98%);
 }
 .section:hover {
     cursor: pointer;
 }
+
 .container__Icon {
-    height: 35px;
-    width: 20px;
+    height: 45px;
+    width: 45px;
 }
 .icon__Section {
     color: hsl(210, 17%, 98%);
-    font-size: 20px;
+    font-size: 25px;
 }
 .link__Side_Bar {
     color: hsl(210, 17%, 98%);

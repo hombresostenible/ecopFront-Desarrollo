@@ -118,7 +118,6 @@ function SideBar() {
     };
 
 
-
     // SUBMENU LATERAL DE SEDES
     const [showBranchClick, setShowBranchClick] = useState<boolean>(false);
     const handleBranchClick = () => {
@@ -175,7 +174,6 @@ function SideBar() {
         }
     };
 
-
     // Detectar clics fuera de los menús
     const branchesMenuRef = useRef<HTMLDivElement>(null);
     const inventoriesMenuRef = useRef<HTMLDivElement>(null);
@@ -214,7 +212,7 @@ function SideBar() {
         <div className={`${menuVisible ? styles.container : styles.container__Small} position-relative`}>
             <div className={`${styles.container__Component} p-2`}>
                 <div className={`${styles.container__Icon_Hamburger} mb-2 d-flex align-items-center justify-content-end`}>
-                    <GiHamburgerMenu className={`${styles.icon__Hamburger}`} onClick={toggleMenuVisible} />
+                    <GiHamburgerMenu className={`${styles.icon__Hamburger} `} onClick={toggleMenuVisible} />
                 </div>
 
                 {/* HOME */}
@@ -233,7 +231,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={branchesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section}`} onClick={handleBranchClick} />
+                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleBranchClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleBranchesSubMenuOpen}>
@@ -265,7 +263,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={inventoriesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section}`} onClick={handleInventoriesClick} />
+                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleInventoriesClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInventorySubMenuOpen}>
