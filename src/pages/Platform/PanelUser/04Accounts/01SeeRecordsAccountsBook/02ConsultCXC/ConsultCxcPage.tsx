@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-import { getAccountsReceivable, getAccountsReceivableByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions.ts';
+import { getAccountsReceivablePaginated, getAccountsReceivableByBranchPaginated } from '../../../../../../redux/User/indicator/finantialIndicators/actions.ts';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from '../../../../../../types/User/accountsBook.types.ts';
@@ -43,7 +43,7 @@ function ConsultCxcPage() {
     useEffect(() => {
         const fetchData = async (page: number, limit: number) => {
             try {
-                await dispatch(getAccountsReceivable(token, page, limit));
+                await dispatch(getAccountsReceivablePaginated(token, page, limit));
             } catch (error) {
                 throw new Error('Error al traer los registros');
             }
@@ -66,7 +66,7 @@ function ConsultCxcPage() {
             if (selectedBranch) {
                 const fetchData = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getAccountsReceivableByBranch(selectedBranch, token, page, limit));
+                        await dispatch(getAccountsReceivableByBranchPaginated(selectedBranch, token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
@@ -75,7 +75,7 @@ function ConsultCxcPage() {
             } else {
                 const fetchData = async (page: number, limit: number) => {
                     try {
-                        await dispatch(getAccountsReceivable(token, page, limit));
+                        await dispatch(getAccountsReceivablePaginated(token, page, limit));
                     } catch (error) {
                         throw new Error('Error al traer los registros');
                     }
