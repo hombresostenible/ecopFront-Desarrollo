@@ -4,7 +4,7 @@ import Select from 'react-select';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../redux/store';
-import { getAccountsReceivableByBranchPaginated } from '../../redux/User/indicator/finantialIndicators/actions';
+import { getAccountsReceivableByBranch } from '../../redux/User/indicator/finantialIndicators/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsReceivable } from "../../types/User/accountsReceivable.types";
 // import styles from '../../pages/05 AccountBook/styles.module.css';
@@ -22,7 +22,7 @@ function SearchCXC ({ token, idBranch, onCXCSelect }: SearchCXCProps) {
     const [filteredAccounts, setFilteredAccounts] = useState<Array<any>>([]);
 
     useEffect(() => {
-        dispatch(getAccountsReceivableByBranchPaginated(idBranch, token));
+        dispatch(getAccountsReceivableByBranch(idBranch, token));
     }, [ token ]);
 
     useEffect(() => {
