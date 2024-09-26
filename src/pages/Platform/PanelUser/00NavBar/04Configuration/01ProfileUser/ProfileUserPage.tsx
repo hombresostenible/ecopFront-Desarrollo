@@ -19,6 +19,8 @@ import styles from './styles.module.css';
 function ProfileUserPage() {
     const location = useLocation();
     const token = jsCookie.get('token') || '';
+
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
 

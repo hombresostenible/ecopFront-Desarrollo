@@ -1,16 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback, useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Chart from 'chart.js/auto';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getSalesPerPeriod, getSalesPerPeriodByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
@@ -22,10 +24,12 @@ import styles from './styles.module.css';
 
 function SalesPerPeriod() {
     const token = jsCookie.get('token') || '';
+    
+    //REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const salesPerPeriod = useSelector((state: RootState) => state.finantialIndicators.salesPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const user = useSelector((state: RootState) => state.user.user);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
     const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null);
@@ -37,6 +41,7 @@ function SalesPerPeriod() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+        dispatch(getProfileUser(token));
     }, [dispatch, token]);
 
     useEffect(() => {
@@ -190,6 +195,31 @@ function SalesPerPeriod() {
         return branch ? branch.nameBranch : "Sede no encontrada";
     }, [branches]);
 
+    const [downloadPdf, setDownloadPdf] = React.useState(false);
+    useEffect(() => {
+        if (downloadPdf) {
+            const date = new Date();
+            const generatePdfDocument = async () => {
+                const MyDocument = () => (
+                    <DownloadSalesPerPeriod
+                        user={user}
+                        date={date}
+                        data={salesPerPeriod as IAccountsBook[]}
+                        selectedBranch={selectedBranch}
+                    />
+                );
+                const blob = await pdf(<MyDocument />).toBlob();
+                saveAs(blob, 'Ventas_del_Período.pdf');
+                setDownloadPdf(false);
+            };
+            generatePdfDocument();
+        }
+    }, [downloadPdf, salesPerPeriod]);
+
+    const handleDownload = () => {
+        setDownloadPdf(true);
+    };
+
     const exportToExcel = useCallback(() => {
         if (originalData) {
             const dataForExcel = originalData.map(item => ({
@@ -218,14 +248,9 @@ function SalesPerPeriod() {
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Ventas del período</h2>
                     <div className={styles.containerButtonExportT}>
-                        {originalData && (
-                            <PDFDownloadLink
-                                document={<DownloadSalesPerPeriod data={originalData} />}
-                                fileName="Ventas_del_Período.pdf"
-                            >
-                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
-                            </PDFDownloadLink>
-                        )}
+                        <div className={`${styles.buttonPDF} d-flex align-items-center justify-content-center gap-1`} onClick={handleDownload}>
+                            PDF <PiExportBold className={styles.icon} />
+                        </div>
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
