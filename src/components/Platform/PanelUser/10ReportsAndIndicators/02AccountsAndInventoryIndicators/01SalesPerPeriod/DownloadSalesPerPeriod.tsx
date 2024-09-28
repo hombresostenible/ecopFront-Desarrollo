@@ -1,35 +1,27 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Document, Image, View, Page, Text, StyleSheet } from '@react-pdf/renderer';
 // ELEMENTOS DEL COMPONENTE
 import { IUser } from '../../../../../../types/User/user.types';
-import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
-import LogoEcopcion from '../../../../../../assets/Logo.png';
+import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import { formatDate } from '../../../../../../helpers/FormatDate/FormatDate';
 
 const stylesPDF = StyleSheet.create({
-    container: {
-        height: '1000px',
-        width: '100%',
-        margin: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
     container__Component: {
         width: '100%',
     },
     top: {
         width: '100%',
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        background: '#212529',
+        backgroundColor: '#212529',
         padding: '10px',
     },
     title: {
-        fontweight: '600',
+        fontWeight: 'bold',
         color: '#f8f9fa',
-        letterspacing: '1px',
+        letterSpacing: '1px',
     },
     container__Generate__By: {
         padding: '0',
@@ -41,52 +33,115 @@ const stylesPDF = StyleSheet.create({
         color: '#f8f9fa',
         fontSize: '10px',
     },
+    generate__Date: {
+        color: '#f8f9fa',
+        fontSize: '10px',
+    },
     container__Body: {
         padding: '20px',
     },
     container__Head: {
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: '0 0 20px 0',
+        padding: '0 0 5px 0',
     },
-
-
-
-
-
-
-
-    logo_Top_Drive: {
-        border: '1px solid red',
-        width: 200,
-        height: 52,
+    container__Data_User: {
+        height: '97px',
+        width: '50%',
     },
-    container__Characteristics: {
-        width: 450,
-        margin: '10px auto 0 auto',
+    container__User_Logo: {
+        height: '80px',
+        width: '250px',
     },
-    title__Characteristics: {
-        fontSize: 16,
-        marginBottom: 10,
-        color: '#212322',
+    logo: {
+        maxHeight: '75px',
+        maxWidth: '230px',
     },
-    container__Propertie: {
-        borderBottom: '1px solid #ced4da',
-        flexDirection: 'row',
+    container__User_Name: {
+        fontWeight: 'bold',
+        opacity: 0.75,
+        fontSize: '16px',
+        letterSpacing: '1px',
+    },
+    name: {
+        fontSize: '14px',
+        margin: '0',
+    },
+    container__User_Info: {
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        marginBottom: 5,
+        height: '97px',
+        width: '50%',
+        justifyContent: 'space-between',
     },
-    title__Propertie: {
-        width: 170,
+    container__User_Contact: {
+        fontSize: '14px',
+        opacity: 0.75,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+    },
+    user__Report: {
+        width: '100%',
+        fontSize: '12px',
+        opacity: 0.75,
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
+
+    // TABLA
+    branch: {
+        fontSize: '14px',
+        opacity: 0.75,
+        padding: '0 0 10px 0',
+    },
+    table: {
+        border: '1px solid #ced4da',
+        opacity: 0.75,
+        width: '100%',
+    },
+    tableHeader: {
+        border: '1px solid #ced4da',
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    tableRow: {
+        borderBottom: '1px solid #ced4da',
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    tableTitleCell: {
+        border: '1px solid #ced4da',
+        height: '40px',
+        flex: 1,
         fontSize: 12,
-        backgroundColor: '#f0f0f0',
-        padding: '5px 10px',
+        padding: '10px 5px 10px 5px',
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
-    value__Characteristics: {
+    tableCell: {
+        border: '1px solid #ced4da',
         fontSize: 12,
         flex: 1,
-        padding: '5px 10px',
+        padding: 5,
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    tableCellTotal: {
+        border: '1px solid #ced4da',
+        fontSize: 12,
+        flex: 1,
+        padding: 5,
+        textAlign: 'right',
     },
     pageNumber: {
         position: 'absolute',
@@ -97,68 +152,63 @@ const stylesPDF = StyleSheet.create({
         textAlign: 'center',
         color: 'grey',
     },
+    back: {
+        background: '#212529',
+        height: '10px',
+        width: '100%',
+    },
 });
-
-// Definir la interfaz para las secciones
-interface CharacteristicsSection {
-    title: string;
-    properties: {
-        name: string;
-        value: string | number | undefined;
-    }[];
-}
 
 interface DownloadSalesPerPeriodProps {
     user: IUser | null,
     date: Date;
-    data: IAccountsBook[];
-    selectedBranch?: string;
+    data: any[];
+    nameBranch: string;
 }
 
-function DownloadSalesPerPeriod({ user, date, data, selectedBranch }: DownloadSalesPerPeriodProps) {
-    const renderCharacteristicsSections = () => {
-        const characteristics: CharacteristicsSection[] = data.map((sale) => ({
-            title: `Fecha: ${sale.transactionDate}`,
-            properties: [
-                { name: 'Tipo de Transacción', value: sale.transactionType },
-                { name: 'Medio de Pago', value: sale.meanPayment || 'N/A' },
-                { name: 'Valor Total', value: sale.totalValue },
-                { name: 'Vendedor', value: sale.seller || 'N/A' },
-            ],
-        }));
+function DownloadSalesPerPeriod({ user, date, data, nameBranch }: DownloadSalesPerPeriodProps) {
+    const renderItemsSold = () => {
 
-        const pages = [
-            {
-                title: selectedBranch ? `Ventas en la Sede: ${selectedBranch}` : 'Ventas en todas las sedes',
-                characteristicsSections: characteristics,
-            }
-        ];
-
-        return pages;
-    };
-
-    const renderCharacteristicsSection = (section: CharacteristicsSection) => {
         return (
-            <View style={stylesPDF.container__Characteristics} key={section.title}>
-                <Text style={stylesPDF.title__Characteristics}>{section.title}</Text>
-                {section.properties.map((property, propIndex) => (
-                    <View key={`property-${propIndex}`} style={stylesPDF.container__Propertie}>
-                        <Text style={stylesPDF.title__Propertie}>{property.name}</Text>
-                        <Text style={stylesPDF.value__Characteristics}>
-                            {property.value !== undefined ? property.value : 'N/A'}
-                        </Text>
+            <View>
+                <Text style={stylesPDF.branch}>Sede: {nameBranch === 'Sede no encontrada' ? 'Todas' : nameBranch}</Text>
+                <View style={stylesPDF.table}>
+                    <View style={stylesPDF.tableHeader}>
+                        <Text style={stylesPDF.tableTitleCell}>Fecha</Text>
+                        <Text style={stylesPDF.tableTitleCell}>Sede</Text>
+                        <Text style={stylesPDF.tableTitleCell}>Cliente</Text>
+                        {/* <Text style={stylesPDF.tableTitleCell}>Vendedor</Text>
+                        <Text style={stylesPDF.tableTitleCell}>Registrador</Text> */}
+                        <Text style={stylesPDF.tableTitleCell}>Contado/crédito</Text>
+                        <Text style={stylesPDF.tableTitleCell}>Medio de Pago</Text>
+                        <Text style={stylesPDF.tableTitleCell}>Valor Total</Text>
                     </View>
-                ))}
+                    {data.map((sale, index) => (
+                        <View key={index} style={stylesPDF.tableRow}>
+                            <Text style={stylesPDF.tableCell}>{formatDate(sale.transactionDate)}</Text>
+                            <Text style={stylesPDF.tableCell}>{sale.nameBranch}</Text>
+                            <Text style={stylesPDF.tableCell}>{sale.transactionCounterpartId || 'N/A'}</Text>
+                            {/* <Text style={stylesPDF.tableCell}>{sale.seller || 'N/A'}</Text>
+                            <Text style={stylesPDF.tableCell}>{sale.userRegister || 'N/A'}</Text> */}
+                            <Text style={stylesPDF.tableCell}>{sale.creditCash || 'N/A'}</Text>
+                            <Text style={stylesPDF.tableCell}>{sale.meanPayment || 'N/A'}</Text>
+                            <Text style={stylesPDF.tableCellTotal}>$ {formatNumber(sale.totalValue)}</Text>
+                        </View>
+                    ))}
+                </View>
             </View>
         );
     };
 
     return (
-        <Document style={stylesPDF.container}>
-            <Page size="A4" style={stylesPDF.container__Component} >
-            {/* <Page size="A4" style={stylesPDF.container} wrap> */}
+        <Document>
+            {/* <Page size="A4" style={stylesPDF.container__Component}> */}
+            <Page size="A4" orientation="landscape" style={stylesPDF.container__Component}> {/* orientation="landscape" es para generar el PDF en horizontal*/}
                 <View style={stylesPDF.top}>
-                    <Text style={stylesPDF.title}>VENTAS DEL PERIODO</Text>
+                    <View>
+                        <Text style={stylesPDF.title}>VENTAS DEL PERIODO</Text>
+                        <Text style={stylesPDF.generate__Date}>Reporte al día: {date.toDateString()}</Text>
+                    </View>
                     <View style={stylesPDF.container__Generate__By}>
                         <Text style={stylesPDF.generate__By}>Generado por Ecopcion</Text>
                     </View>
@@ -166,30 +216,31 @@ function DownloadSalesPerPeriod({ user, date, data, selectedBranch }: DownloadSa
 
                 <View style={stylesPDF.container__Body}>
                     <View style={stylesPDF.container__Head}>
-
+                        <View style={stylesPDF.container__Data_User}>
+                            <View style={stylesPDF.container__User_Logo}>
+                                <Image src={user?.logo} style={stylesPDF.logo} />
+                            </View>
+                            <View style={stylesPDF.container__User_Name}>
+                                <Text style={stylesPDF.name}>
+                                    Empresario: {user?.name && user?.lastName ? `${user.name} ${user.lastName}` : user?.corporateName || 'Nombre no disponible'}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={stylesPDF.container__User_Info}>
+                            <View style={stylesPDF.container__User_Contact}>
+                                <Text>Correo: <Text>{user?.email}</Text></Text>
+                                <Text>Teléfono: <Text>{user?.phone}</Text></Text>
+                                <Text>Dirección: <Text>{user?.address}</Text></Text>
+                            </View>
+                            <View style={stylesPDF.user__Report}>
+                                <Text>Reporte generado por: {user?.name && user?.lastName ? `${user.name} ${user.lastName}` : user?.corporateName || 'Nombre no disponible'}</Text>
+                            </View>
+                        </View>
                     </View>
-                </View>
 
-                <Image src={LogoEcopcion} style={stylesPDF.logo_Top_Drive} />
-                <View style={stylesPDF.container__Head}>
-                    <Text style={stylesPDF.title}>Reporte de Ventas</Text>
-                    <Text style={stylesPDF.title}>Fecha de generación: {date.toDateString()}</Text>
-                    <Text style={stylesPDF.title}>{user?.name ? `${user?.name} ${user?.lastName}` : user?.corporateName}</Text>
-                    <Image src={user?.logo} style={stylesPDF.logo_Top_Drive} />
+                    {renderItemsSold()}
                 </View>
-                {renderCharacteristicsSections().map((page, index) => (
-                    <React.Fragment key={`page-${index}`}>
-                        <Text style={stylesPDF.title}>{page.title}</Text>
-                        {page.characteristicsSections.map((section, index) => (
-                            <div key={index}>
-                               {renderCharacteristicsSection(section)}
-                            </div>
-                        ))}
-                    </React.Fragment>
-                ))}
-                <Text style={stylesPDF.pageNumber} render={({ pageNumber, totalPages }) => (
-                    `${pageNumber} / ${totalPages}`
-                )} fixed />
+                <View style={stylesPDF.back}></View>
             </Page>
         </Document>
     );
