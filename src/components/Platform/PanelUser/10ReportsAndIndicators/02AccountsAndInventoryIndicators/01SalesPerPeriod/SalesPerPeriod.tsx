@@ -197,15 +197,24 @@ function SalesPerPeriod() {
 
     const [downloadPdf, setDownloadPdf] = React.useState(false);
     useEffect(() => {
+        interface IAccountsBookWithBranch extends IAccountsBook {
+            nameBranch: string;
+        }
         if (downloadPdf) {
             const date = new Date();
+            const nameBranch = getBranchName(selectedBranch);
+            // Mapear los datos para incluir el nombre de la sede en cada registro
+            const dataForPdf = salesPerPeriod.map((item: IAccountsBookWithBranch) => ({
+                ...item,  // Mantener el resto de propiedades del objeto
+                nameBranch: getBranchName(item.branchId),  // Agregar el nombre de la sede
+            }));
             const generatePdfDocument = async () => {
                 const MyDocument = () => (
                     <DownloadSalesPerPeriod
                         user={user}
                         date={date}
-                        data={salesPerPeriod as IAccountsBook[]}
-                        selectedBranch={selectedBranch}
+                        data={dataForPdf as IAccountsBook[]}
+                        nameBranch={nameBranch}
                     />
                 );
                 const blob = await pdf(<MyDocument />).toBlob();
@@ -255,22 +264,20 @@ function SalesPerPeriod() {
                     </div>
                 </div>
 
-                <div className="m-auto text-center border">
-                    <div className="d-flex justify-content-between">
-                        <select
-                            className="p-3 border-0 text-center"
-                            value={selectedBranch}
-                            onChange={(e) => setSelectedBranch(e.target.value)}
-                        >
-                            <option value=''>Todas las sedes</option>
-                            {Array.isArray(branches) && branches.map((branch, index) => (
-                                <option key={index} value={branch.id}>
-                                    {branch.nameBranch}
-                                </option>
-                            ))}
-                        </select>
-                        <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
-                    </div>
+                <div className="d-flex justify-content-between border">
+                    <select
+                        className="p-3 border-0 text-center"
+                        value={selectedBranch}
+                        onChange={(e) => setSelectedBranch(e.target.value)}
+                    >
+                        <option value=''>Todas las sedes</option>
+                        {Array.isArray(branches) && branches.map((branch, index) => (
+                            <option key={index} value={branch.id}>
+                                {branch.nameBranch}
+                            </option>
+                        ))}
+                    </select>
+                    <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
                 </div>
                 
                 <div className={`${styles.containerInformatives} `}>
