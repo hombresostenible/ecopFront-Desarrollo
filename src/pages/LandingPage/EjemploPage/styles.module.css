@@ -1,0 +1,168 @@
+.container {
+    border: 1px solid black;
+    height: 1000px;
+    width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.container__Component {
+    width: 100%;
+}
+.top {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: #212529;
+    padding: 10px;
+}
+.title {
+    font-weight: 600;
+    color: #f8f9fa;
+    letter-spacing: 1px;
+}
+.container__Generate__By {
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 3px;
+}
+.generate__By {
+    color: #f8f9fa;
+    font-size: 10px;
+}
+/* COMPONENTE */
+.container__Body {
+    padding: 20px;
+}
+.container__Head {
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 20PX 0;
+}
+
+
+
+
+
+.ddd {
+    border: 1px solid red;
+    height: 125px;
+    width: 50%;
+}
+.eee {
+    max-height: 150px;
+    max-width: 250px;
+}
+.logo {
+    max-height: 120px;
+    max-width: 250px;
+}
+.fff {
+    font-weight: 600;
+    opacity: 0.75;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+.wwwwwww {
+    border: 1px solid teal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 125px;
+    width: 50%;
+    justify-content: space-between;
+}
+.ccccccc {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+.user__Report {
+    width: 100%;
+    border: 1px solid blue;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+/* TABLA */
+.table {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 200px;
+    width: 100%;
+}
+.encabezados {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    color: #212529;
+    font-weight: 600;
+}
+.fecha {
+    height: 60px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sede {
+    height: 60px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nombre {
+    height: 60px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.idCliente {
+    height: 60px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.monto {
+    height: 60px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tipo {
+    height: 60px;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tbody {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    /* height: calc(100% - 60px); */
+    width: 100%;
+    display: flex;
+}
+
+
+
+
+.back {
+    background: #212529;
+    height: 10px;
+    width: 100%;
+}
