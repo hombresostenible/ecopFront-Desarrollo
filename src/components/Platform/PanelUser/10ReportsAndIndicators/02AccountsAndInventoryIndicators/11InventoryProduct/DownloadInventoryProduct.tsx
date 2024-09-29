@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IProduct } from '../../../../../../types/User/products.types';
-import { stylesPDF } from '../../../../../../helpers/StylesComponents/StylesPDF';
+import { stylesPDFDownloadIndicator } from '../../../../../../helpers/StylesComponents/stylesPDFDownloadIndicator';
 
 interface DownloadInventoryProductProps {
     data: IProduct[];
@@ -9,10 +9,10 @@ interface DownloadInventoryProductProps {
 function DownloadInventoryProduct({ data }: DownloadInventoryProductProps) {
     return (
         <Document>
-            <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Inventario de productos</Text>
+            <Page size="A4" style={stylesPDFDownloadIndicator.container__Component}>
+                <Text style={stylesPDFDownloadIndicator.title}>Inventario de productos</Text>
                 {data.map((item, index) => (
-                    <Text key={index} style={stylesPDF.text}>
+                    <Text key={index} style={stylesPDFDownloadIndicator.table}>
                         Sede: {item.branchId}
                     </Text>
                 ))}

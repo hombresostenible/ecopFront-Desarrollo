@@ -1,6 +1,6 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
 import { IBestClientQuantity } from "../../../../../../types/User/financialIndicators.types";
-import { stylesPDF } from '../../../../../../helpers/StylesComponents/StylesPDF';
+import { stylesPDFDownloadIndicator } from '../../../../../../helpers/StylesComponents/stylesPDFDownloadIndicator';
 
 interface DownloadBestClientQuantityProps {
     data: IBestClientQuantity[];
@@ -9,10 +9,10 @@ interface DownloadBestClientQuantityProps {
 function DownloadBestClientQuantity({ data }: DownloadBestClientQuantityProps) {
     return (
         <Document>
-            <Page size="A4" style={stylesPDF.page}>
-                <Text style={stylesPDF.title}>Mejores clientes por cantidad</Text>
+            <Page size="A4" style={stylesPDFDownloadIndicator.container__Component}>
+                <Text style={stylesPDFDownloadIndicator.title}>Mejores clientes por cantidad</Text>
                 {data.map((item, index) => (
-                    <Text key={index} style={stylesPDF.text}>
+                    <Text key={index} style={stylesPDFDownloadIndicator.table}>
                         Sede: {item.branchId}
                     </Text>
                 ))}

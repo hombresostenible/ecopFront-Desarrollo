@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getBestClientValue, getBestClientValueByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IBestClientValue } from "../../../../../../types/User/financialIndicators.types";
@@ -22,10 +24,12 @@ import styles from './styles.module.css';
 
 function BestClientValue() {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
 
+    //REDUX
+    const dispatch: AppDispatch = useDispatch();
     const bestClientValue = useSelector((state: RootState) => state.finantialIndicators.bestClientValue);
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const user = useSelector((state: RootState) => state.user.user);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
     const [originalData, setOriginalData] = useState<IBestClientValue[] | null>(null);
@@ -35,6 +39,7 @@ function BestClientValue() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+        dispatch(getProfileUser(token));
     }, [dispatch, token]);
 
     useEffect(() => {
@@ -83,6 +88,40 @@ function BestClientValue() {
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
     }, [branches]);
+
+    const [downloadPdf, setDownloadPdf] = React.useState(false);
+    useEffect(() => {
+        interface IBestClientValueWithBranch extends IBestClientValue {
+            nameBranch: string;
+        }
+        if (downloadPdf) {
+            const date = new Date();
+            const nameBranch = getBranchName(selectedBranch);
+            // Mapear los datos para incluir el nombre de la sede en cada registro
+            const dataForPdf = bestClientValue.map((item: IBestClientValueWithBranch) => ({
+                ...item,  // Mantener el resto de propiedades del objeto
+                nameBranch: getBranchName(item.branchId),  // Agregar el nombre de la sede
+            }));
+            const generatePdfDocument = async () => {
+                const MyDocument = () => (
+                    <DownloadBestClientValue
+                        user={user}
+                        date={date}
+                        data={dataForPdf as IBestClientValue[]}
+                        nameBranch={nameBranch}
+                    />
+                );
+                const blob = await pdf(<MyDocument />).toBlob();
+                saveAs(blob, 'Ventas_del_Período.pdf');
+                setDownloadPdf(false);
+            };
+            generatePdfDocument();
+        }
+    }, [downloadPdf, bestClientValue]);
+
+    const handleDownload = () => {
+        setDownloadPdf(true);
+    };
 
     const exportToExcel = useCallback(() => {
         if (originalData) {
@@ -151,14 +190,9 @@ function BestClientValue() {
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Mejor cliente por valor</h2>
                     <div className={styles.containerButtonExportT}>
-                        {originalData && (
-                            <PDFDownloadLink
-                                document={<DownloadBestClientValue data={originalData} />}
-                                fileName="Mejor_Cliente_Por_Valor.pdf"
-                            >
-                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
-                            </PDFDownloadLink>
-                        )}
+                        <div className={`${styles.buttonPDF} d-flex align-items-center justify-content-center gap-1`} onClick={handleDownload}>
+                            PDF <PiExportBold className={styles.icon} />
+                        </div>
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>
