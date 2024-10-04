@@ -17,23 +17,29 @@ interface ModalEditProductProps {
 }
 
 function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: ModalEditProductProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
 
     const [editedProduct, setEditedProduct] = useState<IProduct>({ ...product });
 
+    const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
+    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
+    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(product?.individualPackaging);
+    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(product?.secondaryPackageType);
+    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(product?.returnablePackaging);
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(product?.IVA);
-    const [editedPackaged, setEditedPackaged] = useState(product?.packaged || 'No');
-    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(product?.primaryPackageType);    
+    const [editedIsDiscounted, setEditedIsDiscounted] = useState(product?.isDiscounted);
     const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(product?.expirationDate ? new Date(product.expirationDate) : undefined);
     const currentDate = new Date().toISOString().split('T')[0];
-    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(product?.returnablePackaging);
-    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(product?.individualPackaging);
-    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(product?.secondaryPackageType);
-    const [editedIsDiscounted, setEditedIsDiscounted] = useState(product?.isDiscounted);
 
+    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(product?.IVA);
+    const [editedConsumptionTax, setEditedConsumptionTax] = useState<'No aplica' | 4 | 8 | 16>(product?.consumptionTax);
+    const [editedRetentionType, setEditedRetentionType] = useState<'No aplica' | 'Honorarios y consultoria' | 'Servicios' | 'Compras' | 'Pagos al exterior y dividendos' | 'Otros'>(product?.retentionType);
+    const [editedWithholdingTax, setEditedWithholdingTax] = useState<'No aplica' | 0.1 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 6 | 7 | 8 | 10 | 11 | 15 | 20 | 33 | 35>(product?.withholdingTax);
+    const [editedWitholdingIVA, setEditedWitholdingIVA] = useState<'No aplica' | 15 | 100>(product?.withholdingIVA);
+    const [editedWwitholdingICA, setEditedWitholdingICA] = useState<'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8>(product?.withholdingICA);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -59,17 +65,23 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
 
     const handleSaveChanges = async (editedProduct: IProduct) => {
         try {
+            editedProduct.packaged = editedPackaged;
+            editedProduct.primaryPackageType = editedPrimaryPackageType;
+            editedProduct.individualPackaging = editedIndividualPackaging;
+            editedProduct.secondaryPackageType = editedSecondaryPackageType;
+            editedProduct.returnablePackaging = editedReturnablePackaging;
             editedProduct.unitMeasure = editedUnitMeasure;
             editedProduct.inventoryIncrease = editedInventoryIncrease;
             editedProduct.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
-            editedProduct.IVA = editedIVA;
-            editedProduct.packaged = editedPackaged;
-            editedProduct.primaryPackageType = editedPrimaryPackageType;
-            editedProduct.expirationDate = editedExpirationDate;
-            editedProduct.returnablePackaging = editedReturnablePackaging;
-            editedProduct.individualPackaging = editedIndividualPackaging;
-            editedProduct.secondaryPackageType = editedSecondaryPackageType;
             editedProduct.isDiscounted = editedIsDiscounted;
+            editedProduct.expirationDate = editedExpirationDate;
+            // IMPUESTOS
+            editedProduct.IVA = editedIVA;
+            editedProduct.consumptionTax = editedConsumptionTax;
+            editedProduct.retentionType = editedRetentionType;
+            editedProduct.withholdingTax = editedWithholdingTax;
+            editedProduct.withholdingIVA = editedWitholdingIVA;
+            editedProduct.withholdingICA = editedWwitholdingICA;
             if (editedInventoryIncrease === 'No') {
                 editedProduct.periodicityAutomaticIncrease = undefined;
                 editedProduct.automaticInventoryIncrease = 0;
@@ -385,25 +397,156 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
                 />
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA del producto</h6>
-                <select
-                    className={`${styles.input} mb-3 p-2 border`}
-                    value={editedProduct.IVA || 'No aplica'}
-                    onChange={(e) => {
-                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
-                        setEditedIVA(value);
-                        setEditedProduct((prevEdited) => ({
-                            ...prevEdited,
-                            IVA: value,
-                        }));
-                    }}
-                >
-                    <option value='No aplica'>No aplica</option>
-                    <option value={0}>0 %</option>
-                    <option value={5}>5 %</option>
-                    <option value={19}>19 %</option>
-                </select>
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.IVA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                            setEditedIVA(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                IVA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={0}>0 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={19}>19 %</option>
+                    </select>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.consumptionTax || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 4 | 8 | 16;
+                            setEditedConsumptionTax(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                consumptionTax: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={4}>4 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={16}>16 %</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.retentionType || ''}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 'Honorarios y consultoria' | 'Servicios' | 'Compras' | 'Otros' | 'Pagos al exterior y dividendos';
+                            setEditedRetentionType(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                retentionType: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value='Honorarios y consultoria'>Honorarios y consultoria</option>
+                        <option value='Servicios'>Servicios</option>
+                        <option value='Compras'>Compras</option>
+                        <option value='Otros'>Otros</option>
+                        <option value='Pagos al exterior y dividendos'>Pagos al exterior y dividendos</option>
+                    </select>
+                </div>
+
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.withholdingTax || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 0.1 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 6 | 7 | 8 | 10 | 11 | 15 | 20 | 33 | 35;
+                            setEditedWithholdingTax(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingTax: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={0.1}>0.1 %</option>
+                        <option value={0.5}>0.5 %</option>
+                        <option value={1}>1 %</option>
+                        <option value={1.5}>1.5 %</option>
+                        <option value={2}>2 %</option>
+                        <option value={2.5}>2.5 %</option>
+                        <option value={3}>3 %</option>
+                        <option value={3.5}>3.5 %</option>
+                        <option value={4}>4 %</option>
+                        <option value={6}>6 %</option>
+                        <option value={7}>7 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={10}>10 %</option>
+                        <option value={11}>11 %</option>
+                        <option value={15}>15 %</option>
+                        <option value={20}>20 %</option>
+                        <option value={33}>33 %</option>
+                        <option value={35}>35 %</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.withholdingIVA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 15 | 100;
+                            setEditedWitholdingIVA(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingIVA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={15}>15 %</option>
+                        <option value={100}>100 %</option>
+                    </select>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedProduct.withholdingICA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8;
+                            setEditedWitholdingICA(value);
+                            setEditedProduct((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingICA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={2}>2 %</option>
+                        <option value={3.4}>3.4 %</option>
+                        <option value={4.14}>4.14 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={6.9}>6.9 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={9.66}>9.66 %</option>
+                        <option value={11.04}>11.04 %</option>
+                        <option value={13.8}>13.8 %</option>
+                    </select>
+                </div>
             </div>
 
             <div className="d-flex align-items-center justify-content-center">

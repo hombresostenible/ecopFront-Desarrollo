@@ -157,9 +157,37 @@ function SeeItemMerchandise({ merchandise, branches }: SeeItemMerchandiseProps) 
                 <p className={`${styles.input} p-2 text-start border`}>{merchandise?.salesCount}</p>
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA de la mercancía</h6>
-                <p className={`${styles.input} p-2 text-start border`}>{merchandise?.IVA}</p>
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.IVA}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.consumptionTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.retentionType}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.withholdingTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.withholdingIVA}</p> 
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{merchandise?.withholdingICA}</p> 
+                </div>
             </div>
         </div>
     );

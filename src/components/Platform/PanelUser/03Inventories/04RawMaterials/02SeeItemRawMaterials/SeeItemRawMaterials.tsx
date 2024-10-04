@@ -156,16 +156,38 @@ function SeeItemRawMaterials({ rawMaterial, branches }: SeeItemRawMaterialsProps
                 <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.salesCount}</p>
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA de la materia prima</h6>
-                <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.IVA}</p>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA de la mercancía</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.IVA}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.consumptionTax}</p>
+                </div>
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>Fecha de expiración</h6>
-                <p className={`${styles.input} p-2 text-start border`}>
-                    {rawMaterial?.expirationDate ? new Date(rawMaterial.expirationDate).toLocaleDateString() : 'Fecha no asignada'}
-                </p>
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.retentionType}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.withholdingTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.withholdingIVA}</p> 
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{rawMaterial?.withholdingICA}</p> 
+                </div>
             </div>
         </div>
     );

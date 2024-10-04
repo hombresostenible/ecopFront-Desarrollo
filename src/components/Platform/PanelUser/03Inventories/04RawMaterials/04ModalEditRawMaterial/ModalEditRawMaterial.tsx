@@ -17,22 +17,29 @@ interface ModalEditRawMaterialProps {
 }
 
 function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseModal }: ModalEditRawMaterialProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
 
     const [editedRawMaterial, setEditedRawMaterial] = useState<IRawMaterial>({ ...rawMaterial });
 
+    const [editedPackaged, setEditedPackaged] = useState(rawMaterial?.packaged || 'No');
+    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(rawMaterial?.primaryPackageType);    
+    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(rawMaterial?.individualPackaging);
+    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(rawMaterial?.secondaryPackageType);
+    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(rawMaterial?.returnablePackaging);
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(rawMaterial?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(rawMaterial?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(rawMaterial?.periodicityAutomaticIncrease);
-    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(rawMaterial?.IVA);
-    const [editedPackaged, setEditedPackaged] = useState(rawMaterial?.packaged || 'No');
-    const [editedPrimaryPackageType, setEditedPrimaryPackageType] = useState(rawMaterial?.primaryPackageType);    
+    const [editedIsDiscounted, setEditedIsDiscounted] = useState(rawMaterial?.isDiscounted);
     const [editedExpirationDate, setEditedExpirationDate] = useState<Date | undefined>(rawMaterial?.expirationDate ? new Date(rawMaterial.expirationDate) : undefined);
     const currentDate = new Date().toISOString().split('T')[0];
-    const [editedReturnablePackaging, setEditedReturnablePackaging] = useState(rawMaterial?.returnablePackaging);
-    const [editedIndividualPackaging, setEditedIndividualPackaging] = useState(rawMaterial?.individualPackaging);
-    const [editedSecondaryPackageType, setEditedSecondaryPackageType] = useState(rawMaterial?.secondaryPackageType);
-    const [editedIsDiscounted, setEditedIsDiscounted] = useState(rawMaterial?.isDiscounted);
+
+    const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(rawMaterial?.IVA);
+    const [editedConsumptionTax, setEditedConsumptionTax] = useState<'No aplica' | 4 | 8 | 16>(rawMaterial?.consumptionTax);
+    const [editedRetentionType, setEditedRetentionType] = useState<'No aplica' | 'Honorarios y consultoria' | 'Servicios' | 'Compras' | 'Pagos al exterior y dividendos' | 'Otros'>(rawMaterial?.retentionType);
+    const [editedWithholdingTax, setEditedWithholdingTax] = useState<'No aplica' | 0.1 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 6 | 7 | 8 | 10 | 11 | 15 | 20 | 33 | 35>(rawMaterial?.withholdingTax);
+    const [editedWitholdingIVA, setEditedWitholdingIVA] = useState<'No aplica' | 15 | 100>(rawMaterial?.withholdingIVA);
+    const [editedWwitholdingICA, setEditedWitholdingICA] = useState<'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8>(rawMaterial?.withholdingICA);
 
     const handleEditField = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -58,17 +65,23 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
 
     const handleSaveChanges = async (editedRawMaterial: IRawMaterial) => {
         try {
+            editedRawMaterial.packaged = editedPackaged;
+            editedRawMaterial.primaryPackageType = editedPrimaryPackageType;
+            editedRawMaterial.individualPackaging = editedIndividualPackaging;
+            editedRawMaterial.secondaryPackageType = editedSecondaryPackageType;
+            editedRawMaterial.returnablePackaging = editedReturnablePackaging;
             editedRawMaterial.unitMeasure = editedUnitMeasure;
             editedRawMaterial.inventoryIncrease = editedInventoryIncrease;
             editedRawMaterial.periodicityAutomaticIncrease = editedPeriodicityAutomaticIncrease;
-            editedRawMaterial.IVA = editedIVA;
-            editedRawMaterial.packaged = editedPackaged;
-            editedRawMaterial.primaryPackageType = editedPrimaryPackageType;
-            editedRawMaterial.expirationDate = editedExpirationDate;
-            editedRawMaterial.returnablePackaging = editedReturnablePackaging;
-            editedRawMaterial.individualPackaging = editedIndividualPackaging;
-            editedRawMaterial.secondaryPackageType = editedSecondaryPackageType;
             editedRawMaterial.isDiscounted = editedIsDiscounted;
+            editedRawMaterial.expirationDate = editedExpirationDate;
+            // IMPUESTOS
+            editedRawMaterial.IVA = editedIVA;
+            editedRawMaterial.consumptionTax = editedConsumptionTax;
+            editedRawMaterial.retentionType = editedRetentionType;
+            editedRawMaterial.withholdingTax = editedWithholdingTax;
+            editedRawMaterial.withholdingIVA = editedWitholdingIVA;
+            editedRawMaterial.withholdingICA = editedWwitholdingICA;
             if (editedInventoryIncrease === 'No') {
                 editedRawMaterial.periodicityAutomaticIncrease = undefined;
                 editedRawMaterial.automaticInventoryIncrease = 0;
@@ -80,7 +93,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
             dispatch(getRawMaterials(token));
             onCloseModal();
         } catch (error) {
-            console.error('Error al guardar cambios:', error);
+            throw new Error('Error al guardar cambios');
         }
     };
 
@@ -400,25 +413,156 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
                 />
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA de la materia prima</h6>
-                <select
-                    className={`${styles.input} mb-3 p-2 border`}
-                    value={editedRawMaterial.IVA || 'No aplica'}
-                    onChange={(e) => {
-                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
-                        setEditedIVA(value);
-                        setEditedRawMaterial((prevEdited) => ({
-                            ...prevEdited,
-                            IVA: value,
-                        }));
-                    }}
-                >
-                    <option value='No aplica'>No aplica</option>
-                    <option value={0}>0 %</option>
-                    <option value={5}>5 %</option>
-                    <option value={19}>19 %</option>
-                </select>
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.IVA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                            setEditedIVA(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                IVA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={0}>0 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={19}>19 %</option>
+                    </select>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.consumptionTax || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 4 | 8 | 16;
+                            setEditedConsumptionTax(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                consumptionTax: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={4}>4 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={16}>16 %</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.retentionType || ''}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 'Honorarios y consultoria' | 'Servicios' | 'Compras' | 'Otros' | 'Pagos al exterior y dividendos';
+                            setEditedRetentionType(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                retentionType: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value='Honorarios y consultoria'>Honorarios y consultoria</option>
+                        <option value='Servicios'>Servicios</option>
+                        <option value='Compras'>Compras</option>
+                        <option value='Otros'>Otros</option>
+                        <option value='Pagos al exterior y dividendos'>Pagos al exterior y dividendos</option>
+                    </select>
+                </div>
+
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.withholdingTax || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 0.1 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 6 | 7 | 8 | 10 | 11 | 15 | 20 | 33 | 35;
+                            setEditedWithholdingTax(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingTax: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={0.1}>0.1 %</option>
+                        <option value={0.5}>0.5 %</option>
+                        <option value={1}>1 %</option>
+                        <option value={1.5}>1.5 %</option>
+                        <option value={2}>2 %</option>
+                        <option value={2.5}>2.5 %</option>
+                        <option value={3}>3 %</option>
+                        <option value={3.5}>3.5 %</option>
+                        <option value={4}>4 %</option>
+                        <option value={6}>6 %</option>
+                        <option value={7}>7 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={10}>10 %</option>
+                        <option value={11}>11 %</option>
+                        <option value={15}>15 %</option>
+                        <option value={20}>20 %</option>
+                        <option value={33}>33 %</option>
+                        <option value={35}>35 %</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.withholdingIVA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 15 | 100;
+                            setEditedWitholdingIVA(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingIVA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={15}>15 %</option>
+                        <option value={100}>100 %</option>
+                    </select>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <select
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedRawMaterial.withholdingICA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8;
+                            setEditedWitholdingICA(value);
+                            setEditedRawMaterial((prevEdited) => ({
+                                ...prevEdited,
+                                withholdingICA: value,
+                            }));
+                        }}
+                    >
+                        <option value='No aplica'>No aplica</option>
+                        <option value={2}>2 %</option>
+                        <option value={3.4}>3.4 %</option>
+                        <option value={4.14}>4.14 %</option>
+                        <option value={5}>5 %</option>
+                        <option value={6.9}>6.9 %</option>
+                        <option value={8}>8 %</option>
+                        <option value={9.66}>9.66 %</option>
+                        <option value={11.04}>11.04 %</option>
+                        <option value={13.8}>13.8 %</option>
+                    </select>
+                </div>
             </div>
 
             <div className="d-flex align-items-center justify-content-center">

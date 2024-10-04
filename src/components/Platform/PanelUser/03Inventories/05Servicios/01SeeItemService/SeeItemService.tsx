@@ -45,8 +45,8 @@ function SeeItemService({ service, branches }: SeeItemServiceProps) {
                     </p>
                 </div>
                 <div className="w-100">
-                    <h6 className={styles.label}>IVA del servicio</h6>
-                    <p className={`${styles.input} p-2 text-start border`}>{service?.IVA}</p>
+                    <h6 className={styles.label}>Unidades vendidas</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.salesCount}</p>
                 </div>
             </div>
 
@@ -63,9 +63,37 @@ function SeeItemService({ service, branches }: SeeItemServiceProps) {
                 )}
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>Unidades vendidas</h6>
-                <p className={`${styles.input} p-2 text-start border`}>{service?.salesCount}</p>
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.IVA}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.consumptionTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.retentionType}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.withholdingTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.withholdingIVA}</p> 
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{service?.withholdingICA}</p> 
+                </div>
             </div>
 
             {/* PONER LOS ACTIVOS */}
