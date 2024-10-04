@@ -1,31 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import Chart from 'chart.js/auto';
+import { pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getExpensesPerPeriod, getExpensesPerPeriodByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
 import DownloadExpensesPerPeriod from './DownloadExpensesPerPeriod';
 import ModalExpensesPerPeriod from './ModalExpensesPerPeriod';
-import Chart from 'chart.js/auto';
 import { BsCart } from 'react-icons/bs';
 import { PiExportBold } from "react-icons/pi";
 import styles from './styles.module.css';
 
 function ExpensesPerPeriod() {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
 
+    //REDUX
+    const dispatch: AppDispatch = useDispatch();
     const expensesPerPeriod = useSelector((state: RootState) => state.finantialIndicators.expensesPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const user = useSelector((state: RootState) => state.user.user);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
     const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null);
@@ -37,6 +41,7 @@ function ExpensesPerPeriod() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+        dispatch(getProfileUser(token));
     }, [dispatch, token]);
 
     useEffect(() => {
@@ -130,11 +135,99 @@ function ExpensesPerPeriod() {
         renderChart(originalData, null, null);
     };
 
+    const [expensesToday, setExpensesToday] = useState(0);
+    const [expensesThisMonth, setExpensesThisMonth] = useState(0);
+    const [expensesThisYear, setExpensesThisYear] = useState(0);
+
+    useEffect(() => {
+        if (expensesPerPeriod) {
+            setOriginalData(expensesPerPeriod);
+            renderChart(expensesPerPeriod, null, null);
+            calculateExpensesToday(expensesPerPeriod);
+            calculateExpensesThisMonth(expensesPerPeriod);
+            calculateExpensesThisYear(expensesPerPeriod);
+        }
+    }, [ expensesPerPeriod ]);
+
+    const calculateExpensesToday = (data: IAccountsBook[] | null) => {
+        if (data) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            const totalToday = data
+                .filter(item => new Date(item.transactionDate) > yesterday && new Date(item.transactionDate) <= today)
+                .reduce((total, item) => total + item.totalValue, 0);
+            setExpensesToday(totalToday);
+        }
+    };
+
+    const calculateExpensesThisMonth = (data: IAccountsBook[] | null) => {
+        if (data) {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+            firstDayOfMonth.setHours(0, 0, 0, 0);
+            const totalThisMonth = data
+                .filter(item => new Date(item.transactionDate) >= firstDayOfMonth)
+                .reduce((total, item) => total + item.totalValue, 0);
+            setExpensesThisMonth(totalThisMonth);
+        }
+    };  
+
+    const calculateExpensesThisYear = (data: IAccountsBook[] | null) => {
+        if (data) {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const firstDayOfYear = new Date(currentYear, 0, 1);
+            firstDayOfYear.setHours(0, 0, 0, 0);
+            const totalThisYear = data
+                .filter(item => new Date(item.transactionDate) >= firstDayOfYear)
+                .reduce((total, item) => total + item.totalValue, 0);
+            setExpensesThisYear(totalThisYear);
+        }
+    };
+
     const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);
         return branch ? branch.nameBranch : "Sede no encontrada";
     }, [branches]);
+
+    const [downloadPdf, setDownloadPdf] = React.useState(false);
+    useEffect(() => {
+        interface IAccountsBookWithBranch extends IAccountsBook {
+            nameBranch: string;
+        }
+        if (downloadPdf) {
+            const date = new Date();
+            const nameBranch = getBranchName(selectedBranch);
+            // Mapear los datos para incluir el nombre de la sede en cada registro
+            const dataForPdf = expensesPerPeriod.map((item: IAccountsBookWithBranch) => ({
+                ...item,  // Mantener el resto de propiedades del objeto
+                nameBranch: getBranchName(item.branchId),  // Agregar el nombre de la sede
+            }));
+            const generatePdfDocument = async () => {
+                const MyDocument = () => (
+                    <DownloadExpensesPerPeriod
+                        user={user}
+                        date={date}
+                        data={dataForPdf as IAccountsBook[]}
+                        nameBranch={nameBranch}
+                    />
+                );
+                const blob = await pdf(<MyDocument />).toBlob();
+                saveAs(blob, 'Gastos_del_Período.pdf');
+                setDownloadPdf(false);
+            };
+            generatePdfDocument();
+        }
+    }, [downloadPdf, expensesPerPeriod]);
+
+    const handleDownload = () => {
+        setDownloadPdf(true);
+    };
 
     const exportToExcel = useCallback(() => {
         if (originalData) {
@@ -158,74 +251,15 @@ function ExpensesPerPeriod() {
         }
     }, [originalData, getBranchName]);
 
-    const [expensesToday, setExpensesToday] = useState(0);
-    const [expensesThisMonth, setExpensesThisMonth] = useState(0);
-    const [expensesThisYear, setExpensesThisYear] = useState(0);
-
-    useEffect(() => {
-        if (expensesPerPeriod) {
-            setOriginalData(expensesPerPeriod);
-            renderChart(expensesPerPeriod, null, null);
-            calculateSalesToday(expensesPerPeriod);
-            calculateSalesThisMonth(expensesPerPeriod);
-            calculateSalesThisYear(expensesPerPeriod);
-        }
-    }, [ expensesPerPeriod ]);
-
-    const calculateSalesToday = (data: IAccountsBook[] | null) => {
-        if (data) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 1);
-            const totalToday = data
-                .filter(item => new Date(item.transactionDate) > yesterday && new Date(item.transactionDate) <= today)
-                .reduce((total, item) => total + item.totalValue, 0);
-            setExpensesToday(totalToday);
-        }
-    };
-
-    const calculateSalesThisMonth = (data: IAccountsBook[] | null) => {
-        if (data) {
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-            const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-            firstDayOfMonth.setHours(0, 0, 0, 0);
-            const totalThisMonth = data
-                .filter(item => new Date(item.transactionDate) >= firstDayOfMonth)
-                .reduce((total, item) => total + item.totalValue, 0);
-            setExpensesThisMonth(totalThisMonth);
-        }
-    };  
-
-    const calculateSalesThisYear = (data: IAccountsBook[] | null) => {
-        if (data) {
-            const now = new Date();
-            const currentYear = now.getFullYear();
-            const firstDayOfYear = new Date(currentYear, 0, 1);
-            firstDayOfYear.setHours(0, 0, 0, 0);
-            const totalThisYear = data
-                .filter(item => new Date(item.transactionDate) >= firstDayOfYear)
-                .reduce((total, item) => total + item.totalValue, 0);
-            setExpensesThisYear(totalThisYear);
-        }
-    };
-
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Gastos del período</h2>
                     <div className={styles.containerButtonExportT}>
-                        {originalData && (
-                            <PDFDownloadLink
-                                document={<DownloadExpensesPerPeriod data={originalData} />}
-                                fileName="Gastos_del_Período.pdf"
-                            >
-                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
-                            </PDFDownloadLink>
-                        )}
+                        <div className={`${styles.buttonPDF} d-flex align-items-center justify-content-center gap-1`} onClick={handleDownload}>
+                            PDF <PiExportBold className={styles.icon} />
+                        </div>
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>

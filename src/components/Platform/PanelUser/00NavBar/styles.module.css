@@ -29,6 +29,7 @@
     border-radius: 10px;
     top: 70px;
     right: 0;
+    z-index: 1;
     background: white;
     width: 400px;
 }

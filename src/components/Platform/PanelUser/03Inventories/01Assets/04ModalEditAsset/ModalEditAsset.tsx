@@ -237,13 +237,20 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                 <h6 className={styles.label}>IVA del activo</h6>
                 <select
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedAsset.IVA}
-                    onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
-                    >
-                        <option value='No aplica'>No aplica</option>
-                        <option value={0}>0 %</option>
-                        <option value={5}>5 %</option>
-                        <option value={19}>19 %</option>
+                    value={editedAsset.IVA || 'No aplica'}
+                    onChange={(e) => {
+                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                        setEditedIVA(value);
+                        setEditedAsset((prevEdited) => ({
+                            ...prevEdited,
+                            IVA: value,
+                        }));
+                    }}
+                >
+                    <option value='No aplica'>No aplica</option>
+                    <option value={0}>0 %</option>
+                    <option value={5}>5 %</option>
+                    <option value={19}>19 %</option>
                 </select>
             </div>
 

@@ -11,6 +11,7 @@ import { IoHome } from "react-icons/io5";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { MdAppRegistration } from "react-icons/md";
 import { FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
+import { MdReceiptLong } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
 import { TbCoin } from "react-icons/tb";
 import { PiChartLineUp } from "react-icons/pi";
@@ -63,6 +64,7 @@ function SideBar() {
     const [isBranchesSubMenuOpen, setBranchesSubMenuOpen] = useState(() => getInitialState('branches', false));
     const [isInventorySubMenuOpen, setInventorySubMenuOpen] = useState(() => getInitialState('inventory', false));
     const [isAccountsSubMenuOpen, setAccountsSubMenuOpen] = useState(() => getInitialState('accounts', false));
+    const [isInvoicingPosSubMenuOpen, setInvoicingPosSubMenuOpen] = useState(() => getInitialState('invoicingPos', false));
     const [isElectronicPayrollSubMenuOpen, setElectronicPayrollSubMenuOpen] = useState(() => getInitialState('electronicPayroll', false));
     const [isCrmClientsSubMenuOpen, setCrmClientsSubMenuOpen] = useState(() => getInitialState('crmClients', false));
     const [isCrmSuppliersSubMenuOpen, setCrmSuppliersSubMenuOpen] = useState(() => getInitialState('crmSuppliers', false));
@@ -87,6 +89,13 @@ function SideBar() {
         const newState = !isAccountsSubMenuOpen;
         setAccountsSubMenuOpen(newState);
         localStorage.setItem('accounts', JSON.stringify(newState));
+    };
+
+    // SUBMENU DE POS Y FACTURACION ELECTRONICA
+    const toggleInvoicingPosSubMenuOpen = () => {
+        const newState = !isInvoicingPosSubMenuOpen;
+        setInvoicingPosSubMenuOpen(newState);
+        localStorage.setItem('invoicingPos', JSON.stringify(newState));
     };
 
     // SUBMENU DE NOMINA ELECTRONICA
@@ -141,6 +150,14 @@ function SideBar() {
             setShowAccountsClick(prev => !prev);
         }
     };
+    
+    // SUBMENU LATERAL DE POS Y FACTURACION ELECTRONICA
+    const [showInvoicingPosClick, setShowInvoicingPosClick] = useState<boolean>(false);
+    const handleInvoicingPosClick = () => {
+        if (!menuVisible && !isInvoicingPosSubMenuOpen) {
+            setShowInvoicingPosClick(prev => !prev);
+        }
+    };
 
     // SUBMENU LATERAL DE NOMINA ELECTRONICA
     const [showElectronicPayrollClick, setShowElectronicPayrollClick] = useState<boolean>(false);
@@ -178,6 +195,7 @@ function SideBar() {
     const branchesMenuRef = useRef<HTMLDivElement>(null);
     const inventoriesMenuRef = useRef<HTMLDivElement>(null);
     const accountsMenuRef = useRef<HTMLDivElement>(null);
+    const invoicingPosMenuRef = useRef<HTMLDivElement>(null);
     const electronicPayrollMenuRef = useRef<HTMLDivElement>(null);
     const crmClientsMenuRef = useRef<HTMLDivElement>(null);
     const crmSuppliersMenuRef = useRef<HTMLDivElement>(null);
@@ -188,12 +206,12 @@ function SideBar() {
             if (branchesMenuRef.current && !branchesMenuRef.current.contains(event.target as Node)) setShowBranchClick(false);
             if (inventoriesMenuRef.current && !inventoriesMenuRef.current.contains(event.target as Node)) setShowInventoriesClick(false);
             if (accountsMenuRef.current && !accountsMenuRef.current.contains(event.target as Node)) setShowAccountsClick(false);
+            if (invoicingPosMenuRef.current && !invoicingPosMenuRef.current.contains(event.target as Node)) setShowInvoicingPosClick(false);
             if (electronicPayrollMenuRef.current && !electronicPayrollMenuRef.current.contains(event.target as Node)) setShowElectronicPayrollClick(false);
             if (crmClientsMenuRef.current && !crmClientsMenuRef.current.contains(event.target as Node)) setShowCrmClientsClick(false);
             if (crmSuppliersMenuRef.current && !crmSuppliersMenuRef.current.contains(event.target as Node)) setShowCrmSuppliersClick(false);
             if (reportsAndIndicatorsMenuRef.current && !reportsAndIndicatorsMenuRef.current.contains(event.target as Node)) setShowReportsIndicatorsClick(false);
         };
-    
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -341,6 +359,44 @@ function SideBar() {
                         </Link>
                         <Link to='/accounts/consult-pending-approval' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/consult-pending-approval' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Transacciones pendientes de aprobación
+                        </Link>
+                    </div>
+                )}
+
+                {/* POS Y FACTURACION ELECTRÓNICA */}
+                <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={invoicingPosMenuRef}>
+                    <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
+                        <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
+                            <MdReceiptLong className={`${showInvoicingPosClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleInvoicingPosClick}/>
+                        </div>
+                        {menuVisible &&
+                            <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInvoicingPosSubMenuOpen} >Facturación electrónica {isInvoicingPosSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
+                        }
+                    </div>
+                    {showInvoicingPosClick && (
+                        <div className={`${styles.container__Sub_Menu_Compact} pt-2 pb-2 px-3 d-flex flex-column position-absolute`}>
+                            <div className={`${styles.indicator} position-absolute`}></div>
+                            <h6 className={`${styles.title__Sub_Menu_Compact} m-0`}>POS y Facturación electrónica</h6>
+                            <Link to='/invoicing-and-pos/pos' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>POS</Link>
+                            <Link to='/invoicing-and-pos/electronic-invoicing' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Factura electrónica</Link>
+                            <Link to='/invoicing-and-pos/see-electronic-invoicing-pos' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta Factura electrónica</Link>
+                            <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Facturas recurrentes</Link>
+                        </div>
+                    )}
+                </div>
+                {isInvoicingPosSubMenuOpen && (
+                    <div className={styles.sub__Menu}>
+                        <Link to='/invoicing-and-pos/pos' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/pos' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            POS
+                        </Link>
+                        <Link to='/invoicing-and-pos/electronic-invoicing' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/electronic-invoicing' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Factura electrónica
+                        </Link>
+                        <Link to='/invoicing-and-pos/see-electronic-invoicing-pos' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/see-electronic-invoicing-pos' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Consulta Factura electrónica
+                        </Link>
+                        <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/recurring-invoices' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Facturas recurrentes
                         </Link>
                     </div>
                 )}

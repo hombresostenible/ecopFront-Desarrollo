@@ -1,3 +1,6 @@
+.label {
+    font-weight: 600;
+}
 .input__Bar_Code {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
@@ -130,6 +133,7 @@
     width: 470px;
 }
 .text__Purchase {
+    font-weight: 600;
     width: 170px;
 }
 .input__Info_Purchase {

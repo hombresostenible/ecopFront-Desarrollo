@@ -1,14 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import jsCookie from 'js-cookie';
 import { Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import 'react-datepicker/dist/react-datepicker.css';
+import { pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getAllTransactionsPerPeriod, getAllTransactionsPerPeriodByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
+import { getProfileUser } from '../../../../../../redux/User/userSlice/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
@@ -21,10 +24,12 @@ import styles from './styles.module.css';
 
 function UtilityPerPeriod() {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
 
+    //REDUX
+    const dispatch: AppDispatch = useDispatch();
     const allTransactionsPerPeriod = useSelector((state: RootState) => state.finantialIndicators.allTransactionsPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
+    const user = useSelector((state: RootState) => state.user.user);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
     const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null);
@@ -36,6 +41,7 @@ function UtilityPerPeriod() {
 
     useEffect(() => {
         dispatch(getBranches(token));
+        dispatch(getProfileUser(token));
     }, [dispatch, token]);
 
     useEffect(() => {
@@ -129,34 +135,6 @@ function UtilityPerPeriod() {
         renderChart(originalData, null, null);
     };
 
-    const getBranchName = useCallback((branchId: string) => {
-        if (!Array.isArray(branches)) return "Sede no encontrada";
-        const branch = branches.find((b: { id: string }) => b.id === branchId);
-        return branch ? branch.nameBranch : "Sede no encontrada";
-    }, [branches]);
-
-    const exportToExcel = useCallback(() => {
-        if (originalData) {
-            const dataForExcel = originalData.map(item => ({
-                'Sede': item.branchId,
-                'Fecha de Registro': item.transactionDate,
-                'Valor Total': item.totalValue,
-                'Tipo de Transacción': 'Venta',
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Utilidad_del_Período');
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Utilidad_del_Período.xlsx';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-    }, [originalData, getBranchName]);
-
     const [utilityToday, setUtilityToday] = useState(0);
     const [utilityThisMonth, setUtilityThisMonth] = useState(0);
     const [utilityThisYear, setUtilityThisYear] = useState(0);
@@ -165,13 +143,13 @@ function UtilityPerPeriod() {
     if (allTransactionsPerPeriod) {
         setOriginalData(allTransactionsPerPeriod);
         renderChart(allTransactionsPerPeriod, null, null);
-        calculateSalesToday(allTransactionsPerPeriod);
-        calculateSalesThisMonth(allTransactionsPerPeriod);
-        calculateSalesThisYear(allTransactionsPerPeriod);
+        calculateUtilityToday(allTransactionsPerPeriod);
+        calculateUtilityThisMonth(allTransactionsPerPeriod);
+        calculateUtilityThisYear(allTransactionsPerPeriod);
     }
     }, [ allTransactionsPerPeriod ]);
     
-    const calculateSalesToday = (data: IAccountsBook[] | null) => {
+    const calculateUtilityToday = (data: IAccountsBook[] | null) => {
         if (data) {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -195,7 +173,7 @@ function UtilityPerPeriod() {
         }
     };
     
-    const calculateSalesThisMonth = (data: IAccountsBook[] | null) => {
+    const calculateUtilityThisMonth = (data: IAccountsBook[] | null) => {
         if (data) {
             const now = new Date();
             const currentMonth = now.getMonth();
@@ -218,7 +196,7 @@ function UtilityPerPeriod() {
         }
     };
     
-    const calculateSalesThisYear = (data: IAccountsBook[] | null) => {
+    const calculateUtilityThisYear = (data: IAccountsBook[] | null) => {
         if (data) {
             const now = new Date();
             const currentYear = now.getFullYear();
@@ -238,20 +216,77 @@ function UtilityPerPeriod() {
         }
     };
 
+    const getBranchName = useCallback((branchId: string) => {
+        if (!Array.isArray(branches)) return "Sede no encontrada";
+        const branch = branches.find((b: { id: string }) => b.id === branchId);
+        return branch ? branch.nameBranch : "Sede no encontrada";
+    }, [branches]);
+
+    const [downloadPdf, setDownloadPdf] = React.useState(false);
+    useEffect(() => {
+        interface IAccountsBookWithBranch extends IAccountsBook {
+            nameBranch: string;
+        }
+        if (downloadPdf) {
+            const date = new Date();
+            const nameBranch = getBranchName(selectedBranch);
+            // Mapear los datos para incluir el nombre de la sede en cada registro
+            const dataForPdf = allTransactionsPerPeriod.map((item: IAccountsBookWithBranch) => ({
+                ...item,  // Mantener el resto de propiedades del objeto
+                nameBranch: getBranchName(item.branchId),  // Agregar el nombre de la sede
+            }));
+            const generatePdfDocument = async () => {
+                const MyDocument = () => (
+                    <DownloadUtilityPerPeriod
+                        user={user}
+                        date={date}
+                        data={dataForPdf as IAccountsBook[]}
+                        nameBranch={nameBranch}
+                    />
+                );
+                const blob = await pdf(<MyDocument />).toBlob();
+                saveAs(blob, 'Utilidad_del_Período.pdf');
+                setDownloadPdf(false);
+            };
+            generatePdfDocument();
+        }
+    }, [downloadPdf, allTransactionsPerPeriod]);
+
+    const handleDownload = () => {
+        setDownloadPdf(true);
+    };
+
+    const exportToExcel = useCallback(() => {
+        if (originalData) {
+            const dataForExcel = originalData.map(item => ({
+                'Sede': item.branchId,
+                'Fecha de Registro': item.transactionDate,
+                'Valor Total': item.totalValue,
+                'Tipo de Transacción': 'Venta',
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(dataForExcel);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Utilidad_del_Período');
+            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Utilidad_del_Período.xlsx';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    }, [originalData, getBranchName]);
+
     return (
         <div className={`${styles.container} m-2 p-3 chart-container border rounded d-flex flex-column align-items-center justify-content-center`} >
             <div className={styles.containerS}>
                 <div className={`${styles.containerTitle} pt-2 pb-4 d-flex align-items-center justify-content-between`}>
                     <h2 className="text-primary-emphasis text-start">Utilidad del período</h2>
                     <div className={styles.containerButtonExportT}>
-                        {originalData && (
-                            <PDFDownloadLink
-                                document={<DownloadUtilityPerPeriod data={originalData} />}
-                                fileName="Utilidad_del_Período.pdf"
-                            >
-                                <button className={`${styles.buttonPDF} `} >PDF <PiExportBold className={styles.icon} /></button>
-                            </PDFDownloadLink>
-                        )}
+                        <div className={`${styles.buttonPDF} d-flex align-items-center justify-content-center gap-1`} onClick={handleDownload}>
+                            PDF <PiExportBold className={styles.icon} />
+                        </div>
                         <button className={`${styles.buttonExcel} btn btn-success btn-sm`} onClick={exportToExcel}>Excel <PiExportBold className={styles.icon} /></button>
                     </div>
                 </div>

@@ -238,7 +238,6 @@ export const getAccountsReceivableByBranchPaginated = (idBranch: string, token: 
                 "Content-Type": "application/json",
             }
         });
-        console.log('response: ', response)
         dispatch(getAccountsReceivableByBranchPaginatedStart({
             registers: response.data.registers,
             totalRegisters: response.data.totalRegisters,

@@ -8,7 +8,6 @@ import Scroll from "./components/Scroll/Scroll";
 import Notification from './components/Platform/PanelUser/Notifications/Notification';
 // LANDINGPAGE
 import LandingPage from './pages/LandingPage/LandingPage';
-import EjemploPage from './pages/LandingPage/EjemploPage/EjemploPage';
 // NAVBAR DE LA LANDINGPAGE
 import PaymentPlansPage from './pages/LandingPage/NavBarLandingPage/01PaymentPlans/PaymentPlansPage';
 import ContactUsPage from './pages/LandingPage/NavBarLandingPage/02ContactUs/ContactUsPage';
@@ -186,7 +185,6 @@ function App() {
                 <Routes>
                     {/* LandingPage */}
                     <Route path='/' element={<LandingPage />} />
-                    <Route path='/ejemplo' element={<EjemploPage />} />
                     {/* Registros */}
                     <Route path='/register' element={<RegisterPage />} />
                     <Route path='/register-user' element={<RegisterUserPage />} />

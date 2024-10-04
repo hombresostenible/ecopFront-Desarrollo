@@ -274,7 +274,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                     <div className='mt-4 mb-4'>
                         <div className="d-flex align-items-start justify-content-between">
                             <div>
-                                <p className="m-0">Busca el item por código de barras</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por código de barras</p>
                                 <input
                                     id="barCodeInput"
                                     type="text"
@@ -286,7 +286,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                             </div>
 
                             <div>
-                                <p className="m-0">Busca el item por nombre</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por nombre</p>
                                 <SearchItemsByname
                                     selectedBranch={selectedBranch}
                                     token={token}
@@ -376,7 +376,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
                         <div className={`${styles.container__Pay} d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Selected_Client} d-flex flex-column position-relative`}>
-                                <p className='m-0'>Selecciona o crea a tu cliente</p>
+                                <p className={`${styles.label} m-0`}>Selecciona o crea a tu cliente</p>
                                 <SearchClientCrm
                                     token={token}
                                     onClientSelect={(client) => setSelectedClient(client)}
@@ -431,7 +431,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
                                 <div className="mb-3 mx-auto d-flex align-items-center justify-content-between">
                                     <p className={`${styles.text__Purchase} m-0`}>Total de la compra</p>
-                                    <p className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</p>
+                                    <h4 className={`${styles.input__Info_Purchase} m-0 p-2 text-end`}>$ {formatNumber(totalPurchaseAmount)}</h4>
                                 </div>
 
                                 {meanPayment === 'Efectivo' && (
