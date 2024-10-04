@@ -368,7 +368,7 @@ function ConsultAssetsPage() {
                                             )}
                                             {selectedColumns.includes('IVA') && (
                                                 <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.IVA}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{asset.IVA === 'No aplica' ? 'No aplica' : `${asset.IVA} %`}</span>
                                                 </td>
                                             )}
 

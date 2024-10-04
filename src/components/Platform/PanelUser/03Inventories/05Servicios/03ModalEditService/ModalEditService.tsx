@@ -21,6 +21,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
     const dispatch: AppDispatch = useDispatch();
 
     const [editedService, setEditedService] = useState<IService>({ ...service });
+
     const [editedIVA, setEditedIVA] = useState<'No aplica' | 0 | 5 | 19>(service?.IVA);
     const [ editedIsDiscounted, setEditedIsDiscounted ] = useState(service?.isDiscounted);
 
@@ -124,9 +125,17 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                     <h6 className={styles.label}>IVA del servicio</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedIVA}
-                        onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                        value={editedService.IVA || 'No aplica'}
+                        onChange={(e) => {
+                            const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                            setEditedIVA(value);
+                            setEditedService((prevEdited) => ({
+                                ...prevEdited,
+                                IVA: value,
+                            }));
+                        }}
                     >
+                        <option value='No aplica'>No aplica</option>
                         <option value={0}>0 %</option>
                         <option value={5}>5 %</option>
                         <option value={19}>19 %</option>

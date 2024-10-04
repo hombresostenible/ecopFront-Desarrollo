@@ -73,7 +73,6 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
                 codeDane: selectedCodeDane,
                 subregionCodeDane: selectedsubregionCodeDane,
             } as IUserPlatform;
-            console.log('formData: ', formData)
             await dispatch(postUserPlatform(formData, token));
             setFormSubmitted(true);    
             reset();

@@ -20,6 +20,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     const dispatch: AppDispatch = useDispatch();
 
     const [editedProduct, setEditedProduct] = useState<IProduct>({ ...product });
+
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(product?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(product?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(product?.periodicityAutomaticIncrease);
@@ -388,9 +389,17 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
                 <h6 className={styles.label}>IVA del producto</h6>
                 <select
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedIVA}
-                    onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                    value={editedProduct.IVA || 'No aplica'}
+                    onChange={(e) => {
+                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                        setEditedIVA(value);
+                        setEditedProduct((prevEdited) => ({
+                            ...prevEdited,
+                            IVA: value,
+                        }));
+                    }}
                 >
+                    <option value='No aplica'>No aplica</option>
                     <option value={0}>0 %</option>
                     <option value={5}>5 %</option>
                     <option value={19}>19 %</option>

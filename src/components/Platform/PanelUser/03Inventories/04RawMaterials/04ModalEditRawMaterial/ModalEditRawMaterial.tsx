@@ -20,6 +20,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
     const dispatch: AppDispatch = useDispatch();
 
     const [editedRawMaterial, setEditedRawMaterial] = useState<IRawMaterial>({ ...rawMaterial });
+
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(rawMaterial?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(rawMaterial?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(rawMaterial?.periodicityAutomaticIncrease);
@@ -403,9 +404,17 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
                 <h6 className={styles.label}>IVA de la materia prima</h6>
                 <select
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedIVA}
-                    onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
+                    value={editedRawMaterial.IVA || 'No aplica'}
+                    onChange={(e) => {
+                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                        setEditedIVA(value);
+                        setEditedRawMaterial((prevEdited) => ({
+                            ...prevEdited,
+                            IVA: value,
+                        }));
+                    }}
                 >
+                    <option value='No aplica'>No aplica</option>
                     <option value={0}>0 %</option>
                     <option value={5}>5 %</option>
                     <option value={19}>19 %</option>

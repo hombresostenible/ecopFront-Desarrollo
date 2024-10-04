@@ -332,8 +332,9 @@ function ConsultProductsPage() {
                                             )}
                                             {selectedColumns.includes('IVA') && (
                                                 <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.IVA}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{product.IVA === 'No aplica' ? 'No aplica' : `${product.IVA} %`}</span>
                                                 </td>
+
                                             )}
                                             {selectedColumns.includes('Precio de venta') && (
                                                 <td className={`${styles.selling__Price} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>

@@ -20,6 +20,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
     const dispatch: AppDispatch = useDispatch();
 
     const [editedMerchandise, setEditedMerchandise] = useState<IMerchandise>({ ...merchandise });
+
     const [editedUnitMeasure, setEditedUnitMeasure] = useState(merchandise?.unitMeasure);
     const [editedInventoryIncrease, setEditedInventoryIncrease] = useState(merchandise?.inventoryIncrease || 'No');
     const [editedPeriodicityAutomaticIncrease, setEditedPeriodicityAutomaticIncrease] = useState(merchandise?.periodicityAutomaticIncrease);
@@ -397,12 +398,20 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                 <h6 className={styles.label}>IVA de la mercancía</h6>
                 <select
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedMerchandise.IVA}
-                    onChange={(e) => setEditedIVA(Number(e.target.value) as 0 | 5 | 19)}
-                    >
-                        <option value={0}>0 %</option>
-                        <option value={5}>5 %</option>
-                        <option value={19}>19 %</option>
+                    value={editedMerchandise.IVA || 'No aplica'}
+                    onChange={(e) => {
+                        const value = e.target.value as 'No aplica' | 0 | 5 | 19;
+                        setEditedIVA(value);
+                        setEditedMerchandise((prevEdited) => ({
+                            ...prevEdited,
+                            IVA: value,
+                        }));
+                    }}
+                >
+                    <option value='No aplica'>No aplica</option>
+                    <option value={0}>0 %</option>
+                    <option value={5}>5 %</option>
+                    <option value={19}>19 %</option>
                 </select>
             </div>
 

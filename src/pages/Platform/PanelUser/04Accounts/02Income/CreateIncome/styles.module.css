@@ -34,6 +34,9 @@
 .calendar {
     border-radius: 5px;
 }
+.label {
+    font-weight: 600;
+}
 .input {
     border-radius: 5px;
     width: 350px;

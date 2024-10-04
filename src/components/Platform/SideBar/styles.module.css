@@ -16,6 +16,7 @@
         margin: auto;
     }
     .container__Icon {
+        color: #f28705;
         height: 45px;
         width: 55px;
     }
@@ -59,7 +60,7 @@
     cursor: pointer;
 }
 
-.container__Icon {
+.container__Icon, .icon__Compact {
     height: 45px;
     width: 45px;
 }
@@ -98,7 +99,7 @@
     border-radius: 10px;
     width: 300px;
     top: 0;
-    left: 60px;
+    left: 85px;
 }
 .indicator {
     clip-path: polygon(100% 0, 0 50%, 100% 100%);

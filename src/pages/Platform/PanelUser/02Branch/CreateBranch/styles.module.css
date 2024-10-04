@@ -54,6 +54,7 @@
     z-index: 1;
 }
 .label {
+    font-weight: 600;
     margin-bottom: 5px;
 }
 .required__Information {

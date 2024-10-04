@@ -72,7 +72,6 @@ export const getAssetsPaginated = (token: string, page: number, limit: number) =
                 "Content-Type": "application/json",
             }
         });
-        console.log('response: ', response)
         dispatch(getAssetsPaginatedStart({
             registers: response.data.registers,
             totalRegisters: response.data.totalRegisters,

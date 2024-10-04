@@ -81,6 +81,7 @@ function NavBar() {
                         <Link to='/questions/information-manage-your-business' className={`${styles.link__NavBar} text-decoration-none ${location.pathname === '/questions/information-manage-your-business' ? styles.active : ''} `}>Información clave para gerenciar tu negocio</Link>
                         <Link to='/questions/support-contact' className={`${styles.link__NavBar} text-decoration-none ${location.pathname === '/questions/support-contact' ? styles.active : ''}`}>Contacta con soporte</Link>
                         <Link to='/questions/operation-platform' className={`${styles.link__NavBar} text-decoration-none ${location.pathname === '/questions/operation-platform' ? styles.active : ''} `}>Funcionamiento de la plataforma</Link>
+                        <Link to='/questions/prepare-for-billing' className={`${styles.link__NavBar} text-decoration-none ${location.pathname === '/questions/prepare-for-billing' ? styles.active : ''} `}>Prepárate para facturar</Link>
                     </div>
                 )}
 
