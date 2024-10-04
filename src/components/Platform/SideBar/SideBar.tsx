@@ -40,6 +40,7 @@ function SideBar() {
         setBranchesSubMenuOpen(false);
         setInventorySubMenuOpen(false);
         setAccountsSubMenuOpen(false);
+        setInvoicingPosSubMenuOpen(false);
         setElectronicPayrollSubMenuOpen(false);
         setCrmClientsSubMenuOpen(false);
         setCrmSuppliersSubMenuOpen(false);
@@ -49,6 +50,7 @@ function SideBar() {
         localStorage.removeItem('branches');
         localStorage.removeItem('inventory');
         localStorage.removeItem('accounts');
+        localStorage.removeItem('invoicingPos');
         localStorage.removeItem('electronicPayroll');
         localStorage.removeItem('crmClients');
         localStorage.removeItem('crmSuppliers');

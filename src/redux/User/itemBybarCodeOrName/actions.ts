@@ -7,6 +7,8 @@ import { IBackendItemResponse } from '../../../types/User/backendItemResponse.ty
 //BUSCA UN ITEM POR CODIGO DE BARRAS EN TODAS LAS TABLAS
 export const getItemByBarCode = (barCode: string, token: string) => async (dispatch: AppDispatch) => {
     try {
+        console.log('barCode: ', barCode)
+        // console.log('token: ', token)
         const response = await axiosInstance.get<IBackendItemResponse>(`/all-items/bar-code/${barCode}`, {
             headers: {
                 Authorization: `Bearer ${token}`,

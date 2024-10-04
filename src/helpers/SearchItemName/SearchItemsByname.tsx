@@ -104,18 +104,16 @@ function SearchItemsByname({ token, selectedBranch, onItemSelect, onDataItemSele
 
     return (
         <div ref={selectRef} className="d-flex align-items-center justify-content-center">
-            <div>
-                <Select
-                    value={selectedOption || null}
-                    inputValue={filterText || ''}
-                    onInputChange={handleInputChange}
-                    onChange={handleSelectChange}
-                    options={filteredOptions}
-                    placeholder="Busca por nombre"
-                    isSearchable
-                    styles={StylesReactSelect}
-                />
-            </div>
+            <Select
+                value={selectedOption || null}
+                inputValue={filterText || ''}
+                onInputChange={handleInputChange}
+                onChange={handleSelectChange}
+                options={filteredOptions}
+                placeholder="Busca por nombre"
+                isSearchable
+                styles={StylesReactSelect}
+            />
 
             <Modal show={showCancelModalCreateItem} onHide={onCloseCreateItemModal}>
                 <Modal.Header closeButton>
