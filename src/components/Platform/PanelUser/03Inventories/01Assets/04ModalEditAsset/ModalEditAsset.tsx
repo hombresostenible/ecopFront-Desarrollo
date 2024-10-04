@@ -17,6 +17,7 @@ interface ModalEditAssetProps {
 }
 
 function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalEditAssetProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
 
     const [editedAsset, setEditedAsset] = useState<IAssets>({ ...asset });
@@ -27,9 +28,8 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
     const [editedConsumptionTax, setEditedConsumptionTax] = useState<'No aplica' | 4 | 8 | 16>(asset?.consumptionTax);
     const [editedRetentionType, setEditedRetentionType] = useState<'No aplica' | 'Honorarios y consultoria' | 'Servicios' | 'Compras' | 'Otros' | 'Pagos al exterior y dividendos'>(asset?.retentionType);
     const [editedWithholdingTax, setEditedWithholdingTax] = useState<'No aplica' | 0.1 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 6 | 7 | 8 | 10 | 11 | 15 | 20 | 33 | 35>(asset?.withholdingTax);
-    
-    const [editedWithholdingIVA, setEditedWithholdingIVA] = useState<'No aplica' | 15 | 100>(asset?.withholdingIVA);
-    const [editedWwithholdingICA, setEditedWithholdingICA] = useState<'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8>(asset?.withholdingICA);
+    const [editedWitholdingIVA, setEditedWitholdingIVA] = useState<'No aplica' | 15 | 100>(asset?.withholdingIVA);
+    const [editedWwitholdingICA, setEditedWitholdingICA] = useState<'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8>(asset?.withholdingICA);
     const [editedIsDiscounted, setEditedIsDiscounted] = useState(asset?.isDiscounted);
 
     const handleEditField = (
@@ -63,8 +63,8 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
             editedAsset.consumptionTax = editedConsumptionTax;
             editedAsset.retentionType = editedRetentionType;
             editedAsset.withholdingTax = editedWithholdingTax;
-            editedAsset.withholdingIVA = editedWithholdingIVA;
-            editedAsset.withholdingICA = editedWwithholdingICA;
+            editedAsset.withholdingIVA = editedWitholdingIVA;
+            editedAsset.withholdingICA = editedWwitholdingICA;
             await dispatch(putAsset(idItem, editedAsset, token));
             dispatch(getAssets(token));
             onCloseModal();
@@ -356,7 +356,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                         value={editedAsset.withholdingIVA || 'No aplica'}
                         onChange={(e) => {
                             const value = e.target.value as 'No aplica' | 15 | 100;
-                            setEditedWithholdingIVA(value);
+                            setEditedWitholdingIVA(value);
                             setEditedAsset((prevEdited) => ({
                                 ...prevEdited,
                                 withholdingIVA: value,
@@ -375,7 +375,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                         value={editedAsset.withholdingICA || 'No aplica'}
                         onChange={(e) => {
                             const value = e.target.value as 'No aplica' | 2 | 3.4 | 4.14 | 5 | 6.9 | 8 | 9.66 | 11.04 | 13.8;
-                            setEditedWithholdingICA(value);
+                            setEditedWitholdingICA(value);
                             setEditedAsset((prevEdited) => ({
                                 ...prevEdited,
                                 withholdingICA: value,

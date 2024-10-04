@@ -158,14 +158,43 @@ function SeeItemProduct({ product, branches }: SeeItemProductProps) {
                 <p className={`${styles.input} p-2 text-start border`}>{product?.salesCount}</p>
             </div>
 
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.IVA}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.consumptionTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.retentionType}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.withholdingTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.withholdingIVA}</p> 
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{product?.withholdingICA}</p> 
+                </div>
+            </div>
+
             {/* PONER LOS ACCESORIOS */}
             {/* PONER LOS ACTIVOS */}
             {/* PONER LAS MATERIAS PRIMAS */}
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA del producto</h6>
-                <p className={`${styles.input} p-2 text-start border`}>{product?.IVA}</p>
-            </div>
         </div>
     );
 }
