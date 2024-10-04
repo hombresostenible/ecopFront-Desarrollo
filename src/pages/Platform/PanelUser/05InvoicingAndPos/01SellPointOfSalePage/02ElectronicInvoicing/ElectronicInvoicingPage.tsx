@@ -59,19 +59,13 @@ function ElectronicInvoicingPage() {
         setCurrentDate(currentDate);
     }, []);
     
-    // const [rows, setRows] = useState<Array<{
-    //     id: number | null;
-    //     item: IAssets | IMerchandise | IProduct | IRawMaterial | IService | null;
-    //     quantity: number | null;
-    //     discountPercentage: number | null;
-    // }>>([]);
     const [rows, setRows] = useState<Array<{
         id: number | null;
         item: IAssets | IMerchandise | IProduct | IRawMaterial | IService | null;
         quantity: number | null;
         discountPercentage: number | null;
     }>>([
-        { id: null, item: null, quantity: null, discountPercentage: null } // Inicializa aquí
+        { id: null, item: null, quantity: null, discountPercentage: null }
     ]);
 
     const addRow = () => {
@@ -122,19 +116,19 @@ function ElectronicInvoicingPage() {
     };
     
     const calculateIVA = (taxableBase: number, ivaRate: number) => {
-        return taxableBase * (ivaRate / 100); // Convertir a porcentaje
+        return taxableBase * (ivaRate / 100);
     };
     
     const calculateTotalTaxes = () => {
-        const taxableBase = calculateTaxableBase(); // Calcula la base imponible una vez y úsala
+        const taxableBase = calculateTaxableBase();
         return rows.reduce((acc, row) => {
-            const iva = row.item?.IVA; // IVA puede ser 'No aplica', 0, 5, o 19
+            const iva = row.item?.IVA;
             if (typeof iva === "string" && iva === "No aplica") {
-                return acc; // No se suma IVA si es "No aplica"
+                return acc;
             } else {
-                const ivaValue = iva !== undefined ? (typeof iva === "number" ? iva : parseInt(iva, 10)) : 0; // Asegúrate de que no sea undefined
+                const ivaValue = iva !== undefined ? (typeof iva === "number" ? iva : parseInt(iva, 10)) : 0;
                 const ivaAmount = calculateIVA(taxableBase, ivaValue);
-                return acc + ivaAmount; // Sumar IVA calculado
+                return acc + ivaAmount;
             }
         }, 0);
     };
@@ -143,7 +137,6 @@ function ElectronicInvoicingPage() {
         return taxableBase + totalTaxes;
     };
     
-    // En el renderizado
     const subtotal = calculateSubtotal();
     const discounts = calculateDiscounts();
     const taxableBase = calculateTaxableBase();
@@ -300,7 +293,7 @@ function ElectronicInvoicingPage() {
                                                             token={token}
                                                             onItemSelect={() => {
                                                                 const updatedRows = [...rows];
-                                                                updatedRows[index] = { ...updatedRows[index] }; // Si necesitas hacer algo más aquí
+                                                                updatedRows[index] = { ...updatedRows[index] };
                                                                 setRows(updatedRows);
                                                             }}
                                                             onDataItemSelect={(item) => {
@@ -317,9 +310,9 @@ function ElectronicInvoicingPage() {
                                                         <input
                                                             type="number"
                                                             className={`${styles.quantity__Quantity} p-2 border`}
-                                                            value={row.item?.sellingPrice ?? ''} // Asegúrate de que el valor sea una cadena vacía si es undefined
+                                                            value={row.item?.sellingPrice ?? ''}
                                                             min={0}
-                                                            readOnly // Añade esta propiedad si no deseas que el usuario edite este campo directamente
+                                                            readOnly
                                                         />
                                                     </div>
                                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center overflow-hidden`}>
@@ -328,7 +321,7 @@ function ElectronicInvoicingPage() {
                                                             className={`${styles.quantity__Quantity} p-2 border`}
                                                             placeholder='Cantidad'
                                                             min={0}
-                                                            value={row.quantity ?? ''} // Cambia `row.quantity || ''` a `row.quantity ?? ''`
+                                                            value={row.quantity ?? ''}
                                                             onChange={(e) => {
                                                                 const value = parseFloat(e.target.value);
                                                                 const updatedRows = [...rows];
@@ -343,7 +336,7 @@ function ElectronicInvoicingPage() {
                                                         />
                                                     </div>
                                                     <div className={`${styles.discount__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>19</span>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{row.item?.IVA === 'No aplica' ? 'No aplica' : `${row.item?.IVA} %`}</span>
                                                     </div>
                                                     <div className={`${styles.discount} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <input
@@ -351,7 +344,7 @@ function ElectronicInvoicingPage() {
                                                             className={`${styles.quantity__Quantity} p-2 border`}
                                                             placeholder='Descuento'
                                                             min={0}
-                                                            value={row.discountPercentage ?? ''} // Cambia `row.discountPercentage || ''` a `row.discountPercentage ?? ''`
+                                                            value={row.discountPercentage ?? ''}
                                                             onChange={(e) => {
                                                                 const value = parseFloat(e.target.value);
                                                                 const updatedRows = [...rows];
@@ -399,27 +392,6 @@ function ElectronicInvoicingPage() {
                                     </div>
                                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 <div className={`${styles.container__Add} mb-4 d-flex flex-column align-items-start justify-content-between gap-2`}>
                                     <div>CADA PRODUCTO SE DEBE DE AGREGAR CON CODIGO DE BARRAS O POR NOMBRE EN EL SELECT</div>
                                     <div
@@ -444,19 +416,19 @@ function ElectronicInvoicingPage() {
                                             </div>
                                             <div className={`${styles.container__Values_Totals}`}>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(subtotal)}  {/* Subtotal */}
+                                                    $ {formatNumber(subtotal)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(discounts)}  {/* Descuentos */}
+                                                    $ {formatNumber(discounts)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(taxableBase)}  {/* Base Imponible */}
+                                                    $ {formatNumber(taxableBase)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(totalTaxes)}  {/* Total IVA */}
+                                                    $ {formatNumber(totalTaxes)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(totalInvoice)}  {/* Total Factura */}
+                                                    $ {formatNumber(totalInvoice)}
                                                 </div>
                                             </div>
                                         </div>
