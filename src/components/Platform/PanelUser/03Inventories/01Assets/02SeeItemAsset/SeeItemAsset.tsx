@@ -84,9 +84,37 @@ function SeeItemAsset({ asset, branches }: SeeItemAssetProps) {
                 </div>
             </div>
 
-            <div className="w-100">
-                <h6 className={styles.label}>IVA</h6>
-                <p className={`${styles.input} p-2 text-start border`}>{asset?.IVA}</p> 
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.IVA}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Impuesto al consumo</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.consumptionTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Tipo de retención en la fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.retentionType}</p>
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Porcentaje de Rete Fuente</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.withholdingTax}</p>
+                </div>
+            </div>
+
+            <div className='d-flex gap-3'>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete IVA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.withholdingIVA}</p> 
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Rete ICA</h6>
+                    <p className={`${styles.input} p-2 text-start border`}>{asset?.withholdingICA}</p> 
+                </div>
             </div>
         </div>
     );
