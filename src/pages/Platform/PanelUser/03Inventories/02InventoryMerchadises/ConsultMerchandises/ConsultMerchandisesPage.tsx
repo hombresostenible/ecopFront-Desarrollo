@@ -332,7 +332,7 @@ function ConsultMerchandisesPage() {
                                                 )}
                                                 {selectedColumns.includes('IVA') && (
                                                     <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.IVA}</span>
+                                                        <span className={`${styles.text__Ellipsis} overflow-hidden`}>{merchandise.IVA === 'No aplica' ? 'No aplica' : `${merchandise.IVA} %`}</span>
                                                     </td>
                                                 )}
                                                 {selectedColumns.includes('Precio de venta') && (

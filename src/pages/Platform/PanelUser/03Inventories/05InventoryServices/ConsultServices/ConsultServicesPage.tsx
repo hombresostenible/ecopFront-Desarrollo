@@ -267,7 +267,7 @@ function ConsultServicesPage() {
                                             )}
                                             {selectedColumns.includes('IVA') && (
                                                 <td className={`${styles.IVA} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA}</span>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{service.IVA === 'No aplica' ? 'No aplica' : `${service.IVA} %`}</span>
                                                 </td>
                                             )}
                                             {selectedColumns.includes('Precio de venta') && (

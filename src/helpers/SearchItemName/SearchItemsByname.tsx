@@ -1,4 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from 'react';
 import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
@@ -29,8 +30,6 @@ interface OptionType {
 
 function SearchItemsByname({ token, selectedBranch, onItemSelect, onDataItemSelect }: SearchItemsBynameProps) {
     const dispatch: AppDispatch = useDispatch();
-
-    // Estados de Redux
     const items = useSelector((state: RootState) => state.searchItems.items);
     
     const [filterText, setFilterText] = useState<string>('');
@@ -107,8 +106,8 @@ function SearchItemsByname({ token, selectedBranch, onItemSelect, onDataItemSele
         <div ref={selectRef} className="d-flex align-items-center justify-content-center">
             <div>
                 <Select
-                    value={selectedOption}
-                    inputValue={filterText}
+                    value={selectedOption || null}
+                    inputValue={filterText || ''}
                     onInputChange={handleInputChange}
                     onChange={handleSelectChange}
                     options={filteredOptions}
