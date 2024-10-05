@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles.css';
 // GENERALES
-import WhatsApp from './components/WhatsApp/WhatsApp';
-import Telegram from './components/WhatsApp/Telegram';
-import Scroll from "./components/Scroll/Scroll";
+import WhatsApp from './components/GeneralComponents/WhatsApp/WhatsApp';
+import Telegram from './components/GeneralComponents/WhatsApp/Telegram';
+import Scroll from "./components/GeneralComponents/Scroll/Scroll";
 import Notification from './components/Platform/PanelUser/Notifications/Notification';
+import ScrollToTop from './components/GeneralComponents/ScrollToTop/ScrollToTop';
 // LANDINGPAGE
 import LandingPage from './pages/LandingPage/LandingPage';
 // NAVBAR DE LA LANDINGPAGE
@@ -177,6 +178,7 @@ function App() {
                 <WhatsApp />
                 <Telegram />
                 <Scroll />
+                <ScrollToTop />
                 <div className="notification__Container">
                     {notifications.map(({ id, type, message }) => (
                         <Notification key={id} type={type} message={message} onClose={() => setNotifications(notifications.filter(notification => notification.id !== id))} />

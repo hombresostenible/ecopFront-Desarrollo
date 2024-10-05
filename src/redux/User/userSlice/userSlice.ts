@@ -77,8 +77,12 @@ const userSlice = createSlice({
             state.loading = true;
             state.errorUser = null;
         },
+        clearUserErrors: (state) => {
+            state.loading = false;
+            state.errorUser = null;
+        },
     },
 });
 
-export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart } = userSlice.actions;
+export const { userData, userErrors, registerUserStart, isAuthenticatedStatus, loginStart, sendEmailByResetPasswordStart, putResetPasswordStart, profileStart, putProfileUserStart, accountUnlocking, logoChange, deleteLogo, patchUpdateApplicationPasswordStart, clearUserErrors } = userSlice.actions;
 export default userSlice.reducer;

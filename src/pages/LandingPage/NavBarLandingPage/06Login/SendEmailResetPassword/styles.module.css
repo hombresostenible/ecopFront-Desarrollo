@@ -15,7 +15,8 @@
     outline-color: #718bd8;
 }
 .button__Submit {
-    padding: 7px 25px;
+    height: 40px;
+    width: 150px;
     letter-spacing: 1px;
     font-size: 18px;
     color: #f8f9fa;
@@ -26,8 +27,25 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
-.text__Danger {
-    top: 44px;
+.alert__Danger {
+    color: #ff595e;
+    font-weight: 800;
+    top: 5px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
+.button__Return {
+    padding: 7px 25px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    color: #f8f9fa;
+    background: #718bd8;
+}
+.butbutton__Returnton__Submit:hover {
+    background: #0a31bf;
+    transition: 300ms all ease;
+    cursor: pointer;
 }
 .link {
     font-weight: 600;
