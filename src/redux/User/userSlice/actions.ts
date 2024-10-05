@@ -115,7 +115,7 @@ export const putPutProfileUser = (formData: IUser, token: string) => async (disp
 export const accountUnlockingUser = (idUser: string, formData: IResetPasswordBlocked) => async (dispatch: AppDispatch) => {
     try {
         dispatch(accountUnlocking());
-        return await axiosInstance.put(`/user/resetPasswordBlocked/${idUser}`, formData);
+        return await axiosInstance.put(`/user/reset-password-user-blocked/${idUser}`, formData);
     } catch (error: any) {
         if (error.response && error.response.status === 500) {
             dispatch(userErrors(error.response?.data));
