@@ -1,4 +1,4 @@
-import logo from '../../assets/WhatsApp.png';
+import logo from '../../../assets/WhatsApp.png';
 import styles from "./WhatsApp.module.css";
 
 export default function WhatsApp () {

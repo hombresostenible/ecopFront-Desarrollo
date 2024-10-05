@@ -1,4 +1,4 @@
-import logo from '../../assets/Telegram.png';
+import logo from '../../../assets/Telegram.png';
 import styles from "./WhatsApp.module.css";
 
 export default function Telegram () {
