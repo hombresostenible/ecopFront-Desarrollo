@@ -8,10 +8,6 @@
 .logo {
     height: 80px;
 }
-.errors {
-    top: -35px;
-    left: 0;
-}
 .title {
     color: #718bd8;
 }
@@ -21,9 +17,6 @@
 .input:focus{
     outline-color: #718bd8;
 }
-.text__Danger {
-    top: 44px;
-}
 .icon {
     z-index: 1;
     top: 10px;
@@ -31,14 +24,36 @@
     font-size: 20px;
     color: #718bd8;
 }
-
-
+.text__Danger {
+    top: 44px;
+}
+.alert__Success {
+    color: #4cb963;
+    font-weight: 700;
+    top: 44px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
+.errors {
+    top: -35px;
+    left: 0;
+}
+.alert__Danger {
+    color: #ff595e;
+    font-weight: 800;
+    top: 44px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
 .button__Submit {
-    padding: 7px 25px;
     letter-spacing: 1px;
+    color: #f8f9fa;
     font-size: 18px;
     background: #718bd8;
-    color: #f8f9fa;
+    height: 40px;
+    width: 150px;
 }
 .button__Submit:hover {
     background: #0a31bf;
