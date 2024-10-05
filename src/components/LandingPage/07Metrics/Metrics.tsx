@@ -5,7 +5,7 @@ function Metrics () {
     return (
         <div className={`${styles.container} mb-5`}>
             <div className={`${styles.container__Metrics} `}>
-                <h1 className={`${styles.title} m-0 text-center`}>Los análisis globales al alcance de tu mano</h1>
+                <h2 className={`${styles.title} m-0 text-center`}>Los análisis globales al alcance de tu mano</h2>
                 <p className="text-center">Te conectamos de forma fiable a cientos de feeds de datos, con acceso directo a más de 100 indicadores. La información obtenida es de máxima calidad, así como la que utilizan los profesionales relacionados con socios de datos de nivel institucional.</p>
                 <div className={`${styles.container__Tags} `}>
                     <h1 className={`${styles.title__Hashtags} text-center`}>Respaldo en cada</h1>
