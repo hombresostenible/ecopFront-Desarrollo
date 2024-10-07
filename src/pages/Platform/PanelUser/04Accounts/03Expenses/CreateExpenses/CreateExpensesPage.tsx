@@ -75,21 +75,17 @@ function CreateExpensesPage() {
         setCheckDatesRegisterTx(prevCheckDatesRegisterTx => !prevCheckDatesRegisterTx);
     };
 
-    // Manejar cambio en el tipo de pago (contado o crédito)
-    const handleCreditCashChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setCreditCashOption(event.target.value);
+    // Estado para seleccionar contado o crédito
+    const [creditCashOption, setCreditCashOption] = useState('Contado');
+    const handleCreditCashChange = (creditCash: string) => {
+        setCreditCashOption(creditCash);
     };
 
     // Manejar cambio en el tipo de gasto (venta de artículos u otros gastos)
+    const [typeExpense, setTypeIncome] = useState<string>('Compra de articulos');
     const handleTypeExpenseChange = (incomeType: string) => {
         setTypeIncome(incomeType);
     };
-
-    // Estado para seleccionar contado o crédito
-    const [creditCashOption, setCreditCashOption] = useState('Contado');
-
-    // Estado para seleccionar tipo de ingreso
-    const [typeExpense, setTypeIncome] = useState<string>('Compra de articulos');
 
     // Efecto para establecer las fechas por defecto o manualmente
     useEffect(() => {
@@ -188,18 +184,25 @@ function CreateExpensesPage() {
 
                         <div className="mb-4 d-flex align-items-center justify-content-between">
                             <div>
-                                <p className="mb-0">El gasto ¿Es de contado o a crédito?</p>
-                                <select
-                                    className={`${styles.input} p-2 border `}
-                                    onChange={handleCreditCashChange}
-                                >
-                                    <option value='Contado'>Contado</option>
-                                    <option value='Credito'>A cuotas</option>
-                                </select>
+                                <p className={`${styles.label} m-0`}>La venta ¿Es de contado o a crédito?</p>
+                                <div className="d-flex align-items-center justify-content-center gap-3">
+                                    <div
+                                        className={`${styles.type__Income} ${creditCashOption === 'Contado' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('Contado')}
+                                    >
+                                        Contado
+                                    </div>
+                                    <div
+                                        className={`${styles.type__Income} ${creditCashOption === 'Credito' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('Credito')}
+                                    >
+                                        Crédito
+                                    </div>
+                                </div>
                             </div>
 
                             <div>
-                                <p className="mb-0">Tipo de gasto</p>
+                                <p className={`${styles.label} m-0`}>Tipo de gasto</p>
                                 <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
                                         className={`${styles.type__Income} ${typeExpense === 'Compra de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}

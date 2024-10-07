@@ -88,8 +88,6 @@ function CreateIncomePage() {
         setTypeIncome(incomeType);
     };
 
-    // Estado para seleccionar tipo de ingreso
-
     // useEffect para establecer las fechas por defecto o manualmente
     useEffect(() => {
         if (checkDatesRegisterTx) {

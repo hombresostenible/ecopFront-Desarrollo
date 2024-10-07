@@ -32,7 +32,8 @@
     color: #718bd8;
 }
 .button__Submit {
-    padding: 7px 25px;
+    height: 40px;
+    width: 150px;
     letter-spacing: 1px;
     font-size: 18px;
     background: #718bd8;

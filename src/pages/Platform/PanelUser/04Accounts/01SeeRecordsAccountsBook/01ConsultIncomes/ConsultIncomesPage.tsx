@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
@@ -231,7 +232,12 @@ function ConsultIncomesPage() {
                         </div>
 
                         <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-start justify-content-between`}>
-                            <div></div>
+                            <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
+                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
+                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
+                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
+                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
+                            </div>
                             <div className={`${styles.container__Filter_Dates} flex-column d-flex align-items-end justify-content-end gap-2`}>
                                 <div className={`${styles.filter__Dates} d-flex gap-2`}>
                                     <input
@@ -288,7 +294,7 @@ function ConsultIncomesPage() {
                                             <th className={`${styles.transaction__Type} d-flex align-items-center justify-content-center text-center`}>Tipo de TX</th>
                                         )}
                                         {selectedColumns.includes('Medio de pago') && (
-                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Definir columna</th>
+                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Contado / Crédito</th>
                                         )}
                                         {selectedColumns.includes('Valor total') && (
                                             <th className={`${styles.total__Value} d-flex align-items-center justify-content-center text-center`}>Total</th>

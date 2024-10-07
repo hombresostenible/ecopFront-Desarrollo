@@ -9,9 +9,12 @@ import {
     getExpensesPerPeriodByBranchStart,
     getAllTransactionsPerPeriodStart,
     getAllTransactionsPerPeriodByBranchStart,
-
-
-
+    
+    getAccountsPayableStart,
+    getAccountsPayablePaginatedStart,
+    getAccountsPayableByBranchStart,
+    getAccountsPayableByBranchPaginatedStart,
+    
     getAccountsReceivableStart,
     getAccountsReceivableByBranchStart,
     getAccountsReceivablePaginatedStart,
@@ -22,10 +25,7 @@ import {
 
 
 
-    getAccountsPayableStart,
-    getAccountsPayablePaginatedStart,
-    getAccountsPayableByBranchStart,
-    getAccountsPayableByBranchPaginatedStart,
+
 
     getBestClientValueStart,
     getBestClientValueByBranchStart,
@@ -43,7 +43,7 @@ import {
     getRawmaterialsInventoryByBranchStart,
 } from './finantialIndicatorsSlice';
 
-//
+// OBTENER TODAS LAS VENTAS DEL PERIODO DEL USER
 export const getSalesPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/financial-indicator/sales-per-period', {
@@ -62,7 +62,7 @@ export const getSalesPerPeriod = (token: string) => async (dispatch: AppDispatch
     }
 };
 
-//
+// OBTENER TODAS LAS VENTAS DEL PERIODO POR SEDE DEL USER
 export const getSalesPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/financial-indicator/sales-per-period/${idBranch}`, {
@@ -81,7 +81,7 @@ export const getSalesPerPeriodByBranch = (idBranch: string, token: string) => as
     }
 };
 
-//
+// OBTENER TODOS LOS GASTOS DEL PERIODO DEL USER
 export const getExpensesPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/financial-indicator/expenses-per-period', {
@@ -100,7 +100,7 @@ export const getExpensesPerPeriod = (token: string) => async (dispatch: AppDispa
     }
 };
 
-//
+// OBTENER TODOs LOS GASTOS DEL PERIODO DEL USER
 export const getExpensesPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/financial-indicator/expenses-per-period/${idBranch}`, {
@@ -119,7 +119,7 @@ export const getExpensesPerPeriodByBranch = (idBranch: string, token: string) =>
     }
 };
 
-//
+// OBTENER TODAS LAS TRANSACCIONES DEL PERIODO PARA CALCULAR LA UTILIDAD DEL USER
 export const getAllTransactionsPerPeriod = (token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get('/financial-indicator/all-transactions-per-period', {
@@ -138,7 +138,7 @@ export const getAllTransactionsPerPeriod = (token: string) => async (dispatch: A
     }
 };
 
-//
+// OBTENER TODAS LAS TRANSACCIONES DEL PERIODO POR SEDE PARA CALCULAR LA UTILIDAD DEL USER
 export const getAllTransactionsPerPeriodByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/financial-indicator/all-transactions-per-period/${idBranch}`, {
@@ -157,106 +157,10 @@ export const getAllTransactionsPerPeriodByBranch = (idBranch: string, token: str
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-//
-export const getAccountsReceivable = (token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get('/financial-indicator/indicator-accounts-receivable', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsReceivableStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorFinantialIndicator(error.response?.data.message));
-        } else {
-            dispatch(errorFinantialIndicator(error.message));
-        }
-    }
-};
-
-//OBTENER TODOS LOS REGISTROS DE CUENTAS POR COBRAR PAGINADOS DEL USUARIO
-export const getAccountsReceivablePaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable-paginated?page=${page}&limit=${limit}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsReceivablePaginatedStart({
-            registers: response.data.registers,
-            totalRegisters: response.data.totalRegisters,
-            totalPages: response.data.registers.totalPages,
-            currentPage: response.data.registers.currentPage,
-        }));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorFinantialIndicator(error.response?.data.message));
-        } else {
-            dispatch(errorFinantialIndicator(error.message));
-        }
-    }
-};
-
-//
-export const getAccountsReceivableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/financial-indicator/indicator-accounts-receivable/${idBranch}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsReceivableByBranchStart(response.data));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorFinantialIndicator(error.response?.data.message));
-        } else {
-            dispatch(errorFinantialIndicator(error.message));
-        }
-    }
-};
-
-//OBTENER TODOS LOS REGISTROS DE CUENTAS POR COBRAR PAGINADOS DE UNA SEDE DEL USUARIO
-export const getAccountsReceivableByBranchPaginated = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
-    try {
-        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable-paginated/${idBranch}?page=${page}&limit=${limit}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        });
-        dispatch(getAccountsReceivableByBranchPaginatedStart({
-            registers: response.data.registers,
-            totalRegisters: response.data.totalRegisters,
-            totalPages: response.data.registers.totalPages,
-            currentPage: response.data.registers.currentPage,
-        }));
-    } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            dispatch(errorFinantialIndicator(error.response?.data.message));
-        } else {
-            dispatch(errorFinantialIndicator(error.message));
-        }
-    }
-};
-
-//
+// OBTENER TODAS LAS CUENTAS POR PAGAR DEL USER
 export const getAccountsPayable = (token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get('/financial-indicator/accounts-payable', {
+        const response = await axiosInstance.get('/financial-indicator/indicator-accounts-payable', {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -272,7 +176,7 @@ export const getAccountsPayable = (token: string) => async (dispatch: AppDispatc
     }
 };
 
-//
+//OBTENER TODOS LOS REGISTROS DE CUENTAS POR PAGAR PAGINADOS DEL USER
 export const getAccountsPayablePaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/financial-indicator/accounts-payable-paginated?page=${page}&limit=${limit}`, {
@@ -296,10 +200,10 @@ export const getAccountsPayablePaginated = (token: string, page: number, limit: 
     }
 };
 
-//
+// OBTENER TODAS LAS CUENTAS POR PAGAR POR SEDE DEL USER
 export const getAccountsPayableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await axiosInstance.get(`/financial-indicator/accounts-payable/${idBranch}`, {
+        const response = await axiosInstance.get(`/financial-indicator/indicator-accounts-payable/${idBranch}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -315,7 +219,7 @@ export const getAccountsPayableByBranch = (idBranch: string, token: string) => a
     }
 };
 
-//
+//OBTENER TODOS LOS REGISTROS DE CUENTAS POR PAGAR PAGINADOS DE UNA SEDE DEL USER
 export const getAccountsPayableByBranchPaginated = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
     try {
         const response = await axiosInstance.get(`/financial-indicator/accounts-payable-paginated/${idBranch}?page=${page}&limit=${limit}`, {
@@ -338,6 +242,114 @@ export const getAccountsPayableByBranchPaginated = (idBranch: string, token: str
         }
     }
 };
+
+// OBTENER TODAS LAS CUENTAS POR COBRAR DEL USER
+export const getAccountsReceivable = (token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get('/financial-indicator/indicator-accounts-receivable', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsReceivableStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorFinantialIndicator(error.response?.data.message));
+        } else {
+            dispatch(errorFinantialIndicator(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS REGISTROS DE CUENTAS POR COBRAR PAGINADOS DEL USER
+export const getAccountsReceivablePaginated = (token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable-paginated?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsReceivablePaginatedStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorFinantialIndicator(error.response?.data.message));
+        } else {
+            dispatch(errorFinantialIndicator(error.message));
+        }
+    }
+};
+
+// OBTENER TODAS LAS CUENTAS POR COBRAR POR SEDE DEL USER
+export const getAccountsReceivableByBranch = (idBranch: string, token: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/financial-indicator/indicator-accounts-receivable/${idBranch}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsReceivableByBranchStart(response.data));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorFinantialIndicator(error.response?.data.message));
+        } else {
+            dispatch(errorFinantialIndicator(error.message));
+        }
+    }
+};
+
+//OBTENER TODOS LOS REGISTROS DE CUENTAS POR COBRAR PAGINADOS DE UNA SEDE DEL USER
+export const getAccountsReceivableByBranchPaginated = (idBranch: string, token: string, page: number, limit: number) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await axiosInstance.get(`/financial-indicator/accounts-receivable-paginated/${idBranch}?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        });
+        dispatch(getAccountsReceivableByBranchPaginatedStart({
+            registers: response.data.registers,
+            totalRegisters: response.data.totalRegisters,
+            totalPages: response.data.registers.totalPages,
+            currentPage: response.data.registers.currentPage,
+        }));
+    } catch (error: any) {
+        if (error.response && error.response.status === 401) {
+            dispatch(errorFinantialIndicator(error.response?.data.message));
+        } else {
+            dispatch(errorFinantialIndicator(error.message));
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //
 export const getBestClientValue = (token: string) => async (dispatch: AppDispatch) => {
