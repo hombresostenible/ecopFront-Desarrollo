@@ -294,7 +294,7 @@ function SeeRecordsAccountsBookPage() {
                                             <th className={`${styles.transaction__Type} d-flex align-items-center justify-content-center text-center`}>Tipo de TX</th>
                                         )}
                                         {selectedColumns.includes('Medio de pago') && (
-                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Definir columna</th>
+                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Contado / Crédito</th>
                                         )}
                                         {selectedColumns.includes('Valor total') && (
                                             <th className={`${styles.total__Value} d-flex align-items-center justify-content-center text-center`}>Total</th>

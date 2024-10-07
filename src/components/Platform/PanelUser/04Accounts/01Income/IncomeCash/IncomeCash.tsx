@@ -116,24 +116,24 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        return total + (scannedItem.quantity * scannedItem.sellingPrice);
+        const ivaAmount = scannedItem.IVA !== 'No aplica' 
+            ? (scannedItem.sellingPrice / 100 * Number(scannedItem.IVA)) 
+            : 0;
+        return total + (scannedItem.quantity * (scannedItem.sellingPrice + ivaAmount));
     }, 0);
 
     // Manejar el cambio en el monto recibido
     const [paymentAmount, setPaymentAmount] = useState<string>('');
     const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Eliminar caracteres no numéricos
         const value = e.target.value.replace(/[^\d]/g, '');
         setPaymentAmount(value);
     };
     
     // Estado para almacenar el cambio
     const [changeAmount, setChangeAmount] = useState<number | null>(null);
-    // Calcular el cambio y actualizar el estado
     const handleCalculateChange = () => {
         const numericValue = parseFloat(paymentAmount.replace(/[^\d]/g, ''));
         if (!isNaN(numericValue)) {
-            // totalPurchaseAmount debe estar definido y accesible aquí
             setChangeAmount(numericValue - totalPurchaseAmount);
         } else {
             setChangeAmount(null);
@@ -153,24 +153,24 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     //Setea el total del ingreso por la venta
     const [totalValueOtherIncome, setTotalValueOtherIncome] = useState<string>('');
     const handleTotalValueOtherIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^\d]/g, '');                                     // Eliminar caracteres no numéricos
+        const value = e.target.value.replace(/[^\d]/g, '');
         setTotalValueOtherIncome(value);
     };
     
-    const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');            //Setea si es con interés o no
+    const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('Si');
     const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newCreditWithInterest = event.target.value as 'No' | 'Si';
         setCreditWithInterest(newCreditWithInterest);
         setValue('creditWithInterest', newCreditWithInterest);
     };
 
-    const [interestRateChange, setInterestRateChange] = useState<number>(0);                    //Setea la tasa de interés de la venta a cuotas
+    const [interestRateChange, setInterestRateChange] = useState<number>(0);
     const handleInterestRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const interestRate = parseFloat(event.target.value);
         setInterestRateChange(interestRate);
     };
 
-    const [numberOfPayments, setNumberOfPayments] = useState<number>(0);                        //Setea la cantidad de cuotas
+    const [numberOfPayments, setNumberOfPayments] = useState<number>(0);
     const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newUnitValue = parseFloat(event.target.value);
         setNumberOfPayments(newUnitValue);
@@ -181,18 +181,11 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
     useEffect(() => {
         if (totalValueOtherIncome !== undefined && numberOfPayments !== 0) {
             if (interestRateChange !== 0) {
-                // Convertir la tasa de interés anual a tasa mensual
                 const tasaInteresMensual = interestRateChange / 100 / 12;
-                
-                // Fórmula de Amortización Francesa para calcular la cuota fija con interés
                 const totalValue = Number(totalValueOtherIncome);
-                const cuotaWithInterest = totalValue * (tasaInteresMensual * Math.pow(1 + tasaInteresMensual, numberOfPayments)) / 
-                                        (Math.pow(1 + tasaInteresMensual, numberOfPayments) - 1);
-                
-                // Setear el valor de la cuota
+                const cuotaWithInterest = totalValue * (tasaInteresMensual * Math.pow(1 + tasaInteresMensual, numberOfPayments)) / (Math.pow(1 + tasaInteresMensual, numberOfPayments) - 1);
                 setPaymentValue(cuotaWithInterest);
             } else {
-                // Si no hay interés, dividimos el monto total entre el número de pagos
                 const totalValue = Number(totalValueOtherIncome);
                 const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
@@ -284,7 +277,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                                     placeholder='Código de barras'
                                 />
                             </div>
-
                             <div>
                                 <p className={`${styles.label} m-0`}>Busca el item por nombre</p>
                                 <SearchItemsByname
@@ -302,7 +294,9 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                     <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
                                     <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
                                     <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                     <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
                                 </div>
@@ -327,13 +321,24 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                             </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                            </div>
+                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica' 
+                                                        ? `$ ${(item.sellingPrice / 100 * Number(item.IVA))}`  // Convierte IVA a número si no es 'No aplica'
+                                                        : 'No aplica' 
+                                                    }
+                                                </span>
                                             </div>
                                             <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
                                             </div>
+                                            <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA)))}</span>
+                                            </div>
                                             <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * (item.sellingPrice))}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * ((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA))))}</span>
                                             </div>
                                             <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
                                                 <RiDeleteBin6Line

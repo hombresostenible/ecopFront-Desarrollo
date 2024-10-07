@@ -11,7 +11,7 @@ export interface IAccountsReceivable {
     paymentValue?: number;
     currentBalance?: number;
     pendingNumberOfPayments?: number;
-    creditPayments?: { date: Date; value: number; branchId: string; seller: string }[]; 
+    creditPayments?: { date: Date; value: number; branchId: string; userRegister: string }[]; 
     cancellationDate?: Date;
     seller?: string;
     

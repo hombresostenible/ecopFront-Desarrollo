@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IAccountsPayable } from '../../../../types/User/accountsPayable.types';
+import { IAccountsReceivable } from '../../../../types/User/accountsReceivable.types';
 
 interface FinantialIndicatorState {
     salesPerPeriod: any;                        //
     expensesPerPeriod: any;                     //
     allTransactionsPerPeriod: any;              //
-    accountsReceivable: any;                    //
-    accountsPayable: any;                       //
+    accountsPayable: IAccountsPayable | IAccountsPayable[] | null;
+    accountsReceivable: IAccountsReceivable | IAccountsReceivable[] | null;
     bestClientValue: any;                       //
     bestClientQuantity: any;                    //
     averageTicketPerPeriod: any;                //
@@ -79,50 +81,12 @@ const finantialIndicatorsSlice = createSlice({
             state.allTransactionsPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
-
-
-
-
-
-
-
-
-        getAccountsReceivableStart: (state, action: PayloadAction<any  | null>) => {
-            state.loading = true;
-            state.accountsReceivable = action.payload;
-            state.errorFinantialIndicator = null;
-        },
-        getAccountsReceivablePaginatedStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
-            state.loading = true;
-            state.accountsReceivable = action.payload.registers;
-            state.totalRegisters = action.payload.totalRegisters;
-            state.totalPages = action.payload.totalPages;
-            state.currentPage = action.payload.currentPage;
-            state.errorFinantialIndicator = null;
-        },
-        getAccountsReceivableByBranchStart: (state, action: PayloadAction<any  | null>) => {
-            state.loading = true;
-            state.accountsReceivable = action.payload;
-            state.errorFinantialIndicator = null;
-        },
-        getAccountsReceivableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
-            state.loading = true;
-            state.accountsReceivable = action.payload.registers;
-            state.totalRegisters = action.payload.totalRegisters;
-            state.totalPages = action.payload.totalPages;
-            state.currentPage = action.payload.currentPage;
-            state.errorFinantialIndicator = null;
-        },
-
-
-
-
         getAccountsPayableStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.accountsPayable = action.payload;
             state.errorFinantialIndicator = null;
         },
-        getAccountsPayablePaginatedStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+        getAccountsPayablePaginatedStart: (state, action: PayloadAction<{ registers: IAccountsPayable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsPayable = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
@@ -135,7 +99,7 @@ const finantialIndicatorsSlice = createSlice({
             state.accountsPayable = action.payload;
             state.errorFinantialIndicator = null;
         },
-        getAccountsPayableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: PayloadAction[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+        getAccountsPayableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsPayable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsPayable = action.payload.registers;
             state.totalRegisters = action.payload.totalRegisters;
@@ -143,6 +107,44 @@ const finantialIndicatorsSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
+        getAccountsReceivableStart: (state, action: PayloadAction<any  | null>) => {
+            state.loading = true;
+            state.accountsReceivable = action.payload;
+            state.errorFinantialIndicator = null;
+        },
+        getAccountsReceivablePaginatedStart: (state, action: PayloadAction<{ registers: IAccountsReceivable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.accountsReceivable = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorFinantialIndicator = null;
+        },
+        getAccountsReceivableByBranchStart: (state, action: PayloadAction<any  | null>) => {
+            state.loading = true;
+            state.accountsReceivable = action.payload;
+            state.errorFinantialIndicator = null;
+        },
+        getAccountsReceivableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsReceivable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
+            state.loading = true;
+            state.accountsReceivable = action.payload.registers;
+            state.totalRegisters = action.payload.totalRegisters;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
+            state.errorFinantialIndicator = null;
+        },
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -229,16 +231,16 @@ export const {
     getExpensesPerPeriodByBranchStart,
     getAllTransactionsPerPeriodStart,
     getAllTransactionsPerPeriodByBranchStart,
+    getAccountsPayableStart,
+    getAccountsPayablePaginatedStart,
+    getAccountsPayableByBranchStart,
+    getAccountsPayableByBranchPaginatedStart,
     
     getAccountsReceivableStart,
     getAccountsReceivablePaginatedStart,
     getAccountsReceivableByBranchStart,
     getAccountsReceivableByBranchPaginatedStart,
 
-    getAccountsPayableStart,
-    getAccountsPayablePaginatedStart,
-    getAccountsPayableByBranchStart,
-    getAccountsPayableByBranchPaginatedStart,
 
     getBestClientValueStart,
     getBestClientValueByBranchStart,

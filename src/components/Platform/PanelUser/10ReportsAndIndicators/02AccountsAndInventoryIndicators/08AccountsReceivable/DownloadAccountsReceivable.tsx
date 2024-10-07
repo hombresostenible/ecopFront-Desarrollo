@@ -1,9 +1,9 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
-import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
+import { IAccountsReceivable } from '../../../../../../types/User/accountsReceivable.types';
 import { stylesPDFDownloadIndicator } from '../../../../../../helpers/StylesComponents/stylesPDFDownloadIndicator';
 
 interface DownloadAccountsReceivableProps {
-    data: IAccountsBook[];
+    data: IAccountsReceivable[];
 }
 
 function DownloadAccountsReceivable({ data }: DownloadAccountsReceivableProps) {

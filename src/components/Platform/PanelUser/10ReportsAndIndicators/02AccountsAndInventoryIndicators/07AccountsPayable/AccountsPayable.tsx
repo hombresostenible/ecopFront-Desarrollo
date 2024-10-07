@@ -9,11 +9,10 @@ import * as XLSX from 'xlsx';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
-
 import { getAccountsPayable, getAccountsPayableByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
+import { IAccountsPayable } from '../../../../../../types/User/accountsPayable.types';
 import DownloadAccountsPayable from './DownloadAccountsPayable';
 import ModalAccountsPayable from './ModaAccountsPayable';
 import { PiExportBold } from "react-icons/pi";
@@ -22,13 +21,14 @@ import styles from './styles.module.css';
 
 function AccountsPayable() {
     const token = jsCookie.get('token') || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const accountsPayable = useSelector((state: RootState) => state.finantialIndicators.accountsPayable);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null);
+    const [originalData, setOriginalData] = useState<IAccountsPayable[] | null>(null);
     const chartContainer = useRef<HTMLCanvasElement | null>(null);
     const chartInstance = useRef<Chart | null>(null);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -48,33 +48,35 @@ function AccountsPayable() {
     }, [selectedBranch, dispatch, token]);
 
     useEffect(() => {
-        if (accountsPayable && accountsPayable.length > 0) {
-            setOriginalData(accountsPayable);
+        if (Array.isArray(accountsPayable)) {
+            if (accountsPayable.length > 0) {
+                setOriginalData(accountsPayable);
+            } else {
+                setOriginalData([]);
+            }
+        } else if (accountsPayable) {
+            setOriginalData([accountsPayable]);
         }
     }, [accountsPayable]);
 
-    const renderChart = (data: IAccountsBook[] | null, start: Date | null, end: Date | null) => {
+    const renderChart = (data: IAccountsPayable[] | null, start: Date | null, end: Date | null) => {
         if (!data || !chartContainer.current) return;
         if (chartContainer.current && data) {
             const ctx = chartContainer.current.getContext('2d');
-    
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-            }
-    
+            if (chartInstance.current) chartInstance.current.destroy();
             const filteredAccumulatedData: { date: string; total: number }[] = [];    
             let accumulatedTotal = 0;
             data.forEach(item => {
                 const transactionDate = new Date(item.transactionDate).toLocaleDateString();
                 if (!start || !end || (start && end && new Date(item.transactionDate) >= start && new Date(item.transactionDate) <= end)) {
-                    accumulatedTotal += item.totalValue;
-                    filteredAccumulatedData.push({ date: transactionDate, total: accumulatedTotal });
+                    if (item.currentBalance !== undefined) {
+                        accumulatedTotal += item.currentBalance;
+                        filteredAccumulatedData.push({ date: transactionDate, total: accumulatedTotal });
+                    }
                 }
             });
-    
             const dates = filteredAccumulatedData.map(entry => entry.date);
             const totals = filteredAccumulatedData.map(entry => entry.total);
-    
             if (ctx) {
                 chartInstance.current = new Chart(ctx, {
                     type: 'line',
@@ -125,11 +127,11 @@ function AccountsPayable() {
 
     useEffect(() => {
         if (accountsPayable) {
-            setOriginalData(accountsPayable);
-            renderChart(accountsPayable, null, null);
+            setOriginalData(Array.isArray(accountsPayable) ? accountsPayable : [accountsPayable]);
+            renderChart(Array.isArray(accountsPayable) ? accountsPayable : [accountsPayable], null, null);
         }
     }, [accountsPayable]);
-
+    
     const getBranchName = useCallback((branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
         const branch = branches.find((b: { id: string }) => b.id === branchId);

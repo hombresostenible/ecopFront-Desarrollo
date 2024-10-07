@@ -86,10 +86,10 @@
     display: block;
 }
 .link__Sub_Menu:hover {
-    color: #f28705;
+    color: #343a40;
 }
 .active__Sub_Menu {
-    color: hsl(210, 17%, 98%);
+    color: #212529;
     font-weight: 600;
 }
 .container__Sub_Menu_Compact {
