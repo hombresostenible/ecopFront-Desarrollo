@@ -57,7 +57,6 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
 
     // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
     useEffect(() => {
-        // Actualiza el estado scannedItems cuando itemByBarCode cambie
         if (itemByBarCode && itemByBarCode.result) {
             const item = itemByBarCode.result;
             const selectedItem: IAccountsBookItems = {
@@ -69,7 +68,6 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                 quantity: 1,
                 subTotalValue: item.sellingPrice * 1,
             };
-            // Añade el ítem al estado scannedItems
             setScannedItems(prevItems => [...prevItems, selectedItem]);
             setBarCode('');
         }
@@ -133,10 +131,11 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        const purchasePrice = scannedItem.purchasePrice ?? 0;
-        return total + (scannedItem.quantity * purchasePrice);
+        const ivaAmount = scannedItem.IVA !== 'No aplica' 
+            ? ((scannedItem.purchasePrice ?? 0) / 100 * Number(scannedItem.IVA)) 
+            : 0;
+        return total + (scannedItem.quantity * ((scannedItem.purchasePrice ?? 0) + ivaAmount));
     }, 0);
-
 
     // OTROS GASTOS
     const [showOtherExpenses, setShowOtherExpenses] = useState('');
@@ -224,7 +223,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                     <div className='mt-4 mb-4'>
                         <div className="d-flex align-items-start justify-content-between">
                             <div>
-                                <p className="m-0">Busca el item por código de barras</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por código de barras</p>
                                 <input
                                     id="barCodeInput"
                                     type="text"
@@ -234,9 +233,8 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                     placeholder='Código de barras'
                                 />
                             </div>
-
                             <div>
-                                <p className="m-0">Busca el item por nombre</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por nombre</p>
                                 <SearchItemsByname
                                     selectedBranch={selectedBranch}
                                     token={token}
@@ -252,7 +250,9 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                     <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
                                     <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
                                     <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                     <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
                                 </div>
@@ -277,12 +277,20 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                             </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                            </div>
+                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica'
+                                                        ? `$ ${formatNumber((item.purchasePrice ?? 0) / 100 * Number(item.IVA))}`
+                                                        : 'No aplica'}
+                                                </span>
                                             </div>
                                             <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>
                                                 <input
-                                                    type="text"
+                                                    type="number"
+                                                    min="0"
                                                     value={item.purchasePrice || 0}
                                                     onChange={(e) => handlePriceChange(index, e.target.value)}
                                                     className={styles.priceInput}
@@ -291,7 +299,13 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                             <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
                                                     <span>$ </span>
-                                                    {formatNumber(item.quantity * (item.purchasePrice ?? 0))}
+                                                    {formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    <span>$ </span>
+                                                    {formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))}
                                                 </span>
                                             </div>
                                             <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
@@ -335,7 +349,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
 
                         <div className={`${styles.container__Pay} d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Selected_Client} d-flex flex-column position-relative`}>
-                                <p className='m-0'>Selecciona o crea a tu proveedor</p>
+                                <p className={`${styles.label} m-0`}>Selecciona o crea a tu proveedor</p>
                                 <SearchSupplierCrm
                                     token={token}
                                     onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
@@ -343,7 +357,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                 {messageSelectedSupplier && (
                                     <div className={`${styles.error__Selected_Client} p-2 position-absolute`}>
                                         <div className={`${styles.triangle} position-absolute`}></div>
-                                        <p className='m-0'>Selecciona el proveedor acá</p>
+                                        <p className={`${styles.label} m-0`}>Selecciona el proveedor acá</p>
                                     </div>
                                 )}
                             </div>

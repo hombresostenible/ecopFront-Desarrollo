@@ -13,7 +13,7 @@ import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getAccountsReceivable, getAccountsReceivableByBranch } from '../../../../../../redux/User/indicator/finantialIndicators/actions';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
+import { IAccountsReceivable } from '../../../../../../types/User/accountsReceivable.types';
 import DownloadAccountsReceivable from './DownloadAccountsReceivable';
 import ModalAccountsReceivable from './ModalAccountsReceivable';
 import { PiExportBold } from "react-icons/pi";
@@ -21,13 +21,14 @@ import styles from './styles.module.css';
 
 function AccountsReceivable() {
     const token = Cookies.get('token') || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const accountsReceivable = useSelector((state: RootState) => state.finantialIndicators.accountsReceivable);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [originalData, setOriginalData] = useState<IAccountsBook[] | null>(null);
+    const [originalData, setOriginalData] = useState<IAccountsReceivable[] | null>(null);
     const chartContainer = useRef<HTMLCanvasElement | null>(null);
     const chartInstance = useRef<Chart | null>(null);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -47,33 +48,35 @@ function AccountsReceivable() {
     }, [selectedBranch, dispatch, token]);
 
     useEffect(() => {
-        if (accountsReceivable && accountsReceivable.length > 0) {
-            setOriginalData(accountsReceivable);
+        if (Array.isArray(accountsReceivable)) {
+            if (accountsReceivable.length > 0) {
+                setOriginalData(accountsReceivable);
+            } else {
+                setOriginalData([]);
+            }
+        } else if (accountsReceivable) {
+            setOriginalData([accountsReceivable]);
         }
     }, [accountsReceivable]);
 
-    const renderChart = (data: IAccountsBook[] | null, start: Date | null, end: Date | null) => {
+    const renderChart = (data: IAccountsReceivable[] | null, start: Date | null, end: Date | null) => {
         if (!data || !chartContainer.current) return;
         if (chartContainer.current && data) {
             const ctx = chartContainer.current.getContext('2d');
-    
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-            }
-    
+            if (chartInstance.current) chartInstance.current.destroy();
             const filteredAccumulatedData: { date: string; total: number }[] = [];    
             let accumulatedTotal = 0;
             data.forEach(item => {
                 const transactionDate = new Date(item.transactionDate).toLocaleDateString();
                 if (!start || !end || (start && end && new Date(item.transactionDate) >= start && new Date(item.transactionDate) <= end)) {
-                    accumulatedTotal += item.totalValue;
-                    filteredAccumulatedData.push({ date: transactionDate, total: accumulatedTotal });
+                    if (item.currentBalance !== undefined) {
+                        accumulatedTotal += item.currentBalance;
+                        filteredAccumulatedData.push({ date: transactionDate, total: accumulatedTotal });
+                    }
                 }
             });
-    
             const dates = filteredAccumulatedData.map(entry => entry.date);
             const totals = filteredAccumulatedData.map(entry => entry.total);
-    
             if (ctx) {
                 chartInstance.current = new Chart(ctx, {
                     type: 'line',
@@ -121,11 +124,10 @@ function AccountsReceivable() {
         setEndDate(null);
         renderChart(originalData, null, null);
     };
-
     useEffect(() => {
         if (accountsReceivable) {
-            setOriginalData(accountsReceivable);
-            renderChart(accountsReceivable, null, null);
+            setOriginalData(Array.isArray(accountsReceivable) ? accountsReceivable : [accountsReceivable]);
+            renderChart(Array.isArray(accountsReceivable) ? accountsReceivable : [accountsReceivable], null, null);
         }
     }, [accountsReceivable]);
 

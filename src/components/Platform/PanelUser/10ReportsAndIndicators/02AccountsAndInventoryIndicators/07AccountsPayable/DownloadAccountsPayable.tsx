@@ -1,9 +1,9 @@
 import { Document, Page, Text } from '@react-pdf/renderer';
-import { IAccountsBook } from "../../../../../../types/User/accountsBook.types";
+import { IAccountsPayable } from '../../../../../../types/User/accountsPayable.types';
 import { stylesPDFDownloadIndicator } from '../../../../../../helpers/StylesComponents/stylesPDFDownloadIndicator';
 
 interface DownloadAccountsPayableProps {
-    data: IAccountsBook[];
+    data: IAccountsPayable[];
 }
 
 function DownloadAccountsPayable({ data }: DownloadAccountsPayableProps) {

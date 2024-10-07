@@ -123,8 +123,10 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        const purchasePrice = scannedItem.purchasePrice ?? 0;
-        return total + (scannedItem.quantity * purchasePrice);
+        const ivaAmount = scannedItem.IVA !== 'No aplica' 
+            ? ((scannedItem.purchasePrice ?? 0) / 100 * Number(scannedItem.IVA)) 
+            : 0;
+        return total + (scannedItem.quantity * ((scannedItem.purchasePrice ?? 0) + ivaAmount));
     }, 0);
 
     // OTROS GASTOS
@@ -162,10 +164,8 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
             const totalValue = Number(totalPurchaseAmount);
             if (interestRateChange !== 0) {
-                // Fórmula de Amortización Francesa
                 const monthlyInterestRate = interestRateChange / 100 / 12; 
-                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
-                                        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
                 setPaymentValue(cuotaConInteres);
             } else {
                 const cuotaSinInteres = totalValue / numberOfPayments;
@@ -225,7 +225,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
 
     return (
         <div>
-            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta "A cuotas", por tanto estas creando una cuenta por pagar</h3>
+            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta a "crédito", por tanto estas creando una cuenta por pagar</h3>
             {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
@@ -245,7 +245,6 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                     placeholder='Código de barras'
                                 />
                             </div>
-
                             <div>
                                 <p className="m-0">Busca el item por nombre</p>
                                 <SearchItemsByname
@@ -263,7 +262,9 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                     <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                     <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
                                     <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
+                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
                                     <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                     <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
                                 </div>
@@ -288,12 +289,20 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                             </div>
                                             <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                            </div>
+                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica'
+                                                        ? `$ ${formatNumber((item.purchasePrice ?? 0) / 100 * Number(item.IVA))}`
+                                                        : 'No aplica'}
+                                                </span>
                                             </div>
                                             <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>
                                                 <input
-                                                    type="text"
+                                                    type="number"
+                                                    min="0"
                                                     value={item.purchasePrice || 0}
                                                     onChange={(e) => handlePriceChange(index, e.target.value)}
                                                     className={styles.priceInput}
@@ -302,7 +311,13 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                             <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
                                                     <span>$ </span>
-                                                    {formatNumber(item.quantity * (item.purchasePrice ?? 0))}
+                                                    {formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))}
+                                                </span>
+                                            </div>
+                                            <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    <span>$ </span>
+                                                    {formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))}
                                                 </span>
                                             </div>
                                             <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>

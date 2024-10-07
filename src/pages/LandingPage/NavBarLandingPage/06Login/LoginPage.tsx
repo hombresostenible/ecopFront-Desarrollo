@@ -22,6 +22,7 @@ function LoginPage() {
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
 
     const { register, formState: { errors }, handleSubmit } = useForm<ILogin>();
+    const [loading, setLoading] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => {
@@ -29,10 +30,13 @@ function LoginPage() {
     };
 
     const onSubmit = async (loginData: ILogin) => {
+        setLoading(true);
         try {
             dispatch(loginUser(loginData));
         } catch (error) {
             throw new Error('Error al iniciar sesión');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -86,10 +90,16 @@ function LoginPage() {
                                     )}
                                 </div>
                             </div>
-       
-                            <div className="d-flex mb-4">
-                                <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
-                            </div>
+
+                            {loading ? 
+                                <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit'>
+                                    <span className="spinner-border spinner-border-sm" role="status"></span> Login...
+                                </button>
+                            :
+                                <div className='d-flex'>
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
+                                </div>
+                            }
                         </form>
 
                         <p className='m-0 text-center'>¿No tienes cuenta? <Link to="/register-user" className={`${styles.link} text-sky-500 text-decoration-none`}>Regístrate acá</Link></p>

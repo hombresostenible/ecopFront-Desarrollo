@@ -54,7 +54,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     //Setea todos los artículos que se registrarán
     const [scannedItems, setScannedItems] = useState<IAccountsBookItems[]>([]);
 
-        // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
+    // SETEA EL ARTICULO BUSCADO POR CODIGO DE BARRAS
     useEffect(() => {
         if (itemByBarCode && itemByBarCode.result) {
             const item = itemByBarCode.result;
@@ -107,10 +107,12 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
 
     // CALCULA EL VALOR TOTAL DE TODOS LOS ARTICULOS AÑADIDOS A LA COMPRA
     const totalPurchaseAmount = scannedItems.reduce((total, scannedItem) => {
-        return total + (scannedItem.quantity * scannedItem.sellingPrice);
+        const ivaAmount = scannedItem.IVA !== 'No aplica' 
+            ? (scannedItem.sellingPrice / 100 * Number(scannedItem.IVA)) 
+            : 0;
+        return total + (scannedItem.quantity * (scannedItem.sellingPrice + ivaAmount));
     }, 0);
 
-    
     //Setea la cantidad de cuotas
     const [numberOfPayments, setNumberOfPayments] = useState<number>(0);
     const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,10 +142,8 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
             const totalValue = Number(totalPurchaseAmount);
             if (interestRateChange !== 0) {
-                // Fórmula de Amortización Francesa
                 const monthlyInterestRate = interestRateChange / 100 / 12; 
-                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
-                                        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
                 setPaymentValue(cuotaConInteres);
             } else {
                 const cuotaSinInteres = totalValue / numberOfPayments;
@@ -177,7 +177,6 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 totalValue: totalPurchaseAmount,
                 userRegister: decodeUserIdRegister,
             } as IAccountsBook;
-
             if (defaultDates) {
                 formData.registrationDate = new Date().toLocaleDateString();
                 formData.transactionDate = new Date().toLocaleDateString();
@@ -190,7 +189,6 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 setTimeout(() => setMessageSelectedBranch(null), 5000);
                 return;
             }
-
             if (!selectedClient) {
                 setMessageSelectedClient('Debes de seleccionar un cliente');
                 setTimeout(() => setMessageSelectedClient(null), 5000);
@@ -217,7 +215,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
 
     return (
         <div>
-            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta "A cuotas", por tanto estas creando una cuenta por cobrar</h3>
+            <h3 className='text-center text-primary-emphasis'>Elegiste la forma de venta a "crédito", por tanto estas creando una cuenta por cobrar</h3>
             {Array.isArray(errorAccountsBook) && errorAccountsBook.map((error, i) => (
                 <div key={i} className='bg-red-500 p-2 text-white text-center my-2'>{error}</div>
             ))}
@@ -254,7 +252,10 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                                 <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
                                 <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
                                 <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
+                                <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
                                 <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
+                                <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
+                                <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
                                 <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
                                 <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
                             </div>
@@ -279,14 +280,25 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
                                         </div>
                                         <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA}</span>
-                                        </div>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                            </div>
+                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica' 
+                                                        ? `$ ${(item.sellingPrice / 100 * Number(item.IVA))}`  // Convierte IVA a número si no es 'No aplica'
+                                                        : 'No aplica' 
+                                                    }
+                                                </span>
+                                            </div>
                                         <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
                                             <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
                                         </div>
-                                        <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * (item.sellingPrice))}</span>
+                                        <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
+                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA)))}</span>
                                         </div>
+                                        <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * ((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA))))}</span>
+                                            </div>
                                         <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
                                             <RiDeleteBin6Line
                                                 className={`${styles.button__Action} `}
