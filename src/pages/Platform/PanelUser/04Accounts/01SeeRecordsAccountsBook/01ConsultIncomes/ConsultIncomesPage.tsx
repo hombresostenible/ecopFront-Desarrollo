@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
 import { Modal } from 'react-bootstrap';
@@ -26,6 +26,7 @@ import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
 
 function ConsultIncomesPage() {
+    const location = useLocation();
     const token = jsCookie.get('token') || '';
 
     //REDUX
@@ -233,10 +234,10 @@ function ConsultIncomesPage() {
 
                         <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
-                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
-                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
-                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
-                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
+                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-incomes' ? styles.active : ''} text-decoration-none` }>Consulta Ingresos</Link>
+                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-cxc' ? styles.active : ''} text-decoration-none` }>Consulta CXC</Link>
+                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-expences' ? styles.active : ''} text-decoration-none` }>Consulta Gastos</Link>
+                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-cxp' ? styles.active : ''} text-decoration-none` }>Consulta CXP</Link>
                             </div>
                             <div className={`${styles.container__Filter_Dates} flex-column d-flex align-items-end justify-content-end gap-2`}>
                                 <div className={`${styles.filter__Dates} d-flex gap-2`}>

@@ -1,6 +1,6 @@
 import NavBar from '../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../components/Platform/SideBar/SideBar.tsx';
-import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer';
+import Footer from '../../../../../components/Platform/PanelUser/Footer/Footer.tsx';
 import styles from './styles.module.css';
 
 function ReceivedPaymentsPage() {

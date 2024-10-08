@@ -58,7 +58,6 @@ function ModalEditAccountsBook({ token, idItem, registerAccount, branches, onClo
             dispatch(putAccountsBook(idItem, editedAccountsBook, token));
             setCurrentPage(1);
             setItemsByPage(20);
-            // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getAccountsBooksIncomes(token, currentPage, itemsByPage));
             onCloseModal();
