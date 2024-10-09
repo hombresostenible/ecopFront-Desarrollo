@@ -46,7 +46,6 @@ function AccountsPayable() {
             dispatch(getAccountsPayableByBranch(selectedBranch, token));
         }
     }, [selectedBranch, dispatch, token]);
-
     useEffect(() => {
         if (Array.isArray(accountsPayable)) {
             if (accountsPayable.length > 0) {
@@ -64,19 +63,31 @@ function AccountsPayable() {
         if (chartContainer.current && data) {
             const ctx = chartContainer.current.getContext('2d');
             if (chartInstance.current) chartInstance.current.destroy();
-            const filteredAccumulatedData: { date: string; total: number }[] = [];    
+            
+            // Filtrar los datos según las fechas seleccionadas
+            const filteredData = data.filter(item => {
+                const transactionDate = new Date(item.transactionDate);
+                return (!start || transactionDate >= start) && (!end || transactionDate <= end);
+            });
+            
+            // Acumular los valores a lo largo del tiempo
+            const accumulatedData: { date: string; total: number }[] = [];
             let accumulatedTotal = 0;
-            data.forEach(item => {
+            
+            // Ordenar los datos por fecha para asegurar que se acumulen correctamente
+            const sortedData = filteredData.sort((a, b) => new Date(a.transactionDate).getTime() - new Date(b.transactionDate).getTime());
+            
+            sortedData.forEach(item => {
                 const transactionDate = new Date(item.transactionDate).toLocaleDateString();
-                if (!start || !end || (start && end && new Date(item.transactionDate) >= start && new Date(item.transactionDate) <= end)) {
-                    if (item.currentBalance !== undefined) {
-                        accumulatedTotal += item.currentBalance;
-                        filteredAccumulatedData.push({ date: transactionDate, total: accumulatedTotal });
-                    }
+                if (item.currentBalance !== undefined) {
+                    accumulatedTotal += item.currentBalance;
+                    accumulatedData.push({ date: transactionDate, total: accumulatedTotal });
                 }
             });
-            const dates = filteredAccumulatedData.map(entry => entry.date);
-            const totals = filteredAccumulatedData.map(entry => entry.total);
+    
+            const dates = accumulatedData.map(entry => entry.date);
+            const totals = accumulatedData.map(entry => entry.total);
+    
             if (ctx) {
                 chartInstance.current = new Chart(ctx, {
                     type: 'line',
