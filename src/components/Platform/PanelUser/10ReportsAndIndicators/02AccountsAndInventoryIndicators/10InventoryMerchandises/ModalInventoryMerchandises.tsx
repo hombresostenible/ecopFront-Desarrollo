@@ -8,6 +8,7 @@ import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions'
 // ELEMENTOS DEL COMPONENTE
 import { IMerchandise } from '../../../../../../types/User/merchandise.types';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import styles from './styles.module.css';
 
 interface ModalInventoryMerchandiseProps {
     merchandisesInventory: IMerchandise[] | null;
@@ -15,15 +16,28 @@ interface ModalInventoryMerchandiseProps {
 
 function ModalInventoryMerchandises ({ merchandisesInventory }: ModalInventoryMerchandiseProps) {
     const token = jsCookie.get('token') || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const branches = useSelector((state: RootState) => state.branch.branch);
 
+    // ESTADO LOCAL PARA EL FILTRO
     const [selectedBranch, setSelectedBranch] = useState('Todas');
+    const [filteredRegisters, setFilteredRegisters] = useState(merchandisesInventory);
 
     useEffect(() => {
         dispatch(getBranches(token));
     }, [ selectedBranch ]);
+
+    useEffect(() => {
+        if (Array.isArray(merchandisesInventory)) {
+            if (selectedBranch === 'Todas') {
+                setFilteredRegisters(merchandisesInventory);
+            } else {
+                setFilteredRegisters(merchandisesInventory.filter((sale) => sale.branchId === selectedBranch));
+            }
+        } else setFilteredRegisters([]);
+    }, [selectedBranch, merchandisesInventory]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -33,30 +47,26 @@ function ModalInventoryMerchandises ({ merchandisesInventory }: ModalInventoryMe
 
     return (
         <div className="p-3 text-center m-auto border">
-            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
-                <h2 className="m-0 text-primary-emphasis text-start">Inventario de Mercancías</h2>
-            </div>
+            <h2 className="mb-3 text-primary-emphasis text-start">Inventario de Mercancías</h2>
   
-            <div className="border">
-                <div className="d-flex justify-content-between">
-                    <select
-                        className="border-0 p-3"
-                        value={selectedBranch}
-                        onChange={(e) => setSelectedBranch(e.target.value)}
-                    >
-                        <option value=''>Todas las Sedes</option>
-                        {Array.isArray(branches) && branches.map((branch, index) => (
-                            <option key={index} value={branch.id}>
-                                {branch.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                    <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
-                </div>
+            <div className="d-flex justify-content-between">
+                <select
+                    className={`${styles.input} p-3 border rounded`}
+                    value={selectedBranch}
+                    onChange={(e) => setSelectedBranch(e.target.value)}
+                >
+                    <option value='Todas'>Todas las Sedes</option>
+                    {Array.isArray(branches) && branches.map((branch, index) => (
+                        <option key={index} value={branch.id}>
+                            {branch.nameBranch}
+                        </option>
+                    ))}
+                </select>
+                <button className="p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
             </div>
 
-            <div className="mt-4">   
-                {merchandisesInventory && merchandisesInventory.length > 0 ? (
+            <div className="mt-4 col-12">  
+                {filteredRegisters && filteredRegisters.length > 0 ? (
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -67,7 +77,7 @@ function ModalInventoryMerchandises ({ merchandisesInventory }: ModalInventoryMe
                             </tr>
                         </thead>
                         <tbody>
-                            {merchandisesInventory.map((merchandiseInventory, index) => (
+                            {filteredRegisters.map((merchandiseInventory, index) => (
                                 <tr key={merchandiseInventory.id || index}>
                                     <td>
                                         {getBranchName(merchandiseInventory.branchId)}

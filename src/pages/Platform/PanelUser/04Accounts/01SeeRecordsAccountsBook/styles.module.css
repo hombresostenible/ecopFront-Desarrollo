@@ -57,6 +57,12 @@
     border: none;
     background: #0a31bf;
 }
+.active {
+    background: #718bd8;
+    border: none;
+    color: #f8f9fa;
+    cursor: pointer;
+}
 .input__Date {
     outline-color: #718bd8;
 }

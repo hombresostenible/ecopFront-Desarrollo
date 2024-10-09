@@ -57,16 +57,11 @@
     border: none;
     background: #0a31bf;
 }
-.Link__Consult {
-    color: #718bd8;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
-    transition: 300ms ease all;
-}
-.Link__Consult:hover {
-    color: #f8f9fa;
+.active {
+    background: #718bd8;
     border: none;
-    background: #0a31bf;
+    color: #f8f9fa;
+    cursor: pointer;
 }
 .input__Date {
     outline-color: #718bd8;
@@ -106,7 +101,7 @@
 /* TABLA */
 .container__Table {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    max-width: 1210px;
+    max-width: 960px;
     overflow-x: auto;
 }
 .container__Head {
@@ -132,15 +127,11 @@
     height: 60px;
     width: 200px;
 }
-.transaction__Type {
+.initial__Number_Payments {
     height: 60px;
     width: 150px;
 }
-.mean__Payment {
-    height: 60px;
-    width: 150px;
-}
-.total__Value {
+.payment__Value {
     height: 60px;
     width: 150px;
 }
@@ -148,11 +139,7 @@
     height: 60px;
     width: 150px;
 }
-.transaction__Approved {
-    height: 60px;
-    width: 100px;
-}
-.action {
+.total__Value {
     height: 60px;
     width: 150px;
 }
