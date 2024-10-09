@@ -1,28 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import { format } from 'date-fns';
-import { Modal } from 'react-bootstrap';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../../redux/store';
 import { getAccountsPayablePaginated, getAccountsPayableByBranchPaginated } from '../../../../../../redux/User/indicator/finantialIndicators/actions.ts';
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 // ELEMENTOS DEL COMPONENTE
-import { IAccountsBook } from '../../../../../../types/User/accountsBook.types.ts';
+import { IAccountsPayable } from '../../../../../../types/User/accountsPayable.types.ts';
 import ColumnSelector from '../../../../../../helpers/ColumnSelector/ColumnSelector';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
-import SeeRegisterAccountsBook from '../../../../../../components/Platform/PanelUser/04Accounts/05PendingApproval/01SeeRegisterAccountsBook/SeeRegisterAccountsBook';
-import ConfirmDeleteRegister from '../../../../../../components/Platform/PanelUser/ConfirmDeleteRegister/ConfirmDeleteRegister';
-import ModalEditAccountsBook from '../../../../../../components/Platform/PanelUser/04Accounts/03ModalEditAccountsBook/ModalEditAccountsBook';
 import ComponentPaginated from '../../../../../../components/Platform/PanelUser/ComponentPaginated/ComponentPaginated.tsx';
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { BsPencil } from 'react-icons/bs';
 import styles from './styles.module.css';
 
 function ConsultCxpPage() {
@@ -85,12 +78,10 @@ function ConsultCxpPage() {
             }
         }
     }, [selectedBranch, token, dispatch]);
-    
-    const branchesArray = Array.isArray(branches) ? branches : [];
 
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
-    const [filteredTransactions, setFilteredTransactions] = useState<IAccountsBook[] | null>(null);
+    const [filteredTransactions, setFilteredTransactions] = useState<IAccountsPayable[] | null>(null);
 
     const handleFilter = () => {
         if (!startDate || !endDate) {
@@ -154,33 +145,6 @@ function ConsultCxpPage() {
         setSelectedColumns(updatedColumns);
     };
 
-    const [idRegisterAccount, setIdRegisterAccount] = useState('');
-    const [selectedRegisterAccount, setSelectedRegisterAccount] = useState<IAccountsBook>();
-    const [showSeeRegisterAccount, setShowSeeRegisterAccount] = useState(false);
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showModalEditAsset, setShowModalEditAsset] = useState(false);
-
-    const handleSeeItem = useCallback((accountsPayable: IAccountsBook) => {
-        setSelectedRegisterAccount(accountsPayable);
-        setShowSeeRegisterAccount(true);
-    }, []);
-
-    const handleDelete = useCallback((accountsPayable: IAccountsBook) => {
-        setSelectedRegisterAccount(accountsPayable);
-        setShowDeleteConfirmation(true);
-    }, []);
-
-    const handleEdit = useCallback((accountsPayable: IAccountsBook) => {
-        setSelectedRegisterAccount(accountsPayable);
-        setShowModalEditAsset(true);
-    }, []);
-
-    const onCloseModal = useCallback(() => {
-        setShowSeeRegisterAccount(false);
-        setShowDeleteConfirmation(false);
-        setShowModalEditAsset(false);
-    }, []);
-
     const transactionsToShow = filteredTransactions && filteredTransactions.length > 0 ? filteredTransactions : accountsPayable;
 
     return (
@@ -233,10 +197,10 @@ function ConsultCxpPage() {
 
                         <div className={`${styles.container__Link_Head_Navigate} mb-3 mx-auto d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Navigate_Consult} d-flex align-items-center justify-content-between gap-2`}>
-                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Ingresos</Link>
-                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXC</Link>
-                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} text-decoration-none` }>Consulta Gastos</Link>
-                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} text-decoration-none` }>Consulta CXP</Link>
+                                <Link to='/accounts/consult-incomes' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-incomes' ? styles.active : ''} text-decoration-none` }>Consulta Ingresos</Link>
+                                <Link to='/accounts/consult-cxc' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-cxc' ? styles.active : ''} text-decoration-none` }>Consulta CXC</Link>
+                                <Link to='/accounts/consult-expences' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-expences' ? styles.active : ''} text-decoration-none` }>Consulta Gastos</Link>
+                                <Link to='/accounts/consult-cxp' className={`${styles.Link__Consult} ${location.pathname === '/accounts/consult-cxp' ? styles.active : ''} text-decoration-none` }>Consulta CXP</Link>
                             </div>
                             <div className={`${styles.container__Filter_Dates} flex-column d-flex align-items-end justify-content-end gap-2`}>
                                 <div className={`${styles.filter__Dates} d-flex gap-2`}>
@@ -291,10 +255,10 @@ function ConsultCxpPage() {
                                             <th className={`${styles.branch} d-flex align-items-center justify-content-center`}>Sede</th>
                                         )}
                                         {selectedColumns.includes('Cuotas') && (
-                                            <th className={`${styles.transaction__Type} d-flex align-items-center justify-content-center text-center`}>Cuotas</th>
+                                            <th className={`${styles.initial__Number_Payments} d-flex align-items-center justify-content-center text-center`}>Cuotas</th>
                                         )}
                                         {selectedColumns.includes('Valor de la cuota') && (
-                                            <th className={`${styles.mean__Payment} d-flex align-items-center justify-content-center text-center`}>Valor de la cuota</th>
+                                            <th className={`${styles.payment__Value} d-flex align-items-center justify-content-center text-center`}>Valor de la cuota</th>
                                         )}
                                         {selectedColumns.includes('Valor total') && (
                                             <th className={`${styles.total__Value} d-flex align-items-center justify-content-center text-center`}>Total</th>
@@ -302,8 +266,6 @@ function ConsultCxpPage() {
                                         {selectedColumns.includes('Deudor') && (
                                             <th className={`${styles.transaction__Counterpart} d-flex align-items-center justify-content-center text-center`}>Deudor</th>
                                         )}
-                                        <th className={`${styles.transaction__Approved} d-flex align-items-center justify-content-center text-center`}>Aprobada</th>
-                                        <th className={`${styles.action} d-flex align-items-center justify-content-center text-center`}>Acciones</th>
                                     </tr>
                                 </thead>
 
@@ -328,12 +290,12 @@ function ConsultCxpPage() {
                                                     </td>
                                                 )}
                                                 {selectedColumns.includes('Cuotas') && (
-                                                    <td className={`${styles.transaction__Type} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <td className={`${styles.initial__Number_Payments} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsPayable.initialNumberOfPayments}</span>
                                                     </td>
                                                 )}
                                                 {selectedColumns.includes('Valor de la cuota') && (
-                                                    <td className={`${styles.mean__Payment} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
+                                                    <td className={`${styles.payment__Value} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
                                                         <span className={`${styles.text__Ellipsis} overflow-hidden`}>$ {formatNumber(accountsPayable.paymentValue)}</span>
                                                     </td>
                                                 )}
@@ -347,40 +309,6 @@ function ConsultCxpPage() {
                                                         <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsPayable.transactionCounterpartId}</span>
                                                     </td>
                                                 )}
-                                                <td className={`${styles.transaction__Approved} pt-0 pb-0 px-2 pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{accountsPayable.transactionApproved === true ? 'Si' : 'No'}</span>
-                                                </td>
-                                                <td className={`${styles.action} pt-0 pb-0 px-2 d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                    <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                            <MdOutlineRemoveRedEye
-                                                                className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
-                                                                onClick={() => {
-                                                                    setIdRegisterAccount(accountsPayable.id);
-                                                                    handleSeeItem(accountsPayable);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                            <RiDeleteBin6Line
-                                                                className={`${styles.button__Delete} d-flex align-items-center justify-content-center`}
-                                                                onClick={() => {
-                                                                    setIdRegisterAccount(accountsPayable.id);
-                                                                    handleDelete(accountsPayable);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <div className={`${styles.container__Icons} d-flex align-items-center justify-content-center overflow-hidden`}>
-                                                            <BsPencil
-                                                                className={`${styles.button__Action} d-flex align-items-center justify-content-center`}
-                                                                onClick={() => {
-                                                                    setIdRegisterAccount(accountsPayable.id);
-                                                                    handleEdit(accountsPayable)
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         ))
                                     ) : (
@@ -393,50 +321,6 @@ function ConsultCxpPage() {
                                 </tbody>
                             </table>
                         </div>
-                        
-                        <Modal show={showSeeRegisterAccount} onHide={onCloseModal} size="xl">
-                            <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Registro</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                {selectedRegisterAccount &&
-                                    <SeeRegisterAccountsBook
-                                        accountsBook={selectedRegisterAccount}
-                                        branches={branchesArray}
-                                    />
-                                }
-                            </Modal.Body>
-                        </Modal>
-
-                        <Modal show={showDeleteConfirmation} onHide={() => setShowDeleteConfirmation(false)} >
-                            <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Confirmación para eliminar el registro</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <ConfirmDeleteRegister
-                                    typeRegisterDelete={'AccountsBook'}
-                                    idItem={idRegisterAccount}
-                                    onCloseModal={onCloseModal}
-                                />
-                            </Modal.Body>
-                        </Modal>
-
-                        <Modal show={showModalEditAsset} onHide={onCloseModal} size="xl">
-                            <Modal.Header closeButton>
-                                <Modal.Title className='text-primary-emphasis text-start'>Detalles del Registro</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                {selectedRegisterAccount &&
-                                    <ModalEditAccountsBook
-                                        token={token}
-                                        idItem={idRegisterAccount}
-                                        registerAccount={selectedRegisterAccount}
-                                        branches={branchesArray}
-                                        onCloseModal={onCloseModal}
-                                    />
-                                }
-                            </Modal.Body>
-                        </Modal>
                     </div>
                     <Footer />
                 </div>

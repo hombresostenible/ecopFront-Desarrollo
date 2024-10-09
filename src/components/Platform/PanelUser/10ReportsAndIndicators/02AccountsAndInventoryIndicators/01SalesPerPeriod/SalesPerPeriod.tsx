@@ -203,10 +203,8 @@ function SalesPerPeriod() {
         if (downloadPdf) {
             const date = new Date();
             const nameBranch = getBranchName(selectedBranch);
-            // Mapear los datos para incluir el nombre de la sede en cada registro
             const dataForPdf = salesPerPeriod.map((item: IAccountsBookWithBranch) => ({
-                ...item,  // Mantener el resto de propiedades del objeto
-                nameBranch: getBranchName(item.branchId),  // Agregar el nombre de la sede
+                nameBranch: getBranchName(item.branchId),
             }));
             const generatePdfDocument = async () => {
                 const MyDocument = () => (

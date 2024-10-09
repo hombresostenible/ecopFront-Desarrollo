@@ -132,8 +132,8 @@ function SideBar() {
     // SUBMENU LATERAL DE SEDES
     const [showBranchClick, setShowBranchClick] = useState<boolean>(false);
     const handleBranchClick = () => {
-        if (!menuVisible && !isBranchesSubMenuOpen) {                   // Solo si la SideBar está compacta
-            setShowBranchClick(prev => !prev);                          // Alternar la visibilidad del div
+        if (!menuVisible && !isBranchesSubMenuOpen) {
+            setShowBranchClick(prev => !prev);
         }
     };
 
@@ -383,6 +383,7 @@ function SideBar() {
                             <Link to='/invoicing-and-pos/electronic-invoicing' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Factura electrónica</Link>
                             <Link to='/invoicing-and-pos/see-electronic-invoicing-pos' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta Factura electrónica</Link>
                             <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Facturas recurrentes</Link>
+                            <Link to='/invoicing-and-pos/quotations' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Cotizaciones</Link>
                         </div>
                     )}
                 </div>
@@ -399,6 +400,9 @@ function SideBar() {
                         </Link>
                         <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/recurring-invoices' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Facturas recurrentes
+                        </Link>
+                        <Link to='/invoicing-and-pos/quotations' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/quotations' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Cotizaciones
                         </Link>
                     </div>
                 )}

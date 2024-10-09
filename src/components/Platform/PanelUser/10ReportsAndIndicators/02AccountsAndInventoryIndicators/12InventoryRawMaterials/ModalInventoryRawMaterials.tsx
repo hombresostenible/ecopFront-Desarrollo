@@ -8,6 +8,7 @@ import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions'
 // ELEMENTOS DEL COMPONENTE
 import { IRawMaterial } from '../../../../../../types/User/rawMaterial.types';
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import styles from './styles.module.css';
 
 interface ModalInventoryRawMaterialProps {
     rawMaterialsInventory: IRawMaterial[] | null;
@@ -15,15 +16,28 @@ interface ModalInventoryRawMaterialProps {
 
 function ModalInventoryRawMaterials ({ rawMaterialsInventory }: ModalInventoryRawMaterialProps) {
     const token = jsCookie.get('token') || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const [selectedBranch, setSelectedBranch] = useState('Todas'); 
+    // ESTADO LOCAL PARA EL FILTRO
+    const [selectedBranch, setSelectedBranch] = useState('Todas');
+    const [filteredRegisters, setFilteredRegisters] = useState(rawMaterialsInventory);
 
     useEffect(() => {
         dispatch(getBranches(token));
     }, [ selectedBranch, rawMaterialsInventory ]);
+
+    useEffect(() => {
+        if (Array.isArray(rawMaterialsInventory)) {
+            if (selectedBranch === 'Todas') {
+                setFilteredRegisters(rawMaterialsInventory);
+            } else {
+                setFilteredRegisters(rawMaterialsInventory.filter((sale) => sale.branchId === selectedBranch));
+            }
+        } else setFilteredRegisters([]);
+    }, [selectedBranch, rawMaterialsInventory]);
 
     const getBranchName = (branchId: string) => {
         if (!Array.isArray(branches)) return "Sede no encontrada";
@@ -33,30 +47,26 @@ function ModalInventoryRawMaterials ({ rawMaterialsInventory }: ModalInventoryRa
 
     return (
         <div className="p-3 text-center m-auto border">
-            <div className="pt-3 pb-3 d-flex align-items">
-                <h2 className="m-0 text-primary-emphasis text-start">Inventario de materias primas</h2>
+            <h2 className="mb-3 text-primary-emphasis text-start">Inventario de materias primas</h2>
+
+            <div className="d-flex justify-content-between">
+                <select
+                    className={`${styles.input} p-3 border rounded`}
+                    value={selectedBranch}
+                    onChange={(e) => setSelectedBranch(e.target.value)}
+                >
+                    <option value='Todas'>Todas las Sedes</option>
+                    {Array.isArray(branches) && branches.map((branch, index) => (
+                        <option key={index} value={branch.id}>
+                            {branch.nameBranch}
+                        </option>
+                    ))}
+                </select>
+                <button className="p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
             </div>
 
-            <div className="border">
-                <div className="d-flex justify-content-between">
-                    <select
-                        className="border-0 p-3"
-                        value={selectedBranch}
-                        onChange={(e) => setSelectedBranch(e.target.value)}
-                    >
-                        <option value=''>Todas las Sedes</option>
-                        {Array.isArray(branches) && branches.map((branch, index) => (
-                            <option key={index} value={branch.id}>
-                                {branch.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                    <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
-                </div>
-            </div>
-
-            <div className="mt-4">   
-                {rawMaterialsInventory && rawMaterialsInventory.length > 0 ? (
+            <div className="mt-4 col-12">  
+                {filteredRegisters && filteredRegisters.length > 0 ? (
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -67,7 +77,7 @@ function ModalInventoryRawMaterials ({ rawMaterialsInventory }: ModalInventoryRa
                             </tr>
                         </thead>
                         <tbody>
-                            {rawMaterialsInventory.map((rawMaterialInventory, index) => (
+                            {filteredRegisters.map((rawMaterialInventory, index) => (
                                 <tr key={rawMaterialInventory.id || index}>
                                     <td>
                                         {getBranchName(rawMaterialInventory.branchId)}

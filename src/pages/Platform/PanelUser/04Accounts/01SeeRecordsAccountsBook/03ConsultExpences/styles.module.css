@@ -57,16 +57,11 @@
     border: none;
     background: #0a31bf;
 }
-.Link__Consult {
-    color: #718bd8;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
-    transition: 300ms ease all;
-}
-.Link__Consult:hover {
-    color: #f8f9fa;
+.active {
+    background: #718bd8;
     border: none;
-    background: #0a31bf;
+    color: #f8f9fa;
+    cursor: pointer;
 }
 .input__Date {
     outline-color: #718bd8;

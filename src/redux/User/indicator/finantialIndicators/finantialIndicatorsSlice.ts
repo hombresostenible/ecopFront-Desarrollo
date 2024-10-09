@@ -51,41 +51,49 @@ const finantialIndicatorsSlice = createSlice({
             state.loading = false;
             state.errorFinantialIndicator = action.payload;
         },
+        // VENTAS DEL PERIODO
         getSalesPerPeriodStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.salesPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // VENTAS DEL PERIODO POR SEDE
         getSalesPerPeriodByBranchStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.salesPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // GASTOS DEL PERIODO
         getExpensesPerPeriodStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.expensesPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // GASTOS DEL PERIODO POR SEDE
         getExpensesPerPeriodByBranchStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.expensesPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // UTILIDAD DEL PERIODO - TODAS LAS TRANSACCIONES (GASTOS E INGRESOS)
         getAllTransactionsPerPeriodStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.allTransactionsPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // UTILIDAD DEL PERIODO - TODAS LAS TRANSACCIONES (GASTOS E INGRESOS) POR SEDE
         getAllTransactionsPerPeriodByBranchStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.allTransactionsPerPeriod = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR PAGAR
         getAccountsPayableStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.accountsPayable = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR PAGAR CON PAGINADO
         getAccountsPayablePaginatedStart: (state, action: PayloadAction<{ registers: IAccountsPayable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsPayable = action.payload.registers;
@@ -94,11 +102,13 @@ const finantialIndicatorsSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR PAGAR POR SEDE
         getAccountsPayableByBranchStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.accountsPayable = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR PAGAR POR SEDE CON PAGINADO
         getAccountsPayableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsPayable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsPayable = action.payload.registers;
@@ -107,11 +117,13 @@ const finantialIndicatorsSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR COBRAR
         getAccountsReceivableStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.accountsReceivable = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR COBRAR CON PAGINADO
         getAccountsReceivablePaginatedStart: (state, action: PayloadAction<{ registers: IAccountsReceivable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsReceivable = action.payload.registers;
@@ -120,11 +132,13 @@ const finantialIndicatorsSlice = createSlice({
             state.currentPage = action.payload.currentPage;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR COBRAR POR SEDE
         getAccountsReceivableByBranchStart: (state, action: PayloadAction<any  | null>) => {
             state.loading = true;
             state.accountsReceivable = action.payload;
             state.errorFinantialIndicator = null;
         },
+        // CUENTAS POR COBRAR POR SEDE CON PAGINADO
         getAccountsReceivableByBranchPaginatedStart: (state, action: PayloadAction<{ registers: IAccountsReceivable[], totalRegisters: number, totalPages: number, currentPage: number }>) => {
             state.loading = true;
             state.accountsReceivable = action.payload.registers;

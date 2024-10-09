@@ -8,6 +8,7 @@ import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions'
 // ELEMENTOS DEL COMPONENTE
 import { IBestClientValue } from "../../../../../../types/User/financialIndicators.types";
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import styles from './styles.module.css';
 
 interface ModalBestClientValueProps {
     consolidatedData: IBestClientValue[] | null;
@@ -15,8 +16,9 @@ interface ModalBestClientValueProps {
 
 function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
 
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const [selectedBranch, setSelectedBranch] = useState('Todas');
@@ -33,27 +35,24 @@ function ModalBestClientValue ({ consolidatedData }: ModalBestClientValueProps) 
 
     return (
         <div className="p-3 text-center m-auto border">
-            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
-                <h2 className="m-0 text-primary-emphasis text-start">Mejor cliente por valor</h2>
+            <h2 className="mb-3 text-primary-emphasis text-start">Mejor cliente por valor</h2>
+
+            <div className="d-flex justify-content-between">
+                <select
+                    className={`${styles.input} p-3 border rounded`}
+                    value={selectedBranch}
+                    onChange={(e) => setSelectedBranch(e.target.value)}
+                >
+                    <option value='Todas'>Todas las Sedes</option>
+                    {Array.isArray(branches) && branches.map((branch, index) => (
+                        <option key={index} value={branch.id}>
+                            {branch.nameBranch}
+                        </option>
+                    ))}
+                </select>
+                <button className="p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
             </div>
 
-            <div className="border">
-                <div className="d-flex justify-content-between">
-                    <select
-                        className="border-0 p-3"
-                        value={selectedBranch}
-                        onChange={(e) => setSelectedBranch(e.target.value)}
-                    >
-                        <option value=''>Todas las Sedes</option>
-                        {Array.isArray(branches) && branches.map((branch, index) => (
-                            <option key={index} value={branch.id}>
-                                {branch.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                    <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('')}>Borrar Filtro de sedes</button>
-                </div>
-            </div>
 
             <div className="mt-4">    
                 {consolidatedData && consolidatedData.length > 0 ? (

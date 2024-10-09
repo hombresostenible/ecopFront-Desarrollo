@@ -8,18 +8,19 @@ import { getSalesPerPeriod } from '../../../../../../redux/User/indicator/finant
 import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions';
 //ELEMENTOS DEL COMPONENTE
 import { formatNumber } from '../../../../../../helpers/FormatNumber/FormatNumber';
+import styles from './styles.module.css';
 
 function ModalSalesPerPeriod() {
     const token = jsCookie.get('token') || '';
     
-    //REDUX
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
     const salesPerPeriod = useSelector((state: RootState) => state.finantialIndicators.salesPerPeriod);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    // Estado local para el filtro
+    // ESTADO LOCAL PARA EL FILTRO
     const [selectedBranch, setSelectedBranch] = useState('Todas');
-    const [filteredSales, setFilteredSales] = useState(salesPerPeriod);
+    const [filteredRegisters, setFilteredRegisters] = useState(salesPerPeriod);
 
     useEffect(() => {
         dispatch(getBranches(token));
@@ -28,9 +29,9 @@ function ModalSalesPerPeriod() {
 
     useEffect(() => {
         if (selectedBranch === 'Todas') {
-            setFilteredSales(salesPerPeriod);
+            setFilteredRegisters(salesPerPeriod);
         } else {
-            setFilteredSales(salesPerPeriod.filter((sale: { branchId: string; }) => sale.branchId === selectedBranch));
+            setFilteredRegisters(salesPerPeriod.filter((sale: { branchId: string; }) => sale.branchId === selectedBranch));
         }
     }, [selectedBranch, salesPerPeriod]);
 
@@ -42,77 +43,71 @@ function ModalSalesPerPeriod() {
 
     return (
         <div className="p-3 text-center m-auto border">
-            <div className="pt-3 pb-3 d-flex align-items-center justify-content-between">
-                <h2 className="m-0 text-primary-emphasis text-start">Ventas del período</h2>
+            <h2 className="mb-3 text-primary-emphasis text-start">Ventas del período</h2>
+
+            <div className="d-flex justify-content-between">
+                <select
+                    className={`${styles.input} p-3 border rounded`}
+                    value={selectedBranch}
+                    onChange={(e) => setSelectedBranch(e.target.value)}
+                >
+                    <option value='Todas'>Todas las Sedes</option>
+                    {Array.isArray(branches) && branches.map((branch, index) => (
+                        <option key={index} value={branch.id}>
+                            {branch.nameBranch}
+                        </option>
+                    ))}
+                </select>
+                <button className="p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
             </div>
 
-            <div className="border">
-                <div className="d-flex justify-content-between">
-                    <select
-                        className="border-0 p-3"
-                        value={selectedBranch}
-                        onChange={(e) => setSelectedBranch(e.target.value)}
-                    >
-                        <option value='Todas'>Todas las Sedes</option>
-                        {Array.isArray(branches) && branches.map((branch, index) => (
-                            <option key={index} value={branch.id}>
-                                {branch.nameBranch}
-                            </option>
-                        ))}
-                    </select>
-                    <button className="m-2 p-3 chart-container border rounded" onClick={() => setSelectedBranch('Todas')}>Borrar Filtro de sedes</button>
-                </div>
-            </div>
-
-            <div className="mt-4">
-                <div className="col-12">    
-                    {filteredSales && filteredSales.length > 0 ? (
-                        <table className="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Fecha de transacción</th>
-                                    <th>Sede</th>
-                                    <th>Concepto de ingreso</th>
-                                    <th>Nombre del artículo</th>
-                                    <th>Valor unitario</th>
-                                    <th>Cantidad</th>
-                                    <th>Valor total</th>
+            <div className="mt-4 col-12">
+                {filteredRegisters && filteredRegisters.length > 0 ? (
+                    <table className="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha de transacción</th>
+                                <th>Sede</th>
+                                <th>Concepto de ingreso</th>
+                                <th>Nombre del artículo</th>
+                                <th>Valor unitario</th>
+                                <th>Cantidad</th>
+                                <th>Valor total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredRegisters.map((salePerPeriod: { id: any; transactionDate: string | number | Date; branchId: string; incomeCategory: any; nameItem: any; unitValue: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; quantity: number | undefined; totalValue: number | undefined; }, index: any) => (
+                                <tr key={salePerPeriod.id || index}>
+                                    <td>
+                                        {new Date(salePerPeriod.transactionDate).toLocaleDateString('en-GB')}
+                                    </td>
+                                    <td>
+                                        {getBranchName(salePerPeriod.branchId)}
+                                    </td>
+                                    <td>
+                                        {salePerPeriod.incomeCategory || 'N/A'}
+                                    </td>
+                                    <td>
+                                        {salePerPeriod.nameItem || 'N/A'}
+                                    </td>
+                                    <td className='text-end'>
+                                        $ {salePerPeriod.unitValue}
+                                    </td>
+                                    <td>
+                                        {salePerPeriod.quantity ? formatNumber(salePerPeriod.quantity) : 'N/A'}
+                                    </td>
+                                    <td className='text-end'>
+                                        $ {salePerPeriod.totalValue !== undefined ? formatNumber(salePerPeriod.totalValue) : 'N/A'}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {filteredSales.map((salePerPeriod: { id: any; transactionDate: string | number | Date; branchId: string; incomeCategory: any; nameItem: any; unitValue: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; quantity: number | undefined; totalValue: number | undefined; }, index: any) => (
-                                    <tr key={salePerPeriod.id || index}>
-                                        <td>
-                                            {new Date(salePerPeriod.transactionDate).toLocaleDateString('en-GB')}
-                                        </td>
-                                        <td>
-                                            {getBranchName(salePerPeriod.branchId)}
-                                        </td>
-                                        <td>
-                                            {salePerPeriod.incomeCategory || 'N/A'}
-                                        </td>
-                                        <td>
-                                            {salePerPeriod.nameItem || 'N/A'}
-                                        </td>
-                                        <td className='text-end'>
-                                            $ {salePerPeriod.unitValue}
-                                        </td>
-                                        <td>
-                                            {salePerPeriod.quantity ? formatNumber(salePerPeriod.quantity) : 'N/A'}
-                                        </td>
-                                        <td className='text-end'>
-                                            $ {salePerPeriod.totalValue !== undefined ? formatNumber(salePerPeriod.totalValue) : 'N/A'}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <div className="text-center">
-                            <p>Los datos no están disponibles.</p>
-                        </div>
-                    )}
-                </div>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className="text-center">
+                        <p>Los datos no están disponibles.</p>
+                    </div>
+                )}
             </div>
         </div>
     );
