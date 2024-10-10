@@ -29,8 +29,9 @@ import styles from './styles.module.css';
 
 function ElectronicInvoicingPage() {
     const token = jsCookie.get("token") || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-
     const user = useSelector((state: RootState) => state.user.user);
     const branches = useSelector((state: RootState) => state.branch.branch);
 
@@ -97,6 +98,82 @@ function ElectronicInvoicingPage() {
         }
     };
 
+
+
+
+
+    // TABLA DE RETENCIONES
+    const calculateTaxableBaseForRow = (row: any) => {
+        const subtotal = (row.quantity || 1) * (row.item?.sellingPrice || 0);
+        const discount = row.discountPercentage ? (row.discountPercentage / 100) * subtotal : 0;
+        return subtotal - discount;
+    };
+
+
+    const calculateTotalConsumptionTax = () => {
+        return parseFloat(rows.reduce((acc, row) => {
+            const consumptionTax = row.item?.consumptionTax;
+            if (typeof consumptionTax === "string" && consumptionTax === "No aplica") {
+                return acc;
+            } else {
+                const taxableBase = calculateTaxableBaseForRow(row);
+                const consumptionTaxValue = consumptionTax !== undefined ? (typeof consumptionTax === "number" ? consumptionTax : parseInt(consumptionTax, 10)) : 0;
+                const taxAmount = taxableBase * (consumptionTaxValue / 100);
+                return acc + taxAmount;
+            }
+        }, 0).toFixed(2)); // Convertir a número después de toFixed()
+    };
+
+    const calculateTotalWithholdingTax = () => {
+        return parseFloat(rows.reduce((acc, row) => {
+            const withholdingTax = row.item?.withholdingTax;
+            if (typeof withholdingTax === "string" && withholdingTax === "No aplica") {
+                return acc;
+            } else if (typeof withholdingTax === "number" || typeof withholdingTax === "string") { // Verificación adicional
+                const taxableBase = calculateTaxableBaseForRow(row);
+                const withholdingTaxValue = typeof withholdingTax === "number" ? withholdingTax : parseFloat(withholdingTax); // Removido el .toString()
+                const taxAmount = taxableBase * (withholdingTaxValue / 100);
+                return acc + taxAmount;
+            }
+            return acc;
+        }, 0).toFixed(2));
+    };
+    
+    const calculateTotalWithholdingIVA = () => {
+        return parseFloat(rows.reduce((acc, row) => {
+            const withholdingIVA = row.item?.withholdingIVA;
+            if (typeof withholdingIVA === "string" && withholdingIVA === "No aplica") {
+                return acc;
+            } else if (typeof withholdingIVA === "number" || typeof withholdingIVA === "string") { // Verificación adicional
+                const taxableBase = calculateTaxableBaseForRow(row);
+                const withholdingIVAValue = typeof withholdingIVA === "number" ? withholdingIVA : parseFloat(withholdingIVA); // Removido el .toString()
+                const taxAmount = taxableBase * (withholdingIVAValue / 100);
+                return acc + taxAmount;
+            }
+            return acc;
+        }, 0).toFixed(2));
+    };
+    
+    const calculateTotalWithholdingICA = () => {
+        return parseFloat(rows.reduce((acc, row) => {
+            const withholdingICA = row.item?.withholdingICA;
+            if (typeof withholdingICA === "string" && withholdingICA === "No aplica") {
+                return acc;
+            } else if (typeof withholdingICA === "number" || typeof withholdingICA === "string") { // Verificación adicional
+                const taxableBase = calculateTaxableBaseForRow(row);
+                const withholdingICAValue = typeof withholdingICA === "number" ? withholdingICA : parseFloat(withholdingICA); // Removido el .toString()
+                const taxAmount = taxableBase * (withholdingICAValue / 100);
+                return acc + taxAmount;
+            }
+            return acc;
+        }, 0).toFixed(2));
+    };
+
+
+
+
+
+
     const calculateSubtotal = () => {
         return rows.reduce((acc, row) => {
             const totalRowValue = (row.quantity || 1) * (row.item?.sellingPrice || 0);
@@ -119,7 +196,7 @@ function ElectronicInvoicingPage() {
         return taxableBase * (ivaRate / 100);
     };
     
-    const calculateTotalTaxes = () => {
+    const calculateTotalIVA = () => {
         const taxableBase = calculateTaxableBase();
         return rows.reduce((acc, row) => {
             const iva = row.item?.IVA;
@@ -133,15 +210,16 @@ function ElectronicInvoicingPage() {
         }, 0);
     };
 
-    const calculateTotalInvoice = (taxableBase: number, totalTaxes: number) => {
-        return taxableBase + totalTaxes;
+    const calculateTotalInvoice = (taxableBase: number, totalIVA: number) => {
+        return taxableBase + totalIVA;
     };
-    
+
+    // TABLA DE TOTALES
     const subtotal = calculateSubtotal();
     const discounts = calculateDiscounts();
     const taxableBase = calculateTaxableBase();
-    const totalTaxes = calculateTotalTaxes();
-    const totalInvoice = calculateTotalInvoice(taxableBase, totalTaxes);
+    const totalIVA = calculateTotalIVA();
+    const totalInvoice = calculateTotalInvoice(taxableBase, totalIVA);
 
     useEffect(() => {
         if (shouldNavigate) {
@@ -403,7 +481,37 @@ function ElectronicInvoicingPage() {
                                     </div>
                                 </div>
                                 
-                                <div className={`${styles.container__Taxes_And_Values} pb-4 d-flex align-items-start justify-content-end`}>
+                                <div className={`${styles.container__Taxes_And_Values} pb-4 d-flex align-items-start justify-content-between`}>
+                                    <div className={styles.container__Totales}>
+                                        <div className={`${styles.title__Container_Totales} p-2 text-center`}>Totales retenciones</div>
+                                        <div className={`${styles.ffffffffff} d-flex`}>
+                                            <div className={styles.container__Column_Totals}>
+                                                {/* <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Totales IVA:</div> */}
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Totales Impuesto al consumo:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Totales Retefuente:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Totales ReteIVA:</div>
+                                                <div className={`${styles.title__Column_Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>Totales ReteICA:</div>
+                                            </div>
+                                            <div className={styles.container__Values_Totals}>
+                                                {/* <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
+                                                    $ {formatNumber(totalIVA)}
+                                                </div> */}
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
+                                                    $ {formatNumber(calculateTotalConsumptionTax())}
+                                                </div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
+                                                    $ {formatNumber(calculateTotalWithholdingTax())}
+                                                </div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
+                                                    $ {formatNumber(calculateTotalWithholdingIVA())}
+                                                </div>
+                                                <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
+                                                    $ {formatNumber(calculateTotalWithholdingICA())}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div className={styles.container__Totales}>
                                         <div className={`${styles.title__Container_Totales} p-2 text-center`}>Totales</div>
                                         <div className={`${styles.ffffffffff} d-flex`}>
@@ -425,7 +533,7 @@ function ElectronicInvoicingPage() {
                                                     $ {formatNumber(taxableBase)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
-                                                    $ {formatNumber(totalTaxes)}
+                                                    $ {formatNumber(totalIVA)}
                                                 </div>
                                                 <div className={`${styles.column__Totals} m-0 px-2 d-flex align-items-center justify-content-end`}>
                                                     $ {formatNumber(totalInvoice)}
