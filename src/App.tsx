@@ -113,7 +113,7 @@ import CreateCreditNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/
 import ConsultDebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04DebitNotes/ConsultDebitNotes/ConsultDebitNotesPage';
 import CreateDebitNotesPage from './pages/Platform/PanelUser/05InvoicingAndPos/04DebitNotes/CreateDebitNotes/CreateDebitNotesPage';
 import RecurringInvoicesPage from './pages/Platform/PanelUser/05InvoicingAndPos/05RecurringInvoices/RecurringInvoicesPage';
-import QuotationsPage from './pages/Platform/PanelUser/05InvoicingAndPos/06Quotations/QuotationsPage';
+// import QuotationsPage from './pages/Platform/PanelUser/05InvoicingAndPos/06Quotations/QuotationsPage';
 import ReceivedPaymentsPage from './pages/Platform/PanelUser/05InvoicingAndPos/07ReceivedPayments/ReceivedPaymentsPage';
 // SIDEBAR - ELECTRONIC-PAYROLL
 import ElectronicPayrollPage from './pages/Platform/PanelUser/06ElectronicPayroll/ElectronicPayrollPage';
@@ -292,7 +292,7 @@ function App() {
                         <Route path='/invoicing-and-pos/electronic-invoicing' element={<ElectronicInvoicingPage />} />
                         <Route path='/invoicing-and-pos/see-electronic-invoicing-pos' element={<SeeElectronicInvoicingPosPage />} />
                         <Route path='/invoicing-and-pos/recurring-invoices' element={<RecurringInvoicesPage />}  />
-                        <Route path='/invoicing-and-pos/quotations' element={<QuotationsPage />}  />
+                        {/* <Route path='/invoicing-and-pos/quotations' element={<QuotationsPage />}  /> */}
                         <Route path='/invoicing-and-pos/received-payments' element={<ReceivedPaymentsPage />} />
                         <Route path='/credit-notes/consult-credit-notes' element={<ConsultCreditNotes />} />
                         <Route path='/credit-notes/create-credit-notes' element={<CreateCreditNotesPage />} />
