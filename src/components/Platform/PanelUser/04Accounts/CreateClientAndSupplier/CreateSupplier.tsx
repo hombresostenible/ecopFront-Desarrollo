@@ -44,7 +44,6 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                 entityUserId: userId,
             } as ICrmSupplier;
             dispatch(postCrmSupplier(formData, token));
-            // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getCrmSuppliers(token));
             setFormSubmitted(true);
@@ -154,26 +153,46 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                     <h6 className={styles.label}>Email</h6>
                     <input
                         type="email"
-                        {...register('email', { required: true })}
-                        className={`${styles.input} p-2`}
-                        placeholder='¿Cuál es su email?'
+                        {...register('email', {
+                            required: `El email es requerido`,
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: `El formato del email no es válido`
+                            }
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder={`¿Cuál es tu email?`}
                     />
                     {errors.email && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El email del proveedor es requerido</p>
+                        <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.email.message}</p>
                     )}
                 </div>
 
                 <div className="w-100 position-relative">
                     <h6 className={styles.label}>Celular o teléfono fijo</h6>
                     <input
-                        type="phone"
-                        {...register('phone', { required: true })}
-                        className={`${styles.input} p-2`}
-                        placeholder='¿Cuál es el celular o teléfono fijo de tu proveedor?'
+                        type="tel"
+                        {...register('phone', { 
+                            required: true, 
+                            pattern: /^\d{1,10}$/,
+                            setValueAs: (value) => value.substring(0, 10)
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
+                        maxLength={10}
                         min={0}
+                        onInput={(e) => {
+                            const target = e.target as HTMLInputElement;
+                            target.value = target.value.replace(/\D/g, '').substring(0, 10);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                     {errors.phone && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del proveedor es requerido</p>
+                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del usuario es requerido</p>
                     )}
                 </div>
 

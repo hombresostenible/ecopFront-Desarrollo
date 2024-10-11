@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../../../../redux/store';
 import { postRegisterClient } from '../../../../../redux/User/userSlice/actions';
+import { clearUserErrors } from '../../../../../redux/User/userSlice/userSlice';
 //ELEMENTOS DEL COMPONENTE
 import { IUser } from "../../../../../types/User/user.types";
 import Loading from '../../../../../components/Loading/Loading';
@@ -35,6 +36,7 @@ function RegisterUserPagePage() {
     const {register, formState: { errors }, handleSubmit} = useForm<IUser>();
     
     useEffect(() => {
+        dispatch(clearUserErrors());
         if (isAuthenticated) navigate("/home");
     }, [ isAuthenticated ]);
 

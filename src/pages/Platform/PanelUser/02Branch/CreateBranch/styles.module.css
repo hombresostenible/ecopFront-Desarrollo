@@ -71,6 +71,9 @@
 .text__Danger {
     top: 65px;
 }
+.container__Loading {
+    width: 100%;
+}
 .button__Submit {
     padding: 7px 25px;
     letter-spacing: 1px;
