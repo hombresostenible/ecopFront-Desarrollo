@@ -23,10 +23,11 @@ function AddInventoryProducts({ token, idItem, nameItem, idBranch, onCloseModal 
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IProduct>();
-
+    const [loading, setLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const onSubmit = async (values: IProduct) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -40,6 +41,8 @@ function AddInventoryProducts({ token, idItem, nameItem, idBranch, onCloseModal 
             reset();
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,8 +78,17 @@ function AddInventoryProducts({ token, idItem, nameItem, idBranch, onCloseModal 
                             <p className='text-danger'>El inventario es requerido</p>
                         )}
                     </div>
-                    <div className="d-flex align-items-center justify-content-center">
-                        <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+
+                    <div className="mb-5 d-flex">
+                        {loading ? 
+                            <div className={`${styles.container__Loading} position-relative w-100`}>
+                                <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                                    <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                </button>
+                            </div> 
+                        :
+                            <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                        }
                     </div>
                 </div>
             </form>

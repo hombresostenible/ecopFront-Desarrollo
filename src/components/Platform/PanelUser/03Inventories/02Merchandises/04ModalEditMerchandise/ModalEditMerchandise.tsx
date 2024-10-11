@@ -20,6 +20,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
     // REDUX
     const dispatch: AppDispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
     const [editedMerchandise, setEditedMerchandise] = useState<IMerchandise>({ ...merchandise });
     
     const [editedPackaged, setEditedPackaged] = useState(merchandise?.packaged || 'No');
@@ -64,6 +65,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
     };
 
     const handleSaveChanges = async (editedMerchandise: IMerchandise) => {
+        setLoading(true);
         try {
             editedMerchandise.packaged = editedPackaged;
             editedMerchandise.primaryPackageType = editedPrimaryPackageType;
@@ -88,12 +90,13 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
             }
             if (editedPackaged === 'No') editedMerchandise.primaryPackageType = undefined;
             if (editedIndividualPackaging === 'No') editedMerchandise.secondaryPackageType = undefined;
-
             await dispatch(putMerchandise(idItem, editedMerchandise, token));
             dispatch(getMerchandises(token));
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -560,7 +563,16 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
+                {loading ?
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
+                }
+
                 <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(merchandise.id)}>Cancelar</button>
             </div>
         </div>

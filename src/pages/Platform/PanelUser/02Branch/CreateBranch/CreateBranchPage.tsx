@@ -28,6 +28,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
     const navigate = useNavigate();
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
 
@@ -35,7 +36,6 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    
     const [showCancelModal, setShowCancelModal] = useState(false);
     const onCloseBranchModal = () => {
         setShowCancelModal(false);
@@ -79,13 +79,13 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
     
     useEffect(() => {
-        if (shouldNavigate) {
-            navigate('/branches/consult-branches');
-        }
+        if (shouldNavigate) navigate('/branches/consult-branches');
     }, [ shouldNavigate, navigate ]);
 
     return (
@@ -159,19 +159,6 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección de la Sede es requerida</p>
                                 )}
                             </div>
-
-                            {/* <div className="mb-4 w-100 position-relative">
-                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Email de la Sede</p>
-                                <input
-                                    type="email"
-                                    {...register('contactEmailBranch', { required: true })}
-                                    className={`${styles.input} p-2 border`}
-                                    placeholder='Email de la Sede'
-                                />
-                                {errors.contactEmailBranch && (
-                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El email de la Sede es requerido</p>
-                                )}
-                            </div> */}
 
                             <div className="mb-4 w-100 position-relative">
                                 <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Email de la Sede</p>
@@ -274,15 +261,15 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                                 )}
                             </div>
 
-                            <div className="d-flex">
+                            <div className="mb-5 d-flex">
                                 {loading ? 
-                                    <div className={`${styles.container__Loading} `}>
-                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
                                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                                         </button>
                                     </div> 
                                 :
-                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
                                 }
                             </div>
                         </form>

@@ -32,8 +32,8 @@ function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
     
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ICrmClient>();
-    
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const [showCancelModal, setShowCancelModal] = useState(false);
@@ -60,6 +60,7 @@ function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
     };
 
     const onSubmit = async (values: ICrmClient) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -80,10 +81,12 @@ function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);
-                }, 10); // Se reinicia después de un corto período para asegurarse de que el reset haya tenido efecto
+                }, 10);
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
     
@@ -280,8 +283,16 @@ function CreateCrmClientPage({ addNotification }: CreateClientPageProps) {
                                 />
                             </div>
 
-                            <div className="mb-4 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                            <div className="mb-5 d-flex">
+                                {loading ? 
+                                    <div className={`${styles.container__Loading} `}>
+                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                                }
                             </div>
                         </form>
                     </div>

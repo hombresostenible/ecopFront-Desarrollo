@@ -19,6 +19,7 @@ interface ModalEditAssetProps {
 function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalEditAssetProps) {
     // REDUX
     const dispatch: AppDispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const [editedAsset, setEditedAsset] = useState<IAssets>({ ...asset });
 
@@ -55,6 +56,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
     };
 
     const handleSaveChanges = async (editedAsset: IAssets) => {
+        setLoading(true);
         try {
             editedAsset.conditionAssets = editedCondition;
             editedAsset.stateAssets = editedStateAssets;
@@ -70,6 +72,8 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -397,7 +401,15 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
+                {loading ?
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
+                }
                 <button className={`${styles.button__Cancel} border-0`} onClick={cancelEditing}>Cancelar</button>
             </div>
         </div>

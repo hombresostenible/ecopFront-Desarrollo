@@ -144,6 +144,9 @@
 .input__Info_Purchase:focus, .input__Change__Amount:focus {
     outline-color: #718bd8;
 }
+.container__Section_Info_Purchase {
+    width: 470px;
+}
 
 /* RELACION DE PAGO */
 .button__Calculate {
@@ -229,4 +232,7 @@
     transition: 300ms all ease;
     color: #f8f9fa;
     cursor: pointer;
+}
+.container__Loading {
+    width: 100%;
 }

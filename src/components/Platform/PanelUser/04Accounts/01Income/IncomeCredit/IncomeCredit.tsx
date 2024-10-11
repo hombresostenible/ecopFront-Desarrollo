@@ -38,7 +38,8 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
-    const [formSubmitted, setFormSubmitted] = useState(false);
+    // const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
     const [messageSelectedClient, setMessageSelectedClient] = useState<string | null>(null);
@@ -163,6 +164,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     };
 
     const onSubmit = async (values: IAccountsBook) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -196,10 +198,10 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
             }
             if(userPlatform?.id) formData.seller = userPlatform.id;
             dispatch(postAccountsBook(formData, token));
-            setFormSubmitted(true);
+            // setFormSubmitted(true);
             setSelectedClient(null);
             setTimeout(() => {
-                setFormSubmitted(false);
+                // setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
         } catch (error) {
@@ -468,16 +470,26 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
-                    {formSubmitted && (
+                    {/* {formSubmitted && (
                         <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                    )}
+                    )} */}
                     {messageSelectedBranch && (
                         <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
                     )}
                     {messageSelectedClient && (
                         <div className={`${styles.error__Message_Selected_Client} position-absolute`}>{messageSelectedClient}</div>
                     )}
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                    <div className="mb-5 d-flex">
+                        {loading ? 
+                            <div className={`${styles.container__Loading} position-relative w-100`}>
+                                <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                                    <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                </button>
+                            </div> 
+                        :
+                            <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                        }
+                    </div>
                 </div>
             </form>
         </div>

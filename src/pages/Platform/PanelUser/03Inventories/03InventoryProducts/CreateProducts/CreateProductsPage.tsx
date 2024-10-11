@@ -43,8 +43,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
 
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IProduct>();
-    
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
     useEffect(() => {
@@ -289,6 +289,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
     };
 
     const onSubmit = async (values: IProduct) => {
+        setLoading(true);
         try {
             if (!isCreatingRawMaterial && !isCreatingAsset) {
                 // Convertir assets, product y rawMaterial a arrays si no lo son ya
@@ -330,7 +331,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             quantity: String(rawMaterialQuantities[rawMaterial.id] || 0),  // Convertir cantidad a cadena
                         })),
                 } as IProduct;
-
                 await dispatch(postProduct(formData, token));
                 setFormSubmitted(true);
                 reset();
@@ -350,6 +350,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
             }
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -395,6 +397,7 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
+
                             {Array.isArray(errorProduct) && errorProduct?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
@@ -1045,8 +1048,16 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                 <p className='mt-2'>Si la materia prima no existe, créala <span className={`${styles.link} text-sky-500`} onClick={handleCreateRawMaterial}>aquí</span></p>
                             </div>
 
-                            <div className="mb-5 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                            <div className="mb-5 d-flex">
+                                {loading ? 
+                                    <div className={`${styles.container__Loading} `}>
+                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                                }
                             </div>
                         </form>
                     </div>

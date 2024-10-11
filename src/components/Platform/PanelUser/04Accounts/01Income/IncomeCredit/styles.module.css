@@ -230,3 +230,6 @@
     color: #f8f9fa;
     cursor: pointer;
 }
+.container__Loading {
+    width: 100%;
+}

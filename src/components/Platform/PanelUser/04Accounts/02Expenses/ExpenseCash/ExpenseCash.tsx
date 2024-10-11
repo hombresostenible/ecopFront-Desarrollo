@@ -39,7 +39,8 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
     const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
-    const [formSubmitted, setFormSubmitted] = useState(false);
+    // const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
     const [messageSelectedSupplier, setMessageSelectedSupplier] = useState<string | null>(null);
@@ -177,6 +178,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
     };
     
     const onSubmit = async (values: IAccountsBook) => {
+        setLoading(true);
         const totalValueOtherExpensesNumber = Number(totalValueOtherExpenses);
         try {
             const formData = {
@@ -211,14 +213,16 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
             }
             if (totalValueOtherExpenses) formData.pay = 'Si';
             dispatch(postAccountsBook(formData, token));
-            setFormSubmitted(true);
+            // setFormSubmitted(true);
             setSelectedSupplier(null);
             setTimeout(() => {
-                setFormSubmitted(false);
+                // setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
         } catch (error) {
             throw new Error(`Error en el envío del formulario: ${error}`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -305,7 +309,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                                     </span>
                                                 </td>
                                                 <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>
+                                                    <span className={`${styles.text__Ellipsis_Purchase_Price} overflow-hidden position-absolute`}>$</span>
                                                     <input
                                                         type="text"
                                                         className={`${styles.price__Input} text-end`}
@@ -673,16 +677,28 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                 )}
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
-                    {formSubmitted && (
+                    {/* {formSubmitted && (
                         <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                    )}
+                    )} */}
                     {messageSelectedBranch && (
                         <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
                     )}
                     {messageSelectedSupplier && (
                         <div className={`${styles.error__Message_Selected_Client} position-absolute`}>{messageSelectedSupplier}</div>
                     )}
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                    {/* <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button> */}
+
+                    <div className="mb-5 d-flex">
+                        {loading ? 
+                            <div className={`${styles.container__Loading} position-relative w-100`}>
+                                <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                                    <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                </button>
+                            </div> 
+                        :
+                            <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                        }
+                    </div>
                 </div>
             </form>
         </div>

@@ -49,3 +49,6 @@
     border: 1px solid #0a31bf;
     cursor: pointer;
 }
+.container__Loading {
+    width: 100%;
+}
