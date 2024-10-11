@@ -245,74 +245,87 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                         </div>
                     </div>
             
-                    <div className={`${styles.container__Table} mt-5 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                        <h3 className="mb-3 text-primary-emphasis text-start">Relación de artículos</h3>
-                        <div className={styles.container__Head}>
-                            <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
-                                <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
-                                <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
-                                <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
-                                <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Precio</div>
-                                <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
-                                <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
-                                <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
-                                <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
-                            </div>
-                        </div>
+                    <h3 className="text-primary-emphasis text-center">Relación de artículos</h3>
+                    <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                        <table className="table">
+                            <thead className={`${styles.container__Head} `}>
+                                <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                    <th className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</th>
+                                    <th className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</th>
+                                    <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</th>
+                                    <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</th>
+                                    <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
+                                    <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</th>
+                                    <th className={`${styles.subtotal} d-flex align-items-center justify-content-center text-center`}>Subtotal</th>
+                                    <th className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}>Eliminar</th>
+                                </tr>
+                            </thead>
 
-                        <div className={`${styles.container__Body} `}>
-                            {Array.isArray(scannedItems) && scannedItems.length > 0 ? (
-                                scannedItems.map((item, index) => (
-                                    <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                        <div className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
-                                            <div className={`${styles.container__Quantity} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.quantity}</span>
-                                            </div>
-                                            <div className={`${styles.container__FaPlus} d-flex align-items-center justify-content-center`}>
-                                                <FaPlus
-                                                    className={`${styles.icon__FaPlus} `}
-                                                    onClick={() => handleChangeQuantityPerItem(index)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
-                                        </div>
-                                        <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
-                                            </div>
-                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                    {item.IVA !== 'No aplica' 
-                                                        ? `$ ${(item.sellingPrice / 100 * Number(item.IVA))}`  // Convierte IVA a número si no es 'No aplica'
-                                                        : 'No aplica' 
+                            <tbody className={`${styles.container__Body} `}>
+                                {Array.isArray(scannedItems) && scannedItems.length > 0 ? (
+                                    scannedItems.map((item, index) => (
+                                        <tr key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                            <td className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
+                                                <div className={`${styles.container__Quantity} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.quantity}</span>
+                                                </div>
+                                                <div className={`${styles.container__FaPlus} d-flex align-items-center justify-content-center`}>
+                                                    <FaPlus
+                                                        className={`${styles.icon__FaPlus} `}
+                                                        onClick={() => handleChangeQuantityPerItem(index)}
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.nameItem}</span>
+                                            </td>
+                                            <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                            </td>
+                                            <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica'
+                                                        ? `$ ${(item.sellingPrice / 100 * Number(item.IVA))}`
+                                                        : 'No aplica'
                                                     }
                                                 </span>
-                                            </div>
-                                        <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
-                                        </div>
-                                        <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
-                                            <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$</span> {formatNumber((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA)))}</span>
-                                        </div>
-                                        <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * ((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA))))}</span>
-                                            </div>
-                                        <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
-                                            <RiDeleteBin6Line
-                                                className={`${styles.button__Action} `}
-                                                onClick={() => handleDeleteItem(index)}
-                                            />
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                    No tienes artículos registrados en la venta
-                                </div>
-                            )}
-                        </div>
+                                            </td>
+                                            <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
+                                            </td>
+                                            <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica' 
+                                                        ? <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$</span> {formatNumber((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA)))}</span>
+                                                        : <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
+                                                    }
+                                                </span>
+                                            </td>
+                                            <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                    {item.IVA !== 'No aplica' 
+                                                        ? <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * ((item.sellingPrice) + (item.sellingPrice / 100 * Number(item.IVA))))}</span>
+                                                        : <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$ </span>{formatNumber((item.quantity) * (item.sellingPrice))}</span>
+                                                    }
+                                                </span>
+                                            </td>
+                                            <td className={`${styles.delete} d-flex align-items-center justify-content-center`}>
+                                                <RiDeleteBin6Line
+                                                    className={`${styles.button__Action} `}
+                                                    onClick={() => handleDeleteItem(index)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                            No tienes artículos registrados en la venta
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
 
                     <Modal show={changeQuantityIndex !== null} onHide={handleCloseModal}>

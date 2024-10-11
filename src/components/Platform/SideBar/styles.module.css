@@ -42,7 +42,8 @@
     width: 100%;
 }
 .container__Section:hover {
-    border-left: 3px solid hsl(210, 17%, 98%);
+    border: 1px solid hsl(210, 17%, 98%);
+    border-radius: 5px;
 }
 .active {
     color: #4361ee;
@@ -67,6 +68,9 @@
 .icon__Section {
     color: hsl(210, 17%, 98%);
     font-size: 25px;
+}
+.active__Icon_Section {
+    color: #343a40;
 }
 .link__Side_Bar {
     color: hsl(210, 17%, 98%);

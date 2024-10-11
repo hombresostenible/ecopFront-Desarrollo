@@ -58,6 +58,7 @@
     width: 600px;
 }
 .label {
+    font-weight: 600;
     margin-bottom: 5px;
 }
 .required__Information {
@@ -78,6 +79,13 @@
 }
 .text__Danger {
     top: 65px;
+}
+.icon {
+    z-index: 1;
+    top: 35px;
+    right: 10px;
+    font-size: 20px;
+    color: #718bd8;
 }
 .button__Submit {
     padding: 7px 25px;

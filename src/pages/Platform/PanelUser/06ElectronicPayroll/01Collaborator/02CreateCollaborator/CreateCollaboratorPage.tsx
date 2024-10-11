@@ -18,6 +18,7 @@ import Footer from '../../../../../../components/Platform/PanelUser/Footer/Foote
 import CreateManyCollaborators from '../../../../../../components/Platform/PanelUser/06ElectronicPayroll/01Collaborator/CreateManyCollaborator/CreateManyCollaborator.tsx';
 import DepartmenAndCity from '../../../../../../helpers/DepartmenAndCity/DepartmenAndCity.tsx';
 import { FaPlus } from "react-icons/fa6";
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import styles from './styles.module.css';
 
 interface CreateCollaboratorPageProps {
@@ -61,6 +62,11 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
         setSelectedCity(city);
         setSelectedCodeDane(codeDane);
         setSelectedsubregionCodeDane(subregionCodeDane);
+    };
+
+    const [ showPassword, setShowPassword ] = useState(false);
+    const toggleShowPassword = () => {
+        setShowPassword((prevState) => !prevState);
     };
 
     const onSubmit = async (values: IUserPlatform) => {
@@ -156,86 +162,76 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
 
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombres de tu cliente</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('name')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Nombres de tu cliente'
-                                        />
-                                        {errors.name && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Los nombres de tu cliente son requeridos</p>
-                                        )}
-                                    </div>
+                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombres de tu colaboradores</h6>
+                                    <input
+                                        type="text"
+                                        {...register('name')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='Nombres de tu colaboradores'
+                                    />
+                                    {errors.name && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>Los nombres de tu colaboradores son requeridos</p>
+                                    )}
                                 </div>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
-                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Apellidos de tu cliente</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('lastName')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Apellidos de tu cliente'
-                                        />
-                                        {errors.lastName && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Los apellidos de tu cliente son requeridos</p>
-                                        )}
-                                    </div>
+                                    <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Apellidos de tu colaboradores</h6>
+                                    <input
+                                        type="text"
+                                        {...register('lastName')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='Apellidos de tu colaboradores'
+                                    />
+                                    {errors.lastName && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>Los apellidos de tu colaboradores son requeridos</p>
+                                    )}
                                 </div>
                             </div>
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Tipo de identificación</h6>
-                                    <div className={styles.container__Input}>
-                                        <select
-                                            {...register('typeDocumentId', { required: true })}
-                                            className={`${styles.input} p-2 border`}
-                                        >
-                                            <option value='Cedula de Ciudadania'>Cédula de Ciudadania</option>
-                                            <option value='Cedula de Extranjeria'>Cédula de Extranjeria</option>
-                                            <option value='Pasaporte'>Pasaporte</option>
-                                        </select>
-                                        {errors.typeDocumentId && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del proveedor es requerido</p>
-                                        )}
-                                    </div>
+                                    <select
+                                        {...register('typeDocumentId', { required: true })}
+                                        className={`${styles.input} p-2 border`}
+                                    >
+                                        <option value='Cedula de Ciudadania'>Cédula de Ciudadania</option>
+                                        <option value='Cedula de Extranjeria'>Cédula de Extranjeria</option>
+                                        <option value='Pasaporte'>Pasaporte</option>
+                                    </select>
+                                    {errors.typeDocumentId && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del proveedor es requerido</p>
+                                    )}
                                 </div>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Número de identificación</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('documentId')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el número de identificación de tu cliente?'
-                                        />
-                                        {errors.documentId && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('documentId')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='¿Cuál es el número de identificación de tu colaboradores?'
+                                    />
+                                    {errors.documentId && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                                    )}
                                 </div>
                             </div>
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Tipo de rol</h6>
-                                <div className={styles.container__Input}>
-                                    <select
-                                        {...register('typeRole', { required: true })}
-                                        className={`${styles.input} p-2 border`}
-                                    >
-                                        <option value='Superadmin'>Superadmin</option>
-                                        <option value='Administrador'>Administrador</option>
-                                        <option value='Vendedor'>Vendedor</option>
-                                        <option value='Cajero'>Cajero</option>
-                                        <option value='Operativo'>Operativo</option>
-                                        <option value='Contador'>Contador</option>
-                                    </select>
-                                    {errors.typeRole && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de rol del colaborador es requerido</p>
-                                    )}
-                                </div>
+                                <select
+                                    {...register('typeRole', { required: true })}
+                                    className={`${styles.input} p-2 border`}
+                                >
+                                    <option value='Superadmin'>Superadmin</option>
+                                    <option value='Administrador'>Administrador</option>
+                                    <option value='Vendedor'>Vendedor</option>
+                                    <option value='Cajero'>Cajero</option>
+                                    <option value='Operativo'>Operativo</option>
+                                    <option value='Contador'>Contador</option>
+                                </select>
+                                {errors.typeRole && (
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de rol del colaborador es requerido</p>
+                                )}
                             </div>
 
                             <DepartmenAndCity
@@ -246,62 +242,66 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Dirección</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('address')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Dirección'
-                                        />
-                                        {errors.address && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección son requeridos</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('address')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='Dirección'
+                                    />
+                                    {errors.address && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección son requeridos</p>
+                                    )}
                                 </div>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono del colaborador</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('phone')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Celular o teléfono del colaborador'
-                                        />
-                                        {errors.phone && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular o teléfono del colaborador son requeridos</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('phone')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='Celular o teléfono del colaborador'
+                                    />
+                                    {errors.phone && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular o teléfono del colaborador son requeridos</p>
+                                    )}
                                 </div>
                             </div>
 
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Email</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('email')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Email'
-                                        />
-                                        {errors.email && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El email son requeridos</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="email"
+                                        {...register('email', {
+                                            required: `El email es requerido`,
+                                            pattern: {
+                                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                                message: `El formato del email no es válido`
+                                            }
+                                        })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder={`¿Cuál es tu email?`}
+                                    />
+                                    {errors.email && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.email.message}</p>
+                                    )}
                                 </div>
+
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Contraseña</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('password')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='Contraseña'
-                                        />
-                                        {errors.password && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El Contraseña son requeridos</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register('password', { required: true })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='¿Cuál es tu contraseña?'
+                                    />
+                                    {showPassword ? (
+                                        <RiEyeOffFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
+                                    ) : (
+                                        <RiEyeFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
+                                    )}
+                                    {errors.password && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>La contraseña es requerida</p>
+                                    )}
                                 </div>
                             </div>
 

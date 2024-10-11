@@ -239,7 +239,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center justify-content-start text-decoration-none`}>
                     <Link to="/home" className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <IoHome className={`${styles.icon__Section}`} />
+                            <IoHome className={`${styles.icon__Section} ${location.pathname === '/home' ? styles.active__Icon_Section : ''} `} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 text-decoration-none`}>Home</div>
@@ -251,7 +251,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={branchesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleBranchClick} />
+                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/branches/consult-branches' || location.pathname === '/branches/create-branches') ? styles.active__Icon_Section : ''} `} onClick={handleBranchClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleBranchesSubMenuOpen}>
@@ -305,19 +305,19 @@ function SideBar() {
                 </div>
                 {isInventorySubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link to='/inventories/consult-assets' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-assets' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-assets' className={`${styles.link__Sub_Menu} ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/create-assets') ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Activos
                         </Link>
-                        <Link to='/inventories/consult-merchandises' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-merchandises' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-merchandises' className={`${styles.link__Sub_Menu} ${(location.pathname === '/inventories/consult-merchandises' || location.pathname === '/inventories/create-merchandises') ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Mercancías
                         </Link>
-                        <Link to='/inventories/consult-products' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-products' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-products' className={`${styles.link__Sub_Menu} ${(location.pathname === '/inventories/consult-products' || location.pathname === '/inventories/create-products') ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Productos
                         </Link>
-                        <Link to='/inventories/consult-raw-materals' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-raw-materals' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-raw-materals' className={`${styles.link__Sub_Menu} ${(location.pathname === '/inventories/consult-raw-materals' || location.pathname === '/inventories/create-raw-materals') ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Materia prima
                         </Link>
-                        <Link to='/inventories/consult-services' className={`${styles.link__Sub_Menu} ${location.pathname === '/inventories/consult-services' ? styles.active__Sub_Menu : ''} text-decoration-none`}>
+                        <Link to='/inventories/consult-services' className={`${styles.link__Sub_Menu} ${(location.pathname === '/inventories/consult-services' || location.pathname === '/inventories/create-services') ? styles.active__Sub_Menu : ''} text-decoration-none`}>
                             Servicios
                         </Link>
                     </div>
@@ -347,7 +347,7 @@ function SideBar() {
                 </div>
                 {isAccountsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link to='/accounts/see-records' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/see-records' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        <Link to='/accounts/see-records' className={`${styles.link__Sub_Menu} ${(location.pathname === '/accounts/see-records' || location.pathname === '/accounts/consult-incomes' || location.pathname === '/accounts/consult-cxc' || location.pathname === '/accounts/consult-expences' || location.pathname === '/accounts/consult-cxp') ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Ver todos los registros
                         </Link>
                         <Link to='/accounts/create-incomes' className={`${styles.link__Sub_Menu} ${location.pathname === '/accounts/create-incomes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
@@ -476,7 +476,7 @@ function SideBar() {
                 </div>
                 {isCrmClientsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link to='/crm-clients/consult-crm-clients' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/consult-crm-clients' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        <Link to='/crm-clients/consult-crm-clients' className={`${styles.link__Sub_Menu} ${(location.pathname === '/crm-clients/consult-crm-clients' || location.pathname === '/crm-clients/create-crm-clients') ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Clientes
                         </Link>
                         <Link to='/crm-clients/customer-tracking' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-clients/customer-tracking' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
@@ -507,7 +507,7 @@ function SideBar() {
                 </div>
                 {isCrmSuppliersSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/consult-crm-suppliers' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        <Link to='/crm-suppliers/consult-crm-suppliers' className={`${styles.link__Sub_Menu} ${(location.pathname === '/crm-suppliers/consult-crm-suppliers' || location.pathname === '/crm-suppliers/create-crm-suppliers') ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Proveedores
                         </Link>
                         <Link to='/crm-suppliers/tracking-your-purchases' className={`${styles.link__Sub_Menu} ${location.pathname === '/crm-suppliers/tracking-your-purchases' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
@@ -538,10 +538,10 @@ function SideBar() {
                 </div>
                 {isReportsAndIndicatorsSubMenuOpen && (
                     <div className={styles.sub__Menu}>
-                        <Link to='/reports-and-indicators/accounts-and-inventory-indicators' className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        <Link to='/reports-and-indicators/accounts-and-inventory-indicators' className={`${styles.link__Sub_Menu} ${(location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' || location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators/calculate-financial-items') ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Indicadores cuentas e inventarios
                         </Link>
-                        <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Sub_Menu} ${location.pathname === '/reports-and-indicators/marketing-indicators' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                        <Link to='/reports-and-indicators/marketing-indicators' className={`${styles.link__Sub_Menu} ${(location.pathname === '/reports-and-indicators/marketing-indicators' || location.pathname === '/reports-and-indicators/marketing-indicators/calculate-marketing-items') ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Indicadores de mercadeo
                         </Link>
                     </div>
