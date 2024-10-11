@@ -36,6 +36,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
 
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IAssets>();
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     
     useEffect(() => {
@@ -59,10 +60,11 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
     };
 
     const onSubmit = async (values: IAssets) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
-                branchId: selectedBranchId || values.branchId, // Usa el branchId pasado como prop si está disponible
+                branchId: selectedBranchId || values.branchId,
                 referenceItem: String(values.referenceItem),
                 conditionAssets: selectedCondition,
             } as IAssets;
@@ -85,6 +87,8 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -127,6 +131,10 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                         </Modal>
 
                         <form onSubmit={handleSubmit(onSubmit)} className={`${styles.form} m-auto d-flex flex-column align-items-center justify-content-center position-relative`}>
+                            {formSubmitted && (
+                                <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
+                            )}
+
                             {Array.isArray(errorAssets) && errorAssets?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
@@ -137,7 +145,7 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                                     {...register('branchId', { required: true })}
                                     className={`${styles.input} p-2 border`}
                                     defaultValue={selectedBranchId || ''}
-                                    disabled={!!selectedBranchId} // Deshabilita el select si se pasa una branchId
+                                    disabled={!!selectedBranchId}
                                 >
                                     <option value=''>Selecciona una Sede</option>
                                     {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -286,13 +294,17 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                                 </select>
                             </div>
 
-                            <div className="mb-5 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                            <div className="mb-5 d-flex">
+                                {loading ? 
+                                    <div className={`${styles.container__Loading} `}>
+                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                                }
                             </div>
-
-                            {formSubmitted && (
-                                <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                            )}
                         </form>
                     </div>
                     {!onCreateComplete && <Footer />}

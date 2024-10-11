@@ -16,8 +16,10 @@ interface ModalEditBranchProps {
 }
 
 function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBranchProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
     const [editedBranch, setEditedBranch] = useState<IBranch>({ ...branch });
     const [editedTypeDocumentIdManager, setEditedTypeDocumentIdManager] = useState<string>(branch.typeDocumentIdManager || 'Cedula de Ciudadania');
 
@@ -28,9 +30,7 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
     const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);
 
     const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
-        // Asegurar que el valor de department es un valor válido de la lista o undefined
         const validDepartment = department as 'Bogota D.C.' | 'Amazonas' | 'Antioquia' | 'Arauca' | 'Atlantico' | 'Bolivar' | 'Boyaca' | 'Caldas' | 'Caqueta' | 'Casanare' | 'Cauca' | 'Cesar' | 'Choco' | 'Cordoba' | 'Cundinamarca' | 'Guainia' | 'Guaviare' | 'Huila' | 'La Guajira' | 'Magdalena' | 'Meta' | 'Nariño' | 'Norte de Santander' | 'Putumayo' | 'Quindio' | 'Risaralda' | 'San Andres y Providencia' | 'Santander' | 'Sucre' | 'Tolima' | 'Valle del Cauca' | 'Vaupes' | 'Vichada';
-    
         setSelectedDepartment(validDepartment);
         setSelectedCity(city);
         setSelectedCodeDane(codeDane);
@@ -57,19 +57,21 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
     };
 
     const handleSaveChanges = async (formData: IBranch) => {
+        setLoading(true);
         try {
             formData.typeDocumentIdManager = editedTypeDocumentIdManager as 'Cedula de Ciudadania' | 'Cedula de Extranjeria' | 'Pasaporte';
             formData.department = selectedDepartment;
             formData.city = selectedCity;
             formData.codeDane = selectedCodeDane;
             formData.subregionCodeDane = selectedSubregionCodeDane;
-
             await dispatch(putBranch(idBranch, formData, token));
             dispatch(getBranches(token));
             setResetDepartmenAndCity(true);
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -178,7 +180,15 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
                     </div>
 
                     <div className="d-flex align-items-center justify-content-center">
-                        <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
+                        {loading ?
+                            <div className={`${styles.container__Loading} position-relative w-100`}>
+                                <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                                    <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                </button>
+                            </div> 
+                        :
+                            <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
+                        }
                         <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
                     </div>
                 </div>

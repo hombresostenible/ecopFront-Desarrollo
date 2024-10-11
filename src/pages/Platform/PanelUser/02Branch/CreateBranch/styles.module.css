@@ -37,22 +37,6 @@
 .form {
     width: 550px;
 }
-.alert__Success {
-    color: #4cb963;
-    font-weight: 700;
-    top: 5px;
-    left: 50px;
-    right: 50px;
-    z-index: 1;
-}
-.alert__Danger {
-    color: #ff595e;
-    font-weight: 800;
-    top: 5px;
-    left: 50px;
-    right: 50px;
-    z-index: 1;
-}
 .label {
     font-weight: 600;
     margin-bottom: 5px;
@@ -72,6 +56,7 @@
     top: 65px;
 }
 .container__Loading {
+    border: 1px solid red;
     width: 100%;
 }
 .button__Submit {
@@ -88,6 +73,23 @@
 }
 .container__Loading {
     width: 100%;
+}
+.alert__Success {
+    position: absolute;
+    color: #4cb963;
+    font-weight: 700;
+    top: 50px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
+}
+.alert__Danger {
+    color: #ff595e;
+    font-weight: 800;
+    top: 100px;
+    left: 50px;
+    right: 50px;
+    z-index: 1;
 }
 
 /* ---------- RESPONSIVE (700 PX) ---------- */

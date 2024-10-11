@@ -26,7 +26,7 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
 
     // Estados de Redux
     const user = useSelector((state: RootState) => state.user.user);
-
+    const [loading, setLoading] = useState(false);
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
 
@@ -122,24 +122,29 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
     };
 
     const onSubmit = () => {
-        if (!excelData || !selectedBranch) return;
-        const branchId = selectedBranch;
-        // Filtrar las filas no vacías del excelData
-        const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-        const formData = nonEmptyRows.map(asset => ({
-            ...asset,
-            branchId: branchId,
-            userId: user?.id,
-        }));
-        dispatch(postManyAssets(formData as unknown as IAssets[], token));
-        // Restablecer estado y mensaje de éxito
-        setExcelData(null);
-        setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
-        setTimeout(() => {
-            setShouldNavigate(true);
-            dispatch(getAssets(token));
-            onCreateComplete();
-        }, 1500);
+        setLoading(true);
+        try {
+            if (!excelData || !selectedBranch) return;
+            const branchId = selectedBranch;
+            const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
+            const formData = nonEmptyRows.map(asset => ({
+                ...asset,
+                branchId: branchId,
+                userId: user?.id,
+            }));
+            dispatch(postManyAssets(formData as unknown as IAssets[], token));
+            setExcelData(null);
+            setMessage('Se guardó masivamente tus equipos, herramientas o máquinas con exito');
+            setTimeout(() => {
+                setShouldNavigate(true);
+                dispatch(getAssets(token));
+                onCreateComplete();
+            }, 1500);            
+        } catch (error) {
+            throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -211,8 +216,16 @@ function CreateManyAssets({ branches, token, onCreateComplete }: CreateManyMerch
                 )}
             </div>
 
-            <div className="d-flex">
-                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
+            <div className="mb-5 d-flex">
+                {loading ? 
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={onSubmit}>Enviar</button>
+                }
             </div>
         </div>
     );

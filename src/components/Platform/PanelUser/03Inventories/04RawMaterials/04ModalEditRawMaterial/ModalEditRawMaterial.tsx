@@ -19,7 +19,7 @@ interface ModalEditRawMaterialProps {
 function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseModal }: ModalEditRawMaterialProps) {
     // REDUX
     const dispatch: AppDispatch = useDispatch();
-
+    const [loading, setLoading] = useState(false);
     const [editedRawMaterial, setEditedRawMaterial] = useState<IRawMaterial>({ ...rawMaterial });
 
     const [editedPackaged, setEditedPackaged] = useState(rawMaterial?.packaged || 'No');
@@ -64,6 +64,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
     };
 
     const handleSaveChanges = async (editedRawMaterial: IRawMaterial) => {
+        setLoading(true);
         try {
             editedRawMaterial.packaged = editedPackaged;
             editedRawMaterial.primaryPackageType = editedPrimaryPackageType;
@@ -88,12 +89,13 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
             }
             if (editedPackaged === 'No') editedRawMaterial.primaryPackageType = undefined;
             if (editedIndividualPackaging === 'No') editedRawMaterial.secondaryPackageType = undefined;
-
             await dispatch(putRawMaterial(idItem, editedRawMaterial, token));
             dispatch(getRawMaterials(token));
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -566,7 +568,16 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedRawMaterial)}>Guardar</button>
+                {loading ?
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedRawMaterial)}>Guardar</button>
+                }
+
                 <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(rawMaterial.id)}>Cancelar</button>
             </div>
         </div>

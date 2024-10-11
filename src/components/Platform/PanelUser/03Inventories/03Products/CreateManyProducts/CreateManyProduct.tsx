@@ -24,7 +24,7 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
 
     const dispatch: AppDispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.user);
-
+    const [loading, setLoading] = useState(false);
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
     const [selectedBranch, setSelectedBranch] = useState('');
@@ -156,16 +156,23 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
         
     // Función onSubmit actualizada que usa prepareFormData
     const onSubmit = () => {
-        if (!excelData || !selectedBranch) return;
-        const formData = prepareFormData(excelData, selectedBranch, user);
-        dispatch(postManyProducts(formData, token));
-        setExcelData(null);
-        setMessage('Se guardaron exitosamente los registros');
-        setTimeout(() => {
-            setShouldNavigate(true);
-            dispatch(getProducts(token));
-            onCreateComplete();
-        }, 1500);
+        setLoading(true);
+        try {
+            if (!excelData || !selectedBranch) return;
+            const formData = prepareFormData(excelData, selectedBranch, user);
+            dispatch(postManyProducts(formData, token));
+            setExcelData(null);
+            setMessage('Se guardaron exitosamente los registros');
+            setTimeout(() => {
+                setShouldNavigate(true);
+                dispatch(getProducts(token));
+                onCreateComplete();
+            }, 1500);
+        } catch (error) {
+            throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -236,8 +243,16 @@ function CreateManyProducts({ branches, token, onCreateComplete }: CreateManyPro
                 )}
             </div>
 
-            <div className="d-flex">
-                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
+            <div className="mb-5 d-flex">
+                {loading ? 
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={onSubmit}>Enviar</button>
+                }
             </div>
         </div>
     );

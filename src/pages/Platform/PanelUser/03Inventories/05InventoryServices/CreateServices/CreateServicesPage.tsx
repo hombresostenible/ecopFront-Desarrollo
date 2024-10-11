@@ -42,8 +42,8 @@ function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
     const rawMaterial = useSelector((state: RootState) => state.rawMaterial.rawMaterial);
     
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IService>();
-
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [selectedBranch, setSelectedBranch] = useState('');
     
@@ -295,13 +295,13 @@ function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
     };
 
     const onSubmit = (values: IService) => {
+        setLoading(true);
         try {
             if (!isCreatingRawMaterial && !isCreatingProduct && !isCreatingAsset) {
                 // Convertir assets, product y rawMaterial a arrays si no lo son ya
                 const assetsArray = Array.isArray(assets) ? assets : assets ? [assets] : [];
                 const productsArray = Array.isArray(product) ? product : product ? [product] : [];
                 const rawMaterialsArray = Array.isArray(rawMaterial) ? rawMaterial : rawMaterial ? [rawMaterial] : [];
-    
                 const formData = {
                     ...values,
                     retentionType: showRetentionType,
@@ -342,6 +342,8 @@ function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
             }
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -387,6 +389,7 @@ function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
                             {formSubmitted && (
                                 <div className={`${styles.alert__Success} text-center position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
                             )}
+
                             {Array.isArray(errorService)&& errorService?.map((error, i) => (
                                 <div key={i} className={`${styles.alert__Danger} text-center position-absolute alert-danger`}>{error}</div>
                             ))}
@@ -663,8 +666,16 @@ function CreateServicesPage({ addNotification }: CreateServicesPageProps) {
                                 </div>
                             )}
 
-                            <div className="mb-5 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                            <div className="mb-5 d-flex">
+                                {loading ? 
+                                    <div className={`${styles.container__Loading} `}>
+                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                                }
                             </div>
                         </form>
                     </div>
