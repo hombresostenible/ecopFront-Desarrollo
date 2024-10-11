@@ -283,7 +283,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={inventoriesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleInventoriesClick} />
+                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/consult-merchandises' || location.pathname === '/inventories/consult-products' || location.pathname === '/inventories/raw-materals' || location.pathname === '/inventories/consult-services') ? styles.active__Icon_Section : ''}`} onClick={handleInventoriesClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInventorySubMenuOpen}>
@@ -327,7 +327,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={accountsMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <FaFileInvoiceDollar className={`${showAccountsClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleAccountsClick}/>
+                            <FaFileInvoiceDollar className={`${showAccountsClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/accounts/see-records' || location.pathname === '/accounts/create-incomes' || location.pathname === '/accounts/fast-incomes' || location.pathname === '/accounts/create-expenses' || location.pathname === '/consult-pending-approval') ? styles.active__Icon_Section : ''}`} onClick={handleAccountsClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleAccountsSubMenuOpen} >Cuentas {isAccountsSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -369,7 +369,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={invoicingPosMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <MdReceiptLong className={`${showInvoicingPosClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleInvoicingPosClick}/>
+                            <MdReceiptLong className={`${showInvoicingPosClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/invoicing-and-pos/pos' || location.pathname === '/invoicing-and-pos/electronic-invoicing' || location.pathname === '/invoicing-and-pos/see-electronic-invoicing-pos' || location.pathname === '/invoicing-and-pos/recurring-invoices' || location.pathname === '/invoicing-and-pos/quotations') ? styles.active__Icon_Section : ''} `} onClick={handleInvoicingPosClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInvoicingPosSubMenuOpen} >Facturación electrónica {isInvoicingPosSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -411,7 +411,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={electronicPayrollMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <BsCashCoin className={`${showElectronicPayrollClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleElectronicPayrollClick}/>
+                            <BsCashCoin className={`${showElectronicPayrollClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/electronic-payroll/consult-collaborators' || location.pathname === '/electronic-payroll/create-collaborators') ? styles.active__Icon_Section : ''}`} onClick={handleElectronicPayrollClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleElectronicPayrollSubMenuOpen} >Nomina electrónica {isElectronicPayrollSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -458,7 +458,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={crmClientsMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <TbCoin className={`${showCrmClientsClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleCrmClientsClick}/>
+                            <TbCoin className={`${showCrmClientsClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/crm-clients/consult-crm-clients' || location.pathname === '/crm-clients/customer-tracking') ? styles.active__Icon_Section : ''}`} onClick={handleCrmClientsClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleCrmClientsSubMenuOpen} >CRM Clientes {isCrmClientsSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -489,7 +489,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={crmSuppliersMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <FaUsers className={`${showCrmSuppliersClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleCrmSuppliersClick}/>
+                            <FaUsers className={`${showCrmSuppliersClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/crm-suppliers/consult-crm-suppliers' || location.pathname === '/crm-suppliers/tracking-your-purchases') ? styles.active__Icon_Section : ''}`} onClick={handleCrmSuppliersClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleCrmSuppliersSubMenuOpen} >CRM Proveedores {isCrmSuppliersSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -520,7 +520,7 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={reportsAndIndicatorsMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <PiChartLineUp className={`${showReportsIndicatorsClick ? styles.icon__Compact : styles.icon__Section} `} onClick={handleReportsIndicatorsClick}/>
+                            <PiChartLineUp className={`${showReportsIndicatorsClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/reports-and-indicators/accounts-and-inventory-indicators' || location.pathname === '/reports-and-indicators/marketing-indicators') ? styles.active__Icon_Section : ''}`} onClick={handleReportsIndicatorsClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleReportsAndIndicatorsSubMenuOpen} >Reportes e indicadores {isReportsAndIndicatorsSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>

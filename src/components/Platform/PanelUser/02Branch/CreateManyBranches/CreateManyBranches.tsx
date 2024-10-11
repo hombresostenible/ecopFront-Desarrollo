@@ -20,6 +20,7 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
     const dispatch: AppDispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const [ excelData, setExcelData ] = useState<Array<{ [key: string]: any }> | null>(null);
     const [ headers, setHeaders ] = useState<string[]>([]);
@@ -99,24 +100,28 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
         // Agregar más nombres de columnas según sea necesario
     };
 
-    const onSubmit = async () => {    
-        // Filtrar las filas que contienen datos
-        const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
-    
-        // Mapear solo las filas no vacías
-        const formData = nonEmptyRows?.map(branch => ({
-            ...branch,
-            contactPhoneBranch: branch.contactPhoneBranch.toString(),
-            documentIdManager: branch.documentIdManager.toString(),
-        }));
-        await dispatch(postManyBranch(formData as IBranch[], token));
-        setExcelData(null);
-        setMessage('Se guardó masivamente tus sedes con exito');
-        setTimeout(() => {
-            setShouldNavigate(true);
-            dispatch(getBranches(token));
-            onCreateComplete();
-        }, 1500);
+    const onSubmit = async () => {
+        setLoading(true);
+        try {
+            const nonEmptyRows = excelData?.filter(row => Object.values(row).some(value => !!value));
+            const formData = nonEmptyRows?.map(branch => ({
+                ...branch,
+                contactPhoneBranch: branch.contactPhoneBranch.toString(),
+                documentIdManager: branch.documentIdManager.toString(),
+            }));
+            await dispatch(postManyBranch(formData as IBranch[], token));
+            setExcelData(null);
+            setMessage('Se guardó masivamente tus sedes con exito');
+            setTimeout(() => {
+                setShouldNavigate(true);
+                dispatch(getBranches(token));
+                onCreateComplete();
+            }, 1500);
+        } catch (error) {
+            throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -173,8 +178,16 @@ function CreateManyBranches ({ token, onCreateComplete }: CreateManyBranchesProp
                 )}
             </div>
 
-            <div className="d-flex">
-                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} type='button' onClick={onSubmit}>Enviar</button>
+            <div className="mb-5 d-flex">
+                {loading ? 
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={onSubmit}>Enviar</button>
+                }
             </div>
         </div>
     );

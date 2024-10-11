@@ -133,7 +133,9 @@
 .link:hover {
     cursor: pointer;
 }
-
+.container__Loading {
+    width: 100%;
+}
 
 /* ---------- RESPONSIVE (700 PX) ---------- */
 @media screen and (max-width: 700px) {

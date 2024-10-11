@@ -38,3 +38,6 @@
     transition: 300ms all ease;
     cursor: pointer;
 }
+.container__Loading {
+    width: 100%;
+}

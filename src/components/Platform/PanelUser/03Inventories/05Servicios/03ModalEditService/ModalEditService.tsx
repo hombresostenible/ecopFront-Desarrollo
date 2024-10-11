@@ -20,6 +20,7 @@ interface ModalEditServiceProps {
 function ModalEditService({ token, idItem, service, branches, onCloseModal }: ModalEditServiceProps) {
     // REDUX
     const dispatch: AppDispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const [editedService, setEditedService] = useState<IService>({ ...service });
 
@@ -60,6 +61,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
     };
 
     const handleSaveChanges = async (editedService: IService) => {
+        setLoading(true);
         try {
             editedService.isDiscounted = editedIsDiscounted;
             // IMPUESTOS
@@ -74,6 +76,8 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -311,7 +315,16 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedService)}>Guardar</button>
+                {loading ?
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedService)}>Guardar</button>
+                }
+
                 <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(service.id)}>Cancelar</button>
             </div>
         </div>

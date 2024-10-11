@@ -45,6 +45,7 @@
     width: 120px;
 }
 .unit__Price {
+    /* border: 1px solid red; */
     height: 60px;
     width: 150px;
 }
@@ -55,6 +56,12 @@
 }
 .price__Input:focus{
     outline-color: #718bd8;
+}
+.text__Ellipsis_Purchase_Price {
+    opacity: 0.75;
+    left: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .subtotal {
     height: 60px;
@@ -236,4 +243,7 @@
     transition: 300ms all ease;
     color: #f8f9fa;
     cursor: pointer;
+}
+.container__Loading {
+    width: 100%;
 }

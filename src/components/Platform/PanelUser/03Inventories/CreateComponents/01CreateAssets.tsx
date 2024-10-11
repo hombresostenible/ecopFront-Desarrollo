@@ -28,6 +28,7 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
     const branches = useSelector((state: RootState) => state.branch.branch);
 
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm<IAssets>();
+    const [loading, setLoading] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     
@@ -55,13 +56,13 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
     };
 
     const onSubmit = async (values: IAssets) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
                 conditionAssets: selectedCondition,
                 branchId: selectedBranchId || values.branchId,
             } as IAssets;
-
             await dispatch(postAsset(formData, token));
             setFormSubmitted(true);
             reset();
@@ -79,6 +80,8 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -101,15 +104,13 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
                 ))}
                 
                 <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
-                    <div>
-                        <p className={`${styles.text} mb-0 p-2`}>Sede</p>
-                    </div>
+                    <p className={`${styles.text} mb-0 p-2`}>Sede</p>
                     <div>
                         <select
                             {...register('branchId', { required: true })}
                             className={`${styles.input} p-2 border `}
                             defaultValue={selectedBranchId || ''}
-                            disabled={!!selectedBranchId} // Deshabilita el select si se pasa una branchId
+                            disabled={!!selectedBranchId}
                         >
                             <option value=''>Selecciona una Sede</option>
                             {Array.isArray(branches) && branches.map((branch: IBranch, index: number) => (
@@ -292,8 +293,16 @@ function CreateAsset({ token, selectedBranchId, onCreateComplete, onAssetCreated
                     </div>
                 </div>
 
-                <div className="mb-4 d-flex align-items-center justify-content-center">
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                <div className="mb-5 d-flex">
+                    {loading ? 
+                        <div className={`${styles.container__Loading} position-relative w-100`}>
+                            <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                                <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                            </button>
+                        </div> 
+                    :
+                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                    }
                 </div>
             </form>
         </div>

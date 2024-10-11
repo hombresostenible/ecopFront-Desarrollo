@@ -19,6 +19,7 @@ interface ModalEditProductProps {
 function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: ModalEditProductProps) {
     // REDUX
     const dispatch: AppDispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const [editedProduct, setEditedProduct] = useState<IProduct>({ ...product });
 
@@ -64,6 +65,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
     };
 
     const handleSaveChanges = async (editedProduct: IProduct) => {
+        setLoading(true);
         try {
             editedProduct.packaged = editedPackaged;
             editedProduct.primaryPackageType = editedPrimaryPackageType;
@@ -93,7 +95,9 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
             dispatch(getProducts(token));
             onCloseModal();
         } catch (error) {
-            console.error('Error al guardar cambios:', error);
+            throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -550,7 +554,15 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
             </div>
 
             <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedProduct)}>Guardar</button>
+                {loading ?
+                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedProduct)}>Guardar</button>
+                }
                 <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(product.id)}>Cancelar</button>
             </div>
         </div>
