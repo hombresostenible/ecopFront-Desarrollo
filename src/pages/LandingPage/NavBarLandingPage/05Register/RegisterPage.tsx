@@ -1,8 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
+// REDUX
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../../../redux/store';
+import { clearUserErrors } from '../../../../redux/User/userSlice/userSlice';
+// ELEMENTOS DEL COMPONENTE
 import { Link } from 'react-router-dom';
 import Logo from '../../../../assets/LogoEcopcion.svg';
 import styles from './styles.module.css';
 
 function RegisterPage() {
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(clearUserErrors());
+    }, [  ]);
 
     return (
         <div className={`${styles.container} d-flex align-items-center justify-content-center`}>

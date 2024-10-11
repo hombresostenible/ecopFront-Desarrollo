@@ -48,13 +48,13 @@ function LoginPage() {
         <div className="d-flex align-items-center justify-content-center">
             <div className={`${styles.container} d-flex align-items-center justify-content-center vh-100`}>
                 <div className={`${styles.container__Component} d-flex flex-column align-items-center justify-content-center`}>
-                    <Link to="/">
+                    <Link to="/" className='mb-3'>
                         <img src={Logo} alt="Top Drive Group" className={`${styles.logo} mb-4`}/>
                     </Link>
                     
                     <div className='position-relative'>
                         {errorUser && (
-                            <div className={`${styles.errors} p-2 text-center position-absolute w-100`}>
+                            <div className={`${styles.errors} text-center position-absolute w-100`}>
                                 <p className='m-0'><PiWarningCircle /> {errorUser}</p>
                             </div>
                         )}

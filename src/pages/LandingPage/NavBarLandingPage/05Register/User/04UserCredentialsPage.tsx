@@ -23,37 +23,39 @@ function UserCredentialsPage({ register, errors }: InfoCredentialsSectionProps) 
             <h4 className={`${styles.tertiary__Title } text-center`}>Tus datos de acceso</h4>
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Email</h6>
-                <div className={styles.container__Input}>
-                    <input
-                        type="email"
-                        {...register('email', { required: true })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es tu email?'
-                    />
-                    {errors.email && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El email del usuario es requerido</p>
-                    )}
-                </div>
+                <input
+                    type="email"
+                    {...register('email', {
+                        required: `El email es requerido`,
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: `El formato del email no es válido`
+                        }
+                    })}
+                    className={`${styles.input} p-2 border `}
+                    placeholder={`¿Cuál es tu email?`}
+                />
+                {errors.email && (
+                    <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.email.message}</p>
+                )}
             </div>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Contraseña</h6>
-                <div className={styles.container__Input}>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        {...register('password', { required: true })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es tu contraseña?'
-                    />
-                    {showPassword ? (
-                        <RiEyeOffFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
-                    ) : (
-                        <RiEyeFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
-                    )}
-                    {errors.password && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>La contraseña es requerida</p>
-                    )}
-                </div>
+                <input
+                    type={showPassword ? "text" : "password"}
+                    {...register('password', { required: true })}
+                    className={`${styles.input} p-2 border `}
+                    placeholder='¿Cuál es tu contraseña?'
+                />
+                {showPassword ? (
+                    <RiEyeOffFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
+                ) : (
+                    <RiEyeFill className={`${styles.icon} position-absolute`} onClick={toggleShowPassword} />
+                )}
+                {errors.password && (
+                    <p className={`${styles.text__Danger} text-danger position-absolute`}>La contraseña es requerida</p>
+                )}
             </div>
 
             <div className={`${styles.container__Accepted_Policy} d-flex align-items-center justify-content-center position-relative`}>

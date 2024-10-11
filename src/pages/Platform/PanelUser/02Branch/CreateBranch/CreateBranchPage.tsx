@@ -32,8 +32,9 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
     const errorBranch = useSelector((state: RootState) => state.branch.errorBranch);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IBranch>();
-
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     
     const [showCancelModal, setShowCancelModal] = useState(false);
     const onCloseBranchModal = () => {
@@ -44,7 +45,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedCodeDane, setSelectedCodeDane] = useState('');
     const [selectedsubregionCodeDane, setSelectedsubregionCodeDane] = useState('');
-    const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);    //Estado para resetear el componente "DepartmenAndCity" luego de crear el registro
+    const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);
     // Función para manejar los datos seleccionados del departamento y los municipios
     const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
         setSelectedDepartment(department);
@@ -54,6 +55,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
     };
     
     const onSubmit = async (values: IBranch) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -73,7 +75,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);
-                }, 10); // Se reinicia después de un corto período para asegurarse de que el reset haya tenido efecto
+                }, 10);
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -158,7 +160,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                                 )}
                             </div>
 
-                            <div className="mb-4 w-100 position-relative">
+                            {/* <div className="mb-4 w-100 position-relative">
                                 <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Email de la Sede</p>
                                 <input
                                     type="email"
@@ -169,18 +171,52 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                                 {errors.contactEmailBranch && (
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>El email de la Sede es requerido</p>
                                 )}
+                            </div> */}
+
+                            <div className="mb-4 w-100 position-relative">
+                                <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Email de la Sede</p>
+                                <input
+                                    type="email"
+                                    {...register('contactEmailBranch', {
+                                        required: `El email es requerido`,
+                                        pattern: {
+                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                            message: `El formato del email no es válido`
+                                        }
+                                    })}
+                                    className={`${styles.input} p-2 border `}
+                                    placeholder={`¿Cuál es tu email?`}
+                                />
+                                {errors.contactEmailBranch && (
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.contactEmailBranch.message}</p>
+                                )}
                             </div>
 
                             <div className="mb-4 w-100 position-relative">
                                 <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> Número telefónico de la Sede</p>
                                 <input
-                                    type="text"
-                                    {...register('contactPhoneBranch', { required: true })}
-                                    className={`${styles.input} p-2 border`}
-                                    placeholder='Número telefónico de contacto de la Sede'
+                                    type="tel"
+                                    {...register('contactPhoneBranch', { 
+                                        required: true, 
+                                        pattern: /^\d{1,10}$/,
+                                        setValueAs: (value) => value.substring(0, 10)
+                                    })}
+                                    className={`${styles.input} p-2 border `}
+                                    placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
+                                    maxLength={10}
+                                    min={0}
+                                    onInput={(e) => {
+                                        const target = e.target as HTMLInputElement;
+                                        target.value = target.value.replace(/\D/g, '').substring(0, 10);
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                            e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 {errors.contactPhoneBranch && (
-                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El número telefónico de contacto de la Sede es requerido</p>
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del usuario es requerido</p>
                                 )}
                             </div>
 
@@ -237,16 +273,18 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad del Gerente de la Sede es requerido</p>
                                 )}
                             </div>
-                            
-                            <div className="mb-4 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
-                            </div>
 
-                            {/* <div className={`${styles.container__Loading} d-flex align-items-center justify-content-center position-absolute`}>
-                                {loading && (
-                                    <Loading />
-                                )}
-                            </div> */}
+                            <div className="d-flex">
+                                {loading ? 
+                                    <div className={`${styles.container__Loading} `}>
+                                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
+                                }
+                            </div>
                         </form>
                     </div>
                     <Footer />

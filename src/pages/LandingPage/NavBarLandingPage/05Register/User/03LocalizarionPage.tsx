@@ -22,58 +22,65 @@ function LocalizarionPage({ register, errors, onSelect, reset }: UserInfoSection
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Dirección</h6>
-                <div className={styles.container__Input}>
-                    <input
-                        type="text"
-                        {...register('address', { required: true })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es tu dirección?'
-                    />
-                    {errors.address && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección de tu oficina es requerida</p>
-                    )}
-                </div>
+                <input
+                    type="text"
+                    {...register('address', { required: true })}
+                    className={`${styles.input} p-2 border `}
+                    placeholder='¿Cuál es tu dirección?'
+                />
+                {errors.address && (
+                    <p className={`${styles.text__Danger} text-danger position-absolute`}>La dirección de tu oficina es requerida</p>
+                )}
             </div>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}>Código postal</h6>
-                <div className={styles.container__Input}>
-                    <input
-                        type="text" // Cambié el tipo a "text" para permitir caracteres alfanuméricos
-                        {...register('postalCode', {
-                            maxLength: 10, // Limita el input a 10 caracteres
-                            pattern: /^[A-Za-z0-9]{1,10}$/ // Expresión regular para hasta 10 caracteres alfanuméricos
-                        })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='Si tienes código postal ¿Cuál es el código?'
-                        maxLength={10} // Limita el input a 10 caracteres
-                        onKeyDown={(e) => {
-                            // Puedes personalizar la prevención de caracteres si es necesario
-                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
-                                e.preventDefault();
-                            }
-                        }}
-                    />
-                </div>
+                <input
+                    type="text"
+                    {...register('postalCode', {
+                        maxLength: 10,
+                        pattern: /^[A-Za-z0-9]{1,10}$/
+                    })}
+                    className={`${styles.input} p-2 border `}
+                    placeholder='Si tienes código postal ¿Cuál es el código?'
+                    maxLength={10}
+                    onKeyDown={(e) => {
+                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                            e.preventDefault();
+                        }
+                    }}
+                />
             </div>
 
             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono fijo</h6>
-                <div className={styles.container__Input}>
-                    <input
-                        type="phone"
-                        {...register('phone', { required: true })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
-                        min={0}
-                    />
-                    {errors.phone && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del usuario es requerido</p>
-                    )}
-                </div>
+                <input
+                    type="tel"
+                    {...register('phone', { 
+                        required: true, 
+                        pattern: /^\d{1,10}$/,
+                        setValueAs: (value) => value.substring(0, 10)
+                    })}
+                    className={`${styles.input} p-2 border `}
+                    placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
+                    maxLength={10}
+                    min={0}
+                    onInput={(e) => {
+                        const target = e.target as HTMLInputElement;
+                        target.value = target.value.replace(/\D/g, '').substring(0, 10);
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                            e.preventDefault();
+                        }
+                    }}
+                />
+                {errors.phone && (
+                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del usuario es requerido</p>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
 export default LocalizarionPage;

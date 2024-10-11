@@ -10,51 +10,59 @@
 .input__Bar_Code:focus {
     outline-color: #718bd8;
 }
+
 /* TABLA */
 .container__Table {
-    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    max-width: 1165px;
+    overflow-x: auto;
 }
 .container__Head {
-    background: #e9ecef;
     height: 60px;
     width: 100%;
     font-weight: 600;
 }
 
 /* TITULOS DE LAS COLUMNAS */
-.container__Tr {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+.container__Tr{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    flex-wrap: nowrap;
     height: 60px;
+}
+.container__Info {
+    flex-wrap: nowrap;
 }
 .quantity {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 100px;
 }
 .description__Item {
     height: 60px;
-    width: 35%;
-    min-width: 350px;
+    width: 300px;
 }
 .iva {
     height: 60px;
-    width: 10%;
-    min-width: 100px;
+    width: 120px;
 }
-.price__Unit {
+.unit__Price {
     height: 60px;
-    width: 20%;
-    min-width: 200px;
+    width: 150px;
 }
-.value {
+.price__Input {
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+.price__Input:focus{
+    outline-color: #718bd8;
+}
+.subtotal {
     height: 60px;
-    width: 15%;
-    min-width: 150px;
+    width: 150px;
 }
 .delete {
     height: 60px;
-    width: 5%;
-    min-width: 50px;
+    width: 70px;
 }
 
 /* CONTENIDO DE LA TABLA */

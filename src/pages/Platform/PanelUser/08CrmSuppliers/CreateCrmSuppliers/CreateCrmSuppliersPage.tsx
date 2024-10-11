@@ -80,7 +80,7 @@ function CreateCrmSupplierPage({ addNotification }: CreateCrmSupplierPageProps) 
                 setResetDepartmenAndCity(true);
                 setTimeout(() => {
                     setResetDepartmenAndCity(false);
-                }, 10); // Se reinicia después de un corto período para asegurarse de que el reset haya tenido efecto
+                }, 10);
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -134,48 +134,42 @@ function CreateCrmSupplierPage({ addNotification }: CreateCrmSupplierPageProps) 
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Tipo de identificación</h6>
-                                <div className={styles.container__Input}>
-                                    <select
-                                        {...register('typeDocumentId', { required: true })}
-                                        className={`${styles.input} p-2 border`}
-                                        onChange={handleTypeDocumentIdChange}
-                                    >
-                                        <option value='NIT' translate="no">NIT</option>
-                                        <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
-                                        <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
-                                        <option value='Pasaporte'>Pasaporte</option>
-                                    </select>
-                                    {errors.typeDocumentId && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del proveedor es requerido</p>
-                                    )}
-                                </div>
+                                <select
+                                    {...register('typeDocumentId', { required: true })}
+                                    className={`${styles.input} p-2 border`}
+                                    onChange={handleTypeDocumentIdChange}
+                                >
+                                    <option value='NIT' translate="no">NIT</option>
+                                    <option value='Cedula de Ciudadania'>Cedula de Ciudadania</option>
+                                    <option value='Cedula de Extranjeria'>Cedula de Extranjeria</option>
+                                    <option value='Pasaporte'>Pasaporte</option>
+                                </select>
+                                {errors.typeDocumentId && (
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El tipo de documento del proveedor es requerido</p>
+                                )}
                             </div>
 
                             <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Número de identificación</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('documentId')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el número de identificación de tu proveedor?'
-                                        />
-                                        {errors.documentId && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('documentId')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='¿Cuál es el número de identificación de tu proveedor?'
+                                    />
+                                    {errors.documentId && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                                    )}
                                 </div>
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}>Dígito de verificación</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('verificationDigit')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el número de identificación?'
-                                        />
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('verificationDigit')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='¿Cuál es el número de identificación?'
+                                    />
                                 </div>
                             </div>
 
@@ -183,31 +177,27 @@ function CreateCrmSupplierPage({ addNotification }: CreateCrmSupplierPageProps) 
                                 <div className={`${styles.container__Info} d-flex align-items-center justify-content-center gap-3`}>
                                     <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                         <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombres de tu proveedor</h6>
-                                        <div className={styles.container__Input}>
-                                            <input
-                                                type="text"
-                                                {...register('name')}
-                                                className={`${styles.input} p-2 border`}
-                                                placeholder='Nombres de tu proveedor'
-                                            />
-                                            {errors.name && (
-                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Los nombres de tu proveedor son requeridos</p>
-                                            )}
-                                        </div>
+                                        <input
+                                            type="text"
+                                            {...register('name')}
+                                            className={`${styles.input} p-2 border`}
+                                            placeholder='Nombres de tu proveedor'
+                                        />
+                                        {errors.name && (
+                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Los nombres de tu proveedor son requeridos</p>
+                                        )}
                                     </div>
                                     <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                         <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Apellidos de tu proveedor</h6>
-                                        <div className={styles.container__Input}>
-                                            <input
-                                                type="text"
-                                                {...register('lastName')}
-                                                className={`${styles.input} p-2 border`}
-                                                placeholder='Apellidos de tu proveedor'
-                                            />
-                                            {errors.lastName && (
-                                                <p className={`${styles.text__Danger} text-danger position-absolute`}>Los apellidos de tu proveedor son requeridos</p>
-                                            )}
-                                        </div>
+                                        <input
+                                            type="text"
+                                            {...register('lastName')}
+                                            className={`${styles.input} p-2 border`}
+                                            placeholder='Apellidos de tu proveedor'
+                                        />
+                                        {errors.lastName && (
+                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>Los apellidos de tu proveedor son requeridos</p>
+                                        )}
                                     </div>
                                 </div>
                             )}
@@ -215,49 +205,63 @@ function CreateCrmSupplierPage({ addNotification }: CreateCrmSupplierPageProps) 
                             {typeDocumentId === 'NIT' && (
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Nombre de la empresa</h6>
-                                    <div className={styles.container__Input}>
-                                        <input
-                                            type="text"
-                                            {...register('corporateName')}
-                                            className={`${styles.input} p-2 border`}
-                                            placeholder='¿Cuál es el nombre de la empresa?'
-                                        />
-                                        {errors.corporateName && (
-                                            <p className={`${styles.text__Danger} text-danger position-absolute`}>El nombre de la empresa es requerido</p>
-                                        )}
-                                    </div>
+                                    <input
+                                        type="text"
+                                        {...register('corporateName')}
+                                        className={`${styles.input} p-2 border`}
+                                        placeholder='¿Cuál es el nombre de la empresa?'
+                                    />
+                                    {errors.corporateName && (
+                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El nombre de la empresa es requerido</p>
+                                    )}
                                 </div>
                             )}
 
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Email</h6>
-                                <div className={styles.container__Input}>
-                                    <input
-                                        type="email"
-                                        {...register('email', { required: true })}
-                                        className={`${styles.input} p-2 border`}
-                                        placeholder='¿Cuál es el email?'
-                                    />
-                                    {errors.email && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El email del proveedor es requerido</p>
-                                    )}
-                                </div>
+                                <input
+                                    type="email"
+                                    {...register('email', {
+                                        required: `El email es requerido`,
+                                        pattern: {
+                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                            message: `El formato del email no es válido`
+                                        }
+                                    })}
+                                    className={`${styles.input} p-2 border `}
+                                    placeholder={`¿Cuál es tu email?`}
+                                />
+                                {errors.email && (
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>{errors.email.message}</p>
+                                )}
                             </div>
                     
                             <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                 <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono fijo</h6>
-                                <div className={styles.container__Input}>
-                                    <input
-                                        type="phone"
-                                        {...register('phone', { required: true })}
-                                        className={`${styles.input} p-2 border`}
-                                        placeholder='¿Cuál es el celular o teléfono fijo de tu proveedor?'
-                                        min={0}
-                                    />
-                                    {errors.phone && (
-                                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del proveedor es requerido</p>
-                                    )}
-                                </div>
+                                <input
+                                    type="tel"
+                                    {...register('phone', { 
+                                        required: true, 
+                                        pattern: /^\d{1,10}$/,
+                                        setValueAs: (value) => value.substring(0, 10)
+                                    })}
+                                    className={`${styles.input} p-2 border `}
+                                    placeholder='¿Cuál es el celular o teléfono fijo de tu oficina principal?'
+                                    maxLength={10}
+                                    min={0}
+                                    onInput={(e) => {
+                                        const target = e.target as HTMLInputElement;
+                                        target.value = target.value.replace(/\D/g, '').substring(0, 10);
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                />
+                                {errors.phone && (
+                                    <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular del usuario es requerido</p>
+                                )}
                             </div>
 
                             <DepartmenAndCity
