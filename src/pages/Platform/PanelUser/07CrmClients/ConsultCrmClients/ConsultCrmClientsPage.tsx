@@ -191,7 +191,7 @@ function ConsultCrmClientsPage() {
 
                         <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
                             <table className="table">
-                                <thead className={`${styles.container__Head}`}>
+                                <thead className={`${styles.container__Head} `}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         {selectedColumns.includes('Tipo de Doc. Id') && (
                                             <th className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center text-center`}>Tipo de Doc. Id</th>
@@ -218,7 +218,7 @@ function ConsultCrmClientsPage() {
                                     </tr>
                                 </thead>
                                 
-                                <tbody className={`${styles.container__Body}`}>
+                                <tbody className={`${styles.container__Body} `}>
                                     {Array.isArray(crmClient) && crmClient.length > 0 ? (
                                         crmClient.map((crmClient) => (
                                         <tr key={crmClient.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>

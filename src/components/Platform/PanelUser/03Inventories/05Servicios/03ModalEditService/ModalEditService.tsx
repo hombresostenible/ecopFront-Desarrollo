@@ -81,9 +81,9 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         onCloseModal();
-        setEditedService({ ...editedService, [id]: { ...service } });
+        setEditedService({ ...editedService });
     };
 
     return (
@@ -108,21 +108,21 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
 
             <div className='d-flex gap-3'>
                 <div className="w-100">
-                    <h6 className={styles.label}>Nombre del servicio</h6>
-                    <input
-                        type="text"
-                        className={`${styles.input} mb-3 p-2 border`}
-                        value={editedService.nameItem || ''}
-                        onChange={(e) => handleEditField(e, 'nameItem', 'text')}
-                    />
-                </div>
-                <div className="w-100">
                     <h6 className={styles.label}>Código de barras</h6>
                     <input
                         type="text"
                         className={`${styles.input} mb-3 p-2 border`}
                         value={editedService.barCode || ''}
                         onChange={(e) => handleEditField(e, 'barCode', 'text')}
+                    />
+                </div>
+                <div className="w-100">
+                    <h6 className={styles.label}>Nombre del servicio</h6>
+                    <input
+                        type="text"
+                        className={`${styles.input} mb-3 p-2 border`}
+                        value={editedService.nameItem || ''}
+                        onChange={(e) => handleEditField(e, 'nameItem', 'text')}
                     />
                 </div>
             </div>
@@ -324,7 +324,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                 :
                     <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedService)}>Guardar</button>
                 }
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );

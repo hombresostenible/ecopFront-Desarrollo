@@ -101,9 +101,9 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         onCloseModal();
-        setEditedProduct({ ...editedProduct, [id]: { ...product } });
+        setEditedProduct({ ...editedProduct });
     };
 
     return (
@@ -563,7 +563,7 @@ function ModalEditProduct({ token, idItem, product, branches, onCloseModal }: Mo
                 :
                     <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedProduct)}>Guardar</button>
                 }
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );

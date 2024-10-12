@@ -22,7 +22,7 @@ function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal, addNotificat
 
     const [loading, setLoading] = useState(false);
 
-    const onDelete = async () => {
+    const onSubmit = async () => {
         setLoading(true);
         try {
             dispatch(deleteBranch(idBranch, token));
@@ -48,7 +48,7 @@ function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal, addNotificat
                         </button>
                     </div> 
                 :
-                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onDelete}>Eliminar</button>
+                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onSubmit}>Eliminar</button>
                 }
             </div>
         </div>
