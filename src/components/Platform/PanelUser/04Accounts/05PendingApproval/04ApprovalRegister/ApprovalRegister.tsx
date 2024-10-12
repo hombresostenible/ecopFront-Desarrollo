@@ -17,27 +17,38 @@ function ApprovalRegister({ token, idItem, onCloseModal }: ApprovalRegisterProps
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async () => {
+        setLoading(true);
         try {
             dispatch(patchApproveRecord(idItem, token));
             setCurrentPage(1);
             setItemsByPage(20);
-            // Simulamos un delay de la API
             await new Promise(resolve => setTimeout(resolve, 500));
             dispatch(getUnapprovedRecords(token, currentPage, itemsByPage));
             onCloseModal();
         } catch (error) {
             throw new Error('Error al aprobar el registro');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="p-3">
             <p>¿Estás seguro de que quieres aprobar este registro?</p>
-            <div className={` d-flex mt-3`}>
-                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onSubmit} >Enviar</button>
-            </div>  
+            <div className="mb-3 d-flex align-items-center justify-content-center">
+                {loading ? 
+                    <div>
+                        <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Aprobando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onSubmit}>Aprobar</button>
+                }
+            </div> 
         </div>
     );
 }

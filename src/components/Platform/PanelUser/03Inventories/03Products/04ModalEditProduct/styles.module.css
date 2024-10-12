@@ -13,8 +13,8 @@
     outline-color: #718bd8;
 }
 .button__Submit {
-    padding: 5px 10px;
-    width: 100px;
+    height: 40px;
+    width: 200px;
     margin: 0 10px;
     border-radius: 4px;
     background: #718bd8;
@@ -27,9 +27,9 @@
 }
 .button__Cancel {
     color: #f8f9fa;
-    padding: 5px 10px;
+    height: 40px;
+    width: 200px;
     margin: 0 10px;
-    width: 100px;
     border-radius: 4px;
     background: #f28705;
 }
@@ -48,7 +48,4 @@
 .button__Edit:hover {
     border: 1px solid #0a31bf;
     cursor: pointer;
-}
-.container__Loading {
-    width: 100%;
 }

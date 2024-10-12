@@ -24,6 +24,7 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
     
     const { register, handleSubmit, formState: { errors } } = useForm<ICrmSupplier>();
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (token)
@@ -38,6 +39,9 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
     };
 
     const onSubmit = async (values: ICrmSupplier) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -51,6 +55,8 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
             onSupplierCreated(token);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -115,9 +121,18 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                     <h6 className={styles.label}>No. de identificación</h6>
                     <input
                         type="text"
-                        {...register('documentId')}
-                        className={`${styles.input} p-2`}
-                        placeholder='¿Cuál es el número de identificación?'
+                        {...register('documentId', { 
+                            required: true,
+                            pattern: /^\d{1,10}$/
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder='¿Cuál es tu número de identificación?'
+                        maxLength={10}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                     {errors.lastName && (
                         <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
@@ -143,9 +158,18 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                     <h6 className={styles.label}>Dígito de verificación</h6>
                     <input
                         type="text"
-                        {...register('verificationDigit')}
-                        className={`${styles.input} p-2`}
+                        {...register('verificationDigit', { 
+                            required: true,
+                            pattern: /^\d{1,1}$/
+                        })}
+                        className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es el dígito de verificación?'
+                        maxLength={10}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                 </div>
 
@@ -196,8 +220,16 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                     )}
                 </div>
 
-                <div className="mb-4 d-flex align-items-center justify-content-center">
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                <div className="mb-3 d-flex align-items-center justify-content-center">
+                    {loading ? 
+                        <div>
+                            <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
+                                <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                            </button>
+                        </div> 
+                    :
+                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                    }
                 </div>
             </form>
         </div>

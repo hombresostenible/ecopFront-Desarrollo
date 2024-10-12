@@ -22,22 +22,22 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
     const navigate = useNavigate();
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
     const user = useSelector((state: RootState) => state.user.user);
-
+    
     const [excelData, setExcelData] = useState<Array<{ [key: string]: any }> | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
     const [selectedBranch, setSelectedBranch] = useState<string>('');
     const [message, setMessage] = useState<string>('');
-
+    const [loading, setLoading] = useState(false);
+    
     useEffect(() => {
         if (token) {
             dispatch(getProfileUser(token));
         }
     }, [token]);
 
-    //Selección de la sede
     const handleBranchChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedBranch(e.target.value);
     };
@@ -80,19 +80,16 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
                 });
 
                 if (currentHeaders.length > 0) {
-                    // Mapear los datos a un formato compatible con el modelo, excluyendo la primera columna
                     const formattedData = originalData.map((row) =>
                         currentHeaders.slice(1).reduce((obj: { [key: string]: any }, header, index) => {
                             let value = row[index + 1];
                             if (header === 'expirationDate' && typeof value === 'number') {
-                                value = excelSerialToDate(value).toLocaleDateString(); // Convertir el número de serie a fecha legible
+                                value = excelSerialToDate(value).toLocaleDateString();
                             }
                             obj[header] = value;
                             return obj;
                         }, {})
                     );
-
-                    // Establecer los encabezados y los datos traducidos
                     setHeaders(currentHeaders.slice(1));
                     setExcelData(formattedData);
                 } else {
@@ -158,13 +155,12 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
         });
     };
     
-    // Función onSubmit actualizada que usa prepareFormData
-    const onSubmit = () => {
+    const onSubmit = async () => {
         setLoading(true);
         try {
             if (!excelData || !selectedBranch) return;
             const formData = prepareFormData(excelData, selectedBranch, user);
-            dispatch(postManyMerchandises(formData, token));
+            await dispatch(postManyMerchandises(formData, token));
             setExcelData(null);
             setMessage('Se guardaron exitosamente los registros');
             setTimeout(() => {
@@ -186,13 +182,13 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
     }, [ shouldNavigate, navigate ]);
 
     return (
-        <div>
-            <div className='mt-3 mb-3 p-2 d-flex flex-column border rounded'>
-                <div className={`${styles.container__Download_File} mt-3 mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
+        <div className='position-relative'>
+            <div className='mb-4 p-2 d-flex flex-column border rounded'>
+                <div className={`${styles.container__Download_File} mb-3 p-2 d-flex align-items-center justify-content-between border rounded`}>
                     <h6 className='m-0 text-center'>Primero descarga el archivo para que lo diligencies</h6>
                     <a className={`${styles.download__File} text-center text-decoration-none`} href="/DownloadExcels/Mercancias.xlsx" download="Mercancias.xlsx">Descargar Excel</a>
                 </div>
-                <p>Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
+                <p className="m-0">Recuerda descargar el archivo Excel adjunto para que puedas diligenciarlo con la información de cada uno de tus mercancías y facilitar la creación masiva en la sede seleccionada.</p>
             </div>
 
             <div className="mb-3 p-2 d-flex align-items-center justify-content-center border rounded">
@@ -210,19 +206,13 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
                 </select>
             </div>
 
-            <div className="d-flex">
-                <input type="file" accept=".xlsx" onChange={handleFileUpload} className="m-auto p-1 border rounded text-decoration-none" />
+            <div className="mb-4 d-flex">
+                <input type="file" accept=".xlsx" onChange={handleFileUpload} className="m-auto p-1 border rounded" />
             </div>
-
-            <div className={`${styles.success} m-auto position-relative`}>
-                {message && (
-                    <p className={`${styles.alert__Success} text-center position-absolute alert-success`}>{message}</p>
-                )}
-            </div> 
 
             <div className="mt-4 mb-4 table-responsive">
                 {excelData && (
-                    <table className="table table-bordered table-striped">
+                    <table className="m-0 table table-bordered table-striped">
                         <thead>
                             <tr>
                                 {headers.map((header) => (
@@ -247,17 +237,23 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
                 )}
             </div>
 
-            <div className="mb-5 d-flex">
+            <div className="mb-5 d-flex align-items-center justify-content-center">
                 {loading ? 
-                    <div className={`${styles.container__Loading} position-relative w-100`}>
-                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                    <div>
+                        <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                         </button>
                     </div> 
                 :
-                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={onSubmit}>Enviar</button>
+                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onSubmit}>Enviar</button>
                 }
             </div>
+
+            <div className={`${styles.success} position-absolute`}>
+                {message && (
+                    <p className={`${styles.alert__Success} m-0 text-center alert-success`}>{message}</p>
+                )}
+            </div> 
         </div>
     );
 }

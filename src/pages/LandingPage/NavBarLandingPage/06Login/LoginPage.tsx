@@ -32,7 +32,7 @@ function LoginPage() {
     const onSubmit = async (loginData: ILogin) => {
         setLoading(true);
         try {
-            dispatch(loginUser(loginData));
+            await dispatch(loginUser(loginData));
         } catch (error) {
             throw new Error('Error al iniciar sesión');
         } finally {
@@ -92,11 +92,13 @@ function LoginPage() {
                             </div>
 
                             {loading ? 
-                                <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit'>
-                                    <span className="spinner-border spinner-border-sm" role="status"></span> Login...
-                                </button>
+                                <div className='mb-4 d-flex'>
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit'>
+                                        <span className="spinner-border spinner-border-sm" role="status"></span> Login...
+                                    </button>
+                                </div>
                             :
-                                <div className='d-flex'>
+                                <div className='mb-4 d-flex'>
                                     <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Login</button>
                                 </div>
                             }

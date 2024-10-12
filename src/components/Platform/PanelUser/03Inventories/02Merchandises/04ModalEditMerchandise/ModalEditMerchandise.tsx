@@ -139,7 +139,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <input
                         type="text"
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedMerchandise.nameItem}
+                        value={editedMerchandise.nameItem || ''}
                         onChange={(e) => handleEditField(e, 'nameItem', 'text')}
                     />
                 </div>
@@ -150,7 +150,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                 <input
                     type="text"
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedMerchandise.brandItem}
+                    value={editedMerchandise.brandItem || ''}
                     onChange={(e) => handleEditField(e, 'brandItem', 'text')}
                 />
             </div>
@@ -160,7 +160,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>¿Empacado?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedPackaged}
+                        value={editedPackaged || ''}
                         onChange={(e) => setEditedPackaged(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -202,7 +202,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>¿Tiene empaques individuales?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedIndividualPackaging}
+                        value={editedIndividualPackaging || ''}
                         onChange={(e) => setEditedIndividualPackaging(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -253,7 +253,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>¿Empaque retornable?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedReturnablePackaging}
+                        value={editedReturnablePackaging || ''}
                         onChange={(e) => setEditedReturnablePackaging(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -268,7 +268,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <input
                         type="text"
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedMerchandise.inventory}
+                        value={editedMerchandise.inventory || ''}
                         onChange={(e) => handleEditField(e, 'inventory', 'text')}
                     />
                 </div>
@@ -276,7 +276,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>Unidad de medida</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedUnitMeasure}
+                        value={editedUnitMeasure || ''}
                         onChange={(e) => setEditedUnitMeasure(e.target.value as 'Unidades' | 'Ristra' | 'Decena' | 'Docena' | 'Miligramo' | 'Gramo' | 'Media libra' | 'Libra' | 'Kilogramo' | 'Caja' | 'Paca' | 'Arroba' | 'Bulto' | 'Saco' | 'Tonelada' | 'Mililitro' | 'Onza' | 'Litro' | 'Galon' | 'Pimpina' | 'Metro cubico' | 'Milimetro' | 'Centrimetro' | 'Pulgada' | 'Metro' | 'Centimetro cuadrado' | 'Metro cuadrado')}
                     >
                         <option value='Unidades'>Unidades</option>
@@ -315,7 +315,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>¿Autoincremento?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedInventoryIncrease}
+                        value={editedInventoryIncrease || ''}
                         onChange={(e) => setEditedInventoryIncrease(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -360,7 +360,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <input
                         type="text"
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedMerchandise.purchasePriceBeforeTax}
+                        value={editedMerchandise.purchasePriceBeforeTax || ''}
                         onChange={(e) => handleEditField(e, 'purchasePriceBeforeTax', 'text')}
                     />
                 </div>
@@ -380,7 +380,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                     <h6 className={styles.label}>¿Tiene descuento?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedIsDiscounted}
+                        value={editedIsDiscounted || ''}
                         onChange={(e) => setEditedIsDiscounted(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -405,7 +405,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                 <input
                     type="date"
                     className={`${styles.input} mb-3 p-2 border`}
-                    value={editedExpirationDate ? editedExpirationDate.toISOString().split('T')[0] : currentDate}
+                    value={editedExpirationDate ? editedExpirationDate.toISOString().split('T')[0] : currentDate || ''}
                     onChange={(e) => setEditedExpirationDate(new Date(e.target.value))}
                 />
             </div>
@@ -562,18 +562,17 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                 </div>
             </div>
 
-            <div className="d-flex align-items-center justify-content-center">
+            <div className="mb-3 d-flex align-items-center justify-content-center">
                 {loading ?
-                    <div className={`${styles.container__Loading} position-relative w-100`}>
-                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                    <div>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded`} type='submit' >
                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                         </button>
                     </div> 
                 :
-                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
+                    <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
                 }
-
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(merchandise.id)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
             </div>
         </div>
     );
