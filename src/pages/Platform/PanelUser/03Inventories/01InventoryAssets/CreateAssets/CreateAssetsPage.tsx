@@ -59,6 +59,28 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
         setNameItem(event.target.value);
     };
 
+    // Formatear el número
+    const [inputValue, setInputValue] = useState('');
+    const formatNumber = (number: number | null | undefined): string => {
+        if (number === undefined || number === null || isNaN(number)) return '';
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Formato con puntos
+    };
+
+    // Maneja el cambio en el input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const rawValue = e.target.value.replace(/\./g, '').replace('$', '').replace(',', '.');
+        const numericValue = rawValue ? parseFloat(rawValue) : 0;
+        setInputValue(`$ ${formatNumber(numericValue)}`);
+        setValue('purchasePriceBeforeTax', numericValue);
+    };
+
+    // Efecto para establecer el valor inicial
+    useEffect(() => {
+        const initialValue = 0;
+        setInputValue(`$ ${formatNumber(initialValue)}`);
+        setValue('purchasePriceBeforeTax', initialValue);
+    }, [setValue]);
+
     const onSubmit = async (values: IAssets) => {
         setLoading(true);
         try {
@@ -68,7 +90,6 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                 referenceItem: String(values.referenceItem),
                 conditionAssets: selectedCondition,
             } as IAssets;
-
             await dispatch(postAsset(formData, token));
             setFormSubmitted(true);
             reset();
@@ -78,12 +99,8 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                 addNotification('success', 'Equipo, herramienta o máquina creada exitosamente!');
                 if (onCreateComplete) {
                     onCreateComplete();
-                } else {
-                    setShouldNavigate(true);
-                }
-                if (onAssetCreated && selectedBranchId) {
-                    onAssetCreated(selectedBranchId, token);
-                }
+                } else setShouldNavigate(true);
+                if (onAssetCreated && selectedBranchId) onAssetCreated(selectedBranchId, token);
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
@@ -267,14 +284,24 @@ function CreateAssetsPage({ selectedBranchId, onCreateComplete, onAssetCreated, 
                             <div className="mb-4 w-100 position-relative">
                                 <p className={`${styles.label} mb-1`}><span className={`${styles.required__Information} `}>*</span> ¿Cuál es el precio de compra antes de impuestos?</p>
                                 <input
-                                    type="number"
-                                    {...register('purchasePriceBeforeTax', { required: true, setValueAs: (value) => parseFloat(value) })}
-                                    className={`${styles.input} p-2 border`}
+                                    type="text"
+                                    value={inputValue}
+                                    {...register('purchasePriceBeforeTax', {
+                                        required: true,
+                                        setValueAs: (value) => {
+                                            if (typeof value !== 'string') return 0;
+                                            const numericValue = parseFloat(value.replace(/\./g, '').replace('$', '').replace(',', '.'));
+                                            return isNaN(numericValue) ? 0 : numericValue;
+                                        },
+                                    })}
+                                    className={`${styles.input} p-2 text-end border`}
                                     placeholder='Precio de compra del equipo, herramienta o máquina'
-                                    min={0}
                                     onKeyDown={(e) => {
-                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') { e.preventDefault(); }
+                                        if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                            e.preventDefault();
+                                        }
                                     }}
+                                    onChange={handleChange}
                                 />
                                 {errors.purchasePriceBeforeTax && (
                                     <p className={`${styles.text__Danger} text-danger position-absolute`}>El precio de compra antes de impuestos es requerido</p>

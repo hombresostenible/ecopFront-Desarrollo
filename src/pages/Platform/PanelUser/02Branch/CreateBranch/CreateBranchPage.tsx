@@ -263,7 +263,7 @@ function CreateBranchPage({ addNotification }: CreateBranchProps) {
 
                             <div className="mb-5 d-flex">
                                 {loading ? 
-                                    <div className={`${styles.container__Loading} position-relative w-100`}>
+                                    <div className={`${styles.container__Loading} `}>
                                         <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
                                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                                         </button>

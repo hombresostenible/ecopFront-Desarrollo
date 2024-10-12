@@ -42,10 +42,10 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
     // const [formSubmitted, setFormSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
     const [messageSelectedClient, setMessageSelectedClient] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
     // BUSCAR Y SETEAR EL ARTICULO POR CODIGO DE BARRAS
     const [barCode, setBarCode] = useState<string>('');
@@ -238,7 +238,7 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                 return;
             }
             if(userPlatform?.id) formData.seller = userPlatform.id;
-            dispatch(postAccountsBook(formData, token));
+            await dispatch(postAccountsBook(formData, token));
             // setFormSubmitted(true);
             setSelectedClient(null);
             setSelectedSupplier(null);
@@ -498,7 +498,6 @@ function IncomeCash({ token, decodeUserIdRegister, usersPlatform, selectedBranch
                             className={`${styles.input} p-2 border`}
                             value={userPlatform?.id || ''}
                             onChange={handleUserPlatformChange}
-                            required
                         >
                             <option value=''>Selecciona el vendedor</option>
                             {Array.isArray(usersPlatform) && usersPlatform.map((userPlatform, index) => (

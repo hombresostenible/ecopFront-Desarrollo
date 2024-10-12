@@ -24,6 +24,7 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
 
     const { register, handleSubmit, formState: { errors } } = useForm<ICrmClient>();
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (token)
@@ -38,6 +39,9 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
     };
 
     const onSubmit = async (values: ICrmClient) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -51,6 +55,8 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
             onClientCreated(token);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -115,9 +121,18 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                     <h6 className={styles.label}>No. de identificación</h6>
                     <input
                         type="text"
-                        {...register('documentId', { required: true })}
-                        className={`${styles.input} p-2`}
-                        placeholder='¿Cuál es el número de identificación?'
+                        {...register('documentId', { 
+                            required: true,
+                            pattern: /^\d{1,10}$/
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder='¿Cuál es tu número de identificación?'
+                        maxLength={10}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
                     />
                     {errors.documentId && (
                         <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
@@ -186,8 +201,16 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                     )}
                 </div>
 
-                <div className="mb-4 d-flex align-items-center justify-content-center">
-                    <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                <div className="mb-3 d-flex align-items-center justify-content-center">
+                    {loading ? 
+                        <div>
+                            <button className={`${styles.button__Submit} mx-auto border-0 rounded`} >
+                                <span className={`${styles.role} spinner-border spinner-border-sm`} ></span> Guardando...
+                            </button>
+                        </div> 
+                    :
+                        <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} >Enviar</button>
+                    }
                 </div>
             </form>
         </div>

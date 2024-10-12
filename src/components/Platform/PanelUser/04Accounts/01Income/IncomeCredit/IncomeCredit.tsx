@@ -197,7 +197,7 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 return;
             }
             if(userPlatform?.id) formData.seller = userPlatform.id;
-            dispatch(postAccountsBook(formData, token));
+            await dispatch(postAccountsBook(formData, token));
             // setFormSubmitted(true);
             setSelectedClient(null);
             setTimeout(() => {

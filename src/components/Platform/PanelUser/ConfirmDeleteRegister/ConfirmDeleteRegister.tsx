@@ -21,7 +21,10 @@ interface ConfirmDeleteRegisterProps {
 
 function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onCloseModal }: ConfirmDeleteRegisterProps) {
     const token = Cookies.get('token') || '';
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
+
+    const [loading, setLoading] = useState(false);
 
     const [typeDelete, setTypeDelete] = useState('');
     useEffect(() => {
@@ -49,43 +52,38 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsByPage, setItemsByPage] = useState<number>(20);
 
-    const onDelete = async () => {
+    const onSubmit = async () => {
+        setLoading(true);
         try {
             setCurrentPage(1);
             setItemsByPage(20);
             if (typeRegisterDelete === 'Asset') {
                 dispatch(deleteAsset(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getAssets(token));
             }
             if (typeRegisterDelete === 'Merchandise') {
                 dispatch(deleteMerchandise(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getMerchandises(token));
             }
             if (typeRegisterDelete === 'Product') {
                 dispatch(deleteProduct(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getProducts(token));
             }
             if (typeRegisterDelete === 'RawMaterial') {
                 dispatch(deleteRawMaterial(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getRawMaterials(token));
             }
             if (typeRegisterDelete === 'Service') {
                 dispatch(deleteService(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getServices(token));
             }
             if (typeRegisterDelete === 'AccountsBook') {
                 dispatch(deleteAccountsBook(idItem, token));
-                // Simulamos un delay de la API
                 await new Promise(resolve => setTimeout(resolve, 500));
                 dispatch(getAccountsBooks(token, currentPage, itemsByPage));
             }
@@ -98,9 +96,17 @@ function ConfirmDeleteRegister({ typeRegisterDelete, idItem, nameRegister, onClo
     return (
         <div className="p-3">
             <p>{typeDelete}</p>
-            <div className={` d-flex mt-3`}>
-                <button className={`${styles.button__Submit} m-auto border-0 rounded text-decoration-none`} onClick={onDelete} >Enviar</button>
-            </div>  
+            <div className="mb-3 d-flex align-items-center justify-content-center">
+                {loading ? 
+                    <div>
+                        <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Eliminando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onSubmit}>Eliminar</button>
+                }
+            </div>
         </div>
     );
 }

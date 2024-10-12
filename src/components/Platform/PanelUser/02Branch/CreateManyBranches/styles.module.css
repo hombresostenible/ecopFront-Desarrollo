@@ -1,5 +1,4 @@
 .container__Download_File {
-    width: 600px;
     margin: auto;
 }
 .download__File {
@@ -15,19 +14,18 @@
     cursor: pointer;
 }
 .success {
-    height: 50px;
+    z-index: 1;
+    bottom: -40px;
     width: 400px;
+    width: 100%;
 }
 .alert__Success {
     color: #4cb963;
     font-weight: 700;
-    top: 5px;
-    left: 50px;
-    right: 50px;
-    z-index: 1;
 }
 .button__Submit {
-    padding: 7px 25px;
+    height: 40px;
+    width: 200px;
     letter-spacing: 1px;
     font-size: 18px;
     background: #718bd8;
@@ -37,7 +35,4 @@
     background: #0a31bf;
     transition: 300ms all ease;
     cursor: pointer;
-}
-.container__Loading {
-    width: 100%;
 }

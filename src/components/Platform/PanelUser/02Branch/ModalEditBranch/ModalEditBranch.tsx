@@ -179,15 +179,15 @@ function ModalEditBranch({ idBranch, branch, token, onCloseModal }: ModalEditBra
                         </div>
                     </div>
 
-                    <div className="d-flex align-items-center justify-content-center">
+                    <div className="mb-3 d-flex align-items-center justify-content-center">
                         {loading ?
-                            <div className={`${styles.container__Loading} position-relative w-100`}>
-                                <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                            <div>
+                                <button className={`${styles.button__Submit} border-0 mx-auto rounded`} type='submit' >
                                     <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                                 </button>
                             </div> 
                         :
-                            <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
+                            <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedBranch)}>Guardar</button>
                         }
                         <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
                     </div>

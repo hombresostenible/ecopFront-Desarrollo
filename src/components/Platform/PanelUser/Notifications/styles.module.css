@@ -9,10 +9,10 @@
     border-left: none;
     height: 100px;
     width: 350px;
-    animation: slideIn 0.5s ease-out, vibrate 0.5s linear 0.5s;
+    /* animation: slideIn 0.5s ease-out, vibrate 0.5s linear 0.5s; */
 }
 
-@keyframes slideIn {
+/* @keyframes slideIn {
     from {
         transform: translateX(100%);
         opacity: 0;
@@ -39,7 +39,7 @@
     100% {
         transform: translateX(0) translateY(0);
     }
-}
+} */
 .success {
     border-left: 7px solid #4caf50;
     width: 330px;
