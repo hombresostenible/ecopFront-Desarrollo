@@ -189,9 +189,9 @@ function ConsultCrmSuppliersPage() {
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto table-responsive`}>
-                            <table className="table table-striped">
-                                <thead className={`${styles.container__Head}`}>
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
+                                <thead className={`${styles.container__Head} `}>
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         {selectedColumns.includes('Tipo de Doc. Id') && (
                                             <th className={`${styles.type__Document_Id} d-flex align-items-center justify-content-center text-center`}>Tipo de Doc. Id</th>
@@ -218,7 +218,7 @@ function ConsultCrmSuppliersPage() {
                                     </tr>
                                 </thead>
                                 
-                                <tbody className={`${styles.container__Body}`}>
+                                <tbody className={`${styles.container__Body} `}>
                                     {Array.isArray(crmSupplier) && crmSupplier.length > 0 ? (
                                         crmSupplier.map((crmSupplier) => (
                                         <tr key={crmSupplier.id} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>

@@ -16,8 +16,10 @@ interface ModalCrmSupplierProps {
 }
 
 function ModalEditCrmSupplier({ token, idCrmSupplier, crmSupplier, onCloseModal }: ModalCrmSupplierProps) {
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
     const [editedCrmSupplier, setEditedCrmSupplier] = useState<ICrmSupplier>({ ...crmSupplier });
     const [editedTypeDocumentId, setEditedTypeDocumentId] = useState(crmSupplier?.typeDocumentId);
 
@@ -28,9 +30,7 @@ function ModalEditCrmSupplier({ token, idCrmSupplier, crmSupplier, onCloseModal 
     const [resetDepartmenAndCity, setResetDepartmenAndCity] = useState(false);
     
     const handleSelectDepartmentAndCity = (department: string, city: string, codeDane: string, subregionCodeDane: string) => {
-        // Asegurar que el valor de department es un valor válido de la lista o undefined
         const validDepartment = department as 'Bogota D.C.' | 'Amazonas' | 'Antioquia' | 'Arauca' | 'Atlantico' | 'Bolivar' | 'Boyaca' | 'Caldas' | 'Caqueta' | 'Casanare' | 'Cauca' | 'Cesar' | 'Choco' | 'Cordoba' | 'Cundinamarca' | 'Guainia' | 'Guaviare' | 'Huila' | 'La Guajira' | 'Magdalena' | 'Meta' | 'Nariño' | 'Norte de Santander' | 'Putumayo' | 'Quindio' | 'Risaralda' | 'San Andres y Providencia' | 'Santander' | 'Sucre' | 'Tolima' | 'Valle del Cauca' | 'Vaupes' | 'Vichada' | undefined;
-    
         setSelectedDepartment(validDepartment);
         setSelectedCity(city);
         setSelectedCodeDane(codeDane);
@@ -60,25 +60,27 @@ function ModalEditCrmSupplier({ token, idCrmSupplier, crmSupplier, onCloseModal 
     };
 
     const handleSaveChanges = async (formData: ICrmSupplier) => {
+        setLoading(true);
         try {
             formData.typeDocumentId = editedTypeDocumentId;         
             formData.department = selectedDepartment as ICrmSupplier['department'];
             formData.city = selectedCity;
             formData.codeDane = selectedCodeDane;
             formData.subregionCodeDane = selectedSubregionCodeDane;
-
             await dispatch(putCrmSupplier(idCrmSupplier, formData, token));
             dispatch(getCrmSuppliers(token));
             setResetDepartmenAndCity(true);
             onCloseModal();
         } catch (error) {
             throw new Error('Error al guardar cambios');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         onCloseModal();
-        setEditedCrmSupplier({ ...editedCrmSupplier, [id]: { ...crmSupplier } });
+        setEditedCrmSupplier({ ...editedCrmSupplier });
     };
    
     return (
@@ -199,9 +201,17 @@ function ModalEditCrmSupplier({ token, idCrmSupplier, crmSupplier, onCloseModal 
                 />
             </div>
 
-            <div className="d-flex align-items-center justify-content-center">
-                <button className={`${styles.button__Submit} border-0`} onClick={() => handleSaveChanges(editedCrmSupplier)}>Guardar</button>
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idCrmSupplier)}>Cancelar</button>
+            <div className="mb-3 d-flex align-items-center justify-content-center">
+                {loading ?
+                    <div>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded`} type='submit' >
+                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                        </button>
+                    </div> 
+                :
+                    <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedCrmSupplier)}>Guardar</button>
+                }
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );

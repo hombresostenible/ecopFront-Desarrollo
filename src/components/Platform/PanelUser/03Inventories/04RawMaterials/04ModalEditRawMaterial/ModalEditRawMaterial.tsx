@@ -99,9 +99,9 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         onCloseModal();
-        setEditedRawMaterial({ ...editedRawMaterial, [id]: { ...rawMaterial } });
+        setEditedRawMaterial({ ...editedRawMaterial });
     };
 
     return (
@@ -577,7 +577,7 @@ function ModalEditRawMaterial({ token, idItem, rawMaterial, branches, onCloseMod
                 :
                     <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedRawMaterial)}>Guardar</button>
                 }
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );

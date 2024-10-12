@@ -39,17 +39,15 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
     };
 
     const onSubmit = async (values: ICrmClient) => {
-        event.preventDefault();
-        event.stopPropagation();
         setLoading(true);
         try {
             const formData = {
                 ...values,
                 entityUserId: userId,
             } as ICrmClient;
-            dispatch(postCrmClient(formData, token));
+            await dispatch(postCrmClient(formData, token));
             await new Promise(resolve => setTimeout(resolve, 500));
-            dispatch(getCrmClients(token));
+            await dispatch(getCrmClients(token));
             setFormSubmitted(true);
             onCreateComplete();
             onClientCreated(token);

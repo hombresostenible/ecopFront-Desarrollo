@@ -410,7 +410,7 @@ function ModalEditAsset({ token, idItem, asset, branches, onCloseModal }: ModalE
                 :
                     <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedAsset)}>Guardar</button>
                 }
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );
