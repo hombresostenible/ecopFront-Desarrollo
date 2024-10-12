@@ -126,13 +126,10 @@ function CreateManyMerchandises({ branches, token, onCreateComplete }: CreateMan
     // Función para preparar los datos del formulario antes de enviarlos a Redux
     const prepareFormData = (excelData: any[], selectedBranch: string, user?: { id: string } | null): IMerchandise[] => {
         if (!excelData || !selectedBranch) return [];
-    
         const branchId = selectedBranch;
         const nonEmptyRows = excelData.filter(row => Object.values(row).some(value => !!value));
-    
         return nonEmptyRows.map(item => {
             const expirationDate = typeof item.expirationDate === 'number' ? excelSerialToDate(item.expirationDate) : undefined;
-    
             const dataPrepare: IMerchandise = {
                 id: item.id,
                 barCode: item.barCode,

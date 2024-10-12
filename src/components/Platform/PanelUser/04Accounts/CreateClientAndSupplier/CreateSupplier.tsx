@@ -39,17 +39,15 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
     };
 
     const onSubmit = async (values: ICrmSupplier) => {
-        event.preventDefault();
-        event.stopPropagation();
         setLoading(true);
         try {
             const formData = {
                 ...values,
                 entityUserId: userId,
             } as ICrmSupplier;
-            dispatch(postCrmSupplier(formData, token));
+            await dispatch(postCrmSupplier(formData, token));
             await new Promise(resolve => setTimeout(resolve, 500));
-            dispatch(getCrmSuppliers(token));
+            await dispatch(getCrmSuppliers(token));
             setFormSubmitted(true);
             onCreateComplete();
             onSupplierCreated(token);

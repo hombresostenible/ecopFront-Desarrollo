@@ -100,9 +100,9 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
         }
     };
 
-    const cancelEditing = (id: string) => {
+    const cancelEditing = () => {
         onCloseModal();
-        setEditedMerchandise({ ...editedMerchandise, [id]: { ...merchandise } });
+        setEditedMerchandise({ ...editedMerchandise });
     };
 
     return (
@@ -572,7 +572,7 @@ function ModalEditMerchandise({ token, idItem, merchandise, branches, onCloseMod
                 :
                     <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedMerchandise)}>Guardar</button>
                 }
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing()}>Cancelar</button>
             </div>
         </div>
     );
