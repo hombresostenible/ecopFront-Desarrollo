@@ -27,15 +27,15 @@ interface CreateCollaboratorPageProps {
 
 function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps) {
     const token = jsCookie.get('token') || '';
+    const navigate = useNavigate();
     
     // REDUX
     const dispatch: AppDispatch = useDispatch();
     const errorUserPlatform = useSelector((state: RootState) => state.usersPlatform.errorUserPlatform);
-
     const branches = useSelector((state: RootState) => state.branch.branch);
 
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<IUserPlatform>();
+    const [loading, setLoading] = useState(false);
     
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
@@ -70,6 +70,7 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
     };
 
     const onSubmit = async (values: IUserPlatform) => {
+        setLoading(true);
         try {
             const formData = {
                 ...values,
@@ -94,6 +95,8 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
             }, 1500);
         } catch (error) {
             throw new Error('Error en el envío del formulario');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -206,9 +209,18 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Número de identificación</h6>
                                     <input
                                         type="text"
-                                        {...register('documentId')}
-                                        className={`${styles.input} p-2 border`}
-                                        placeholder='¿Cuál es el número de identificación de tu colaboradores?'
+                                        {...register('documentId', { 
+                                            required: true,
+                                            pattern: /^\d{1,10}$/
+                                        })}
+                                        className={`${styles.input} p-2 border `}
+                                        placeholder='¿Cuál es el número de identificación de tu colaborador?'
+                                        maxLength={10}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     {errors.documentId && (
                                         <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
@@ -255,10 +267,25 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
                                 <div className={`${styles.container__Info} d-flex flex-column align-items-start justify-content-start position-relative`}>
                                     <h6 className={styles.label}><span className={`${styles.required__Information} `}>*</span> Celular o teléfono del colaborador</h6>
                                     <input
-                                        type="text"
-                                        {...register('phone')}
-                                        className={`${styles.input} p-2 border`}
+                                        type="tel"
+                                        {...register('phone', { 
+                                            required: true, 
+                                            pattern: /^\d{1,10}$/,
+                                            setValueAs: (value) => value.substring(0, 10)
+                                        })}
+                                        className={`${styles.input} p-2 border `}
                                         placeholder='Celular o teléfono del colaborador'
+                                        maxLength={10}
+                                        min={0}
+                                        onInput={(e) => {
+                                            const target = e.target as HTMLInputElement;
+                                            target.value = target.value.replace(/\D/g, '').substring(0, 10);
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.') {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     {errors.phone && (
                                         <p className={`${styles.text__Danger} text-danger position-absolute`}>El celular o teléfono del colaborador son requeridos</p>
@@ -305,8 +332,16 @@ function CreateCollaboratorPage({ addNotification }: CreateCollaboratorPageProps
                                 </div>
                             </div>
 
-                            <div className="mb-4 d-flex align-items-center justify-content-center">
-                                <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button>
+                            <div className="mb-3 d-flex align-items-center justify-content-center">
+                                {loading ? 
+                                    <div>
+                                        <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
+                                            <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
+                                        </button>
+                                    </div> 
+                                :
+                                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' >Enviar</button>
+                                }
                             </div>
                         </form>
                     </div>

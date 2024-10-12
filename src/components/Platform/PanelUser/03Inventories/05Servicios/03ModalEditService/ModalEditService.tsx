@@ -112,7 +112,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                     <input
                         type="text"
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedService.nameItem}
+                        value={editedService.nameItem || ''}
                         onChange={(e) => handleEditField(e, 'nameItem', 'text')}
                     />
                 </div>
@@ -142,7 +142,7 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                     <h6 className={styles.label}>¿Tiene descuento?</h6>
                     <select
                         className={`${styles.input} mb-3 p-2 border`}
-                        value={editedIsDiscounted}
+                        value={editedIsDiscounted || ''}
                         onChange={(e) => setEditedIsDiscounted(e.target.value as 'Si' | 'No')}
                     >
                         <option value='Si'>Si</option>
@@ -314,18 +314,17 @@ function ModalEditService({ token, idItem, service, branches, onCloseModal }: Mo
                 </div>
             </div>
 
-            <div className="d-flex align-items-center justify-content-center">
+            <div className="mb-3 d-flex align-items-center justify-content-center">
                 {loading ?
-                    <div className={`${styles.container__Loading} position-relative w-100`}>
-                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                    <div>
+                        <button className={`${styles.button__Submit} border-0 mx-auto rounded`} type='submit' >
                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Guardando...
                         </button>
                     </div> 
                 :
-                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={() => handleSaveChanges(editedService)}>Guardar</button>
+                    <button className={`${styles.button__Submit} border-0 rounded`} type='submit' onClick={() => handleSaveChanges(editedService)}>Guardar</button>
                 }
-
-                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(service.id)}>Cancelar</button>
+                <button className={`${styles.button__Cancel} border-0`} onClick={() => cancelEditing(idBranch)}>Cancelar</button>
             </div>
         </div>
     );

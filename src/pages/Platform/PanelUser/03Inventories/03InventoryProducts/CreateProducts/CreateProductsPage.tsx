@@ -33,10 +33,10 @@ interface CreateProductPageProps {
 
 function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreated, addNotification }: CreateProductPageProps) {
     const token = jsCookie.get('token') || '';
-    const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
-
-    // Estados de Redux
+    
+    // REDUX
+    const dispatch: AppDispatch = useDispatch();
     const errorProduct = useSelector((state: RootState) => state.product.errorProduct);
     const branches = useSelector((state: RootState) => state.branch.branch);
     const assets = useSelector((state: RootState) => state.assets.assets);
@@ -292,13 +292,10 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
         setLoading(true);
         try {
             if (!isCreatingRawMaterial && !isCreatingAsset) {
-                // Convertir assets, product y rawMaterial a arrays si no lo son ya
                 const assetsArray = Array.isArray(assets) ? assets : assets ? [assets] : [];
                 const rawMaterialsArray = Array.isArray(rawMaterial) ? rawMaterial : rawMaterial ? [rawMaterial] : [];
-    
                 if (values.inventoryIncrease === 'No') values.periodicityAutomaticIncrease = undefined;
                 if (values.packaged === 'No') values.primaryPackageType = undefined;
-    
                 const formData = {
                     ...values,
                     returnablePackaging: selectedReturnablePackaging,
@@ -340,12 +337,8 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                     addNotification('success', 'Producto creado exitosamente!');
                     if (onCreateComplete) {
                         onCreateComplete();
-                    } else {
-                        setShouldNavigate(true);
-                    }
-                    if (onProductCreated && selectedBranchId) {
-                        onProductCreated(selectedBranchId, token);
-                    }
+                    } else setShouldNavigate(true);
+                    if (onProductCreated && selectedBranchId) onProductCreated(selectedBranchId, token);
                 }, 1500);
             }
         } catch (error) {
@@ -624,7 +617,6 @@ function CreateProductsPage({ selectedBranchId, onCreateComplete, onProductCreat
                                     )}
                                 </div>
                             )}
-
 
                             {selectedpackaged === 'Si' && (
                                 <div className="mb-4 w-100 position-relative">

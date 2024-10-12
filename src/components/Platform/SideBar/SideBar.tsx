@@ -251,7 +251,10 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={branchesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/branches/consult-branches' || location.pathname === '/branches/create-branches') ? styles.active__Icon_Section : ''} `} onClick={handleBranchClick} />
+                            <IoStorefrontSharp className={`${showBranchClick ? styles.icon__Compact : styles.icon__Section}
+                            ${(location.pathname === '/branches/consult-branches' ||
+                            location.pathname === '/branches/create-branches') ?
+                            styles.active__Icon_Section : ''} `} onClick={handleBranchClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleBranchesSubMenuOpen}>
@@ -283,7 +286,17 @@ function SideBar() {
                 <div className={`${styles.container__Section} mb-2 d-flex align-items-center position-relative`} ref={inventoriesMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/inventories/consult-assets' || location.pathname === '/inventories/consult-merchandises' || location.pathname === '/inventories/consult-products' || location.pathname === '/inventories/raw-materals' || location.pathname === '/inventories/consult-services') ? styles.active__Icon_Section : ''}`} onClick={handleInventoriesClick} />
+                            <MdAppRegistration className={`${showInventoriesClick ? styles.icon__Compact : styles.icon__Section}
+                            ${(location.pathname === '/inventories/consult-assets' ||
+                                location.pathname === '/inventories/create-assets' ||
+                                location.pathname === '/inventories/consult-merchandises' ||
+                                location.pathname === '/inventories/create-merchandises' ||
+                                location.pathname === '/inventories/consult-products' ||
+                                location.pathname === '/inventories/create-products' ||
+                                location.pathname === '/inventories/raw-materals' ||
+                                location.pathname === '/inventories/create-raw-materals' ||
+                                location.pathname === '/inventories/consult-services' ||
+                                location.pathname === '/inventories/create-services' ) ? styles.active__Icon_Section : ''} `} onClick={handleInventoriesClick} />
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleInventorySubMenuOpen}>
@@ -327,7 +340,12 @@ function SideBar() {
                 <div className={`${styles.container__Section} ${(location.pathname === '/sig/operations/policies') ? styles.active : ''} mb-2 d-flex align-items-center position-relative`} ref={accountsMenuRef}>
                     <div className={`${styles.section} px-1 d-flex align-items-center justify-content-center text-decoration-none`}>
                         <div className={`${styles.container__Icon} d-flex align-items-center justify-content-center`}>
-                            <FaFileInvoiceDollar className={`${showAccountsClick ? styles.icon__Compact : styles.icon__Section} ${(location.pathname === '/accounts/see-records' || location.pathname === '/accounts/create-incomes' || location.pathname === '/accounts/fast-incomes' || location.pathname === '/accounts/create-expenses' || location.pathname === '/consult-pending-approval') ? styles.active__Icon_Section : ''}`} onClick={handleAccountsClick}/>
+                            <FaFileInvoiceDollar className={`${showAccountsClick ? styles.icon__Compact : styles.icon__Section}
+                            ${(location.pathname === '/accounts/see-records' ||
+                            location.pathname === '/accounts/create-incomes' ||
+                            location.pathname === '/accounts/fast-incomes' ||
+                            location.pathname === '/accounts/create-expenses' ||
+                            location.pathname === '/consult-pending-approval') ? styles.active__Icon_Section : ''} `} onClick={handleAccountsClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleAccountsSubMenuOpen} >Cuentas {isAccountsSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>

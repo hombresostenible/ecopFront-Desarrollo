@@ -35,8 +35,8 @@ function CreateMerchandisesPage({ addNotification }: CreateMerchandisesPage) {
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<IMerchandise>();
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (token) {

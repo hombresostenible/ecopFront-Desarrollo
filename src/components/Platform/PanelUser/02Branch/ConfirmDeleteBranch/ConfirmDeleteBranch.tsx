@@ -16,7 +16,10 @@ interface ConfirmDeleteBranchProps {
 
 function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal, addNotification }: ConfirmDeleteBranchProps) {
     const token = jsCookie.get('token') || '';
+    
+    // REDUX
     const dispatch: AppDispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
 
     const onDelete = async () => {
@@ -37,17 +40,17 @@ function ConfirmDeleteBranch ({ idBranch, nameBranch, onCloseModal, addNotificat
     return (
         <div className="p-3">
             <p>¿Estas seguro de que quieres eliminar la sede "{nameBranch}"?</p>
-            <div className="mb-5 d-flex">
+            <div className="mb-3 d-flex align-items-center justify-content-center">
                 {loading ? 
-                    <div className={`${styles.container__Loading} position-relative w-100`}>
-                        <button className={`${styles.button__Submit} border-0 mx-auto rounded m-auto text-decoration-none`} type='submit' >
+                    <div>
+                        <button className={`${styles.button__Submit} mx-auto border-0 rounded`} type='submit' >
                             <span className={`${styles.role} spinner-border spinner-border-sm`} role="status"></span> Eliminando...
                         </button>
                     </div> 
                 :
-                    <button className={`${styles.button__Submit} border-0 rounded m-auto text-decoration-none`} type='submit' onClick={onDelete}>Enviar</button>
+                    <button className={`${styles.button__Submit} m-auto border-0 rounded`} type='submit' onClick={onDelete}>Eliminar</button>
                 }
-            </div>    
+            </div>
         </div>
     )
 }
