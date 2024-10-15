@@ -1,5 +1,5 @@
 import logo from '../../../assets/WhatsApp.png';
-import styles from "./WhatsApp.module.css";
+import styles from "./styles.module.css";
 
 export default function WhatsApp () {
     const phoneNumber = '573213270365';
