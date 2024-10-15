@@ -37,7 +37,6 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
     
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<IAccountsBook>();
-    // const [formSubmitted, setFormSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
@@ -90,21 +89,46 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
     // ESTADO PARA CONTROLAR EL INDICE DEL ARTICULO EN scannedItems QUE SE ESTA AÑADIENDO
     const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
     const handleChangeQuantityPerItem = (index: number) => setChangeQuantityIndex(index);
-    
-    // ESTADO PARA CONTROLAR EL INDICE DEL ARTICULO EN scannedItems QUE SE ESTA AÑADIENDO
+
     const handlePriceChange = (index: number, value: string) => {
-        const newPrice = parseFloat(value);
-        if (isNaN(newPrice) || newPrice < 0) return;
-            setScannedItems((prevItems) => {
-                const updatedItems = [...prevItems];
+        setScannedItems((prevItems) => {
+            const updatedItems = [...prevItems];
+            
+            if (value === "") {
+                // Si el input está vacío, lo dejamos como undefined para que el usuario pueda escribir
                 updatedItems[index] = {
                     ...updatedItems[index],
-                    purchasePrice: newPrice,
-                    subTotalValue: updatedItems[index].quantity * newPrice
+                    purchasePrice: undefined, // Permitir que el valor sea undefined en lugar de string vacío
+                    subTotalValue: 0 // También ajustamos el subTotal
                 };
-                return updatedItems;
+            } else {
+                // Convertimos a número solo cuando haya un valor
+                const newPrice = parseFloat(value);
+                if (!isNaN(newPrice) && newPrice >= 0) {
+                    updatedItems[index] = {
+                        ...updatedItems[index],
+                        purchasePrice: newPrice,
+                        subTotalValue: updatedItems[index].quantity * newPrice
+                    };
+                }
             }
-        );
+            return updatedItems;
+        });
+    };
+
+    const handlePriceBlur = (index: number) => {
+        setScannedItems((prevItems) => {
+            const updatedItems = [...prevItems];
+            const price = updatedItems[index].purchasePrice ?? 0;
+            if (price >= 0) {
+                updatedItems[index] = {
+                    ...updatedItems[index],
+                    purchasePrice: price,
+                    subTotalValue: updatedItems[index].quantity * price
+                };
+            }
+            return updatedItems;
+        });
     };
       
     // ELIMINA EL ARTICULO AGREGADO A LA TABLA PARA COMPRA
@@ -118,6 +142,15 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
 
     // CIERRA EL MODAL QUE CAMBIA LA CANTIDAD DEL ARTICULO SELECCIONADO PARA LA COMPRA
     const handleCloseModal = () => setChangeQuantityIndex(null);
+
+    // ABRE EL MODAL DE CANTIDAD PRESIONANDO "Ctrl + Q"
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'q') setChangeQuantityIndex(0);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {  window.removeEventListener('keydown', handleKeyDown); };
+    }, []);
 
     // SETEA EL PROVEEDOR CUANDO SE BUSCA O SE CREA
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
@@ -136,44 +169,46 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
         setShowOtherExpenses(event.target.value);
     };
 
-    //Setea la cantidad de cuotas
-    const [numberOfPayments, setNumberOfPayments] = useState<number>(0);
-    const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newUnitValue = parseFloat(event.target.value);
-        setNumberOfPayments(newUnitValue);
-    };
-
-    //Setea si es con interés o no
+    // SETEA SI ES CON O SIN INTRERES
     const [creditWithInterest, setCreditWithInterest] = useState<'No' | 'Si'>('No');
-    const [interestRateChange, setInterestRateChange] = useState<number>(0);
     const handleCreditWithInterest = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newCreditWithInterest = event.target.value as 'No' | 'Si';
         setCreditWithInterest(newCreditWithInterest);
         setValue('creditWithInterest', newCreditWithInterest);
         setInterestRateChange(0);
     };
-
-    //Setea la tasa de interés de la venta a cuotas
+    
+    // SETEA LA TASA DE INTERES DE LA COMPRA
+    const [interestRateChange, setInterestRateChange] = useState<number>(0);
     const handleInterestRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const interestRate = parseFloat(event.target.value);
         setInterestRateChange(interestRate);
     };
-   
-    //Setea el valor de la cuota
+
+    // SETEA LA CANTIDAD DE CUOTAS
+    const [numberOfPayments, setNumberOfPayments] = useState<number>(0);
+    const handleNumberOfPaymentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newUnitValue = parseFloat(event.target.value);
+        setNumberOfPayments(newUnitValue);
+    };
+
+    // SETEA EL VALOR DE LA CUOTA
     const [paymentValue, setPaymentValue] = useState<number | undefined>(0);
     useEffect(() => {
         if (totalPurchaseAmount !== undefined && numberOfPayments !== 0) {
-            const totalValue = Number(totalPurchaseAmount);
             if (interestRateChange !== 0) {
-                const monthlyInterestRate = interestRateChange / 100 / 12; 
-                const cuotaConInteres = totalValue * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-                setPaymentValue(cuotaConInteres);
+                const tasaInteresMensual = interestRateChange / 100 / 12;
+                const totalValue = Number(totalPurchaseAmount);
+                const cuotaWithInterest = totalValue * (tasaInteresMensual * Math.pow(1 + tasaInteresMensual, numberOfPayments)) / (Math.pow(1 + tasaInteresMensual, numberOfPayments) - 1);
+                setPaymentValue(cuotaWithInterest);
             } else {
+                const totalValue = Number(totalPurchaseAmount);
                 const cuotaSinInteres = totalValue / numberOfPayments;
                 setPaymentValue(cuotaSinInteres);
             }
         }
     }, [totalPurchaseAmount, numberOfPayments, interestRateChange]);
+
 
     const onSubmit = async (values: IAccountsBook) => {
         setLoading(true);
@@ -209,9 +244,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                 }
             }
             dispatch(postAccountsBook(formData, token));
-            // setFormSubmitted(true);
             setTimeout(() => {
-                // setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
         } catch (error) {
@@ -239,7 +272,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                     <div className='mt-4 mb-4'>
                         <div className="d-flex align-items-start justify-content-between">
                             <div>
-                                <p className="m-0">Busca el item por código de barras</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por código de barras</p>
                                 <input
                                     id="barCodeInput"
                                     type="text"
@@ -250,7 +283,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                                 />
                             </div>
                             <div>
-                                <p className="m-0">Busca el item por nombre</p>
+                                <p className={`${styles.label} m-0`}>Busca el item por nombre</p>
                                 <SearchItemsByname
                                     selectedBranch={selectedBranch}
                                     token={token}
@@ -259,85 +292,109 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             </div>
                         </div>
 
-                        <div className={`${styles.container__Table} mt-5 mb-4 mx-auto d-flex flex-column align-items-center justify-content-start`}>
-                            <h3 className="mb-3 text-primary-emphasis text-start">Relación de artículos</h3>
-                            <div className={styles.container__Head}>
-                                <div className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
-                                    <div className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</div>
-                                    <div className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</div>
-                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</div>
-                                    <div className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</div>
-                                    <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</div>
-                                    <div className={`${styles.value} d-flex align-items-center justify-content-center text-center`}>Subtotal</div>
-                                    <div className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}></div>
-                                </div>
-                            </div>
+                        <h3 className="text-primary-emphasis text-center">Relación de artículos</h3>
+                        <div className={`${styles.container__Table} mt-2 mb-2 mx-auto`}>
+                            <table className="table">
+                            <thead className={`${styles.container__Head} `}>
+                                    <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
+                                        <th className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</th>
+                                        <th className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</th>
+                                        <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
+                                        <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</th>
+                                        <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</th>
+                                        <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</th>
+                                        <th className={`${styles.subtotal} d-flex align-items-center justify-content-center text-center`}>Subtotal</th>
+                                        <th className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}>Eliminar</th>
+                                    </tr>
+                                </thead>
 
-                            <div className={`${styles.container__Body} `}>
-                                {Array.isArray(scannedItems) && scannedItems.length > 0 ? (
-                                    scannedItems.map((item, index) => (
-                                        <div key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
-                                            <div className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
-                                                <div className={`${styles.container__Quantity} d-flex align-items-center justify-content-center`}>
-                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.quantity}</span>
-                                                </div>
-                                                <div className={`${styles.container__FaPlus} d-flex align-items-center justify-content-center`}>
-                                                    <FaPlus
-                                                        className={`${styles.icon__FaPlus} `}
-                                                        onClick={() => handleChangeQuantityPerItem(index)}
+                                <tbody className={`${styles.container__Body} `}>
+                                    {Array.isArray(scannedItems) && scannedItems.length > 0 ? (
+                                        scannedItems.map((item, index) => (
+                                            <tr key={index} className={`${styles.container__Info} d-flex align-items-center justify-content-between`}>
+                                                 <td className={`${styles.quantity} d-flex align-items-center justify-content-center`}>
+                                                    <div className={`${styles.container__Quantity} d-flex align-items-center justify-content-center`}>
+                                                        <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.quantity}</span>
+                                                    </div>
+                                                    <div className={`${styles.container__FaPlus} d-flex align-items-center justify-content-center`}>
+                                                        <FaPlus
+                                                            className={`${styles.icon__FaPlus} `}
+                                                            onClick={() => handleChangeQuantityPerItem(index)}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.nameItem}</span>
+                                                </td>
+                                                {/* <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis_Purchase_Price} overflow-hidden position-absolute`}>$</span>
+                                                    <input
+                                                        type="text"
+                                                        className={`${styles.price__Input} text-end rounded`}
+                                                        value={item.purchasePrice || ''}
+                                                        onChange={(e) => handlePriceChange(index, e.target.value)}
+                                                        onBlur={() => handlePriceBlur(index)}
+                                                        placeholder="0"
                                                     />
-                                                </div>
-                                            </div>
-                                            <div className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.nameItem}</span>
-                                            </div>
-                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
-                                            </div>
-                                            <div className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                    {item.IVA !== 'No aplica'
-                                                        ? `$ ${formatNumber((item.purchasePrice ?? 0) / 100 * Number(item.IVA))}`
-                                                        : 'No aplica'}
-                                                </span>
-                                            </div>
-                                            <div className={`${styles.price__Unit} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>$</span>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    value={item.purchasePrice || 0}
-                                                    onChange={(e) => handlePriceChange(index, e.target.value)}
-                                                    className={styles.priceInput}
-                                                />
-                                            </div>
-                                            <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                    <span>$ </span>
-                                                    {formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))}
-                                                </span>
-                                            </div>
-                                            <div className={`${styles.value} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                    <span>$ </span>
-                                                    {formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))}
-                                                </span>
-                                            </div>
-                                            <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
-                                                <RiDeleteBin6Line
-                                                    className={`${styles.button__Action} `}
-                                                    onClick={() => handleDeleteItem(index)}
-                                                />
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
-                                        No tienes artículos registrados para gastos
-                                    </div>
-                                )}
-                            </div>
+                                                </td> */}
+
+                                                <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+    <span className={`${styles.text__Ellipsis_Purchase_Price} overflow-hidden position-absolute`}>$</span>
+    <input
+        type="text"
+        className={`${styles.price__Input} text-end rounded`}
+        value={item.purchasePrice?.toString() || ''} // Aceptamos también el string vacío
+        onChange={(e) => handlePriceChange(index, e.target.value)}
+        onBlur={() => handlePriceBlur(index)}
+        placeholder="0"
+    />
+</td>
+                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                                </td>
+                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>
+                                                        {item.IVA !== 'No aplica'
+                                                            ? `$ ${formatNumber((item.purchasePrice ?? 0) / 100 * Number(item.IVA))}`
+                                                            : 'No aplica'
+                                                        }
+                                                    </span>
+                                                </td>
+                                                <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                        <span>$ </span>
+                                                        {item.IVA !== 'No aplica'
+                                                            ? formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))
+                                                            : formatNumber(item.purchasePrice ?? 0)
+                                                        }
+                                                    </span>
+                                                </td>
+                                                <td className={`${styles.subtotal} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} overflow-hidden`}>
+                                                        <span>$ </span>
+                                                        {item.IVA !== 'No aplica'
+                                                            ? formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))
+                                                            : formatNumber(item.quantity * (item.purchasePrice ?? 0))
+                                                        }
+                                                    </span>
+                                                </td>
+                                                <td className={`${styles.delete} d-flex align-items-center justify-content-center`}>
+                                                    <RiDeleteBin6Line
+                                                        className={`${styles.button__Action} `}
+                                                        onClick={() => handleDeleteItem(index)}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={10} className={`${styles.message__Unrelated_Items} d-flex align-items-center justify-content-center`}>
+                                                No tienes artículos registrados en la compra
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
 
                         <Modal show={changeQuantityIndex !== null} onHide={handleCloseModal}>
@@ -365,7 +422,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
 
                         <div className={`${styles.container__Pay} d-flex align-items-start justify-content-between`}>
                             <div className={`${styles.container__Selected_Client} d-flex flex-column position-relative`}>
-                                <p className='m-0'>Selecciona o crea a tu proveedor</p>
+                                <p className={`${styles.label} m-0`}>Selecciona o crea a tu proveedor</p>
                                 <SearchSupplierCrm
                                     token={token}
                                     onSupplierSelect={(supplier) => setSelectedSupplier(supplier)}
@@ -473,6 +530,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             <p className={`${styles.text__Danger} text-danger position-absolute`}>La descripión es requerida</p>
                         )}
                     </div>
+
                     <div className="mb-4 position-relative">
                         <p className={`${styles.label} m-0`}>¿A cuántas cuotas vas a pagar?</p>
                         <input
@@ -488,6 +546,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de cuotas es requerido</p>
                         )}
                     </div>
+
                     <div className="mb-4 position-relative">
                         <p className={`${styles.label} m-0`}>¿Es con interés?</p>
                         <select
@@ -503,6 +562,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             <p className={`${styles.text__Danger} text-danger position-absolute`}>El dato es requerido</p>
                         )}
                     </div>
+
                     {creditWithInterest === 'Si' && (
                         <div className="mb-4 position-relative">
                             <p className={`${styles.label} m-0`}>Tasa de interés</p>
@@ -520,6 +580,7 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             )}
                         </div>
                     )}
+
                     <div className="mb-4 position-relative">
                         <p className={`${styles.label} m-0`}>Valor aproximado de cada una de las cuotas</p>
                         <input
@@ -529,23 +590,20 @@ function ExpenseCredit({ token, decodeUserIdRegister, selectedBranch, defaultDat
                             placeholder='Valor de cada cuota'
                             inputMode="numeric"
                             readOnly
-                            value={paymentValue || 0}
+                            value={paymentValue}
                             min={0}
                         />
                     </div>
                 </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
-                    {/* {formSubmitted && (
-                        <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                    )} */}
+
                     {messageSelectedBranch && (
                         <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
                     )}
                     {messageSelectedSupplier && (
                         <div className={`${styles.error__Message_Selected_Client} position-absolute`}>{messageSelectedSupplier}</div>
                     )}
-                    {/* <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button> */}
 
                     <div className="mb-5 d-flex">
                         {loading ? 

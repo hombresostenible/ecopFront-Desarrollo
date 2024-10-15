@@ -12,8 +12,10 @@ import { getBranches } from '../../../../../../redux/User/02BranchSlice/actions'
 import { getProfileUser } from '../../../../../../redux/User/userSlice/actions.ts';
 import { getUsersPlatform } from '../../../../../../redux/User/userPlatformSlice/actions.ts';
 // ELEMENTOS DEL COMPONENTE
-import IncomeCash from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCash/IncomeCash';
-import IncomeCredit from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/IncomeCredit/IncomeCredit';
+import IncomeCash from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/01IncomeCash/IncomeCash.tsx';
+import IncomeCredit from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/02IncomeCredit/IncomeCredit.tsx';
+import LoansRequested from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/03LoansRequested/LoansRequested.tsx';
+import AccountsReceivable from '../../../../../../components/Platform/PanelUser/04Accounts/01Income/04AccountsReceivable/AccountsReceivable.tsx';
 import NavBar from '../../../../../../components/Platform/PanelUser/00NavBar/NavBar.tsx';
 import SideBar from '../../../../../../components/Platform/SideBar/SideBar.tsx';
 import Footer from '../../../../../../components/Platform/PanelUser/Footer/Footer';
@@ -77,15 +79,9 @@ function CreateIncomePage() {
     };
 
     // Estado para seleccionar contado o crédito
-    const [creditCashOption, setCreditCashOption] = useState('Contado');
+    const [creditCashOption, setCreditCashOption] = useState('VentaContado');
     const handleCreditCashChange = (creditCash: string) => {
         setCreditCashOption(creditCash);
-    };
-
-    // Manejar cambio en el tipo de ingreso (venta de artículos u otros ingresos)
-    const [typeIncome, setTypeIncome] = useState<string>('Venta de articulos');
-    const handleTypeIncomeChange = (incomeType: string) => {
-        setTypeIncome(incomeType);
     };
 
     // useEffect para establecer las fechas por defecto o manualmente
@@ -185,46 +181,37 @@ function CreateIncomePage() {
 
                         <div className="mb-4 d-flex align-items-center justify-content-between">
                             <div>
-                                <p className={`${styles.label} m-0`}>La venta ¿Es de contado o a crédito?</p>
+                                <p className={`${styles.label} `}>¿Qué tipo de ingreso vas a registrar?</p>
                                 <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
-                                        className={`${styles.type__Income} ${creditCashOption === 'Contado' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                        onClick={() => handleCreditCashChange('Contado')}
+                                        className={`${styles.type__Income} ${creditCashOption === 'VentaContado' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('VentaContado')}
                                     >
-                                        Contado
+                                        Venta de contado
                                     </div>
                                     <div
-                                        className={`${styles.type__Income} ${creditCashOption === 'Credito' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                        onClick={() => handleCreditCashChange('Credito')}
+                                        className={`${styles.type__Income} ${creditCashOption === 'VentaCredito' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('VentaCredito')}
                                     >
-                                        Crédito
+                                        Venta a crédito
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <p className={`${styles.label} m-0`}>Tipo de ingreso</p>
-                                <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
-                                        className={`${styles.type__Income} ${typeIncome === 'Venta de articulos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                        onClick={() => handleTypeIncomeChange('Venta de articulos')}
+                                        className={`${styles.type__Income} ${creditCashOption === 'PrestamosSolicitados' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('PrestamosSolicitados')}
                                     >
-                                        Venta de artículos
+                                        Préstamos solicitados
                                     </div>
-
-                                    {creditCashOption === 'Contado' && (
-                                        <div
-                                            className={`${styles.type__Income} ${typeIncome === 'Otros ingresos' ? styles.active : ''} d-flex align-items-center justify-content-center`}
-                                            onClick={() => handleTypeIncomeChange('Otros ingresos')}
-                                        >
-                                            Otros ingresos
-                                        </div>
-                                    )}
+                                    <div
+                                        className={`${styles.type__Income} ${creditCashOption === 'CuentasCobrar' ? styles.active : ''} d-flex align-items-center justify-content-center`}
+                                        onClick={() => handleCreditCashChange('CuentasCobrar')}
+                                    >
+                                        Cuentas por cobrar
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {creditCashOption === 'Contado' && (
+                        {creditCashOption === 'VentaContado' && (
                             <IncomeCash
                                 token={token}
                                 decodeUserIdRegister={decodeUserIdRegister}
@@ -233,12 +220,35 @@ function CreateIncomePage() {
                                 defaultDates={defaultDates}
                                 registrationDate={formattedRegistrationDate}
                                 transactionDate={formattedTransactionDate}
-                                typeIncome={typeIncome}
+                                typeIncome='Contado'
                             />
                         )}
 
-                        {creditCashOption === 'Credito' && (
+                        {creditCashOption === 'VentaCredito' && (
                             <IncomeCredit
+                                token={token}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                usersPlatform={usersPlatform}
+                                selectedBranch={selectedBranch}
+                                defaultDates={defaultDates}
+                                registrationDate={formattedRegistrationDate}
+                                transactionDate={formattedTransactionDate}
+                            />
+                        )}
+
+                        {creditCashOption === 'PrestamosSolicitados' && (
+                            <LoansRequested
+                                token={token}
+                                decodeUserIdRegister={decodeUserIdRegister}
+                                selectedBranch={selectedBranch}
+                                defaultDates={defaultDates}
+                                registrationDate={formattedRegistrationDate}
+                                transactionDate={formattedTransactionDate}
+                            />
+                        )}
+
+                        {creditCashOption === 'CuentasCobrar' && (
+                            <AccountsReceivable
                                 token={token}
                                 decodeUserIdRegister={decodeUserIdRegister}
                                 usersPlatform={usersPlatform}

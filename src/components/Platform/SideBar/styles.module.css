@@ -16,9 +16,7 @@
         margin: auto;
     }
     .container__Icon {
-        color: #f28705;
-        height: 45px;
-        width: 55px;
+        color: #495057;
     }
     .icon__Section, .icon__Section_Logout {
         font-size: 35px;
@@ -62,8 +60,8 @@
 }
 
 .container__Icon, .icon__Compact {
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
 }
 .icon__Section {
     color: hsl(210, 17%, 98%);
@@ -99,7 +97,7 @@
 .container__Sub_Menu_Compact {
     z-index: 1;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
-    background: #dee2e6;
+    background: #495057;
     border-radius: 10px;
     width: 300px;
     top: 0;
@@ -108,7 +106,7 @@
 .indicator {
     clip-path: polygon(100% 0, 0 50%, 100% 100%);
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
-    background: #dee2e6;
+    background: #495057;
     height: 15px;
     width: 15px;
     top: 10px;
@@ -117,11 +115,11 @@
 .title__Sub_Menu_Compact {
     letter-spacing: 1px;
     font-weight: 600;
-    color: #000;
+    color: #ced4da;
     opacity: 0.75;
 }
 .link__Sub_Menu_Compact {
-    color: #000;
+    color: #ced4da;
     opacity: 0.75;
     font-size: 14px;
     min-width: 100%;

@@ -39,7 +39,6 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
     const itemByBarCode = useSelector((state: RootState) => state.itemByBarCodeOrName.itemByBarCode);
 
     const { register, handleSubmit, formState: { errors } } = useForm<IAccountsBook>();
-    // const [formSubmitted, setFormSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [shouldNavigate, setShouldNavigate] = useState(false);
     const [messageSelectedBranch, setMessageSelectedBranch] = useState<string | null>('');
@@ -93,7 +92,7 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
     const [changeQuantityIndex, setChangeQuantityIndex] = useState<number | null>(null);
     const handleChangeQuantityPerItem = (index: number) => setChangeQuantityIndex(index);
 
-    // // ESTADO PARA CONTROLAR EL INDICE DEL ARTICULO EN scannedItems QUE SE ESTA AÑADIENDO
+    // ESTADO PARA CONTROLAR EL INDICE DEL ARTICULO EN scannedItems QUE SE ESTA AÑADIENDO
     const handlePriceChange = (index: number, value: string) => {
         const newPrice = parseFloat(value);
         if (isNaN(newPrice) || newPrice < 0) return;
@@ -113,7 +112,6 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
         setScannedItems((prevItems) => {
             const updatedItems = [...prevItems];
             const price = updatedItems[index].purchasePrice ?? 0;
-            
             if (price >= 0) {
                 updatedItems[index] = {
                     ...updatedItems[index],
@@ -136,6 +134,28 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
 
     // CIERRA EL MODAL QUE CAMBIA LA CANTIDAD DEL ARTICULO SELECCIONADO PARA LA COMPRA
     const handleCloseModal = () => setChangeQuantityIndex(null);
+
+    // ABRE EL MODAL DE CANTIDAD PRESIONANDO "Ctrl + Q"
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'q') setChangeQuantityIndex(0);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {  window.removeEventListener('keydown', handleKeyDown); };
+    }, []);
+
+    // ABRE EL MODAL DE CANTIDAD PRESIONANDO "Ctrl + Q"
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'q') {
+                setChangeQuantityIndex(0);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     // SETEA EL PROVEEDOR CUANDO SE BUSCA O SE CREA
     const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
@@ -270,9 +290,9 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                     <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                         <th className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</th>
                                         <th className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</th>
+                                        <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
                                         <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</th>
                                         <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</th>
-                                        <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
                                         <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</th>
                                         <th className={`${styles.subtotal} d-flex align-items-center justify-content-center text-center`}>Subtotal</th>
                                         <th className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}>Eliminar</th>
@@ -297,45 +317,52 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                                                 <td className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.nameItem}</span>
                                                 </td>
-                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
-                                                </td>
-                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
-                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>
-                                                        {item.IVA !== 'No aplica'
-                                                            ? `$ ${formatNumber(item.sellingPrice / 100 * Number(item.IVA))}`
-                                                            : 'No aplica'
-                                                        }
-                                                    </span>
-                                                </td>
                                                 <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis_Purchase_Price} overflow-hidden position-absolute`}>$</span>
                                                     <input
                                                         type="text"
-                                                        className={`${styles.price__Input} text-end`}
+                                                        className={`${styles.price__Input} text-end rounded`}
                                                         value={item.purchasePrice || ''}
                                                         onChange={(e) => handlePriceChange(index, e.target.value)}
                                                         onBlur={() => handlePriceBlur(index)}
                                                         placeholder="0"
                                                     />
                                                 </td>
+                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
+                                                </td>
+                                                <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
+                                                    <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>
+                                                        {item.IVA !== 'No aplica'
+                                                            ? `$ ${formatNumber((item.purchasePrice ?? 0) / 100 * Number(item.IVA))}`
+                                                            : 'No aplica'
+                                                        }
+                                                    </span>
+                                                </td>
                                                 <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>
                                                         <span>$ </span>
-                                                        {formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))}
+                                                        {item.IVA !== 'No aplica'
+                                                            ? formatNumber((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA)))
+                                                            : formatNumber(item.purchasePrice ?? 0)
+                                                        }
                                                     </span>
                                                 </td>
                                                 <td className={`${styles.subtotal} d-flex align-items-center justify-content-center`}>
                                                     <span className={`${styles.text__Ellipsis} overflow-hidden`}>
-                                                        <span>$ </span> {formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))}
+                                                        <span>$ </span>
+                                                        {item.IVA !== 'No aplica'
+                                                            ? formatNumber(item.quantity * ((item.purchasePrice ?? 0) + ((item.purchasePrice ?? 0) / 100 * Number(item.IVA))))
+                                                            : formatNumber(item.quantity * (item.purchasePrice ?? 0))
+                                                        }
                                                     </span>
                                                 </td>
-                                                <div className={`${styles.delete} d-flex align-items-center justify-content-center`}>
+                                                <td className={`${styles.delete} d-flex align-items-center justify-content-center`}>
                                                     <RiDeleteBin6Line
                                                         className={`${styles.button__Action} `}
                                                         onClick={() => handleDeleteItem(index)}
                                                     />
-                                                </div>
+                                                </td>
                                             </tr>
                                         ))
                                     ) : (
@@ -677,16 +704,12 @@ function ExpenseCash({ token, decodeUserIdRegister, selectedBranch, defaultDates
                 )}
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
-                    {/* {formSubmitted && (
-                        <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                    )} */}
                     {messageSelectedBranch && (
                         <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
                     )}
                     {messageSelectedSupplier && (
                         <div className={`${styles.error__Message_Selected_Client} position-absolute`}>{messageSelectedSupplier}</div>
                     )}
-                    {/* <button type='submit' className={`${styles.button__Submit} border-0 rounded text-decoration-none`} >Enviar</button> */}
 
                     <div className="mb-5 d-flex">
                         {loading ? 
