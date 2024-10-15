@@ -1,0 +1,17 @@
+.container__Whatsapp {
+    border: none;
+    border-radius: 10px;
+    position: fixed;    
+    bottom: 160px;
+    right: 20px;
+    z-index: 2;
+    transition: 300ms all ease;
+}
+.container__Whatsapp:hover {
+    cursor: pointer;
+    transform: scale(1.2) rotate(10deg);
+}
+.whatsapp {
+    height: 45px;
+    width: 45px;
+}
