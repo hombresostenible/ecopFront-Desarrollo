@@ -345,7 +345,7 @@ function SideBar() {
                             location.pathname === '/accounts/create-incomes' ||
                             location.pathname === '/accounts/fast-incomes' ||
                             location.pathname === '/accounts/create-expenses' ||
-                            location.pathname === '/consult-pending-approval') ? styles.active__Icon_Section : ''} `} onClick={handleAccountsClick}/>
+                            location.pathname === '/accounts/consult-pending-approval') ? styles.active__Icon_Section : ''} `} onClick={handleAccountsClick}/>
                         </div>
                         {menuVisible &&
                             <div className={`${styles.link__Side_Bar} p-1 d-flex align-items-center justify-content-between`} onClick={toggleAccountsSubMenuOpen} >Cuentas {isAccountsSubMenuOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}  </div>
@@ -402,6 +402,10 @@ function SideBar() {
                             <Link to='/invoicing-and-pos/see-electronic-invoicing-pos' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consulta Factura electrónica</Link>
                             <Link to='/invoicing-and-pos/recurring-invoices' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Facturas recurrentes</Link>
                             <Link to='/invoicing-and-pos/quotations' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Cotizaciones</Link>
+                            <Link to='/credit-notes/consult-credit-notes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consultar notas crédito</Link>
+                            <Link to='/credit-notes/create-credit-notes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crear notas crédito</Link>
+                            <Link to='/credit-notes/consult-debit-notes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Consultar notas débito</Link>
+                            <Link to='/credit-notes/create-debit-notes' className={`${styles.link__Sub_Menu_Compact} text-decoration-none`}>Crear notas débito</Link>
                         </div>
                     )}
                 </div>
@@ -421,6 +425,18 @@ function SideBar() {
                         </Link>
                         <Link to='/invoicing-and-pos/quotations' className={`${styles.link__Sub_Menu} ${location.pathname === '/invoicing-and-pos/quotations' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
                             Cotizaciones
+                        </Link>
+                        <Link to='/credit-notes/consult-credit-notes' className={`${styles.link__Sub_Menu} ${location.pathname === '/credit-notes/consult-credit-notes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Consultar notas crédito
+                        </Link>
+                        <Link to='/credit-notes/create-credit-notes' className={`${styles.link__Sub_Menu} ${location.pathname === '/credit-notes/consult-credit-notes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Crear notas crédito
+                        </Link>
+                        <Link to='/credit-notes/consult-debit-notes' className={`${styles.link__Sub_Menu} ${location.pathname === '/credit-notes/consult-debit-notes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Consultar notas débito
+                        </Link>
+                        <Link to='/credit-notes/create-debit-notes' className={`${styles.link__Sub_Menu} ${location.pathname === '/credit-notes/consult-debit-notes' ? styles.active__Sub_Menu : ''} text-decoration-none`} >
+                            Crear notas débito
                         </Link>
                     </div>
                 )}

@@ -184,7 +184,7 @@ function CreateExpensesPage() {
 
                         <div className="mb-4 d-flex align-items-center justify-content-between">
                             <div>
-                                <p className={`${styles.label} m-0`}>La venta ¿Es de contado o a crédito?</p>
+                                <p className={`${styles.label} m-0`}>El gasto ¿Es de contado o a crédito?</p>
                                 <div className="d-flex align-items-center justify-content-center gap-3">
                                     <div
                                         className={`${styles.type__Income} ${creditCashOption === 'Contado' ? styles.active : ''} d-flex align-items-center justify-content-center`}

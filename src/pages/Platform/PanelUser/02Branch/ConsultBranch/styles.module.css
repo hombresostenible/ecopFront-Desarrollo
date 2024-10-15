@@ -65,7 +65,6 @@
 /* TABLA */
 .container__Table {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    max-width: 1202px;
     overflow-x: auto;
 }
 .container__Head {
@@ -85,30 +84,38 @@
 .branch {
     height: 60px;
     width: 200px;
+    min-width: 200px;
+    width: 16%;
 }
 .department {
     height: 60px;
-    width: 150px;
+    min-width: 150px;
+    width: 13%;
 }
 .city {
     height: 60px;
-    width: 150px;
+    min-width: 150px;
+    width: 13%;
 }
 .address {
     height: 60px;
-    width: 150px;
+    min-width: 150px;
+    width: 13%;
 }
 .email {
     height: 60px;
-    width: 250px;
+    min-width: 250px;
+    width: 19%;
 }
 .phone {
     height: 60px;
-    width: 150px;
+    min-width: 150px;
+    width: 13%;
 }
 .action {
     height: 60px;
-    width: 150px;
+    min-width: 150px;
+    width: 13%;
 }
 
 /* CONTENIDO DE LA TABLA */

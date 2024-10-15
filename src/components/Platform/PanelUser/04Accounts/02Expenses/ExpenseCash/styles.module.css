@@ -45,23 +45,22 @@
     width: 120px;
 }
 .unit__Price {
-    /* border: 1px solid red; */
     height: 60px;
     width: 150px;
-}
-.price__Input {
-    border: none;
-    height: 100%;
-    width: 100%;
-}
-.price__Input:focus{
-    outline-color: #718bd8;
 }
 .text__Ellipsis_Purchase_Price {
     opacity: 0.75;
     left: 5px;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.price__Input {
+    border: 1px solid #718bd8;
+    height: 100%;
+    width: 100%;
+}
+.price__Input:focus{
+    outline-color: #718bd8;
 }
 .subtotal {
     height: 60px;

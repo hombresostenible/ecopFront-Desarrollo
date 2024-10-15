@@ -6,8 +6,6 @@ import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../redux/store';
 import { getCrmSuppliers } from '../../redux/User/08CrmSupplierSlice/actions';
-
-
 import CreateSupplier from '../../components/Platform/PanelUser/04Accounts/CreateClientAndSupplier/CreateSupplier';
 import { StylesReactSelect } from '../StylesComponents/StylesReactSelect';
 
@@ -94,19 +92,17 @@ function SearchSupplierCrm({ token, onSupplierSelect }: SearchSupplierCrmCrmProp
     };
 
     return (
-        <div ref={selectRef} className="d-flex align-items-center justify-content-center">
-            <div>
-                <Select
-                    value={selectedOption}
-                    inputValue={filterText}
-                    onInputChange={handleInputChange}
-                    onChange={handleSelectChange}
-                    options={filteredOptions}
-                    placeholder='Busca por nombre o número de NIT'
-                    isSearchable
-                    styles={StylesReactSelect}
-                />
-            </div>
+        <div ref={selectRef}>
+            <Select
+                value={selectedOption}
+                inputValue={filterText}
+                onInputChange={handleInputChange}
+                onChange={handleSelectChange}
+                options={filteredOptions}
+                placeholder='Busca por nombre o número de NIT'
+                isSearchable
+                styles={StylesReactSelect}
+            />
 
             <Modal show={showCancelModalCreateSupplier} onHide={() => setShowCancelModalCreateSupplier(false)} >
                 <Modal.Header closeButton onClick={() => setShowCancelModalCreateSupplier(false)}>
