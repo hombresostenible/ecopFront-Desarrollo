@@ -103,6 +103,15 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
     //Cierra el modal que cambia la cantidad del artículo seleccionado para la venta
     const handleCloseModal = () => setChangeQuantityIndex(null);
 
+    // ABRE EL MODAL DE CANTIDAD PRESIONANDO "Ctrl + Q"
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'q') setChangeQuantityIndex(0);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {  window.removeEventListener('keydown', handleKeyDown); };
+    }, []);
+
     //Selecciona el cliente al que se le vende
     const [selectedClient, setSelectedClient] = useState<number | null>(null);
 
@@ -197,11 +206,10 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 return;
             }
             if(userPlatform?.id) formData.seller = userPlatform.id;
+            console.log('formData: ', formData)
             await dispatch(postAccountsBook(formData, token));
-            // setFormSubmitted(true);
             setSelectedClient(null);
             setTimeout(() => {
-                // setFormSubmitted(false);
                 setShouldNavigate(true);
             }, 1500);
         } catch (error) {
@@ -254,9 +262,9 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                                 <tr className={`${styles.container__Tr} d-flex align-items-center justify-content-between`}>
                                     <th className={`${styles.quantity} d-flex align-items-center justify-content-center text-center`}>Cantidad</th>
                                     <th className={`${styles.description__Item} d-flex align-items-center justify-content-center text-center`}>Descripción artículo</th>
+                                    <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
                                     <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>% IVA</th>
                                     <th className={`${styles.iva} d-flex align-items-center justify-content-center text-center`}>Vr. IVA</th>
-                                    <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario</th>
                                     <th className={`${styles.unit__Price} d-flex align-items-center justify-content-center text-center`}>Vr. unitario + IVA</th>
                                     <th className={`${styles.subtotal} d-flex align-items-center justify-content-center text-center`}>Subtotal</th>
                                     <th className={`${styles.delete} d-flex align-items-center justify-content-center text-center`}>Eliminar</th>
@@ -281,6 +289,9 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                                             <td className={`${styles.description__Item} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.nameItem}</span>
                                             </td>
+                                            <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
+                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
+                                            </td>
                                             <td className={`${styles.iva} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}>{item.IVA === 'No aplica' ? item.IVA : `${item.IVA} %`}</span>
                                             </td>
@@ -291,9 +302,6 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                                                         : 'No aplica'
                                                     }
                                                 </span>
-                                            </td>
-                                            <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
-                                                <span className={`${styles.text__Ellipsis} text-center overflow-hidden`}><span>$</span> {formatNumber(item.sellingPrice)}</span>
                                             </td>
                                             <td className={`${styles.unit__Price} d-flex align-items-center justify-content-center`}>
                                                 <span className={`${styles.text__Ellipsis} overflow-hidden`}>
@@ -470,9 +478,6 @@ function IncomeCredit({ token, decodeUserIdRegister, usersPlatform, selectedBran
                 </div>
 
                 <div className="mb-4 d-flex align-items-center justify-content-center position-relative">
-                    {/* {formSubmitted && (
-                        <div className={`${styles.alert__Success} position-absolute alert-success`}>El formulario se ha enviado con éxito</div>
-                    )} */}
                     {messageSelectedBranch && (
                         <div className={`${styles.error__Message_Selected_Branch} position-absolute`}>{messageSelectedBranch}</div>
                     )}

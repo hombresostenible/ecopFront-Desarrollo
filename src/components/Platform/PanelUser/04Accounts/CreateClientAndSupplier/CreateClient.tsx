@@ -85,6 +85,28 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                     )}
                 </div>
 
+                <div className="w-100 position-relative">
+                    <h6 className={styles.label}>No. de identificación</h6>
+                    <input
+                        type="text"
+                        {...register('documentId', { 
+                            required: true,
+                            pattern: /^\d{1,10}$/
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder='¿Cuál es tu número de identificación?'
+                        maxLength={10}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
+                    {errors.documentId && (
+                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
+                    )}
+                </div>
+
                 {(typeDocumentId === 'Cedula de Ciudadania' || typeDocumentId === 'Cedula de Extranjeria' || typeDocumentId === 'Pasaporte') && (
                     <div>
                         <div className="w-100 position-relative">
@@ -114,28 +136,6 @@ function CreateClient({ token, onCreateComplete, onClientCreated }:CreateClientP
                         </div>
                     </div>
                 )}
-
-                <div className="w-100 position-relative">
-                    <h6 className={styles.label}>No. de identificación</h6>
-                    <input
-                        type="text"
-                        {...register('documentId', { 
-                            required: true,
-                            pattern: /^\d{1,10}$/
-                        })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es tu número de identificación?'
-                        maxLength={10}
-                        onKeyDown={(e) => {
-                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
-                                e.preventDefault();
-                            }
-                        }}
-                    />
-                    {errors.documentId && (
-                        <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
-                    )}
-                </div>
 
                 {typeDocumentId === 'NIT' && (
                     <div className="w-100 position-relative">

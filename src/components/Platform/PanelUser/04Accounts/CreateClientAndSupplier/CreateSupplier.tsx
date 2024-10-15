@@ -121,11 +121,11 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                         type="text"
                         {...register('documentId', { 
                             required: true,
-                            pattern: /^\d{1,10}$/
+                            pattern: /^\d{1,9}$/
                         })}
                         className={`${styles.input} p-2 border `}
                         placeholder='¿Cuál es tu número de identificación?'
-                        maxLength={10}
+                        maxLength={9}
                         onKeyDown={(e) => {
                             if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
                                 e.preventDefault();
@@ -135,6 +135,25 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                     {errors.lastName && (
                         <p className={`${styles.text__Danger} text-danger position-absolute`}>El número de identidad es requerido</p>
                     )}
+                </div>
+
+                <div className="w-100 position-relative">
+                    <h6 className={styles.label}>Dígito de verificación</h6>
+                    <input
+                        type="text"
+                        {...register('verificationDigit', { 
+                            required: true,
+                            pattern: /^\d{1,1}$/
+                        })}
+                        className={`${styles.input} p-2 border `}
+                        placeholder='¿Cuál es el dígito de verificación?'
+                        maxLength={1}
+                        onKeyDown={(e) => {
+                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
+                                e.preventDefault();
+                            }
+                        }}
+                    />
                 </div>
 
                 {typeDocumentId === 'NIT' && (
@@ -151,25 +170,6 @@ function CreateSupplier({ token, onCreateComplete, onSupplierCreated }:CreateSup
                         )}
                     </div>
                 )}
-
-                <div className="w-100 position-relative">
-                    <h6 className={styles.label}>Dígito de verificación</h6>
-                    <input
-                        type="text"
-                        {...register('verificationDigit', { 
-                            required: true,
-                            pattern: /^\d{1,1}$/
-                        })}
-                        className={`${styles.input} p-2 border `}
-                        placeholder='¿Cuál es el dígito de verificación?'
-                        maxLength={10}
-                        onKeyDown={(e) => {
-                            if (e.key === '-' || e.key === 'e' || e.key === '+' || e.key === '.' || e.key === ' ') {
-                                e.preventDefault();
-                            }
-                        }}
-                    />
-                </div>
 
                 <div className="w-100 position-relative">
                     <h6 className={styles.label}>Email</h6>

@@ -7,22 +7,21 @@ import type { RootState, AppDispatch } from '../../redux/store';
 import { getAccountsReceivableByBranch } from '../../redux/User/indicator/finantialIndicators/actions';
 // ELEMENTOS DEL COMPONENTE
 import { IAccountsReceivable } from "../../types/User/accountsReceivable.types";
-// import styles from '../../pages/05 AccountBook/styles.module.css';
 
 interface SearchCXCProps {
     token: string;
-    idBranch: string;
+    selectedBranch: string;
     onCXCSelect: (selectedOption: IAccountsReceivable) => void;
 }
 
-function SearchCXC ({ token, idBranch, onCXCSelect }: SearchCXCProps) {
+function SearchCXC({ token, selectedBranch, onCXCSelect }: SearchCXCProps) {
     const dispatch: AppDispatch = useDispatch();
     const accountsReceivable = useSelector((state: RootState) => state.finantialIndicators.accountsReceivable);
 
     const [filteredAccounts, setFilteredAccounts] = useState<Array<any>>([]);
 
     useEffect(() => {
-        dispatch(getAccountsReceivableByBranch(idBranch, token));
+        dispatch(getAccountsReceivableByBranch(selectedBranch, token));
     }, [ token ]);
 
     useEffect(() => {
@@ -47,7 +46,6 @@ function SearchCXC ({ token, idBranch, onCXCSelect }: SearchCXCProps) {
     return (
         <div>
             <Select
-                // className={`${styles.info} p-1 border rounded border-secundary`}
                 options={options}
                 placeholder='Digita la cédula, el nombre del deudor o el nombre de la deuda'
                 onChange={handleSelectChange}
